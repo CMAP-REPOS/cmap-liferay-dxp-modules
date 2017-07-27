@@ -8,7 +8,7 @@ This repository contains module projects for the CMAP Liferay DXP instance.
 
 * Clone this repository into your Liferay "modules" directory.
 
-  `clone git@bitbucket.org:workstate-code/cmap-liferay-dxp-modules.git .`
+        clone git@bitbucket.org:workstate-code/cmap-liferay-dxp-modules.git .
 
 * Check out [Portlets](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/portlets) and [Service Builder](https://dev.liferay.com/develop/tutorials/-/knowledge_base/7-0/service-builder) in the Liferay documentation.
 
