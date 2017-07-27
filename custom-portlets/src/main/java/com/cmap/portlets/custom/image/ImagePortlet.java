@@ -1,3 +1,4 @@
+// not used
 //package com.cmap.portlets.custom.image;
 //
 //import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
