@@ -18,12 +18,23 @@ This repository contains module projects for the CMAP Liferay DXP instance.
  
 ### How do I build and deploy modules? ###
 
-* To build a module, open the Gradle Tasks for the module and run the build/build task.
+* To build a module, open the Gradle Tasks for the module and run the "build/build" task.
 
-* To deploy a module, open the Gradle Tasks for the module and run the build/deploy task.
+* To deploy a module locally, open the Gradle Tasks for the module and run the "build/deploy" task.
 
-* To rebuild services, open the Gradle Tasks for the service module and run the build/buildService task.
+* To deploy a module to the server:
+	
+	1. Open the Gradle Tasks for the module and run the "build/deploy" task.
+	2. Copy the module's JAR file(s) from the workspace's "bundles/osgi/modules" directory to the "deploy" directory on the server. For the DXP sandbox, the path is /webapps/liferay-2p/liferay-dxp-digital-enterprise-7.0-sp2/deploy.
+	3. Update permissions on the remote JAR file(s) to make them writable -- 646 should work. 
+	4. Watch the logs to make sure the module has been successfully deployed. You should see lines similar to this in the logs: 
 
+		> 17:46:25,631 INFO  [fileinstall-/webapps/liferay-2p/liferay-dxp-digital-enterprise-7.0-sp2/osgi/modules][BundleStartStopLogger:38] STOPPED custom.services-api_1.0.0 [536]
+		> 17:46:25,784 INFO  [fileinstall-/webapps/liferay-2p/liferay-dxp-digital-enterprise-7.0-sp2/osgi/modules][BundleStartStopLogger:38] STOPPED custom.services-service_1.0.0 [537]
+		> 17:46:26,137 INFO  [Refresh Thread: Equinox Container: a0e0c2f0-0a73-0017-15d1-964ebca560be][BundleStartStopLogger:35] STARTED custom.services-api_1.0.0 [536]
+		> 17:46:26,565 INFO  [Refresh Thread: Equinox Container: a0e0c2f0-0a73-0017-15d1-964ebca560be][BundleStartStopLogger:35] STARTED custom.services-service_1.0.0 [537]
+
+* To rebuild services, open the Gradle Tasks for the service module and run the "build/buildService" task.
 
 ### Contribution guidelines ###
 
