@@ -17,6 +17,8 @@ package com.cmap.services.custom.service.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import com.cmap.services.custom.service.base.UtilLocalServiceBaseImpl;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Base64;
@@ -25,10 +27,14 @@ import java.util.Base64;
  * The implementation of the util local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.cmap.services.custom.service.UtilLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link com.cmap.services.custom.service.UtilLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -40,15 +46,19 @@ public class UtilLocalServiceImpl extends UtilLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link com.cmap.services.custom.service.UtilLocalServiceUtil} to access the util local service.
+	 * Never reference this class directly. Always use {@link
+	 * com.cmap.services.custom.service.UtilLocalServiceUtil} to access the util
+	 * local service.
 	 */
-	
+
+	private static final Log LOGGER = LogFactoryUtil.getLog(UtilLocalServiceImpl.class);
+
 	public String Base64Encode(String string) {
 		String encoded = StringPool.BLANK;
 		try {
 			encoded = Base64.getEncoder().encodeToString(string.getBytes("utf-8"));
 		} catch (Exception ex) {
-			
+			LOGGER.error("Exception in UtilLocalService.Base64Encode: " + ex.getMessage(), ex);
 		}
 		return encoded;
 	}
@@ -61,21 +71,21 @@ public class UtilLocalServiceImpl extends UtilLocalServiceBaseImpl {
 				decoded = new String(asBytes, "utf-8");
 			}
 		} catch (Exception ex) {
-			
+			LOGGER.error("Exception in UtilLocalService.Base64Decode: " + ex.getMessage(), ex);
 		}
 		return decoded;
 	}
 
 	public String GenerateEncodedVcard(String firstName, String lastName, String title, String phone, String email) {
-	//	BEGIN:VCARD
-	//	VERSION:4.0
-	//	N:Ambriz;Yesenia;;;
-	//	FN:Yesenia Ambriz
-	//	ORG:Chicago Metropolitan Agency for Planning
-	//	TITLE:Admin II
-	//	TEL;TYPE=work,voice;VALUE=uri:tel:+1-312-386-8660
-	//	EMAIL:yambriz@cmap.illinois.gov
-	//	END:VCARD
+		// BEGIN:VCARD
+		// VERSION:4.0
+		// N:Ambriz;Yesenia;;;
+		// FN:Yesenia Ambriz
+		// ORG:Chicago Metropolitan Agency for Planning
+		// TITLE:Admin II
+		// TEL;TYPE=work,voice;VALUE=uri:tel:+1-312-386-8660
+		// EMAIL:yambriz@cmap.illinois.gov
+		// END:VCARD
 		String encodedCard = StringPool.BLANK;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -98,6 +108,7 @@ public class UtilLocalServiceImpl extends UtilLocalServiceBaseImpl {
 			sb.append("END:VCARD");
 			encodedCard = Base64.getEncoder().encodeToString(sb.toString().getBytes("utf-8"));
 		} catch (Exception ex) {
+			LOGGER.error("Exception in UtilLocalService.GenerateEncodedVcard: " + ex.getMessage(), ex);
 		}
 		return encodedCard;
 	}
