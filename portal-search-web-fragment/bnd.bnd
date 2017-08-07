@@ -1,0 +1,4 @@
+Bundle-Name: portal-search-web-fragment
+Bundle-SymbolicName: portal.search.web.fragment
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.portal.search.web;bundle-version="1.1.22"
