@@ -1,20 +1,35 @@
 package com.cmap.portlets.custom.featuredcard;
 
+import com.liferay.asset.kernel.model.AssetEntry;
+import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
 import com.liferay.journal.model.JournalArticle;
+import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.Layout;
+import com.liferay.portal.kernel.model.LayoutTypePortlet;
 import com.liferay.portal.kernel.model.PortletPreferences;
-import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.model.ResourceAction;
+import com.liferay.portal.kernel.model.ResourceConstants;
+import com.liferay.portal.kernel.model.ResourcePermission;
+import com.liferay.portal.kernel.model.Role;
+import com.liferay.portal.kernel.model.RoleConstants;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
+import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourceActionLocalServiceUtil;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
+import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -48,6 +63,13 @@ public class FeaturedCardPortlet extends MVCPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(FeaturedCardPortlet.class);
 	private static Locale _enUs = new Locale.Builder().setLanguage("en").setRegion("US").build();
+	private static long _userId = 102474;
+	private static long _groupId = 10180;
+	private static long _folderId = 0;
+	private static int _ownerId = 0;
+	private static int _ownerType = 3;
+	private static String _ddmStructureKey = "675484";
+	private static String _ddmTemplateKey = "675499";
 
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
@@ -56,15 +78,17 @@ public class FeaturedCardPortlet extends MVCPortlet {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(FeaturedCardPortlet.class.getName(),
 					renderRequest);
 
-			if (serviceContext.getUserId() == 0) {
+			if (serviceContext.getUserId() == _userId) {
 				// long[] plids = { 10818L, 11674L, 117101L, 12317L, 14136L };
 				long[] plids = { 12317L };
-				
-				
+
 				List<String> results = new ArrayList<String>();
 
 				for (int i = 0; i < plids.length; i++) {
 					List<PortletPreferences> pagePortletPreferences = GetPagePortletPreferences(plids[i]);
+					List<JournalArticle> pageJournalArticles =  new ArrayList<JournalArticle>();
+					Layout pageLayout = LayoutLocalServiceUtil.getLayout(plids[i]);
+					LayoutTypePortlet layoutTypePortlet = (LayoutTypePortlet) pageLayout.getLayoutType();
 
 					for (PortletPreferences portletPreferences : pagePortletPreferences) {
 						if (portletPreferences.getPortletId()
@@ -75,11 +99,55 @@ public class FeaturedCardPortlet extends MVCPortlet {
 									portletPreferences.getPreferences());
 							JournalArticle result = CreateFeaturedCardArticle(featuredCardTitle, featuredCardContent,
 									portletPreferences.getPortletId(), serviceContext);
+							pageJournalArticles.add(result);
+							
 							if (result != null) {
+								setFeaturedCardArticlePermission(result, serviceContext);
 								results.add(result.getTitle(_enUs));
 							}
 						}
 					}
+					
+					if (pageJournalArticles.size() > 0) {
+	 					for (JournalArticle pageJournalArticle : pageJournalArticles) {
+	 						
+							String journalPortletId = layoutTypePortlet.addPortletId(_userId,
+									"com_liferay_journal_content_web_portlet_JournalContentPortlet", "column-1", -1);
+							
+							javax.portlet.PortletPreferences prefs = (javax.portlet.PortletPreferences) PortletPreferencesLocalServiceUtil
+									.getPreferences(serviceContext.getCompanyId(), _ownerId, _ownerType, plids[i],
+											journalPortletId);
+
+							JournalArticleResource journalArticleResource = pageJournalArticle.getArticleResource();
+							AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(_groupId, journalArticleResource.getUuid());
+
+							// <portlet-preferences>
+							// <preference><name>ddmTemplateKey</name><value>675499</value></preference>
+							// <preference><name>assetEntryId</name><value>691943</value></preference>
+							// <preference><name>userToolAssetAddonEntryKeys</name><value></value></preference>
+							// <preference><name>enableViewCountIncrement</name><value>true</value></preference>
+							// <preference><name>groupId</name><value>10180</value></preference>
+							// <preference><name>articleId</name><value>691939</value></preference>
+							// <preference><name>contentMetadataAssetAddonEntryKeys</name><value></value></preference>
+							// </portlet-preferences>							
+
+							prefs.setValue("articleId", pageJournalArticle.getArticleId());
+							prefs.setValue("assetEntryId", String.valueOf(assetEntry.getEntryId()));
+							prefs.setValue("ddmTemplateKey", _ddmTemplateKey);
+							prefs.setValue("enableViewCountIncrement", "true");
+							prefs.setValue("groupId", String.valueOf(_groupId));
+							prefs.setValue("userToolAssetAddonEntryKeys", "");
+							System.out.println("Added Portlet: " + journalPortletId);
+							
+							PortletPreferencesLocalServiceUtil.updatePreferences(_ownerId, _ownerType, plids[i],
+									journalPortletId, prefs);
+						}
+					}
+					
+					LayoutLocalServiceUtil.updateLayout(pageLayout.getGroupId(),
+							pageLayout.isPrivateLayout(),
+							pageLayout.getLayoutId(),
+							pageLayout.getTypeSettings());
 				}
 				
 				renderRequest.setAttribute("results", results);
@@ -92,30 +160,62 @@ public class FeaturedCardPortlet extends MVCPortlet {
 		} catch (IOException ex) {
 			_log.error("Exception in FeaturedCardPortlet.doView: " + ex.getMessage(), ex);
 		} catch (PortalException ex) {
-			// TODO Auto-generated catch block
 			_log.error("Exception in FeaturedCardPortlet.doView: " + ex.getMessage(), ex);
 		}
 	}
 
+	private void DeleteFeaturedCardArticle(JournalArticle journalArticle) {
+		System.out.println("Deleting JournalArticle: " + journalArticle.getTitle(_enUs));
+		try {
+			JournalArticleLocalServiceUtil.deleteArticle(journalArticle);
+		} catch (PortalException ex) {
+			_log.error("Exception in FeaturedCardPortlet.DeleteFeaturedCardArticle: " + ex.getMessage(), ex);
+		}
+	}
+	
 	private JournalArticle CreateFeaturedCardArticle(String title, String content, String portletId, ServiceContext serviceContext) {
 
-		long userId = 102474;
-		long groupId = 10180;
-		long folderId = 0;
-		String ddmStructureKey = "675484";
-		String ddmTemplateKey = "675499";
+		JournalArticle featuredCardArticle = null;
 		
 		System.out.println("Creating JournalArticle: " + title);
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 		titleMap.put(_enUs, title);
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 		descriptionMap.put(_enUs, "Featured Card generated from portlet " + portletId);
+
 		try {
-			return JournalArticleLocalServiceUtil.addArticle(userId, groupId, folderId, titleMap, descriptionMap,
-					content, ddmStructureKey, ddmTemplateKey, serviceContext);
+			featuredCardArticle = JournalArticleLocalServiceUtil.addArticle(_userId, _groupId, _folderId, titleMap, descriptionMap,
+					content, _ddmStructureKey, _ddmTemplateKey, serviceContext);
+			
 		} catch (PortalException ex) {
 			_log.error("Exception in FeaturedCardPortlet.CreateFeaturedCardArticle: " + ex.getMessage(), ex);
-			return null;
+			return featuredCardArticle;
+		}
+		
+		return featuredCardArticle;
+	}
+	
+	private void setFeaturedCardArticlePermission(JournalArticle journalArticle, ServiceContext serviceContext) {
+
+		System.out.println("Setting permissions on JournalArticle: " + journalArticle.getTitle(_enUs));
+
+		try {
+			Role memberRole = RoleLocalServiceUtil.getRole(serviceContext.getCompanyId(), RoleConstants.GUEST);
+			if (Validator.isNotNull(memberRole)) {
+				ResourceAction resourceAction = ResourceActionLocalServiceUtil
+						.getResourceAction(JournalArticle.class.getName(), ActionKeys.VIEW);
+				ResourcePermission resourcePermission = ResourcePermissionLocalServiceUtil
+						.createResourcePermission(CounterLocalServiceUtil.increment(ResourcePermission.class.getName()));
+				resourcePermission.setActionIds(resourceAction.getBitwiseValue());
+				resourcePermission.setCompanyId(serviceContext.getCompanyId());
+				resourcePermission.setScope(ResourceConstants.SCOPE_INDIVIDUAL);
+				resourcePermission.setPrimKey(String.valueOf(journalArticle.getPrimaryKey()));
+				resourcePermission.setRoleId(memberRole.getRoleId());
+				ResourcePermissionLocalServiceUtil.addResourcePermission(resourcePermission);
+			}
+
+		} catch (PortalException ex) {
+			_log.error("Exception in FeaturedCardPortlet.setFeaturedCardArticlePermission: " + ex.getMessage(), ex);
 		}
 	}
 
@@ -135,6 +235,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 	private String GetFeaturedCardTitle(String portletId, String portletPreferencesXml) {
 		String[] preferencesArray = ParsePortletPreferences(portletPreferencesXml);
 		String featuredCardTitle = StringPool.BLANK;
+		
 		for (int j = 0; j < preferencesArray.length; j++) {
 			String[] keyValueArray = preferencesArray[j].split("=");
 
@@ -142,6 +243,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 				featuredCardTitle = keyValueArray[1];
 			}
 		}
+		
 		return featuredCardTitle;
 	}
 
@@ -161,34 +263,25 @@ public class FeaturedCardPortlet extends MVCPortlet {
 			if (keyValueArray.length == 2) {
 
 				if (keyValueArray[0].equals(portletId + "title")) {
-					// get title
 					featuredCardXmlTitle = FeaturedCardXmlTitle(portletId, keyValueArray[1]);
 				}
 				if (keyValueArray[0].equals(portletId + "caption")) {
-					// get caption
 					featuredCardXmlCaption = FeaturedCardXmlCaption(portletId, keyValueArray[1]);
 				}
 				if (keyValueArray[0].equals(portletId + "featuredUrl")) {
-					// get featuredUrl
 					featuredCardXmlTitle = FeaturedCardXmlTitle(portletId, keyValueArray[1]);
 				}
 				if (keyValueArray[0].equals(portletId + "featuredImage")) {
-					// get featuredImage
 					// System.out.println("featuredImage: " + keyValueArray[1]);
 					featuredCardXmlImageToDisplay = FeaturedCardXmlImageToDisplay(portletId, keyValueArray[1]);
 				}
 				if (keyValueArray[0].equals(portletId + "featuredAssetId")) {
-					// get featuredAssetId
 					// System.out.println("featuredAssetId: " + keyValueArray[1]);
 					featuredCardXmlDocument = FeaturedCardXmlDocument(portletId, keyValueArray[1]);
 				}
 				if (keyValueArray[0].equals(portletId + "featuredPlid")) {
-					// get featuredPlid
 					featuredCardXmlPage = FeaturedCardXmlPage(portletId, keyValueArray[1]);
 				}
-
-			} else {
-				// System.out.println(keyValueArray[0] + ": no value");
 			}
 		}
 
@@ -204,6 +297,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 
 	
 	private List<PortletPreferences> GetPagePortletPreferences(long plid) {
+		
 		try {
 			List<PortletPreferences> pagePortletPreferences = PortletPreferencesLocalServiceUtil.getPortletPreferences(0, 3,
 					plid);
@@ -250,6 +344,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 	}
 
 	private String FeaturedCardXmlImageToDisplay(String portletId, String featuredImage) {
+		
 		try {
 			if (featuredImage.equals("-1")) {
 				_log.warn("featuredImage is -1 for portletId: " + portletId);
@@ -284,6 +379,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 	}
 
 	private String FeaturedCardXmlDocument(String portletId, String document) {
+		
 		try {
 			if (document.equals("-1")) {
 				_log.warn("document is -1 for portletId: " + portletId);
@@ -316,15 +412,18 @@ public class FeaturedCardPortlet extends MVCPortlet {
 	}
 
 	private String FeaturedCardXmlPage(String portletId, String page) {
+		
 		StringBuilder sb = new StringBuilder();
 		sb.append(
 				"<dynamic-element name=\"Page\" type=\"link_to_layout\" index-type=\"keyword\" instance-id=\"laxk\">");
 		sb.append("<dynamic-content language-id=\"en_US\"><![CDATA[]]></dynamic-content>");
 		sb.append("</dynamic-element>");
+		
 		return sb.toString();
 	}
 
 	public static String GetDLFileURL(DLFileEntry file) {
+		
 		try {
 			return "/documents/" + file.getGroupId() + StringPool.SLASH + file.getFolderId() + StringPool.SLASH
 					+ file.getTitle() + StringPool.SLASH + file.getUuid();
