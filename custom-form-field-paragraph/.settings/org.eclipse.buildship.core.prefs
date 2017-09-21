@@ -5,5 +5,9 @@ connection.jvm.arguments=
 build.commands=org.eclipse.jdt.core.javabuilder
 connection.project.dir=../..
 natures=org.eclipse.jdt.core.javanature
+eclipse.preferences.version=1
+connection.java.home=null
+derived.resources=.gradle,build
+connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
 project.path=\:modules\:custom-form-field-paragraph
  44f7387f8d668215e0db84e7ef33699d52c96f4c:custom-form-field-paragraph/.settings/org.eclipse.buildship.core.prefs
