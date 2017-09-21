@@ -1,0 +1,22 @@
+{namespace ddm}
+
+/**
+ * Prints the form field.
+ *
+ * @param label
+ * @param name
+ * @param showLabel
+ * @param tip
+ */
+{template .CustomFormFieldParagraph autoescape="deprecated-contextual"}
+	<div class="form-group custom-form-field-paragraph-form-field" data-fieldname="{$name}">
+		{if $showLabel}
+			<p>
+				{$label}
+			</p>
+		{/if}
+		{if $tip}
+			<p>{$tip}</p>
+		{/if}
+	</div>
+{/template}

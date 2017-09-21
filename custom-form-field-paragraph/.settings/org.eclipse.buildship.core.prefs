@@ -1,0 +1,9 @@
+#Wed Aug 16 16:40:52 CDT 2017
+connection.arguments=
+containers=org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/
+connection.jvm.arguments=
+build.commands=org.eclipse.jdt.core.javabuilder
+connection.project.dir=../..
+natures=org.eclipse.jdt.core.javanature
+project.path=\:modules\:custom-form-field-paragraph
+ 44f7387f8d668215e0db84e7ef33699d52c96f4c:custom-form-field-paragraph/.settings/org.eclipse.buildship.core.prefs
