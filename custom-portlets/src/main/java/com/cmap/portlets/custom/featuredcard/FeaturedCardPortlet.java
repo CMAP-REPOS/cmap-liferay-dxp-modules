@@ -294,7 +294,6 @@ public class FeaturedCardPortlet extends MVCPortlet {
 			return featuredCardXml;
 		}
 	}
-
 	
 	private List<PortletPreferences> GetPagePortletPreferences(long plid) {
 		
