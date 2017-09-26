@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>calendar-web-fragment</name>
-	<comment>Project calendar-web-fragment created by Buildship.</comment>
+	<name>calendar-event-importer-portlet</name>
+	<comment>Project calendar-event-importer-portlet created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>

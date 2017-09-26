@@ -1,4 +1,4 @@
-#Wed Aug 16 16:40:53 CDT 2017
+#Tue Sep 26 09:48:10 EDT 2017
 connection.arguments=
 containers=org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8/
 connection.jvm.arguments=
@@ -8,5 +8,5 @@ natures=org.eclipse.jdt.core.javanature
 eclipse.preferences.version=1
 connection.java.home=null
 derived.resources=.gradle,build
-project.path=\:modules\:custom-services\:custom-services-api
 connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
+project.path=\:modules\:custom-services\:custom-services-api
