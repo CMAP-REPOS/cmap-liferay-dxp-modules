@@ -157,6 +157,16 @@ public class UtilLocalServiceUtil {
 		return getService().Base64Encode(string);
 	}
 
+	public static java.lang.String GenerateEncodedCal(java.lang.String uid,
+		java.lang.String dtStamp, java.lang.String organizer,
+		java.lang.String dtStart, java.lang.String dtEnd,
+		java.lang.String summary, java.lang.String url,
+		java.lang.String location) {
+		return getService()
+				   .GenerateEncodedCal(uid, dtStamp, organizer, dtStart, dtEnd,
+			summary, url, location);
+	}
+
 	public static java.lang.String GenerateEncodedVcard(
 		java.lang.String firstName, java.lang.String lastName,
 		java.lang.String title, java.lang.String phone, java.lang.String email) {

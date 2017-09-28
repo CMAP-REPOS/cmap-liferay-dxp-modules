@@ -112,4 +112,53 @@ public class UtilLocalServiceImpl extends UtilLocalServiceBaseImpl {
 		}
 		return encodedCard;
 	}
+	
+	public String GenerateEncodedCal(String uid, String dtStamp, String organizer, String dtStart, String dtEnd,
+			String summary, String url, String location) {
+		// BEGIN:VCALENDAR
+		// VERSION:2.0
+		// PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+		// BEGIN:VEVENT
+		// UID:uid1@example.com
+		// DTSTAMP:19970714T170000Z
+		// ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
+		// DTSTART:19970714T170000Z
+		// DTEND:19970715T035959Z
+		// SUMMARY:Bastille Day Party
+		// END:VEVENT
+		// END:VCALENDAR
+		String encodedCal = StringPool.BLANK;
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append("BEGIN:VCALENDAR");
+			sb.append("\n");
+			sb.append("VERSION:2.0");
+			sb.append("\n");
+			sb.append("BEGIN:VEVENT");
+			sb.append("\n");
+			sb.append("UID:" + uid);
+			sb.append("\n");
+			sb.append("DTSTAMP:" + dtStamp);
+			sb.append("\n");
+			sb.append("DTSTART:" + dtStart);
+			sb.append("\n");
+			sb.append("DTEND:" + dtEnd);
+			sb.append("\n");
+			sb.append("SUMMARY:" + summary);
+			sb.append("\n");
+			sb.append("URL:" + url);
+			sb.append("\n");
+			sb.append("LOCATION:" + location);
+			sb.append("\n");
+			sb.append("END:VEVENT");
+			sb.append("\n");
+			sb.append("END:VCALENDAR");
+			encodedCal = Base64.getEncoder().encodeToString(sb.toString().getBytes("utf-8"));
+		} catch (Exception ex) {
+			LOGGER.error("Exception in UtilLocalService.GenerateEncodedCal: " + ex.getMessage(), ex);
+		}
+
+		return encodedCal;
+
+	}
 }
