@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.service.ThemeLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -77,7 +78,7 @@ public class FeaturedCardPortlet extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(FeaturedCardPortlet.class.getName(),
 					renderRequest);
-
+			
 			if (serviceContext.getUserId() == _userId) {
 				// long[] plids = { 10818L, 11674L, 117101L, 12317L, 14136L };
 				long[] plids = { 12317L };
