@@ -22,11 +22,11 @@ import org.osgi.service.component.annotations.Modified;
 import aQute.bnd.annotation.metatype.Configurable;
 
 @Component(
-		configurationPid = "com.cmap.portlets.custom.configuration.EventsListConfiguration",
+		configurationPid = "com.cmap.portlets.custom.eventslist.configuration.EventsListConfiguration",
 		configurationPolicy = ConfigurationPolicy.OPTIONAL, 
         immediate = true,
         property = {
-            "javax.portlet.name=com_cmap_portlets_custom_portlet_EventsListPortlet"
+            "javax.portlet.name=com_cmap_portlets_custom_eventslist_portlet_EventsListPortlet"
         },
         service = ConfigurationAction.class
 )

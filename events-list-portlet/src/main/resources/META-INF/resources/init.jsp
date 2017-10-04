@@ -1,5 +1,5 @@
-<%@ page import="com.cmap.portlets.custom.configuration.EventsListConfiguration"%>
-<%@ page import="com.cmap.portlets.custom.constants.EventsListPortletKeys"%>
+<%@ page import="com.cmap.portlets.custom.eventslist.configuration.EventsListConfiguration"%>
+<%@ page import="com.cmap.portlets.custom.eventslist.constants.EventsListPortletKeys"%>
 
 <%@ page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@ page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
@@ -11,6 +11,7 @@
 <%@ page import="com.liferay.portal.kernel.util.Constants"%>
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ page import="com.liferay.portal.kernel.util.Validator"%>
+<%@ page import="java.net.URI"%>
 
 <%@ page import="java.util.Calendar"%>
 <%@ page import="java.util.Date"%>
@@ -25,12 +26,17 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
+
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
 
 <%
-	EventsListConfiguration configuration = (EventsListConfiguration) renderRequest.getAttribute(EventsListConfiguration.class.getName());
+
+List<CalendarBooking> calendarEvents = (List<CalendarBooking>)renderRequest.getAttribute("calendarEvents");
+
+/* 	EventsListConfiguration configuration = (EventsListConfiguration) renderRequest.getAttribute(EventsListConfiguration.class.getName());
 
 	int numberOfDaysInThePast = EventsListPortletKeys.DAYS_IN_THE_PAST;
 	int numberOfEventsToShow = EventsListPortletKeys.NUMBER_OF_EVENTS;
@@ -59,5 +65,5 @@
 			.add(RestrictionsFactoryUtil.eq("calendarId", 738411L)).addOrder(order);
 
 	List<CalendarBooking> calendarBookings = CalendarBookingLocalServiceUtil.dynamicQuery(calendarQuery, 0,
-			numberOfEventsToShow);
+			numberOfEventsToShow); */
 %>

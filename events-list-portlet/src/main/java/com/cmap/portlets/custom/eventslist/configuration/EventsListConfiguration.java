@@ -3,7 +3,7 @@ package com.cmap.portlets.custom.eventslist.configuration;
 import aQute.bnd.annotation.metatype.Meta;
 
 @Meta.OCD(
-		id = "com.cmap.portlets.custom.configuration.EventsListConfiguration"
+		id = "com.cmap.portlets.custom.eventslist.configuration.EventsListConfiguration"
 )
 
 public interface EventsListConfiguration {
