@@ -1,6 +1,4 @@
 package com.cmap.portlets.custom.eventslist.model;
-import com.cmap.services.custom.service.UtilLocalServiceUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 public class EventViewModel {
 	

@@ -5,6 +5,7 @@ import com.cmap.portlets.custom.eventslist.constants.EventsListPortletKeys;
 import com.cmap.portlets.custom.eventslist.model.EventViewModel;
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
+import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
@@ -13,10 +14,12 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -27,11 +30,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -106,6 +113,44 @@ public class EventsListPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 
+	@Override
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+		
+		System.out.println("serveResource");
+		System.out.println("requestedResource" + ParamUtil.getString(resourceRequest, "requestedResource"));
+		System.out.println("fromEmail" + ParamUtil.getString(resourceRequest, "fromEmail"));
+		System.out.println("toEmail" + ParamUtil.getString(resourceRequest, "toEmail"));
+
+		String requestedResource = ParamUtil.getString(resourceRequest, "requestedResource");
+		if(requestedResource.equals("emailEventResource")) {
+			String result = "success";
+			String fromEmail = ParamUtil.getString(resourceRequest, "fromEmail");
+			String toEmail = ParamUtil.getString(resourceRequest, "toEmail");
+			String title = ParamUtil.getString(resourceRequest, "title");
+			String date = ParamUtil.getString(resourceRequest, "date");
+			String time = ParamUtil.getString(resourceRequest, "time");
+			String location = ParamUtil.getString(resourceRequest, "location");
+			String link = ParamUtil.getString(resourceRequest, "link");
+			
+			if (Validator.isEmailAddress(fromEmail) && Validator.isEmailAddress(toEmail)) {
+				result = sendEventEmail(fromEmail, toEmail, title, date, time, location, link);
+			} else {
+				result = "failure";
+			}
+
+			try {
+				PrintWriter writer = resourceResponse.getWriter();
+				writer.write(result);
+				writer.close();
+			} catch (IOException ex) {
+				_log.error("Exception in EventsListPortlet.serveResource: " + ex.getMessage(), ex);
+			}
+		}
+
+		super.serveResource(resourceRequest, resourceResponse);
+	}
+
 	protected EventViewModel getEventViewModel(CalendarBooking calendarBooking) {
 		
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
@@ -153,6 +198,7 @@ public class EventsListPortlet extends MVCPortlet {
 		// END:VCALENDAR
 		
 		String appointment = StringPool.BLANK;
+		
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append("BEGIN:VCALENDAR");
@@ -185,12 +231,101 @@ public class EventsListPortlet extends MVCPortlet {
 			sb.append("END:VCALENDAR");
 			appointment = Base64.getEncoder().encodeToString(sb.toString().getBytes("utf-8"));
 		} catch (Exception ex) {
-			_log.error("Exception in UtilLocalService.GenerateEncodedCal: " + ex.getMessage(), ex);
+			_log.error("Exception in EventsListPortlet.getAppointment: " + ex.getMessage(), ex);
 		}		
 		
-
 		return appointment;
 	}	
+	
+	protected String sendEventEmail(String fromEmail, String toEmail, String title, String date, String time,
+			String location, String link) {
+
+		// You've been sent an event announcement from the Chicago Metropolitan
+		// Agency for Planning event calendar.
+		//
+		// From: hello@workstate.com
+		//
+		// Event Name: CMAP Environment and Natural Resources Committee
+		//
+		// Event Date: 10/05/2017
+		//
+		// Duration: 09:30 AM - 11:30 AM
+		//
+		// Type: CMAP Events
+		//
+		// Location: 233 S. Wacker Dr., Suite 800, Chicago
+		//
+		// Link:
+		// http://www.cmap.illinois.gov/about/involvement/committees/working-committees/environment-and-natural-resources/minutes
+
+		String emailBody = StringPool.BLANK;
+		String result = "success";
+		
+		try {
+			StringBuilder sb = new StringBuilder();
+			sb.append(
+					"You've been sent an event announcement from the Chicago Metropolitan Agency for Planning event calendar.");
+			sb.append("\n\n");
+			sb.append("From: ");
+			sb.append(fromEmail);
+			sb.append("\n\n");
+			sb.append("Event Name: ");
+			sb.append(title);
+			sb.append("\n\n");
+			sb.append("Event Date: ");
+			sb.append(date);
+			sb.append("\n\n");
+			sb.append("Event Time: ");
+			sb.append(time);
+			sb.append("\n\n");
+			sb.append("Location: ");
+			sb.append(location);
+			if (!link.isEmpty()) {
+				sb.append("\n\n");
+				sb.append("Link: ");
+				sb.append(link);
+			}
+			emailBody = sb.toString();
+		} catch (Exception ex) {
+			_log.error("Exception in EventsListPortlet.sendEventEmail: " + ex.getMessage(), ex);
+		}
+
+		InternetAddress fromAddress = null;
+		InternetAddress toAddress = null;
+		
+		
+		try {
+			fromAddress = new InternetAddress(fromEmail);
+		} catch (AddressException ex) {
+			_log.error("Exception in EventsListPortlet.sendEventEmail: " + ex.getMessage(), ex);
+		}
+		
+		try {
+			toAddress = new InternetAddress(toEmail);
+		} catch (AddressException ex) {
+			_log.error("Exception in EventsListPortlet.sendEventEmail: " + ex.getMessage(), ex);
+		}
+
+		if (fromAddress != null && toAddress != null) {
+			 MailMessage mailMessage = new MailMessage();
+			 mailMessage.setFrom(fromAddress);
+			 mailMessage.setTo(toAddress);
+			 mailMessage.setSubject("CMAP EVENT - " + title);
+			 mailMessage.setBody(emailBody);
+			 mailMessage.setHTMLFormat(true);
+			 
+			 System.out.println(mailMessage.getFrom().toString());
+			 System.out.println(mailMessage.getTo().toString());
+			 System.out.println(mailMessage.getSubject());
+			 System.out.println(mailMessage.getBody());
+			 
+			 // MailServiceUtil.sendEmail(mailMessage);
+		} else {
+			result = "failure";
+		}
+		
+		return result;
+	}
 	
 	@Activate
 	@Modified
