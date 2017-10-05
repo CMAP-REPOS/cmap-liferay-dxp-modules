@@ -3,11 +3,9 @@ package com.cmap.portlets.custom.eventslist.portlet;
 import com.cmap.portlets.custom.eventslist.configuration.EventsListConfiguration;
 import com.cmap.portlets.custom.eventslist.constants.EventsListPortletKeys;
 import com.cmap.portlets.custom.eventslist.model.EventViewModel;
-import com.cmap.services.custom.service.UtilLocalServiceUtil;
+import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.calendar.service.CalendarBookingLocalServiceUtil;
-import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Order;
 import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
@@ -25,15 +23,15 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
+import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
-import javax.portlet.PortletPreferences;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -135,24 +133,25 @@ public class EventsListPortlet extends MVCPortlet {
 		EventViewModel eventViewModel = new EventViewModel(date, time, title, description, location, appointment);
 		
 		return eventViewModel;
-		
 	}
 	
 	protected String getAppointment(CalendarBooking calendarBooking) {
 		String url = StringPool.BLANK;
+		SimpleDateFormat iCalDateFormat = new SimpleDateFormat("yyyyMMdd'T'HHmmss");;
 		
 		// BEGIN:VCALENDAR
 		// VERSION:2.0
-		// PRODID:-//hacksw/handcal//NONSGML v1.0//EN
+		// PRODID:-PRODID:-//CMAP//NONSGML CMAP//EN
 		// BEGIN:VEVENT
 		// UID:uid1@example.com
-		// DTSTAMP:19970714T170000Z
+		// DTSTAMP:19970714T170000
 		// ORGANIZER;CN=John Doe:MAILTO:john.doe@example.com
 		// DTSTART:19970714T170000Z
 		// DTEND:19970715T035959Z
 		// SUMMARY:Bastille Day Party
 		// END:VEVENT
 		// END:VCALENDAR
+		
 		String appointment = StringPool.BLANK;
 		try {
 			StringBuilder sb = new StringBuilder();
@@ -160,18 +159,23 @@ public class EventsListPortlet extends MVCPortlet {
 			sb.append("\n");
 			sb.append("VERSION:2.0");
 			sb.append("\n");
+			sb.append("PRODID:-//CMAP//NONSGML CMAP//EN");
+			sb.append("\n");
 			sb.append("BEGIN:VEVENT");
 			sb.append("\n");
 			sb.append("UID:" + UUID.randomUUID());
 			sb.append("\n");
-			sb.append("DTSTAMP:" + String.valueOf(calendarBooking.getStartTime()));
+			sb.append("DTSTAMP:" + iCalDateFormat.format(new Date(calendarBooking.getStartTime())));
 			sb.append("\n");
-			sb.append("DTSTART:" + String.valueOf(calendarBooking.getStartTime()));
+			sb.append("ORGANIZER;CN=CMAP:MAILTO:info@cmap.illinois.gov");
 			sb.append("\n");
-			sb.append("DTEND:" + String.valueOf(calendarBooking.getEndTime()));
+			sb.append("DTSTART:" + iCalDateFormat.format(new Date(calendarBooking.getStartTime())));
 			sb.append("\n");
-			sb.append("SUMMARY:" + String.valueOf(calendarBooking.getDescription()));
+			sb.append("DTEND:" + iCalDateFormat.format(new Date(calendarBooking.getEndTime())));
 			sb.append("\n");
+			sb.append("SUMMARY:" + String.valueOf(calendarBooking.getTitle()));
+			sb.append("\n");
+			// TODO: add link from Custom Fields
 			sb.append("URL:" + url);
 			sb.append("\n");
 			sb.append("LOCATION:" + calendarBooking.getLocation());
@@ -179,8 +183,7 @@ public class EventsListPortlet extends MVCPortlet {
 			sb.append("END:VEVENT");
 			sb.append("\n");
 			sb.append("END:VCALENDAR");
-			// appointment = Base64.getEncoder().encodeToString(sb.toString().getBytes("utf-8"));
-			appointment = sb.toString();
+			appointment = Base64.getEncoder().encodeToString(sb.toString().getBytes("utf-8"));
 		} catch (Exception ex) {
 			_log.error("Exception in UtilLocalService.GenerateEncodedCal: " + ex.getMessage(), ex);
 		}		

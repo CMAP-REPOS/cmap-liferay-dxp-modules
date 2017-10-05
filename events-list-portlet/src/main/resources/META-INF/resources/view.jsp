@@ -23,7 +23,7 @@
 		      <a href="<c:url value="https://www.google.com/maps/place/${calendarBooking.getLocation() }"/>"><i class="icon-map-marker"></i> Get Directions</a></a>
 		</c:if>
 		<li>
-		      <a href="<c:url value="data:text/calendar,${calendarBooking.getAppointment() }"/>"><i class="icon-calendar"></i> Add to Calendar</a></a>
+		      <a href="<c:url value="data:text/calendar;base64,${calendarBooking.getAppointment() }"/>" download="ical.ics"><i class="icon-calendar"></i> Add to Calendar</a></a>
 		</li>
 		<li><a href="#"><i class="icon-envelope"></i> Email</a></li>
 	</ul>
