@@ -7,6 +7,8 @@ import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
+import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -133,17 +135,16 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	private static long _folderId = 0;
 	private static int _ownerId = 0;
 	private static int _ownerType = 3;
-	private static String _ddmStructureKey = "675484";
-	private static String _ddmTemplateKey = "675499";
+	private static String _ddmStructureKey = "738516";
+	private static String _ddmTemplateKey = "738520";
 
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException  {
-		
+		System.out.println("FeaturedCardImporterPortlet.doView()");
+
 		List<Layout> layouts = LayoutLocalServiceUtil.getLayouts(_groupId, false);
-		List<FeaturedCardModel> featuredCards = new ArrayList<FeaturedCardModel>();
-		List<String> pages = new ArrayList<String>();
-		List<String> urls = new ArrayList<String>();
-		
+		List<String> results = new ArrayList<String>();
+
 		ServiceContext serviceContext = null;
 
 		try {
@@ -154,6 +155,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		}
 
 		if (serviceContext != null) {
+			
+			layouts = layouts.subList(0, 20);
 			
 			for (Layout l : layouts) {
 				
@@ -171,6 +174,12 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 						if (journalArticle != null) {
 							setJournalArticlePermissions(journalArticle, serviceContext);
 							setJournalArticlePreferences(l, serviceContext, journalArticle);
+							
+							StringBuilder sb = new StringBuilder();
+							sb.append("url: " + l.getFriendlyURL());
+							sb.append(", title: " + journalArticle.getTitle(_enUs));
+							
+							results.add(sb.toString());
 						}
 					}
 				}
@@ -185,41 +194,37 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 				}
 			}
 
-			renderRequest.setAttribute("pages", pages);
-			renderRequest.setAttribute("urls", urls);
-			renderRequest.setAttribute("results", featuredCards);		
+			renderRequest.setAttribute("results", results);		
 		}
 
 		super.doView(renderRequest, renderResponse);
 	}
 
 	private JournalArticle createFeaturedCardArticle(String title, String content, String portletId, ServiceContext serviceContext) {
+		System.out.println("FeaturedCardImporterPortlet.createFeaturedCardArticle()");
+		
+		JournalArticle featuredCardArticle = null;
+		
+		System.out.println("Creating JournalArticle: " + title);
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		titleMap.put(_enUs, title);
+		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
+		descriptionMap.put(_enUs, "Featured Card generated from portlet " + portletId);
 
-		System.out.println(content);
+		try {
+			featuredCardArticle = JournalArticleLocalServiceUtil.addArticle(_userId, _groupId, _folderId, titleMap, descriptionMap,
+					content, _ddmStructureKey, _ddmTemplateKey, serviceContext);
+			
+		} catch (PortalException ex) {
+			_log.error("Exception in FeaturedCardImporterPortlet.createFeaturedCardArticle: " + ex.getMessage(), ex);
+			return featuredCardArticle;
+		}
 		
-		return null;
-		
-//		JournalArticle featuredCardArticle = null;
-//		
-//		System.out.println("Creating JournalArticle: " + title);
-//		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-//		titleMap.put(_enUs, title);
-//		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-//		descriptionMap.put(_enUs, "Featured Card generated from portlet " + portletId);
-//
-//		try {
-//			featuredCardArticle = JournalArticleLocalServiceUtil.addArticle(_userId, _groupId, _folderId, titleMap, descriptionMap,
-//					content, _ddmStructureKey, _ddmTemplateKey, serviceContext);
-//			
-//		} catch (PortalException ex) {
-//			_log.error("Exception in FeaturedCardImporterPortlet.createFeaturedCardArticle: " + ex.getMessage(), ex);
-//			return featuredCardArticle;
-//		}
-//		
-//		return featuredCardArticle;
+		return featuredCardArticle;
 	}
 
 	private PortletPreferences setJournalArticlePreferences(Layout layout, ServiceContext serviceContext, JournalArticle journalArticle) throws ReadOnlyException {
+		System.out.println("FeaturedCardImporterPortlet.setJournalArticlePreferences()");
 
 		JournalArticleResource journalArticleResource = null;
 		PortletPreferences updatedPreferences = null;
@@ -268,10 +273,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		return updatedPreferences;
 	}
 	
-	
 	private void setJournalArticlePermissions(JournalArticle journalArticle, ServiceContext serviceContext) {
-
-		System.out.println("Setting permissions on JournalArticle: " + journalArticle.getTitle(_enUs));
+		System.out.println("FeaturedCardImporterPortlet.setJournalArticlePermissions()");
 
 		try {
 			Role memberRole = RoleLocalServiceUtil.getRole(serviceContext.getCompanyId(), RoleConstants.GUEST);
@@ -294,6 +297,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	}
 	
 	private String[] parsePortletPreferences(String portletPreferencesXml) {
+		System.out.println("FeaturedCardImporterPortlet.parsePortletPreferences()");
+
 		portletPreferencesXml = portletPreferencesXml.replaceAll("<portlet-preferences>", "")
 				.replaceAll("</portlet-preferences>", "")
 				.replaceAll("<preference>", "")
@@ -306,7 +311,9 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		return preferencesArray;
 	}
 
-	private String getCartArticleTitle(String portletId, String portletPreferencesXml) {
+	private String getCardArticleTitle(String portletId, String portletPreferencesXml) {
+		System.out.println("FeaturedCardImporterPortlet.getCardArticleTitle()");
+
 		String[] preferencesArray = parsePortletPreferences(portletPreferencesXml);
 		String featuredCardTitle = StringPool.BLANK;
 		
@@ -320,9 +327,10 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		
 		return featuredCardTitle;
 	}
-
 	
 	private String getCardArticleContent(String portletId, String portletPreferencesXml) {
+		System.out.println("FeaturedCardImporterPortlet.getCardArticleContent()");
+
 		String[] preferencesArray = parsePortletPreferences(portletPreferencesXml);
 		
 		String cardContent = StringPool.BLANK;
@@ -382,6 +390,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US"><![CDATA[foo]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardTitle(String portletId, String title) {
+		System.out.println("FeaturedCardImporterPortlet.getCardTitle()");
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("<dynamic-element name=\"CardTitle\" type=\"text\" index-type=\"keyword\" instance-id=\"");
 		sb.append(getInstanceId());
@@ -397,6 +407,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US"><![CDATA[foo]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardCaption(String portletId, String caption) {
+		System.out.println("FeaturedCardImporterPortlet.getCardCaption()");
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("<dynamic-element name=\"Caption\" type=\"text\" index-type=\"keyword\" instance-id=\"");
 		sb.append(getInstanceId());
@@ -412,7 +424,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US" alt="LSC Map description" name="LSC Map.png" title="LSC Map.png" type="document" fileEntryId="629322"><![CDATA[/documents/10180/10709/LSC+Map.png/6e85d9c9-4948-4ea8-8c2f-354bb532e111?t=1489504984000]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardImageToDisplay(String portletId, String featuredImage) {
-		
+		System.out.println("FeaturedCardImporterPortlet.getCardImageToDisplay()");
+
 		String cardImageToDisplay = StringPool.BLANK;
 
 		if (isValueEmpty(featuredImage)) {
@@ -456,7 +469,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US"><![CDATA[/documents/10180/10709/Copy+of+Transit_website.xlsx/91843cde-6a44-43ac-8de0-8694af9f7ed1]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardDocument(String portletId, String document) {
-		
+		System.out.println("FeaturedCardImporterPortlet.getCardDocument()");
+
 		String cardDocument = StringPool.BLANK;
 		Long fileEntryId = Long.parseLong(document,10);
 		DLFileEntry fileEntry = null;
@@ -493,7 +507,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US"><![CDATA[5@public@10180]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardPage(String portletId, String page) {
-		
+		System.out.println("FeaturedCardImporterPortlet.getCardPage()");
+	
 		StringBuilder sb = new StringBuilder();
 		sb.append("<dynamic-element name=\"Page\" type=\"link_to_layout\" index-type=\"keyword\" instance-id=\"");
 		sb.append(getInstanceId());
@@ -510,6 +525,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	//		<dynamic-content language-id="en_US"><![CDATA[http://us.imdb.com]]></dynamic-content>
 	//	</dynamic-element>
 	private String getCardUrl(String portletId, String url) {
+		System.out.println("FeaturedCardImporterPortlet.getCardUrl()");
+
 		StringBuilder sb = new StringBuilder();
 		sb.append("<dynamic-element name=\"Url\" type=\"text\" index-type=\"keyword\" instance-id=\"");
 		sb.append(getInstanceId());
@@ -523,6 +540,8 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	}
 	
 	private String getFileURL(DLFileEntry file) {
+		System.out.println("FeaturedCardImporterPortlet.getFileURL()");
+
 		try {
 			return "/documents/" + file.getGroupId() + StringPool.SLASH + file.getFolderId() + StringPool.SLASH
 					+ file.getTitle() + StringPool.SLASH + file.getUuid();
@@ -533,6 +552,7 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 	}
 	
 	private String getInstanceId() {
+		System.out.println("FeaturedCardImporterPortlet.getInstanceId()");
 		return org.apache.commons.lang.RandomStringUtils.random(4, true, false);
 	}	
 	
@@ -540,44 +560,44 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		return (value == null || value.isEmpty() || value.equals("-1"));
 	}
 	
-	private boolean isUrlEmpty(String url) {
-		return (url == null || url.isEmpty() || url.equals("-1") || url.equals("http://"));
-	}
+//	private boolean isUrlEmpty(String url) {
+//		return (url == null || url.isEmpty() || url.equals("-1") || url.equals("http://"));
+//	}
 	
-	private FeaturedCardModel getFeaturedCardModel(String portletId, String portletPreferencesXml) {
-		String[] preferencesArray = parsePortletPreferences(portletPreferencesXml);
-		String cardTitle = StringPool.BLANK;
-		String cardCaption = StringPool.BLANK;
-		String cardImageToDisplay = StringPool.BLANK;
-		String cardDocument = StringPool.BLANK;
-		String cardPage = StringPool.BLANK;
-		String cardUrl = StringPool.BLANK;
-
-		for (int j = 0; j < preferencesArray.length; j++) {
-			String[] keyValueArray = preferencesArray[j].split("=");
-
-			if (keyValueArray.length == 2) {
-
-				if (keyValueArray[0].equals(portletId + "title")) {
-					cardTitle =  keyValueArray[1];
-				}
-				if (keyValueArray[0].equals(portletId + "caption")) {
-					cardCaption = keyValueArray[1];
-				}
-				if (keyValueArray[0].equals(portletId + "featuredImage")) {
-					cardImageToDisplay = keyValueArray[1];
-				}
-				if (keyValueArray[0].equals(portletId + "featuredAssetId")) {
-					cardDocument = keyValueArray[1];
-				}
-				if (keyValueArray[0].equals(portletId + "featuredPlid")) {
-					cardPage = keyValueArray[1];
-				}
-				if (keyValueArray[0].equals(portletId + "featuredUrl")) {
-					cardUrl = keyValueArray[1];
-				}
-			}
-		}
-		return new FeaturedCardModel(cardTitle, cardCaption, cardImageToDisplay, cardDocument, cardPage, cardUrl);
-	}
+//	private FeaturedCardModel getFeaturedCardModel(String portletId, String portletPreferencesXml) {
+//		String[] preferencesArray = parsePortletPreferences(portletPreferencesXml);
+//		String cardTitle = StringPool.BLANK;
+//		String cardCaption = StringPool.BLANK;
+//		String cardImageToDisplay = StringPool.BLANK;
+//		String cardDocument = StringPool.BLANK;
+//		String cardPage = StringPool.BLANK;
+//		String cardUrl = StringPool.BLANK;
+//
+//		for (int j = 0; j < preferencesArray.length; j++) {
+//			String[] keyValueArray = preferencesArray[j].split("=");
+//
+//			if (keyValueArray.length == 2) {
+//
+//				if (keyValueArray[0].equals(portletId + "title")) {
+//					cardTitle =  keyValueArray[1];
+//				}
+//				if (keyValueArray[0].equals(portletId + "caption")) {
+//					cardCaption = keyValueArray[1];
+//				}
+//				if (keyValueArray[0].equals(portletId + "featuredImage")) {
+//					cardImageToDisplay = keyValueArray[1];
+//				}
+//				if (keyValueArray[0].equals(portletId + "featuredAssetId")) {
+//					cardDocument = keyValueArray[1];
+//				}
+//				if (keyValueArray[0].equals(portletId + "featuredPlid")) {
+//					cardPage = keyValueArray[1];
+//				}
+//				if (keyValueArray[0].equals(portletId + "featuredUrl")) {
+//					cardUrl = keyValueArray[1];
+//				}
+//			}
+//		}
+//		return new FeaturedCardModel(cardTitle, cardCaption, cardImageToDisplay, cardDocument, cardPage, cardUrl);
+//	}
 }
