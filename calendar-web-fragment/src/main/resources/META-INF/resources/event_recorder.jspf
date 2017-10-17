@@ -57,41 +57,36 @@
 						</td>
 					</tr>
 				</tpl>
+			</table>
 
-				<tr>
-					<td>
-						<liferay-ui:message key="when" />:
-					</td>
-					<td>
-						<label class="scheduler-event-recorder-date">{date}</label>
-					</td>
-				</tr>
-				<tr class="calendar-portlet-event-recorder-calendar-row">
-					<td>
-						<liferay-ui:message key="calendar" />:
-					</td>
-					<td>
-						<tpl if="values.permissions.MANAGE_BOOKINGS">
-							<select id="<portlet:namespace />eventRecorderCalendar" name="calendarId">
-								<tpl for="calendarIds">
-									<tpl for="parent.availableCalendars[values]">
-										<tpl if="values.get('manageable') == true">
-											<option value="{[values.get('calendarId')]}">
-												{[LString.escapeHTML(Liferay.CalendarUtil.getCalendarName(values.get('name'), values.get('calendarResourceName')))]}
-											</option>
-										</tpl>
-									</tpl>
-								</tpl>
-							</select>
-						</tpl>
 
-						<tpl if="!values.permissions.MANAGE_BOOKINGS">
-							<label>{[LString.escapeHTML(Liferay.CalendarUtil.getCalendarName(values.calendar.get('name'), values.calendar.get('calendarResourceName')))]}</label>
-						</tpl>
-					</td>
-				</tr>
+			<p>{formattedDate}</p>
+			<p>{formattedTime}</p>
+			<p>{location}</p>
 
-				<tpl if="values.editing && values.permissions.VIEW_BOOKING_DETAILS">
+			<div class="scheduler-event-recorder-actions">
+				<span class="scheduler-event-recorder-action">
+					<a href="https://www.google.com/maps/place/{location}"/>
+						<i class="icon-map-marker"></i> Get Directions
+					</a>
+				</span>
+
+				<span class="scheduler-event-recorder-action">
+					<a href="data:text/calendar;base64,{appointment}" download="ical.ics">
+						<i class="icon-calendar"></i> Add to Calendar
+					</a>
+				</span>
+
+				<span class="scheduler-event-recorder-action">
+					<a href="#" class="emailFriend" data-event-name="{content}" data-event-date="{formattedDate}" 
+						data-event-time="{formattedTime}"  data-event-location="{location}" data-event-link="">
+						<i class="icon-envelope"></i> Email
+					</a>
+				</span>
+			</div>
+
+			<table>
+				<tpl if="values.editing && values.permissions.VIEW_BOOKING_DETAILS && values.permissions.MANAGE_BOOKINGS">
 					<tr id="<portlet:namespace />eventRecorderUsers">
 						<td>
 							<liferay-ui:message key="users" />:
