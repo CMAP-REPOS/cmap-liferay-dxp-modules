@@ -853,7 +853,6 @@ AUI
 					},
 
 					_afterDateChange: function (event) {
-						console.log('_afterDateChange');
 						var instance = this;
 
 						instance.load();
@@ -1262,7 +1261,6 @@ AUI
 
 					_uiSetDate: function (date) {
 						var instance = this;
-						console.log(date);
 
 						var weeks = DateMath
 							.getWeeksInMonth(date);
@@ -1364,8 +1362,6 @@ AUI
 							location = schedulerEvent
 								.get('location');
 						}
-
-						console.log(location);
 
 						var availableCalendars = CalendarUtil.availableCalendars;
 

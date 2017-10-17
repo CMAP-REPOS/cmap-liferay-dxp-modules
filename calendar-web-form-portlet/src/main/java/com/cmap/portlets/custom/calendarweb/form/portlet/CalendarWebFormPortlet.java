@@ -45,14 +45,10 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 	@Override
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-		
-		System.out.println("serveResource");
-		System.out.println("requestedResource" + ParamUtil.getString(resourceRequest, "requestedResource"));
-		System.out.println("fromEmail" + ParamUtil.getString(resourceRequest, "fromEmail"));
-		System.out.println("toEmail" + ParamUtil.getString(resourceRequest, "toEmail"));
 
 		String requestedResource = ParamUtil.getString(resourceRequest, "requestedResource");
-		if(requestedResource.equals("emailEventResource")) {
+
+		if (requestedResource.equals("emailEventResource")) {
 			String result = "success";
 			String fromEmail = ParamUtil.getString(resourceRequest, "fromEmail");
 			String toEmail = ParamUtil.getString(resourceRequest, "toEmail");
@@ -61,7 +57,7 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 			String time = ParamUtil.getString(resourceRequest, "time");
 			String location = ParamUtil.getString(resourceRequest, "location");
 			String link = ParamUtil.getString(resourceRequest, "link");
-			
+
 			if (Validator.isEmailAddress(fromEmail) && Validator.isEmailAddress(toEmail)) {
 				result = sendEventEmail(fromEmail, toEmail, title, date, time, location, link);
 			} else {
@@ -103,7 +99,7 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 
 		String emailBody = StringPool.BLANK;
 		String result = "success";
-		
+
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(
@@ -135,14 +131,13 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 
 		InternetAddress fromAddress = null;
 		InternetAddress toAddress = null;
-		
-		
+
 		try {
 			fromAddress = new InternetAddress(fromEmail);
 		} catch (AddressException ex) {
 			_log.error("Exception in EventsListPortlet.sendEventEmail: " + ex.getMessage(), ex);
 		}
-		
+
 		try {
 			toAddress = new InternetAddress(toEmail);
 		} catch (AddressException ex) {
@@ -150,25 +145,24 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 		}
 
 		if (fromAddress != null && toAddress != null) {
-			 MailMessage mailMessage = new MailMessage();
-			 mailMessage.setFrom(fromAddress);
-			 mailMessage.setTo(toAddress);
-			 mailMessage.setSubject("CMAP EVENT - " + title);
-			 mailMessage.setBody(emailBody);
-			 mailMessage.setHTMLFormat(true);
-			 
-			 System.out.println(mailMessage.getFrom().toString());
-			 System.out.println(mailMessage.getTo().toString());
-			 System.out.println(mailMessage.getSubject());
-			 System.out.println(mailMessage.getBody());
-			 
-			 // MailServiceUtil.sendEmail(mailMessage);
+			MailMessage mailMessage = new MailMessage();
+			mailMessage.setFrom(fromAddress);
+			mailMessage.setTo(toAddress);
+			mailMessage.setSubject("CMAP EVENT - " + title);
+			mailMessage.setBody(emailBody);
+			mailMessage.setHTMLFormat(true);
+
+			System.out.println(mailMessage.getFrom().toString());
+			System.out.println(mailMessage.getTo().toString());
+			System.out.println(mailMessage.getSubject());
+			System.out.println(mailMessage.getBody());
+
+			// MailServiceUtil.sendEmail(mailMessage);
+			
 		} else {
 			result = "failure";
 		}
-		
+
 		return result;
 	}
-	
-
 }
