@@ -218,7 +218,27 @@ AUI
 					status: {
 						setter: toInt,
 						value: 0
-					}
+					},
+					
+                    titleDateFormat: {
+                        getter: '_getTitleDateFormat',
+                        value: function() {
+                        	var instance = this,
+                                scheduler = instance.get('scheduler'),
+                                isoTime = scheduler && scheduler.get('activeView').get('isoTime'),
+
+                                format = {
+                                    endDate: ' to ' + '%l:%M %p',
+                                    startDate: '%l:%M %p'
+                                };
+
+                        		if (instance.get('allDay')) {
+                        			format = {};
+                        		}
+
+                            return format;
+                        }
+                    }
 				},
 
 				EXTENDS: A.SchedulerEvent,
@@ -1572,33 +1592,21 @@ AUI
 						aa.push('\r\n');
 						aa.push('VERSION:2.0');
 						aa.push('\r\n');
-						aa
-							.push('PRODID:-//CMAP//NONSGML CMAP//EN');
+						aa.push('PRODID:-//CMAP//NONSGML CMAP//EN');
 						aa.push('\r\n');
 						aa.push('BEGIN:VEVENT');
 						aa.push('\r\n');
 						aa.push('UID:' + '');
 						aa.push('\r\n');
-						aa
-							.push('DTSTAMP:'
-							+ startMoment
-								.format('YYYYMMDDTHHmmss[Z]'));
+						aa.push('DTSTAMP:' + startMoment.format('YYYYMMDDTHHmmss[Z]'));
 						aa.push('\r\n');
-						aa
-							.push('ORGANIZER;CN=CMAP:MAILTO:info@cmap.illinois.gov');
+						aa.push('ORGANIZER;CN=CMAP:MAILTO:info@cmap.illinois.gov');
 						aa.push('\r\n');
-						aa
-							.push('DTSTART:'
-							+ startMoment
-								.format('YYYYMMDDTHHmmss[Z]'));
+						aa.push('DTSTART:' + startMoment.format('YYYYMMDDTHHmmss[Z]'));
 						aa.push('\r\n');
-						aa
-							.push('DTEND:'
-							+ endMoment
-								.format('YYYYMMDDTHHmmss[Z]'));
+						aa.push('DTEND:' + endMoment.format('YYYYMMDDTHHmmss[Z]'));
 						aa.push('\r\n');
-						aa.push('SUMMARY:'
-							+ templateData.content);
+						aa.push('SUMMARY:' + templateData.content);
 						aa.push('\r\n');
 						aa.push('LOCATION:' + location);
 						aa.push('\r\n');
