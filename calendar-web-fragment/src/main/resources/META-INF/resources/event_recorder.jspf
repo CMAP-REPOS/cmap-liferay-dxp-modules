@@ -59,20 +59,18 @@
 				</tpl>
 			</table>
 
-
-			<p>{formattedDate}</p>
-			<p>{formattedTime}</p>
+			<p>{date}</p>
 			<p>{location}</p>
 
 			<div class="scheduler-event-recorder-actions">
 				<span class="scheduler-event-recorder-action">
-					<a href="https://www.google.com/maps/place/{location}"/>
+					<a href="https://www.google.com/maps/place/{locationEncoded}" target="_blank"/>
 						<i class="icon-map-marker"></i> Get Directions
 					</a>
 				</span>
 
 				<span class="scheduler-event-recorder-action">
-					<a href="data:text/calendar;base64,{appointment}" download="ical.ics">
+					<a href="data:text/calendar;base64,{appointment}" download="ical.ics" target="_blank">
 						<i class="icon-calendar"></i> Add to Calendar
 					</a>
 				</span>
