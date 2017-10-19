@@ -1,5 +1,5 @@
 AUI.add(
-	'liferay-scheduler',
+	'liferay-scheduler-override',
 	function(A) {
 		var AArray = A.Array;
 		var AObject = A.Object;
@@ -1022,6 +1022,14 @@ AUI.add(
 							$('.scheduler-base-controls')
 								.find('.col-xl-4')
 								.after('<div class="col-xl-3"/>');
+						}
+
+						if ($('.jumpToContainer').length && 
+								!$('.scheduler-base-controls')
+								.find('.col-xl-4')
+								.find('.jumpToContainer').length) {
+							$('.jumpToContainer').removeClass('hidden')
+								.appendTo($('.scheduler-base-controls').find('.col-xl-4'));
 						}
 
 						// replace "previous" link icon
