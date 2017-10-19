@@ -222,8 +222,8 @@ AUI.add(
                                 isoTime = scheduler && scheduler.get('activeView').get('isoTime'),
 
                                 format = {
-                                    endDate: ' to ' + '%l:%M %p',
-                                    startDate: '%l:%M %p'
+                                    endDate: ' to ' + '%l:%M %P',
+                                    startDate: '%l:%M %P'
                                 };
 
                         		if (instance.get('allDay')) {
@@ -300,6 +300,29 @@ AUI.add(
 							}
 						}
 					},
+
+					// CMAP: override A.SchedulerEvent.syncNodeTitleUI
+					// https://alloyui.com/api/files/alloy-ui_src_aui-scheduler_js_aui-scheduler-base-event.js.html#l801
+                    syncNodeTitleUI: function() {
+                        var instance = this,
+                            format = instance.get('titleDateFormat'),
+                            startDate = instance.get('startDate'),
+                            endDate = instance.get('endDate'),
+                            title = [];
+                        
+                        var ream = / am/ig;
+                        var repm = / pm/ig;
+
+                        if (format.startDate) {
+                            title.push(instance._formatDate(startDate, format.startDate));
+                        }
+
+                        if (format.endDate) {
+                            title.push(instance._formatDate(endDate, format.endDate));
+                        }
+
+                        instance.setTitle(title.join('').replace(ream, ' a.m.').replace(repm, ' p.m.'));
+                    },
 
 					syncWithServer: function() {
 						var instance = this;
@@ -1208,7 +1231,13 @@ AUI.add(
 
                         formattedDate = formattedDate.concat('<br>');
 
-                        return [formattedDate, evt._formatDate(startDate, '%l:%M %p'), ' to ', evt._formatDate(endDate, '%l:%M %p')].join(' ');
+                        var ream = / am/ig;
+                        var repm = / pm/ig;
+
+                        var startTime = evt._formatDate(startDate, '%l:%M %P').replace(ream, ' a.m.').replace(repm, ' p.m.');
+                        var endTime = evt._formatDate(endDate, '%l:%M %P').replace(ream, ' a.m.').replace(repm, ' p.m.');
+                        
+                        return [formattedDate, startTime, ' to ', endTime].join(' ');
                     },
 
 					getTemplateData: function() {
