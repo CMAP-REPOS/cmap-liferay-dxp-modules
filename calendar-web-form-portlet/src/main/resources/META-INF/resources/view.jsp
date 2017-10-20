@@ -84,29 +84,31 @@ $(function() {
 
 	%>
 
-<div id="<portlet:namespace />jumpToContainer" class="jumpToContainer hidden form-group form-inline">
-	<div class="input-select-wrapper">
-		<label for="<portlet:namespace />jumpTo">Jump To</label>
-		<select id="<portlet:namespace />jumpTo" name="<portlet:namespace />jumpTo" class="form-control">
-		<% 		
-		for (int i = todayYear; i >= firstBookingYear; i--) {
-			for (int j = 11; j >= 0; j--) {
-				if (i == firstBookingYear && j < firstBookingMonth) {
-					break;
-				}
-				if (!(i == todayYear && j > todayMonth)) {
-					String key = monthNames[j] + " " + String.valueOf(i);
-					/* add one to the month because new Date("2017, 2, 1") is not the same as new Date(2017, 2, 1) */
-					String value = String.valueOf(i) + ", " + String.valueOf(j+1) + ", 1";
-					bookingOptions.put(key, value);
-					%>
-					<option value="<%= value %>"><%= key %></option>
-					<% 
+<div id="<portlet:namespace />jumpToContainer" class="jump-to-container hidden form-group form-inline">
+	<div class="col-xl-6 col-xl-offset-10 col-sm-16 col-sm-offset-0">
+		<div class="input-select-wrapper">
+			<label for="<portlet:namespace />jumpTo">Jump to</label>
+			<select id="<portlet:namespace />jumpTo" name="<portlet:namespace />jumpTo" class="form-control">
+			<% 		
+			for (int i = todayYear; i >= firstBookingYear; i--) {
+				for (int j = 11; j >= 0; j--) {
+					if (i == firstBookingYear && j < firstBookingMonth) {
+						break;
+					}
+					if (!(i == todayYear && j > todayMonth)) {
+						String key = monthNames[j] + " " + String.valueOf(i);
+						/* add one to the month because new Date("2017, 2, 1") is not the same as new Date(2017, 2, 1) */
+						String value = String.valueOf(i) + ", " + String.valueOf(j+1) + ", 1";
+						bookingOptions.put(key, value);
+						%>
+						<option value="<%= value %>"><%= key %></option>
+						<% 
+					}
 				}
 			}
-		}
-		%>
-		</select>
+			%>
+			</select>
+		</div>
 	</div>
 </div>
 

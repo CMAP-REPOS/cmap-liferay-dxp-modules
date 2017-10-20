@@ -685,7 +685,7 @@ AUI.add(
 						var events = instance._events;
 
 						// CMAP: update header layout when calendar loads
-						instance._updateHeader();
+						instance._updateLayout();
 
 						return events.load.apply(events, arguments);
 					},
@@ -1024,7 +1024,7 @@ AUI.add(
 					},
 
 					// CMAP: custom function to update calendar layout
-					_updateHeader: function () {
+					_updateLayout: function () {
 
 						// remove 12-column grid classes
 						$('.calendar-portlet-column-grid').removeClass('col-md-12');
@@ -1036,23 +1036,16 @@ AUI.add(
 						} else {
 							$('.scheduler-base-controls')
 								.find('.btn-group')
-								.wrap('<div class="col-xl-4"/>');
+								.wrap('<div class="scheduler-base-controls-buttons col-xl-6"/>');
 
 							$('.scheduler-base-controls')
-								.find('.col-xl-4')
-								.before('<div class="col-xl-3"></div><div class="col-xl-6"><h2 class="calendar-month-view-label">' + $('.scheduler-base-view-date').text() + '</h2></div>');
-
-							$('.scheduler-base-controls')
-								.find('.col-xl-4')
-								.after('<div class="col-xl-3"/>');
+								.find('.scheduler-base-controls-buttons')
+								.before('<div class="scheduler-base-controls-title col-xl-10"><h2 class="calendar-month-view-label">' + $('.scheduler-base-view-date').text() + '</h2></div>');
 						}
 
-						if ($('.jumpToContainer').length && 
-								!$('.scheduler-base-controls')
-								.find('.col-xl-4')
-								.find('.jumpToContainer').length) {
-							$('.jumpToContainer').removeClass('hidden')
-								.appendTo($('.scheduler-base-controls').find('.col-xl-4'));
+						if ($('.jump-to-container').length &&  
+								!$('.scheduler-base-controls').find('.scheduler-base-controls-jump').length) {
+							$('.scheduler-base-controls').append($('.jump-to-container').removeClass('hidden'))
 						}
 
 						// replace "previous" link icon
@@ -1072,6 +1065,10 @@ AUI.add(
 							.find('.scheduler-view-table-header-day').each(function () {
 								$('> div', $(this)).text($('> div', $(this)).text().slice(0, 1));
 							});
+
+						$('.scheduler-base-content > .yui3-widget-hd').addClass('col-xl-14 col-xl-offset-1');
+						$('.scheduler-base-content > .yui3-widget-bd').addClass('col-xl-14 col-xl-offset-1');
+						
 					},
 
 				}
