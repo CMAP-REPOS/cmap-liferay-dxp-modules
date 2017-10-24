@@ -1040,7 +1040,7 @@ AUI.add(
 
 							$('.scheduler-base-controls')
 								.find('.scheduler-base-controls-buttons')
-								.before('<div class="scheduler-base-controls-title col-xl-10"><h2 class="calendar-month-view-label">' + $('.scheduler-base-view-date').text() + '</h2></div>');
+								.before('<div class="scheduler-base-controls-title col-xl-9 col-xl-offset-1 col-sm-offset-0"><h2 class="calendar-month-view-label">' + $('.scheduler-base-view-date').text() + '</h2></div>');
 						}
 
 						if ($('.jump-to-container').length &&  
