@@ -1025,6 +1025,10 @@ AUI.add(
 
 					// CMAP: custom function to update calendar layout
 					_updateLayout: function () {
+						
+						// hide popover
+						var instance = this;
+						instance.get('eventRecorder').hidePopover();
 
 						// remove 12-column grid classes
 						$('.calendar-portlet-column-grid').removeClass('col-md-12');
