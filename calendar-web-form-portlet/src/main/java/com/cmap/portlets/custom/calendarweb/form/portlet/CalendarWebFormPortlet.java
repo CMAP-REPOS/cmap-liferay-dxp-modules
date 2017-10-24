@@ -104,26 +104,27 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 		try {
 			StringBuilder sb = new StringBuilder();
 			sb.append(
-					"You've been sent an event announcement from the Chicago Metropolitan Agency for Planning event calendar.");
-			sb.append("\n\n");
-			sb.append("From: ");
+					"<p>You've been sent an event announcement from the Chicago Metropolitan Agency for Planning event calendar.");
+			sb.append("</p>");
+			sb.append("<p>From: ");
 			sb.append(fromEmail);
-			sb.append("\n\n");
-			sb.append("Event Name: ");
+			sb.append("</p>");
+			sb.append("<p>Event Name: ");
 			sb.append(title);
-			sb.append("\n\n");
-			sb.append("Event Date: ");
+			sb.append("</p>");
+			sb.append("<p>Event Date: ");
 			sb.append(date);
-			sb.append("\n\n");
-			sb.append("Event Time: ");
+			sb.append("</p>");
+			sb.append("<p>Event Time: ");
 			sb.append(time);
-			sb.append("\n\n");
-			sb.append("Location: ");
+			sb.append("</p>");
+			sb.append("<p>Location: ");
 			sb.append(location);
+			sb.append("</p>");
 			if (!link.isEmpty()) {
-				sb.append("\n\n");
-				sb.append("Link: ");
+				sb.append("<p>Link: ");
 				sb.append(link);
+				sb.append("</p>");
 			}
 			emailBody = sb.toString();
 		} catch (Exception ex) {
@@ -146,6 +147,7 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 		}
 
 		if (fromAddress != null && toAddress != null) {
+
 			MailMessage mailMessage = new MailMessage();
 			mailMessage.setFrom(fromAddress);
 			mailMessage.setTo(toAddress);
@@ -153,12 +155,7 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 			mailMessage.setBody(emailBody);
 			mailMessage.setHTMLFormat(true);
 
-			System.out.println(mailMessage.getFrom().toString());
-			System.out.println(mailMessage.getTo().toString());
-			System.out.println(mailMessage.getSubject());
-			System.out.println(mailMessage.getBody());
-
-			 MailServiceUtil.sendEmail(mailMessage);
+			MailServiceUtil.sendEmail(mailMessage);
 			
 		} else {
 			result = "failure";
