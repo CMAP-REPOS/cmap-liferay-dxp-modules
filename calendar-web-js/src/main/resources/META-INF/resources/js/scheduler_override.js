@@ -1263,8 +1263,12 @@ AUI.add(
 						var templateData = SchedulerEventRecorder.superclass.getTemplateData.apply(this, arguments);
 
 						// CMAP: get event location if event exists
-						var eventLocation = schedulerEvent ? schedulerEvent.get('location') : '';
-
+						var eventLocation = schedulerEvent.get('location');
+						
+						// CMAP: get formatted date and time for email form
+						var formattedDate = schedulerEvent._formatDate(new Date(templateData.startDate), '%m/%d/%Y');
+						var formattedTime = schedulerEvent._formatDate(new Date(templateData.startDate), '%I:%M %p');
+						
 						return A.merge(
 							templateData,
 							{
@@ -1286,7 +1290,9 @@ AUI.add(
 								// CMAP: add event location and appointment to templateData
 								location: eventLocation,
 								locationEncoded: encodeURIComponent(eventLocation),
-								appointment: instance._getAppointment(templateData, eventLocation)
+								appointment: instance._getAppointment(templateData, eventLocation),
+								formattedDate: formattedDate,
+								formattedTime: formattedTime
 							}
 						);
 					},
