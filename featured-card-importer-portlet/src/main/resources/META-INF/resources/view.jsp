@@ -4,8 +4,8 @@
 	<b><liferay-ui:message key="featured-card-importer-portlet.caption"/></b>
 </p>
 
-<ol>
+<p>Created ${resultsCount } Featured Cards</p>
+
 <c:forEach var="result" items="${results}">
-	<li>${result}</li>
+${result}<br/>
 </c:forEach>
-</ol>
