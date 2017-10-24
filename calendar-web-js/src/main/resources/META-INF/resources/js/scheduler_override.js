@@ -1266,8 +1266,8 @@ AUI.add(
 						var eventLocation = schedulerEvent.get('location');
 						
 						// CMAP: get formatted date and time for email form
-						var formattedDate = schedulerEvent._formatDate(new Date(templateData.startDate), '%m/%d/%Y');
-						var formattedTime = schedulerEvent._formatDate(new Date(templateData.startDate), '%I:%M %p');
+						var formattedDate = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%m/%d/%Y');
+						var formattedTime = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%I:%M %p');
 						
 						return A.merge(
 							templateData,
@@ -1292,7 +1292,8 @@ AUI.add(
 								locationEncoded: encodeURIComponent(eventLocation),
 								appointment: instance._getAppointment(templateData, eventLocation),
 								formattedDate: formattedDate,
-								formattedTime: formattedTime
+								formattedTime: formattedTime,
+								googleCalendarLink: instance._getGoogleCalendarLink(templateData, eventLocation)
 							}
 						);
 					},
@@ -1359,6 +1360,41 @@ AUI.add(
 						instance._showResources();
 					},
 
+					// CMAP: custom function to get "Add to Google Calendar" link
+					_getGoogleCalendarLink: function(templateData, location) {
+						// https://stackoverflow.com/questions/22757908/google-calendar-render-action-template-parameter-documentation
+						// https://www.google.com/calendar/render?
+						// 	action=TEMPLATE
+						// 	&text=EventName
+						// 	&dates=20131206T050000Z/20131208T060000Z
+						// 	&location=EventLocation
+						// 	&details=EventDetail
+						// 	&sf=true
+						// 	&output=xml
+							
+                        var instance = this,
+	                        evt = (instance.get('event') || instance),
+	                        endDate = evt.get('endDate'),
+	                        startDate = evt.get('startDate');
+
+                        console.log(evt.get('startDate'));
+                        console.log(evt.get('endDate'));
+						
+						var la = [];
+						la.push('https://www.google.com/calendar/render?action=TEMPLATE&text=');
+						la.push(encodeURIComponent(templateData.content));
+						la.push('&dates=');
+						la.push(evt._formatDate(startDate, '%Y%m%dT%H%M%S'));
+						la.push('/');
+						la.push(evt._formatDate(endDate, '%Y%m%dT%H%M%S'));
+						la.push('&location=');
+						la.push(encodeURIComponent(location));
+						la.push('&sf=true');
+						la.push('&output=xml');
+						console.log(la.join(''));
+						return la.join('');
+					}, 
+
 					// CMAP: custom function to generate iCal data
 					_getAppointment: function (templateData, location) {
 
@@ -1392,13 +1428,13 @@ AUI.add(
 						aa.push('\r\n');
 						aa.push('UID:' + '');
 						aa.push('\r\n');
-						aa.push('DTSTAMP:' + evt._formatDate(templateData.startDate, 'Ymd\This\Z'));
+						aa.push('DTSTAMP:' + evt._formatDate(evt.get('startDate'), 'Ymd\This\Z'));
 						aa.push('\r\n');
 						aa.push('ORGANIZER;CN=CMAP:MAILTO:info@cmap.illinois.gov');
 						aa.push('\r\n');
-						aa.push('DTSTART:' + evt._formatDate(templateData.startDate, 'Ymd\This\Z'));
+						aa.push('DTSTART:' + evt._formatDate(evt.get('startDate'), 'Ymd\This\Z'));
 						aa.push('\r\n');
-						aa.push('DTEND:' + evt._formatDate(templateData.endDate, 'Ymd\This\Z'));
+						aa.push('DTEND:' + evt._formatDate(evt.get('endDate'), 'Ymd\This\Z'));
 						aa.push('\r\n');
 						aa.push('SUMMARY:' + templateData.content);
 						aa.push('\r\n');

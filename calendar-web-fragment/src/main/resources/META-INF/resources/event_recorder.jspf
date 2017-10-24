@@ -64,19 +64,25 @@
 
 			<div class="scheduler-event-recorder-actions">
 				<span class="scheduler-event-recorder-action">
-					<a href="https://www.google.com/maps/place/{locationEncoded}" target="_blank"/>
+					<a href="https://www.google.com/maps/place/{locationEncoded}" title="View map location for {content} in a new window." target="_blank"/>
 						<i class="icon-map-marker"></i> Get Directions
 					</a>
 				</span>
 
 				<span class="scheduler-event-recorder-action">
-					<a href="data:text/calendar;base64,{appointment}" download="ical.ics" target="_blank">
+					<a href="data:text/calendar;base64,{appointment}" download="ical.ics" title="Download iCal file for {content} in a new window." target="_blank">
 						<i class="icon-calendar"></i> Add to Calendar
 					</a>
 				</span>
 
 				<span class="scheduler-event-recorder-action">
-					<a href="#" class="emailFriend" data-event-name="{content}" data-event-date="{formattedDate}" 
+					<a href="{googleCalendarLink}" target="_blank" title="Add {content} to Google Calendar in a new window.">
+						<i class="icon-calendar"></i> Add to Google Calendar
+					</a>
+				</span>
+
+				<span class="scheduler-event-recorder-action">
+					<a href="#" class="emailFriend" title="Email {content} to a friend." data-event-name="{content}" data-event-date="{formattedDate}" 
 						data-event-time="{formattedTime}"  data-event-location="{location}" data-event-link="">
 						<i class="icon-envelope"></i> Email
 					</a>

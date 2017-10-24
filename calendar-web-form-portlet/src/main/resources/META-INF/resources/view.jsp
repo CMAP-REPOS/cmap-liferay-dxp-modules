@@ -24,7 +24,7 @@ $(function() {
 	cmap.calendar.form.init = function() {
 		$('#<portlet:namespace />fromEmail').val('');
 		$('#<portlet:namespace />toEmail').val('');
-		$('#<portlet:namespace />jumpTo').find('option:eq(0)').prop('selected', true);
+		// $('#<portlet:namespace />jumpTo').find('option:eq(0)').prop('selected', true);
 	}
 
 	cmap.calendar.form.bindEvents = function() {
@@ -90,19 +90,25 @@ $(function() {
 			<label for="<portlet:namespace />jumpTo">Jump to</label>
 			<select id="<portlet:namespace />jumpTo" name="<portlet:namespace />jumpTo" class="form-control">
 			<% 		
-			for (int i = todayYear; i >= firstBookingYear; i--) {
+			for (int i = todayYear+1; i >= firstBookingYear; i--) {
 				for (int j = 11; j >= 0; j--) {
 					if (i == firstBookingYear && j < firstBookingMonth) {
 						break;
 					}
-					if (!(i == todayYear && j > todayMonth)) {
+					if (!(i == todayYear && j > 11)) {
 						String key = monthNames[j] + " " + String.valueOf(i);
 						/* add one to the month because new Date("2017, 2, 1") is not the same as new Date(2017, 2, 1) */
 						String value = String.valueOf(i) + ", " + String.valueOf(j+1) + ", 1";
 						bookingOptions.put(key, value);
-						%>
-						<option value="<%= value %>"><%= key %></option>
-						<% 
+						if (i == todayYear && j == todayMonth) {
+							%>
+							<option selected="selected" value="<%= value %>"><%= key %></option>
+							<% 
+						} else {
+							%>
+							<option value="<%= value %>"><%= key %></option>
+							<% 
+						}
 					}
 				}
 			}
