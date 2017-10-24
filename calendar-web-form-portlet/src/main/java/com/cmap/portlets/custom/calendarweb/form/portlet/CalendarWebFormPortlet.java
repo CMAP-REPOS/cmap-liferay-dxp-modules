@@ -2,6 +2,7 @@ package com.cmap.portlets.custom.calendarweb.form.portlet;
 
 import com.cmap.portlets.custom.calendarweb.form.constants.CalendarWebFormPortletKeys;
 import com.liferay.mail.kernel.model.MailMessage;
+import com.liferay.mail.kernel.service.MailServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -157,7 +158,7 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 			System.out.println(mailMessage.getSubject());
 			System.out.println(mailMessage.getBody());
 
-			// MailServiceUtil.sendEmail(mailMessage);
+			 MailServiceUtil.sendEmail(mailMessage);
 			
 		} else {
 			result = "failure";
