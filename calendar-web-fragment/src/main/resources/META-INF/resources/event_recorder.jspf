@@ -38,8 +38,8 @@
 		<input name="endTime" type="hidden" value="{endTime}" />
 
 		<div class="scheduler-event-recorder-body">
-			<table>
-				<tpl if="values.permissions.MANAGE_BOOKINGS && !values.hasWorkflowInstanceLink && (status != Liferay.CalendarWorkflow.STATUS_DRAFT)">
+			<tpl if="values.permissions.MANAGE_BOOKINGS && !values.hasWorkflowInstanceLink && (status != Liferay.CalendarWorkflow.STATUS_DRAFT)">
+				<table>
 					<tr class="calendar-portlet-event-recorder-status-row">
 						<td>
 							<liferay-ui:message key="attend" />?
@@ -56,8 +56,8 @@
 							<a class="calendar-event-answer calendar-event-answer-{declineLinkEnabled}" data-status="{workflowStatus.STATUS_DENIED}" href="javascript:void(0);"><liferay-ui:message key="no" /></a>
 						</td>
 					</tr>
-				</tpl>
-			</table>
+				</table>
+			</tpl>
 
 			<p>{date}</p>
 			<p>{location}</p>
@@ -89,8 +89,8 @@
 				</span>
 			</div>
 
-			<table>
-				<tpl if="values.editing && values.permissions.VIEW_BOOKING_DETAILS && values.permissions.MANAGE_BOOKINGS">
+			<tpl if="values.editing && values.permissions.VIEW_BOOKING_DETAILS && values.permissions.MANAGE_BOOKINGS">
+				<table>
 					<tr id="<portlet:namespace />eventRecorderUsers">
 						<td>
 							<liferay-ui:message key="users" />:
@@ -107,8 +107,8 @@
 							<label class="calendar-portlet-invitees"><liferay-ui:message key="loading" /></label>
 						</td>
 					</tr>
-				</tpl>
-			</table>
+				</table>
+			</tpl>
 		</div>
 	</div>
 </script>

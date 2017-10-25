@@ -1028,7 +1028,9 @@ AUI.add(
 						
 						// hide popover
 						var instance = this;
-						instance.get('eventRecorder').hidePopover();
+						if (instance.get('eventRecorder')) {
+							instance.get('eventRecorder').hidePopover();
+						}
 
 						// remove 12-column grid classes
 						$('.calendar-portlet-column-grid').removeClass('col-md-12');
