@@ -9,7 +9,7 @@ $(function() {
 	var cmap = cmap || {};
 	cmap.calendar = cmap.calendar || {};
 	cmap.calendar.form = cmap.calendar.form || {};
-	cmap.calendar.form.resourceUrl = '<%=ajaxCallResourceURL.toString()%>';
+	cmap.calendar.form.resourceUrl = '<%=ajaxCallResourceURL %>';
 	
 	cmap.calendar.form.emailEvent = function() {
 		$.post(cmap.calendar.form.resourceUrl, $('#emailEventFormClone').serialize(), function(data) {

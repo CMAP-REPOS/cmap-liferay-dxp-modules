@@ -1376,9 +1376,6 @@ AUI.add(
 	                        evt = (instance.get('event') || instance),
 	                        endDate = evt.get('endDate'),
 	                        startDate = evt.get('startDate');
-
-                        console.log(evt.get('startDate'));
-                        console.log(evt.get('endDate'));
 						
 						var la = [];
 						la.push('https://www.google.com/calendar/render?action=TEMPLATE&text=');
@@ -1391,7 +1388,7 @@ AUI.add(
 						la.push(encodeURIComponent(location));
 						la.push('&sf=true');
 						la.push('&output=xml');
-						console.log(la.join(''));
+
 						return la.join('');
 					}, 
 
