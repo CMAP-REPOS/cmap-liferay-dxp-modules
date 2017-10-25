@@ -600,6 +600,44 @@ AUI.add(
 						}
 					},
 
+					// CMAP: override A.SchedulerBase.iconNextNode
+					// https://alloyui.com/api/files/alloy-ui_src_aui-scheduler_js_aui-scheduler-base.js.html#l752
+                    iconNextNode: {
+                        valueFn: function() {
+                            var instance = this;
+
+                            var TPL_SCHEDULER_ICON_NEXT = '<button aria-label="{ariaLabel}" role="button" type="button" class="scheduler-base-icon-next btn btn-default">'
+                            	+ '<span class="sr-only">Next</span>'
+                            	+ '<span class="sr-hidden icon-cmap icon-nav-right-white"></span>'
+                            	+ '</button>';
+
+                            return A.Node.create(
+                                A.Lang.sub(TPL_SCHEDULER_ICON_NEXT, {
+                                    ariaLabel: instance.getAriaLabel('next')
+                                })
+                            );
+                        }
+                    },
+
+					// CMAP: override A.SchedulerBase.iconPrevNode
+					// https://alloyui.com/api/files/alloy-ui_src_aui-scheduler_js_aui-scheduler-base.js.html#770
+                    iconPrevNode: {
+                        valueFn: function() {
+                            var instance = this;
+
+                            var TPL_SCHEDULER_ICON_PREV  = '<button aria-label="{ariaLabel}" role="button" type="button" class="scheduler-base-icon-prev btn btn-default">'
+                            	+ '<span class="sr-only">Previous</span>'
+                            	+ '<span class="sr-hidden icon-cmap icon-nav-left-white"></span>'
+                            	+ '</button>';
+
+                            return A.Node.create(
+                                A.Lang.sub(TPL_SCHEDULER_ICON_PREV, {
+                                    ariaLabel: instance.getAriaLabel('previous')
+                                })
+                            );
+                        }
+                    },
+
 					portletNamespace: {
 						setter: String,
 						validator: isValue,
@@ -1054,18 +1092,6 @@ AUI.add(
 							$('.scheduler-base-controls').append($('.jump-to-container').removeClass('hidden'))
 						}
 
-						// replace "previous" link icon
-						$('.scheduler-base-controls .scheduler-base-icon-prev')
-							.find('.glyphicon-chevron-left')
-							.removeClass('glyphicon glyphicon-chevron-left')
-							.addClass('icon-cmap icon-nav-left-white');
-
-						// replace "next" link icon
-						$('.scheduler-base-controls .scheduler-base-icon-next')
-							.find('.glyphicon-chevron-right')
-							.removeClass('glyphicon glyphicon-chevron-right')
-							.addClass('icon-cmap icon-nav-right-white');
-
 						// replace day headers with first letter of day
 						$('.scheduler-view-table-header-col')
 							.find('.scheduler-view-table-header-day').each(function () {
@@ -1074,9 +1100,7 @@ AUI.add(
 
 						$('.scheduler-base-content > .yui3-widget-hd').addClass('col-xl-14 col-xl-offset-1');
 						$('.scheduler-base-content > .yui3-widget-bd').addClass('col-xl-14 col-xl-offset-1');
-						
 					},
-
 				}
 			}
 		);
