@@ -1,1 +1,0 @@
-create index IX_6E8AEDA6 on CMAP_Util (uuid_[$COLUMN_LENGTH:75$]);

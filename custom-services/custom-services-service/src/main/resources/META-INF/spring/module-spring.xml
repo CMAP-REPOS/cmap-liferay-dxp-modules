@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-	<bean class="com.cmap.services.custom.service.impl.UtilLocalServiceImpl" id="com.cmap.services.custom.service.UtilLocalService" />
-	<bean class="com.cmap.services.custom.service.impl.UtilServiceImpl" id="com.cmap.services.custom.service.UtilService" />
-	<bean class="com.cmap.services.custom.service.persistence.impl.UtilPersistenceImpl" id="com.cmap.services.custom.service.persistence.UtilPersistence" parent="basePersistence" />
-</beans>

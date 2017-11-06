@@ -1,9 +1,0 @@
-#Tue Sep 26 09:48:09 EDT 2017
-connection.gradle.distribution=GRADLE_DISTRIBUTION(WRAPPER)
-derived.resources=.gradle,build
-connection.arguments=
-connection.java.home=null
-connection.jvm.arguments=
-eclipse.preferences.version=1
-project.path=\:modules\:custom-services
-connection.project.dir=../..

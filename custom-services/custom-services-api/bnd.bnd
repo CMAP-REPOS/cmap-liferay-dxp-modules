@@ -1,7 +1,0 @@
-Bundle-SymbolicName: custom.services-api
-Bundle-Version: 1.0.0
-Export-Package:\
-	com.cmap.services.custom.exception,\
-	com.cmap.services.custom.model,\
-	com.cmap.services.custom.service,\
-	com.cmap.services.custom.service.persistence
