@@ -91,6 +91,9 @@ $(function() {
 			<select id="<portlet:namespace />jumpTo" name="<portlet:namespace />jumpTo" class="form-control">
 			<% 		
 			for (int i = todayYear+1; i >= firstBookingYear; i--) {
+				%>
+				<optgroup label="<%= i %>">
+				<%
 				for (int j = 11; j >= 0; j--) {
 					if (i == firstBookingYear && j < firstBookingMonth) {
 						break;
@@ -111,6 +114,9 @@ $(function() {
 						}
 					}
 				}
+				%>
+				</optgroup>
+				<%
 			}
 			%>
 			</select>
