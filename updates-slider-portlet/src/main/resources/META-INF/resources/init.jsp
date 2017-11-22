@@ -1,35 +1,30 @@
-<%--
-/**
- * Copyright 2000-present Liferay, Inc.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
---%>
+<%@ page import="com.cmap.portlets.custom.updatesslider.UpdatesSliderAssetModel" %>
+<%@ page import="com.cmap.portlets.custom.updatesslider.UpdatesSliderConfiguration" %>
 
-<%@ page import="com.liferay.portal.kernel.util.StringPool" %><%@
-page import="com.liferay.portal.kernel.util.Validator" %>
+<%@ page import="com.liferay.portal.kernel.dao.orm.Criterion" %>
+
+
+<%@ page import="com.liferay.asset.kernel.model.AssetEntry" %>
+<%@ page import="com.liferay.asset.kernel.model.AssetCategory" %>
+<%@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %>
+<%@ page import="com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil"%>
+<%@ page import="com.liferay.portal.kernel.dao.orm.DynamicQuery" %>
+<%@ page import="com.liferay.portal.kernel.dao.orm.Order" %>
+<%@ page import="com.liferay.portal.kernel.dao.orm.OrderFactoryUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
+<%@ page import="com.liferay.portal.kernel.util.Validator" %>
+<%@ page import="com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil" %>
+
+<%@ page import="java.util.List" %>
 
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %><%@
-taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %><%@
-taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %><%@
-taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
-
-<%@page
-	import="com.cmap.portlets.custom.updatesslider.UpdatesSliderConfiguration" %>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ taglib uri="http://liferay.com/tld/portlet" prefix="liferay-portlet" %>
+<%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme" %>
+<%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <liferay-theme:defineObjects />
 
@@ -40,11 +35,41 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		(UpdatesSliderConfiguration)
 		renderRequest.getAttribute(UpdatesSliderConfiguration.class.getName());
 
-	String assetCategoryId = StringPool.BLANK;
+	long assetCategoryId = 0;
+	int assetCount = 0;
+	int summaryLength = 0;
 
 	if (Validator.isNotNull(updatesSliderConfiguration)) {
-		assetCategoryId =
-			portletPreferences.getValue(
-				"assetCategoryId", updatesSliderConfiguration.assetCategoryId());
+		String assetCategoryIdPref = 
+				portletPreferences.getValue("assetCategoryId", updatesSliderConfiguration.assetCategoryId());
+
+		String assetCountPref = 
+				portletPreferences.getValue("assetCount", updatesSliderConfiguration.assetCount());
+
+		String summaryLengthPref = 
+				portletPreferences.getValue("summaryLength", updatesSliderConfiguration.summaryLength());
+
+		if (Validator.isDigit(assetCategoryIdPref)) {
+			assetCategoryId = Long.parseLong(assetCategoryIdPref);
+		}
+
+		if (Validator.isDigit(assetCountPref)) {
+			assetCount = Integer.parseInt(assetCountPref);
+		}
+
+		if (Validator.isDigit(summaryLengthPref)) {
+			summaryLength = Integer.parseInt(summaryLengthPref);
+		}
 	}
+
+	Order assetCategoryOrder = OrderFactoryUtil.asc("name");
+	DynamicQuery assetCategoryQuery = AssetCategoryLocalServiceUtil.dynamicQuery();
+	
+	Criterion criterion = null;
+	criterion = RestrictionsFactoryUtil.eq("vocabularyId", 424402L);
+	criterion = RestrictionsFactoryUtil.or(criterion , RestrictionsFactoryUtil.eq("vocabularyId", 64259L));
+
+	assetCategoryQuery.add(criterion).addOrder(assetCategoryOrder);
+	
+	List<AssetCategory> assetCategories = AssetCategoryLocalServiceUtil.dynamicQuery(assetCategoryQuery);
 %>

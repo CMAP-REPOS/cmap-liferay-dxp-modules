@@ -13,7 +13,6 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,6 +31,9 @@ import org.osgi.service.component.annotations.Modified;
 )
 public class UpdatesSliderConfigurationAction
 	extends DefaultConfigurationAction {
+
+	private static final Log _log = LogFactoryUtil.getLog(UpdatesSliderConfigurationAction.class);
+	private volatile UpdatesSliderConfiguration _updatesSliderConfiguration;
 
 	@Override
 	public void include(
@@ -61,8 +63,12 @@ public class UpdatesSliderConfigurationAction
 		}
 
 		String assetCategoryId = ParamUtil.getString(actionRequest, "assetCategoryId");
+		String assetCount = ParamUtil.getString(actionRequest, "assetCount");
+		String summaryLength = ParamUtil.getString(actionRequest, "summaryLength");
 
 		setPreference(actionRequest, "assetCategoryId", assetCategoryId);
+		setPreference(actionRequest, "assetCount", assetCount);
+		setPreference(actionRequest, "summaryLength", summaryLength);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}
@@ -73,10 +79,4 @@ public class UpdatesSliderConfigurationAction
 		_updatesSliderConfiguration = ConfigurableUtil.createConfigurable(
 			UpdatesSliderConfiguration.class, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(
-		UpdatesSliderConfigurationAction.class);
-
-	private volatile UpdatesSliderConfiguration _updatesSliderConfiguration;
-
 }
