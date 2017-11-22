@@ -5,9 +5,6 @@ import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Order;
-import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -90,13 +87,11 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			}
 
 			if (assetCategoryId != 0) {
-				
-				Order assetEntryOrder = OrderFactoryUtil.desc("publishDate");
-				DynamicQuery assetEntryQuery = AssetEntryLocalServiceUtil.dynamicQuery();
-				assetEntryQuery.addOrder(assetEntryOrder);
-				
-				List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.dynamicQuery(assetEntryQuery);
-				assetEntries = assetEntries.subList(0, assetCount);
+
+				AssetEntryPublishDateComparator comparator = new AssetEntryPublishDateComparator();
+
+				List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getAssetCategoryAssetEntries(assetCategoryId,
+						0, assetCount, comparator);
 
 				List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
 
@@ -122,7 +117,6 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				StringPool.BLANK, StringPool.BLANK);
 
 		try {
-			// DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 			DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
 
