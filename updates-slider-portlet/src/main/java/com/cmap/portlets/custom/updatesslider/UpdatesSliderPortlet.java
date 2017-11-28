@@ -96,7 +96,10 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
 
 				for (AssetEntry assetEntry : assetEntries) {
-					assetModels.add(getAssetModel(assetEntry, summaryLength));
+					UpdatesSliderAssetModel assetModel = getAssetModel(assetEntry, summaryLength);
+					if (assetModel != null) {
+						assetModels.add(assetModel);
+					}
 				}
 
 				renderRequest.setAttribute("assetModels", assetModels);
@@ -134,10 +137,19 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				summary = summary.substring(0, summaryLength - 3) + "...";
 			}
 
-			assetModel = new UpdatesSliderAssetModel(dateFormatted, title, summary, link);
+			if (title.isEmpty() || summary.isEmpty() || link.isEmpty() || dateFormatted.isEmpty()) {
+				assetModel = null;
+				_log.warn("Warning in UpdatesSliderPortlet.getAssetModel(): returning null UpdatesSliderAssetModel");
+			} else {
+				assetModel.setTitle(title);
+				assetModel.setDate(dateFormatted);
+				assetModel.setSummary(summary);
+				assetModel.setLink(link);
+			}
 
 		} catch (Exception ex) {
 			_log.error("Exception in UpdatesSliderPortlet.getAssetModel(): " + ex.getMessage());
+			assetModel = null;
 		}
 
 		return assetModel;
