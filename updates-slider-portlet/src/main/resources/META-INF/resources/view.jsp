@@ -73,8 +73,8 @@ $(document).ready(function(){
 		if(i===0){ $navItem.addClass('active'); }
 
 		$navItem.click(function(){
-			$container.css('transform', 'translateX(-'+(i*100)+'vw)');
-      $nav.find('.nav-item.active').removeClass('active');
+			$container.css('transform', 'translateX(-'+(i*100)+'%)');
+		    $nav.find('.nav-item.active').removeClass('active');
 			$(this).addClass('active');
 		});
 
