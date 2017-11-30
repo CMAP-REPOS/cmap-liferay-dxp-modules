@@ -96,9 +96,11 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
 
 				for (AssetEntry assetEntry : assetEntries) {
-					UpdatesSliderAssetModel assetModel = getAssetModel(assetEntry, summaryLength);
-					if (assetModel != null) {
-						assetModels.add(assetModel);
+					if (assetEntry.isVisible() && assetEntry.getClassNameId() == 10108L) {
+						UpdatesSliderAssetModel assetModel = getAssetModel(assetEntry, summaryLength);
+						if (assetModel != null) {
+							assetModels.add(assetModel);
+						}
 					}
 				}
 
