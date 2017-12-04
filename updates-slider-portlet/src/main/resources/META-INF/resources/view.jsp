@@ -42,49 +42,56 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 </c:choose>
 
 <script>
-$(document).ready(function(){
-	var $this = $('#<%=themeDisplay.getPortletDisplay().getId() %>');
-	var $container = $this.find('.slider-container');
-	var $spacer = $('<div class="col-xl-4"></div>');
-	var $row = $('<div class="row"></div>');
-	var $nav = $('<nav class="slider-nav"></nav>');
+Liferay.on('allPortletsReady', function () {
+  var $this = $('#<%=themeDisplay.getPortletDisplay().getId() %>');
+  var $container = $this.find('.slider-container');
+  var $spacer = $('<div class="col-xl-4"></div>');
+  var $row = $('<div class="row"></div>');
+  var $nav = $('<nav class="slider-nav"></nav>');
 
-	var items = $container.find('.item');
+  var items = $container.find('.item');
 
-	function addItem(dom){
-		var $node = $(dom);
-		if($node){
-			$node.remove();
-			$row.append($node);
-		} else {
-			$row.append($spacer.clone());
-		}
-	}
-	for(let i=0; i<Math.ceil(items.length / 4); i++){
-		// create row
-		addItem(items[(i*4)]);
-		addItem(items[(i*4)+1]);
-		addItem(items[(i*4)+2]);
-		addItem(items[(i*4)+3]);
+  function addItem(dom) {
+    var $node = $(dom);
+    if ($node) {
+      $node.remove();
+      $row.append($node);
+    } else {
+      $row.append($spacer.clone());
+    }
+  }
 
-		var $slide = $(`<div class="slider-slide"></div>`);
-		var $navItem = $('<div class="nav-item"></div>');
-		if(i===0){ $navItem.addClass('active'); }
+  for (var i = 0; i < Math.ceil(items.length / 4); i++) {
+    // create row
+    addItem(items[(i * 4)]);
+    addItem(items[(i * 4) + 1]);
+    addItem(items[(i * 4) + 2]);
+    addItem(items[(i * 4) + 3]);
 
-		$navItem.click(function(){
-			$container.css('transform', 'translateX(-'+(i*100)+'%)');
-		    $nav.find('.nav-item.active').removeClass('active');
-			$(this).addClass('active');
-		});
+    var $slide = $('<div class="slider-slide"></div>');
+    var $navItem = $('<div class="nav-item"></div>');
+    if (i === 0) {
+      $navItem.addClass('active');
+    }
 
-		$nav.append($navItem);
-		$slide.append($row);
-		$container.append($slide);
+    $nav.append($navItem);
+    $slide.append($row);
+    $container.append($slide);
 
-		// reset
-		$row = $('<div class="row"></div>');
-	}
-	$this.append($nav);
+    // reset
+    $row = $('<div class="row"></div>');
+  }
+
+  $this.append($nav);
+
+  $this.find('.nav-item').each(function (i, e) {
+    var transform = 'translateX(-' + (i * 100) + '%)';
+    $(e).on('click', function () {
+      $container.css('transform', transform);
+      $nav.find('.nav-item.active').removeClass('active');
+      $(e).addClass('active');
+    })
+  });
 });
 
 </script>
