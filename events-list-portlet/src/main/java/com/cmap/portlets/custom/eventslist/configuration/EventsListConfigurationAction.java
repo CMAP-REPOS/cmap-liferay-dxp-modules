@@ -1,7 +1,5 @@
 package com.cmap.portlets.custom.eventslist.configuration;
 
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.ConfigurationAction;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -60,8 +58,6 @@ public class EventsListConfigurationAction extends DefaultConfigurationAction {
 	protected void activate(Map<Object, Object> properties) {
 		_configuration = Configurable.createConfigurable(EventsListConfiguration.class, properties);
 	}
-
-	private static final Log _log = LogFactoryUtil.getLog(EventsListConfigurationAction.class);
 
 	private volatile EventsListConfiguration _configuration;
 

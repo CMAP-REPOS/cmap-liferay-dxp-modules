@@ -1,14 +1,11 @@
 package com.cmap.portlets.custom.featuredcardimporter.portlet;
 
 import com.cmap.portlets.custom.featuredcardimporter.constants.FeaturedCardImporterPortletKeys;
-import com.cmap.portlets.custom.featuredcardimporter.models.FeaturedCardModel;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.document.library.kernel.model.DLFileEntry;
 import com.liferay.document.library.kernel.service.DLFileEntryLocalServiceUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMStructureManagerUtil;
-import com.liferay.dynamic.data.mapping.kernel.DDMTemplateManagerUtil;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.model.JournalArticleResource;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
@@ -240,6 +237,7 @@ public class FeaturedCardImporterPortlet extends MVCPortlet {
 		return featuredCardArticle;
 	}
 
+	@SuppressWarnings("unused")
 	private PortletPreferences setJournalArticlePreferences(Layout layout, ServiceContext serviceContext, JournalArticle journalArticle) throws ReadOnlyException {
 		// System.out.println("FeaturedCardImporterPortlet.setJournalArticlePreferences()");
 

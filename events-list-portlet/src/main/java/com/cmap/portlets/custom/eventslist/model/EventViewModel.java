@@ -1,9 +1,7 @@
 package com.cmap.portlets.custom.eventslist.model;
 
 public class EventViewModel {
-	
-	private static final String directionsPrefix = "https://www.google.com/maps/place/";
-	
+		
     private String date;
     private String time;
     private String title;
