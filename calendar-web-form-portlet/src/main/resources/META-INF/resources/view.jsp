@@ -24,7 +24,6 @@ $(function() {
 	cmap.calendar.form.init = function() {
 		$('#<portlet:namespace />fromEmail').val('');
 		$('#<portlet:namespace />toEmail').val('');
-		// $('#<portlet:namespace />jumpTo').find('option:eq(0)').prop('selected', true);
 	}
 
 	cmap.calendar.form.bindEvents = function() {
@@ -32,7 +31,6 @@ $(function() {
 			e.preventDefault();
 			e.stopPropagation();
 			var $button = $(this);
-			console.log();
 			if ($('#emailEventForm').length) {
 
 				$('.scheduler-event-recorder-body').html($('#emailEventForm').clone(true).attr('id','emailEventFormClone').removeClass('hidden'));
@@ -50,7 +48,11 @@ $(function() {
 		});
 		
 		$('#<portlet:namespace />jumpTo').on('change', function() {
-			window._com_liferay_calendar_web_portlet_CalendarPortlet_scheduler.set('date', new Date($(this).val())); 
+			var dateParts = $(this).val().split(',');
+			var jumpDate = new Date();
+			// month is a 0-based array but value in dropdown is 1-12
+			jumpDate.setFullYear($.trim(dateParts[0]), $.trim(dateParts[1])-1, $.trim(dateParts[2]));
+			window._com_liferay_calendar_web_portlet_CalendarPortlet_scheduler.set('date', jumpDate); 
 		});
 	}
 	
