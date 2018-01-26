@@ -1451,13 +1451,13 @@ AUI.add(
 						aa.push('\r\n');
 						aa.push('UID:' + '');
 						aa.push('\r\n');
-						aa.push('DTSTAMP:' + evt._formatDate(evt.get('startDate'), 'Ymd\This\Z'));
+						aa.push('DTSTAMP:' + evt._formatDate(evt.get('startDate'), '%Y%m%dT%H%M%S'));
 						aa.push('\r\n');
 						aa.push('ORGANIZER;CN=CMAP:MAILTO:info@cmap.illinois.gov');
 						aa.push('\r\n');
-						aa.push('DTSTART:' + evt._formatDate(evt.get('startDate'), 'Ymd\This\Z'));
+						aa.push('DTSTART:' + evt._formatDate(evt.get('startDate'), '%Y%m%dT%H%M%S'));
 						aa.push('\r\n');
-						aa.push('DTEND:' + evt._formatDate(evt.get('endDate'), 'Ymd\This\Z'));
+						aa.push('DTEND:' + evt._formatDate(evt.get('endDate'), '%Y%m%dT%H%M%S'));
 						aa.push('\r\n');
 						aa.push('SUMMARY:' + templateData.content);
 						aa.push('\r\n');
