@@ -10,6 +10,12 @@ public interface UpdatesSliderConfiguration {
 	@Meta.AD(required = false)
 	public String assetCategoryId();
 
+	@Meta.AD(required = false)
+	public String assetCategoryId2();
+
+	@Meta.AD(required = false)
+	public String assetCategoryId3();
+
 	@Meta.AD(deflt = "20",
 			required = false)
 	public String assetCount();

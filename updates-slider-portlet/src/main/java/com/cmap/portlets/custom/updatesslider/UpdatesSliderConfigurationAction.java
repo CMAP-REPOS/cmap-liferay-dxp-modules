@@ -63,10 +63,14 @@ public class UpdatesSliderConfigurationAction
 		}
 
 		String assetCategoryId = ParamUtil.getString(actionRequest, "assetCategoryId");
+		String assetCategoryId2 = ParamUtil.getString(actionRequest, "assetCategoryId2");
+		String assetCategoryId3 = ParamUtil.getString(actionRequest, "assetCategoryId3");
 		String assetCount = ParamUtil.getString(actionRequest, "assetCount");
 		String summaryLength = ParamUtil.getString(actionRequest, "summaryLength");
 
 		setPreference(actionRequest, "assetCategoryId", assetCategoryId);
+		setPreference(actionRequest, "assetCategoryId2", assetCategoryId2);
+		setPreference(actionRequest, "assetCategoryId3", assetCategoryId3);
 		setPreference(actionRequest, "assetCount", assetCount);
 		setPreference(actionRequest, "summaryLength", summaryLength);
 
