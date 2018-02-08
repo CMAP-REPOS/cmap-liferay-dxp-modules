@@ -62,6 +62,10 @@
 			<p>{date}</p>
 			<p>{location}</p>
 
+			<div class="detailsLink hidden">
+				
+			</div>
+
 			<div class="scheduler-event-recorder-actions">
 				<span class="scheduler-event-recorder-action">
 					<a href="https://www.google.com/maps/place/{locationEncoded}" title="View map location for {content} in a new window." target="_blank"/>

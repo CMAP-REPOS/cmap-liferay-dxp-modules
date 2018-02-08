@@ -4,9 +4,11 @@
 <portlet:resourceURL var="ajaxCallResourceURL" />
 
 <script type="text/javascript">
+
+var cmap = cmap || {};
+
 $(function() {
 
-	var cmap = cmap || {};
 	cmap.calendar = cmap.calendar || {};
 	cmap.calendar.form = cmap.calendar.form || {};
 	cmap.calendar.form.resourceUrl = '<%=ajaxCallResourceURL %>';
@@ -21,12 +23,32 @@ $(function() {
 		});
 	}
 	
+	cmap.calendar.form.getEventLink = function(calendarBookingId, scheduleEventRecorder) {
+		
+		console.log(calendarBookingId);
+		console.log(scheduleEventRecorder);
+		
+		$.get(cmap.calendar.form.resourceUrl, { 
+			'<portlet:namespace />cmd': 'eventLinkResource',
+			'<portlet:namespace />calendarBookingId': calendarBookingId
+		}, 
+		function(data) { 
+			scheduleEventRecorder.popover.show();
+			var $link = $('.scheduler-event-recorder-popover').find('.detailsLink');
+			$link.addClass('hidden');
+			if (data !== '') {
+				$link.removeClass('hidden').html('<p><a href="'+data+'">Learn more</a></p>');
+			}
+		});
+	}
+
 	cmap.calendar.form.init = function() {
 		$('#<portlet:namespace />fromEmail').val('');
 		$('#<portlet:namespace />toEmail').val('');
 	}
 
 	cmap.calendar.form.bindEvents = function() {
+
 		$('#_com_liferay_calendar_web_portlet_CalendarPortlet_scheduler').on('click', '.emailFriend', function(e) {
 			e.preventDefault();
 			e.stopPropagation();
@@ -54,6 +76,7 @@ $(function() {
 			jumpDate.setFullYear($.trim(dateParts[0]), $.trim(dateParts[1])-1, $.trim(dateParts[2]));
 			window._com_liferay_calendar_web_portlet_CalendarPortlet_scheduler.set('date', jumpDate); 
 		});
+			
 	}
 	
 	cmap.calendar.form.init();
@@ -153,7 +176,7 @@ $(function() {
 	<input id="<portlet:namespace />date" name="<portlet:namespace />date" type="hidden"> 
 	<input id="<portlet:namespace />time" name="<portlet:namespace />time" type="hidden"> 
 	<input id="<portlet:namespace />location" name="<portlet:namespace />location" type="hidden"> 
-	<input id="<portlet:namespace />requestedResource" name="<portlet:namespace />requestedResource" value="emailEventResource" type="hidden">
+	<input id="<portlet:namespace />cmd" name="<portlet:namespace />requestedResource" value="emailEventResource" type="hidden">
 
 	<p>
 		<button class="btn btn-lg btn-primary lfr-ddm-form-submit pull-right emailEventSend"

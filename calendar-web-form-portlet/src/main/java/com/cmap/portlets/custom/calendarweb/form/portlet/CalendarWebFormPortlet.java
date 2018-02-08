@@ -1,8 +1,11 @@
 package com.cmap.portlets.custom.calendarweb.form.portlet;
 
 import com.cmap.portlets.custom.calendarweb.form.constants.CalendarWebFormPortletKeys;
+import com.liferay.expando.kernel.model.ExpandoValue;
+import com.liferay.expando.kernel.service.ExpandoValueLocalServiceUtil;
 import com.liferay.mail.kernel.model.MailMessage;
 import com.liferay.mail.kernel.service.MailServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -47,9 +50,9 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
 
-		String requestedResource = ParamUtil.getString(resourceRequest, "requestedResource");
+		String command = ParamUtil.getString(resourceRequest, "cmd");
 
-		if (requestedResource.equals("emailEventResource")) {
+		if (command.equals("emailEventResource")) {
 			String result = "success";
 			String fromEmail = ParamUtil.getString(resourceRequest, "fromEmail");
 			String toEmail = ParamUtil.getString(resourceRequest, "toEmail");
@@ -68,6 +71,29 @@ public class CalendarWebFormPortlet extends MVCPortlet {
 			try {
 				PrintWriter writer = resourceResponse.getWriter();
 				writer.write(result);
+				writer.close();
+			} catch (IOException ex) {
+				_log.error("Exception in EventsListPortlet.serveResource: " + ex.getMessage(), ex);
+			}
+		}
+		
+		if (command.equals("eventLinkResource")) {
+			
+			String link = StringPool.BLANK;
+			long calendarBookingId = ParamUtil.getLong(resourceRequest, "calendarBookingId");
+			ExpandoValue linkExpandoValue = ExpandoValueLocalServiceUtil.getValue(10154,
+					"com.liferay.calendar.model.CalendarBooking", "CUSTOM_FIELDS", "Link", calendarBookingId);
+			
+			try {
+				link  = linkExpandoValue.getString();
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			try {
+				PrintWriter writer = resourceResponse.getWriter();
+				writer.write(link);
 				writer.close();
 			} catch (IOException ex) {
 				_log.error("Exception in EventsListPortlet.serveResource: " + ex.getMessage(), ex);

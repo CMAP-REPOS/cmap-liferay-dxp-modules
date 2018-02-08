@@ -1266,7 +1266,7 @@ AUI.add(
                         
                         return [formattedDate, startTime, ' to ', endTime].join(' ');
                     },
-
+                    
 					getTemplateData: function() {
 						var instance = this;
 
@@ -1294,7 +1294,7 @@ AUI.add(
 						// CMAP: get formatted date and time for email form
 						var formattedDate = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%m/%d/%Y');
 						var formattedTime = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%I:%M %p');
-						
+												
 						return A.merge(
 							templateData,
 							{
@@ -1319,7 +1319,8 @@ AUI.add(
 								appointment: instance._getAppointment(templateData, eventLocation),
 								formattedDate: formattedDate,
 								formattedTime: formattedTime,
-								googleCalendarLink: instance._getGoogleCalendarLink(templateData, eventLocation)
+								googleCalendarLink: instance._getGoogleCalendarLink(templateData, eventLocation),
+								calendarBookingId: schedulerEvent.get('calendarBookingId')
 							}
 						);
 					},
@@ -1348,17 +1349,14 @@ AUI.add(
 
 					populateForm: function() {
 						var instance = this;
-
+						
 						var bodyTemplate = instance.get('bodyTemplate');
-
 						var headerTemplate = instance.get('headerTemplate');
-
 						var templateData = instance.getTemplateData();
 
 						if (A.instanceOf(bodyTemplate, A.Template) && A.instanceOf(headerTemplate, A.Template)) {
 							instance.popover.setStdModContent('body', bodyTemplate.parse(templateData));
 							instance.popover.setStdModContent('header', headerTemplate.parse(templateData));
-
 							instance.popover.addToolbar(instance._getFooterToolbar(), 'footer');
 						}
 						else {
@@ -1386,6 +1384,46 @@ AUI.add(
 						instance._showResources();
 					},
 
+					// CMAP: copied in A.SchedulerEventRecorder.showPopover from alloy-3.0.1
+			        showPopover: function(node) {
+			        	
+			        	console.log('showPopover');
+			        	
+			            var instance = this,
+			                event = instance.get('event');
+
+			            if (!instance.popover.get('rendered')) {
+			                instance._renderPopover();
+			            }
+
+			            if (!node) {
+			                if (event) {
+			                    node = event.get('node');
+			                }
+			                else {
+			                    node = instance.get('node');
+			                }
+			            }
+
+			            if (A.Lang.isNodeList(node)) {
+			                node = node.item(0);
+			            }
+
+			            var align = instance.popover.get('align');
+			            instance.popover.set('align', {
+			                node: node,
+			                points: align.points
+			            });
+
+						// CMAP: call cmap.calendar.form.getEventLink if it is defined -- see view.jsp in calendar-web-form-pZ
+			            if (!!cmap && !!cmap.calendar && !!cmap.calendar.form && !!cmap.calendar.form.getEventLink) {
+				            cmap.calendar.form.getEventLink(event.get('calendarBookingId'), instance);
+			            } else {
+			            	instance.popover.show();
+			            }
+			        },
+					
+					
 					// CMAP: custom function to get "Add to Google Calendar" link
 					_getGoogleCalendarLink: function(templateData, location) {
 						// https://stackoverflow.com/questions/22757908/google-calendar-render-action-template-parameter-documentation
