@@ -1,9 +1,9 @@
 <%@ include file="/init.jsp" %>
 
 <%
-boolean notConfigured = Validator.isNull(assetCategoryId) || 
-	"0".equals(assetCategoryId) || 
-	Validator.isNull(assetCount) || 
+boolean notConfigured = Validator.isNull(assetCategoryId) ||
+	"0".equals(assetCategoryId) ||
+	Validator.isNull(assetCount) ||
 	"0".equals(assetCount);
 %>
 
@@ -14,7 +14,7 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 	<c:otherwise>
 	<section class="update-slider slider" id="<%=themeDisplay.getPortletDisplay().getId() %>">
 		<header class="row">
-			<div class="col-xl-10 col-xl-offset-3 col-md-10 col-md-offset-3 col-sm-16 col-sm-offset-0">
+			<div class="col-xl-10 col-xl-offset-3 col-md-12 col-md-offset-2 col-sm-16 col-sm-offset-0">
 				<div class="buttons">
 					<h3>Updates</h3>
 					<div class="view-all">
@@ -47,6 +47,7 @@ Liferay.on('allPortletsReady', function () {
   var $container = $this.find('.slider-container');
   var $spacer = $('<div class="col-xl-4"></div>');
   var $row = $('<div class="row"></div>');
+	var rows = [], active_index = 0;
   var $nav = $('<nav class="slider-nav"></nav>');
 
   var items = $container.find('.item');
@@ -61,7 +62,15 @@ Liferay.on('allPortletsReady', function () {
     }
   }
 
-  for (var i = 0; i < Math.ceil(items.length / 4); i++) {
+	function setHeight(){
+		console.log($(rows[active_index]), $(rows[active_index]).innerHeight());
+		$container.css('height', $(rows[active_index]).innerHeight());
+	}
+	$(window).resize(_.throttle(setHeight, 100));
+
+  for (let i = 0; i < Math.ceil(items.length / 4); i++) {
+		$row = $('<div class="row"></div>');
+
     // create row
     addItem(items[(i * 4)]);
     addItem(items[(i * 4) + 1]);
@@ -69,29 +78,32 @@ Liferay.on('allPortletsReady', function () {
     addItem(items[(i * 4) + 3]);
 
     var $slide = $('<div class="slider-slide"></div>');
-    var $navItem = $('<div class="nav-item"></div>');
+    var $navItem = $('<div class="nav-item" data-index="'+i+'"></div>');
+
+		$navItem.on('click', function () {
+			var index = $(this).data('index');
+			var transform = 'translateX(-' + (index * 100) + '%)';
+      $container.css('transform', transform);
+			active_index = index;
+			setHeight();
+      $nav.find('.nav-item.active').removeClass('active');
+      $(this).addClass('active');
+    })
+
     if (i === 0) {
       $navItem.addClass('active');
     }
 
+		rows.push($row);
     $nav.append($navItem);
     $slide.append($row);
     $container.append($slide);
-
-    // reset
-    $row = $('<div class="row"></div>');
+		setHeight();
   }
 
-  $this.append($nav);
-
-  $this.find('.nav-item').each(function (i, e) {
-    var transform = 'translateX(-' + (i * 100) + '%)';
-    $(e).on('click', function () {
-      $container.css('transform', transform);
-      $nav.find('.nav-item.active').removeClass('active');
-      $(e).addClass('active');
-    })
-  });
+	if($nav.find('.nav-item').length > 1){
+		$this.append($nav);
+	}
 });
 
 </script>
