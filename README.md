@@ -10,12 +10,8 @@ This repository contains module projects for the CMAP Liferay DXP instance.
 
 Clone this repository into your Liferay `modules` directory.
 
-`git clone git@bitbucket.org:workstate-code/cmap-liferay-dxp-modules.git .`
-		
-or 
-		
-`git clone https://[user]@bitbucket.org/workstate-code/cmap-liferay-dxp-modules.git .`
-		
+`git clone https://github.com/CMAP-REPOS/cmap-liferay-dxp-modules.git .`
+
 The "." at the end of the git command will clone the contents of the project into your current directory, without creating the `cmap-liferay-dxp-modules` directory.
 
 #### Refresh workspace
