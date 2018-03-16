@@ -1,4 +1,4 @@
-Bundle-Name: custom-form-field-paragraph
+Bundle-Name: CMAP custom-form-field-paragraph
 Bundle-SymbolicName: com.cmap.custom.paragraph
 Bundle-Version: 1.0.0
 Liferay-JS-Config: /META-INF/resources/config.js

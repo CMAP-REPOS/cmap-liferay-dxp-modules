@@ -1,4 +1,4 @@
-Bundle-Name: events-list-portlet
+Bundle-Name: CMAP events-list-portlet
 Bundle-SymbolicName: com.cmap.portlets.custom.eventslist
 Bundle-Version: 1.0.0
 Export-Package: com.cmap.portlets.custom.constants

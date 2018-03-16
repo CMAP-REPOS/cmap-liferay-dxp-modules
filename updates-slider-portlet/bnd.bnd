@@ -1,4 +1,4 @@
-Bundle-Name: updates-slider-portlet
+Bundle-Name: CMAP updates-slider-portlet
 Bundle-SymbolicName: com.cmap.portlets.custom.updatesslider
 Bundle-Version: 1.0.0
 Export-Package: com.cmap.portlets.custom.updatesslider.constants

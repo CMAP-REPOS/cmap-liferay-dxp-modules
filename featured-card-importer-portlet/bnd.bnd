@@ -1,4 +1,4 @@
-Bundle-Name: featured-card-importer-portlet
+Bundle-Name: CMAP featured-card-importer-portlet
 Bundle-SymbolicName: com.cmap.portlets.custom.featuredcardimporter
 Bundle-Version: 1.0.0
 Export-Package: com.cmap.portlets.custom.featuredcardimporter.constants

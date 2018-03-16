@@ -1,4 +1,4 @@
-Bundle-Name: calendar-web-form-portlet
+Bundle-Name: CMAP calendar-web-form-portlet
 Bundle-SymbolicName: com.cmap.portlets.custom.calendarweb.form
 Bundle-Version: 1.0.0
 Export-Package: com.cmap.portlets.custom.calendarweb.form.constants
