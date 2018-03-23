@@ -1,2 +1,4 @@
 custom-portlets/bin
+.settings/
+/.settings
 .DS_Store
