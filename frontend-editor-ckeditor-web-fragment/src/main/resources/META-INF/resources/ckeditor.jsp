@@ -455,6 +455,18 @@ name = HtmlUtil.escapeJS(name);
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 
 		var config = A.merge(defaultConfig, editorConfig);
+		
+		// CMAP - apply the current page's them to CKEDITOR config
+		// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
+		// editor is in an IFRAME, so query the parent window
+		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+		if (pathThemeImages.indexOf('cmap') > -1) {
+			var cmapConfig = {
+					contentsCss: pathThemeImages.replace(/\/images$/, '/css/main.css')
+				};
+
+			config = A.merge(config, cmapConfig);
+		}
 
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 
