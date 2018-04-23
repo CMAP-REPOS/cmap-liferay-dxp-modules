@@ -1,0 +1,4 @@
+Bundle-Name: frontend-editor-ckeditor-web-fragment
+Bundle-SymbolicName: frontend.editor.ckeditor.web.fragment
+Bundle-Version: 1.0.0
+Fragment-Host: com.liferay.frontend.editor.ckeditor.web;bundle-version="1.0.42"
