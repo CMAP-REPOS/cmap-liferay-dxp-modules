@@ -1,0 +1,4 @@
+Bundle-Name: glossary-utility-portlet
+Bundle-SymbolicName: com.cmap.portlets.custom.glossary.utility
+Bundle-Version: 1.0.0
+Export-Package: com.cmap.portlets.custom.glossary.utility.constants
