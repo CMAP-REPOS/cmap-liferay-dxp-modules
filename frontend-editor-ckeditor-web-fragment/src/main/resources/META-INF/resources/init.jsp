@@ -59,9 +59,3 @@ if (Validator.isNull(namespace)) {
 	namespace = AUIUtil.getNamespace(request);
 }
 %>
-
-<%!
-private String getSennaTrackJSFileLocation(String location){
-	return HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + location, javaScriptLastModified));
-}
-%>

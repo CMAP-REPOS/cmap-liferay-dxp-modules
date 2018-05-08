@@ -20,13 +20,21 @@
 String portletId = portletDisplay.getRootPortletId();
 
 boolean autoCreate = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:autoCreate"));
+
 String contents = (String)request.getAttribute("liferay-ui:input-editor:contents");
+
 String cssClass = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:cssClass"));
+
 Map<String, Object> data = (Map<String, Object>)request.getAttribute("liferay-ui:input-editor:data");
+
 String editorName = (String)request.getAttribute("liferay-ui:input-editor:editorName");
+
 String initMethod = (String)request.getAttribute("liferay-ui:input-editor:initMethod");
+
 boolean inlineEdit = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:inlineEdit"));
+
 String inlineEditSaveURL = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:inlineEditSaveURL"));
+
 String name = GetterUtil.getString((String)request.getAttribute("liferay-ui:input-editor:name"));
 
 String onBlurMethod = (String)request.getAttribute("liferay-ui:input-editor:onBlurMethod");
@@ -54,6 +62,7 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 
 if (!inlineEdit) {
@@ -82,37 +91,40 @@ if (editorOptions != null) {
 <c:if test="<%= !skipEditorLoading %>">
 	<liferay-util:html-top outputKey="js_editor_ckeditor_skip_editor_loading">
 		<style type="text/css">
-			table.cke_dialog {
-				position: absolute !important;
-			}
+			table.cke_dialog { position: absolute !important; }
 		</style>
 
-		<%
-		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
-		%>
+		<% long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR); %>
 
-		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+		<script
+			data-senna-track="temporary"
+			src="<%= getSennaTrackJSFileLocation("/ckeditor/ckeditor.js") %>"
+			type="text/javascript"></script>
 
 		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-			<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/main.js", javaScriptLastModified)) %>" type="text/javascript"></script>
+			<script
+				data-senna-track="temporary"
+				src="<%= getSennaTrackJSFileLocation("/ckeditor/main.js") %>"
+				type="text/javascript"></script>
 		</c:if>
 
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>' />
+		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#additionalResources" %>'/>
 
 		<script data-senna-track="temporary" type="text/javascript">
 			Liferay.namespace('EDITORS')['<%= editorName %>'] = true;
 
-			CKEDITOR.scriptLoader.loadScripts = function(scripts, success, failure) {
+			CKEDITOR.scriptLoader.loadScripts = function (scripts, success, failure) {
 				CKEDITOR.scriptLoader.load(scripts, success, failure);
 			};
 
-			CKEDITOR.getNextZIndex = function() {
-				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
+			CKEDITOR.getNextZIndex = function () {
+				return CKEDITOR.dialog._.currentZIndex
+					? CKEDITOR.dialog._.currentZIndex + 10
+					: Liferay.zIndex.WINDOW + 10;
 			};
 
-			var destroyGlobalEditor = function() {
+			var destroyGlobalEditor = function () {
 				window.CKEDITOR = undefined;
-
 				Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
 			};
 
@@ -128,7 +140,6 @@ String modules = "aui-node-base";
 
 if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	textareaName = textareaName + "_original";
-
 	modules += ",inline-editor-ckeditor";
 }
 %>
@@ -147,153 +158,112 @@ if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	CKEDITOR.disableAutoInline = true;
 </script>
 
-<%
-name = HtmlUtil.escapeJS(name);
-%>
+<% name = HtmlUtil.escapeJS(name); %>
 
 <aui:script use="<%= modules %>">
 	var UA = A.UA;
-
 	var getInitialContent = function() {
 		var data;
-
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		}
-		else {
+		} else {
 			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
-
 		return data;
 	};
-
 	window['<%= name %>'] = {
 		create: function() {
 			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
-
 				var editorContainer = A.one('#<%= name %>Container');
-
 				editorContainer.appendChild(editorNode);
-
 				createEditor();
 			}
 		},
-
 		destroy: function() {
 			window['<%= name %>'].dispose();
-
 			window['<%= name %>'] = null;
 		},
-
 		dispose: function() {
 			var editor = CKEDITOR.instances['<%= name %>'];
-
 			if (editor) {
 				editor.destroy();
-
 				window['<%= name %>'].instanceReady = false;
 			}
-
 			var editorEl = document.getElementById('<%= name %>');
-
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
 			}
 		},
-
 		focus: function() {
 			CKEDITOR.instances['<%= name %>'].focus();
 		},
-
 		getCkData: function() {
 			var data;
-
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
-
-				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
+				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br/>')) {
 					data = '';
 				}
 			}
-
 			return data;
 		},
-
 		getHTML: function() {
 			return window['<%= name %>'].getCkData();
 		},
-
 		getNativeEditor: function() {
 			return CKEDITOR.instances['<%= name %>'];
 		},
-
 		getText: function() {
 			var data;
-
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				var editor = CKEDITOR.instances['<%= name %>'];
-
 				data = editor.editable().getText();
 			}
-
 			return data;
 		},
-
 		instanceReady: false,
 
-		<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-			onBlurCallback: function() {
-				window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](CKEDITOR.instances['<%= name %>']);
-			},
-		</c:if>
+	<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
+		onBlurCallback: function() {
+			window['<%= HtmlUtil.escapeJS(onBlurMethod) %>'](CKEDITOR.instances['<%= name %>']);
+		},
+	</c:if>
 
-		<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-			onChangeCallback: function() {
-				var ckEditor = CKEDITOR.instances['<%= name %>'];
-				var dirty = ckEditor.checkDirty();
+	<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+		onChangeCallback: function() {
+			var ckEditor = CKEDITOR.instances['<%= name %>'];
+			var dirty = ckEditor.checkDirty();
+			if (dirty) {
+				window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
+				ckEditor.resetDirty();
+			}
+		},
+	</c:if>
 
-				if (dirty) {
-					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-
-					ckEditor.resetDirty();
-				}
-			},
-		</c:if>
-
-		<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-			onFocusCallback: function() {
-				window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](CKEDITOR.instances['<%= name %>']);
-			},
-		</c:if>
+	<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
+		onFocusCallback: function() {
+			window['<%= HtmlUtil.escapeJS(onFocusMethod) %>'](CKEDITOR.instances['<%= name %>']);
+		},
+	</c:if>
 
 		setHTML: function(value) {
 			var ckEditorInstance = CKEDITOR.instances['<%= name %>'];
-
 			var win = window['<%= name %>'];
-
 			var setHTML = function(data) {
 				ckEditorInstance.setData(data);
-
 				win._setStyles();
 			};
-
 			if (win.instanceReady) {
 				setHTML(value);
-			}
-			else {
-				ckEditorInstance.on(
-					'instanceReady',
-					function() {
-						setHTML(value);
-					}
-				);
+			} else {
+				ckEditorInstance.on( 'instanceReady', function() {
+					setHTML(value);
+				} );
 			}
 		}
 	};
@@ -301,10 +271,8 @@ name = HtmlUtil.escapeJS(name);
 	var addAUIClass = function(iframe) {
 		if (iframe) {
 			var iframeWin = iframe.getDOM().contentWindow;
-
 			if (iframeWin) {
 				var iframeDoc = iframeWin.document.documentElement;
-
 				A.one(iframeDoc).addClass('aui');
 			}
 		}
@@ -312,125 +280,85 @@ name = HtmlUtil.escapeJS(name);
 
 	window['<%= name %>']._setStyles = function() {
 		var ckEditor = A.one('#cke_<%= name %>');
-
 		if (ckEditor) {
 			var iframe = ckEditor.one('iframe');
-
 			addAUIClass(iframe);
-
 			var ckePanelDelegate = Liferay.Data['<%= name %>Handle'];
-
 			if (!ckePanelDelegate) {
-				ckePanelDelegate = ckEditor.delegate(
-					'click',
-					function(event) {
-						var panelFrame = A.one('.cke_combopanel .cke_panel_frame');
-
-						addAUIClass(panelFrame);
-
-						ckePanelDelegate.detach();
-
-						Liferay.Data['<%= name %>Handle'] = null;
-					},
-					'.cke_combo'
-				);
-
+				ckePanelDelegate = ckEditor.delegate( 'click', function(event) {
+					var panelFrame = A.one('.cke_combopanel .cke_panel_frame');
+					addAUIClass(panelFrame);
+					ckePanelDelegate.detach();
+					Liferay.Data['<%= name %>Handle'] = null;
+				}, '.cke_combo' );
 				Liferay.Data['<%= name %>Handle'] = ckePanelDelegate;
 			}
 		}
 	};
 
-	Liferay.fire(
-		'editorAPIReady',
-		{
-			editor: window['<%= name %>'],
-			editorName: '<%= name %>'
-		}
-	);
+	Liferay.fire( 'editorAPIReady', {
+		editor: window['<%= name %>'],
+		editorName: '<%= name %>'
+	});
 
-	<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-		var inlineEditor;
-
-		Liferay.on(
-			'toggleControls',
-			function(event) {
-				if (event.src === 'ui') {
-					var ckEditor = CKEDITOR.instances['<%= name %>'];
-
-					if (event.enabled && !ckEditor) {
-						createEditor();
-					}
-					else if (ckEditor) {
-						inlineEditor.destroy();
-						ckEditor.destroy();
-
-						var editorNode = A.one('#<%= name %>');
-
-						editorNode.removeAttribute('contenteditable');
-						editorNode.removeClass('lfr-editable');
-					}
-				}
+<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
+	var inlineEditor;
+	Liferay.on( 'toggleControls', function(event) {
+		if (event.src === 'ui') {
+			var ckEditor = CKEDITOR.instances['<%= name %>'];
+			if (event.enabled && !ckEditor) {
+				createEditor();
+			} else if (ckEditor) {
+				inlineEditor.destroy();
+				ckEditor.destroy();
+				var editorNode = A.one('#<%= name %>');
+				editorNode.removeAttribute('contenteditable');
+				editorNode.removeClass('lfr-editable');
 			}
-		);
-	</c:if>
+		}
+	});
+</c:if>
 
 	var ckEditorContent;
 	var currentToolbarSet;
-
 	var initialToolbarSet = '<%= TextFormatter.format(HtmlUtil.escapeJS(toolbarSet), TextFormatter.M) %>';
-
 	function getToolbarSet(toolbarSet) {
 		var Util = Liferay.Util;
-
 		if (Util.isPhone()) {
 			toolbarSet = 'phone';
-		}
-		else if (Util.isTablet()) {
+		} else if (Util.isTablet()) {
 			toolbarSet = 'tablet';
 		}
-
 		return toolbarSet;
 	}
 
 	var afterVal = function() {
-		console.log(window['<%= name %>']);
-		return new A.Do.AlterReturn(
-			'Return editor content',
-			window['<%= name %>'].getHTML()
-		);
+		console.log('testing in afterVal', window['<%= name %>'], window['<%= name %>'].getHTML());
+		return new A.Do.AlterReturn( 'Return editor content', window['<%= name %>'].getHTML() );
 	};
 
 	var createEditor = function() {
 		var editorNode = A.one('#<%= name %>');
-
 		editorNode.attr('contenteditable', true);
 		editorNode.addClass('lfr-editable');
-
-		var eventHandles = [
-			A.Do.after(afterVal, editorNode, 'val', this)
-		];
-
+		var eventHandles = [ A.Do.after(afterVal, editorNode, 'val', this) ];
 		function initData() {
+
 			<c:if test="<%= Validator.isNotNull(initMethod) && !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
 				if (!ckEditorContent) {
-					<c:choose>
-						<c:when test="<%= contents != null %>">
-							ckEditorContent = '<%= HtmlUtil.escapeJS(contents) %>';
-						</c:when>
-						<c:otherwise>
-							ckEditorContent = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
-						</c:otherwise>
-					</c:choose>
+				<c:choose>
+					<c:when test="<%= contents != null %>">
+						ckEditorContent = '<%= HtmlUtil.escapeJS(contents) %>';
+					</c:when>
+					<c:otherwise>
+						ckEditorContent = window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']();
+					</c:otherwise>
+				</c:choose>
 				}
-
-				ckEditor.setData(
-					ckEditorContent,
-					function() {
-						ckEditor.resetDirty();
-
-						ckEditorContent = '';
-					}
-				);
+				ckEditor.setData( ckEditorContent, function(){
+					ckEditor.resetDirty();
+					ckEditorContent = '';
+				});
 			</c:if>
 
 			window['<%= name %>']._setStyles();
@@ -441,9 +369,7 @@ name = HtmlUtil.escapeJS(name);
 
 			window['<%= name %>'].instanceReady = true;
 		}
-
 		currentToolbarSet = getToolbarSet(initialToolbarSet);
-
 		var defaultConfig = {
 			filebrowserBrowseUrl: '',
 			filebrowserFlashBrowseUrl: '',
@@ -452,221 +378,150 @@ name = HtmlUtil.escapeJS(name);
 			filebrowserUploadUrl: null,
 			toolbar: currentToolbarSet
 		};
-
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
-
 		var config = A.merge(defaultConfig, editorConfig);
-
+		// CMAP - apply the current page's them to CKEDITOR config
+		// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
+		// editor is in an IFRAME, so query the parent window
+		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+		if (pathThemeImages.indexOf('cmap') > -1) {
+			var cmapConfig = {
+				contentsCss: pathThemeImages.replace(/\/images$/, '/css/main.css')
+			};
+			config = A.merge(config, cmapConfig);
+		}
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
-
-		Liferay.on(
-			'<%= name %>selectItem',
-			function(event) {
-				CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.value);
-			}
-		);
-
+		Liferay.on( '<%= name %>selectItem', function(event) {
+			CKEDITOR.tools.callFunction(event.ckeditorfuncnum, event.value);
+		});
 		var ckEditor = CKEDITOR.instances['<%= name %>'];
 
-		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#onEditorCreate" %>' />
+		<liferay-util:dynamic-include key='<%= "com.liferay.frontend.editor.ckeditor.web#" + editorName + "#onEditorCreate" %>'/>
 
 		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
-			inlineEditor = new Liferay.CKEditorInline(
-				{
-					editor: ckEditor,
-					editorName: '<%= name %>',
-					namespace: '<portlet:namespace />',
-					saveURL: '<%= inlineEditSaveURL %>'
-				}
-			);
+			inlineEditor = new Liferay.CKEditorInline({
+				editor: ckEditor,
+				editorName: '<%= name %>',
+				namespace: '<portlet:namespace/>',
+				saveURL: '<%= inlineEditSaveURL %>'
+			});
 		</c:if>
 
 		var customDataProcessorLoaded = false;
 
-		<%
-		boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor"));
-		%>
+		<% boolean useCustomDataProcessor = (editorOptionsDynamicAttributes != null) && GetterUtil.getBoolean(editorOptionsDynamicAttributes.get("useCustomDataProcessor")); %>
 
 		<c:if test="<%= useCustomDataProcessor %>">
-			ckEditor.on(
-				'customDataProcessorLoaded',
-				function() {
-					customDataProcessorLoaded = true;
-
-					if (instanceReady) {
-						initData();
-					}
-				}
-			);
+			ckEditor.on( 'customDataProcessorLoaded', function(){
+				customDataProcessorLoaded = true;
+				if (instanceReady) { initData(); }
+			});
 		</c:if>
 
 		var instanceReady = false;
+		ckEditor.on( 'instanceReady', function(){
+			<c:choose>
+				<c:when test="<%= useCustomDataProcessor %>">
+					instanceReady = true; if (customDataProcessorLoaded) { initData(); }
+				</c:when>
+				<c:otherwise>
+					initData();
+				</c:otherwise>
+			</c:choose>
 
-		ckEditor.on(
-			'instanceReady',
-			function() {
+			<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
+				CKEDITOR.instances['<%= name %>'].on('blur', window['<%= name %>'].onBlurCallback);
+			</c:if>
 
-				<c:choose>
-					<c:when test="<%= useCustomDataProcessor %>">
-						instanceReady = true;
-
-						if (customDataProcessorLoaded) {
-							initData();
-						}
-					</c:when>
-					<c:otherwise>
-						initData();
-					</c:otherwise>
-				</c:choose>
-
-				<c:if test="<%= Validator.isNotNull(onBlurMethod) %>">
-					CKEDITOR.instances['<%= name %>'].on('blur', window['<%= name %>'].onBlurCallback);
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
-					var contentChangeHandle = setInterval(
-						function() {
-							try {
-								window['<%= name %>'].onChangeCallback();
-							}
-							catch (e) {
-							}
-						},
-						300
-					);
-
-					var clearContentChangeHandle = function(event) {
-						if (event.portletId === '<%= portletId %>') {
-							clearInterval(contentChangeHandle);
-
-							Liferay.detach('destroyPortlet', clearContentChangeHandle);
-						}
-					};
-
-					Liferay.on('destroyPortlet', clearContentChangeHandle);
-				</c:if>
-
-				<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
-					CKEDITOR.instances['<%= name %>'].on('focus', window['<%= name %>'].onFocusCallback);
-				</c:if>
-
-				<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
-					var initialEditor = CKEDITOR.instances['<%= name %>'].id;
-
-					A.getWin().on(
-						'resize',
-						A.debounce(
-							function() {
-								if (currentToolbarSet != getToolbarSet(initialToolbarSet)) {
-									var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
-
-									if (ckeditorInstance) {
-										var currentEditor = ckeditorInstance.id;
-
-										if (currentEditor === initialEditor) {
-											var currentDialog = CKEDITOR.dialog.getCurrent();
-
-											if (currentDialog) {
-												currentDialog.hide();
-											}
-
-											ckEditorContent = ckeditorInstance.getData();
-
-											window['<%= name %>'].dispose();
-
-											window['<%= name %>'].create();
-
-											window['<%= name %>'].setHTML(ckEditorContent);
-
-											initialEditor = CKEDITOR.instances['<%= name %>'].id;
-										}
-									}
-								}
-							},
-							250
-						)
-					);
-				</c:if>
-
-				var destroyInstance = function(event) {
+			<c:if test="<%= Validator.isNotNull(onChangeMethod) %>">
+				var contentChangeHandle = setInterval( function() {
+					try {
+						window['<%= name %>'].onChangeCallback();
+					} catch (e) { }
+				}, 300 );
+				var clearContentChangeHandle = function(event) {
 					if (event.portletId === '<%= portletId %>') {
-						try {
-							var ckeditorInstances = window.CKEDITOR.instances;
-
-							A.Object.each(
-								ckeditorInstances,
-								function(value, key) {
-									var inst = ckeditorInstances[key];
-
-									delete ckeditorInstances[key];
-
-									inst.destroy();
-								}
-							);
-						}
-						catch (e) {
-						}
-
-						(new A.EventHandle(eventHandles)).detach();
-
-						Liferay.detach('destroyPortlet', destroyInstance);
+						clearInterval(contentChangeHandle);
+						Liferay.detach('destroyPortlet', clearContentChangeHandle);
 					}
 				};
+				Liferay.on('destroyPortlet', clearContentChangeHandle);
+			</c:if>
 
-				Liferay.on('destroyPortlet', destroyInstance);
-			}
-		);
+			<c:if test="<%= Validator.isNotNull(onFocusMethod) %>">
+				CKEDITOR.instances['<%= name %>'].on('focus', window['<%= name %>'].onFocusCallback);
+			</c:if>
+
+			<c:if test="<%= !(inlineEdit && Validator.isNotNull(inlineEditSaveURL)) %>">
+				var initialEditor = CKEDITOR.instances['<%= name %>'].id;
+				A.getWin().on( 'resize', A.debounce( function() {
+					if (currentToolbarSet != getToolbarSet(initialToolbarSet)) {
+						var ckeditorInstance = CKEDITOR.instances['<%= name %>'];
+						if (ckeditorInstance) {
+							var currentEditor = ckeditorInstance.id;
+							if (currentEditor === initialEditor) {
+								var currentDialog = CKEDITOR.dialog.getCurrent();
+								if (currentDialog) {
+									currentDialog.hide();
+								}
+								ckEditorContent = ckeditorInstance.getData();
+								window['<%= name %>'].dispose();
+								window['<%= name %>'].create();
+								window['<%= name %>'].setHTML(ckEditorContent);
+								initialEditor = CKEDITOR.instances['<%= name %>'].id;
+							}
+						}
+					}
+				}, 250 ) );
+			</c:if>
+
+			var destroyInstance = function(event) {
+				if (event.portletId === '<%= portletId %>') {
+					try {
+						var ckeditorInstances = window.CKEDITOR.instances;
+						A.Object.each( ckeditorInstances, function(value, key) {
+							var inst = ckeditorInstances[key];
+							delete ckeditorInstances[key];
+							inst.destroy();
+						});
+					} catch (e) { } (new A.EventHandle(eventHandles)).detach();
+					Liferay.detach('destroyPortlet', destroyInstance);
+				}
+			};
+			Liferay.on('destroyPortlet', destroyInstance);
+		});
 
 		ckEditor.on('dataReady', window['<%= name %>']._setStyles);
-
 		if (UA.edge && parseInt(UA.edge, 10) >= 14) {
 			var resetActiveElementValidation = function(activeElement) {
 				activeElement = A.one(activeElement);
-
 				var activeElementAncestor = activeElement.ancestor();
-
 				if (activeElementAncestor.hasClass('has-error') || activeElementAncestor.hasClass('has-success')) {
 					activeElementAncestor.removeClass('has-error');
 					activeElementAncestor.removeClass('has-success');
-
 					var formValidatorStack = activeElementAncestor.one('.form-validator-stack');
-
 					if (formValidatorStack) {
 						formValidatorStack.remove();
 					}
 				}
 			};
-
 			var onBlur = function(activeElement) {
 				resetActiveElementValidation(activeElement);
-
-				setTimeout(
-					function() {
-						if (activeElement) {
-							ckEditor.focusManager.blur(true);
-							activeElement.focus();
-						}
-					},
-					0
-				);
-			};
-
-			ckEditor.on(
-				'instanceReady',
-				function() {
-					var editorWrapper = A.one('#cke_<%= name %>');
-
-					if (editorWrapper) {
-						editorWrapper.once(
-							'mouseenter',
-							function(event) {
-								ckEditor.once('focus', onBlur.bind(this, document.activeElement));
-								ckEditor.focus();
-							}
-						);
+				setTimeout( function() {
+					if (activeElement) {
+						ckEditor.focusManager.blur(true);
+						activeElement.focus();
 					}
+				}, 0 );
+			};
+			ckEditor.on( 'instanceReady', function() {
+				var editorWrapper = A.one('#cke_<%= name %>');
+				if (editorWrapper) {
+					editorWrapper.once('mouseenter', function(event){
+						ckEditor.once('focus', onBlur.bind(this, document.activeElement)); ckEditor.focus();
+					});
 				}
-			);
+			});
 		}
 	};
 
@@ -688,6 +543,7 @@ public String marshallParams(Map<String, String> params) {
 	StringBundler sb = new StringBundler(4 * params.size());
 
 	for (Map.Entry<String, String> configParam : params.entrySet()) {
+		console.log(configParam.getValue(), configParam);
 		sb.append(StringPool.AMPERSAND);
 		sb.append(configParam.getKey());
 		sb.append(StringPool.EQUAL);
