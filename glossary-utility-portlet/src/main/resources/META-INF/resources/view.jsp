@@ -14,8 +14,8 @@ AUI().ready(
     cmap.glossary.resourceUrl = '<%=ajaxCallResourceURL %>';
 
     <%-- TODO: configure paths --%>
-    var glossaryPath = '/2050-glossary';
-    var endnotesPath = '/2050-endnotes';
+    var glossaryPath = '/2050/glossary';
+    var endnotesPath = '/2050/endnotes';
 
     cmap.glossary.linkGlossaryItem = function (term, link) {
       $.get(

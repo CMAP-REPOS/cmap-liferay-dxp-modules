@@ -28,25 +28,24 @@ import org.osgi.service.component.annotations.Component;
  * @author jon
  */
 @Component(
-	immediate = true,
-	property = {
-		"com.liferay.portlet.display-category=CMAP",
-		"com.liferay.portlet.instanceable=false",
-		"javax.portlet.display-name=Glossary Utility",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + GlossaryUtilityPortletKeys.GlossaryUtility,
-		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
-	},
-	service = Portlet.class
-)
+		immediate = true,
+		property = {
+			"com.liferay.portlet.display-category=CMAP",
+			"com.liferay.portlet.instanceable=false",
+			"javax.portlet.display-name=Glossary Utility",
+			"javax.portlet.init-param.template-path=/",
+			"javax.portlet.init-param.view-template=/view.jsp",
+			"javax.portlet.name=" + GlossaryUtilityPortletKeys.GlossaryUtility,
+			"javax.portlet.resource-bundle=content.Language",
+			"javax.portlet.security-role-ref=power-user,user"
+		},
+		service = Portlet.class
+	)
 public class GlossaryUtilityPortlet extends MVCPortlet {
 	
 	private static Log _log = LogFactoryUtil.getLog(GlossaryUtilityPortlet.class);
 	private static long _groupId = 10180;
-	// TODO: 
-	private static String _ddmStructureKey = "841354";
+	private static String _ddmStructureKey = "853953";
 
 	@Override
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -58,7 +57,10 @@ public class GlossaryUtilityPortlet extends MVCPortlet {
 			String requestedTerm = ParamUtil.getString(resourceRequest, "term");
 			String returnedDefintion = StringPool.BLANK;
 			List<JournalArticle> glossaryArticles = JournalArticleLocalServiceUtil.getStructureArticles(_groupId, _ddmStructureKey);
-			// TODO: glossary *should* be the only one
+			// glossary *should* be the only one
+			if (glossaryArticles.size() > 1) {
+				_log.warn("Warning in GlossaryUtilityPortlet.serveResource: multiple glossary articles found.");
+			}
 			JournalArticle glossaryArticle = glossaryArticles.get(0);
 
 			Document doc;
@@ -73,9 +75,8 @@ public class GlossaryUtilityPortlet extends MVCPortlet {
 					}
 				}
 
-			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (DocumentException ex) {
+				_log.error("DocumentException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
 			}
 
 			try {
@@ -83,7 +84,7 @@ public class GlossaryUtilityPortlet extends MVCPortlet {
 				writer.write(returnedDefintion);
 				writer.close();
 			} catch (IOException ex) {
-				_log.error("Exception in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
+				_log.error("IOException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
 			}
 		}
 
