@@ -91,6 +91,11 @@ if (editorOptions != null) {
 		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 		%>
 
+
+		<script>
+		console.log('<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified) %>');
+		</script>
+
 		<script data-senna-track="temporary" src="<%= HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 		<c:if test="<%= inlineEdit && Validator.isNotNull(inlineEditSaveURL) %>">
@@ -112,7 +117,6 @@ if (editorOptions != null) {
 
 			var destroyGlobalEditor = function() {
 				window.CKEDITOR = undefined;
-
 				Liferay.detach('beforeScreenFlip', destroyGlobalEditor);
 			};
 
@@ -123,12 +127,9 @@ if (editorOptions != null) {
 
 <%
 String textareaName = HtmlUtil.escapeAttribute(name);
-
 String modules = "aui-node-base";
-
 if (inlineEdit && Validator.isNotNull(inlineEditSaveURL)) {
 	textareaName = textareaName + "_original";
-
 	modules += ",inline-editor-ckeditor";
 }
 %>
@@ -156,14 +157,11 @@ name = HtmlUtil.escapeJS(name);
 
 	var getInitialContent = function() {
 		var data;
-
 		if (window['<%= HtmlUtil.escapeJS(namespace + initMethod) %>']) {
 			data = <%= HtmlUtil.escapeJS(namespace + initMethod) %>();
-		}
-		else {
+		} else {
 			data = '<%= contents != null ? HtmlUtil.escapeJS(contents) : StringPool.BLANK %>';
 		}
-
 		return data;
 	};
 
@@ -171,32 +169,24 @@ name = HtmlUtil.escapeJS(name);
 		create: function() {
 			if (!window['<%= name %>'].instanceReady) {
 				var editorNode = A.Node.create('<%= HtmlUtil.escapeJS(editor) %>');
-
 				var editorContainer = A.one('#<%= name %>Container');
-
 				editorContainer.appendChild(editorNode);
-
 				createEditor();
 			}
 		},
 
 		destroy: function() {
 			window['<%= name %>'].dispose();
-
 			window['<%= name %>'] = null;
 		},
 
 		dispose: function() {
 			var editor = CKEDITOR.instances['<%= name %>'];
-
 			if (editor) {
 				editor.destroy();
-
 				window['<%= name %>'].instanceReady = false;
 			}
-
 			var editorEl = document.getElementById('<%= name %>');
-
 			if (editorEl) {
 				editorEl.parentNode.removeChild(editorEl);
 			}
@@ -208,18 +198,14 @@ name = HtmlUtil.escapeJS(name);
 
 		getCkData: function() {
 			var data;
-
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				data = CKEDITOR.instances['<%= name %>'].getData();
-
 				if (CKEDITOR.env.gecko && (CKEDITOR.tools.trim(data) == '<br />')) {
 					data = '';
 				}
 			}
-
 			return data;
 		},
 
@@ -233,16 +219,12 @@ name = HtmlUtil.escapeJS(name);
 
 		getText: function() {
 			var data;
-
 			if (!window['<%= name %>'].instanceReady) {
 				data = getInitialContent();
-			}
-			else {
+			} else {
 				var editor = CKEDITOR.instances['<%= name %>'];
-
 				data = editor.editable().getText();
 			}
-
 			return data;
 		},
 
@@ -258,10 +240,8 @@ name = HtmlUtil.escapeJS(name);
 			onChangeCallback: function() {
 				var ckEditor = CKEDITOR.instances['<%= name %>'];
 				var dirty = ckEditor.checkDirty();
-
 				if (dirty) {
 					window['<%= HtmlUtil.escapeJS(onChangeMethod) %>'](window['<%= name %>'].getHTML());
-
 					ckEditor.resetDirty();
 				}
 			},
@@ -275,15 +255,11 @@ name = HtmlUtil.escapeJS(name);
 
 		setHTML: function(value) {
 			var ckEditorInstance = CKEDITOR.instances['<%= name %>'];
-
 			var win = window['<%= name %>'];
-
 			var setHTML = function(data) {
 				ckEditorInstance.setData(data);
-
 				win._setStyles();
 			};
-
 			if (win.instanceReady) {
 				setHTML(value);
 			}
@@ -301,10 +277,8 @@ name = HtmlUtil.escapeJS(name);
 	var addAUIClass = function(iframe) {
 		if (iframe) {
 			var iframeWin = iframe.getDOM().contentWindow;
-
 			if (iframeWin) {
 				var iframeDoc = iframeWin.document.documentElement;
-
 				A.one(iframeDoc).addClass('aui');
 			}
 		}
@@ -312,24 +286,18 @@ name = HtmlUtil.escapeJS(name);
 
 	window['<%= name %>']._setStyles = function() {
 		var ckEditor = A.one('#cke_<%= name %>');
-
 		if (ckEditor) {
 			var iframe = ckEditor.one('iframe');
-
 			addAUIClass(iframe);
 
 			var ckePanelDelegate = Liferay.Data['<%= name %>Handle'];
-
 			if (!ckePanelDelegate) {
 				ckePanelDelegate = ckEditor.delegate(
 					'click',
 					function(event) {
 						var panelFrame = A.one('.cke_combopanel .cke_panel_frame');
-
 						addAUIClass(panelFrame);
-
 						ckePanelDelegate.detach();
-
 						Liferay.Data['<%= name %>Handle'] = null;
 					},
 					'.cke_combo'
@@ -393,7 +361,6 @@ name = HtmlUtil.escapeJS(name);
 	}
 
 	var afterVal = function() {
-		console.log(window['<%= name %>']);
 		return new A.Do.AlterReturn(
 			'Return editor content',
 			window['<%= name %>'].getHTML()
@@ -427,7 +394,6 @@ name = HtmlUtil.escapeJS(name);
 					ckEditorContent,
 					function() {
 						ckEditor.resetDirty();
-
 						ckEditorContent = '';
 					}
 				);
@@ -457,6 +423,77 @@ name = HtmlUtil.escapeJS(name);
 
 		var config = A.merge(defaultConfig, editorConfig);
 
+		// CMAP - apply the current page's them to CKEDITOR config
+		// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
+		// editor is in an IFRAME, so query the parent window
+		var pathThemeImages = 	window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+
+		if (pathThemeImages.indexOf('cmap') > -1) {
+			var cmapConfig = {
+				contentsCss: [
+					pathThemeImages.replace(/\/images$/, '/css/main.css'),
+					'https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css',
+					'https://cloud.typography.com/7947314/7427752/css/fonts.css'
+				]
+			};
+
+
+			// All CKEditor config options
+			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
+
+			// All of the plugins available by default
+			// https://dev.liferay.com/pt/develop/reference/-/knowledge_base/7-0/ckeditor-plugin-reference-guide
+
+			// And How to Include Them
+			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
+
+			// cmapConfig.removePlugins = '';
+			// cmapConfig.extraPlugins = cmapConfig.extraPlugins+'';
+
+			// Enable Spell Check
+			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
+			cmapConfig.extraPlugins = 'scayt';
+			cmapConfig.scayt_autoStartup = true;
+
+			// Set Font Sizes
+			cmapConfig.fontSize_sizes = 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;';
+
+			// Set Formatting options (incomplete)
+			// Should probably be using styles
+			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
+			cmapConfig.format_tags = 'p;h2;h3;pre';
+			cmapConfig.format_h1 = {
+				element: 'h1',
+				attributes: { 'class': 'editorTitle1' }
+			};
+			cmapConfig.format_h2 = {
+				element: 'h2',
+				attributes: { 'class': 'editorTitle2' }
+			};
+			cmapConfig.format_pre = {
+				element: 'pre',
+				attributes: { 'class': 'editorCode' }
+			};
+
+			// Basic Styles
+			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_basicstyles.html
+
+			// span[style="color:#ffffff;"]{
+			//   background-color: black;
+			// }
+
+			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_uicolor.html
+			cmapConfig.uiColor = '#E4EBEE';
+
+			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_colorbutton.html
+			// cmapConfig.colorButton_colorsPerRow = 3;
+			cmapConfig.colorButton_colors = '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA';
+
+			cmapConfig.font_names = '"Whitney SSm A";"Helvetica Neue";Helvetica;Arial;sans-serif';
+			cmapConfig.font_defaultLabel = 'Whitney SSm A';
+
+			config = A.merge(config, cmapConfig);
+		}
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 
 		Liferay.on(
@@ -509,7 +546,6 @@ name = HtmlUtil.escapeJS(name);
 				<c:choose>
 					<c:when test="<%= useCustomDataProcessor %>">
 						instanceReady = true;
-
 						if (customDataProcessorLoaded) {
 							initData();
 						}
@@ -530,6 +566,7 @@ name = HtmlUtil.escapeJS(name);
 								window['<%= name %>'].onChangeCallback();
 							}
 							catch (e) {
+
 							}
 						},
 						300
@@ -538,7 +575,6 @@ name = HtmlUtil.escapeJS(name);
 					var clearContentChangeHandle = function(event) {
 						if (event.portletId === '<%= portletId %>') {
 							clearInterval(contentChangeHandle);
-
 							Liferay.detach('destroyPortlet', clearContentChangeHandle);
 						}
 					};
