@@ -302,7 +302,6 @@ name = HtmlUtil.escapeJS(name);
 					},
 					'.cke_combo'
 				);
-
 				Liferay.Data['<%= name %>Handle'] = ckePanelDelegate;
 			}
 		}
@@ -448,7 +447,10 @@ name = HtmlUtil.escapeJS(name);
 			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
 
 			// cmapConfig.removePlugins = '';
-			// cmapConfig.extraPlugins = cmapConfig.extraPlugins+'';
+			// cmapConfig.extraPlugins =
+			// cmapConfig.extraPlugins = 'allyhelp,allyhelpbtn,ajaxsave,autocomplete,basicstyles,bbcode,bidi,blockquote,clipboard,colorbutton,colordialog,contextmenu';
+			// cmapConfig.plugins = 'allyhelp,allyhelpbtn,ajaxsave,autocomplete,basicstyles,bbcode,bidi,blockquote,clipboard,colorbutton,colordialog,contextmenu';
+			// cmapConfig.extraPlugins = 'undo';
 
 			// Enable Spell Check
 			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
@@ -489,9 +491,43 @@ name = HtmlUtil.escapeJS(name);
 			// cmapConfig.colorButton_colorsPerRow = 3;
 			cmapConfig.colorButton_colors = '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA';
 
-			cmapConfig.font_names = '"Whitney SSm A";"Helvetica Neue";Helvetica;Arial;sans-serif';
-			cmapConfig.font_defaultLabel = 'Whitney SSm A';
+			// cmapConfig.font_names = '"Whitney SSm A";"Helvetica Neue";Helvetica;Arial;sans-serif';
+			cmapConfig.font_names = 'Whitney/"Whitney SSm A", "Whitney SSm B", sans-serif;Prensa/"Prensa LF", serif';
+			cmapConfig.toolbarCanCollapse = true;
 
+			// Loads every possible toolbar button
+			cmapConfig.toolbar = null;
+
+			config.removeButtons = 'Save,NewPage,Preview,CreateDiv,SelectAll,Smiley,Find,Replace,Flash';
+			// config.removeButtons += 'Form,Checkbox,Radio,TextField,Textarea,Select,Button';
+			cmapConfig.removePlugins = 'forms';
+
+			// cmapConfig.font_defaultLabel = 'Whitney SSm A';
+
+			CKEDITOR.config.specialChars = [
+				'!', '&quot;', '#', '$', '%', '&amp;', "'", '(', ')', '*', '+', '-', '.', '/',
+				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';',
+				'&lt;', '=', '&gt;', '?', '@',
+				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+				'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
+				'[', ']', '^', '_', '`',
+				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
+				'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+				'{', '|', '}', '~',
+				'&euro;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&ndash;', '&mdash;', '&iexcl;', '&cent;', '&pound;',
+				'&curren;', '&yen;', '&brvbar;', '&sect;', '&uml;', '&copy;', '&ordf;', '&laquo;', '&not;', '&reg;', '&macr;',
+				'&deg;', '&sup2;', '&sup3;', '&acute;', '&micro;', '&para;', '&middot;', '&cedil;', '&sup1;', '&ordm;', '&raquo;',
+				'&frac14;', '&frac12;', '&frac34;', '&iquest;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '&Aring;',
+				'&AElig;', '&Ccedil;', '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;', '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;',
+				'&ETH;', '&Ntilde;', '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;', '&times;', '&Oslash;', '&Ugrave;',
+				'&Uacute;', '&Ucirc;', '&Uuml;', '&Yacute;', '&THORN;', '&szlig;', '&agrave;', '&aacute;', '&acirc;', '&atilde;',
+				'&auml;', '&aring;', '&aelig;', '&ccedil;', '&egrave;', '&eacute;', '&ecirc;', '&euml;', '&igrave;', '&iacute;',
+				'&icirc;', '&iuml;', '&eth;', '&ntilde;', '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;', '&divide;',
+				'&oslash;', '&ugrave;', '&uacute;', '&ucirc;', '&uuml;', '&yacute;', '&thorn;', '&yuml;', '&OElig;', '&oelig;',
+				'&#372;', '&#374', '&#373', '&#375;', '&sbquo;', '&#8219;', '&bdquo;', '&hellip;', '&trade;', '&#9658;', '&bull;',
+				'&rarr;', '&rArr;', '&hArr;', '&diams;', '&asymp;'
+			];
+			
 			config = A.merge(config, cmapConfig);
 		}
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
@@ -529,7 +565,6 @@ name = HtmlUtil.escapeJS(name);
 				'customDataProcessorLoaded',
 				function() {
 					customDataProcessorLoaded = true;
-
 					if (instanceReady) {
 						initData();
 					}
@@ -565,9 +600,7 @@ name = HtmlUtil.escapeJS(name);
 							try {
 								window['<%= name %>'].onChangeCallback();
 							}
-							catch (e) {
-
-							}
+							catch (e) { }
 						},
 						300
 					);
@@ -642,9 +675,7 @@ name = HtmlUtil.escapeJS(name);
 						}
 						catch (e) {
 						}
-
 						(new A.EventHandle(eventHandles)).detach();
-
 						Liferay.detach('destroyPortlet', destroyInstance);
 					}
 				};
@@ -691,7 +722,6 @@ name = HtmlUtil.escapeJS(name);
 				'instanceReady',
 				function() {
 					var editorWrapper = A.one('#cke_<%= name %>');
-
 					if (editorWrapper) {
 						editorWrapper.once(
 							'mouseenter',
