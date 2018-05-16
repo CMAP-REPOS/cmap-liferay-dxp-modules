@@ -425,40 +425,33 @@ name = HtmlUtil.escapeJS(name);
 		// CMAP - apply the current page's them to CKEDITOR config
 		// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
 		// editor is in an IFRAME, so query the parent window
-		var pathThemeImages = 	window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+
+		var themePathRoot = window.parent.Liferay.ThemeDisplay.getPathThemeRoot();
+		// document.write('<link href="'+themePathRoot+'/css/ckeditor.css"></link>');
+		// document.write('<link href="https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css"></link>');
+		// document.write('<link href="https://cloud.typography.com/7947314/7427752/css/fonts.css"></link>');
 
 		if (pathThemeImages.indexOf('cmap') > -1) {
+			// All CKEditor config options
+			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
 			var cmapConfig = {
+
+				// Add Spell Check and enable by default
+				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
+				extraPlugins: 'scayt',
+				scayt_autoStartup: true,
+
+				// Set Font Sizes
+				fontSize_sizes: 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;',
 				contentsCss: [
-					pathThemeImages.replace(/\/images$/, '/css/main.css'),
-					'https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css',
-					'https://cloud.typography.com/7947314/7427752/css/fonts.css'
+					pathThemeImages.replace(/\/images$/, '/css/main.css')
 				]
 			};
 
-
-			// All CKEditor config options
-			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
-
-			// All of the plugins available by default
+			// All of the liferay ckeditor plugins available by default
 			// https://dev.liferay.com/pt/develop/reference/-/knowledge_base/7-0/ckeditor-plugin-reference-guide
-
-			// And How to Include Them
 			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
-
-			// cmapConfig.removePlugins = '';
-			// cmapConfig.extraPlugins =
-			// cmapConfig.extraPlugins = 'allyhelp,allyhelpbtn,ajaxsave,autocomplete,basicstyles,bbcode,bidi,blockquote,clipboard,colorbutton,colordialog,contextmenu';
-			// cmapConfig.plugins = 'allyhelp,allyhelpbtn,ajaxsave,autocomplete,basicstyles,bbcode,bidi,blockquote,clipboard,colorbutton,colordialog,contextmenu';
-			// cmapConfig.extraPlugins = 'undo';
-
-			// Enable Spell Check
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
-			cmapConfig.extraPlugins = 'scayt';
-			cmapConfig.scayt_autoStartup = true;
-
-			// Set Font Sizes
-			cmapConfig.fontSize_sizes = 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;';
 
 			// Set Formatting options (incomplete)
 			// Should probably be using styles
@@ -480,10 +473,6 @@ name = HtmlUtil.escapeJS(name);
 			// Basic Styles
 			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_basicstyles.html
 
-			// span[style="color:#ffffff;"]{
-			//   background-color: black;
-			// }
-
 			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_uicolor.html
 			cmapConfig.uiColor = '#E4EBEE';
 
@@ -498,36 +487,54 @@ name = HtmlUtil.escapeJS(name);
 			// Loads every possible toolbar button
 			cmapConfig.toolbar = null;
 
-			config.removeButtons = 'Save,NewPage,Preview,CreateDiv,SelectAll,Smiley,Find,Replace,Flash';
+			config.removeButtons = 'Save,NewPage,Preview,';
+			config.removeButtons += 'CreateDiv,Flash,';
+			config.removeButtons += 'SelectAll,Smiley,Find,Replace';
+			config.removeButtons += 'ParagraphFormat';
 			// config.removeButtons += 'Form,Checkbox,Radio,TextField,Textarea,Select,Button';
 			cmapConfig.removePlugins = 'forms';
+
+			CKEDITOR.stylesSet.add( 'cmap_styles', [
+		    // Block-level styles
+		    {
+					name: 'Blue Title',
+					element: 'h2',
+					styles: {
+						'color': 'Blue'
+					}
+				},
+		    {
+					name: 'Red Title',
+					element: 'h3',
+					styles: {
+						'color': 'Red'
+					}
+				},
+
+		    // Inline styles
+		    {
+					name: 'CSS Style',
+					element: 'span',
+					attributes: {
+						'class': 'my_style'
+					}
+				},
+		    {
+					name: 'Marker: Yellow',
+					element: 'span',
+					styles: {
+						'background-color': 'Yellow'
+					}
+				}
+			]);
+			cmapConfig.stylesSet = 'cmap_styles';
 
 			// cmapConfig.font_defaultLabel = 'Whitney SSm A';
 
 			CKEDITOR.config.specialChars = [
-				'!', '&quot;', '#', '$', '%', '&amp;', "'", '(', ')', '*', '+', '-', '.', '/',
-				'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ':', ';',
-				'&lt;', '=', '&gt;', '?', '@',
-				'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
-				'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z',
-				'[', ']', '^', '_', '`',
-				'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-				'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-				'{', '|', '}', '~',
-				'&euro;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&ndash;', '&mdash;', '&iexcl;', '&cent;', '&pound;',
-				'&curren;', '&yen;', '&brvbar;', '&sect;', '&uml;', '&copy;', '&ordf;', '&laquo;', '&not;', '&reg;', '&macr;',
-				'&deg;', '&sup2;', '&sup3;', '&acute;', '&micro;', '&para;', '&middot;', '&cedil;', '&sup1;', '&ordm;', '&raquo;',
-				'&frac14;', '&frac12;', '&frac34;', '&iquest;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '&Aring;',
-				'&AElig;', '&Ccedil;', '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;', '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;',
-				'&ETH;', '&Ntilde;', '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;', '&times;', '&Oslash;', '&Ugrave;',
-				'&Uacute;', '&Ucirc;', '&Uuml;', '&Yacute;', '&THORN;', '&szlig;', '&agrave;', '&aacute;', '&acirc;', '&atilde;',
-				'&auml;', '&aring;', '&aelig;', '&ccedil;', '&egrave;', '&eacute;', '&ecirc;', '&euml;', '&igrave;', '&iacute;',
-				'&icirc;', '&iuml;', '&eth;', '&ntilde;', '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;', '&divide;',
-				'&oslash;', '&ugrave;', '&uacute;', '&ucirc;', '&uuml;', '&yacute;', '&thorn;', '&yuml;', '&OElig;', '&oelig;',
-				'&#372;', '&#374', '&#373', '&#375;', '&sbquo;', '&#8219;', '&bdquo;', '&hellip;', '&trade;', '&#9658;', '&bull;',
-				'&rarr;', '&rArr;', '&hArr;', '&diams;', '&asymp;'
+				'&euro;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&ndash;', '&mdash;', '&iexcl;', '&cent;', '&pound;', '&curren;', '&yen;', '&brvbar;', '&sect;', '&uml;', '&copy;', '&ordf;', '&laquo;', '&not;', '&reg;', '&macr;', '&deg;', '&sup2;', '&sup3;', '&acute;', '&micro;', '&para;', '&middot;', '&cedil;', '&sup1;', '&ordm;', '&raquo;', '&frac14;', '&frac12;', '&frac34;', '&iquest;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '&Aring;', '&AElig;', '&Ccedil;', '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;', '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;', '&ETH;', '&Ntilde;', '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;', '&times;', '&Oslash;', '&Ugrave;', '&Uacute;', '&Ucirc;', '&Uuml;', '&Yacute;', '&THORN;', '&szlig;', '&agrave;', '&aacute;', '&acirc;', '&atilde;', '&auml;', '&aring;', '&aelig;', '&ccedil;', '&egrave;', '&eacute;', '&ecirc;', '&euml;', '&igrave;', '&iacute;', '&icirc;', '&iuml;', '&eth;', '&ntilde;', '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;', '&divide;', '&oslash;', '&ugrave;', '&uacute;', '&ucirc;', '&uuml;', '&yacute;', '&thorn;', '&yuml;', '&OElig;', '&oelig;', '&#372;', '&#374', '&#373', '&#375;', '&sbquo;', '&#8219;', '&bdquo;', '&hellip;', '&trade;', '&#9658;', '&bull;', '&rarr;', '&rArr;', '&hArr;', '&diams;', '&asymp;'
 			];
-			
+
 			config = A.merge(config, cmapConfig);
 		}
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
@@ -634,19 +641,13 @@ name = HtmlUtil.escapeJS(name);
 
 										if (currentEditor === initialEditor) {
 											var currentDialog = CKEDITOR.dialog.getCurrent();
-
 											if (currentDialog) {
 												currentDialog.hide();
 											}
-
 											ckEditorContent = ckeditorInstance.getData();
-
 											window['<%= name %>'].dispose();
-
 											window['<%= name %>'].create();
-
 											window['<%= name %>'].setHTML(ckEditorContent);
-
 											initialEditor = CKEDITOR.instances['<%= name %>'].id;
 										}
 									}
