@@ -1,0 +1,9 @@
+Bundle-Name: contact-manager-service-api
+Bundle-SymbolicName: contact.manager.service.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	contact.manager.service.exception,\
+	contact.manager.service.model,\
+	contact.manager.service.service,\
+	contact.manager.service.service.persistence
+-includeresource: META-INF/service.xml=../contact-manager-service-service/service.xml
