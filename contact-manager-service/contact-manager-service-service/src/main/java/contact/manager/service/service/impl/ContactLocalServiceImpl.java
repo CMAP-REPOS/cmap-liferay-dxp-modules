@@ -14,16 +14,23 @@
 
 package contact.manager.service.service.impl;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import contact.manager.service.service.base.ContactLocalServiceBaseImpl;
 
 /**
  * The implementation of the contact local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.service.ContactLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.service.ContactLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -34,6 +41,11 @@ public class ContactLocalServiceImpl extends ContactLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.service.ContactLocalServiceUtil} to access the contact local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.service.ContactLocalServiceUtil} to access the
+	 * contact local service.
 	 */
+
+	private static Log LOGGER = LogFactoryUtil.getLog(ContactLocalServiceImpl.class);
+
 }

@@ -96,20 +96,6 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 			true);
 	public static final long SUBGROUPNAME_COLUMN_BITMASK = 1L;
 	public static final long SUBGROUPID_COLUMN_BITMASK = 2L;
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_NAME =
-		"contactmanager_Contacts_CmapSubGroups";
-	public static final Object[][] MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_COLUMNS =
-		{
-			{ "companyId", Types.BIGINT },
-			{ "subGroupId", Types.BIGINT },
-			{ "contactId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_SQL_CREATE =
-		"create table contactmanager_Contacts_CmapSubGroups (companyId LONG not null,subGroupId LONG not null,contactId LONG not null,primary key (subGroupId, contactId))";
-	public static final boolean FINDER_CACHE_ENABLED_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS =
-		GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.contactmanager_Contacts_CmapSubGroups"),
-			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.CmapSubGroup"));
 

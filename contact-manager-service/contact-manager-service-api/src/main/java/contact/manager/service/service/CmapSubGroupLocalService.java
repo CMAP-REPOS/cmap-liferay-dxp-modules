@@ -61,12 +61,6 @@ public interface CmapSubGroupLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CmapSubGroupLocalServiceUtil} to access the cmap sub group local service. Add custom service methods to {@link contact.manager.service.service.impl.CmapSubGroupLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasContactCmapSubGroup(long contactId, long subGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasContactCmapSubGroups(long contactId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
@@ -154,9 +148,6 @@ public interface CmapSubGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCmapSubGroupsCount();
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getContactCmapSubGroupsCount(long contactId);
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -217,17 +208,6 @@ public interface CmapSubGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CmapSubGroup> getCmapSubGroups(int start, int end);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CmapSubGroup> getContactCmapSubGroups(long contactId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CmapSubGroup> getContactCmapSubGroups(long contactId,
-		int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CmapSubGroup> getContactCmapSubGroups(long contactId,
-		int start, int end, OrderByComparator<CmapSubGroup> orderByComparator);
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -245,36 +225,4 @@ public interface CmapSubGroupLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	/**
-	* Returns the contactIds of the contacts associated with the cmap sub group.
-	*
-	* @param subGroupId the subGroupId of the cmap sub group
-	* @return long[] the contactIds of contacts associated with the cmap sub group
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getContactPrimaryKeys(long subGroupId);
-
-	public void addContactCmapSubGroup(long contactId, CmapSubGroup cmapSubGroup);
-
-	public void addContactCmapSubGroup(long contactId, long subGroupId);
-
-	public void addContactCmapSubGroups(long contactId,
-		List<CmapSubGroup> cmapSubGroups);
-
-	public void addContactCmapSubGroups(long contactId, long[] subGroupIds);
-
-	public void clearContactCmapSubGroups(long contactId);
-
-	public void deleteContactCmapSubGroup(long contactId,
-		CmapSubGroup cmapSubGroup);
-
-	public void deleteContactCmapSubGroup(long contactId, long subGroupId);
-
-	public void deleteContactCmapSubGroups(long contactId,
-		List<CmapSubGroup> cmapSubGroups);
-
-	public void deleteContactCmapSubGroups(long contactId, long[] subGroupIds);
-
-	public void setContactCmapSubGroups(long contactId, long[] subGroupIds);
 }

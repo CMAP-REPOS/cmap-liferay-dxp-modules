@@ -82,11 +82,6 @@
 		<column name="kioskUuid" type="String"></column>
 		<column name="imageFileEntryId" type="long"></column>
 
-		<column name="tags" type="Collection" entity="CmapTag"
-			mapping-table="Contacts_Tags" />
-		<column name="cmapSubGroups" type="Collection" entity="CmapSubGroup"
-			mapping-table="Contacts_CmapSubGroups" />
-
 		<column name="tagsList" type="String"></column>
 		<column name="subGroupsList" type="String"></column>
 
@@ -115,8 +110,6 @@
 	<entity name="CmapGroup" local-service="true" remote-service="false">
 		<column name="groupId" type="long" primary="true" id-type="increment"></column>
 		<column name="groupName" type="String"></column>
-		<column name="subGroups" type="Collection" entity="CmapSubGroup"
-			mapping-key="groupId" />
 
 		<finder name="GroupName" return-type="Collection">
 			<finder-column name="groupName"></finder-column>
@@ -129,8 +122,7 @@
 		<column name="groupId" type="long"></column>
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
-		<column name="contacts" type="Collection" entity="Contact"
-			mapping-table="Contacts_CmapSubGroups" />
+
 		<finder name="SubGroupName" return-type="Collection">
 			<finder-column name="subGroupName"></finder-column>
 		</finder>

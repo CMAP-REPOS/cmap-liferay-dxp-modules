@@ -34,17 +34,6 @@ public class CmapSubGroupLocalServiceWrapper implements CmapSubGroupLocalService
 	}
 
 	@Override
-	public boolean hasContactCmapSubGroup(long contactId, long subGroupId) {
-		return _cmapSubGroupLocalService.hasContactCmapSubGroup(contactId,
-			subGroupId);
-	}
-
-	@Override
-	public boolean hasContactCmapSubGroups(long contactId) {
-		return _cmapSubGroupLocalService.hasContactCmapSubGroups(contactId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _cmapSubGroupLocalService.getActionableDynamicQuery();
 	}
@@ -168,11 +157,6 @@ public class CmapSubGroupLocalServiceWrapper implements CmapSubGroupLocalService
 		return _cmapSubGroupLocalService.getCmapSubGroupsCount();
 	}
 
-	@Override
-	public int getContactCmapSubGroupsCount(long contactId) {
-		return _cmapSubGroupLocalService.getContactCmapSubGroupsCount(contactId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -253,27 +237,6 @@ public class CmapSubGroupLocalServiceWrapper implements CmapSubGroupLocalService
 		return _cmapSubGroupLocalService.getCmapSubGroups(start, end);
 	}
 
-	@Override
-	public java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId) {
-		return _cmapSubGroupLocalService.getContactCmapSubGroups(contactId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId, int start, int end) {
-		return _cmapSubGroupLocalService.getContactCmapSubGroups(contactId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.service.model.CmapSubGroup> orderByComparator) {
-		return _cmapSubGroupLocalService.getContactCmapSubGroups(contactId,
-			start, end, orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -299,76 +262,6 @@ public class CmapSubGroupLocalServiceWrapper implements CmapSubGroupLocalService
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _cmapSubGroupLocalService.dynamicQueryCount(dynamicQuery,
 			projection);
-	}
-
-	/**
-	* Returns the contactIds of the contacts associated with the cmap sub group.
-	*
-	* @param subGroupId the subGroupId of the cmap sub group
-	* @return long[] the contactIds of contacts associated with the cmap sub group
-	*/
-	@Override
-	public long[] getContactPrimaryKeys(long subGroupId) {
-		return _cmapSubGroupLocalService.getContactPrimaryKeys(subGroupId);
-	}
-
-	@Override
-	public void addContactCmapSubGroup(long contactId,
-		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
-		_cmapSubGroupLocalService.addContactCmapSubGroup(contactId, cmapSubGroup);
-	}
-
-	@Override
-	public void addContactCmapSubGroup(long contactId, long subGroupId) {
-		_cmapSubGroupLocalService.addContactCmapSubGroup(contactId, subGroupId);
-	}
-
-	@Override
-	public void addContactCmapSubGroups(long contactId,
-		java.util.List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
-		_cmapSubGroupLocalService.addContactCmapSubGroups(contactId,
-			cmapSubGroups);
-	}
-
-	@Override
-	public void addContactCmapSubGroups(long contactId, long[] subGroupIds) {
-		_cmapSubGroupLocalService.addContactCmapSubGroups(contactId, subGroupIds);
-	}
-
-	@Override
-	public void clearContactCmapSubGroups(long contactId) {
-		_cmapSubGroupLocalService.clearContactCmapSubGroups(contactId);
-	}
-
-	@Override
-	public void deleteContactCmapSubGroup(long contactId,
-		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
-		_cmapSubGroupLocalService.deleteContactCmapSubGroup(contactId,
-			cmapSubGroup);
-	}
-
-	@Override
-	public void deleteContactCmapSubGroup(long contactId, long subGroupId) {
-		_cmapSubGroupLocalService.deleteContactCmapSubGroup(contactId,
-			subGroupId);
-	}
-
-	@Override
-	public void deleteContactCmapSubGroups(long contactId,
-		java.util.List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
-		_cmapSubGroupLocalService.deleteContactCmapSubGroups(contactId,
-			cmapSubGroups);
-	}
-
-	@Override
-	public void deleteContactCmapSubGroups(long contactId, long[] subGroupIds) {
-		_cmapSubGroupLocalService.deleteContactCmapSubGroups(contactId,
-			subGroupIds);
-	}
-
-	@Override
-	public void setContactCmapSubGroups(long contactId, long[] subGroupIds) {
-		_cmapSubGroupLocalService.setContactCmapSubGroups(contactId, subGroupIds);
 	}
 
 	@Override

@@ -61,18 +61,6 @@ public interface ContactLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link ContactLocalServiceUtil} to access the contact local service. Add custom service methods to {@link contact.manager.service.service.impl.ContactLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCmapSubGroupContact(long subGroupId, long contactId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCmapSubGroupContacts(long subGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCmapTagContact(long tagId, long contactId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasCmapTagContacts(long tagId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
@@ -150,12 +138,6 @@ public interface ContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public Contact updateContact(Contact contact);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCmapSubGroupContactsCount(long subGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCmapTagContactsCount(long tagId);
-
 	/**
 	* Returns the number of contacts.
 	*
@@ -210,27 +192,6 @@ public interface ContactLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapSubGroupContacts(long subGroupId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapSubGroupContacts(long subGroupId, int start,
-		int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapSubGroupContacts(long subGroupId, int start,
-		int end, OrderByComparator<Contact> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapTagContacts(long tagId);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapTagContacts(long tagId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Contact> getCmapTagContacts(long tagId, int start, int end,
-		OrderByComparator<Contact> orderByComparator);
-
 	/**
 	* Returns a range of all the contacts.
 	*
@@ -262,63 +223,4 @@ public interface ContactLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
-
-	/**
-	* Returns the subGroupIds of the cmap sub groups associated with the contact.
-	*
-	* @param contactId the contactId of the contact
-	* @return long[] the subGroupIds of cmap sub groups associated with the contact
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCmapSubGroupPrimaryKeys(long contactId);
-
-	/**
-	* Returns the tagIds of the cmap tags associated with the contact.
-	*
-	* @param contactId the contactId of the contact
-	* @return long[] the tagIds of cmap tags associated with the contact
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long[] getCmapTagPrimaryKeys(long contactId);
-
-	public void addCmapSubGroupContact(long subGroupId, Contact contact);
-
-	public void addCmapSubGroupContact(long subGroupId, long contactId);
-
-	public void addCmapSubGroupContacts(long subGroupId, List<Contact> contacts);
-
-	public void addCmapSubGroupContacts(long subGroupId, long[] contactIds);
-
-	public void addCmapTagContact(long tagId, Contact contact);
-
-	public void addCmapTagContact(long tagId, long contactId);
-
-	public void addCmapTagContacts(long tagId, List<Contact> contacts);
-
-	public void addCmapTagContacts(long tagId, long[] contactIds);
-
-	public void clearCmapSubGroupContacts(long subGroupId);
-
-	public void clearCmapTagContacts(long tagId);
-
-	public void deleteCmapSubGroupContact(long subGroupId, Contact contact);
-
-	public void deleteCmapSubGroupContact(long subGroupId, long contactId);
-
-	public void deleteCmapSubGroupContacts(long subGroupId,
-		List<Contact> contacts);
-
-	public void deleteCmapSubGroupContacts(long subGroupId, long[] contactIds);
-
-	public void deleteCmapTagContact(long tagId, Contact contact);
-
-	public void deleteCmapTagContact(long tagId, long contactId);
-
-	public void deleteCmapTagContacts(long tagId, List<Contact> contacts);
-
-	public void deleteCmapTagContacts(long tagId, long[] contactIds);
-
-	public void setCmapSubGroupContacts(long subGroupId, long[] contactIds);
-
-	public void setCmapTagContacts(long tagId, long[] contactIds);
 }

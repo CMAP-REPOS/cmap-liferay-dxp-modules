@@ -16,7 +16,6 @@ package contact.manager.service.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -28,14 +27,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
-import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
-import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -45,7 +38,6 @@ import contact.manager.service.model.CmapSubGroup;
 import contact.manager.service.model.impl.CmapSubGroupImpl;
 import contact.manager.service.model.impl.CmapSubGroupModelImpl;
 import contact.manager.service.service.persistence.CmapSubGroupPersistence;
-import contact.manager.service.service.persistence.ContactPersistence;
 
 import java.io.Serializable;
 
@@ -802,8 +794,6 @@ public class CmapSubGroupPersistenceImpl extends BasePersistenceImpl<CmapSubGrou
 	protected CmapSubGroup removeImpl(CmapSubGroup cmapSubGroup) {
 		cmapSubGroup = toUnwrappedModel(cmapSubGroup);
 
-		cmapSubGroupToContactTableMapper.deleteLeftPrimaryKeyTableMappings(cmapSubGroup.getPrimaryKey());
-
 		Session session = null;
 
 		try {
@@ -1329,309 +1319,6 @@ public class CmapSubGroupPersistenceImpl extends BasePersistenceImpl<CmapSubGrou
 		return count.intValue();
 	}
 
-	/**
-	 * Returns the primaryKeys of contacts associated with the cmap sub group.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @return long[] of the primaryKeys of contacts associated with the cmap sub group
-	 */
-	@Override
-	public long[] getContactPrimaryKeys(long pk) {
-		long[] pks = cmapSubGroupToContactTableMapper.getRightPrimaryKeys(pk);
-
-		return pks.clone();
-	}
-
-	/**
-	 * Returns all the contacts associated with the cmap sub group.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @return the contacts associated with the cmap sub group
-	 */
-	@Override
-	public List<contact.manager.service.model.Contact> getContacts(long pk) {
-		return getContacts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-	}
-
-	/**
-	 * Returns a range of all the contacts associated with the cmap sub group.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapSubGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param start the lower bound of the range of cmap sub groups
-	 * @param end the upper bound of the range of cmap sub groups (not inclusive)
-	 * @return the range of contacts associated with the cmap sub group
-	 */
-	@Override
-	public List<contact.manager.service.model.Contact> getContacts(long pk,
-		int start, int end) {
-		return getContacts(pk, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the contacts associated with the cmap sub group.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapSubGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param start the lower bound of the range of cmap sub groups
-	 * @param end the upper bound of the range of cmap sub groups (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of contacts associated with the cmap sub group
-	 */
-	@Override
-	public List<contact.manager.service.model.Contact> getContacts(long pk,
-		int start, int end,
-		OrderByComparator<contact.manager.service.model.Contact> orderByComparator) {
-		return cmapSubGroupToContactTableMapper.getRightBaseModels(pk, start,
-			end, orderByComparator);
-	}
-
-	/**
-	 * Returns the number of contacts associated with the cmap sub group.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @return the number of contacts associated with the cmap sub group
-	 */
-	@Override
-	public int getContactsSize(long pk) {
-		long[] pks = cmapSubGroupToContactTableMapper.getRightPrimaryKeys(pk);
-
-		return pks.length;
-	}
-
-	/**
-	 * Returns <code>true</code> if the contact is associated with the cmap sub group.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPK the primary key of the contact
-	 * @return <code>true</code> if the contact is associated with the cmap sub group; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsContact(long pk, long contactPK) {
-		return cmapSubGroupToContactTableMapper.containsTableMapping(pk,
-			contactPK);
-	}
-
-	/**
-	 * Returns <code>true</code> if the cmap sub group has any contacts associated with it.
-	 *
-	 * @param pk the primary key of the cmap sub group to check for associations with contacts
-	 * @return <code>true</code> if the cmap sub group has any contacts associated with it; <code>false</code> otherwise
-	 */
-	@Override
-	public boolean containsContacts(long pk) {
-		if (getContactsSize(pk) > 0) {
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-
-	/**
-	 * Adds an association between the cmap sub group and the contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPK the primary key of the contact
-	 */
-	@Override
-	public void addContact(long pk, long contactPK) {
-		CmapSubGroup cmapSubGroup = fetchByPrimaryKey(pk);
-
-		if (cmapSubGroup == null) {
-			cmapSubGroupToContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, contactPK);
-		}
-		else {
-			cmapSubGroupToContactTableMapper.addTableMapping(cmapSubGroup.getCompanyId(),
-				pk, contactPK);
-		}
-	}
-
-	/**
-	 * Adds an association between the cmap sub group and the contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contact the contact
-	 */
-	@Override
-	public void addContact(long pk,
-		contact.manager.service.model.Contact contact) {
-		CmapSubGroup cmapSubGroup = fetchByPrimaryKey(pk);
-
-		if (cmapSubGroup == null) {
-			cmapSubGroupToContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, contact.getPrimaryKey());
-		}
-		else {
-			cmapSubGroupToContactTableMapper.addTableMapping(cmapSubGroup.getCompanyId(),
-				pk, contact.getPrimaryKey());
-		}
-	}
-
-	/**
-	 * Adds an association between the cmap sub group and the contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPKs the primary keys of the contacts
-	 */
-	@Override
-	public void addContacts(long pk, long[] contactPKs) {
-		long companyId = 0;
-
-		CmapSubGroup cmapSubGroup = fetchByPrimaryKey(pk);
-
-		if (cmapSubGroup == null) {
-			companyId = companyProvider.getCompanyId();
-		}
-		else {
-			companyId = cmapSubGroup.getCompanyId();
-		}
-
-		cmapSubGroupToContactTableMapper.addTableMappings(companyId, pk,
-			contactPKs);
-	}
-
-	/**
-	 * Adds an association between the cmap sub group and the contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contacts the contacts
-	 */
-	@Override
-	public void addContacts(long pk,
-		List<contact.manager.service.model.Contact> contacts) {
-		addContacts(pk,
-			ListUtil.toLongArray(contacts,
-				contact.manager.service.model.Contact.CONTACT_ID_ACCESSOR));
-	}
-
-	/**
-	 * Clears all associations between the cmap sub group and its contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group to clear the associated contacts from
-	 */
-	@Override
-	public void clearContacts(long pk) {
-		cmapSubGroupToContactTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
-	}
-
-	/**
-	 * Removes the association between the cmap sub group and the contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPK the primary key of the contact
-	 */
-	@Override
-	public void removeContact(long pk, long contactPK) {
-		cmapSubGroupToContactTableMapper.deleteTableMapping(pk, contactPK);
-	}
-
-	/**
-	 * Removes the association between the cmap sub group and the contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contact the contact
-	 */
-	@Override
-	public void removeContact(long pk,
-		contact.manager.service.model.Contact contact) {
-		cmapSubGroupToContactTableMapper.deleteTableMapping(pk,
-			contact.getPrimaryKey());
-	}
-
-	/**
-	 * Removes the association between the cmap sub group and the contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPKs the primary keys of the contacts
-	 */
-	@Override
-	public void removeContacts(long pk, long[] contactPKs) {
-		cmapSubGroupToContactTableMapper.deleteTableMappings(pk, contactPKs);
-	}
-
-	/**
-	 * Removes the association between the cmap sub group and the contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contacts the contacts
-	 */
-	@Override
-	public void removeContacts(long pk,
-		List<contact.manager.service.model.Contact> contacts) {
-		removeContacts(pk,
-			ListUtil.toLongArray(contacts,
-				contact.manager.service.model.Contact.CONTACT_ID_ACCESSOR));
-	}
-
-	/**
-	 * Sets the contacts associated with the cmap sub group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contactPKs the primary keys of the contacts to be associated with the cmap sub group
-	 */
-	@Override
-	public void setContacts(long pk, long[] contactPKs) {
-		Set<Long> newContactPKsSet = SetUtil.fromArray(contactPKs);
-		Set<Long> oldContactPKsSet = SetUtil.fromArray(cmapSubGroupToContactTableMapper.getRightPrimaryKeys(
-					pk));
-
-		Set<Long> removeContactPKsSet = new HashSet<Long>(oldContactPKsSet);
-
-		removeContactPKsSet.removeAll(newContactPKsSet);
-
-		cmapSubGroupToContactTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeContactPKsSet));
-
-		newContactPKsSet.removeAll(oldContactPKsSet);
-
-		long companyId = 0;
-
-		CmapSubGroup cmapSubGroup = fetchByPrimaryKey(pk);
-
-		if (cmapSubGroup == null) {
-			companyId = companyProvider.getCompanyId();
-		}
-		else {
-			companyId = cmapSubGroup.getCompanyId();
-		}
-
-		cmapSubGroupToContactTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newContactPKsSet));
-	}
-
-	/**
-	 * Sets the contacts associated with the cmap sub group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
-	 *
-	 * @param pk the primary key of the cmap sub group
-	 * @param contacts the contacts to be associated with the cmap sub group
-	 */
-	@Override
-	public void setContacts(long pk,
-		List<contact.manager.service.model.Contact> contacts) {
-		try {
-			long[] contactPKs = new long[contacts.size()];
-
-			for (int i = 0; i < contacts.size(); i++) {
-				contact.manager.service.model.Contact contact = contacts.get(i);
-
-				contactPKs[i] = contact.getPrimaryKey();
-			}
-
-			setContacts(pk, contactPKs);
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-	}
-
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CmapSubGroupModelImpl.TABLE_COLUMNS_MAP;
@@ -1641,8 +1328,6 @@ public class CmapSubGroupPersistenceImpl extends BasePersistenceImpl<CmapSubGrou
 	 * Initializes the cmap sub group persistence.
 	 */
 	public void afterPropertiesSet() {
-		cmapSubGroupToContactTableMapper = TableMapperFactory.getTableMapper("contactmanager_Contacts_CmapSubGroups",
-				"companyId", "subGroupId", "contactId", this, contactPersistence);
 	}
 
 	public void destroy() {
@@ -1650,20 +1335,12 @@ public class CmapSubGroupPersistenceImpl extends BasePersistenceImpl<CmapSubGrou
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		TableMapperFactory.removeTableMapper(
-			"contactmanager_Contacts_CmapSubGroups");
 	}
 
-	@ServiceReference(type = CompanyProvider.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	@BeanReference(type = ContactPersistence.class)
-	protected ContactPersistence contactPersistence;
-	protected TableMapper<CmapSubGroup, contact.manager.service.model.Contact> cmapSubGroupToContactTableMapper;
 	private static final String _SQL_SELECT_CMAPSUBGROUP = "SELECT cmapSubGroup FROM CmapSubGroup cmapSubGroup";
 	private static final String _SQL_SELECT_CMAPSUBGROUP_WHERE_PKS_IN = "SELECT cmapSubGroup FROM CmapSubGroup cmapSubGroup WHERE subGroupId IN (";
 	private static final String _SQL_SELECT_CMAPSUBGROUP_WHERE = "SELECT cmapSubGroup FROM CmapSubGroup cmapSubGroup WHERE ";

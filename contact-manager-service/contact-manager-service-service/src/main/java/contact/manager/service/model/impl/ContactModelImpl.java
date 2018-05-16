@@ -178,33 +178,6 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	public static final long PRIMARYEMAILADDRESS_COLUMN_BITMASK = 4L;
 	public static final long STATUS_COLUMN_BITMASK = 8L;
 	public static final long LASTNAME_COLUMN_BITMASK = 16L;
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_TAGS_NAME = "contactmanager_Contacts_Tags";
-	public static final Object[][] MAPPING_TABLE_CONTACTMANAGER_CONTACTS_TAGS_COLUMNS =
-		{
-			{ "companyId", Types.BIGINT },
-			{ "contactId", Types.BIGINT },
-			{ "tagId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_TAGS_SQL_CREATE =
-		"create table contactmanager_Contacts_Tags (companyId LONG not null,tagId LONG not null,contactId LONG not null,primary key (tagId, contactId))";
-	public static final boolean FINDER_CACHE_ENABLED_CONTACTMANAGER_CONTACTS_TAGS =
-		GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.contactmanager_Contacts_Tags"),
-			true);
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_NAME =
-		"contactmanager_Contacts_CmapSubGroups";
-	public static final Object[][] MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_COLUMNS =
-		{
-			{ "companyId", Types.BIGINT },
-			{ "subGroupId", Types.BIGINT },
-			{ "contactId", Types.BIGINT }
-		};
-	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_SQL_CREATE =
-		"create table contactmanager_Contacts_CmapSubGroups (companyId LONG not null,subGroupId LONG not null,contactId LONG not null,primary key (subGroupId, contactId))";
-	public static final boolean FINDER_CACHE_ENABLED_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS =
-		GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
-				"value.object.finder.cache.enabled.contactmanager_Contacts_CmapSubGroups"),
-			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.Contact"));
 

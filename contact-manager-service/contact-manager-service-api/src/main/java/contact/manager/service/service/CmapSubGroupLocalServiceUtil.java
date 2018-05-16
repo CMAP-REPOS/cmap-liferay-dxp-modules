@@ -41,14 +41,6 @@ public class CmapSubGroupLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.service.impl.CmapSubGroupLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static boolean hasContactCmapSubGroup(long contactId, long subGroupId) {
-		return getService().hasContactCmapSubGroup(contactId, subGroupId);
-	}
-
-	public static boolean hasContactCmapSubGroups(long contactId) {
-		return getService().hasContactCmapSubGroups(contactId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -160,10 +152,6 @@ public class CmapSubGroupLocalServiceUtil {
 		return getService().getCmapSubGroupsCount();
 	}
 
-	public static int getContactCmapSubGroupsCount(long contactId) {
-		return getService().getContactCmapSubGroupsCount(contactId);
-	}
-
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -239,24 +227,6 @@ public class CmapSubGroupLocalServiceUtil {
 		return getService().getCmapSubGroups(start, end);
 	}
 
-	public static java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId) {
-		return getService().getContactCmapSubGroups(contactId);
-	}
-
-	public static java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId, int start, int end) {
-		return getService().getContactCmapSubGroups(contactId, start, end);
-	}
-
-	public static java.util.List<contact.manager.service.model.CmapSubGroup> getContactCmapSubGroups(
-		long contactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.service.model.CmapSubGroup> orderByComparator) {
-		return getService()
-				   .getContactCmapSubGroups(contactId, start, end,
-			orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -279,63 +249,6 @@ public class CmapSubGroupLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	* Returns the contactIds of the contacts associated with the cmap sub group.
-	*
-	* @param subGroupId the subGroupId of the cmap sub group
-	* @return long[] the contactIds of contacts associated with the cmap sub group
-	*/
-	public static long[] getContactPrimaryKeys(long subGroupId) {
-		return getService().getContactPrimaryKeys(subGroupId);
-	}
-
-	public static void addContactCmapSubGroup(long contactId,
-		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
-		getService().addContactCmapSubGroup(contactId, cmapSubGroup);
-	}
-
-	public static void addContactCmapSubGroup(long contactId, long subGroupId) {
-		getService().addContactCmapSubGroup(contactId, subGroupId);
-	}
-
-	public static void addContactCmapSubGroups(long contactId,
-		java.util.List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
-		getService().addContactCmapSubGroups(contactId, cmapSubGroups);
-	}
-
-	public static void addContactCmapSubGroups(long contactId,
-		long[] subGroupIds) {
-		getService().addContactCmapSubGroups(contactId, subGroupIds);
-	}
-
-	public static void clearContactCmapSubGroups(long contactId) {
-		getService().clearContactCmapSubGroups(contactId);
-	}
-
-	public static void deleteContactCmapSubGroup(long contactId,
-		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
-		getService().deleteContactCmapSubGroup(contactId, cmapSubGroup);
-	}
-
-	public static void deleteContactCmapSubGroup(long contactId, long subGroupId) {
-		getService().deleteContactCmapSubGroup(contactId, subGroupId);
-	}
-
-	public static void deleteContactCmapSubGroups(long contactId,
-		java.util.List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
-		getService().deleteContactCmapSubGroups(contactId, cmapSubGroups);
-	}
-
-	public static void deleteContactCmapSubGroups(long contactId,
-		long[] subGroupIds) {
-		getService().deleteContactCmapSubGroups(contactId, subGroupIds);
-	}
-
-	public static void setContactCmapSubGroups(long contactId,
-		long[] subGroupIds) {
-		getService().setContactCmapSubGroups(contactId, subGroupIds);
 	}
 
 	public static CmapSubGroupLocalService getService() {

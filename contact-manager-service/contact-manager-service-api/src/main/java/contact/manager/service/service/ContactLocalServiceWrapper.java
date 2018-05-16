@@ -33,26 +33,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 	}
 
 	@Override
-	public boolean hasCmapSubGroupContact(long subGroupId, long contactId) {
-		return _contactLocalService.hasCmapSubGroupContact(subGroupId, contactId);
-	}
-
-	@Override
-	public boolean hasCmapSubGroupContacts(long subGroupId) {
-		return _contactLocalService.hasCmapSubGroupContacts(subGroupId);
-	}
-
-	@Override
-	public boolean hasCmapTagContact(long tagId, long contactId) {
-		return _contactLocalService.hasCmapTagContact(tagId, contactId);
-	}
-
-	@Override
-	public boolean hasCmapTagContacts(long tagId) {
-		return _contactLocalService.hasCmapTagContacts(tagId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _contactLocalService.getActionableDynamicQuery();
 	}
@@ -162,16 +142,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		return _contactLocalService.updateContact(contact);
 	}
 
-	@Override
-	public int getCmapSubGroupContactsCount(long subGroupId) {
-		return _contactLocalService.getCmapSubGroupContactsCount(subGroupId);
-	}
-
-	@Override
-	public int getCmapTagContactsCount(long tagId) {
-		return _contactLocalService.getCmapTagContactsCount(tagId);
-	}
-
 	/**
 	* Returns the number of contacts.
 	*
@@ -245,47 +215,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapSubGroupContacts(
-		long subGroupId) {
-		return _contactLocalService.getCmapSubGroupContacts(subGroupId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapSubGroupContacts(
-		long subGroupId, int start, int end) {
-		return _contactLocalService.getCmapSubGroupContacts(subGroupId, start,
-			end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapSubGroupContacts(
-		long subGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.service.model.Contact> orderByComparator) {
-		return _contactLocalService.getCmapSubGroupContacts(subGroupId, start,
-			end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapTagContacts(
-		long tagId) {
-		return _contactLocalService.getCmapTagContacts(tagId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapTagContacts(
-		long tagId, int start, int end) {
-		return _contactLocalService.getCmapTagContacts(tagId, start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.service.model.Contact> getCmapTagContacts(
-		long tagId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.service.model.Contact> orderByComparator) {
-		return _contactLocalService.getCmapTagContacts(tagId, start, end,
-			orderByComparator);
-	}
-
 	/**
 	* Returns a range of all the contacts.
 	*
@@ -327,136 +256,6 @@ public class ContactLocalServiceWrapper implements ContactLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _contactLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	* Returns the subGroupIds of the cmap sub groups associated with the contact.
-	*
-	* @param contactId the contactId of the contact
-	* @return long[] the subGroupIds of cmap sub groups associated with the contact
-	*/
-	@Override
-	public long[] getCmapSubGroupPrimaryKeys(long contactId) {
-		return _contactLocalService.getCmapSubGroupPrimaryKeys(contactId);
-	}
-
-	/**
-	* Returns the tagIds of the cmap tags associated with the contact.
-	*
-	* @param contactId the contactId of the contact
-	* @return long[] the tagIds of cmap tags associated with the contact
-	*/
-	@Override
-	public long[] getCmapTagPrimaryKeys(long contactId) {
-		return _contactLocalService.getCmapTagPrimaryKeys(contactId);
-	}
-
-	@Override
-	public void addCmapSubGroupContact(long subGroupId,
-		contact.manager.service.model.Contact contact) {
-		_contactLocalService.addCmapSubGroupContact(subGroupId, contact);
-	}
-
-	@Override
-	public void addCmapSubGroupContact(long subGroupId, long contactId) {
-		_contactLocalService.addCmapSubGroupContact(subGroupId, contactId);
-	}
-
-	@Override
-	public void addCmapSubGroupContacts(long subGroupId,
-		java.util.List<contact.manager.service.model.Contact> contacts) {
-		_contactLocalService.addCmapSubGroupContacts(subGroupId, contacts);
-	}
-
-	@Override
-	public void addCmapSubGroupContacts(long subGroupId, long[] contactIds) {
-		_contactLocalService.addCmapSubGroupContacts(subGroupId, contactIds);
-	}
-
-	@Override
-	public void addCmapTagContact(long tagId,
-		contact.manager.service.model.Contact contact) {
-		_contactLocalService.addCmapTagContact(tagId, contact);
-	}
-
-	@Override
-	public void addCmapTagContact(long tagId, long contactId) {
-		_contactLocalService.addCmapTagContact(tagId, contactId);
-	}
-
-	@Override
-	public void addCmapTagContacts(long tagId,
-		java.util.List<contact.manager.service.model.Contact> contacts) {
-		_contactLocalService.addCmapTagContacts(tagId, contacts);
-	}
-
-	@Override
-	public void addCmapTagContacts(long tagId, long[] contactIds) {
-		_contactLocalService.addCmapTagContacts(tagId, contactIds);
-	}
-
-	@Override
-	public void clearCmapSubGroupContacts(long subGroupId) {
-		_contactLocalService.clearCmapSubGroupContacts(subGroupId);
-	}
-
-	@Override
-	public void clearCmapTagContacts(long tagId) {
-		_contactLocalService.clearCmapTagContacts(tagId);
-	}
-
-	@Override
-	public void deleteCmapSubGroupContact(long subGroupId,
-		contact.manager.service.model.Contact contact) {
-		_contactLocalService.deleteCmapSubGroupContact(subGroupId, contact);
-	}
-
-	@Override
-	public void deleteCmapSubGroupContact(long subGroupId, long contactId) {
-		_contactLocalService.deleteCmapSubGroupContact(subGroupId, contactId);
-	}
-
-	@Override
-	public void deleteCmapSubGroupContacts(long subGroupId,
-		java.util.List<contact.manager.service.model.Contact> contacts) {
-		_contactLocalService.deleteCmapSubGroupContacts(subGroupId, contacts);
-	}
-
-	@Override
-	public void deleteCmapSubGroupContacts(long subGroupId, long[] contactIds) {
-		_contactLocalService.deleteCmapSubGroupContacts(subGroupId, contactIds);
-	}
-
-	@Override
-	public void deleteCmapTagContact(long tagId,
-		contact.manager.service.model.Contact contact) {
-		_contactLocalService.deleteCmapTagContact(tagId, contact);
-	}
-
-	@Override
-	public void deleteCmapTagContact(long tagId, long contactId) {
-		_contactLocalService.deleteCmapTagContact(tagId, contactId);
-	}
-
-	@Override
-	public void deleteCmapTagContacts(long tagId,
-		java.util.List<contact.manager.service.model.Contact> contacts) {
-		_contactLocalService.deleteCmapTagContacts(tagId, contacts);
-	}
-
-	@Override
-	public void deleteCmapTagContacts(long tagId, long[] contactIds) {
-		_contactLocalService.deleteCmapTagContacts(tagId, contactIds);
-	}
-
-	@Override
-	public void setCmapSubGroupContacts(long subGroupId, long[] contactIds) {
-		_contactLocalService.setCmapSubGroupContacts(subGroupId, contactIds);
-	}
-
-	@Override
-	public void setCmapTagContacts(long tagId, long[] contactIds) {
-		_contactLocalService.setCmapTagContacts(tagId, contactIds);
 	}
 
 	@Override
