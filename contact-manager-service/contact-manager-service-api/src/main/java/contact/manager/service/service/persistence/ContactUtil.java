@@ -1,0 +1,670 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
+package contact.manager.service.service.persistence;
+
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import contact.manager.service.model.Contact;
+
+import org.osgi.util.tracker.ServiceTracker;
+
+import java.util.List;
+
+/**
+ * The persistence utility for the contact service. This utility wraps {@link contact.manager.service.service.persistence.impl.ContactPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ *
+ * <p>
+ * Caching information and settings can be found in <code>portal.properties</code>
+ * </p>
+ *
+ * @author Brian Wing Shun Chan
+ * @see ContactPersistence
+ * @see contact.manager.service.service.persistence.impl.ContactPersistenceImpl
+ * @generated
+ */
+@ProviderType
+public class ContactUtil {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify this class directly. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 */
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache()
+	 */
+	public static void clearCache() {
+		getPersistence().clearCache();
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#clearCache(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static void clearCache(Contact contact) {
+		getPersistence().clearCache(contact);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
+	 */
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().countWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
+	 */
+	public static List<Contact> findWithDynamicQuery(DynamicQuery dynamicQuery) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
+	 */
+	public static List<Contact> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
+	 */
+	public static List<Contact> findWithDynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<Contact> orderByComparator) {
+		return getPersistence()
+				   .findWithDynamicQuery(dynamicQuery, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel)
+	 */
+	public static Contact update(Contact contact) {
+		return getPersistence().update(contact);
+	}
+
+	/**
+	 * @see com.liferay.portal.kernel.service.persistence.BasePersistence#update(com.liferay.portal.kernel.model.BaseModel, ServiceContext)
+	 */
+	public static Contact update(Contact contact, ServiceContext serviceContext) {
+		return getPersistence().update(contact, serviceContext);
+	}
+
+	/**
+	* Caches the contact in the entity cache if it is enabled.
+	*
+	* @param contact the contact
+	*/
+	public static void cacheResult(Contact contact) {
+		getPersistence().cacheResult(contact);
+	}
+
+	/**
+	* Caches the contacts in the entity cache if it is enabled.
+	*
+	* @param contacts the contacts
+	*/
+	public static void cacheResult(List<Contact> contacts) {
+		getPersistence().cacheResult(contacts);
+	}
+
+	/**
+	* Creates a new contact with the primary key. Does not add the contact to the database.
+	*
+	* @param contactId the primary key for the new contact
+	* @return the new contact
+	*/
+	public static Contact create(long contactId) {
+		return getPersistence().create(contactId);
+	}
+
+	/**
+	* Removes the contact with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact that was removed
+	* @throws NoSuchContactException if a contact with the primary key could not be found
+	*/
+	public static Contact remove(long contactId)
+		throws contact.manager.service.exception.NoSuchContactException {
+		return getPersistence().remove(contactId);
+	}
+
+	public static Contact updateImpl(Contact contact) {
+		return getPersistence().updateImpl(contact);
+	}
+
+	/**
+	* Returns the contact with the primary key or throws a {@link NoSuchContactException} if it could not be found.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact
+	* @throws NoSuchContactException if a contact with the primary key could not be found
+	*/
+	public static Contact findByPrimaryKey(long contactId)
+		throws contact.manager.service.exception.NoSuchContactException {
+		return getPersistence().findByPrimaryKey(contactId);
+	}
+
+	/**
+	* Returns the contact with the primary key or returns <code>null</code> if it could not be found.
+	*
+	* @param contactId the primary key of the contact
+	* @return the contact, or <code>null</code> if a contact with the primary key could not be found
+	*/
+	public static Contact fetchByPrimaryKey(long contactId) {
+		return getPersistence().fetchByPrimaryKey(contactId);
+	}
+
+	public static java.util.Map<java.io.Serializable, Contact> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
+	}
+
+	/**
+	* Returns all the contacts.
+	*
+	* @return the contacts
+	*/
+	public static List<Contact> findAll() {
+		return getPersistence().findAll();
+	}
+
+	/**
+	* Returns a range of all the contacts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of contacts
+	*/
+	public static List<Contact> findAll(int start, int end) {
+		return getPersistence().findAll(start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the contacts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of contacts
+	*/
+	public static List<Contact> findAll(int start, int end,
+		OrderByComparator<Contact> orderByComparator) {
+		return getPersistence().findAll(start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the contacts.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of contacts
+	*/
+	public static List<Contact> findAll(int start, int end,
+		OrderByComparator<Contact> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the contacts from the database.
+	*/
+	public static void removeAll() {
+		getPersistence().removeAll();
+	}
+
+	/**
+	* Returns the number of contacts.
+	*
+	* @return the number of contacts
+	*/
+	public static int countAll() {
+		return getPersistence().countAll();
+	}
+
+	/**
+	* Returns the primaryKeys of cmap tags associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return long[] of the primaryKeys of cmap tags associated with the contact
+	*/
+	public static long[] getCmapTagPrimaryKeys(long pk) {
+		return getPersistence().getCmapTagPrimaryKeys(pk);
+	}
+
+	/**
+	* Returns all the cmap tags associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return the cmap tags associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapTag> getCmapTags(
+		long pk) {
+		return getPersistence().getCmapTags(pk);
+	}
+
+	/**
+	* Returns a range of all the cmap tags associated with the contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the contact
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of cmap tags associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapTag> getCmapTags(
+		long pk, int start, int end) {
+		return getPersistence().getCmapTags(pk, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cmap tags associated with the contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the contact
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of cmap tags associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapTag> getCmapTags(
+		long pk, int start, int end,
+		OrderByComparator<contact.manager.service.model.CmapTag> orderByComparator) {
+		return getPersistence().getCmapTags(pk, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of cmap tags associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return the number of cmap tags associated with the contact
+	*/
+	public static int getCmapTagsSize(long pk) {
+		return getPersistence().getCmapTagsSize(pk);
+	}
+
+	/**
+	* Returns <code>true</code> if the cmap tag is associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPK the primary key of the cmap tag
+	* @return <code>true</code> if the cmap tag is associated with the contact; <code>false</code> otherwise
+	*/
+	public static boolean containsCmapTag(long pk, long cmapTagPK) {
+		return getPersistence().containsCmapTag(pk, cmapTagPK);
+	}
+
+	/**
+	* Returns <code>true</code> if the contact has any cmap tags associated with it.
+	*
+	* @param pk the primary key of the contact to check for associations with cmap tags
+	* @return <code>true</code> if the contact has any cmap tags associated with it; <code>false</code> otherwise
+	*/
+	public static boolean containsCmapTags(long pk) {
+		return getPersistence().containsCmapTags(pk);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPK the primary key of the cmap tag
+	*/
+	public static void addCmapTag(long pk, long cmapTagPK) {
+		getPersistence().addCmapTag(pk, cmapTagPK);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTag the cmap tag
+	*/
+	public static void addCmapTag(long pk,
+		contact.manager.service.model.CmapTag cmapTag) {
+		getPersistence().addCmapTag(pk, cmapTag);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPKs the primary keys of the cmap tags
+	*/
+	public static void addCmapTags(long pk, long[] cmapTagPKs) {
+		getPersistence().addCmapTags(pk, cmapTagPKs);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTags the cmap tags
+	*/
+	public static void addCmapTags(long pk,
+		List<contact.manager.service.model.CmapTag> cmapTags) {
+		getPersistence().addCmapTags(pk, cmapTags);
+	}
+
+	/**
+	* Clears all associations between the contact and its cmap tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact to clear the associated cmap tags from
+	*/
+	public static void clearCmapTags(long pk) {
+		getPersistence().clearCmapTags(pk);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPK the primary key of the cmap tag
+	*/
+	public static void removeCmapTag(long pk, long cmapTagPK) {
+		getPersistence().removeCmapTag(pk, cmapTagPK);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTag the cmap tag
+	*/
+	public static void removeCmapTag(long pk,
+		contact.manager.service.model.CmapTag cmapTag) {
+		getPersistence().removeCmapTag(pk, cmapTag);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPKs the primary keys of the cmap tags
+	*/
+	public static void removeCmapTags(long pk, long[] cmapTagPKs) {
+		getPersistence().removeCmapTags(pk, cmapTagPKs);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTags the cmap tags
+	*/
+	public static void removeCmapTags(long pk,
+		List<contact.manager.service.model.CmapTag> cmapTags) {
+		getPersistence().removeCmapTags(pk, cmapTags);
+	}
+
+	/**
+	* Sets the cmap tags associated with the contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTagPKs the primary keys of the cmap tags to be associated with the contact
+	*/
+	public static void setCmapTags(long pk, long[] cmapTagPKs) {
+		getPersistence().setCmapTags(pk, cmapTagPKs);
+	}
+
+	/**
+	* Sets the cmap tags associated with the contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapTags the cmap tags to be associated with the contact
+	*/
+	public static void setCmapTags(long pk,
+		List<contact.manager.service.model.CmapTag> cmapTags) {
+		getPersistence().setCmapTags(pk, cmapTags);
+	}
+
+	/**
+	* Returns the primaryKeys of cmap sub groups associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return long[] of the primaryKeys of cmap sub groups associated with the contact
+	*/
+	public static long[] getCmapSubGroupPrimaryKeys(long pk) {
+		return getPersistence().getCmapSubGroupPrimaryKeys(pk);
+	}
+
+	/**
+	* Returns all the cmap sub groups associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return the cmap sub groups associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapSubGroup> getCmapSubGroups(
+		long pk) {
+		return getPersistence().getCmapSubGroups(pk);
+	}
+
+	/**
+	* Returns a range of all the cmap sub groups associated with the contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the contact
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @return the range of cmap sub groups associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapSubGroup> getCmapSubGroups(
+		long pk, int start, int end) {
+		return getPersistence().getCmapSubGroups(pk, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cmap sub groups associated with the contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the contact
+	* @param start the lower bound of the range of contacts
+	* @param end the upper bound of the range of contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of cmap sub groups associated with the contact
+	*/
+	public static List<contact.manager.service.model.CmapSubGroup> getCmapSubGroups(
+		long pk, int start, int end,
+		OrderByComparator<contact.manager.service.model.CmapSubGroup> orderByComparator) {
+		return getPersistence()
+				   .getCmapSubGroups(pk, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of cmap sub groups associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @return the number of cmap sub groups associated with the contact
+	*/
+	public static int getCmapSubGroupsSize(long pk) {
+		return getPersistence().getCmapSubGroupsSize(pk);
+	}
+
+	/**
+	* Returns <code>true</code> if the cmap sub group is associated with the contact.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPK the primary key of the cmap sub group
+	* @return <code>true</code> if the cmap sub group is associated with the contact; <code>false</code> otherwise
+	*/
+	public static boolean containsCmapSubGroup(long pk, long cmapSubGroupPK) {
+		return getPersistence().containsCmapSubGroup(pk, cmapSubGroupPK);
+	}
+
+	/**
+	* Returns <code>true</code> if the contact has any cmap sub groups associated with it.
+	*
+	* @param pk the primary key of the contact to check for associations with cmap sub groups
+	* @return <code>true</code> if the contact has any cmap sub groups associated with it; <code>false</code> otherwise
+	*/
+	public static boolean containsCmapSubGroups(long pk) {
+		return getPersistence().containsCmapSubGroups(pk);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap sub group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPK the primary key of the cmap sub group
+	*/
+	public static void addCmapSubGroup(long pk, long cmapSubGroupPK) {
+		getPersistence().addCmapSubGroup(pk, cmapSubGroupPK);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap sub group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroup the cmap sub group
+	*/
+	public static void addCmapSubGroup(long pk,
+		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
+		getPersistence().addCmapSubGroup(pk, cmapSubGroup);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap sub groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPKs the primary keys of the cmap sub groups
+	*/
+	public static void addCmapSubGroups(long pk, long[] cmapSubGroupPKs) {
+		getPersistence().addCmapSubGroups(pk, cmapSubGroupPKs);
+	}
+
+	/**
+	* Adds an association between the contact and the cmap sub groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroups the cmap sub groups
+	*/
+	public static void addCmapSubGroups(long pk,
+		List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
+		getPersistence().addCmapSubGroups(pk, cmapSubGroups);
+	}
+
+	/**
+	* Clears all associations between the contact and its cmap sub groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact to clear the associated cmap sub groups from
+	*/
+	public static void clearCmapSubGroups(long pk) {
+		getPersistence().clearCmapSubGroups(pk);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap sub group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPK the primary key of the cmap sub group
+	*/
+	public static void removeCmapSubGroup(long pk, long cmapSubGroupPK) {
+		getPersistence().removeCmapSubGroup(pk, cmapSubGroupPK);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap sub group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroup the cmap sub group
+	*/
+	public static void removeCmapSubGroup(long pk,
+		contact.manager.service.model.CmapSubGroup cmapSubGroup) {
+		getPersistence().removeCmapSubGroup(pk, cmapSubGroup);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap sub groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPKs the primary keys of the cmap sub groups
+	*/
+	public static void removeCmapSubGroups(long pk, long[] cmapSubGroupPKs) {
+		getPersistence().removeCmapSubGroups(pk, cmapSubGroupPKs);
+	}
+
+	/**
+	* Removes the association between the contact and the cmap sub groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroups the cmap sub groups
+	*/
+	public static void removeCmapSubGroups(long pk,
+		List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
+		getPersistence().removeCmapSubGroups(pk, cmapSubGroups);
+	}
+
+	/**
+	* Sets the cmap sub groups associated with the contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroupPKs the primary keys of the cmap sub groups to be associated with the contact
+	*/
+	public static void setCmapSubGroups(long pk, long[] cmapSubGroupPKs) {
+		getPersistence().setCmapSubGroups(pk, cmapSubGroupPKs);
+	}
+
+	/**
+	* Sets the cmap sub groups associated with the contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the contact
+	* @param cmapSubGroups the cmap sub groups to be associated with the contact
+	*/
+	public static void setCmapSubGroups(long pk,
+		List<contact.manager.service.model.CmapSubGroup> cmapSubGroups) {
+		getPersistence().setCmapSubGroups(pk, cmapSubGroups);
+	}
+
+	public static ContactPersistence getPersistence() {
+		return _serviceTracker.getService();
+	}
+
+	private static ServiceTracker<ContactPersistence, ContactPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(ContactPersistence.class);
+}

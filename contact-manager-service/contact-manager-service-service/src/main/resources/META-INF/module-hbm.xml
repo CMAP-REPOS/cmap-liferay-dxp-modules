@@ -1,0 +1,203 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="contact.manager.service.model.CCA" />
+	<import class="contact.manager.service.model.Chi_Ward" />
+	<import class="contact.manager.service.model.CmapGroup" />
+	<import class="contact.manager.service.model.CmapSubGroup" />
+	<import class="contact.manager.service.model.CmapTag" />
+	<import class="contact.manager.service.model.Contact" />
+	<import class="contact.manager.service.model.ContactAuditLog" />
+	<import class="contact.manager.service.model.ContactAuditLogChange" />
+	<import class="contact.manager.service.model.County" />
+	<import class="contact.manager.service.model.County_Commissioner_or_Board_Dist" />
+	<import class="contact.manager.service.model.LTA" />
+	<import class="contact.manager.service.model.Muni" />
+	<import class="contact.manager.service.model.Note" />
+	<import class="contact.manager.service.model.OutreachLog" />
+	<import class="contact.manager.service.model.State_Rep" />
+	<import class="contact.manager.service.model.State_Senate" />
+	<import class="contact.manager.service.model.US_Rep" />
+	<class name="contact.manager.service.model.impl.CCAImpl" table="contactmanager_CCA">
+		<id name="ccaId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="ccaName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.Chi_WardImpl" table="contactmanager_Chi_Ward">
+		<id name="chiWardId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="chiWardName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.CmapGroupImpl" table="contactmanager_CmapGroup">
+		<id name="groupId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="groupName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.CmapSubGroupImpl" table="contactmanager_CmapSubGroup">
+		<id name="subGroupId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="subGroupName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="contact.manager.service.model.impl.CmapTagImpl" table="contactmanager_CmapTag">
+		<id name="tagId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="tagName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.ContactImpl" table="contactmanager_Contact">
+		<id name="contactId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="constantContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="prefix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="salutation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="middleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="organization" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddress1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddress2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCounty" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddress1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddress2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCounty" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryPhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryFax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryCell" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="alternateContact" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="alternateEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="isVip" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="facebookId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="twitterHandle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="linkedInUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="kioskUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="imageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="tagsList" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="subGroupsList" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.ContactAuditLogImpl" table="contactmanager_ContactAuditLog">
+		<id name="contactAuditLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="action" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="constantContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="oldSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="newSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="contact.manager.service.model.impl.ContactAuditLogChangeImpl" table="contactmanager_ContactAuditLogChange">
+		<id name="contactAuditLogChangeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="contactAuditLogId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fieldName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="oldValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="newValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.CountyImpl" table="contactmanager_County">
+		<id name="countyId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="countyName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.County_Commissioner_or_Board_DistImpl" table="contactmanager_County_Commissioner_or_Board_Dist">
+		<id name="ccbdId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="ccbdNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ccbdName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.LTAImpl" table="contactmanager_LTA">
+		<id name="ltaId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="ltaName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.MuniImpl" table="contactmanager_Muni">
+		<id name="muniId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="muniName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.NoteImpl" table="contactmanager_Note">
+		<id column="id_" name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="contact.manager.service.model.impl.OutreachLogImpl" table="contactmanager_OutreachLog">
+		<id column="id_" name="id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="contactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="medium" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="activityType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="outreachDate" type="org.hibernate.type.TimestampType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="contact.manager.service.model.impl.State_RepImpl" table="contactmanager_State_Rep">
+		<id name="stateRepId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="stateRepNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="stateRepName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.State_SenateImpl" table="contactmanager_State_Senate">
+		<id name="stateSenateId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="stateSenateNumber" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="stateSenateName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.service.model.impl.US_RepImpl" table="contactmanager_US_Rep">
+		<id name="usRepId" type="long">
+			<generator class="increment" />
+		</id>
+		<property name="usRepNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="usRepName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

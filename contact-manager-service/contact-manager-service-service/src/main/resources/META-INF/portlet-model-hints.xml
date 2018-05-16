@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="contact.manager.service.model.CCA">
+		<field name="ccaId" type="long" />
+		<field name="ccaName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.Chi_Ward">
+		<field name="chiWardId" type="long" />
+		<field name="chiWardName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.CmapGroup">
+		<field name="groupId" type="long" />
+		<field name="groupName" type="String" />
+	</model>
+	<model name="contact.manager.service.model.CmapSubGroup">
+		<field name="subGroupId" type="long" />
+		<field name="subGroupName" type="String" />
+		<field name="groupId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="contact.manager.service.model.CmapTag">
+		<field name="tagId" type="long" />
+		<field name="tagName" type="String" />
+	</model>
+	<model name="contact.manager.service.model.Contact">
+		<field name="contactId" type="long" />
+		<field name="constantContactId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="prefix" type="String" />
+		<field name="salutation" type="String" />
+		<field name="firstName" type="String" />
+		<field name="middleName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="organization" type="String" />
+		<field name="jobTitle" type="String" />
+		<field name="primaryAddress1" type="String" />
+		<field name="primaryAddress2" type="String" />
+		<field name="primaryAddressCity" type="String" />
+		<field name="primaryAddressState" type="String" />
+		<field name="primaryAddressZip" type="String" />
+		<field name="primaryAddressCounty" type="String" />
+		<field name="primaryAddressCountry" type="String" />
+		<field name="secondaryAddress1" type="String" />
+		<field name="secondaryAddress2" type="String" />
+		<field name="secondaryAddressCity" type="String" />
+		<field name="secondaryAddressState" type="String" />
+		<field name="secondaryAddressZip" type="String" />
+		<field name="secondaryAddressCounty" type="String" />
+		<field name="secondaryAddressCountry" type="String" />
+		<field name="primaryPhone" type="String" />
+		<field name="primaryFax" type="String" />
+		<field name="primaryCell" type="String" />
+		<field name="primaryEmailAddress" type="String" />
+		<field name="alternateContact" type="String" />
+		<field name="alternateEmail" type="String" />
+		<field name="isVip" type="boolean" />
+		<field name="facebookId" type="String" />
+		<field name="twitterHandle" type="String" />
+		<field name="linkedInUrl" type="String" />
+		<field name="status" type="String" />
+		<field name="kioskUuid" type="String" />
+		<field name="imageFileEntryId" type="long" />
+		<field name="tagsList" type="String" />
+		<field name="subGroupsList" type="String" />
+	</model>
+	<model name="contact.manager.service.model.ContactAuditLog">
+		<field name="contactAuditLogId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="action" type="String" />
+		<field name="constantContactId" type="long" />
+		<field name="oldSnapshot" type="String" />
+		<field name="newSnapshot" type="String" />
+		<field name="contactId" type="long" />
+	</model>
+	<model name="contact.manager.service.model.ContactAuditLogChange">
+		<field name="contactAuditLogChangeId" type="long" />
+		<field name="contactAuditLogId" type="long" />
+		<field name="fieldName" type="String" />
+		<field name="oldValue" type="String" />
+		<field name="newValue" type="String" />
+	</model>
+	<model name="contact.manager.service.model.County">
+		<field name="countyId" type="long" />
+		<field name="countyName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.County_Commissioner_or_Board_Dist">
+		<field name="ccbdId" type="long" />
+		<field name="ccbdNumber" type="int" />
+		<field name="ccbdName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.LTA">
+		<field name="ltaId" type="long" />
+		<field name="ltaName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.Muni">
+		<field name="muniId" type="long" />
+		<field name="muniName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.Note">
+		<field name="id" type="long" />
+		<field name="contactId" type="long" />
+		<field name="userId" type="long" />
+		<field name="note" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="contact.manager.service.model.OutreachLog">
+		<field name="id" type="long" />
+		<field name="userId" type="long" />
+		<field name="contactId" type="long" />
+		<field name="note" type="String" />
+		<field name="medium" type="String" />
+		<field name="activityType" type="String" />
+		<field name="outreachDate" type="Date" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="contact.manager.service.model.State_Rep">
+		<field name="stateRepId" type="long" />
+		<field name="stateRepNumber" type="int" />
+		<field name="stateRepName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.State_Senate">
+		<field name="stateSenateId" type="long" />
+		<field name="stateSenateNumber" type="int" />
+		<field name="stateSenateName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.service.model.US_Rep">
+		<field name="usRepId" type="long" />
+		<field name="usRepNumber" type="String" />
+		<field name="usRepName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+</model-hints>
