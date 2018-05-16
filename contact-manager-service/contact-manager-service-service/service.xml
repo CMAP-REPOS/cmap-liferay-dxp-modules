@@ -2,49 +2,276 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
 
 <service-builder package-path="contact.manager.service">
-	<namespace>FOO</namespace>
-	<!--<entity data-source="sampleDataSource" local-service="true" name="Foo" remote-service="false" session-factory="sampleSessionFactory" table="foo" tx-manager="sampleTransactionManager uuid="true"">-->
-	<entity local-service="true" name="Foo" remote-service="true" uuid="true">
+	<namespace>contactmanager</namespace>
+	<entity name="ContactAuditLog" local-service="true"
+		remote-service="false">
+		<column name="contactAuditLogId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="action" type="String"></column>
+		<column name="constantContactId" type="long"></column>
+		<column name="oldSnapshot" type="String"></column>
+		<column name="newSnapshot" type="String"></column>
+		<column name="contactId" type="long"></column>
+		<order>
+			<order-column name="createDate" order-by="desc"></order-column>
+		</order>
+		<finder name="ConstantContactId" return-type="Collection">
+			<finder-column name="constantContactId"></finder-column>
+		</finder>
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="ContactAuditLogChange" local-service="true"
+		remote-service="false">
+		<column name="contactAuditLogChangeId" type="long" primary="true"></column>
+		<column name="contactAuditLogId" type="long"></column>
+		<column name="fieldName" type="String"></column>
+		<column name="oldValue" type="String"></column>
+		<column name="newValue" type="String"></column>
+		<order>
+			<order-column name="contactAuditLogChangeId" order-by="asc"></order-column>
+		</order>
+		<finder name="ContactAuditLogId" return-type="Collection">
+			<finder-column name="contactAuditLogId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Contact" local-service="true" remote-service="false">
+		<column name="contactId" type="long" primary="true" id-type="increment"></column>
+		<column name="constantContactId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="prefix" type="String"></column>
+		<column name="salutation" type="String"></column>
+		<column name="firstName" type="String"></column>
+		<column name="middleName" type="String"></column>
+		<column name="lastName" type="String"></column>
+		<column name="organization" type="String"></column>
+		<column name="jobTitle" type="String"></column>
+		<column name="primaryAddress1" type="String"></column>
+		<column name="primaryAddress2" type="String"></column>
+		<column name="primaryAddressCity" type="String"></column>
+		<column name="primaryAddressState" type="String"></column>
+		<column name="primaryAddressZip" type="String"></column>
+		<column name="primaryAddressCounty" type="String"></column>
+		<column name="primaryAddressCountry" type="String"></column>
+		<column name="secondaryAddress1" type="String"></column>
+		<column name="secondaryAddress2" type="String"></column>
+		<column name="secondaryAddressCity" type="String"></column>
+		<column name="secondaryAddressState" type="String"></column>
+		<column name="secondaryAddressZip" type="String"></column>
+		<column name="secondaryAddressCounty" type="String"></column>
+		<column name="secondaryAddressCountry" type="String"></column>
+		<column name="primaryPhone" type="String"></column>
+		<column name="primaryFax" type="String"></column>
+		<column name="primaryCell" type="String"></column>
+		<column name="primaryEmailAddress" type="String"></column>
+		<column name="alternateContact" type="String"></column>
+		<column name="alternateEmail" type="String"></column>
+		<column name="isVip" type="boolean"></column>
+		<column name="facebookId" type="String"></column>
+		<column name="twitterHandle" type="String"></column>
+		<column name="linkedInUrl" type="String"></column>
+		<column name="status" type="String"></column>
+		<column name="kioskUuid" type="String"></column>
+		<column name="imageFileEntryId" type="long"></column>
 
-		<!-- PK fields -->
+		<column name="tags" type="Collection" entity="CmapTag"
+			mapping-table="Contacts_Tags" />
+		<column name="cmapSubGroups" type="Collection" entity="CmapSubGroup"
+			mapping-table="Contacts_CmapSubGroups" />
 
-		<column name="fooId" primary="true" type="long" />
-
-		<!-- Group instance -->
-
-		<column name="groupId" type="long" />
-
-		<!-- Audit fields -->
-
-		<column name="companyId" type="long" />
-		<column name="userId" type="long" />
-		<column name="userName" type="String" />
-		<column name="createDate" type="Date" />
-		<column name="modifiedDate" type="Date" />
-
-		<!-- Other fields -->
-
-		<column name="field1" type="String" />
-		<column name="field2" type="boolean" />
-		<column name="field3" type="int" />
-		<column name="field4" type="Date" />
-		<column name="field5" type="String" />
-
-		<!-- Order -->
+		<column name="tagsList" type="String"></column>
+		<column name="subGroupsList" type="String"></column>
 
 		<order by="asc">
-			<order-column name="field1" />
+			<order-column name="lastName"></order-column>
 		</order>
 
-		<!-- Finder methods -->
-
-		<finder name="Field2" return-type="Collection">
-			<finder-column name="field2" />
+		<finder name="PrimaryEmailAddress" return-type="Collection">
+			<finder-column name="primaryEmailAddress"></finder-column>
 		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status"></finder-column>
+		</finder>
+		<finder name="PrimaryEmailAddressAndStatus" return-type="Collection">
+			<finder-column name="primaryEmailAddress"></finder-column>
+			<finder-column name="status"></finder-column>
+		</finder>
+		<finder name="ConstantContactId" return-type="Contact">
+			<finder-column name="constantContactId"></finder-column>
+		</finder>
+		<finder name="VipFlag" return-type="Collection">
+			<finder-column name="isVip"></finder-column>
+		</finder>
+	</entity>
 
-		<!-- References -->
+	<entity name="CmapGroup" local-service="true" remote-service="false">
+		<column name="groupId" type="long" primary="true" id-type="increment"></column>
+		<column name="groupName" type="String"></column>
+		<column name="subGroups" type="Collection" entity="CmapSubGroup"
+			mapping-key="groupId" />
 
-		<reference entity="AssetEntry" package-path="com.liferay.portlet.asset" />
-		<reference entity="AssetTag" package-path="com.liferay.portlet.asset" />
+		<finder name="GroupName" return-type="Collection">
+			<finder-column name="groupName"></finder-column>
+		</finder>
+	</entity>
+
+	<entity name="CmapSubGroup" local-service="true" remote-service="false">
+		<column name="subGroupId" type="long" primary="true" id-type="increment"></column>
+		<column name="subGroupName" type="String"></column>
+		<column name="groupId" type="long"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="contacts" type="Collection" entity="Contact"
+			mapping-table="Contacts_CmapSubGroups" />
+		<finder name="SubGroupName" return-type="Collection">
+			<finder-column name="subGroupName"></finder-column>
+		</finder>
+	</entity>
+
+	<entity name="CmapTag" local-service="true" remote-service="false">
+		<column name="tagId" type="long" primary="true" id-type="increment"></column>
+		<column name="tagName" type="String"></column>
+	</entity>
+	<entity name="County" local-service="true" remote-service="false">
+		<column name="countyId" type="long" primary="true" id-type="increment"></column>
+		<column name="countyName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="countyName"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Muni" local-service="true" remote-service="false">
+		<column name="muniId" type="long" primary="true" id-type="increment"></column>
+		<column name="muniName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="muniName"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="US_Rep" local-service="true" remote-service="false">
+		<column name="usRepId" type="long" primary="true" id-type="increment"></column>
+		<column name="usRepNumber" type="String"></column>
+		<column name="usRepName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order>
+			<order-column name="usRepNumber" order-by="asc"></order-column>
+			<order-column name="usRepName" order-by="asc"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="State_Senate" local-service="true" remote-service="false">
+		<column name="stateSenateId" type="long" primary="true"
+			id-type="increment"></column>
+		<column name="stateSenateNumber" type="int"></column>
+		<column name="stateSenateName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order>
+			<order-column name="stateSenateNumber" order-by="asc"></order-column>
+			<order-column name="stateSenateName" order-by="asc"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="State_Rep" local-service="true" remote-service="false">
+		<column name="stateRepId" type="long" primary="true" id-type="increment"></column>
+		<column name="stateRepNumber" type="int"></column>
+		<column name="stateRepName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order>
+			<order-column name="stateRepNumber" order-by="asc"></order-column>
+			<order-column name="stateRepName" order-by="asc"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="County_Commissioner_or_Board_Dist" local-service="true"
+		remote-service="false">
+		<column name="ccbdId" type="long" primary="true" id-type="increment"></column>
+		<column name="ccbdNumber" type="int"></column>
+		<column name="ccbdName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order>
+			<order-column name="ccbdName" order-by="asc"></order-column>
+			<order-column name="ccbdNumber" order-by="asc"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Chi_Ward" local-service="true" remote-service="false">
+		<column name="chiWardId" type="long" primary="true" id-type="increment"></column>
+		<column name="chiWardName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="chiWardName"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="CCA" local-service="true" remote-service="false">
+		<column name="ccaId" type="long" primary="true" id-type="increment"></column>
+		<column name="ccaName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="ccaName"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Note" local-service="true" remote-service="false">
+		<column name="id" type="long" primary="true"></column>
+		<column name="contactId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="note" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="OutreachLog" local-service="true" remote-service="false">
+		<column name="id" type="long" primary="true"></column>
+		<column name="userId" type="long"></column>
+		<column name="contactId" type="long"></column>
+		<column name="note" type="String"></column>
+		<column name="medium" type="String"></column>
+		<column name="activityType" type="String"></column>
+		<column name="outreachDate" type="Date"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<finder name="ContactId" return-type="Collection">
+			<finder-column name="contactId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="LTA" local-service="true" remote-service="false">
+		<column name="ltaId" type="long" primary="true" id-type="increment"></column>
+		<column name="ltaName" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="ltaName"></order-column>
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode"></finder-column>
+		</finder>
 	</entity>
 </service-builder>

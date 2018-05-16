@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -44,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -80,6 +82,550 @@ public class CountyPersistenceImpl extends BasePersistenceImpl<County>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CountyModelImpl.ENTITY_CACHE_ENABLED,
 			CountyModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CountyModelImpl.ENTITY_CACHE_ENABLED,
+			CountyModelImpl.FINDER_CACHE_ENABLED, CountyImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
+		new FinderPath(CountyModelImpl.ENTITY_CACHE_ENABLED,
+			CountyModelImpl.FINDER_CACHE_ENABLED, CountyImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] { String.class.getName() },
+			CountyModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CountyModelImpl.COUNTYNAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CountyModelImpl.ENTITY_CACHE_ENABLED,
+			CountyModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the counties where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the matching counties
+	 */
+	@Override
+	public List<County> findByZipCode(String zipCode) {
+		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the counties where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of counties
+	 * @param end the upper bound of the range of counties (not inclusive)
+	 * @return the range of matching counties
+	 */
+	@Override
+	public List<County> findByZipCode(String zipCode, int start, int end) {
+		return findByZipCode(zipCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the counties where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of counties
+	 * @param end the upper bound of the range of counties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching counties
+	 */
+	@Override
+	public List<County> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<County> orderByComparator) {
+		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the counties where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of counties
+	 * @param end the upper bound of the range of counties (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching counties
+	 */
+	@Override
+	public List<County> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<County> orderByComparator, boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+		}
+
+		List<County> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<County>)finderCache.getResult(finderPath, finderArgs,
+					this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (County county : list) {
+					if (!Objects.equals(zipCode, county.getZipCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_COUNTY_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CountyModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				if (!pagination) {
+					list = (List<County>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<County>)QueryUtil.list(q, getDialect(), start,
+							end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first county in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching county
+	 * @throws NoSuchCountyException if a matching county could not be found
+	 */
+	@Override
+	public County findByZipCode_First(String zipCode,
+		OrderByComparator<County> orderByComparator)
+		throws NoSuchCountyException {
+		County county = fetchByZipCode_First(zipCode, orderByComparator);
+
+		if (county != null) {
+			return county;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountyException(msg.toString());
+	}
+
+	/**
+	 * Returns the first county in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching county, or <code>null</code> if a matching county could not be found
+	 */
+	@Override
+	public County fetchByZipCode_First(String zipCode,
+		OrderByComparator<County> orderByComparator) {
+		List<County> list = findByZipCode(zipCode, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last county in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching county
+	 * @throws NoSuchCountyException if a matching county could not be found
+	 */
+	@Override
+	public County findByZipCode_Last(String zipCode,
+		OrderByComparator<County> orderByComparator)
+		throws NoSuchCountyException {
+		County county = fetchByZipCode_Last(zipCode, orderByComparator);
+
+		if (county != null) {
+			return county;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCountyException(msg.toString());
+	}
+
+	/**
+	 * Returns the last county in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching county, or <code>null</code> if a matching county could not be found
+	 */
+	@Override
+	public County fetchByZipCode_Last(String zipCode,
+		OrderByComparator<County> orderByComparator) {
+		int count = countByZipCode(zipCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<County> list = findByZipCode(zipCode, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the counties before and after the current county in the ordered set where zipCode = &#63;.
+	 *
+	 * @param countyId the primary key of the current county
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next county
+	 * @throws NoSuchCountyException if a county with the primary key could not be found
+	 */
+	@Override
+	public County[] findByZipCode_PrevAndNext(long countyId, String zipCode,
+		OrderByComparator<County> orderByComparator)
+		throws NoSuchCountyException {
+		County county = findByPrimaryKey(countyId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			County[] array = new CountyImpl[3];
+
+			array[0] = getByZipCode_PrevAndNext(session, county, zipCode,
+					orderByComparator, true);
+
+			array[1] = county;
+
+			array[2] = getByZipCode_PrevAndNext(session, county, zipCode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected County getByZipCode_PrevAndNext(Session session, County county,
+		String zipCode, OrderByComparator<County> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_COUNTY_WHERE);
+
+		boolean bindZipCode = false;
+
+		if (zipCode == null) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+		}
+		else if (zipCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+		}
+		else {
+			bindZipCode = true;
+
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CountyModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindZipCode) {
+			qPos.add(zipCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(county);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<County> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the counties where zipCode = &#63; from the database.
+	 *
+	 * @param zipCode the zip code
+	 */
+	@Override
+	public void removeByZipCode(String zipCode) {
+		for (County county : findByZipCode(zipCode, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(county);
+		}
+	}
+
+	/**
+	 * Returns the number of counties where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the number of matching counties
+	 */
+	@Override
+	public int countByZipCode(String zipCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+
+		Object[] finderArgs = new Object[] { zipCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_COUNTY_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "county.zipCode IS NULL";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "county.zipCode = ?";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(county.zipCode IS NULL OR county.zipCode = '')";
 
 	public CountyPersistenceImpl() {
 		setModelClass(County.class);
@@ -263,6 +809,8 @@ public class CountyPersistenceImpl extends BasePersistenceImpl<County>
 
 		boolean isNew = county.isNew();
 
+		CountyModelImpl countyModelImpl = (CountyModelImpl)county;
+
 		Session session = null;
 
 		try {
@@ -286,10 +834,39 @@ public class CountyPersistenceImpl extends BasePersistenceImpl<County>
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!CountyModelImpl.COLUMN_BITMASK_ENABLED) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else
+		 if (isNew) {
+			Object[] args = new Object[] { countyModelImpl.getZipCode() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((countyModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						countyModelImpl.getOriginalZipCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+
+				args = new Object[] { countyModelImpl.getZipCode() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+			}
 		}
 
 		entityCache.putResult(CountyModelImpl.ENTITY_CACHE_ENABLED,
@@ -719,8 +1296,11 @@ public class CountyPersistenceImpl extends BasePersistenceImpl<County>
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_COUNTY = "SELECT county FROM County county";
 	private static final String _SQL_SELECT_COUNTY_WHERE_PKS_IN = "SELECT county FROM County county WHERE countyId IN (";
+	private static final String _SQL_SELECT_COUNTY_WHERE = "SELECT county FROM County county WHERE ";
 	private static final String _SQL_COUNT_COUNTY = "SELECT COUNT(county) FROM County county";
+	private static final String _SQL_COUNT_COUNTY_WHERE = "SELECT COUNT(county) FROM County county WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "county.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No County exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No County exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CountyPersistenceImpl.class);
 }

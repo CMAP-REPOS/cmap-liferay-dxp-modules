@@ -114,6 +114,180 @@ public class ContactAuditLogChangeUtil {
 	}
 
 	/**
+	* Returns all the contact audit log changes where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @return the matching contact audit log changes
+	*/
+	public static List<ContactAuditLogChange> findByContactAuditLogId(
+		long contactAuditLogId) {
+		return getPersistence().findByContactAuditLogId(contactAuditLogId);
+	}
+
+	/**
+	* Returns a range of all the contact audit log changes where contactAuditLogId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param start the lower bound of the range of contact audit log changes
+	* @param end the upper bound of the range of contact audit log changes (not inclusive)
+	* @return the range of matching contact audit log changes
+	*/
+	public static List<ContactAuditLogChange> findByContactAuditLogId(
+		long contactAuditLogId, int start, int end) {
+		return getPersistence()
+				   .findByContactAuditLogId(contactAuditLogId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the contact audit log changes where contactAuditLogId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param start the lower bound of the range of contact audit log changes
+	* @param end the upper bound of the range of contact audit log changes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contact audit log changes
+	*/
+	public static List<ContactAuditLogChange> findByContactAuditLogId(
+		long contactAuditLogId, int start, int end,
+		OrderByComparator<ContactAuditLogChange> orderByComparator) {
+		return getPersistence()
+				   .findByContactAuditLogId(contactAuditLogId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the contact audit log changes where contactAuditLogId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param start the lower bound of the range of contact audit log changes
+	* @param end the upper bound of the range of contact audit log changes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching contact audit log changes
+	*/
+	public static List<ContactAuditLogChange> findByContactAuditLogId(
+		long contactAuditLogId, int start, int end,
+		OrderByComparator<ContactAuditLogChange> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByContactAuditLogId(contactAuditLogId, start, end,
+			orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Returns the first contact audit log change in the ordered set where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log change
+	* @throws NoSuchContactAuditLogChangeException if a matching contact audit log change could not be found
+	*/
+	public static ContactAuditLogChange findByContactAuditLogId_First(
+		long contactAuditLogId,
+		OrderByComparator<ContactAuditLogChange> orderByComparator)
+		throws contact.manager.service.exception.NoSuchContactAuditLogChangeException {
+		return getPersistence()
+				   .findByContactAuditLogId_First(contactAuditLogId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first contact audit log change in the ordered set where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log change, or <code>null</code> if a matching contact audit log change could not be found
+	*/
+	public static ContactAuditLogChange fetchByContactAuditLogId_First(
+		long contactAuditLogId,
+		OrderByComparator<ContactAuditLogChange> orderByComparator) {
+		return getPersistence()
+				   .fetchByContactAuditLogId_First(contactAuditLogId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last contact audit log change in the ordered set where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log change
+	* @throws NoSuchContactAuditLogChangeException if a matching contact audit log change could not be found
+	*/
+	public static ContactAuditLogChange findByContactAuditLogId_Last(
+		long contactAuditLogId,
+		OrderByComparator<ContactAuditLogChange> orderByComparator)
+		throws contact.manager.service.exception.NoSuchContactAuditLogChangeException {
+		return getPersistence()
+				   .findByContactAuditLogId_Last(contactAuditLogId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last contact audit log change in the ordered set where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log change, or <code>null</code> if a matching contact audit log change could not be found
+	*/
+	public static ContactAuditLogChange fetchByContactAuditLogId_Last(
+		long contactAuditLogId,
+		OrderByComparator<ContactAuditLogChange> orderByComparator) {
+		return getPersistence()
+				   .fetchByContactAuditLogId_Last(contactAuditLogId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the contact audit log changes before and after the current contact audit log change in the ordered set where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogChangeId the primary key of the current contact audit log change
+	* @param contactAuditLogId the contact audit log ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact audit log change
+	* @throws NoSuchContactAuditLogChangeException if a contact audit log change with the primary key could not be found
+	*/
+	public static ContactAuditLogChange[] findByContactAuditLogId_PrevAndNext(
+		long contactAuditLogChangeId, long contactAuditLogId,
+		OrderByComparator<ContactAuditLogChange> orderByComparator)
+		throws contact.manager.service.exception.NoSuchContactAuditLogChangeException {
+		return getPersistence()
+				   .findByContactAuditLogId_PrevAndNext(contactAuditLogChangeId,
+			contactAuditLogId, orderByComparator);
+	}
+
+	/**
+	* Removes all the contact audit log changes where contactAuditLogId = &#63; from the database.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	*/
+	public static void removeByContactAuditLogId(long contactAuditLogId) {
+		getPersistence().removeByContactAuditLogId(contactAuditLogId);
+	}
+
+	/**
+	* Returns the number of contact audit log changes where contactAuditLogId = &#63;.
+	*
+	* @param contactAuditLogId the contact audit log ID
+	* @return the number of matching contact audit log changes
+	*/
+	public static int countByContactAuditLogId(long contactAuditLogId) {
+		return getPersistence().countByContactAuditLogId(contactAuditLogId);
+	}
+
+	/**
 	* Caches the contact audit log change in the entity cache if it is enabled.
 	*
 	* @param contactAuditLogChange the contact audit log change

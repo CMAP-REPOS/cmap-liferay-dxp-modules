@@ -105,7 +105,12 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.ContactAuditLog"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.ContactAuditLog"),
+			true);
+	public static final long CONSTANTCONTACTID_COLUMN_BITMASK = 1L;
+	public static final long CONTACTID_COLUMN_BITMASK = 2L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.ContactAuditLog"));
 
@@ -289,6 +294,8 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -314,7 +321,19 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 
 	@Override
 	public void setConstantContactId(long constantContactId) {
+		_columnBitmask |= CONSTANTCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalConstantContactId) {
+			_setOriginalConstantContactId = true;
+
+			_originalConstantContactId = _constantContactId;
+		}
+
 		_constantContactId = constantContactId;
+	}
+
+	public long getOriginalConstantContactId() {
+		return _originalConstantContactId;
 	}
 
 	@Override
@@ -354,7 +373,23 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 
 	@Override
 	public void setContactId(long contactId) {
+		_columnBitmask |= CONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactId) {
+			_setOriginalContactId = true;
+
+			_originalContactId = _contactId;
+		}
+
 		_contactId = contactId;
+	}
+
+	public long getOriginalContactId() {
+		return _originalContactId;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -455,6 +490,17 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 
 	@Override
 	public void resetOriginalValues() {
+		ContactAuditLogModelImpl contactAuditLogModelImpl = this;
+
+		contactAuditLogModelImpl._originalConstantContactId = contactAuditLogModelImpl._constantContactId;
+
+		contactAuditLogModelImpl._setOriginalConstantContactId = false;
+
+		contactAuditLogModelImpl._originalContactId = contactAuditLogModelImpl._contactId;
+
+		contactAuditLogModelImpl._setOriginalContactId = false;
+
+		contactAuditLogModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -603,8 +649,13 @@ public class ContactAuditLogModelImpl extends BaseModelImpl<ContactAuditLog>
 	private Date _createDate;
 	private String _action;
 	private long _constantContactId;
+	private long _originalConstantContactId;
+	private boolean _setOriginalConstantContactId;
 	private String _oldSnapshot;
 	private String _newSnapshot;
 	private long _contactId;
+	private long _originalContactId;
+	private boolean _setOriginalContactId;
+	private long _columnBitmask;
 	private ContactAuditLog _escapedModel;
 }

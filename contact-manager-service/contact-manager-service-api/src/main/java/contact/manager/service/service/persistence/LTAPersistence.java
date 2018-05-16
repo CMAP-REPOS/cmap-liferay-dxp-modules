@@ -42,6 +42,138 @@ public interface LTAPersistence extends BasePersistence<LTA> {
 	 */
 
 	/**
+	* Returns all the ltas where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the matching ltas
+	*/
+	public java.util.List<LTA> findByZipCode(java.lang.String zipCode);
+
+	/**
+	* Returns a range of all the ltas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ltas
+	* @param end the upper bound of the range of ltas (not inclusive)
+	* @return the range of matching ltas
+	*/
+	public java.util.List<LTA> findByZipCode(java.lang.String zipCode,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the ltas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ltas
+	* @param end the upper bound of the range of ltas (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ltas
+	*/
+	public java.util.List<LTA> findByZipCode(java.lang.String zipCode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the ltas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ltas
+	* @param end the upper bound of the range of ltas (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ltas
+	*/
+	public java.util.List<LTA> findByZipCode(java.lang.String zipCode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first lta in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lta
+	* @throws NoSuchLTAException if a matching lta could not be found
+	*/
+	public LTA findByZipCode_First(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator)
+		throws NoSuchLTAException;
+
+	/**
+	* Returns the first lta in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching lta, or <code>null</code> if a matching lta could not be found
+	*/
+	public LTA fetchByZipCode_First(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator);
+
+	/**
+	* Returns the last lta in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lta
+	* @throws NoSuchLTAException if a matching lta could not be found
+	*/
+	public LTA findByZipCode_Last(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator)
+		throws NoSuchLTAException;
+
+	/**
+	* Returns the last lta in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching lta, or <code>null</code> if a matching lta could not be found
+	*/
+	public LTA fetchByZipCode_Last(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator);
+
+	/**
+	* Returns the ltas before and after the current lta in the ordered set where zipCode = &#63;.
+	*
+	* @param ltaId the primary key of the current lta
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next lta
+	* @throws NoSuchLTAException if a lta with the primary key could not be found
+	*/
+	public LTA[] findByZipCode_PrevAndNext(long ltaId,
+		java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<LTA> orderByComparator)
+		throws NoSuchLTAException;
+
+	/**
+	* Removes all the ltas where zipCode = &#63; from the database.
+	*
+	* @param zipCode the zip code
+	*/
+	public void removeByZipCode(java.lang.String zipCode);
+
+	/**
+	* Returns the number of ltas where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the number of matching ltas
+	*/
+	public int countByZipCode(java.lang.String zipCode);
+
+	/**
 	* Caches the lta in the entity cache if it is enabled.
 	*
 	* @param lta the lta

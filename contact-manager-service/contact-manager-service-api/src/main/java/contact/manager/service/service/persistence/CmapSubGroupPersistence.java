@@ -42,6 +42,142 @@ public interface CmapSubGroupPersistence extends BasePersistence<CmapSubGroup> {
 	 */
 
 	/**
+	* Returns all the cmap sub groups where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @return the matching cmap sub groups
+	*/
+	public java.util.List<CmapSubGroup> findBySubGroupName(
+		java.lang.String subGroupName);
+
+	/**
+	* Returns a range of all the cmap sub groups where subGroupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapSubGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param subGroupName the sub group name
+	* @param start the lower bound of the range of cmap sub groups
+	* @param end the upper bound of the range of cmap sub groups (not inclusive)
+	* @return the range of matching cmap sub groups
+	*/
+	public java.util.List<CmapSubGroup> findBySubGroupName(
+		java.lang.String subGroupName, int start, int end);
+
+	/**
+	* Returns an ordered range of all the cmap sub groups where subGroupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapSubGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param subGroupName the sub group name
+	* @param start the lower bound of the range of cmap sub groups
+	* @param end the upper bound of the range of cmap sub groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cmap sub groups
+	*/
+	public java.util.List<CmapSubGroup> findBySubGroupName(
+		java.lang.String subGroupName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the cmap sub groups where subGroupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapSubGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param subGroupName the sub group name
+	* @param start the lower bound of the range of cmap sub groups
+	* @param end the upper bound of the range of cmap sub groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cmap sub groups
+	*/
+	public java.util.List<CmapSubGroup> findBySubGroupName(
+		java.lang.String subGroupName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cmap sub group in the ordered set where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cmap sub group
+	* @throws NoSuchCmapSubGroupException if a matching cmap sub group could not be found
+	*/
+	public CmapSubGroup findBySubGroupName_First(
+		java.lang.String subGroupName,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator)
+		throws NoSuchCmapSubGroupException;
+
+	/**
+	* Returns the first cmap sub group in the ordered set where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cmap sub group, or <code>null</code> if a matching cmap sub group could not be found
+	*/
+	public CmapSubGroup fetchBySubGroupName_First(
+		java.lang.String subGroupName,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator);
+
+	/**
+	* Returns the last cmap sub group in the ordered set where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cmap sub group
+	* @throws NoSuchCmapSubGroupException if a matching cmap sub group could not be found
+	*/
+	public CmapSubGroup findBySubGroupName_Last(java.lang.String subGroupName,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator)
+		throws NoSuchCmapSubGroupException;
+
+	/**
+	* Returns the last cmap sub group in the ordered set where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cmap sub group, or <code>null</code> if a matching cmap sub group could not be found
+	*/
+	public CmapSubGroup fetchBySubGroupName_Last(
+		java.lang.String subGroupName,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator);
+
+	/**
+	* Returns the cmap sub groups before and after the current cmap sub group in the ordered set where subGroupName = &#63;.
+	*
+	* @param subGroupId the primary key of the current cmap sub group
+	* @param subGroupName the sub group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cmap sub group
+	* @throws NoSuchCmapSubGroupException if a cmap sub group with the primary key could not be found
+	*/
+	public CmapSubGroup[] findBySubGroupName_PrevAndNext(long subGroupId,
+		java.lang.String subGroupName,
+		com.liferay.portal.kernel.util.OrderByComparator<CmapSubGroup> orderByComparator)
+		throws NoSuchCmapSubGroupException;
+
+	/**
+	* Removes all the cmap sub groups where subGroupName = &#63; from the database.
+	*
+	* @param subGroupName the sub group name
+	*/
+	public void removeBySubGroupName(java.lang.String subGroupName);
+
+	/**
+	* Returns the number of cmap sub groups where subGroupName = &#63;.
+	*
+	* @param subGroupName the sub group name
+	* @return the number of matching cmap sub groups
+	*/
+	public int countBySubGroupName(java.lang.String subGroupName);
+
+	/**
 	* Caches the cmap sub group in the entity cache if it is enabled.
 	*
 	* @param cmapSubGroup the cmap sub group

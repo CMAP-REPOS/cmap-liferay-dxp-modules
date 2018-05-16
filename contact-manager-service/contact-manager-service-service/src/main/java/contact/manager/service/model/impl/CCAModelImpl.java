@@ -85,7 +85,11 @@ public class CCAModelImpl extends BaseModelImpl<CCA> implements CCAModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.CCA"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.CCA"),
+			true);
+	public static final long ZIPCODE_COLUMN_BITMASK = 1L;
+	public static final long CCANAME_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.CCA"));
 
@@ -179,6 +183,8 @@ public class CCAModelImpl extends BaseModelImpl<CCA> implements CCAModel {
 
 	@Override
 	public void setCcaName(String ccaName) {
+		_columnBitmask = -1L;
+
 		_ccaName = ccaName;
 	}
 
@@ -194,7 +200,21 @@ public class CCAModelImpl extends BaseModelImpl<CCA> implements CCAModel {
 
 	@Override
 	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
 		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -285,6 +305,11 @@ public class CCAModelImpl extends BaseModelImpl<CCA> implements CCAModel {
 
 	@Override
 	public void resetOriginalValues() {
+		CCAModelImpl ccaModelImpl = this;
+
+		ccaModelImpl._originalZipCode = ccaModelImpl._zipCode;
+
+		ccaModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -360,5 +385,7 @@ public class CCAModelImpl extends BaseModelImpl<CCA> implements CCAModel {
 	private long _ccaId;
 	private String _ccaName;
 	private String _zipCode;
+	private String _originalZipCode;
+	private long _columnBitmask;
 	private CCA _escapedModel;
 }

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -84,6 +85,1039 @@ public class ContactAuditLogPersistenceImpl extends BasePersistenceImpl<ContactA
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
 			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSTANTCONTACTID =
+		new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			ContactAuditLogImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByConstantContactId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID =
+		new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			ContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByConstantContactId", new String[] { Long.class.getName() },
+			ContactAuditLogModelImpl.CONSTANTCONTACTID_COLUMN_BITMASK |
+			ContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CONSTANTCONTACTID = new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByConstantContactId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the contact audit logs where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @return the matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByConstantContactId(long constantContactId) {
+		return findByConstantContactId(constantContactId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the contact audit logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @return the range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end) {
+		return findByConstantContactId(constantContactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact audit logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		OrderByComparator<ContactAuditLog> orderByComparator) {
+		return findByConstantContactId(constantContactId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact audit logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		OrderByComparator<ContactAuditLog> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID;
+			finderArgs = new Object[] { constantContactId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSTANTCONTACTID;
+			finderArgs = new Object[] {
+					constantContactId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<ContactAuditLog> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactAuditLog>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactAuditLog contactAuditLog : list) {
+					if ((constantContactId != contactAuditLog.getConstantContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ContactAuditLogModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(constantContactId);
+
+				if (!pagination) {
+					list = (List<ContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact audit log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact audit log
+	 * @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog findByConstantContactId_First(
+		long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = fetchByConstantContactId_First(constantContactId,
+				orderByComparator);
+
+		if (contactAuditLog != null) {
+			return contactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("constantContactId=");
+		msg.append(constantContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact audit log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog fetchByConstantContactId_First(
+		long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator) {
+		List<ContactAuditLog> list = findByConstantContactId(constantContactId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact audit log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact audit log
+	 * @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog findByConstantContactId_Last(
+		long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = fetchByConstantContactId_Last(constantContactId,
+				orderByComparator);
+
+		if (contactAuditLog != null) {
+			return contactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("constantContactId=");
+		msg.append(constantContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact audit log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog fetchByConstantContactId_Last(
+		long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator) {
+		int count = countByConstantContactId(constantContactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactAuditLog> list = findByConstantContactId(constantContactId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact audit logs before and after the current contact audit log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param contactAuditLogId the primary key of the current contact audit log
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact audit log
+	 * @throws NoSuchContactAuditLogException if a contact audit log with the primary key could not be found
+	 */
+	@Override
+	public ContactAuditLog[] findByConstantContactId_PrevAndNext(
+		long contactAuditLogId, long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = findByPrimaryKey(contactAuditLogId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactAuditLog[] array = new ContactAuditLogImpl[3];
+
+			array[0] = getByConstantContactId_PrevAndNext(session,
+					contactAuditLog, constantContactId, orderByComparator, true);
+
+			array[1] = contactAuditLog;
+
+			array[2] = getByConstantContactId_PrevAndNext(session,
+					contactAuditLog, constantContactId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactAuditLog getByConstantContactId_PrevAndNext(
+		Session session, ContactAuditLog contactAuditLog,
+		long constantContactId,
+		OrderByComparator<ContactAuditLog> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTAUDITLOG_WHERE);
+
+		query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactAuditLogModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(constantContactId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(contactAuditLog);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ContactAuditLog> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact audit logs where constantContactId = &#63; from the database.
+	 *
+	 * @param constantContactId the constant contact ID
+	 */
+	@Override
+	public void removeByConstantContactId(long constantContactId) {
+		for (ContactAuditLog contactAuditLog : findByConstantContactId(
+				constantContactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(contactAuditLog);
+		}
+	}
+
+	/**
+	 * Returns the number of contact audit logs where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @return the number of matching contact audit logs
+	 */
+	@Override
+	public int countByConstantContactId(long constantContactId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONSTANTCONTACTID;
+
+		Object[] finderArgs = new Object[] { constantContactId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(constantContactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2 =
+		"contactAuditLog.constantContactId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONTACTID =
+		new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			ContactAuditLogImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByContactId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID =
+		new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			ContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByContactId",
+			new String[] { Long.class.getName() },
+			ContactAuditLogModelImpl.CONTACTID_COLUMN_BITMASK |
+			ContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CONTACTID = new FinderPath(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			ContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByContactId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the contact audit logs where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByContactId(long contactId) {
+		return findByContactId(contactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+			null);
+	}
+
+	/**
+	 * Returns a range of all the contact audit logs where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @return the range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByContactId(long contactId, int start,
+		int end) {
+		return findByContactId(contactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact audit logs where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByContactId(long contactId, int start,
+		int end, OrderByComparator<ContactAuditLog> orderByComparator) {
+		return findByContactId(contactId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the contact audit logs where contactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param contactId the contact ID
+	 * @param start the lower bound of the range of contact audit logs
+	 * @param end the upper bound of the range of contact audit logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching contact audit logs
+	 */
+	@Override
+	public List<ContactAuditLog> findByContactId(long contactId, int start,
+		int end, OrderByComparator<ContactAuditLog> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID;
+			finderArgs = new Object[] { contactId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONTACTID;
+			finderArgs = new Object[] { contactId, start, end, orderByComparator };
+		}
+
+		List<ContactAuditLog> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<ContactAuditLog>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (ContactAuditLog contactAuditLog : list) {
+					if ((contactId != contactAuditLog.getContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ContactAuditLogModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				if (!pagination) {
+					list = (List<ContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<ContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first contact audit log in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact audit log
+	 * @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog findByContactId_First(long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = fetchByContactId_First(contactId,
+				orderByComparator);
+
+		if (contactAuditLog != null) {
+			return contactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the first contact audit log in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog fetchByContactId_First(long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator) {
+		List<ContactAuditLog> list = findByContactId(contactId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last contact audit log in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact audit log
+	 * @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog findByContactId_Last(long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = fetchByContactId_Last(contactId,
+				orderByComparator);
+
+		if (contactAuditLog != null) {
+			return contactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("contactId=");
+		msg.append(contactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the last contact audit log in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	 */
+	@Override
+	public ContactAuditLog fetchByContactId_Last(long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator) {
+		int count = countByContactId(contactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ContactAuditLog> list = findByContactId(contactId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the contact audit logs before and after the current contact audit log in the ordered set where contactId = &#63;.
+	 *
+	 * @param contactAuditLogId the primary key of the current contact audit log
+	 * @param contactId the contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next contact audit log
+	 * @throws NoSuchContactAuditLogException if a contact audit log with the primary key could not be found
+	 */
+	@Override
+	public ContactAuditLog[] findByContactId_PrevAndNext(
+		long contactAuditLogId, long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException {
+		ContactAuditLog contactAuditLog = findByPrimaryKey(contactAuditLogId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ContactAuditLog[] array = new ContactAuditLogImpl[3];
+
+			array[0] = getByContactId_PrevAndNext(session, contactAuditLog,
+					contactId, orderByComparator, true);
+
+			array[1] = contactAuditLog;
+
+			array[2] = getByContactId_PrevAndNext(session, contactAuditLog,
+					contactId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ContactAuditLog getByContactId_PrevAndNext(Session session,
+		ContactAuditLog contactAuditLog, long contactId,
+		OrderByComparator<ContactAuditLog> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CONTACTAUDITLOG_WHERE);
+
+		query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ContactAuditLogModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(contactId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(contactAuditLog);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ContactAuditLog> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the contact audit logs where contactId = &#63; from the database.
+	 *
+	 * @param contactId the contact ID
+	 */
+	@Override
+	public void removeByContactId(long contactId) {
+		for (ContactAuditLog contactAuditLog : findByContactId(contactId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(contactAuditLog);
+		}
+	}
+
+	/**
+	 * Returns the number of contact audit logs where contactId = &#63;.
+	 *
+	 * @param contactId the contact ID
+	 * @return the number of matching contact audit logs
+	 */
+	@Override
+	public int countByContactId(long contactId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONTACTID;
+
+		Object[] finderArgs = new Object[] { contactId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONTACTID_CONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(contactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONTACTID_CONTACTID_2 = "contactAuditLog.contactId = ?";
 
 	public ContactAuditLogPersistenceImpl() {
 		setModelClass(ContactAuditLog.class);
@@ -275,6 +1309,8 @@ public class ContactAuditLogPersistenceImpl extends BasePersistenceImpl<ContactA
 
 		boolean isNew = contactAuditLog.isNew();
 
+		ContactAuditLogModelImpl contactAuditLogModelImpl = (ContactAuditLogModelImpl)contactAuditLog;
+
 		Session session = null;
 
 		try {
@@ -298,10 +1334,69 @@ public class ContactAuditLogPersistenceImpl extends BasePersistenceImpl<ContactA
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!ContactAuditLogModelImpl.COLUMN_BITMASK_ENABLED) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else
+		 if (isNew) {
+			Object[] args = new Object[] {
+					contactAuditLogModelImpl.getConstantContactId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+				args);
+
+			args = new Object[] { contactAuditLogModelImpl.getContactId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CONTACTID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((contactAuditLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						contactAuditLogModelImpl.getOriginalConstantContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+					args);
+
+				args = new Object[] {
+						contactAuditLogModelImpl.getConstantContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+					args);
+			}
+
+			if ((contactAuditLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						contactAuditLogModelImpl.getOriginalContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID,
+					args);
+
+				args = new Object[] { contactAuditLogModelImpl.getContactId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONTACTID,
+					args);
+			}
 		}
 
 		entityCache.putResult(ContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
@@ -744,8 +1839,11 @@ public class ContactAuditLogPersistenceImpl extends BasePersistenceImpl<ContactA
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_CONTACTAUDITLOG = "SELECT contactAuditLog FROM ContactAuditLog contactAuditLog";
 	private static final String _SQL_SELECT_CONTACTAUDITLOG_WHERE_PKS_IN = "SELECT contactAuditLog FROM ContactAuditLog contactAuditLog WHERE contactAuditLogId IN (";
+	private static final String _SQL_SELECT_CONTACTAUDITLOG_WHERE = "SELECT contactAuditLog FROM ContactAuditLog contactAuditLog WHERE ";
 	private static final String _SQL_COUNT_CONTACTAUDITLOG = "SELECT COUNT(contactAuditLog) FROM ContactAuditLog contactAuditLog";
+	private static final String _SQL_COUNT_CONTACTAUDITLOG_WHERE = "SELECT COUNT(contactAuditLog) FROM ContactAuditLog contactAuditLog WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "contactAuditLog.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No ContactAuditLog exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No ContactAuditLog exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(ContactAuditLogPersistenceImpl.class);
 }

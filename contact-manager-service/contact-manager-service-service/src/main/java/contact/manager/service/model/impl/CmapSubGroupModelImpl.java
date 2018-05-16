@@ -91,7 +91,11 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.CmapSubGroup"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.CmapSubGroup"),
+			true);
+	public static final long SUBGROUPNAME_COLUMN_BITMASK = 1L;
+	public static final long SUBGROUPID_COLUMN_BITMASK = 2L;
 	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_NAME =
 		"contactmanager_Contacts_CmapSubGroups";
 	public static final Object[][] MAPPING_TABLE_CONTACTMANAGER_CONTACTS_CMAPSUBGROUPS_COLUMNS =
@@ -213,7 +217,17 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 
 	@Override
 	public void setSubGroupName(String subGroupName) {
+		_columnBitmask |= SUBGROUPNAME_COLUMN_BITMASK;
+
+		if (_originalSubGroupName == null) {
+			_originalSubGroupName = _subGroupName;
+		}
+
 		_subGroupName = subGroupName;
+	}
+
+	public String getOriginalSubGroupName() {
+		return GetterUtil.getString(_originalSubGroupName);
 	}
 
 	@Override
@@ -250,6 +264,10 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -346,7 +364,11 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 	public void resetOriginalValues() {
 		CmapSubGroupModelImpl cmapSubGroupModelImpl = this;
 
+		cmapSubGroupModelImpl._originalSubGroupName = cmapSubGroupModelImpl._subGroupName;
+
 		cmapSubGroupModelImpl._setModifiedDate = false;
+
+		cmapSubGroupModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -445,9 +467,11 @@ public class CmapSubGroupModelImpl extends BaseModelImpl<CmapSubGroup>
 		};
 	private long _subGroupId;
 	private String _subGroupName;
+	private String _originalSubGroupName;
 	private long _groupId;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _columnBitmask;
 	private CmapSubGroup _escapedModel;
 }

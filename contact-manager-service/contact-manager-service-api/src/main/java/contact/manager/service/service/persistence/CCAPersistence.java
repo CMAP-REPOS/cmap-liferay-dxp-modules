@@ -42,6 +42,138 @@ public interface CCAPersistence extends BasePersistence<CCA> {
 	 */
 
 	/**
+	* Returns all the ccas where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the matching ccas
+	*/
+	public java.util.List<CCA> findByZipCode(java.lang.String zipCode);
+
+	/**
+	* Returns a range of all the ccas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ccas
+	* @param end the upper bound of the range of ccas (not inclusive)
+	* @return the range of matching ccas
+	*/
+	public java.util.List<CCA> findByZipCode(java.lang.String zipCode,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the ccas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ccas
+	* @param end the upper bound of the range of ccas (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching ccas
+	*/
+	public java.util.List<CCA> findByZipCode(java.lang.String zipCode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the ccas where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of ccas
+	* @param end the upper bound of the range of ccas (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching ccas
+	*/
+	public java.util.List<CCA> findByZipCode(java.lang.String zipCode,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first cca in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cca
+	* @throws NoSuchCCAException if a matching cca could not be found
+	*/
+	public CCA findByZipCode_First(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator)
+		throws NoSuchCCAException;
+
+	/**
+	* Returns the first cca in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cca, or <code>null</code> if a matching cca could not be found
+	*/
+	public CCA fetchByZipCode_First(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator);
+
+	/**
+	* Returns the last cca in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cca
+	* @throws NoSuchCCAException if a matching cca could not be found
+	*/
+	public CCA findByZipCode_Last(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator)
+		throws NoSuchCCAException;
+
+	/**
+	* Returns the last cca in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cca, or <code>null</code> if a matching cca could not be found
+	*/
+	public CCA fetchByZipCode_Last(java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator);
+
+	/**
+	* Returns the ccas before and after the current cca in the ordered set where zipCode = &#63;.
+	*
+	* @param ccaId the primary key of the current cca
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cca
+	* @throws NoSuchCCAException if a cca with the primary key could not be found
+	*/
+	public CCA[] findByZipCode_PrevAndNext(long ccaId,
+		java.lang.String zipCode,
+		com.liferay.portal.kernel.util.OrderByComparator<CCA> orderByComparator)
+		throws NoSuchCCAException;
+
+	/**
+	* Removes all the ccas where zipCode = &#63; from the database.
+	*
+	* @param zipCode the zip code
+	*/
+	public void removeByZipCode(java.lang.String zipCode);
+
+	/**
+	* Returns the number of ccas where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the number of matching ccas
+	*/
+	public int countByZipCode(java.lang.String zipCode);
+
+	/**
 	* Caches the cca in the entity cache if it is enabled.
 	*
 	* @param cca the cca

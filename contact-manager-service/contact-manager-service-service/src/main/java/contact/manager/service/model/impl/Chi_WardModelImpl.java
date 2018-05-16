@@ -86,7 +86,11 @@ public class Chi_WardModelImpl extends BaseModelImpl<Chi_Ward>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.Chi_Ward"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.Chi_Ward"),
+			true);
+	public static final long ZIPCODE_COLUMN_BITMASK = 1L;
+	public static final long CHIWARDNAME_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.Chi_Ward"));
 
@@ -180,6 +184,8 @@ public class Chi_WardModelImpl extends BaseModelImpl<Chi_Ward>
 
 	@Override
 	public void setChiWardName(String chiWardName) {
+		_columnBitmask = -1L;
+
 		_chiWardName = chiWardName;
 	}
 
@@ -195,7 +201,21 @@ public class Chi_WardModelImpl extends BaseModelImpl<Chi_Ward>
 
 	@Override
 	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
 		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -286,6 +306,11 @@ public class Chi_WardModelImpl extends BaseModelImpl<Chi_Ward>
 
 	@Override
 	public void resetOriginalValues() {
+		Chi_WardModelImpl chi_WardModelImpl = this;
+
+		chi_WardModelImpl._originalZipCode = chi_WardModelImpl._zipCode;
+
+		chi_WardModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -361,5 +386,7 @@ public class Chi_WardModelImpl extends BaseModelImpl<Chi_Ward>
 	private long _chiWardId;
 	private String _chiWardName;
 	private String _zipCode;
+	private String _originalZipCode;
+	private long _columnBitmask;
 	private Chi_Ward _escapedModel;
 }

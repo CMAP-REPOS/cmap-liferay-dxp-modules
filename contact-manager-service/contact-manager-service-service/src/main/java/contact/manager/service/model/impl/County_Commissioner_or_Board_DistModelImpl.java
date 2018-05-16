@@ -88,7 +88,12 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.County_Commissioner_or_Board_Dist"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.County_Commissioner_or_Board_Dist"),
+			true);
+	public static final long ZIPCODE_COLUMN_BITMASK = 1L;
+	public static final long CCBDNAME_COLUMN_BITMASK = 2L;
+	public static final long CCBDNUMBER_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.County_Commissioner_or_Board_Dist"));
 
@@ -184,6 +189,8 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 
 	@Override
 	public void setCcbdNumber(int ccbdNumber) {
+		_columnBitmask = -1L;
+
 		_ccbdNumber = ccbdNumber;
 	}
 
@@ -199,6 +206,8 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 
 	@Override
 	public void setCcbdName(String ccbdName) {
+		_columnBitmask = -1L;
+
 		_ccbdName = ccbdName;
 	}
 
@@ -214,7 +223,21 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 
 	@Override
 	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
 		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -323,6 +346,12 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 
 	@Override
 	public void resetOriginalValues() {
+		County_Commissioner_or_Board_DistModelImpl county_Commissioner_or_Board_DistModelImpl =
+			this;
+
+		county_Commissioner_or_Board_DistModelImpl._originalZipCode = county_Commissioner_or_Board_DistModelImpl._zipCode;
+
+		county_Commissioner_or_Board_DistModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -409,5 +438,7 @@ public class County_Commissioner_or_Board_DistModelImpl extends BaseModelImpl<Co
 	private int _ccbdNumber;
 	private String _ccbdName;
 	private String _zipCode;
+	private String _originalZipCode;
+	private long _columnBitmask;
 	private County_Commissioner_or_Board_Dist _escapedModel;
 }

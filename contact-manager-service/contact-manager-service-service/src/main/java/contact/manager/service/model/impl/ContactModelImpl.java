@@ -170,7 +170,14 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.Contact"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.Contact"),
+			true);
+	public static final long CONSTANTCONTACTID_COLUMN_BITMASK = 1L;
+	public static final long ISVIP_COLUMN_BITMASK = 2L;
+	public static final long PRIMARYEMAILADDRESS_COLUMN_BITMASK = 4L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long LASTNAME_COLUMN_BITMASK = 16L;
 	public static final String MAPPING_TABLE_CONTACTMANAGER_CONTACTS_TAGS_NAME = "contactmanager_Contacts_Tags";
 	public static final Object[][] MAPPING_TABLE_CONTACTMANAGER_CONTACTS_TAGS_COLUMNS =
 		{
@@ -575,7 +582,19 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void setConstantContactId(long constantContactId) {
+		_columnBitmask |= CONSTANTCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalConstantContactId) {
+			_setOriginalConstantContactId = true;
+
+			_originalConstantContactId = _constantContactId;
+		}
+
 		_constantContactId = constantContactId;
+	}
+
+	public long getOriginalConstantContactId() {
+		return _originalConstantContactId;
 	}
 
 	@Override
@@ -722,6 +741,8 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void setLastName(String lastName) {
+		_columnBitmask = -1L;
+
 		_lastName = lastName;
 	}
 
@@ -1022,7 +1043,17 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void setPrimaryEmailAddress(String primaryEmailAddress) {
+		_columnBitmask |= PRIMARYEMAILADDRESS_COLUMN_BITMASK;
+
+		if (_originalPrimaryEmailAddress == null) {
+			_originalPrimaryEmailAddress = _primaryEmailAddress;
+		}
+
 		_primaryEmailAddress = primaryEmailAddress;
+	}
+
+	public String getOriginalPrimaryEmailAddress() {
+		return GetterUtil.getString(_originalPrimaryEmailAddress);
 	}
 
 	@Override
@@ -1067,7 +1098,19 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void setIsVip(boolean isVip) {
+		_columnBitmask |= ISVIP_COLUMN_BITMASK;
+
+		if (!_setOriginalIsVip) {
+			_setOriginalIsVip = true;
+
+			_originalIsVip = _isVip;
+		}
+
 		_isVip = isVip;
+	}
+
+	public boolean getOriginalIsVip() {
+		return _originalIsVip;
 	}
 
 	@Override
@@ -1127,7 +1170,17 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 
 	@Override
 	public void setStatus(String status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (_originalStatus == null) {
+			_originalStatus = _status;
+		}
+
 		_status = status;
+	}
+
+	public String getOriginalStatus() {
+		return GetterUtil.getString(_originalStatus);
 	}
 
 	@Override
@@ -1183,6 +1236,10 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	@Override
 	public void setSubGroupsList(String subGroupsList) {
 		_subGroupsList = subGroupsList;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -1315,7 +1372,21 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	public void resetOriginalValues() {
 		ContactModelImpl contactModelImpl = this;
 
+		contactModelImpl._originalConstantContactId = contactModelImpl._constantContactId;
+
+		contactModelImpl._setOriginalConstantContactId = false;
+
 		contactModelImpl._setModifiedDate = false;
+
+		contactModelImpl._originalPrimaryEmailAddress = contactModelImpl._primaryEmailAddress;
+
+		contactModelImpl._originalIsVip = contactModelImpl._isVip;
+
+		contactModelImpl._setOriginalIsVip = false;
+
+		contactModelImpl._originalStatus = contactModelImpl._status;
+
+		contactModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -1925,6 +1996,8 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 		};
 	private long _contactId;
 	private long _constantContactId;
+	private long _originalConstantContactId;
+	private boolean _setOriginalConstantContactId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -1956,16 +2029,21 @@ public class ContactModelImpl extends BaseModelImpl<Contact>
 	private String _primaryFax;
 	private String _primaryCell;
 	private String _primaryEmailAddress;
+	private String _originalPrimaryEmailAddress;
 	private String _alternateContact;
 	private String _alternateEmail;
 	private boolean _isVip;
+	private boolean _originalIsVip;
+	private boolean _setOriginalIsVip;
 	private String _facebookId;
 	private String _twitterHandle;
 	private String _linkedInUrl;
 	private String _status;
+	private String _originalStatus;
 	private String _kioskUuid;
 	private long _imageFileEntryId;
 	private String _tagsList;
 	private String _subGroupsList;
+	private long _columnBitmask;
 	private Contact _escapedModel;
 }

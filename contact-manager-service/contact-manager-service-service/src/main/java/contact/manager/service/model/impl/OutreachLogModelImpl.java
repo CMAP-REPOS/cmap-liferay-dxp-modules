@@ -102,7 +102,11 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.OutreachLog"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.OutreachLog"),
+			true);
+	public static final long CONTACTID_COLUMN_BITMASK = 1L;
+	public static final long ID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.OutreachLog"));
 
@@ -259,7 +263,19 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 
 	@Override
 	public void setContactId(long contactId) {
+		_columnBitmask |= CONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactId) {
+			_setOriginalContactId = true;
+
+			_originalContactId = _contactId;
+		}
+
 		_contactId = contactId;
+	}
+
+	public long getOriginalContactId() {
+		return _originalContactId;
 	}
 
 	@Override
@@ -341,6 +357,10 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -441,7 +461,13 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 	public void resetOriginalValues() {
 		OutreachLogModelImpl outreachLogModelImpl = this;
 
+		outreachLogModelImpl._originalContactId = outreachLogModelImpl._contactId;
+
+		outreachLogModelImpl._setOriginalContactId = false;
+
 		outreachLogModelImpl._setModifiedDate = false;
+
+		outreachLogModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -592,6 +618,8 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 	private long _id;
 	private long _userId;
 	private long _contactId;
+	private long _originalContactId;
+	private boolean _setOriginalContactId;
 	private String _note;
 	private String _medium;
 	private String _activityType;
@@ -599,5 +627,6 @@ public class OutreachLogModelImpl extends BaseModelImpl<OutreachLog>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _columnBitmask;
 	private OutreachLog _escapedModel;
 }

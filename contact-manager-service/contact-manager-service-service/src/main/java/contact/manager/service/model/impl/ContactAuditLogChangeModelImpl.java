@@ -90,7 +90,11 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.ContactAuditLogChange"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.ContactAuditLogChange"),
+			true);
+	public static final long CONTACTAUDITLOGID_COLUMN_BITMASK = 1L;
+	public static final long CONTACTAUDITLOGCHANGEID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.ContactAuditLogChange"));
 
@@ -184,6 +188,8 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 
 	@Override
 	public void setContactAuditLogChangeId(long contactAuditLogChangeId) {
+		_columnBitmask = -1L;
+
 		_contactAuditLogChangeId = contactAuditLogChangeId;
 	}
 
@@ -194,7 +200,19 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 
 	@Override
 	public void setContactAuditLogId(long contactAuditLogId) {
+		_columnBitmask |= CONTACTAUDITLOGID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactAuditLogId) {
+			_setOriginalContactAuditLogId = true;
+
+			_originalContactAuditLogId = _contactAuditLogId;
+		}
+
 		_contactAuditLogId = contactAuditLogId;
+	}
+
+	public long getOriginalContactAuditLogId() {
+		return _originalContactAuditLogId;
 	}
 
 	@Override
@@ -240,6 +258,10 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 	@Override
 	public void setNewValue(String newValue) {
 		_newValue = newValue;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -340,6 +362,13 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 
 	@Override
 	public void resetOriginalValues() {
+		ContactAuditLogChangeModelImpl contactAuditLogChangeModelImpl = this;
+
+		contactAuditLogChangeModelImpl._originalContactAuditLogId = contactAuditLogChangeModelImpl._contactAuditLogId;
+
+		contactAuditLogChangeModelImpl._setOriginalContactAuditLogId = false;
+
+		contactAuditLogChangeModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -436,8 +465,11 @@ public class ContactAuditLogChangeModelImpl extends BaseModelImpl<ContactAuditLo
 		};
 	private long _contactAuditLogChangeId;
 	private long _contactAuditLogId;
+	private long _originalContactAuditLogId;
+	private boolean _setOriginalContactAuditLogId;
 	private String _fieldName;
 	private String _oldValue;
 	private String _newValue;
+	private long _columnBitmask;
 	private ContactAuditLogChange _escapedModel;
 }

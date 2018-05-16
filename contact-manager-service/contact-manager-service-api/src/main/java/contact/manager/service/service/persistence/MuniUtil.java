@@ -109,6 +109,161 @@ public class MuniUtil {
 	}
 
 	/**
+	* Returns all the munis where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the matching munis
+	*/
+	public static List<Muni> findByZipCode(java.lang.String zipCode) {
+		return getPersistence().findByZipCode(zipCode);
+	}
+
+	/**
+	* Returns a range of all the munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of munis
+	* @param end the upper bound of the range of munis (not inclusive)
+	* @return the range of matching munis
+	*/
+	public static List<Muni> findByZipCode(java.lang.String zipCode, int start,
+		int end) {
+		return getPersistence().findByZipCode(zipCode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of munis
+	* @param end the upper bound of the range of munis (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching munis
+	*/
+	public static List<Muni> findByZipCode(java.lang.String zipCode, int start,
+		int end, OrderByComparator<Muni> orderByComparator) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link MuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of munis
+	* @param end the upper bound of the range of munis (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching munis
+	*/
+	public static List<Muni> findByZipCode(java.lang.String zipCode, int start,
+		int end, OrderByComparator<Muni> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching muni
+	* @throws NoSuchMuniException if a matching muni could not be found
+	*/
+	public static Muni findByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<Muni> orderByComparator)
+		throws contact.manager.service.exception.NoSuchMuniException {
+		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the first muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching muni, or <code>null</code> if a matching muni could not be found
+	*/
+	public static Muni fetchByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<Muni> orderByComparator) {
+		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching muni
+	* @throws NoSuchMuniException if a matching muni could not be found
+	*/
+	public static Muni findByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<Muni> orderByComparator)
+		throws contact.manager.service.exception.NoSuchMuniException {
+		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching muni, or <code>null</code> if a matching muni could not be found
+	*/
+	public static Muni fetchByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<Muni> orderByComparator) {
+		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the munis before and after the current muni in the ordered set where zipCode = &#63;.
+	*
+	* @param muniId the primary key of the current muni
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next muni
+	* @throws NoSuchMuniException if a muni with the primary key could not be found
+	*/
+	public static Muni[] findByZipCode_PrevAndNext(long muniId,
+		java.lang.String zipCode, OrderByComparator<Muni> orderByComparator)
+		throws contact.manager.service.exception.NoSuchMuniException {
+		return getPersistence()
+				   .findByZipCode_PrevAndNext(muniId, zipCode, orderByComparator);
+	}
+
+	/**
+	* Removes all the munis where zipCode = &#63; from the database.
+	*
+	* @param zipCode the zip code
+	*/
+	public static void removeByZipCode(java.lang.String zipCode) {
+		getPersistence().removeByZipCode(zipCode);
+	}
+
+	/**
+	* Returns the number of munis where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the number of matching munis
+	*/
+	public static int countByZipCode(java.lang.String zipCode) {
+		return getPersistence().countByZipCode(zipCode);
+	}
+
+	/**
 	* Caches the muni in the entity cache if it is enabled.
 	*
 	* @param muni the muni

@@ -88,7 +88,12 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.State_Senate"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.State_Senate"),
+			true);
+	public static final long ZIPCODE_COLUMN_BITMASK = 1L;
+	public static final long STATESENATENUMBER_COLUMN_BITMASK = 2L;
+	public static final long STATESENATENAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.State_Senate"));
 
@@ -184,6 +189,8 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 
 	@Override
 	public void setStateSenateNumber(int stateSenateNumber) {
+		_columnBitmask = -1L;
+
 		_stateSenateNumber = stateSenateNumber;
 	}
 
@@ -199,6 +206,8 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 
 	@Override
 	public void setStateSenateName(String stateSenateName) {
+		_columnBitmask = -1L;
+
 		_stateSenateName = stateSenateName;
 	}
 
@@ -214,7 +223,21 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 
 	@Override
 	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
 		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -320,6 +343,11 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 
 	@Override
 	public void resetOriginalValues() {
+		State_SenateModelImpl state_SenateModelImpl = this;
+
+		state_SenateModelImpl._originalZipCode = state_SenateModelImpl._zipCode;
+
+		state_SenateModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -404,5 +432,7 @@ public class State_SenateModelImpl extends BaseModelImpl<State_Senate>
 	private int _stateSenateNumber;
 	private String _stateSenateName;
 	private String _zipCode;
+	private String _originalZipCode;
+	private long _columnBitmask;
 	private State_Senate _escapedModel;
 }

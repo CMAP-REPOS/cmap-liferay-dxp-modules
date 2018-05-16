@@ -95,7 +95,11 @@ public class NoteModelImpl extends BaseModelImpl<Note> implements NoteModel {
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.Note"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.Note"),
+			true);
+	public static final long CONTACTID_COLUMN_BITMASK = 1L;
+	public static final long ID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.Note"));
 
@@ -205,7 +209,19 @@ public class NoteModelImpl extends BaseModelImpl<Note> implements NoteModel {
 
 	@Override
 	public void setContactId(long contactId) {
+		_columnBitmask |= CONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalContactId) {
+			_setOriginalContactId = true;
+
+			_originalContactId = _contactId;
+		}
+
 		_contactId = contactId;
+	}
+
+	public long getOriginalContactId() {
+		return _originalContactId;
 	}
 
 	@Override
@@ -273,6 +289,10 @@ public class NoteModelImpl extends BaseModelImpl<Note> implements NoteModel {
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -370,7 +390,13 @@ public class NoteModelImpl extends BaseModelImpl<Note> implements NoteModel {
 	public void resetOriginalValues() {
 		NoteModelImpl noteModelImpl = this;
 
+		noteModelImpl._originalContactId = noteModelImpl._contactId;
+
+		noteModelImpl._setOriginalContactId = false;
+
 		noteModelImpl._setModifiedDate = false;
+
+		noteModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -477,10 +503,13 @@ public class NoteModelImpl extends BaseModelImpl<Note> implements NoteModel {
 		};
 	private long _id;
 	private long _contactId;
+	private long _originalContactId;
+	private boolean _setOriginalContactId;
 	private long _userId;
 	private String _note;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _columnBitmask;
 	private Note _escapedModel;
 }

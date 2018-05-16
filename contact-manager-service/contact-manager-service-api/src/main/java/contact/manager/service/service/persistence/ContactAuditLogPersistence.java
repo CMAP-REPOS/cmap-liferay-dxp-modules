@@ -42,6 +42,275 @@ public interface ContactAuditLogPersistence extends BasePersistence<ContactAudit
 	 */
 
 	/**
+	* Returns all the contact audit logs where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByConstantContactId(
+		long constantContactId);
+
+	/**
+	* Returns a range of all the contact audit logs where constantContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param constantContactId the constant contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @return the range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the contact audit logs where constantContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param constantContactId the constant contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the contact audit logs where constantContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param constantContactId the constant contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first contact audit log in the ordered set where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log
+	* @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog findByConstantContactId_First(
+		long constantContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Returns the first contact audit log in the ordered set where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog fetchByConstantContactId_First(
+		long constantContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns the last contact audit log in the ordered set where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log
+	* @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog findByConstantContactId_Last(
+		long constantContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Returns the last contact audit log in the ordered set where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog fetchByConstantContactId_Last(
+		long constantContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns the contact audit logs before and after the current contact audit log in the ordered set where constantContactId = &#63;.
+	*
+	* @param contactAuditLogId the primary key of the current contact audit log
+	* @param constantContactId the constant contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact audit log
+	* @throws NoSuchContactAuditLogException if a contact audit log with the primary key could not be found
+	*/
+	public ContactAuditLog[] findByConstantContactId_PrevAndNext(
+		long contactAuditLogId, long constantContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Removes all the contact audit logs where constantContactId = &#63; from the database.
+	*
+	* @param constantContactId the constant contact ID
+	*/
+	public void removeByConstantContactId(long constantContactId);
+
+	/**
+	* Returns the number of contact audit logs where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the number of matching contact audit logs
+	*/
+	public int countByConstantContactId(long constantContactId);
+
+	/**
+	* Returns all the contact audit logs where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @return the matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByContactId(long contactId);
+
+	/**
+	* Returns a range of all the contact audit logs where contactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactId the contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @return the range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByContactId(long contactId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the contact audit logs where contactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactId the contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByContactId(long contactId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the contact audit logs where contactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param contactId the contact ID
+	* @param start the lower bound of the range of contact audit logs
+	* @param end the upper bound of the range of contact audit logs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching contact audit logs
+	*/
+	public java.util.List<ContactAuditLog> findByContactId(long contactId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first contact audit log in the ordered set where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log
+	* @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog findByContactId_First(long contactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Returns the first contact audit log in the ordered set where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog fetchByContactId_First(long contactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns the last contact audit log in the ordered set where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log
+	* @throws NoSuchContactAuditLogException if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog findByContactId_Last(long contactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Returns the last contact audit log in the ordered set where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching contact audit log, or <code>null</code> if a matching contact audit log could not be found
+	*/
+	public ContactAuditLog fetchByContactId_Last(long contactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator);
+
+	/**
+	* Returns the contact audit logs before and after the current contact audit log in the ordered set where contactId = &#63;.
+	*
+	* @param contactAuditLogId the primary key of the current contact audit log
+	* @param contactId the contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next contact audit log
+	* @throws NoSuchContactAuditLogException if a contact audit log with the primary key could not be found
+	*/
+	public ContactAuditLog[] findByContactId_PrevAndNext(
+		long contactAuditLogId, long contactId,
+		com.liferay.portal.kernel.util.OrderByComparator<ContactAuditLog> orderByComparator)
+		throws NoSuchContactAuditLogException;
+
+	/**
+	* Removes all the contact audit logs where contactId = &#63; from the database.
+	*
+	* @param contactId the contact ID
+	*/
+	public void removeByContactId(long contactId);
+
+	/**
+	* Returns the number of contact audit logs where contactId = &#63;.
+	*
+	* @param contactId the contact ID
+	* @return the number of matching contact audit logs
+	*/
+	public int countByContactId(long contactId);
+
+	/**
 	* Caches the contact audit log in the entity cache if it is enabled.
 	*
 	* @param contactAuditLog the contact audit log

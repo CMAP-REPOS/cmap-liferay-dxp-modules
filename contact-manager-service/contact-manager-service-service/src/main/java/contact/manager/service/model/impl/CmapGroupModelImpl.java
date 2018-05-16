@@ -84,7 +84,11 @@ public class CmapGroupModelImpl extends BaseModelImpl<CmapGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.CmapGroup"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.CmapGroup"),
+			true);
+	public static final long GROUPNAME_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.CmapGroup"));
 
@@ -171,7 +175,21 @@ public class CmapGroupModelImpl extends BaseModelImpl<CmapGroup>
 
 	@Override
 	public void setGroupName(String groupName) {
+		_columnBitmask |= GROUPNAME_COLUMN_BITMASK;
+
+		if (_originalGroupName == null) {
+			_originalGroupName = _groupName;
+		}
+
 		_groupName = groupName;
+	}
+
+	public String getOriginalGroupName() {
+		return GetterUtil.getString(_originalGroupName);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -263,6 +281,11 @@ public class CmapGroupModelImpl extends BaseModelImpl<CmapGroup>
 
 	@Override
 	public void resetOriginalValues() {
+		CmapGroupModelImpl cmapGroupModelImpl = this;
+
+		cmapGroupModelImpl._originalGroupName = cmapGroupModelImpl._groupName;
+
+		cmapGroupModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -323,5 +346,7 @@ public class CmapGroupModelImpl extends BaseModelImpl<CmapGroup>
 		};
 	private long _groupId;
 	private String _groupName;
+	private String _originalGroupName;
+	private long _columnBitmask;
 	private CmapGroup _escapedModel;
 }

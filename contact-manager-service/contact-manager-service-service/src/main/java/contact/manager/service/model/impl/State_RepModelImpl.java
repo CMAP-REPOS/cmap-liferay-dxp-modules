@@ -88,7 +88,12 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.service.model.State_Rep"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.service.model.State_Rep"),
+			true);
+	public static final long ZIPCODE_COLUMN_BITMASK = 1L;
+	public static final long STATEREPNUMBER_COLUMN_BITMASK = 2L;
+	public static final long STATEREPNAME_COLUMN_BITMASK = 4L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.service.model.State_Rep"));
 
@@ -184,6 +189,8 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 
 	@Override
 	public void setStateRepNumber(int stateRepNumber) {
+		_columnBitmask = -1L;
+
 		_stateRepNumber = stateRepNumber;
 	}
 
@@ -199,6 +206,8 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 
 	@Override
 	public void setStateRepName(String stateRepName) {
+		_columnBitmask = -1L;
+
 		_stateRepName = stateRepName;
 	}
 
@@ -214,7 +223,21 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 
 	@Override
 	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
 		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -320,6 +343,11 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 
 	@Override
 	public void resetOriginalValues() {
+		State_RepModelImpl state_RepModelImpl = this;
+
+		state_RepModelImpl._originalZipCode = state_RepModelImpl._zipCode;
+
+		state_RepModelImpl._columnBitmask = 0;
 	}
 
 	@Override
@@ -404,5 +432,7 @@ public class State_RepModelImpl extends BaseModelImpl<State_Rep>
 	private int _stateRepNumber;
 	private String _stateRepName;
 	private String _zipCode;
+	private String _originalZipCode;
+	private long _columnBitmask;
 	private State_Rep _escapedModel;
 }

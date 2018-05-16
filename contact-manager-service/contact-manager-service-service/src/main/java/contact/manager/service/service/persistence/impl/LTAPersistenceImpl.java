@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
+import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
@@ -44,6 +45,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -80,6 +82,545 @@ public class LTAPersistenceImpl extends BasePersistenceImpl<LTA>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(LTAModelImpl.ENTITY_CACHE_ENABLED,
 			LTAModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(LTAModelImpl.ENTITY_CACHE_ENABLED,
+			LTAModelImpl.FINDER_CACHE_ENABLED, LTAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
+		new FinderPath(LTAModelImpl.ENTITY_CACHE_ENABLED,
+			LTAModelImpl.FINDER_CACHE_ENABLED, LTAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] { String.class.getName() },
+			LTAModelImpl.ZIPCODE_COLUMN_BITMASK |
+			LTAModelImpl.LTANAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(LTAModelImpl.ENTITY_CACHE_ENABLED,
+			LTAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the ltas where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the matching ltas
+	 */
+	@Override
+	public List<LTA> findByZipCode(String zipCode) {
+		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the ltas where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of ltas
+	 * @param end the upper bound of the range of ltas (not inclusive)
+	 * @return the range of matching ltas
+	 */
+	@Override
+	public List<LTA> findByZipCode(String zipCode, int start, int end) {
+		return findByZipCode(zipCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the ltas where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of ltas
+	 * @param end the upper bound of the range of ltas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching ltas
+	 */
+	@Override
+	public List<LTA> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<LTA> orderByComparator) {
+		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the ltas where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link LTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of ltas
+	 * @param end the upper bound of the range of ltas (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching ltas
+	 */
+	@Override
+	public List<LTA> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<LTA> orderByComparator, boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+		}
+
+		List<LTA> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<LTA>)finderCache.getResult(finderPath, finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (LTA lta : list) {
+					if (!Objects.equals(zipCode, lta.getZipCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_LTA_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(LTAModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				if (!pagination) {
+					list = (List<LTA>)QueryUtil.list(q, getDialect(), start,
+							end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<LTA>)QueryUtil.list(q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first lta in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lta
+	 * @throws NoSuchLTAException if a matching lta could not be found
+	 */
+	@Override
+	public LTA findByZipCode_First(String zipCode,
+		OrderByComparator<LTA> orderByComparator) throws NoSuchLTAException {
+		LTA lta = fetchByZipCode_First(zipCode, orderByComparator);
+
+		if (lta != null) {
+			return lta;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLTAException(msg.toString());
+	}
+
+	/**
+	 * Returns the first lta in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching lta, or <code>null</code> if a matching lta could not be found
+	 */
+	@Override
+	public LTA fetchByZipCode_First(String zipCode,
+		OrderByComparator<LTA> orderByComparator) {
+		List<LTA> list = findByZipCode(zipCode, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last lta in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lta
+	 * @throws NoSuchLTAException if a matching lta could not be found
+	 */
+	@Override
+	public LTA findByZipCode_Last(String zipCode,
+		OrderByComparator<LTA> orderByComparator) throws NoSuchLTAException {
+		LTA lta = fetchByZipCode_Last(zipCode, orderByComparator);
+
+		if (lta != null) {
+			return lta;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchLTAException(msg.toString());
+	}
+
+	/**
+	 * Returns the last lta in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching lta, or <code>null</code> if a matching lta could not be found
+	 */
+	@Override
+	public LTA fetchByZipCode_Last(String zipCode,
+		OrderByComparator<LTA> orderByComparator) {
+		int count = countByZipCode(zipCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<LTA> list = findByZipCode(zipCode, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the ltas before and after the current lta in the ordered set where zipCode = &#63;.
+	 *
+	 * @param ltaId the primary key of the current lta
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next lta
+	 * @throws NoSuchLTAException if a lta with the primary key could not be found
+	 */
+	@Override
+	public LTA[] findByZipCode_PrevAndNext(long ltaId, String zipCode,
+		OrderByComparator<LTA> orderByComparator) throws NoSuchLTAException {
+		LTA lta = findByPrimaryKey(ltaId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			LTA[] array = new LTAImpl[3];
+
+			array[0] = getByZipCode_PrevAndNext(session, lta, zipCode,
+					orderByComparator, true);
+
+			array[1] = lta;
+
+			array[2] = getByZipCode_PrevAndNext(session, lta, zipCode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected LTA getByZipCode_PrevAndNext(Session session, LTA lta,
+		String zipCode, OrderByComparator<LTA> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_LTA_WHERE);
+
+		boolean bindZipCode = false;
+
+		if (zipCode == null) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+		}
+		else if (zipCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+		}
+		else {
+			bindZipCode = true;
+
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(LTAModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindZipCode) {
+			qPos.add(zipCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(lta);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<LTA> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the ltas where zipCode = &#63; from the database.
+	 *
+	 * @param zipCode the zip code
+	 */
+	@Override
+	public void removeByZipCode(String zipCode) {
+		for (LTA lta : findByZipCode(zipCode, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(lta);
+		}
+	}
+
+	/**
+	 * Returns the number of ltas where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the number of matching ltas
+	 */
+	@Override
+	public int countByZipCode(String zipCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+
+		Object[] finderArgs = new Object[] { zipCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_LTA_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "lta.zipCode IS NULL";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "lta.zipCode = ?";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(lta.zipCode IS NULL OR lta.zipCode = '')";
 
 	public LTAPersistenceImpl() {
 		setModelClass(LTA.class);
@@ -262,6 +803,8 @@ public class LTAPersistenceImpl extends BasePersistenceImpl<LTA>
 
 		boolean isNew = lta.isNew();
 
+		LTAModelImpl ltaModelImpl = (LTAModelImpl)lta;
+
 		Session session = null;
 
 		try {
@@ -285,10 +828,37 @@ public class LTAPersistenceImpl extends BasePersistenceImpl<LTA>
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
-		if (isNew) {
+		if (!LTAModelImpl.COLUMN_BITMASK_ENABLED) {
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		}
+		else
+		 if (isNew) {
+			Object[] args = new Object[] { ltaModelImpl.getZipCode() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
+		}
+
+		else {
+			if ((ltaModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { ltaModelImpl.getOriginalZipCode() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+
+				args = new Object[] { ltaModelImpl.getZipCode() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+			}
 		}
 
 		entityCache.putResult(LTAModelImpl.ENTITY_CACHE_ENABLED, LTAImpl.class,
@@ -716,8 +1286,11 @@ public class LTAPersistenceImpl extends BasePersistenceImpl<LTA>
 	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_LTA = "SELECT lta FROM LTA lta";
 	private static final String _SQL_SELECT_LTA_WHERE_PKS_IN = "SELECT lta FROM LTA lta WHERE ltaId IN (";
+	private static final String _SQL_SELECT_LTA_WHERE = "SELECT lta FROM LTA lta WHERE ";
 	private static final String _SQL_COUNT_LTA = "SELECT COUNT(lta) FROM LTA lta";
+	private static final String _SQL_COUNT_LTA_WHERE = "SELECT COUNT(lta) FROM LTA lta WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "lta.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No LTA exists with the primary key ";
+	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No LTA exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(LTAPersistenceImpl.class);
 }

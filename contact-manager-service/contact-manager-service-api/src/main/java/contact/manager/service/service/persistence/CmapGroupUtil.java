@@ -112,6 +112,167 @@ public class CmapGroupUtil {
 	}
 
 	/**
+	* Returns all the cmap groups where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @return the matching cmap groups
+	*/
+	public static List<CmapGroup> findByGroupName(java.lang.String groupName) {
+		return getPersistence().findByGroupName(groupName);
+	}
+
+	/**
+	* Returns a range of all the cmap groups where groupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupName the group name
+	* @param start the lower bound of the range of cmap groups
+	* @param end the upper bound of the range of cmap groups (not inclusive)
+	* @return the range of matching cmap groups
+	*/
+	public static List<CmapGroup> findByGroupName(java.lang.String groupName,
+		int start, int end) {
+		return getPersistence().findByGroupName(groupName, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the cmap groups where groupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupName the group name
+	* @param start the lower bound of the range of cmap groups
+	* @param end the upper bound of the range of cmap groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching cmap groups
+	*/
+	public static List<CmapGroup> findByGroupName(java.lang.String groupName,
+		int start, int end, OrderByComparator<CmapGroup> orderByComparator) {
+		return getPersistence()
+				   .findByGroupName(groupName, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the cmap groups where groupName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CmapGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupName the group name
+	* @param start the lower bound of the range of cmap groups
+	* @param end the upper bound of the range of cmap groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching cmap groups
+	*/
+	public static List<CmapGroup> findByGroupName(java.lang.String groupName,
+		int start, int end, OrderByComparator<CmapGroup> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupName(groupName, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first cmap group in the ordered set where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cmap group
+	* @throws NoSuchCmapGroupException if a matching cmap group could not be found
+	*/
+	public static CmapGroup findByGroupName_First(java.lang.String groupName,
+		OrderByComparator<CmapGroup> orderByComparator)
+		throws contact.manager.service.exception.NoSuchCmapGroupException {
+		return getPersistence()
+				   .findByGroupName_First(groupName, orderByComparator);
+	}
+
+	/**
+	* Returns the first cmap group in the ordered set where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching cmap group, or <code>null</code> if a matching cmap group could not be found
+	*/
+	public static CmapGroup fetchByGroupName_First(java.lang.String groupName,
+		OrderByComparator<CmapGroup> orderByComparator) {
+		return getPersistence()
+				   .fetchByGroupName_First(groupName, orderByComparator);
+	}
+
+	/**
+	* Returns the last cmap group in the ordered set where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cmap group
+	* @throws NoSuchCmapGroupException if a matching cmap group could not be found
+	*/
+	public static CmapGroup findByGroupName_Last(java.lang.String groupName,
+		OrderByComparator<CmapGroup> orderByComparator)
+		throws contact.manager.service.exception.NoSuchCmapGroupException {
+		return getPersistence()
+				   .findByGroupName_Last(groupName, orderByComparator);
+	}
+
+	/**
+	* Returns the last cmap group in the ordered set where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching cmap group, or <code>null</code> if a matching cmap group could not be found
+	*/
+	public static CmapGroup fetchByGroupName_Last(java.lang.String groupName,
+		OrderByComparator<CmapGroup> orderByComparator) {
+		return getPersistence()
+				   .fetchByGroupName_Last(groupName, orderByComparator);
+	}
+
+	/**
+	* Returns the cmap groups before and after the current cmap group in the ordered set where groupName = &#63;.
+	*
+	* @param groupId the primary key of the current cmap group
+	* @param groupName the group name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next cmap group
+	* @throws NoSuchCmapGroupException if a cmap group with the primary key could not be found
+	*/
+	public static CmapGroup[] findByGroupName_PrevAndNext(long groupId,
+		java.lang.String groupName,
+		OrderByComparator<CmapGroup> orderByComparator)
+		throws contact.manager.service.exception.NoSuchCmapGroupException {
+		return getPersistence()
+				   .findByGroupName_PrevAndNext(groupId, groupName,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the cmap groups where groupName = &#63; from the database.
+	*
+	* @param groupName the group name
+	*/
+	public static void removeByGroupName(java.lang.String groupName) {
+		getPersistence().removeByGroupName(groupName);
+	}
+
+	/**
+	* Returns the number of cmap groups where groupName = &#63;.
+	*
+	* @param groupName the group name
+	* @return the number of matching cmap groups
+	*/
+	public static int countByGroupName(java.lang.String groupName) {
+		return getPersistence().countByGroupName(groupName);
+	}
+
+	/**
 	* Caches the cmap group in the entity cache if it is enabled.
 	*
 	* @param cmapGroup the cmap group
