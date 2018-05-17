@@ -1,0 +1,209 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="contact.manager">
+	<namespace>CRM</namespace>
+    <entity human-name="CRM CCA" local-service="true" name="CrmCCA" remote-service="false" table="crm_cca" uuid="true">
+        <column name="crmCCAId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM Chi Ward" local-service="true" name="CrmChiWard" remote-service="false" table="crm_chiward" uuid="true">
+        <column name="crmChiWardId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity name="CrmContact" human-name="CRM Contact" table="crm_contact"
+		local-service="true" remote-service="false" uuid="true">
+
+		<!-- PK fields -->
+
+		<!-- Group instance -->
+		<column name="crmContactId" primary="true" type="long"></column>
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+    <entity human-name="CRM Contact Audit Log" local-service="true" name="CrmContactAuditLog" remote-service="false" table="crm_contactauditlog" uuid="true">
+        <column name="crmContactAuditLogId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM Contact Audit Log Change" local-service="true" name="CrmContactAuditLogChange" remote-service="false" table="crm_contactauditlogchange" uuid="true">
+        <column name="crmContactAuditLogChangeId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity human-name="CRM County" local-service="true" name="CrmCounty"
+		remote-service="false" table="crm_county" uuid="true">
+		<column name="crmCountyId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+    <entity human-name="CRM County Commissioner" local-service="true" name="CrmCountyCommissioner" table="crm_countycommissioner" uuid="true">
+        <column name="crmCountyCommissionerOrBoardDistId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
+		local-service="true" remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="crmGroupId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+    <entity human-name="CRM Kiosk Contact" local-service="true" name="CrmKioskContact" remote-service="false" table="crm_kioskcontact" uuid="true">
+        <column name="crmKioskContactId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM Kiosk Survey" local-service="true" name="CrmKioskSurvey" remote-service="false" table="crm_kiosksurvey" uuid="true">
+        <column name="crmKioskSurveyId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM LTA" local-service="true" name="CrmLTA" remote-service="false" table="crm_lta" uuid="true">
+        <column name="crmLTAId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity name="CrmMuni" local-service="true" remote-service="false"
+		human-name="CRM Muni" table="crm_muni" uuid="true">
+
+		<!-- PK fields -->
+
+		<column name="crmMuniId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+    <entity human-name="CRM Note" local-service="true" name="CrmNote" remote-service="false" table="crm_note" uuid="true">
+        <column name="crmNoteId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM Outreach Log" local-service="true" name="CrmOutreachLog" remote-service="false" table="crm_outreachlog" uuid="true">
+        <column name="crmOutreachLogId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM State Rep" local-service="true" name="CrmStateRep" remote-service="false" table="crm_staterep" uuid="true">
+        <column name="crmStateRepId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+	<entity name="CrmStateSenate" human-name="CRM State Senate"
+		table="crm_statesenate" uuid="true" local-service="true"
+		remote-service="false">
+
+		<!-- PK fields -->
+
+		<column name="crmStateSenateId" type="long" primary="true"></column>
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long"></column>
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+	</entity>
+    <entity human-name="CRM Tag" local-service="true" name="CrmTag" remote-service="false" table="crm_tag" uuid="true">
+        <column name="crmTagId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+    <entity human-name="CRM US Rep" local-service="true" name="CrmUsRep" remote-service="false" table="crm_usrep" uuid="true">
+        <column name="crmUsRepId" primary="true" type="long"></column>
+        <column name="groupId" type="long"></column>
+        <column name="companyId" type="long"></column>
+        <column name="userId" type="long"></column>
+        <column name="userName" type="String"></column>
+        <column name="createDate" type="Date"></column>
+        <column name="modifiedDate" type="Date"></column>
+    </entity>
+</service-builder>
