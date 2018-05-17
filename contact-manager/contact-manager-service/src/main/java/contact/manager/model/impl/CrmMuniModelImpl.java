@@ -75,7 +75,9 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
+			{ "zipCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,12 +90,14 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("zipCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_muni (uuid_ VARCHAR(75) null,crmMuniId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_muni (uuid_ VARCHAR(75) null,crmMuniId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,zipCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_muni";
-	public static final String ORDER_BY_JPQL = " ORDER BY crmMuni.crmMuniId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY crm_muni.crmMuniId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY crmMuni.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY crm_muni.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -109,7 +113,8 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMMUNIID_COLUMN_BITMASK = 8L;
+	public static final long ZIPCODE_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmMuni"));
 
@@ -158,6 +163,8 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +220,18 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -361,6 +380,48 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 	}
 
 	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_columnBitmask = -1L;
+
+		_name = name;
+	}
+
+	@Override
+	public String getZipCode() {
+		if (_zipCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _zipCode;
+		}
+	}
+
+	@Override
+	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
+		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmMuni.class.getName()));
@@ -405,6 +466,8 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 		crmMuniImpl.setUserName(getUserName());
 		crmMuniImpl.setCreateDate(getCreateDate());
 		crmMuniImpl.setModifiedDate(getModifiedDate());
+		crmMuniImpl.setName(getName());
+		crmMuniImpl.setZipCode(getZipCode());
 
 		crmMuniImpl.resetOriginalValues();
 
@@ -413,17 +476,15 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 
 	@Override
 	public int compareTo(CrmMuni crmMuni) {
-		long primaryKey = crmMuni.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getName().compareTo(crmMuni.getName());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -479,6 +540,8 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 
 		crmMuniModelImpl._setModifiedDate = false;
 
+		crmMuniModelImpl._originalZipCode = crmMuniModelImpl._zipCode;
+
 		crmMuniModelImpl._columnBitmask = 0;
 	}
 
@@ -528,12 +591,28 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 			crmMuniCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmMuniCacheModel.name = getName();
+
+		String name = crmMuniCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			crmMuniCacheModel.name = null;
+		}
+
+		crmMuniCacheModel.zipCode = getZipCode();
+
+		String zipCode = crmMuniCacheModel.zipCode;
+
+		if ((zipCode != null) && (zipCode.length() == 0)) {
+			crmMuniCacheModel.zipCode = null;
+		}
+
 		return crmMuniCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -551,6 +630,10 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", name=");
+		sb.append(getName());
+		sb.append(", zipCode=");
+		sb.append(getZipCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +641,7 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmMuni");
@@ -596,6 +679,14 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>zipCode</column-name><column-value><![CDATA[");
+		sb.append(getZipCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +711,9 @@ public class CrmMuniModelImpl extends BaseModelImpl<CrmMuni>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _name;
+	private String _zipCode;
+	private String _originalZipCode;
 	private long _columnBitmask;
 	private CrmMuni _escapedModel;
 }

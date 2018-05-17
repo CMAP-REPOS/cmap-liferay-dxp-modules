@@ -41,6 +41,7 @@ public class CrmTagSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setName(model.getName());
 
 		return soapModel;
 	}
@@ -157,6 +158,14 @@ public class CrmTagSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
 	private String _uuid;
 	private long _crmTagId;
 	private long _groupId;
@@ -165,4 +174,5 @@ public class CrmTagSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _name;
 }

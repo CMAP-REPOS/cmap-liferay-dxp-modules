@@ -80,7 +80,10 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
+			{ "number_", Types.VARCHAR },
+			{ "zipCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -93,12 +96,15 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("zipCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_countycommissioner (uuid_ VARCHAR(75) null,crmCountyCommissionerOrBoardDistId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_countycommissioner (uuid_ VARCHAR(75) null,crmCountyCommissionerOrBoardDistId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,number_ VARCHAR(75) null,zipCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_countycommissioner";
-	public static final String ORDER_BY_JPQL = " ORDER BY crmCountyCommissioner.crmCountyCommissionerOrBoardDistId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY crm_countycommissioner.crmCountyCommissionerOrBoardDistId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY crmCountyCommissioner.number ASC, crmCountyCommissioner.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY crm_countycommissioner.number_ ASC, crm_countycommissioner.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -114,7 +120,9 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMCOUNTYCOMMISSIONERORBOARDDISTID_COLUMN_BITMASK = 8L;
+	public static final long ZIPCODE_COLUMN_BITMASK = 8L;
+	public static final long NUMBER_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -138,6 +146,9 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		model.setUserName(soapModel.getUserName());
 		model.setCreateDate(soapModel.getCreateDate());
 		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setNumber(soapModel.getNumber());
+		model.setZipCode(soapModel.getZipCode());
 
 		return model;
 	}
@@ -212,6 +223,9 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("number", getNumber());
+		attributes.put("zipCode", getZipCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -268,6 +282,24 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String number = (String)attributes.get("number");
+
+		if (number != null) {
+			setNumber(number);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -424,6 +456,68 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
+	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_columnBitmask = -1L;
+
+		_name = name;
+	}
+
+	@JSON
+	@Override
+	public String getNumber() {
+		if (_number == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _number;
+		}
+	}
+
+	@Override
+	public void setNumber(String number) {
+		_columnBitmask = -1L;
+
+		_number = number;
+	}
+
+	@JSON
+	@Override
+	public String getZipCode() {
+		if (_zipCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _zipCode;
+		}
+	}
+
+	@Override
+	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
+		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -469,6 +563,9 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		crmCountyCommissionerImpl.setUserName(getUserName());
 		crmCountyCommissionerImpl.setCreateDate(getCreateDate());
 		crmCountyCommissionerImpl.setModifiedDate(getModifiedDate());
+		crmCountyCommissionerImpl.setName(getName());
+		crmCountyCommissionerImpl.setNumber(getNumber());
+		crmCountyCommissionerImpl.setZipCode(getZipCode());
 
 		crmCountyCommissionerImpl.resetOriginalValues();
 
@@ -477,17 +574,21 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 
 	@Override
 	public int compareTo(CrmCountyCommissioner crmCountyCommissioner) {
-		long primaryKey = crmCountyCommissioner.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getNumber().compareTo(crmCountyCommissioner.getNumber());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+
+		value = getName().compareTo(crmCountyCommissioner.getName());
+
+		if (value != 0) {
+			return value;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -543,6 +644,8 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 
 		crmCountyCommissionerModelImpl._setModifiedDate = false;
 
+		crmCountyCommissionerModelImpl._originalZipCode = crmCountyCommissionerModelImpl._zipCode;
+
 		crmCountyCommissionerModelImpl._columnBitmask = 0;
 	}
 
@@ -592,12 +695,36 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 			crmCountyCommissionerCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmCountyCommissionerCacheModel.name = getName();
+
+		String name = crmCountyCommissionerCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			crmCountyCommissionerCacheModel.name = null;
+		}
+
+		crmCountyCommissionerCacheModel.number = getNumber();
+
+		String number = crmCountyCommissionerCacheModel.number;
+
+		if ((number != null) && (number.length() == 0)) {
+			crmCountyCommissionerCacheModel.number = null;
+		}
+
+		crmCountyCommissionerCacheModel.zipCode = getZipCode();
+
+		String zipCode = crmCountyCommissionerCacheModel.zipCode;
+
+		if ((zipCode != null) && (zipCode.length() == 0)) {
+			crmCountyCommissionerCacheModel.zipCode = null;
+		}
+
 		return crmCountyCommissionerCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -615,6 +742,12 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", name=");
+		sb.append(getName());
+		sb.append(", number=");
+		sb.append(getNumber());
+		sb.append(", zipCode=");
+		sb.append(getZipCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -622,7 +755,7 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmCountyCommissioner");
@@ -660,6 +793,18 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>number</column-name><column-value><![CDATA[");
+		sb.append(getNumber());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>zipCode</column-name><column-value><![CDATA[");
+		sb.append(getZipCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -684,6 +829,10 @@ public class CrmCountyCommissionerModelImpl extends BaseModelImpl<CrmCountyCommi
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _name;
+	private String _number;
+	private String _zipCode;
+	private String _originalZipCode;
 	private long _columnBitmask;
 	private CrmCountyCommissioner _escapedModel;
 }

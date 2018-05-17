@@ -66,7 +66,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,14 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", crmContactAuditLogId=");
+		sb.append(crmContactAuditLogId);
+		sb.append(", fieldName=");
+		sb.append(fieldName);
+		sb.append(", oldValue=");
+		sb.append(oldValue);
+		sb.append(", newValue=");
+		sb.append(newValue);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +134,29 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 			crmContactAuditLogChangeImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(crmContactAuditLogId);
+
+		if (fieldName == null) {
+			crmContactAuditLogChangeImpl.setFieldName(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogChangeImpl.setFieldName(fieldName);
+		}
+
+		if (oldValue == null) {
+			crmContactAuditLogChangeImpl.setOldValue(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogChangeImpl.setOldValue(oldValue);
+		}
+
+		if (newValue == null) {
+			crmContactAuditLogChangeImpl.setNewValue(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogChangeImpl.setNewValue(newValue);
+		}
+
 		crmContactAuditLogChangeImpl.resetOriginalValues();
 
 		return crmContactAuditLogChangeImpl;
@@ -145,6 +176,11 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		crmContactAuditLogId = objectInput.readLong();
+		fieldName = objectInput.readUTF();
+		oldValue = objectInput.readUTF();
+		newValue = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +210,29 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(crmContactAuditLogId);
+
+		if (fieldName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(fieldName);
+		}
+
+		if (oldValue == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(oldValue);
+		}
+
+		if (newValue == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(newValue);
+		}
 	}
 
 	public String uuid;
@@ -184,4 +243,8 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long crmContactAuditLogId;
+	public String fieldName;
+	public String oldValue;
+	public String newValue;
 }

@@ -112,7 +112,9 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 			CrmCountyCommissionerImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CrmCountyCommissionerModelImpl.UUID_COLUMN_BITMASK);
+			CrmCountyCommissionerModelImpl.UUID_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
 			CrmCountyCommissionerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -921,7 +923,9 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CrmCountyCommissionerModelImpl.UUID_COLUMN_BITMASK |
-			CrmCountyCommissionerModelImpl.COMPANYID_COLUMN_BITMASK);
+			CrmCountyCommissionerModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
 			CrmCountyCommissionerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1499,6 +1503,561 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmCountyCommissioner.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmCountyCommissioner.uuid IS NULL OR crmCountyCommissioner.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmCountyCommissioner.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCountyCommissionerModelImpl.FINDER_CACHE_ENABLED,
+			CrmCountyCommissionerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
+		new FinderPath(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCountyCommissionerModelImpl.FINDER_CACHE_ENABLED,
+			CrmCountyCommissionerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] { String.class.getName() },
+			CrmCountyCommissionerModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmCountyCommissionerModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCountyCommissionerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the CRM County Commissioners where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the matching CRM County Commissioners
+	 */
+	@Override
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode) {
+		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM County Commissioners where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCountyCommissionerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM County Commissioners
+	 * @param end the upper bound of the range of CRM County Commissioners (not inclusive)
+	 * @return the range of matching CRM County Commissioners
+	 */
+	@Override
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode, int start,
+		int end) {
+		return findByZipCode(zipCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM County Commissioners where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCountyCommissionerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM County Commissioners
+	 * @param end the upper bound of the range of CRM County Commissioners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM County Commissioners
+	 */
+	@Override
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmCountyCommissioner> orderByComparator) {
+		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM County Commissioners where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCountyCommissionerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM County Commissioners
+	 * @param end the upper bound of the range of CRM County Commissioners (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM County Commissioners
+	 */
+	@Override
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmCountyCommissioner> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+		}
+
+		List<CrmCountyCommissioner> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmCountyCommissioner>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmCountyCommissioner crmCountyCommissioner : list) {
+					if (!Objects.equals(zipCode,
+								crmCountyCommissioner.getZipCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CRMCOUNTYCOMMISSIONER_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmCountyCommissionerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				if (!pagination) {
+					list = (List<CrmCountyCommissioner>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmCountyCommissioner>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM County Commissioner in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM County Commissioner
+	 * @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
+	 */
+	@Override
+	public CrmCountyCommissioner findByZipCode_First(String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator)
+		throws NoSuchCrmCountyCommissionerException {
+		CrmCountyCommissioner crmCountyCommissioner = fetchByZipCode_First(zipCode,
+				orderByComparator);
+
+		if (crmCountyCommissioner != null) {
+			return crmCountyCommissioner;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmCountyCommissionerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM County Commissioner in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	 */
+	@Override
+	public CrmCountyCommissioner fetchByZipCode_First(String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator) {
+		List<CrmCountyCommissioner> list = findByZipCode(zipCode, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM County Commissioner in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM County Commissioner
+	 * @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
+	 */
+	@Override
+	public CrmCountyCommissioner findByZipCode_Last(String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator)
+		throws NoSuchCrmCountyCommissionerException {
+		CrmCountyCommissioner crmCountyCommissioner = fetchByZipCode_Last(zipCode,
+				orderByComparator);
+
+		if (crmCountyCommissioner != null) {
+			return crmCountyCommissioner;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmCountyCommissionerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM County Commissioner in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	 */
+	@Override
+	public CrmCountyCommissioner fetchByZipCode_Last(String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator) {
+		int count = countByZipCode(zipCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmCountyCommissioner> list = findByZipCode(zipCode, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM County Commissioners before and after the current CRM County Commissioner in the ordered set where zipCode = &#63;.
+	 *
+	 * @param crmCountyCommissionerOrBoardDistId the primary key of the current CRM County Commissioner
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM County Commissioner
+	 * @throws NoSuchCrmCountyCommissionerException if a CRM County Commissioner with the primary key could not be found
+	 */
+	@Override
+	public CrmCountyCommissioner[] findByZipCode_PrevAndNext(
+		long crmCountyCommissionerOrBoardDistId, String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator)
+		throws NoSuchCrmCountyCommissionerException {
+		CrmCountyCommissioner crmCountyCommissioner = findByPrimaryKey(crmCountyCommissionerOrBoardDistId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmCountyCommissioner[] array = new CrmCountyCommissionerImpl[3];
+
+			array[0] = getByZipCode_PrevAndNext(session, crmCountyCommissioner,
+					zipCode, orderByComparator, true);
+
+			array[1] = crmCountyCommissioner;
+
+			array[2] = getByZipCode_PrevAndNext(session, crmCountyCommissioner,
+					zipCode, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmCountyCommissioner getByZipCode_PrevAndNext(Session session,
+		CrmCountyCommissioner crmCountyCommissioner, String zipCode,
+		OrderByComparator<CrmCountyCommissioner> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CRMCOUNTYCOMMISSIONER_WHERE);
+
+		boolean bindZipCode = false;
+
+		if (zipCode == null) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+		}
+		else if (zipCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+		}
+		else {
+			bindZipCode = true;
+
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmCountyCommissionerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindZipCode) {
+			qPos.add(zipCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmCountyCommissioner);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmCountyCommissioner> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM County Commissioners where zipCode = &#63; from the database.
+	 *
+	 * @param zipCode the zip code
+	 */
+	@Override
+	public void removeByZipCode(String zipCode) {
+		for (CrmCountyCommissioner crmCountyCommissioner : findByZipCode(
+				zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(crmCountyCommissioner);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM County Commissioners where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the number of matching CRM County Commissioners
+	 */
+	@Override
+	public int countByZipCode(String zipCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+
+		Object[] finderArgs = new Object[] { zipCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CRMCOUNTYCOMMISSIONER_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "crmCountyCommissioner.zipCode IS NULL";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "crmCountyCommissioner.zipCode = ?";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(crmCountyCommissioner.zipCode IS NULL OR crmCountyCommissioner.zipCode = '')";
 
 	public CrmCountyCommissionerPersistenceImpl() {
 		setModelClass(CrmCountyCommissioner.class);
@@ -1510,6 +2069,7 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
 			dbColumnNames.put("uuid", "uuid_");
+			dbColumnNames.put("number", "number_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -1841,6 +2401,12 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { crmCountyCommissionerModelImpl.getZipCode() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1884,6 +2450,23 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
+
+			if ((crmCountyCommissionerModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmCountyCommissionerModelImpl.getOriginalZipCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+
+				args = new Object[] { crmCountyCommissionerModelImpl.getZipCode() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+			}
 		}
 
 		entityCache.putResult(CrmCountyCommissionerModelImpl.ENTITY_CACHE_ENABLED,
@@ -1917,6 +2500,9 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 		crmCountyCommissionerImpl.setUserName(crmCountyCommissioner.getUserName());
 		crmCountyCommissionerImpl.setCreateDate(crmCountyCommissioner.getCreateDate());
 		crmCountyCommissionerImpl.setModifiedDate(crmCountyCommissioner.getModifiedDate());
+		crmCountyCommissionerImpl.setName(crmCountyCommissioner.getName());
+		crmCountyCommissionerImpl.setNumber(crmCountyCommissioner.getNumber());
+		crmCountyCommissionerImpl.setZipCode(crmCountyCommissioner.getZipCode());
 
 		return crmCountyCommissionerImpl;
 	}
@@ -2344,6 +2930,6 @@ public class CrmCountyCommissionerPersistenceImpl extends BasePersistenceImpl<Cr
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmCountyCommissioner exists with the key {";
 	private static final Log _log = LogFactoryUtil.getLog(CrmCountyCommissionerPersistenceImpl.class);
 	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "number"
 			});
 }

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -75,7 +76,11 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "crmContactId", Types.BIGINT },
+			{ "constantContactId", Types.BIGINT },
+			{ "oldSnapshot", Types.VARCHAR },
+			{ "newSnapshot", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,12 +93,16 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("crmContactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("constantContactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("oldSnapshot", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("newSnapshot", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlog (uuid_ VARCHAR(75) null,crmContactAuditLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlog (uuid_ VARCHAR(75) null,crmContactAuditLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactId LONG,constantContactId LONG,oldSnapshot TEXT null,newSnapshot TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_contactauditlog";
-	public static final String ORDER_BY_JPQL = " ORDER BY crmContactAuditLog.crmContactAuditLogId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY crm_contactauditlog.crmContactAuditLogId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY crmContactAuditLog.createDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY crm_contactauditlog.createDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -107,9 +116,11 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 				"value.object.column.bitmask.enabled.contact.manager.model.CrmContactAuditLog"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMCONTACTAUDITLOGID_COLUMN_BITMASK = 8L;
+	public static final long CONSTANTCONTACTID_COLUMN_BITMASK = 2L;
+	public static final long CRMCONTACTID_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
+	public static final long CREATEDATE_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmContactAuditLog"));
 
@@ -158,6 +169,10 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("constantContactId", getConstantContactId());
+		attributes.put("oldSnapshot", getOldSnapshot());
+		attributes.put("newSnapshot", getNewSnapshot());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +228,30 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		Long constantContactId = (Long)attributes.get("constantContactId");
+
+		if (constantContactId != null) {
+			setConstantContactId(constantContactId);
+		}
+
+		String oldSnapshot = (String)attributes.get("oldSnapshot");
+
+		if (oldSnapshot != null) {
+			setOldSnapshot(oldSnapshot);
+		}
+
+		String newSnapshot = (String)attributes.get("newSnapshot");
+
+		if (newSnapshot != null) {
+			setNewSnapshot(newSnapshot);
 		}
 	}
 
@@ -341,6 +380,8 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
 		_createDate = createDate;
 	}
 
@@ -358,6 +399,80 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		_setModifiedDate = true;
 
 		_modifiedDate = modifiedDate;
+	}
+
+	@Override
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_columnBitmask |= CRMCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrmContactId) {
+			_setOriginalCrmContactId = true;
+
+			_originalCrmContactId = _crmContactId;
+		}
+
+		_crmContactId = crmContactId;
+	}
+
+	public long getOriginalCrmContactId() {
+		return _originalCrmContactId;
+	}
+
+	@Override
+	public long getConstantContactId() {
+		return _constantContactId;
+	}
+
+	@Override
+	public void setConstantContactId(long constantContactId) {
+		_columnBitmask |= CONSTANTCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalConstantContactId) {
+			_setOriginalConstantContactId = true;
+
+			_originalConstantContactId = _constantContactId;
+		}
+
+		_constantContactId = constantContactId;
+	}
+
+	public long getOriginalConstantContactId() {
+		return _originalConstantContactId;
+	}
+
+	@Override
+	public String getOldSnapshot() {
+		if (_oldSnapshot == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _oldSnapshot;
+		}
+	}
+
+	@Override
+	public void setOldSnapshot(String oldSnapshot) {
+		_oldSnapshot = oldSnapshot;
+	}
+
+	@Override
+	public String getNewSnapshot() {
+		if (_newSnapshot == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _newSnapshot;
+		}
+	}
+
+	@Override
+	public void setNewSnapshot(String newSnapshot) {
+		_newSnapshot = newSnapshot;
 	}
 
 	@Override
@@ -405,6 +520,10 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		crmContactAuditLogImpl.setUserName(getUserName());
 		crmContactAuditLogImpl.setCreateDate(getCreateDate());
 		crmContactAuditLogImpl.setModifiedDate(getModifiedDate());
+		crmContactAuditLogImpl.setCrmContactId(getCrmContactId());
+		crmContactAuditLogImpl.setConstantContactId(getConstantContactId());
+		crmContactAuditLogImpl.setOldSnapshot(getOldSnapshot());
+		crmContactAuditLogImpl.setNewSnapshot(getNewSnapshot());
 
 		crmContactAuditLogImpl.resetOriginalValues();
 
@@ -413,17 +532,18 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	@Override
 	public int compareTo(CrmContactAuditLog crmContactAuditLog) {
-		long primaryKey = crmContactAuditLog.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = DateUtil.compareTo(getCreateDate(),
+				crmContactAuditLog.getCreateDate());
+
+		value = value * -1;
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
-		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -479,6 +599,14 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 		crmContactAuditLogModelImpl._setModifiedDate = false;
 
+		crmContactAuditLogModelImpl._originalCrmContactId = crmContactAuditLogModelImpl._crmContactId;
+
+		crmContactAuditLogModelImpl._setOriginalCrmContactId = false;
+
+		crmContactAuditLogModelImpl._originalConstantContactId = crmContactAuditLogModelImpl._constantContactId;
+
+		crmContactAuditLogModelImpl._setOriginalConstantContactId = false;
+
 		crmContactAuditLogModelImpl._columnBitmask = 0;
 	}
 
@@ -528,12 +656,32 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 			crmContactAuditLogCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmContactAuditLogCacheModel.crmContactId = getCrmContactId();
+
+		crmContactAuditLogCacheModel.constantContactId = getConstantContactId();
+
+		crmContactAuditLogCacheModel.oldSnapshot = getOldSnapshot();
+
+		String oldSnapshot = crmContactAuditLogCacheModel.oldSnapshot;
+
+		if ((oldSnapshot != null) && (oldSnapshot.length() == 0)) {
+			crmContactAuditLogCacheModel.oldSnapshot = null;
+		}
+
+		crmContactAuditLogCacheModel.newSnapshot = getNewSnapshot();
+
+		String newSnapshot = crmContactAuditLogCacheModel.newSnapshot;
+
+		if ((newSnapshot != null) && (newSnapshot.length() == 0)) {
+			crmContactAuditLogCacheModel.newSnapshot = null;
+		}
+
 		return crmContactAuditLogCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -551,6 +699,14 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", crmContactId=");
+		sb.append(getCrmContactId());
+		sb.append(", constantContactId=");
+		sb.append(getConstantContactId());
+		sb.append(", oldSnapshot=");
+		sb.append(getOldSnapshot());
+		sb.append(", newSnapshot=");
+		sb.append(getNewSnapshot());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +714,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmContactAuditLog");
@@ -596,6 +752,22 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>crmContactId</column-name><column-value><![CDATA[");
+		sb.append(getCrmContactId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>constantContactId</column-name><column-value><![CDATA[");
+		sb.append(getConstantContactId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>oldSnapshot</column-name><column-value><![CDATA[");
+		sb.append(getOldSnapshot());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>newSnapshot</column-name><column-value><![CDATA[");
+		sb.append(getNewSnapshot());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +792,14 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _crmContactId;
+	private long _originalCrmContactId;
+	private boolean _setOriginalCrmContactId;
+	private long _constantContactId;
+	private long _originalConstantContactId;
+	private boolean _setOriginalConstantContactId;
+	private String _oldSnapshot;
+	private String _newSnapshot;
 	private long _columnBitmask;
 	private CrmContactAuditLog _escapedModel;
 }

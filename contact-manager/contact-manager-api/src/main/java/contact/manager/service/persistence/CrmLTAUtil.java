@@ -497,6 +497,162 @@ public class CrmLTAUtil {
 	}
 
 	/**
+	* Returns all the CRM LTAs where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the matching CRM LTAs
+	*/
+	public static List<CrmLTA> findByZipCode(java.lang.String zipCode) {
+		return getPersistence().findByZipCode(zipCode);
+	}
+
+	/**
+	* Returns a range of all the CRM LTAs where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM LTAs
+	* @param end the upper bound of the range of CRM LTAs (not inclusive)
+	* @return the range of matching CRM LTAs
+	*/
+	public static List<CrmLTA> findByZipCode(java.lang.String zipCode,
+		int start, int end) {
+		return getPersistence().findByZipCode(zipCode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM LTAs where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM LTAs
+	* @param end the upper bound of the range of CRM LTAs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM LTAs
+	*/
+	public static List<CrmLTA> findByZipCode(java.lang.String zipCode,
+		int start, int end, OrderByComparator<CrmLTA> orderByComparator) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM LTAs where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM LTAs
+	* @param end the upper bound of the range of CRM LTAs (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM LTAs
+	*/
+	public static List<CrmLTA> findByZipCode(java.lang.String zipCode,
+		int start, int end, OrderByComparator<CrmLTA> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first CRM LTA in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM LTA
+	* @throws NoSuchCrmLTAException if a matching CRM LTA could not be found
+	*/
+	public static CrmLTA findByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<CrmLTA> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmLTAException {
+		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the first CRM LTA in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	*/
+	public static CrmLTA fetchByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<CrmLTA> orderByComparator) {
+		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM LTA in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM LTA
+	* @throws NoSuchCrmLTAException if a matching CRM LTA could not be found
+	*/
+	public static CrmLTA findByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<CrmLTA> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmLTAException {
+		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM LTA in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	*/
+	public static CrmLTA fetchByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<CrmLTA> orderByComparator) {
+		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the CRM LTAs before and after the current CRM LTA in the ordered set where zipCode = &#63;.
+	*
+	* @param crmLTAId the primary key of the current CRM LTA
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM LTA
+	* @throws NoSuchCrmLTAException if a CRM LTA with the primary key could not be found
+	*/
+	public static CrmLTA[] findByZipCode_PrevAndNext(long crmLTAId,
+		java.lang.String zipCode, OrderByComparator<CrmLTA> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmLTAException {
+		return getPersistence()
+				   .findByZipCode_PrevAndNext(crmLTAId, zipCode,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the CRM LTAs where zipCode = &#63; from the database.
+	*
+	* @param zipCode the zip code
+	*/
+	public static void removeByZipCode(java.lang.String zipCode) {
+		getPersistence().removeByZipCode(zipCode);
+	}
+
+	/**
+	* Returns the number of CRM LTAs where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the number of matching CRM LTAs
+	*/
+	public static int countByZipCode(java.lang.String zipCode) {
+		return getPersistence().countByZipCode(zipCode);
+	}
+
+	/**
 	* Caches the CRM LTA in the entity cache if it is enabled.
 	*
 	* @param crmLTA the CRM LTA

@@ -68,6 +68,10 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("constantContactId", getConstantContactId());
+		attributes.put("oldSnapshot", getOldSnapshot());
+		attributes.put("newSnapshot", getNewSnapshot());
 
 		return attributes;
 	}
@@ -120,6 +124,30 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		Long constantContactId = (Long)attributes.get("constantContactId");
+
+		if (constantContactId != null) {
+			setConstantContactId(constantContactId);
+		}
+
+		String oldSnapshot = (String)attributes.get("oldSnapshot");
+
+		if (oldSnapshot != null) {
+			setOldSnapshot(oldSnapshot);
+		}
+
+		String newSnapshot = (String)attributes.get("newSnapshot");
+
+		if (newSnapshot != null) {
+			setNewSnapshot(newSnapshot);
 		}
 	}
 
@@ -177,6 +205,26 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public java.lang.Object clone() {
 		return new CrmContactAuditLogWrapper((CrmContactAuditLog)_crmContactAuditLog.clone());
+	}
+
+	/**
+	* Returns the new snapshot of this CRM Contact Audit Log.
+	*
+	* @return the new snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public java.lang.String getNewSnapshot() {
+		return _crmContactAuditLog.getNewSnapshot();
+	}
+
+	/**
+	* Returns the old snapshot of this CRM Contact Audit Log.
+	*
+	* @return the old snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public java.lang.String getOldSnapshot() {
+		return _crmContactAuditLog.getOldSnapshot();
 	}
 
 	/**
@@ -250,6 +298,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	}
 
 	/**
+	* Returns the constant contact ID of this CRM Contact Audit Log.
+	*
+	* @return the constant contact ID of this CRM Contact Audit Log
+	*/
+	@Override
+	public long getConstantContactId() {
+		return _crmContactAuditLog.getConstantContactId();
+	}
+
+	/**
 	* Returns the crm contact audit log ID of this CRM Contact Audit Log.
 	*
 	* @return the crm contact audit log ID of this CRM Contact Audit Log
@@ -257,6 +315,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public long getCrmContactAuditLogId() {
 		return _crmContactAuditLog.getCrmContactAuditLogId();
+	}
+
+	/**
+	* Returns the crm contact ID of this CRM Contact Audit Log.
+	*
+	* @return the crm contact ID of this CRM Contact Audit Log
+	*/
+	@Override
+	public long getCrmContactId() {
+		return _crmContactAuditLog.getCrmContactId();
 	}
 
 	/**
@@ -310,6 +378,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	}
 
 	/**
+	* Sets the constant contact ID of this CRM Contact Audit Log.
+	*
+	* @param constantContactId the constant contact ID of this CRM Contact Audit Log
+	*/
+	@Override
+	public void setConstantContactId(long constantContactId) {
+		_crmContactAuditLog.setConstantContactId(constantContactId);
+	}
+
+	/**
 	* Sets the create date of this CRM Contact Audit Log.
 	*
 	* @param createDate the create date of this CRM Contact Audit Log
@@ -327,6 +405,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public void setCrmContactAuditLogId(long crmContactAuditLogId) {
 		_crmContactAuditLog.setCrmContactAuditLogId(crmContactAuditLogId);
+	}
+
+	/**
+	* Sets the crm contact ID of this CRM Contact Audit Log.
+	*
+	* @param crmContactId the crm contact ID of this CRM Contact Audit Log
+	*/
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_crmContactAuditLog.setCrmContactId(crmContactId);
 	}
 
 	@Override
@@ -368,6 +456,26 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public void setNew(boolean n) {
 		_crmContactAuditLog.setNew(n);
+	}
+
+	/**
+	* Sets the new snapshot of this CRM Contact Audit Log.
+	*
+	* @param newSnapshot the new snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public void setNewSnapshot(java.lang.String newSnapshot) {
+		_crmContactAuditLog.setNewSnapshot(newSnapshot);
+	}
+
+	/**
+	* Sets the old snapshot of this CRM Contact Audit Log.
+	*
+	* @param oldSnapshot the old snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public void setOldSnapshot(java.lang.String oldSnapshot) {
+		_crmContactAuditLog.setOldSnapshot(oldSnapshot);
 	}
 
 	/**

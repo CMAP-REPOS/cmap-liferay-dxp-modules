@@ -42,6 +42,10 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCrmContactAuditLogId(model.getCrmContactAuditLogId());
+		soapModel.setFieldName(model.getFieldName());
+		soapModel.setOldValue(model.getOldValue());
+		soapModel.setNewValue(model.getNewValue());
 
 		return soapModel;
 	}
@@ -161,6 +165,38 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getCrmContactAuditLogId() {
+		return _crmContactAuditLogId;
+	}
+
+	public void setCrmContactAuditLogId(long crmContactAuditLogId) {
+		_crmContactAuditLogId = crmContactAuditLogId;
+	}
+
+	public String getFieldName() {
+		return _fieldName;
+	}
+
+	public void setFieldName(String fieldName) {
+		_fieldName = fieldName;
+	}
+
+	public String getOldValue() {
+		return _oldValue;
+	}
+
+	public void setOldValue(String oldValue) {
+		_oldValue = oldValue;
+	}
+
+	public String getNewValue() {
+		return _newValue;
+	}
+
+	public void setNewValue(String newValue) {
+		_newValue = newValue;
+	}
+
 	private String _uuid;
 	private long _crmContactAuditLogChangeId;
 	private long _groupId;
@@ -169,4 +205,8 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _crmContactAuditLogId;
+	private String _fieldName;
+	private String _oldValue;
+	private String _newValue;
 }

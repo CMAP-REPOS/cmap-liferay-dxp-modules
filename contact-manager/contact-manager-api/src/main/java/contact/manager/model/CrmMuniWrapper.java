@@ -67,6 +67,8 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -178,6 +192,16 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
+	* Returns the name of this CRM Muni.
+	*
+	* @return the name of this CRM Muni
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmMuni.getName();
+	}
+
+	/**
 	* Returns the user name of this CRM Muni.
 	*
 	* @return the user name of this CRM Muni
@@ -205,6 +229,16 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public java.lang.String getUuid() {
 		return _crmMuni.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM Muni.
+	*
+	* @return the zip code of this CRM Muni
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmMuni.getZipCode();
 	}
 
 	@Override
@@ -363,6 +397,16 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 		_crmMuni.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM Muni.
+	*
+	* @param name the name of this CRM Muni
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmMuni.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmMuni.setNew(n);
@@ -421,6 +465,16 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmMuni.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM Muni.
+	*
+	* @param zipCode the zip code of this CRM Muni
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmMuni.setZipCode(zipCode);
 	}
 
 	@Override

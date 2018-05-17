@@ -65,7 +65,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,6 +83,12 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", number=");
+		sb.append(number);
+		sb.append(", zipCode=");
+		sb.append(zipCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +131,27 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 			crmUsRepImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmUsRepImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmUsRepImpl.setName(name);
+		}
+
+		if (number == null) {
+			crmUsRepImpl.setNumber(StringPool.BLANK);
+		}
+		else {
+			crmUsRepImpl.setNumber(number);
+		}
+
+		if (zipCode == null) {
+			crmUsRepImpl.setZipCode(StringPool.BLANK);
+		}
+		else {
+			crmUsRepImpl.setZipCode(zipCode);
+		}
+
 		crmUsRepImpl.resetOriginalValues();
 
 		return crmUsRepImpl;
@@ -144,6 +171,9 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
+		number = objectInput.readUTF();
+		zipCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -173,6 +203,27 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (number == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(number);
+		}
+
+		if (zipCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(zipCode);
+		}
 	}
 
 	public String uuid;
@@ -183,4 +234,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
+	public String number;
+	public String zipCode;
 }

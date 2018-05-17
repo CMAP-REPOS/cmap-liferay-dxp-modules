@@ -210,6 +210,51 @@ public interface CrmStateSenateModel extends BaseModel<CrmStateSenate>,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM State Senate.
+	 *
+	 * @return the name of this CRM State Senate
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM State Senate.
+	 *
+	 * @param name the name of this CRM State Senate
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the number of this CRM State Senate.
+	 *
+	 * @return the number of this CRM State Senate
+	 */
+	@AutoEscape
+	public String getNumber();
+
+	/**
+	 * Sets the number of this CRM State Senate.
+	 *
+	 * @param number the number of this CRM State Senate
+	 */
+	public void setNumber(String number);
+
+	/**
+	 * Returns the zip code of this CRM State Senate.
+	 *
+	 * @return the zip code of this CRM State Senate
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM State Senate.
+	 *
+	 * @param zipCode the zip code of this CRM State Senate
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

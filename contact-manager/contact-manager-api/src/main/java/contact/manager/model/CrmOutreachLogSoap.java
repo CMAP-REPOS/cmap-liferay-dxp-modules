@@ -41,6 +41,11 @@ public class CrmOutreachLogSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCrmContactId(model.getCrmContactId());
+		soapModel.setNote(model.getNote());
+		soapModel.setMedium(model.getMedium());
+		soapModel.setActivityType(model.getActivityType());
+		soapModel.setOutreachDate(model.getOutreachDate());
 
 		return soapModel;
 	}
@@ -157,6 +162,46 @@ public class CrmOutreachLogSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	public void setCrmContactId(long crmContactId) {
+		_crmContactId = crmContactId;
+	}
+
+	public String getNote() {
+		return _note;
+	}
+
+	public void setNote(String note) {
+		_note = note;
+	}
+
+	public String getMedium() {
+		return _medium;
+	}
+
+	public void setMedium(String medium) {
+		_medium = medium;
+	}
+
+	public String getActivityType() {
+		return _activityType;
+	}
+
+	public void setActivityType(String activityType) {
+		_activityType = activityType;
+	}
+
+	public Date getOutreachDate() {
+		return _outreachDate;
+	}
+
+	public void setOutreachDate(Date outreachDate) {
+		_outreachDate = outreachDate;
+	}
+
 	private String _uuid;
 	private long _crmOutreachLogId;
 	private long _groupId;
@@ -165,4 +210,9 @@ public class CrmOutreachLogSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _crmContactId;
+	private String _note;
+	private String _medium;
+	private String _activityType;
+	private Date _outreachDate;
 }

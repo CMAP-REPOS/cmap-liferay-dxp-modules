@@ -66,7 +66,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,14 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", crmContactId=");
+		sb.append(crmContactId);
+		sb.append(", constantContactId=");
+		sb.append(constantContactId);
+		sb.append(", oldSnapshot=");
+		sb.append(oldSnapshot);
+		sb.append(", newSnapshot=");
+		sb.append(newSnapshot);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +134,23 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 			crmContactAuditLogImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		crmContactAuditLogImpl.setCrmContactId(crmContactId);
+		crmContactAuditLogImpl.setConstantContactId(constantContactId);
+
+		if (oldSnapshot == null) {
+			crmContactAuditLogImpl.setOldSnapshot(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogImpl.setOldSnapshot(oldSnapshot);
+		}
+
+		if (newSnapshot == null) {
+			crmContactAuditLogImpl.setNewSnapshot(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogImpl.setNewSnapshot(newSnapshot);
+		}
+
 		crmContactAuditLogImpl.resetOriginalValues();
 
 		return crmContactAuditLogImpl;
@@ -145,6 +170,12 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		crmContactId = objectInput.readLong();
+
+		constantContactId = objectInput.readLong();
+		oldSnapshot = objectInput.readUTF();
+		newSnapshot = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +205,24 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(crmContactId);
+
+		objectOutput.writeLong(constantContactId);
+
+		if (oldSnapshot == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(oldSnapshot);
+		}
+
+		if (newSnapshot == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(newSnapshot);
+		}
 	}
 
 	public String uuid;
@@ -184,4 +233,8 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long crmContactId;
+	public long constantContactId;
+	public String oldSnapshot;
+	public String newSnapshot;
 }

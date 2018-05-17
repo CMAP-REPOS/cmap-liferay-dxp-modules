@@ -65,7 +65,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,6 +83,8 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +127,13 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 			crmTagImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmTagImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmTagImpl.setName(name);
+		}
+
 		crmTagImpl.resetOriginalValues();
 
 		return crmTagImpl;
@@ -144,6 +153,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -173,6 +183,13 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 	}
 
 	public String uuid;
@@ -183,4 +200,5 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
 }

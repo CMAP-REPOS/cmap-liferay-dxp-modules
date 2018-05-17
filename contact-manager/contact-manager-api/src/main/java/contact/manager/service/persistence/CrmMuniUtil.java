@@ -498,6 +498,162 @@ public class CrmMuniUtil {
 	}
 
 	/**
+	* Returns all the CRM Munis where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the matching CRM Munis
+	*/
+	public static List<CrmMuni> findByZipCode(java.lang.String zipCode) {
+		return getPersistence().findByZipCode(zipCode);
+	}
+
+	/**
+	* Returns a range of all the CRM Munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM Munis
+	* @param end the upper bound of the range of CRM Munis (not inclusive)
+	* @return the range of matching CRM Munis
+	*/
+	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
+		int start, int end) {
+		return getPersistence().findByZipCode(zipCode, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM Munis
+	* @param end the upper bound of the range of CRM Munis (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Munis
+	*/
+	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Munis where zipCode = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param zipCode the zip code
+	* @param start the lower bound of the range of CRM Munis
+	* @param end the upper bound of the range of CRM Munis (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Munis
+	*/
+	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByZipCode(zipCode, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first CRM Muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Muni
+	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
+	*/
+	public static CrmMuni findByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<CrmMuni> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmMuniException {
+		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the first CRM Muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	*/
+	public static CrmMuni fetchByZipCode_First(java.lang.String zipCode,
+		OrderByComparator<CrmMuni> orderByComparator) {
+		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Muni
+	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
+	*/
+	public static CrmMuni findByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<CrmMuni> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmMuniException {
+		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Muni in the ordered set where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	*/
+	public static CrmMuni fetchByZipCode_Last(java.lang.String zipCode,
+		OrderByComparator<CrmMuni> orderByComparator) {
+		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
+	}
+
+	/**
+	* Returns the CRM Munis before and after the current CRM Muni in the ordered set where zipCode = &#63;.
+	*
+	* @param crmMuniId the primary key of the current CRM Muni
+	* @param zipCode the zip code
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Muni
+	* @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
+	*/
+	public static CrmMuni[] findByZipCode_PrevAndNext(long crmMuniId,
+		java.lang.String zipCode, OrderByComparator<CrmMuni> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmMuniException {
+		return getPersistence()
+				   .findByZipCode_PrevAndNext(crmMuniId, zipCode,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the CRM Munis where zipCode = &#63; from the database.
+	*
+	* @param zipCode the zip code
+	*/
+	public static void removeByZipCode(java.lang.String zipCode) {
+		getPersistence().removeByZipCode(zipCode);
+	}
+
+	/**
+	* Returns the number of CRM Munis where zipCode = &#63;.
+	*
+	* @param zipCode the zip code
+	* @return the number of matching CRM Munis
+	*/
+	public static int countByZipCode(java.lang.String zipCode) {
+		return getPersistence().countByZipCode(zipCode);
+	}
+
+	/**
 	* Caches the CRM Muni in the entity cache if it is enabled.
 	*
 	* @param crmMuni the CRM Muni

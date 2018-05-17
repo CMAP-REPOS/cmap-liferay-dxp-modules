@@ -210,6 +210,51 @@ public interface CrmUsRepModel extends BaseModel<CrmUsRep>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM US Rep.
+	 *
+	 * @return the name of this CRM US Rep
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM US Rep.
+	 *
+	 * @param name the name of this CRM US Rep
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the number of this CRM US Rep.
+	 *
+	 * @return the number of this CRM US Rep
+	 */
+	@AutoEscape
+	public String getNumber();
+
+	/**
+	 * Sets the number of this CRM US Rep.
+	 *
+	 * @param number the number of this CRM US Rep
+	 */
+	public void setNumber(String number);
+
+	/**
+	 * Returns the zip code of this CRM US Rep.
+	 *
+	 * @return the zip code of this CRM US Rep
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM US Rep.
+	 *
+	 * @param zipCode the zip code of this CRM US Rep
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

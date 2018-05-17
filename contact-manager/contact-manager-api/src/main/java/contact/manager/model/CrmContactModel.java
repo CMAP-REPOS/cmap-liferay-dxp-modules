@@ -98,6 +98,20 @@ public interface CrmContactModel extends BaseModel<CrmContact>, GroupedModel,
 	public void setCrmContactId(long crmContactId);
 
 	/**
+	 * Returns the constant contact ID of this CRM Contact.
+	 *
+	 * @return the constant contact ID of this CRM Contact
+	 */
+	public long getConstantContactId();
+
+	/**
+	 * Sets the constant contact ID of this CRM Contact.
+	 *
+	 * @param constantContactId the constant contact ID of this CRM Contact
+	 */
+	public void setConstantContactId(long constantContactId);
+
+	/**
 	 * Returns the group ID of this CRM Contact.
 	 *
 	 * @return the group ID of this CRM Contact
@@ -209,6 +223,566 @@ public interface CrmContactModel extends BaseModel<CrmContact>, GroupedModel,
 	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate);
+
+	/**
+	 * Returns the prefix of this CRM Contact.
+	 *
+	 * @return the prefix of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrefix();
+
+	/**
+	 * Sets the prefix of this CRM Contact.
+	 *
+	 * @param prefix the prefix of this CRM Contact
+	 */
+	public void setPrefix(String prefix);
+
+	/**
+	 * Returns the salutation of this CRM Contact.
+	 *
+	 * @return the salutation of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSalutation();
+
+	/**
+	 * Sets the salutation of this CRM Contact.
+	 *
+	 * @param salutation the salutation of this CRM Contact
+	 */
+	public void setSalutation(String salutation);
+
+	/**
+	 * Returns the first name of this CRM Contact.
+	 *
+	 * @return the first name of this CRM Contact
+	 */
+	@AutoEscape
+	public String getFirstName();
+
+	/**
+	 * Sets the first name of this CRM Contact.
+	 *
+	 * @param firstName the first name of this CRM Contact
+	 */
+	public void setFirstName(String firstName);
+
+	/**
+	 * Returns the middle name of this CRM Contact.
+	 *
+	 * @return the middle name of this CRM Contact
+	 */
+	@AutoEscape
+	public String getMiddleName();
+
+	/**
+	 * Sets the middle name of this CRM Contact.
+	 *
+	 * @param middleName the middle name of this CRM Contact
+	 */
+	public void setMiddleName(String middleName);
+
+	/**
+	 * Returns the last name of this CRM Contact.
+	 *
+	 * @return the last name of this CRM Contact
+	 */
+	@AutoEscape
+	public String getLastName();
+
+	/**
+	 * Sets the last name of this CRM Contact.
+	 *
+	 * @param lastName the last name of this CRM Contact
+	 */
+	public void setLastName(String lastName);
+
+	/**
+	 * Returns the organization of this CRM Contact.
+	 *
+	 * @return the organization of this CRM Contact
+	 */
+	@AutoEscape
+	public String getOrganization();
+
+	/**
+	 * Sets the organization of this CRM Contact.
+	 *
+	 * @param organization the organization of this CRM Contact
+	 */
+	public void setOrganization(String organization);
+
+	/**
+	 * Returns the job title of this CRM Contact.
+	 *
+	 * @return the job title of this CRM Contact
+	 */
+	@AutoEscape
+	public String getJobTitle();
+
+	/**
+	 * Sets the job title of this CRM Contact.
+	 *
+	 * @param jobTitle the job title of this CRM Contact
+	 */
+	public void setJobTitle(String jobTitle);
+
+	/**
+	 * Returns the primary address1 of this CRM Contact.
+	 *
+	 * @return the primary address1 of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddress1();
+
+	/**
+	 * Sets the primary address1 of this CRM Contact.
+	 *
+	 * @param primaryAddress1 the primary address1 of this CRM Contact
+	 */
+	public void setPrimaryAddress1(String primaryAddress1);
+
+	/**
+	 * Returns the primary address2 of this CRM Contact.
+	 *
+	 * @return the primary address2 of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddress2();
+
+	/**
+	 * Sets the primary address2 of this CRM Contact.
+	 *
+	 * @param primaryAddress2 the primary address2 of this CRM Contact
+	 */
+	public void setPrimaryAddress2(String primaryAddress2);
+
+	/**
+	 * Returns the primary address city of this CRM Contact.
+	 *
+	 * @return the primary address city of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddressCity();
+
+	/**
+	 * Sets the primary address city of this CRM Contact.
+	 *
+	 * @param primaryAddressCity the primary address city of this CRM Contact
+	 */
+	public void setPrimaryAddressCity(String primaryAddressCity);
+
+	/**
+	 * Returns the primary address state of this CRM Contact.
+	 *
+	 * @return the primary address state of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddressState();
+
+	/**
+	 * Sets the primary address state of this CRM Contact.
+	 *
+	 * @param primaryAddressState the primary address state of this CRM Contact
+	 */
+	public void setPrimaryAddressState(String primaryAddressState);
+
+	/**
+	 * Returns the primary address zip of this CRM Contact.
+	 *
+	 * @return the primary address zip of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddressZip();
+
+	/**
+	 * Sets the primary address zip of this CRM Contact.
+	 *
+	 * @param primaryAddressZip the primary address zip of this CRM Contact
+	 */
+	public void setPrimaryAddressZip(String primaryAddressZip);
+
+	/**
+	 * Returns the primary address county of this CRM Contact.
+	 *
+	 * @return the primary address county of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddressCounty();
+
+	/**
+	 * Sets the primary address county of this CRM Contact.
+	 *
+	 * @param primaryAddressCounty the primary address county of this CRM Contact
+	 */
+	public void setPrimaryAddressCounty(String primaryAddressCounty);
+
+	/**
+	 * Returns the primary address country of this CRM Contact.
+	 *
+	 * @return the primary address country of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryAddressCountry();
+
+	/**
+	 * Sets the primary address country of this CRM Contact.
+	 *
+	 * @param primaryAddressCountry the primary address country of this CRM Contact
+	 */
+	public void setPrimaryAddressCountry(String primaryAddressCountry);
+
+	/**
+	 * Returns the secondary address1 of this CRM Contact.
+	 *
+	 * @return the secondary address1 of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddress1();
+
+	/**
+	 * Sets the secondary address1 of this CRM Contact.
+	 *
+	 * @param secondaryAddress1 the secondary address1 of this CRM Contact
+	 */
+	public void setSecondaryAddress1(String secondaryAddress1);
+
+	/**
+	 * Returns the secondary address2 of this CRM Contact.
+	 *
+	 * @return the secondary address2 of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddress2();
+
+	/**
+	 * Sets the secondary address2 of this CRM Contact.
+	 *
+	 * @param secondaryAddress2 the secondary address2 of this CRM Contact
+	 */
+	public void setSecondaryAddress2(String secondaryAddress2);
+
+	/**
+	 * Returns the secondary address city of this CRM Contact.
+	 *
+	 * @return the secondary address city of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddressCity();
+
+	/**
+	 * Sets the secondary address city of this CRM Contact.
+	 *
+	 * @param secondaryAddressCity the secondary address city of this CRM Contact
+	 */
+	public void setSecondaryAddressCity(String secondaryAddressCity);
+
+	/**
+	 * Returns the secondary address state of this CRM Contact.
+	 *
+	 * @return the secondary address state of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddressState();
+
+	/**
+	 * Sets the secondary address state of this CRM Contact.
+	 *
+	 * @param secondaryAddressState the secondary address state of this CRM Contact
+	 */
+	public void setSecondaryAddressState(String secondaryAddressState);
+
+	/**
+	 * Returns the secondary address zip of this CRM Contact.
+	 *
+	 * @return the secondary address zip of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddressZip();
+
+	/**
+	 * Sets the secondary address zip of this CRM Contact.
+	 *
+	 * @param secondaryAddressZip the secondary address zip of this CRM Contact
+	 */
+	public void setSecondaryAddressZip(String secondaryAddressZip);
+
+	/**
+	 * Returns the secondary address county of this CRM Contact.
+	 *
+	 * @return the secondary address county of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddressCounty();
+
+	/**
+	 * Sets the secondary address county of this CRM Contact.
+	 *
+	 * @param secondaryAddressCounty the secondary address county of this CRM Contact
+	 */
+	public void setSecondaryAddressCounty(String secondaryAddressCounty);
+
+	/**
+	 * Returns the secondary address country of this CRM Contact.
+	 *
+	 * @return the secondary address country of this CRM Contact
+	 */
+	@AutoEscape
+	public String getSecondaryAddressCountry();
+
+	/**
+	 * Sets the secondary address country of this CRM Contact.
+	 *
+	 * @param secondaryAddressCountry the secondary address country of this CRM Contact
+	 */
+	public void setSecondaryAddressCountry(String secondaryAddressCountry);
+
+	/**
+	 * Returns the primary phone of this CRM Contact.
+	 *
+	 * @return the primary phone of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryPhone();
+
+	/**
+	 * Sets the primary phone of this CRM Contact.
+	 *
+	 * @param primaryPhone the primary phone of this CRM Contact
+	 */
+	public void setPrimaryPhone(String primaryPhone);
+
+	/**
+	 * Returns the primary phone extension of this CRM Contact.
+	 *
+	 * @return the primary phone extension of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryPhoneExtension();
+
+	/**
+	 * Sets the primary phone extension of this CRM Contact.
+	 *
+	 * @param primaryPhoneExtension the primary phone extension of this CRM Contact
+	 */
+	public void setPrimaryPhoneExtension(String primaryPhoneExtension);
+
+	/**
+	 * Returns the primary fax of this CRM Contact.
+	 *
+	 * @return the primary fax of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryFax();
+
+	/**
+	 * Sets the primary fax of this CRM Contact.
+	 *
+	 * @param primaryFax the primary fax of this CRM Contact
+	 */
+	public void setPrimaryFax(String primaryFax);
+
+	/**
+	 * Returns the primary cell of this CRM Contact.
+	 *
+	 * @return the primary cell of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryCell();
+
+	/**
+	 * Sets the primary cell of this CRM Contact.
+	 *
+	 * @param primaryCell the primary cell of this CRM Contact
+	 */
+	public void setPrimaryCell(String primaryCell);
+
+	/**
+	 * Returns the primary email address of this CRM Contact.
+	 *
+	 * @return the primary email address of this CRM Contact
+	 */
+	@AutoEscape
+	public String getPrimaryEmailAddress();
+
+	/**
+	 * Sets the primary email address of this CRM Contact.
+	 *
+	 * @param primaryEmailAddress the primary email address of this CRM Contact
+	 */
+	public void setPrimaryEmailAddress(String primaryEmailAddress);
+
+	/**
+	 * Returns the alternate contact of this CRM Contact.
+	 *
+	 * @return the alternate contact of this CRM Contact
+	 */
+	@AutoEscape
+	public String getAlternateContact();
+
+	/**
+	 * Sets the alternate contact of this CRM Contact.
+	 *
+	 * @param alternateContact the alternate contact of this CRM Contact
+	 */
+	public void setAlternateContact(String alternateContact);
+
+	/**
+	 * Returns the alternate email of this CRM Contact.
+	 *
+	 * @return the alternate email of this CRM Contact
+	 */
+	@AutoEscape
+	public String getAlternateEmail();
+
+	/**
+	 * Sets the alternate email of this CRM Contact.
+	 *
+	 * @param alternateEmail the alternate email of this CRM Contact
+	 */
+	public void setAlternateEmail(String alternateEmail);
+
+	/**
+	 * Returns the is vip of this CRM Contact.
+	 *
+	 * @return the is vip of this CRM Contact
+	 */
+	public boolean getIsVip();
+
+	/**
+	 * Returns <code>true</code> if this CRM Contact is is vip.
+	 *
+	 * @return <code>true</code> if this CRM Contact is is vip; <code>false</code> otherwise
+	 */
+	public boolean isIsVip();
+
+	/**
+	 * Sets whether this CRM Contact is is vip.
+	 *
+	 * @param isVip the is vip of this CRM Contact
+	 */
+	public void setIsVip(boolean isVip);
+
+	/**
+	 * Returns the facebook ID of this CRM Contact.
+	 *
+	 * @return the facebook ID of this CRM Contact
+	 */
+	@AutoEscape
+	public String getFacebookId();
+
+	/**
+	 * Sets the facebook ID of this CRM Contact.
+	 *
+	 * @param facebookId the facebook ID of this CRM Contact
+	 */
+	public void setFacebookId(String facebookId);
+
+	/**
+	 * Returns the twitter handle of this CRM Contact.
+	 *
+	 * @return the twitter handle of this CRM Contact
+	 */
+	@AutoEscape
+	public String getTwitterHandle();
+
+	/**
+	 * Sets the twitter handle of this CRM Contact.
+	 *
+	 * @param twitterHandle the twitter handle of this CRM Contact
+	 */
+	public void setTwitterHandle(String twitterHandle);
+
+	/**
+	 * Returns the linked in url of this CRM Contact.
+	 *
+	 * @return the linked in url of this CRM Contact
+	 */
+	@AutoEscape
+	public String getLinkedInUrl();
+
+	/**
+	 * Sets the linked in url of this CRM Contact.
+	 *
+	 * @param linkedInUrl the linked in url of this CRM Contact
+	 */
+	public void setLinkedInUrl(String linkedInUrl);
+
+	/**
+	 * Returns the status of this CRM Contact.
+	 *
+	 * @return the status of this CRM Contact
+	 */
+	@AutoEscape
+	public String getStatus();
+
+	/**
+	 * Sets the status of this CRM Contact.
+	 *
+	 * @param status the status of this CRM Contact
+	 */
+	public void setStatus(String status);
+
+	/**
+	 * Returns the kiosk uuid of this CRM Contact.
+	 *
+	 * @return the kiosk uuid of this CRM Contact
+	 */
+	@AutoEscape
+	public String getKioskUuid();
+
+	/**
+	 * Sets the kiosk uuid of this CRM Contact.
+	 *
+	 * @param kioskUuid the kiosk uuid of this CRM Contact
+	 */
+	public void setKioskUuid(String kioskUuid);
+
+	/**
+	 * Returns the image file entry ID of this CRM Contact.
+	 *
+	 * @return the image file entry ID of this CRM Contact
+	 */
+	public long getImageFileEntryId();
+
+	/**
+	 * Sets the image file entry ID of this CRM Contact.
+	 *
+	 * @param imageFileEntryId the image file entry ID of this CRM Contact
+	 */
+	public void setImageFileEntryId(long imageFileEntryId);
+
+	/**
+	 * Returns the tags list of this CRM Contact.
+	 *
+	 * @return the tags list of this CRM Contact
+	 */
+	@AutoEscape
+	public String getTagsList();
+
+	/**
+	 * Sets the tags list of this CRM Contact.
+	 *
+	 * @param tagsList the tags list of this CRM Contact
+	 */
+	public void setTagsList(String tagsList);
+
+	/**
+	 * Returns the groups list of this CRM Contact.
+	 *
+	 * @return the groups list of this CRM Contact
+	 */
+	@AutoEscape
+	public String getGroupsList();
+
+	/**
+	 * Sets the groups list of this CRM Contact.
+	 *
+	 * @param groupsList the groups list of this CRM Contact
+	 */
+	public void setGroupsList(String groupsList);
 
 	@Override
 	public boolean isNew();

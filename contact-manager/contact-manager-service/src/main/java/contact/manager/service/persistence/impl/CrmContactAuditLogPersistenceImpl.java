@@ -112,7 +112,8 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 			CrmContactAuditLogImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CrmContactAuditLogModelImpl.UUID_COLUMN_BITMASK);
+			CrmContactAuditLogModelImpl.UUID_COLUMN_BITMASK |
+			CrmContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -918,7 +919,8 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CrmContactAuditLogModelImpl.UUID_COLUMN_BITMASK |
-			CrmContactAuditLogModelImpl.COMPANYID_COLUMN_BITMASK);
+			CrmContactAuditLogModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1492,6 +1494,1052 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmContactAuditLog.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmContactAuditLog.uuid IS NULL OR crmContactAuditLog.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmContactAuditLog.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTID =
+		new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCrmContactId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID =
+		new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCrmContactId",
+			new String[] { Long.class.getName() },
+			CrmContactAuditLogModelImpl.CRMCONTACTID_COLUMN_BITMASK |
+			CrmContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CRMCONTACTID = new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCrmContactId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the CRM Contact Audit Logs where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @return the matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId) {
+		return findByCrmContactId(crmContactId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM Contact Audit Logs where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @return the range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId,
+		int start, int end) {
+		return findByCrmContactId(crmContactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contact Audit Logs where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId,
+		int start, int end,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		return findByCrmContactId(crmContactId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contact Audit Logs where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId,
+		int start, int end,
+		OrderByComparator<CrmContactAuditLog> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID;
+			finderArgs = new Object[] { crmContactId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTID;
+			finderArgs = new Object[] {
+					crmContactId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CrmContactAuditLog> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmContactAuditLog>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmContactAuditLog crmContactAuditLog : list) {
+					if ((crmContactId != crmContactAuditLog.getCrmContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CRMCONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmContactAuditLogModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(crmContactId);
+
+				if (!pagination) {
+					list = (List<CrmContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM Contact Audit Log in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog findByCrmContactId_First(long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = fetchByCrmContactId_First(crmContactId,
+				orderByComparator);
+
+		if (crmContactAuditLog != null) {
+			return crmContactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("crmContactId=");
+		msg.append(crmContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM Contact Audit Log in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog fetchByCrmContactId_First(long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		List<CrmContactAuditLog> list = findByCrmContactId(crmContactId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM Contact Audit Log in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog findByCrmContactId_Last(long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = fetchByCrmContactId_Last(crmContactId,
+				orderByComparator);
+
+		if (crmContactAuditLog != null) {
+			return crmContactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("crmContactId=");
+		msg.append(crmContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM Contact Audit Log in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog fetchByCrmContactId_Last(long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		int count = countByCrmContactId(crmContactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmContactAuditLog> list = findByCrmContactId(crmContactId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM Contact Audit Logs before and after the current CRM Contact Audit Log in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactAuditLogId the primary key of the current CRM Contact Audit Log
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a CRM Contact Audit Log with the primary key could not be found
+	 */
+	@Override
+	public CrmContactAuditLog[] findByCrmContactId_PrevAndNext(
+		long crmContactAuditLogId, long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = findByPrimaryKey(crmContactAuditLogId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmContactAuditLog[] array = new CrmContactAuditLogImpl[3];
+
+			array[0] = getByCrmContactId_PrevAndNext(session,
+					crmContactAuditLog, crmContactId, orderByComparator, true);
+
+			array[1] = crmContactAuditLog;
+
+			array[2] = getByCrmContactId_PrevAndNext(session,
+					crmContactAuditLog, crmContactId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmContactAuditLog getByCrmContactId_PrevAndNext(
+		Session session, CrmContactAuditLog crmContactAuditLog,
+		long crmContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CRMCONTACTAUDITLOG_WHERE);
+
+		query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmContactAuditLogModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(crmContactId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmContactAuditLog);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmContactAuditLog> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM Contact Audit Logs where crmContactId = &#63; from the database.
+	 *
+	 * @param crmContactId the crm contact ID
+	 */
+	@Override
+	public void removeByCrmContactId(long crmContactId) {
+		for (CrmContactAuditLog crmContactAuditLog : findByCrmContactId(
+				crmContactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(crmContactAuditLog);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM Contact Audit Logs where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @return the number of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public int countByCrmContactId(long crmContactId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CRMCONTACTID;
+
+		Object[] finderArgs = new Object[] { crmContactId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CRMCONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(crmContactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2 = "crmContactAuditLog.crmContactId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSTANTCONTACTID =
+		new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByConstantContactId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID =
+		new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByConstantContactId", new String[] { Long.class.getName() },
+			CrmContactAuditLogModelImpl.CONSTANTCONTACTID_COLUMN_BITMASK |
+			CrmContactAuditLogModelImpl.CREATEDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CONSTANTCONTACTID = new FinderPath(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByConstantContactId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the CRM Contact Audit Logs where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @return the matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByConstantContactId(
+		long constantContactId) {
+		return findByConstantContactId(constantContactId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM Contact Audit Logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @return the range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end) {
+		return findByConstantContactId(constantContactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contact Audit Logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		return findByConstantContactId(constantContactId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contact Audit Logs where constantContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param start the lower bound of the range of CRM Contact Audit Logs
+	 * @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public List<CrmContactAuditLog> findByConstantContactId(
+		long constantContactId, int start, int end,
+		OrderByComparator<CrmContactAuditLog> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID;
+			finderArgs = new Object[] { constantContactId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSTANTCONTACTID;
+			finderArgs = new Object[] {
+					constantContactId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CrmContactAuditLog> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmContactAuditLog>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmContactAuditLog crmContactAuditLog : list) {
+					if ((constantContactId != crmContactAuditLog.getConstantContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CRMCONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmContactAuditLogModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(constantContactId);
+
+				if (!pagination) {
+					list = (List<CrmContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmContactAuditLog>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM Contact Audit Log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog findByConstantContactId_First(
+		long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = fetchByConstantContactId_First(constantContactId,
+				orderByComparator);
+
+		if (crmContactAuditLog != null) {
+			return crmContactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("constantContactId=");
+		msg.append(constantContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM Contact Audit Log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog fetchByConstantContactId_First(
+		long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		List<CrmContactAuditLog> list = findByConstantContactId(constantContactId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM Contact Audit Log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog findByConstantContactId_Last(
+		long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = fetchByConstantContactId_Last(constantContactId,
+				orderByComparator);
+
+		if (crmContactAuditLog != null) {
+			return crmContactAuditLog;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("constantContactId=");
+		msg.append(constantContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactAuditLogException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM Contact Audit Log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	 */
+	@Override
+	public CrmContactAuditLog fetchByConstantContactId_Last(
+		long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+		int count = countByConstantContactId(constantContactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmContactAuditLog> list = findByConstantContactId(constantContactId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM Contact Audit Logs before and after the current CRM Contact Audit Log in the ordered set where constantContactId = &#63;.
+	 *
+	 * @param crmContactAuditLogId the primary key of the current CRM Contact Audit Log
+	 * @param constantContactId the constant contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM Contact Audit Log
+	 * @throws NoSuchCrmContactAuditLogException if a CRM Contact Audit Log with the primary key could not be found
+	 */
+	@Override
+	public CrmContactAuditLog[] findByConstantContactId_PrevAndNext(
+		long crmContactAuditLogId, long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
+		throws NoSuchCrmContactAuditLogException {
+		CrmContactAuditLog crmContactAuditLog = findByPrimaryKey(crmContactAuditLogId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmContactAuditLog[] array = new CrmContactAuditLogImpl[3];
+
+			array[0] = getByConstantContactId_PrevAndNext(session,
+					crmContactAuditLog, constantContactId, orderByComparator,
+					true);
+
+			array[1] = crmContactAuditLog;
+
+			array[2] = getByConstantContactId_PrevAndNext(session,
+					crmContactAuditLog, constantContactId, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmContactAuditLog getByConstantContactId_PrevAndNext(
+		Session session, CrmContactAuditLog crmContactAuditLog,
+		long constantContactId,
+		OrderByComparator<CrmContactAuditLog> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CRMCONTACTAUDITLOG_WHERE);
+
+		query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmContactAuditLogModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(constantContactId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmContactAuditLog);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmContactAuditLog> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM Contact Audit Logs where constantContactId = &#63; from the database.
+	 *
+	 * @param constantContactId the constant contact ID
+	 */
+	@Override
+	public void removeByConstantContactId(long constantContactId) {
+		for (CrmContactAuditLog crmContactAuditLog : findByConstantContactId(
+				constantContactId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(crmContactAuditLog);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM Contact Audit Logs where constantContactId = &#63;.
+	 *
+	 * @param constantContactId the constant contact ID
+	 * @return the number of matching CRM Contact Audit Logs
+	 */
+	@Override
+	public int countByConstantContactId(long constantContactId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONSTANTCONTACTID;
+
+		Object[] finderArgs = new Object[] { constantContactId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CRMCONTACTAUDITLOG_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(constantContactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONSTANTCONTACTID_CONSTANTCONTACTID_2 =
+		"crmContactAuditLog.constantContactId = ?";
 
 	public CrmContactAuditLogPersistenceImpl() {
 		setModelClass(CrmContactAuditLog.class);
@@ -1828,6 +2876,21 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { crmContactAuditLogModelImpl.getCrmContactId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+				args);
+
+			args = new Object[] {
+					crmContactAuditLogModelImpl.getConstantContactId()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+				args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1871,6 +2934,46 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
+
+			if ((crmContactAuditLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmContactAuditLogModelImpl.getOriginalCrmContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+					args);
+
+				args = new Object[] {
+						crmContactAuditLogModelImpl.getCrmContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+					args);
+			}
+
+			if ((crmContactAuditLogModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmContactAuditLogModelImpl.getOriginalConstantContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+					args);
+
+				args = new Object[] {
+						crmContactAuditLogModelImpl.getConstantContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CONSTANTCONTACTID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSTANTCONTACTID,
+					args);
+			}
 		}
 
 		entityCache.putResult(CrmContactAuditLogModelImpl.ENTITY_CACHE_ENABLED,
@@ -1904,6 +3007,10 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 		crmContactAuditLogImpl.setUserName(crmContactAuditLog.getUserName());
 		crmContactAuditLogImpl.setCreateDate(crmContactAuditLog.getCreateDate());
 		crmContactAuditLogImpl.setModifiedDate(crmContactAuditLog.getModifiedDate());
+		crmContactAuditLogImpl.setCrmContactId(crmContactAuditLog.getCrmContactId());
+		crmContactAuditLogImpl.setConstantContactId(crmContactAuditLog.getConstantContactId());
+		crmContactAuditLogImpl.setOldSnapshot(crmContactAuditLog.getOldSnapshot());
+		crmContactAuditLogImpl.setNewSnapshot(crmContactAuditLog.getNewSnapshot());
 
 		return crmContactAuditLogImpl;
 	}

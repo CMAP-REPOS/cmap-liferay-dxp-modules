@@ -67,6 +67,8 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -178,6 +192,16 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	}
 
 	/**
+	* Returns the name of this CRM LTA.
+	*
+	* @return the name of this CRM LTA
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmLTA.getName();
+	}
+
+	/**
 	* Returns the user name of this CRM LTA.
 	*
 	* @return the user name of this CRM LTA
@@ -205,6 +229,16 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	@Override
 	public java.lang.String getUuid() {
 		return _crmLTA.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM LTA.
+	*
+	* @return the zip code of this CRM LTA
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmLTA.getZipCode();
 	}
 
 	@Override
@@ -363,6 +397,16 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 		_crmLTA.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM LTA.
+	*
+	* @param name the name of this CRM LTA
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmLTA.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmLTA.setNew(n);
@@ -421,6 +465,16 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmLTA.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM LTA.
+	*
+	* @param zipCode the zip code of this CRM LTA
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmLTA.setZipCode(zipCode);
 	}
 
 	@Override

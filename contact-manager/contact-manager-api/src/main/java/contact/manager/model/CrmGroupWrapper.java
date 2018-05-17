@@ -64,6 +64,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -110,6 +111,12 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 
@@ -166,6 +173,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public java.lang.Object clone() {
 		return new CrmGroupWrapper((CrmGroup)_crmGroup.clone());
+	}
+
+	/**
+	* Returns the name of this CRM Group.
+	*
+	* @return the name of this CRM Group
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmGroup.getName();
 	}
 
 	/**
@@ -342,6 +359,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmGroup.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this CRM Group.
+	*
+	* @param name the name of this CRM Group
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmGroup.setName(name);
 	}
 
 	@Override

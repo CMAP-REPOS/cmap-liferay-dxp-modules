@@ -61,6 +61,12 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CrmGroupLocalServiceUtil} to access the CRM Group local service. Add custom service methods to {@link contact.manager.service.impl.CrmGroupLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmContactCrmGroup(long crmContactId, long crmGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmContactCrmGroups(long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
@@ -138,6 +144,9 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmGroup updateCrmGroup(CrmGroup crmGroup);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmContactCrmGroupsCount(long crmContactId);
+
 	/**
 	* Returns the number of CRM Groups.
 	*
@@ -192,6 +201,17 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator);
+
 	/**
 	* Returns a range of all the CRM Groups.
 	*
@@ -223,4 +243,35 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Group.
+	*
+	* @param crmGroupId the crmGroupId of the CRM Group
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Group
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCrmContactPrimaryKeys(long crmGroupId);
+
+	public void addCrmContactCrmGroup(long crmContactId, CrmGroup crmGroup);
+
+	public void addCrmContactCrmGroup(long crmContactId, long crmGroupId);
+
+	public void addCrmContactCrmGroups(long crmContactId,
+		List<CrmGroup> crmGroups);
+
+	public void addCrmContactCrmGroups(long crmContactId, long[] crmGroupIds);
+
+	public void clearCrmContactCrmGroups(long crmContactId);
+
+	public void deleteCrmContactCrmGroup(long crmContactId, CrmGroup crmGroup);
+
+	public void deleteCrmContactCrmGroup(long crmContactId, long crmGroupId);
+
+	public void deleteCrmContactCrmGroups(long crmContactId,
+		List<CrmGroup> crmGroups);
+
+	public void deleteCrmContactCrmGroups(long crmContactId, long[] crmGroupIds);
+
+	public void setCrmContactCrmGroups(long crmContactId, long[] crmGroupIds);
 }

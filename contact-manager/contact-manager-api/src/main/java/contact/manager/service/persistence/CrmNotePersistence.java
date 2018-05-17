@@ -369,6 +369,138 @@ public interface CrmNotePersistence extends BasePersistence<CrmNote> {
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns all the CRM Notes where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @return the matching CRM Notes
+	*/
+	public java.util.List<CrmNote> findByCrmContactId(long crmContactId);
+
+	/**
+	* Returns a range of all the CRM Notes where crmContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param crmContactId the crm contact ID
+	* @param start the lower bound of the range of CRM Notes
+	* @param end the upper bound of the range of CRM Notes (not inclusive)
+	* @return the range of matching CRM Notes
+	*/
+	public java.util.List<CrmNote> findByCrmContactId(long crmContactId,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Notes where crmContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param crmContactId the crm contact ID
+	* @param start the lower bound of the range of CRM Notes
+	* @param end the upper bound of the range of CRM Notes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Notes
+	*/
+	public java.util.List<CrmNote> findByCrmContactId(long crmContactId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Notes where crmContactId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param crmContactId the crm contact ID
+	* @param start the lower bound of the range of CRM Notes
+	* @param end the upper bound of the range of CRM Notes (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Notes
+	*/
+	public java.util.List<CrmNote> findByCrmContactId(long crmContactId,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Note in the ordered set where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Note
+	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
+	*/
+	public CrmNote findByCrmContactId_First(long crmContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException;
+
+	/**
+	* Returns the first CRM Note in the ordered set where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	*/
+	public CrmNote fetchByCrmContactId_First(long crmContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator);
+
+	/**
+	* Returns the last CRM Note in the ordered set where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Note
+	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
+	*/
+	public CrmNote findByCrmContactId_Last(long crmContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException;
+
+	/**
+	* Returns the last CRM Note in the ordered set where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	*/
+	public CrmNote fetchByCrmContactId_Last(long crmContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator);
+
+	/**
+	* Returns the CRM Notes before and after the current CRM Note in the ordered set where crmContactId = &#63;.
+	*
+	* @param crmNoteId the primary key of the current CRM Note
+	* @param crmContactId the crm contact ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Note
+	* @throws NoSuchCrmNoteException if a CRM Note with the primary key could not be found
+	*/
+	public CrmNote[] findByCrmContactId_PrevAndNext(long crmNoteId,
+		long crmContactId,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException;
+
+	/**
+	* Removes all the CRM Notes where crmContactId = &#63; from the database.
+	*
+	* @param crmContactId the crm contact ID
+	*/
+	public void removeByCrmContactId(long crmContactId);
+
+	/**
+	* Returns the number of CRM Notes where crmContactId = &#63;.
+	*
+	* @param crmContactId the crm contact ID
+	* @return the number of matching CRM Notes
+	*/
+	public int countByCrmContactId(long crmContactId);
+
+	/**
 	* Caches the CRM Note in the entity cache if it is enabled.
 	*
 	* @param crmNote the CRM Note

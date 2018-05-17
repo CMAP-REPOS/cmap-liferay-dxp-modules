@@ -160,4 +160,170 @@ public interface CrmGroupPersistence extends BasePersistence<CrmGroup> {
 	* @return the number of CRM Groups
 	*/
 	public int countAll();
+
+	/**
+	* Returns the primaryKeys of CRM Contacts associated with the CRM Group.
+	*
+	* @param pk the primary key of the CRM Group
+	* @return long[] of the primaryKeys of CRM Contacts associated with the CRM Group
+	*/
+	public long[] getCrmContactPrimaryKeys(long pk);
+
+	/**
+	* Returns all the CRM Contacts associated with the CRM Group.
+	*
+	* @param pk the primary key of the CRM Group
+	* @return the CRM Contacts associated with the CRM Group
+	*/
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk);
+
+	/**
+	* Returns a range of all the CRM Contacts associated with the CRM Group.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Group
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @return the range of CRM Contacts associated with the CRM Group
+	*/
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts associated with the CRM Group.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Group
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of CRM Contacts associated with the CRM Group
+	*/
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator);
+
+	/**
+	* Returns the number of CRM Contacts associated with the CRM Group.
+	*
+	* @param pk the primary key of the CRM Group
+	* @return the number of CRM Contacts associated with the CRM Group
+	*/
+	public int getCrmContactsSize(long pk);
+
+	/**
+	* Returns <code>true</code> if the CRM Contact is associated with the CRM Group.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPK the primary key of the CRM Contact
+	* @return <code>true</code> if the CRM Contact is associated with the CRM Group; <code>false</code> otherwise
+	*/
+	public boolean containsCrmContact(long pk, long crmContactPK);
+
+	/**
+	* Returns <code>true</code> if the CRM Group has any CRM Contacts associated with it.
+	*
+	* @param pk the primary key of the CRM Group to check for associations with CRM Contacts
+	* @return <code>true</code> if the CRM Group has any CRM Contacts associated with it; <code>false</code> otherwise
+	*/
+	public boolean containsCrmContacts(long pk);
+
+	/**
+	* Adds an association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPK the primary key of the CRM Contact
+	*/
+	public void addCrmContact(long pk, long crmContactPK);
+
+	/**
+	* Adds an association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContact the CRM Contact
+	*/
+	public void addCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact);
+
+	/**
+	* Adds an association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPKs the primary keys of the CRM Contacts
+	*/
+	public void addCrmContacts(long pk, long[] crmContactPKs);
+
+	/**
+	* Adds an association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContacts the CRM Contacts
+	*/
+	public void addCrmContacts(long pk,
+		java.util.List<contact.manager.model.CrmContact> crmContacts);
+
+	/**
+	* Clears all associations between the CRM Group and its CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group to clear the associated CRM Contacts from
+	*/
+	public void clearCrmContacts(long pk);
+
+	/**
+	* Removes the association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPK the primary key of the CRM Contact
+	*/
+	public void removeCrmContact(long pk, long crmContactPK);
+
+	/**
+	* Removes the association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContact the CRM Contact
+	*/
+	public void removeCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact);
+
+	/**
+	* Removes the association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPKs the primary keys of the CRM Contacts
+	*/
+	public void removeCrmContacts(long pk, long[] crmContactPKs);
+
+	/**
+	* Removes the association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContacts the CRM Contacts
+	*/
+	public void removeCrmContacts(long pk,
+		java.util.List<contact.manager.model.CrmContact> crmContacts);
+
+	/**
+	* Sets the CRM Contacts associated with the CRM Group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContactPKs the primary keys of the CRM Contacts to be associated with the CRM Group
+	*/
+	public void setCrmContacts(long pk, long[] crmContactPKs);
+
+	/**
+	* Sets the CRM Contacts associated with the CRM Group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Group
+	* @param crmContacts the CRM Contacts to be associated with the CRM Group
+	*/
+	public void setCrmContacts(long pk,
+		java.util.List<contact.manager.model.CrmContact> crmContacts);
 }

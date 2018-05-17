@@ -210,6 +210,36 @@ public interface CrmCountyModel extends BaseModel<CrmCounty>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM County.
+	 *
+	 * @return the name of this CRM County
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM County.
+	 *
+	 * @param name the name of this CRM County
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the zip code of this CRM County.
+	 *
+	 * @return the zip code of this CRM County
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM County.
+	 *
+	 * @param zipCode the zip code of this CRM County
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

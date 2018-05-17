@@ -108,7 +108,8 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, CrmChiWardImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CrmChiWardModelImpl.UUID_COLUMN_BITMASK);
+			CrmChiWardModelImpl.UUID_COLUMN_BITMASK |
+			CrmChiWardModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
 			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -907,7 +908,8 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CrmChiWardModelImpl.UUID_COLUMN_BITMASK |
-			CrmChiWardModelImpl.COMPANYID_COLUMN_BITMASK);
+			CrmChiWardModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmChiWardModelImpl.NAME_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
 			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1478,6 +1480,551 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmChiWard.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmChiWard.uuid IS NULL OR crmChiWard.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmChiWard.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
+			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, CrmChiWardImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
+		new FinderPath(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
+			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, CrmChiWardImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] { String.class.getName() },
+			CrmChiWardModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CrmChiWardModelImpl.NAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
+			CrmChiWardModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the CRM Chi Wards where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the matching CRM Chi Wards
+	 */
+	@Override
+	public List<CrmChiWard> findByZipCode(String zipCode) {
+		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM Chi Wards where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmChiWardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM Chi Wards
+	 * @param end the upper bound of the range of CRM Chi Wards (not inclusive)
+	 * @return the range of matching CRM Chi Wards
+	 */
+	@Override
+	public List<CrmChiWard> findByZipCode(String zipCode, int start, int end) {
+		return findByZipCode(zipCode, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Chi Wards where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmChiWardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM Chi Wards
+	 * @param end the upper bound of the range of CRM Chi Wards (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM Chi Wards
+	 */
+	@Override
+	public List<CrmChiWard> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<CrmChiWard> orderByComparator) {
+		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Chi Wards where zipCode = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmChiWardModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param zipCode the zip code
+	 * @param start the lower bound of the range of CRM Chi Wards
+	 * @param end the upper bound of the range of CRM Chi Wards (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM Chi Wards
+	 */
+	@Override
+	public List<CrmChiWard> findByZipCode(String zipCode, int start, int end,
+		OrderByComparator<CrmChiWard> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
+			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+		}
+
+		List<CrmChiWard> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmChiWard>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmChiWard crmChiWard : list) {
+					if (!Objects.equals(zipCode, crmChiWard.getZipCode())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CRMCHIWARD_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmChiWardModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				if (!pagination) {
+					list = (List<CrmChiWard>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmChiWard>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM Chi Ward in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Chi Ward
+	 * @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
+	 */
+	@Override
+	public CrmChiWard findByZipCode_First(String zipCode,
+		OrderByComparator<CrmChiWard> orderByComparator)
+		throws NoSuchCrmChiWardException {
+		CrmChiWard crmChiWard = fetchByZipCode_First(zipCode, orderByComparator);
+
+		if (crmChiWard != null) {
+			return crmChiWard;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmChiWardException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM Chi Ward in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	 */
+	@Override
+	public CrmChiWard fetchByZipCode_First(String zipCode,
+		OrderByComparator<CrmChiWard> orderByComparator) {
+		List<CrmChiWard> list = findByZipCode(zipCode, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM Chi Ward in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Chi Ward
+	 * @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
+	 */
+	@Override
+	public CrmChiWard findByZipCode_Last(String zipCode,
+		OrderByComparator<CrmChiWard> orderByComparator)
+		throws NoSuchCrmChiWardException {
+		CrmChiWard crmChiWard = fetchByZipCode_Last(zipCode, orderByComparator);
+
+		if (crmChiWard != null) {
+			return crmChiWard;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("zipCode=");
+		msg.append(zipCode);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmChiWardException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM Chi Ward in the ordered set where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	 */
+	@Override
+	public CrmChiWard fetchByZipCode_Last(String zipCode,
+		OrderByComparator<CrmChiWard> orderByComparator) {
+		int count = countByZipCode(zipCode);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmChiWard> list = findByZipCode(zipCode, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM Chi Wards before and after the current CRM Chi Ward in the ordered set where zipCode = &#63;.
+	 *
+	 * @param crmChiWardId the primary key of the current CRM Chi Ward
+	 * @param zipCode the zip code
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM Chi Ward
+	 * @throws NoSuchCrmChiWardException if a CRM Chi Ward with the primary key could not be found
+	 */
+	@Override
+	public CrmChiWard[] findByZipCode_PrevAndNext(long crmChiWardId,
+		String zipCode, OrderByComparator<CrmChiWard> orderByComparator)
+		throws NoSuchCrmChiWardException {
+		CrmChiWard crmChiWard = findByPrimaryKey(crmChiWardId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmChiWard[] array = new CrmChiWardImpl[3];
+
+			array[0] = getByZipCode_PrevAndNext(session, crmChiWard, zipCode,
+					orderByComparator, true);
+
+			array[1] = crmChiWard;
+
+			array[2] = getByZipCode_PrevAndNext(session, crmChiWard, zipCode,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmChiWard getByZipCode_PrevAndNext(Session session,
+		CrmChiWard crmChiWard, String zipCode,
+		OrderByComparator<CrmChiWard> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CRMCHIWARD_WHERE);
+
+		boolean bindZipCode = false;
+
+		if (zipCode == null) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+		}
+		else if (zipCode.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+		}
+		else {
+			bindZipCode = true;
+
+			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmChiWardModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindZipCode) {
+			qPos.add(zipCode);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmChiWard);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmChiWard> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM Chi Wards where zipCode = &#63; from the database.
+	 *
+	 * @param zipCode the zip code
+	 */
+	@Override
+	public void removeByZipCode(String zipCode) {
+		for (CrmChiWard crmChiWard : findByZipCode(zipCode, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(crmChiWard);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM Chi Wards where zipCode = &#63;.
+	 *
+	 * @param zipCode the zip code
+	 * @return the number of matching CRM Chi Wards
+	 */
+	@Override
+	public int countByZipCode(String zipCode) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+
+		Object[] finderArgs = new Object[] { zipCode };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CRMCHIWARD_WHERE);
+
+			boolean bindZipCode = false;
+
+			if (zipCode == null) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
+			}
+			else if (zipCode.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
+			}
+			else {
+				bindZipCode = true;
+
+				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindZipCode) {
+					qPos.add(zipCode);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "crmChiWard.zipCode IS NULL";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "crmChiWard.zipCode = ?";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(crmChiWard.zipCode IS NULL OR crmChiWard.zipCode = '')";
 
 	public CrmChiWardPersistenceImpl() {
 		setModelClass(CrmChiWard.class);
@@ -1804,6 +2351,12 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { crmChiWardModelImpl.getZipCode() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1847,6 +2400,23 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
+
+			if ((crmChiWardModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmChiWardModelImpl.getOriginalZipCode()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+
+				args = new Object[] { crmChiWardModelImpl.getZipCode() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
+					args);
+			}
 		}
 
 		entityCache.putResult(CrmChiWardModelImpl.ENTITY_CACHE_ENABLED,
@@ -1878,6 +2448,8 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		crmChiWardImpl.setUserName(crmChiWard.getUserName());
 		crmChiWardImpl.setCreateDate(crmChiWard.getCreateDate());
 		crmChiWardImpl.setModifiedDate(crmChiWard.getModifiedDate());
+		crmChiWardImpl.setName(crmChiWard.getName());
+		crmChiWardImpl.setZipCode(crmChiWard.getZipCode());
 
 		return crmChiWardImpl;
 	}

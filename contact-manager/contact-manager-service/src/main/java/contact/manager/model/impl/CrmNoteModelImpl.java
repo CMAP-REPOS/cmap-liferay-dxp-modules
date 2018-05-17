@@ -75,7 +75,9 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "crmContactId", Types.BIGINT },
+			{ "note", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,9 +90,11 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("crmContactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("note", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_note (uuid_ VARCHAR(75) null,crmNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_note (uuid_ VARCHAR(75) null,crmNoteId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactId LONG,note TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_note";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmNote.crmNoteId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_note.crmNoteId ASC";
@@ -107,9 +111,10 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 				"value.object.column.bitmask.enabled.contact.manager.model.CrmNote"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMNOTEID_COLUMN_BITMASK = 8L;
+	public static final long CRMCONTACTID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long CRMNOTEID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmNote"));
 
@@ -158,6 +163,8 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("note", getNote());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +220,18 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		String note = (String)attributes.get("note");
+
+		if (note != null) {
+			setNote(note);
 		}
 	}
 
@@ -361,6 +380,43 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 	}
 
 	@Override
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_columnBitmask |= CRMCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrmContactId) {
+			_setOriginalCrmContactId = true;
+
+			_originalCrmContactId = _crmContactId;
+		}
+
+		_crmContactId = crmContactId;
+	}
+
+	public long getOriginalCrmContactId() {
+		return _originalCrmContactId;
+	}
+
+	@Override
+	public String getNote() {
+		if (_note == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _note;
+		}
+	}
+
+	@Override
+	public void setNote(String note) {
+		_note = note;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmNote.class.getName()));
@@ -405,6 +461,8 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 		crmNoteImpl.setUserName(getUserName());
 		crmNoteImpl.setCreateDate(getCreateDate());
 		crmNoteImpl.setModifiedDate(getModifiedDate());
+		crmNoteImpl.setCrmContactId(getCrmContactId());
+		crmNoteImpl.setNote(getNote());
 
 		crmNoteImpl.resetOriginalValues();
 
@@ -479,6 +537,10 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 
 		crmNoteModelImpl._setModifiedDate = false;
 
+		crmNoteModelImpl._originalCrmContactId = crmNoteModelImpl._crmContactId;
+
+		crmNoteModelImpl._setOriginalCrmContactId = false;
+
 		crmNoteModelImpl._columnBitmask = 0;
 	}
 
@@ -528,12 +590,22 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 			crmNoteCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmNoteCacheModel.crmContactId = getCrmContactId();
+
+		crmNoteCacheModel.note = getNote();
+
+		String note = crmNoteCacheModel.note;
+
+		if ((note != null) && (note.length() == 0)) {
+			crmNoteCacheModel.note = null;
+		}
+
 		return crmNoteCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -551,6 +623,10 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", crmContactId=");
+		sb.append(getCrmContactId());
+		sb.append(", note=");
+		sb.append(getNote());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +634,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmNote");
@@ -596,6 +672,14 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>crmContactId</column-name><column-value><![CDATA[");
+		sb.append(getCrmContactId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>note</column-name><column-value><![CDATA[");
+		sb.append(getNote());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +704,10 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _crmContactId;
+	private long _originalCrmContactId;
+	private boolean _setOriginalCrmContactId;
+	private String _note;
 	private long _columnBitmask;
 	private CrmNote _escapedModel;
 }

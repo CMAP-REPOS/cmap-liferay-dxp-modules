@@ -210,6 +210,36 @@ public interface CrmMuniModel extends BaseModel<CrmMuni>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM Muni.
+	 *
+	 * @return the name of this CRM Muni
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM Muni.
+	 *
+	 * @param name the name of this CRM Muni
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the zip code of this CRM Muni.
+	 *
+	 * @return the zip code of this CRM Muni
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM Muni.
+	 *
+	 * @param zipCode the zip code of this CRM Muni
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

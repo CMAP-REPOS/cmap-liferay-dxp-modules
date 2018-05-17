@@ -65,7 +65,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,6 +83,10 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", crmContactId=");
+		sb.append(crmContactId);
+		sb.append(", note=");
+		sb.append(note);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +129,15 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 			crmNoteImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		crmNoteImpl.setCrmContactId(crmContactId);
+
+		if (note == null) {
+			crmNoteImpl.setNote(StringPool.BLANK);
+		}
+		else {
+			crmNoteImpl.setNote(note);
+		}
+
 		crmNoteImpl.resetOriginalValues();
 
 		return crmNoteImpl;
@@ -144,6 +157,9 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		crmContactId = objectInput.readLong();
+		note = objectInput.readUTF();
 	}
 
 	@Override
@@ -173,6 +189,15 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(crmContactId);
+
+		if (note == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(note);
+		}
 	}
 
 	public String uuid;
@@ -183,4 +208,6 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long crmContactId;
+	public String note;
 }

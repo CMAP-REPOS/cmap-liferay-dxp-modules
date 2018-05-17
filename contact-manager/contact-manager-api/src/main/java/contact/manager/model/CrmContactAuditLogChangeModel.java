@@ -210,6 +210,65 @@ public interface CrmContactAuditLogChangeModel extends BaseModel<CrmContactAudit
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the crm contact audit log ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the crm contact audit log ID of this CRM Contact Audit Log Change
+	 */
+	public long getCrmContactAuditLogId();
+
+	/**
+	 * Sets the crm contact audit log ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param crmContactAuditLogId the crm contact audit log ID of this CRM Contact Audit Log Change
+	 */
+	public void setCrmContactAuditLogId(long crmContactAuditLogId);
+
+	/**
+	 * Returns the field name of this CRM Contact Audit Log Change.
+	 *
+	 * @return the field name of this CRM Contact Audit Log Change
+	 */
+	@AutoEscape
+	public String getFieldName();
+
+	/**
+	 * Sets the field name of this CRM Contact Audit Log Change.
+	 *
+	 * @param fieldName the field name of this CRM Contact Audit Log Change
+	 */
+	public void setFieldName(String fieldName);
+
+	/**
+	 * Returns the old value of this CRM Contact Audit Log Change.
+	 *
+	 * @return the old value of this CRM Contact Audit Log Change
+	 */
+	@AutoEscape
+	public String getOldValue();
+
+	/**
+	 * Sets the old value of this CRM Contact Audit Log Change.
+	 *
+	 * @param oldValue the old value of this CRM Contact Audit Log Change
+	 */
+	public void setOldValue(String oldValue);
+
+	/**
+	 * Returns the new value of this CRM Contact Audit Log Change.
+	 *
+	 * @return the new value of this CRM Contact Audit Log Change
+	 */
+	@AutoEscape
+	public String getNewValue();
+
+	/**
+	 * Sets the new value of this CRM Contact Audit Log Change.
+	 *
+	 * @param newValue the new value of this CRM Contact Audit Log Change
+	 */
+	public void setNewValue(String newValue);
+
 	@Override
 	public boolean isNew();
 

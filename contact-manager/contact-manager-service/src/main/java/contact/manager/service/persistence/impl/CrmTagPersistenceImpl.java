@@ -1863,6 +1863,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		crmTagImpl.setUserName(crmTag.getUserName());
 		crmTagImpl.setCreateDate(crmTag.getCreateDate());
 		crmTagImpl.setModifiedDate(crmTag.getModifiedDate());
+		crmTagImpl.setName(crmTag.getName());
 
 		return crmTagImpl;
 	}

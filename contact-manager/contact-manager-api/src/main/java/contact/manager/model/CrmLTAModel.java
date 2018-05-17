@@ -210,6 +210,36 @@ public interface CrmLTAModel extends BaseModel<CrmLTA>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM LTA.
+	 *
+	 * @return the name of this CRM LTA
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM LTA.
+	 *
+	 * @param name the name of this CRM LTA
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the zip code of this CRM LTA.
+	 *
+	 * @return the zip code of this CRM LTA
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM LTA.
+	 *
+	 * @param zipCode the zip code of this CRM LTA
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

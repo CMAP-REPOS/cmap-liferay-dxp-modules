@@ -66,7 +66,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,12 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", number=");
+		sb.append(number);
+		sb.append(", zipCode=");
+		sb.append(zipCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +132,27 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 			crmCountyCommissionerImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmCountyCommissionerImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmCountyCommissionerImpl.setName(name);
+		}
+
+		if (number == null) {
+			crmCountyCommissionerImpl.setNumber(StringPool.BLANK);
+		}
+		else {
+			crmCountyCommissionerImpl.setNumber(number);
+		}
+
+		if (zipCode == null) {
+			crmCountyCommissionerImpl.setZipCode(StringPool.BLANK);
+		}
+		else {
+			crmCountyCommissionerImpl.setZipCode(zipCode);
+		}
+
 		crmCountyCommissionerImpl.resetOriginalValues();
 
 		return crmCountyCommissionerImpl;
@@ -145,6 +172,9 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
+		number = objectInput.readUTF();
+		zipCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +204,27 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (number == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(number);
+		}
+
+		if (zipCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(zipCode);
+		}
 	}
 
 	public String uuid;
@@ -184,4 +235,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
+	public String number;
+	public String zipCode;
 }

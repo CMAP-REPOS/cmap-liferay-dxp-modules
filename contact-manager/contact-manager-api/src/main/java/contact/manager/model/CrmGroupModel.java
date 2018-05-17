@@ -192,6 +192,21 @@ public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM Group.
+	 *
+	 * @return the name of this CRM Group
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM Group.
+	 *
+	 * @param name the name of this CRM Group
+	 */
+	public void setName(String name);
+
 	@Override
 	public boolean isNew();
 

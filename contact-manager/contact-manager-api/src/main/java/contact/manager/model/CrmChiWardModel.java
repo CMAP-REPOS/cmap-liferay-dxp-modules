@@ -210,6 +210,36 @@ public interface CrmChiWardModel extends BaseModel<CrmChiWard>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM Chi Ward.
+	 *
+	 * @return the name of this CRM Chi Ward
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM Chi Ward.
+	 *
+	 * @param name the name of this CRM Chi Ward
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the zip code of this CRM Chi Ward.
+	 *
+	 * @return the zip code of this CRM Chi Ward
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM Chi Ward.
+	 *
+	 * @param zipCode the zip code of this CRM Chi Ward
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

@@ -41,6 +41,9 @@ public class CrmUsRepSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setName(model.getName());
+		soapModel.setNumber(model.getNumber());
+		soapModel.setZipCode(model.getZipCode());
 
 		return soapModel;
 	}
@@ -157,6 +160,30 @@ public class CrmUsRepSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getNumber() {
+		return _number;
+	}
+
+	public void setNumber(String number) {
+		_number = number;
+	}
+
+	public String getZipCode() {
+		return _zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		_zipCode = zipCode;
+	}
+
 	private String _uuid;
 	private long _crmUsRepId;
 	private long _groupId;
@@ -165,4 +192,7 @@ public class CrmUsRepSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private String _name;
+	private String _number;
+	private String _zipCode;
 }

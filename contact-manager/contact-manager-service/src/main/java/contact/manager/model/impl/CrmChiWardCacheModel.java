@@ -66,7 +66,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,10 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", zipCode=");
+		sb.append(zipCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +130,20 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 			crmChiWardImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmChiWardImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmChiWardImpl.setName(name);
+		}
+
+		if (zipCode == null) {
+			crmChiWardImpl.setZipCode(StringPool.BLANK);
+		}
+		else {
+			crmChiWardImpl.setZipCode(zipCode);
+		}
+
 		crmChiWardImpl.resetOriginalValues();
 
 		return crmChiWardImpl;
@@ -145,6 +163,8 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
+		zipCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +194,20 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (zipCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(zipCode);
+		}
 	}
 
 	public String uuid;
@@ -184,4 +218,6 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
+	public String zipCode;
 }

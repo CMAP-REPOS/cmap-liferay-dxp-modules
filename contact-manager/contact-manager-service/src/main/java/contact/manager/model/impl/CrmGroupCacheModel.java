@@ -65,7 +65,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{crmGroupId=");
 		sb.append(crmGroupId);
@@ -81,6 +81,8 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
 		sb.append("}");
 
 		return sb.toString();
@@ -116,6 +118,13 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 			crmGroupImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmGroupImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmGroupImpl.setName(name);
+		}
+
 		crmGroupImpl.resetOriginalValues();
 
 		return crmGroupImpl;
@@ -133,6 +142,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
 	}
 
 	@Override
@@ -155,6 +165,13 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
 	}
 
 	public long crmGroupId;
@@ -164,4 +181,5 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
 }

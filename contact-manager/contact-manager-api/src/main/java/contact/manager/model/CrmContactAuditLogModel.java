@@ -210,6 +210,64 @@ public interface CrmContactAuditLogModel extends BaseModel<CrmContactAuditLog>,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the crm contact ID of this CRM Contact Audit Log.
+	 *
+	 * @return the crm contact ID of this CRM Contact Audit Log
+	 */
+	public long getCrmContactId();
+
+	/**
+	 * Sets the crm contact ID of this CRM Contact Audit Log.
+	 *
+	 * @param crmContactId the crm contact ID of this CRM Contact Audit Log
+	 */
+	public void setCrmContactId(long crmContactId);
+
+	/**
+	 * Returns the constant contact ID of this CRM Contact Audit Log.
+	 *
+	 * @return the constant contact ID of this CRM Contact Audit Log
+	 */
+	public long getConstantContactId();
+
+	/**
+	 * Sets the constant contact ID of this CRM Contact Audit Log.
+	 *
+	 * @param constantContactId the constant contact ID of this CRM Contact Audit Log
+	 */
+	public void setConstantContactId(long constantContactId);
+
+	/**
+	 * Returns the old snapshot of this CRM Contact Audit Log.
+	 *
+	 * @return the old snapshot of this CRM Contact Audit Log
+	 */
+	@AutoEscape
+	public String getOldSnapshot();
+
+	/**
+	 * Sets the old snapshot of this CRM Contact Audit Log.
+	 *
+	 * @param oldSnapshot the old snapshot of this CRM Contact Audit Log
+	 */
+	public void setOldSnapshot(String oldSnapshot);
+
+	/**
+	 * Returns the new snapshot of this CRM Contact Audit Log.
+	 *
+	 * @return the new snapshot of this CRM Contact Audit Log
+	 */
+	@AutoEscape
+	public String getNewSnapshot();
+
+	/**
+	 * Sets the new snapshot of this CRM Contact Audit Log.
+	 *
+	 * @param newSnapshot the new snapshot of this CRM Contact Audit Log
+	 */
+	public void setNewSnapshot(String newSnapshot);
+
 	@Override
 	public boolean isNew();
 

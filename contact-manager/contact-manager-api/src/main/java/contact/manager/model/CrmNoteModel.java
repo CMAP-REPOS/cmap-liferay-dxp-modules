@@ -210,6 +210,35 @@ public interface CrmNoteModel extends BaseModel<CrmNote>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the crm contact ID of this CRM Note.
+	 *
+	 * @return the crm contact ID of this CRM Note
+	 */
+	public long getCrmContactId();
+
+	/**
+	 * Sets the crm contact ID of this CRM Note.
+	 *
+	 * @param crmContactId the crm contact ID of this CRM Note
+	 */
+	public void setCrmContactId(long crmContactId);
+
+	/**
+	 * Returns the note of this CRM Note.
+	 *
+	 * @return the note of this CRM Note
+	 */
+	@AutoEscape
+	public String getNote();
+
+	/**
+	 * Sets the note of this CRM Note.
+	 *
+	 * @param note the note of this CRM Note
+	 */
+	public void setNote(String note);
+
 	@Override
 	public boolean isNew();
 

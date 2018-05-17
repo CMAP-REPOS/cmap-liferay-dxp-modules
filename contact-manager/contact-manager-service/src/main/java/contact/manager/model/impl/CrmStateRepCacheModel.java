@@ -66,7 +66,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,12 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", number=");
+		sb.append(number);
+		sb.append(", zipCode=");
+		sb.append(zipCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +132,27 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 			crmStateRepImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmStateRepImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmStateRepImpl.setName(name);
+		}
+
+		if (number == null) {
+			crmStateRepImpl.setNumber(StringPool.BLANK);
+		}
+		else {
+			crmStateRepImpl.setNumber(number);
+		}
+
+		if (zipCode == null) {
+			crmStateRepImpl.setZipCode(StringPool.BLANK);
+		}
+		else {
+			crmStateRepImpl.setZipCode(zipCode);
+		}
+
 		crmStateRepImpl.resetOriginalValues();
 
 		return crmStateRepImpl;
@@ -145,6 +172,9 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
+		number = objectInput.readUTF();
+		zipCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -174,6 +204,27 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (number == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(number);
+		}
+
+		if (zipCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(zipCode);
+		}
 	}
 
 	public String uuid;
@@ -184,4 +235,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
+	public String number;
+	public String zipCode;
 }

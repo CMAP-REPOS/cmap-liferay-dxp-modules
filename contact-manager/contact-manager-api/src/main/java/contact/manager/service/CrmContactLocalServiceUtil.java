@@ -41,6 +41,23 @@ public class CrmContactLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmContactLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasCrmGroupCrmContact(long crmGroupId,
+		long crmContactId) {
+		return getService().hasCrmGroupCrmContact(crmGroupId, crmContactId);
+	}
+
+	public static boolean hasCrmGroupCrmContacts(long crmGroupId) {
+		return getService().hasCrmGroupCrmContacts(crmGroupId);
+	}
+
+	public static boolean hasCrmTagCrmContact(long crmTagId, long crmContactId) {
+		return getService().hasCrmTagCrmContact(crmTagId, crmContactId);
+	}
+
+	public static boolean hasCrmTagCrmContacts(long crmTagId) {
+		return getService().hasCrmTagCrmContacts(crmTagId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -183,6 +200,14 @@ public class CrmContactLocalServiceUtil {
 		return getService().getCrmContactsCount();
 	}
 
+	public static int getCrmGroupCrmContactsCount(long crmGroupId) {
+		return getService().getCrmGroupCrmContactsCount(crmGroupId);
+	}
+
+	public static int getCrmTagCrmContactsCount(long crmTagId) {
+		return getService().getCrmTagCrmContactsCount(crmTagId);
+	}
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -288,6 +313,41 @@ public class CrmContactLocalServiceUtil {
 			end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmContact> getCrmGroupCrmContacts(
+		long crmGroupId) {
+		return getService().getCrmGroupCrmContacts(crmGroupId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmGroupCrmContacts(
+		long crmGroupId, int start, int end) {
+		return getService().getCrmGroupCrmContacts(crmGroupId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmGroupCrmContacts(
+		long crmGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return getService()
+				   .getCrmGroupCrmContacts(crmGroupId, start, end,
+			orderByComparator);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
+		long crmTagId) {
+		return getService().getCrmTagCrmContacts(crmTagId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
+		long crmTagId, int start, int end) {
+		return getService().getCrmTagCrmContacts(crmTagId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
+		long crmTagId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return getService()
+				   .getCrmTagCrmContacts(crmTagId, start, end, orderByComparator);
+	}
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -310,6 +370,119 @@ public class CrmContactLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Returns the crmGroupIds of the CRM Groups associated with the CRM Contact.
+	*
+	* @param crmContactId the crmContactId of the CRM Contact
+	* @return long[] the crmGroupIds of CRM Groups associated with the CRM Contact
+	*/
+	public static long[] getCrmGroupPrimaryKeys(long crmContactId) {
+		return getService().getCrmGroupPrimaryKeys(crmContactId);
+	}
+
+	/**
+	* Returns the crmTagIds of the CRM Tags associated with the CRM Contact.
+	*
+	* @param crmContactId the crmContactId of the CRM Contact
+	* @return long[] the crmTagIds of CRM Tags associated with the CRM Contact
+	*/
+	public static long[] getCrmTagPrimaryKeys(long crmContactId) {
+		return getService().getCrmTagPrimaryKeys(crmContactId);
+	}
+
+	public static void addCrmGroupCrmContact(long crmGroupId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().addCrmGroupCrmContact(crmGroupId, crmContact);
+	}
+
+	public static void addCrmGroupCrmContact(long crmGroupId, long crmContactId) {
+		getService().addCrmGroupCrmContact(crmGroupId, crmContactId);
+	}
+
+	public static void addCrmGroupCrmContacts(long crmGroupId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().addCrmGroupCrmContacts(crmGroupId, crmContacts);
+	}
+
+	public static void addCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().addCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public static void addCrmTagCrmContact(long crmTagId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().addCrmTagCrmContact(crmTagId, crmContact);
+	}
+
+	public static void addCrmTagCrmContact(long crmTagId, long crmContactId) {
+		getService().addCrmTagCrmContact(crmTagId, crmContactId);
+	}
+
+	public static void addCrmTagCrmContacts(long crmTagId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().addCrmTagCrmContacts(crmTagId, crmContacts);
+	}
+
+	public static void addCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		getService().addCrmTagCrmContacts(crmTagId, crmContactIds);
+	}
+
+	public static void clearCrmGroupCrmContacts(long crmGroupId) {
+		getService().clearCrmGroupCrmContacts(crmGroupId);
+	}
+
+	public static void clearCrmTagCrmContacts(long crmTagId) {
+		getService().clearCrmTagCrmContacts(crmTagId);
+	}
+
+	public static void deleteCrmGroupCrmContact(long crmGroupId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().deleteCrmGroupCrmContact(crmGroupId, crmContact);
+	}
+
+	public static void deleteCrmGroupCrmContact(long crmGroupId,
+		long crmContactId) {
+		getService().deleteCrmGroupCrmContact(crmGroupId, crmContactId);
+	}
+
+	public static void deleteCrmGroupCrmContacts(long crmGroupId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContacts);
+	}
+
+	public static void deleteCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public static void deleteCrmTagCrmContact(long crmTagId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().deleteCrmTagCrmContact(crmTagId, crmContact);
+	}
+
+	public static void deleteCrmTagCrmContact(long crmTagId, long crmContactId) {
+		getService().deleteCrmTagCrmContact(crmTagId, crmContactId);
+	}
+
+	public static void deleteCrmTagCrmContacts(long crmTagId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().deleteCrmTagCrmContacts(crmTagId, crmContacts);
+	}
+
+	public static void deleteCrmTagCrmContacts(long crmTagId,
+		long[] crmContactIds) {
+		getService().deleteCrmTagCrmContacts(crmTagId, crmContactIds);
+	}
+
+	public static void setCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().setCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public static void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		getService().setCrmTagCrmContacts(crmTagId, crmContactIds);
 	}
 
 	public static CrmContactLocalService getService() {

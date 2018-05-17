@@ -66,7 +66,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -84,6 +84,16 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", crmContactId=");
+		sb.append(crmContactId);
+		sb.append(", note=");
+		sb.append(note);
+		sb.append(", medium=");
+		sb.append(medium);
+		sb.append(", activityType=");
+		sb.append(activityType);
+		sb.append(", outreachDate=");
+		sb.append(outreachDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -126,6 +136,36 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 			crmOutreachLogImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		crmOutreachLogImpl.setCrmContactId(crmContactId);
+
+		if (note == null) {
+			crmOutreachLogImpl.setNote(StringPool.BLANK);
+		}
+		else {
+			crmOutreachLogImpl.setNote(note);
+		}
+
+		if (medium == null) {
+			crmOutreachLogImpl.setMedium(StringPool.BLANK);
+		}
+		else {
+			crmOutreachLogImpl.setMedium(medium);
+		}
+
+		if (activityType == null) {
+			crmOutreachLogImpl.setActivityType(StringPool.BLANK);
+		}
+		else {
+			crmOutreachLogImpl.setActivityType(activityType);
+		}
+
+		if (outreachDate == Long.MIN_VALUE) {
+			crmOutreachLogImpl.setOutreachDate(null);
+		}
+		else {
+			crmOutreachLogImpl.setOutreachDate(new Date(outreachDate));
+		}
+
 		crmOutreachLogImpl.resetOriginalValues();
 
 		return crmOutreachLogImpl;
@@ -145,6 +185,12 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+
+		crmContactId = objectInput.readLong();
+		note = objectInput.readUTF();
+		medium = objectInput.readUTF();
+		activityType = objectInput.readUTF();
+		outreachDate = objectInput.readLong();
 	}
 
 	@Override
@@ -174,6 +220,31 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		objectOutput.writeLong(crmContactId);
+
+		if (note == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(note);
+		}
+
+		if (medium == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(medium);
+		}
+
+		if (activityType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(activityType);
+		}
+
+		objectOutput.writeLong(outreachDate);
 	}
 
 	public String uuid;
@@ -184,4 +255,9 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public long crmContactId;
+	public String note;
+	public String medium;
+	public String activityType;
+	public long outreachDate;
 }

@@ -68,6 +68,9 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("number", getNumber());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -120,6 +123,24 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String number = (String)attributes.get("number");
+
+		if (number != null) {
+			setNumber(number);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -179,6 +200,26 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	}
 
 	/**
+	* Returns the name of this CRM State Senate.
+	*
+	* @return the name of this CRM State Senate
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmStateSenate.getName();
+	}
+
+	/**
+	* Returns the number of this CRM State Senate.
+	*
+	* @return the number of this CRM State Senate
+	*/
+	@Override
+	public java.lang.String getNumber() {
+		return _crmStateSenate.getNumber();
+	}
+
+	/**
 	* Returns the user name of this CRM State Senate.
 	*
 	* @return the user name of this CRM State Senate
@@ -206,6 +247,16 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	@Override
 	public java.lang.String getUuid() {
 		return _crmStateSenate.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM State Senate.
+	*
+	* @return the zip code of this CRM State Senate
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmStateSenate.getZipCode();
 	}
 
 	@Override
@@ -364,9 +415,29 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 		_crmStateSenate.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM State Senate.
+	*
+	* @param name the name of this CRM State Senate
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmStateSenate.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmStateSenate.setNew(n);
+	}
+
+	/**
+	* Sets the number of this CRM State Senate.
+	*
+	* @param number the number of this CRM State Senate
+	*/
+	@Override
+	public void setNumber(java.lang.String number) {
+		_crmStateSenate.setNumber(number);
 	}
 
 	/**
@@ -422,6 +493,16 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmStateSenate.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM State Senate.
+	*
+	* @param zipCode the zip code of this CRM State Senate
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmStateSenate.setZipCode(zipCode);
 	}
 
 	@Override

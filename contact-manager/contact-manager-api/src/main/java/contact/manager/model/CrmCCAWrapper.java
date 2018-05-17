@@ -67,6 +67,8 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -178,6 +192,16 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	}
 
 	/**
+	* Returns the name of this CRM CCA.
+	*
+	* @return the name of this CRM CCA
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmCCA.getName();
+	}
+
+	/**
 	* Returns the user name of this CRM CCA.
 	*
 	* @return the user name of this CRM CCA
@@ -205,6 +229,16 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	@Override
 	public java.lang.String getUuid() {
 		return _crmCCA.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM CCA.
+	*
+	* @return the zip code of this CRM CCA
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmCCA.getZipCode();
 	}
 
 	@Override
@@ -363,6 +397,16 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 		_crmCCA.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM CCA.
+	*
+	* @param name the name of this CRM CCA
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmCCA.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmCCA.setNew(n);
@@ -421,6 +465,16 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmCCA.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM CCA.
+	*
+	* @param zipCode the zip code of this CRM CCA
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmCCA.setZipCode(zipCode);
 	}
 
 	@Override

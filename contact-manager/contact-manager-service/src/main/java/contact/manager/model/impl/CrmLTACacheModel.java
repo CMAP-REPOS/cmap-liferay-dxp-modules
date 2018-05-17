@@ -65,7 +65,7 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -83,6 +83,10 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", zipCode=");
+		sb.append(zipCode);
 		sb.append("}");
 
 		return sb.toString();
@@ -125,6 +129,20 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 			crmLTAImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
+		if (name == null) {
+			crmLTAImpl.setName(StringPool.BLANK);
+		}
+		else {
+			crmLTAImpl.setName(name);
+		}
+
+		if (zipCode == null) {
+			crmLTAImpl.setZipCode(StringPool.BLANK);
+		}
+		else {
+			crmLTAImpl.setZipCode(zipCode);
+		}
+
 		crmLTAImpl.resetOriginalValues();
 
 		return crmLTAImpl;
@@ -144,6 +162,8 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
+		name = objectInput.readUTF();
+		zipCode = objectInput.readUTF();
 	}
 
 	@Override
@@ -173,6 +193,20 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
+
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (zipCode == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(zipCode);
+		}
 	}
 
 	public String uuid;
@@ -183,4 +217,6 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
+	public String name;
+	public String zipCode;
 }

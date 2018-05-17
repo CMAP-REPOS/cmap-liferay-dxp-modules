@@ -67,6 +67,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
 
 		return attributes;
 	}
@@ -119,6 +120,12 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
 		}
 	}
 
@@ -175,6 +182,16 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public java.lang.Object clone() {
 		return new CrmTagWrapper((CrmTag)_crmTag.clone());
+	}
+
+	/**
+	* Returns the name of this CRM Tag.
+	*
+	* @return the name of this CRM Tag
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmTag.getName();
 	}
 
 	/**
@@ -361,6 +378,16 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmTag.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	* Sets the name of this CRM Tag.
+	*
+	* @param name the name of this CRM Tag
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmTag.setName(name);
 	}
 
 	@Override

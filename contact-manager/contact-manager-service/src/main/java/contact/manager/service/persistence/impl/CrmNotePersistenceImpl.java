@@ -1474,6 +1474,517 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmNote.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmNote.uuid IS NULL OR crmNote.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmNote.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTID =
+		new FinderPath(CrmNoteModelImpl.ENTITY_CACHE_ENABLED,
+			CrmNoteModelImpl.FINDER_CACHE_ENABLED, CrmNoteImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCrmContactId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID =
+		new FinderPath(CrmNoteModelImpl.ENTITY_CACHE_ENABLED,
+			CrmNoteModelImpl.FINDER_CACHE_ENABLED, CrmNoteImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCrmContactId",
+			new String[] { Long.class.getName() },
+			CrmNoteModelImpl.CRMCONTACTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CRMCONTACTID = new FinderPath(CrmNoteModelImpl.ENTITY_CACHE_ENABLED,
+			CrmNoteModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCrmContactId",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the CRM Notes where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @return the matching CRM Notes
+	 */
+	@Override
+	public List<CrmNote> findByCrmContactId(long crmContactId) {
+		return findByCrmContactId(crmContactId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM Notes where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Notes
+	 * @param end the upper bound of the range of CRM Notes (not inclusive)
+	 * @return the range of matching CRM Notes
+	 */
+	@Override
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
+		int end) {
+		return findByCrmContactId(crmContactId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Notes where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Notes
+	 * @param end the upper bound of the range of CRM Notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM Notes
+	 */
+	@Override
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
+		int end, OrderByComparator<CrmNote> orderByComparator) {
+		return findByCrmContactId(crmContactId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Notes where crmContactId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmNoteModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param start the lower bound of the range of CRM Notes
+	 * @param end the upper bound of the range of CRM Notes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM Notes
+	 */
+	@Override
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
+		int end, OrderByComparator<CrmNote> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID;
+			finderArgs = new Object[] { crmContactId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTID;
+			finderArgs = new Object[] {
+					crmContactId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CrmNote> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmNote>)finderCache.getResult(finderPath, finderArgs,
+					this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmNote crmNote : list) {
+					if ((crmContactId != crmNote.getCrmContactId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CRMNOTE_WHERE);
+
+			query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmNoteModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(crmContactId);
+
+				if (!pagination) {
+					list = (List<CrmNote>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmNote>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM Note in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Note
+	 * @throws NoSuchCrmNoteException if a matching CRM Note could not be found
+	 */
+	@Override
+	public CrmNote findByCrmContactId_First(long crmContactId,
+		OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException {
+		CrmNote crmNote = fetchByCrmContactId_First(crmContactId,
+				orderByComparator);
+
+		if (crmNote != null) {
+			return crmNote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("crmContactId=");
+		msg.append(crmContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmNoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM Note in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	 */
+	@Override
+	public CrmNote fetchByCrmContactId_First(long crmContactId,
+		OrderByComparator<CrmNote> orderByComparator) {
+		List<CrmNote> list = findByCrmContactId(crmContactId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM Note in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Note
+	 * @throws NoSuchCrmNoteException if a matching CRM Note could not be found
+	 */
+	@Override
+	public CrmNote findByCrmContactId_Last(long crmContactId,
+		OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException {
+		CrmNote crmNote = fetchByCrmContactId_Last(crmContactId,
+				orderByComparator);
+
+		if (crmNote != null) {
+			return crmNote;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("crmContactId=");
+		msg.append(crmContactId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmNoteException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM Note in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	 */
+	@Override
+	public CrmNote fetchByCrmContactId_Last(long crmContactId,
+		OrderByComparator<CrmNote> orderByComparator) {
+		int count = countByCrmContactId(crmContactId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmNote> list = findByCrmContactId(crmContactId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM Notes before and after the current CRM Note in the ordered set where crmContactId = &#63;.
+	 *
+	 * @param crmNoteId the primary key of the current CRM Note
+	 * @param crmContactId the crm contact ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM Note
+	 * @throws NoSuchCrmNoteException if a CRM Note with the primary key could not be found
+	 */
+	@Override
+	public CrmNote[] findByCrmContactId_PrevAndNext(long crmNoteId,
+		long crmContactId, OrderByComparator<CrmNote> orderByComparator)
+		throws NoSuchCrmNoteException {
+		CrmNote crmNote = findByPrimaryKey(crmNoteId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmNote[] array = new CrmNoteImpl[3];
+
+			array[0] = getByCrmContactId_PrevAndNext(session, crmNote,
+					crmContactId, orderByComparator, true);
+
+			array[1] = crmNote;
+
+			array[2] = getByCrmContactId_PrevAndNext(session, crmNote,
+					crmContactId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmNote getByCrmContactId_PrevAndNext(Session session,
+		CrmNote crmNote, long crmContactId,
+		OrderByComparator<CrmNote> orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CRMNOTE_WHERE);
+
+		query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmNoteModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(crmContactId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmNote);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmNote> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM Notes where crmContactId = &#63; from the database.
+	 *
+	 * @param crmContactId the crm contact ID
+	 */
+	@Override
+	public void removeByCrmContactId(long crmContactId) {
+		for (CrmNote crmNote : findByCrmContactId(crmContactId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(crmNote);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM Notes where crmContactId = &#63;.
+	 *
+	 * @param crmContactId the crm contact ID
+	 * @return the number of matching CRM Notes
+	 */
+	@Override
+	public int countByCrmContactId(long crmContactId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CRMCONTACTID;
+
+		Object[] finderArgs = new Object[] { crmContactId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CRMNOTE_WHERE);
+
+			query.append(_FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(crmContactId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CRMCONTACTID_CRMCONTACTID_2 = "crmNote.crmContactId = ?";
 
 	public CrmNotePersistenceImpl() {
 		setModelClass(CrmNote.class);
@@ -1793,6 +2304,12 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 				args);
 
+			args = new Object[] { crmNoteModelImpl.getCrmContactId() };
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+				args);
+
 			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
 				FINDER_ARGS_EMPTY);
@@ -1834,6 +2351,23 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
+
+			if ((crmNoteModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmNoteModelImpl.getOriginalCrmContactId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+					args);
+
+				args = new Object[] { crmNoteModelImpl.getCrmContactId() };
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTID,
+					args);
+			}
 		}
 
 		entityCache.putResult(CrmNoteModelImpl.ENTITY_CACHE_ENABLED,
@@ -1865,6 +2399,8 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		crmNoteImpl.setUserName(crmNote.getUserName());
 		crmNoteImpl.setCreateDate(crmNote.getCreateDate());
 		crmNoteImpl.setModifiedDate(crmNote.getModifiedDate());
+		crmNoteImpl.setCrmContactId(crmNote.getCrmContactId());
+		crmNoteImpl.setNote(crmNote.getNote());
 
 		return crmNoteImpl;
 	}

@@ -41,6 +41,15 @@ public class CrmGroupLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmGroupLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasCrmContactCrmGroup(long crmContactId,
+		long crmGroupId) {
+		return getService().hasCrmContactCrmGroup(crmContactId, crmGroupId);
+	}
+
+	public static boolean hasCrmContactCrmGroups(long crmContactId) {
+		return getService().hasCrmContactCrmGroups(crmContactId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -139,6 +148,10 @@ public class CrmGroupLocalServiceUtil {
 		return getService().updateCrmGroup(crmGroup);
 	}
 
+	public static int getCrmContactCrmGroupsCount(long crmContactId) {
+		return getService().getCrmContactCrmGroupsCount(crmContactId);
+	}
+
 	/**
 	* Returns the number of CRM Groups.
 	*
@@ -207,6 +220,24 @@ public class CrmGroupLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId) {
+		return getService().getCrmContactCrmGroups(crmContactId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId, int start, int end) {
+		return getService().getCrmContactCrmGroups(crmContactId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
+		return getService()
+				   .getCrmContactCrmGroups(crmContactId, start, end,
+			orderByComparator);
+	}
+
 	/**
 	* Returns a range of all the CRM Groups.
 	*
@@ -245,6 +276,64 @@ public class CrmGroupLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Group.
+	*
+	* @param crmGroupId the crmGroupId of the CRM Group
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Group
+	*/
+	public static long[] getCrmContactPrimaryKeys(long crmGroupId) {
+		return getService().getCrmContactPrimaryKeys(crmGroupId);
+	}
+
+	public static void addCrmContactCrmGroup(long crmContactId,
+		contact.manager.model.CrmGroup crmGroup) {
+		getService().addCrmContactCrmGroup(crmContactId, crmGroup);
+	}
+
+	public static void addCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		getService().addCrmContactCrmGroup(crmContactId, crmGroupId);
+	}
+
+	public static void addCrmContactCrmGroups(long crmContactId,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
+		getService().addCrmContactCrmGroups(crmContactId, crmGroups);
+	}
+
+	public static void addCrmContactCrmGroups(long crmContactId,
+		long[] crmGroupIds) {
+		getService().addCrmContactCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	public static void clearCrmContactCrmGroups(long crmContactId) {
+		getService().clearCrmContactCrmGroups(crmContactId);
+	}
+
+	public static void deleteCrmContactCrmGroup(long crmContactId,
+		contact.manager.model.CrmGroup crmGroup) {
+		getService().deleteCrmContactCrmGroup(crmContactId, crmGroup);
+	}
+
+	public static void deleteCrmContactCrmGroup(long crmContactId,
+		long crmGroupId) {
+		getService().deleteCrmContactCrmGroup(crmContactId, crmGroupId);
+	}
+
+	public static void deleteCrmContactCrmGroups(long crmContactId,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
+		getService().deleteCrmContactCrmGroups(crmContactId, crmGroups);
+	}
+
+	public static void deleteCrmContactCrmGroups(long crmContactId,
+		long[] crmGroupIds) {
+		getService().deleteCrmContactCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	public static void setCrmContactCrmGroups(long crmContactId,
+		long[] crmGroupIds) {
+		getService().setCrmContactCrmGroups(crmContactId, crmGroupIds);
 	}
 
 	public static CrmGroupLocalService getService() {

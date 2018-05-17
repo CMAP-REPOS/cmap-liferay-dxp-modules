@@ -328,6 +328,134 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 */
+	@Override
+	public void addCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		crmContactPersistence.addCrmGroup(crmContactId, crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmContactCrmGroup(long crmContactId, CrmGroup crmGroup) {
+		crmContactPersistence.addCrmGroup(crmContactId, crmGroup);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
+		crmContactPersistence.addCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmContactCrmGroups(long crmContactId,
+		List<CrmGroup> crmGroups) {
+		crmContactPersistence.addCrmGroups(crmContactId, crmGroups);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearCrmContactCrmGroups(long crmContactId) {
+		crmContactPersistence.clearCrmGroups(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		crmContactPersistence.removeCrmGroup(crmContactId, crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmContactCrmGroup(long crmContactId, CrmGroup crmGroup) {
+		crmContactPersistence.removeCrmGroup(crmContactId, crmGroup);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
+		crmContactPersistence.removeCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmContactCrmGroups(long crmContactId,
+		List<CrmGroup> crmGroups) {
+		crmContactPersistence.removeCrmGroups(crmContactId, crmGroups);
+	}
+
+	/**
+	 * Returns the crmContactIds of the CRM Contacts associated with the CRM Group.
+	 *
+	 * @param crmGroupId the crmGroupId of the CRM Group
+	 * @return long[] the crmContactIds of CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public long[] getCrmContactPrimaryKeys(long crmGroupId) {
+		return crmGroupPersistence.getCrmContactPrimaryKeys(crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId) {
+		return crmContactPersistence.getCrmGroups(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId, int start,
+		int end) {
+		return crmContactPersistence.getCrmGroups(crmContactId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator) {
+		return crmContactPersistence.getCrmGroups(crmContactId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getCrmContactCrmGroupsCount(long crmContactId) {
+		return crmContactPersistence.getCrmGroupsSize(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		return crmContactPersistence.containsCrmGroup(crmContactId, crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmContactCrmGroups(long crmContactId) {
+		return crmContactPersistence.containsCrmGroups(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
+		crmContactPersistence.setCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	/**
 	 * Returns the CRM CCA local service.
 	 *
 	 * @return the CRM CCA local service

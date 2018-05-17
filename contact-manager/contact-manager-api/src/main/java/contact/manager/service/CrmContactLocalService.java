@@ -64,6 +64,18 @@ public interface CrmContactLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CrmContactLocalServiceUtil} to access the CRM Contact local service. Add custom service methods to {@link contact.manager.service.impl.CrmContactLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmGroupCrmContact(long crmGroupId, long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmGroupCrmContacts(long crmGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmTagCrmContact(long crmTagId, long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmTagCrmContacts(long crmTagId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
@@ -178,6 +190,12 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCrmContactsCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmGroupCrmContactsCount(long crmGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmTagCrmContactsCount(long crmTagId);
+
 	/**
 	* Returns the OSGi service identifier.
 	*
@@ -264,6 +282,28 @@ public interface CrmContactLocalService extends BaseLocalService,
 		java.lang.String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmContact> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator);
+
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -281,4 +321,65 @@ public interface CrmContactLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	/**
+	* Returns the crmGroupIds of the CRM Groups associated with the CRM Contact.
+	*
+	* @param crmContactId the crmContactId of the CRM Contact
+	* @return long[] the crmGroupIds of CRM Groups associated with the CRM Contact
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCrmGroupPrimaryKeys(long crmContactId);
+
+	/**
+	* Returns the crmTagIds of the CRM Tags associated with the CRM Contact.
+	*
+	* @param crmContactId the crmContactId of the CRM Contact
+	* @return long[] the crmTagIds of CRM Tags associated with the CRM Contact
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCrmTagPrimaryKeys(long crmContactId);
+
+	public void addCrmGroupCrmContact(long crmGroupId, CrmContact crmContact);
+
+	public void addCrmGroupCrmContact(long crmGroupId, long crmContactId);
+
+	public void addCrmGroupCrmContacts(long crmGroupId,
+		List<CrmContact> crmContacts);
+
+	public void addCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
+
+	public void addCrmTagCrmContact(long crmTagId, CrmContact crmContact);
+
+	public void addCrmTagCrmContact(long crmTagId, long crmContactId);
+
+	public void addCrmTagCrmContacts(long crmTagId, List<CrmContact> crmContacts);
+
+	public void addCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
+
+	public void clearCrmGroupCrmContacts(long crmGroupId);
+
+	public void clearCrmTagCrmContacts(long crmTagId);
+
+	public void deleteCrmGroupCrmContact(long crmGroupId, CrmContact crmContact);
+
+	public void deleteCrmGroupCrmContact(long crmGroupId, long crmContactId);
+
+	public void deleteCrmGroupCrmContacts(long crmGroupId,
+		List<CrmContact> crmContacts);
+
+	public void deleteCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
+
+	public void deleteCrmTagCrmContact(long crmTagId, CrmContact crmContact);
+
+	public void deleteCrmTagCrmContact(long crmTagId, long crmContactId);
+
+	public void deleteCrmTagCrmContacts(long crmTagId,
+		List<CrmContact> crmContacts);
+
+	public void deleteCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
+
+	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
+
+	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
 }

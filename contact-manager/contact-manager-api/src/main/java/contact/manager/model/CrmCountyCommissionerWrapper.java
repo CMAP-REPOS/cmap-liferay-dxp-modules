@@ -70,6 +70,9 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("number", getNumber());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -123,6 +126,24 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String number = (String)attributes.get("number");
+
+		if (number != null) {
+			setNumber(number);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -183,6 +204,26 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
+	* Returns the name of this CRM County Commissioner.
+	*
+	* @return the name of this CRM County Commissioner
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmCountyCommissioner.getName();
+	}
+
+	/**
+	* Returns the number of this CRM County Commissioner.
+	*
+	* @return the number of this CRM County Commissioner
+	*/
+	@Override
+	public java.lang.String getNumber() {
+		return _crmCountyCommissioner.getNumber();
+	}
+
+	/**
 	* Returns the user name of this CRM County Commissioner.
 	*
 	* @return the user name of this CRM County Commissioner
@@ -210,6 +251,16 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	@Override
 	public java.lang.String getUuid() {
 		return _crmCountyCommissioner.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM County Commissioner.
+	*
+	* @return the zip code of this CRM County Commissioner
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmCountyCommissioner.getZipCode();
 	}
 
 	@Override
@@ -369,9 +420,29 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 		_crmCountyCommissioner.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM County Commissioner.
+	*
+	* @param name the name of this CRM County Commissioner
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmCountyCommissioner.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmCountyCommissioner.setNew(n);
+	}
+
+	/**
+	* Sets the number of this CRM County Commissioner.
+	*
+	* @param number the number of this CRM County Commissioner
+	*/
+	@Override
+	public void setNumber(java.lang.String number) {
+		_crmCountyCommissioner.setNumber(number);
 	}
 
 	/**
@@ -427,6 +498,16 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmCountyCommissioner.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM County Commissioner.
+	*
+	* @param zipCode the zip code of this CRM County Commissioner
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmCountyCommissioner.setZipCode(zipCode);
 	}
 
 	@Override

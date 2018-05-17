@@ -68,6 +68,11 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("note", getNote());
+		attributes.put("medium", getMedium());
+		attributes.put("activityType", getActivityType());
+		attributes.put("outreachDate", getOutreachDate());
 
 		return attributes;
 	}
@@ -120,6 +125,36 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		String note = (String)attributes.get("note");
+
+		if (note != null) {
+			setNote(note);
+		}
+
+		String medium = (String)attributes.get("medium");
+
+		if (medium != null) {
+			setMedium(medium);
+		}
+
+		String activityType = (String)attributes.get("activityType");
+
+		if (activityType != null) {
+			setActivityType(activityType);
+		}
+
+		Date outreachDate = (Date)attributes.get("outreachDate");
+
+		if (outreachDate != null) {
+			setOutreachDate(outreachDate);
 		}
 	}
 
@@ -176,6 +211,36 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public java.lang.Object clone() {
 		return new CrmOutreachLogWrapper((CrmOutreachLog)_crmOutreachLog.clone());
+	}
+
+	/**
+	* Returns the activity type of this CRM Outreach Log.
+	*
+	* @return the activity type of this CRM Outreach Log
+	*/
+	@Override
+	public java.lang.String getActivityType() {
+		return _crmOutreachLog.getActivityType();
+	}
+
+	/**
+	* Returns the medium of this CRM Outreach Log.
+	*
+	* @return the medium of this CRM Outreach Log
+	*/
+	@Override
+	public java.lang.String getMedium() {
+		return _crmOutreachLog.getMedium();
+	}
+
+	/**
+	* Returns the note of this CRM Outreach Log.
+	*
+	* @return the note of this CRM Outreach Log
+	*/
+	@Override
+	public java.lang.String getNote() {
+		return _crmOutreachLog.getNote();
 	}
 
 	/**
@@ -239,6 +304,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	}
 
 	/**
+	* Returns the outreach date of this CRM Outreach Log.
+	*
+	* @return the outreach date of this CRM Outreach Log
+	*/
+	@Override
+	public Date getOutreachDate() {
+		return _crmOutreachLog.getOutreachDate();
+	}
+
+	/**
 	* Returns the company ID of this CRM Outreach Log.
 	*
 	* @return the company ID of this CRM Outreach Log
@@ -246,6 +321,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public long getCompanyId() {
 		return _crmOutreachLog.getCompanyId();
+	}
+
+	/**
+	* Returns the crm contact ID of this CRM Outreach Log.
+	*
+	* @return the crm contact ID of this CRM Outreach Log
+	*/
+	@Override
+	public long getCrmContactId() {
+		return _crmOutreachLog.getCrmContactId();
 	}
 
 	/**
@@ -293,6 +378,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 		_crmOutreachLog.persist();
 	}
 
+	/**
+	* Sets the activity type of this CRM Outreach Log.
+	*
+	* @param activityType the activity type of this CRM Outreach Log
+	*/
+	@Override
+	public void setActivityType(java.lang.String activityType) {
+		_crmOutreachLog.setActivityType(activityType);
+	}
+
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_crmOutreachLog.setCachedModel(cachedModel);
@@ -316,6 +411,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmOutreachLog.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the crm contact ID of this CRM Outreach Log.
+	*
+	* @param crmContactId the crm contact ID of this CRM Outreach Log
+	*/
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_crmOutreachLog.setCrmContactId(crmContactId);
 	}
 
 	/**
@@ -355,6 +460,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	}
 
 	/**
+	* Sets the medium of this CRM Outreach Log.
+	*
+	* @param medium the medium of this CRM Outreach Log
+	*/
+	@Override
+	public void setMedium(java.lang.String medium) {
+		_crmOutreachLog.setMedium(medium);
+	}
+
+	/**
 	* Sets the modified date of this CRM Outreach Log.
 	*
 	* @param modifiedDate the modified date of this CRM Outreach Log
@@ -367,6 +482,26 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public void setNew(boolean n) {
 		_crmOutreachLog.setNew(n);
+	}
+
+	/**
+	* Sets the note of this CRM Outreach Log.
+	*
+	* @param note the note of this CRM Outreach Log
+	*/
+	@Override
+	public void setNote(java.lang.String note) {
+		_crmOutreachLog.setNote(note);
+	}
+
+	/**
+	* Sets the outreach date of this CRM Outreach Log.
+	*
+	* @param outreachDate the outreach date of this CRM Outreach Log
+	*/
+	@Override
+	public void setOutreachDate(Date outreachDate) {
+		_crmOutreachLog.setOutreachDate(outreachDate);
 	}
 
 	/**

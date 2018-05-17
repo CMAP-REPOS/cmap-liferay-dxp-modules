@@ -75,7 +75,10 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "name", Types.VARCHAR },
+			{ "number_", Types.VARCHAR },
+			{ "zipCode", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,12 +91,15 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("number_", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("zipCode", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_usrep (uuid_ VARCHAR(75) null,crmUsRepId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_usrep (uuid_ VARCHAR(75) null,crmUsRepId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,number_ VARCHAR(75) null,zipCode VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_usrep";
-	public static final String ORDER_BY_JPQL = " ORDER BY crmUsRep.crmUsRepId ASC";
-	public static final String ORDER_BY_SQL = " ORDER BY crm_usrep.crmUsRepId ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY crmUsRep.number ASC, crmUsRep.name ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY crm_usrep.number_ ASC, crm_usrep.name ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -109,7 +115,9 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMUSREPID_COLUMN_BITMASK = 8L;
+	public static final long ZIPCODE_COLUMN_BITMASK = 8L;
+	public static final long NUMBER_COLUMN_BITMASK = 16L;
+	public static final long NAME_COLUMN_BITMASK = 32L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmUsRep"));
 
@@ -158,6 +166,9 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("number", getNumber());
+		attributes.put("zipCode", getZipCode());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +224,24 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String number = (String)attributes.get("number");
+
+		if (number != null) {
+			setNumber(number);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -361,6 +390,65 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 	}
 
 	@Override
+	public String getName() {
+		if (_name == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _name;
+		}
+	}
+
+	@Override
+	public void setName(String name) {
+		_columnBitmask = -1L;
+
+		_name = name;
+	}
+
+	@Override
+	public String getNumber() {
+		if (_number == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _number;
+		}
+	}
+
+	@Override
+	public void setNumber(String number) {
+		_columnBitmask = -1L;
+
+		_number = number;
+	}
+
+	@Override
+	public String getZipCode() {
+		if (_zipCode == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _zipCode;
+		}
+	}
+
+	@Override
+	public void setZipCode(String zipCode) {
+		_columnBitmask |= ZIPCODE_COLUMN_BITMASK;
+
+		if (_originalZipCode == null) {
+			_originalZipCode = _zipCode;
+		}
+
+		_zipCode = zipCode;
+	}
+
+	public String getOriginalZipCode() {
+		return GetterUtil.getString(_originalZipCode);
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmUsRep.class.getName()));
@@ -405,6 +493,9 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 		crmUsRepImpl.setUserName(getUserName());
 		crmUsRepImpl.setCreateDate(getCreateDate());
 		crmUsRepImpl.setModifiedDate(getModifiedDate());
+		crmUsRepImpl.setName(getName());
+		crmUsRepImpl.setNumber(getNumber());
+		crmUsRepImpl.setZipCode(getZipCode());
 
 		crmUsRepImpl.resetOriginalValues();
 
@@ -413,17 +504,21 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 
 	@Override
 	public int compareTo(CrmUsRep crmUsRep) {
-		long primaryKey = crmUsRep.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		value = getNumber().compareTo(crmUsRep.getNumber());
+
+		if (value != 0) {
+			return value;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+
+		value = getName().compareTo(crmUsRep.getName());
+
+		if (value != 0) {
+			return value;
 		}
-		else {
-			return 0;
-		}
+
+		return 0;
 	}
 
 	@Override
@@ -479,6 +574,8 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 
 		crmUsRepModelImpl._setModifiedDate = false;
 
+		crmUsRepModelImpl._originalZipCode = crmUsRepModelImpl._zipCode;
+
 		crmUsRepModelImpl._columnBitmask = 0;
 	}
 
@@ -528,12 +625,36 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 			crmUsRepCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmUsRepCacheModel.name = getName();
+
+		String name = crmUsRepCacheModel.name;
+
+		if ((name != null) && (name.length() == 0)) {
+			crmUsRepCacheModel.name = null;
+		}
+
+		crmUsRepCacheModel.number = getNumber();
+
+		String number = crmUsRepCacheModel.number;
+
+		if ((number != null) && (number.length() == 0)) {
+			crmUsRepCacheModel.number = null;
+		}
+
+		crmUsRepCacheModel.zipCode = getZipCode();
+
+		String zipCode = crmUsRepCacheModel.zipCode;
+
+		if ((zipCode != null) && (zipCode.length() == 0)) {
+			crmUsRepCacheModel.zipCode = null;
+		}
+
 		return crmUsRepCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -551,6 +672,12 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", name=");
+		sb.append(getName());
+		sb.append(", number=");
+		sb.append(getNumber());
+		sb.append(", zipCode=");
+		sb.append(getZipCode());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +685,7 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmUsRep");
@@ -596,6 +723,18 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>name</column-name><column-value><![CDATA[");
+		sb.append(getName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>number</column-name><column-value><![CDATA[");
+		sb.append(getNumber());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>zipCode</column-name><column-value><![CDATA[");
+		sb.append(getZipCode());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +759,10 @@ public class CrmUsRepModelImpl extends BaseModelImpl<CrmUsRep>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private String _name;
+	private String _number;
+	private String _zipCode;
+	private String _originalZipCode;
 	private long _columnBitmask;
 	private CrmUsRep _escapedModel;
 }

@@ -16,6 +16,7 @@ package contact.manager.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -29,7 +30,12 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -40,6 +46,7 @@ import contact.manager.model.CrmGroup;
 import contact.manager.model.impl.CrmGroupImpl;
 import contact.manager.model.impl.CrmGroupModelImpl;
 
+import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmGroupPersistence;
 
 import java.io.Serializable;
@@ -240,6 +247,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	protected CrmGroup removeImpl(CrmGroup crmGroup) {
 		crmGroup = toUnwrappedModel(crmGroup);
 
+		crmGroupToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(crmGroup.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -352,6 +361,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		crmGroupImpl.setUserName(crmGroup.getUserName());
 		crmGroupImpl.setCreateDate(crmGroup.getCreateDate());
 		crmGroupImpl.setModifiedDate(crmGroup.getModifiedDate());
+		crmGroupImpl.setName(crmGroup.getName());
 
 		return crmGroupImpl;
 	}
@@ -735,6 +745,309 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the primaryKeys of CRM Contacts associated with the CRM Group.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @return long[] of the primaryKeys of CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public long[] getCrmContactPrimaryKeys(long pk) {
+		long[] pks = crmGroupToCrmContactTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the CRM Contacts associated with the CRM Group.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @return the CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk) {
+		return getCrmContacts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the CRM Contacts associated with the CRM Group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param start the lower bound of the range of CRM Groups
+	 * @param end the upper bound of the range of CRM Groups (not inclusive)
+	 * @return the range of CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
+		int start, int end) {
+		return getCrmContacts(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contacts associated with the CRM Group.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param start the lower bound of the range of CRM Groups
+	 * @param end the upper bound of the range of CRM Groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
+		int start, int end,
+		OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return crmGroupToCrmContactTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of CRM Contacts associated with the CRM Group.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @return the number of CRM Contacts associated with the CRM Group
+	 */
+	@Override
+	public int getCrmContactsSize(long pk) {
+		long[] pks = crmGroupToCrmContactTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the CRM Contact is associated with the CRM Group.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPK the primary key of the CRM Contact
+	 * @return <code>true</code> if the CRM Contact is associated with the CRM Group; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCrmContact(long pk, long crmContactPK) {
+		return crmGroupToCrmContactTableMapper.containsTableMapping(pk,
+			crmContactPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the CRM Group has any CRM Contacts associated with it.
+	 *
+	 * @param pk the primary key of the CRM Group to check for associations with CRM Contacts
+	 * @return <code>true</code> if the CRM Group has any CRM Contacts associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCrmContacts(long pk) {
+		if (getCrmContactsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPK the primary key of the CRM Contact
+	 */
+	@Override
+	public void addCrmContact(long pk, long crmContactPK) {
+		CrmGroup crmGroup = fetchByPrimaryKey(pk);
+
+		if (crmGroup == null) {
+			crmGroupToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, crmContactPK);
+		}
+		else {
+			crmGroupToCrmContactTableMapper.addTableMapping(crmGroup.getCompanyId(),
+				pk, crmContactPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContact the CRM Contact
+	 */
+	@Override
+	public void addCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact) {
+		CrmGroup crmGroup = fetchByPrimaryKey(pk);
+
+		if (crmGroup == null) {
+			crmGroupToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, crmContact.getPrimaryKey());
+		}
+		else {
+			crmGroupToCrmContactTableMapper.addTableMapping(crmGroup.getCompanyId(),
+				pk, crmContact.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPKs the primary keys of the CRM Contacts
+	 */
+	@Override
+	public void addCrmContacts(long pk, long[] crmContactPKs) {
+		long companyId = 0;
+
+		CrmGroup crmGroup = fetchByPrimaryKey(pk);
+
+		if (crmGroup == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = crmGroup.getCompanyId();
+		}
+
+		crmGroupToCrmContactTableMapper.addTableMappings(companyId, pk,
+			crmContactPKs);
+	}
+
+	/**
+	 * Adds an association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContacts the CRM Contacts
+	 */
+	@Override
+	public void addCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		addCrmContacts(pk,
+			ListUtil.toLongArray(crmContacts,
+				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the CRM Group and its CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group to clear the associated CRM Contacts from
+	 */
+	@Override
+	public void clearCrmContacts(long pk) {
+		crmGroupToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPK the primary key of the CRM Contact
+	 */
+	@Override
+	public void removeCrmContact(long pk, long crmContactPK) {
+		crmGroupToCrmContactTableMapper.deleteTableMapping(pk, crmContactPK);
+	}
+
+	/**
+	 * Removes the association between the CRM Group and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContact the CRM Contact
+	 */
+	@Override
+	public void removeCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact) {
+		crmGroupToCrmContactTableMapper.deleteTableMapping(pk,
+			crmContact.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPKs the primary keys of the CRM Contacts
+	 */
+	@Override
+	public void removeCrmContacts(long pk, long[] crmContactPKs) {
+		crmGroupToCrmContactTableMapper.deleteTableMappings(pk, crmContactPKs);
+	}
+
+	/**
+	 * Removes the association between the CRM Group and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContacts the CRM Contacts
+	 */
+	@Override
+	public void removeCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		removeCrmContacts(pk,
+			ListUtil.toLongArray(crmContacts,
+				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the CRM Contacts associated with the CRM Group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContactPKs the primary keys of the CRM Contacts to be associated with the CRM Group
+	 */
+	@Override
+	public void setCrmContacts(long pk, long[] crmContactPKs) {
+		Set<Long> newCrmContactPKsSet = SetUtil.fromArray(crmContactPKs);
+		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(crmGroupToCrmContactTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(oldCrmContactPKsSet);
+
+		removeCrmContactPKsSet.removeAll(newCrmContactPKsSet);
+
+		crmGroupToCrmContactTableMapper.deleteTableMappings(pk,
+			ArrayUtil.toLongArray(removeCrmContactPKsSet));
+
+		newCrmContactPKsSet.removeAll(oldCrmContactPKsSet);
+
+		long companyId = 0;
+
+		CrmGroup crmGroup = fetchByPrimaryKey(pk);
+
+		if (crmGroup == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = crmGroup.getCompanyId();
+		}
+
+		crmGroupToCrmContactTableMapper.addTableMappings(companyId, pk,
+			ArrayUtil.toLongArray(newCrmContactPKsSet));
+	}
+
+	/**
+	 * Sets the CRM Contacts associated with the CRM Group, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Group
+	 * @param crmContacts the CRM Contacts to be associated with the CRM Group
+	 */
+	@Override
+	public void setCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		try {
+			long[] crmContactPKs = new long[crmContacts.size()];
+
+			for (int i = 0; i < crmContacts.size(); i++) {
+				contact.manager.model.CrmContact crmContact = crmContacts.get(i);
+
+				crmContactPKs[i] = crmContact.getPrimaryKey();
+			}
+
+			setCrmContacts(pk, crmContactPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
 	@Override
 	protected Map<String, Integer> getTableColumnsMap() {
 		return CrmGroupModelImpl.TABLE_COLUMNS_MAP;
@@ -744,6 +1057,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Initializes the CRM Group persistence.
 	 */
 	public void afterPropertiesSet() {
+		crmGroupToCrmContactTableMapper = TableMapperFactory.getTableMapper("crm_contacts_groups",
+				"companyId", "crmGroupId", "crmContactId", this,
+				crmContactPersistence);
 	}
 
 	public void destroy() {
@@ -751,6 +1067,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("crm_contacts_groups");
 	}
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
@@ -759,6 +1077,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@BeanReference(type = CrmContactPersistence.class)
+	protected CrmContactPersistence crmContactPersistence;
+	protected TableMapper<CrmGroup, contact.manager.model.CrmContact> crmGroupToCrmContactTableMapper;
 	private static final String _SQL_SELECT_CRMGROUP = "SELECT crmGroup FROM CrmGroup crmGroup";
 	private static final String _SQL_SELECT_CRMGROUP_WHERE_PKS_IN = "SELECT crmGroup FROM CrmGroup crmGroup WHERE crmGroupId IN (";
 	private static final String _SQL_COUNT_CRMGROUP = "SELECT COUNT(crmGroup) FROM CrmGroup crmGroup";

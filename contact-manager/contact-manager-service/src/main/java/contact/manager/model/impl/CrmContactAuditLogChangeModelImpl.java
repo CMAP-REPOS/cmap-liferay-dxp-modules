@@ -75,7 +75,11 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "crmContactAuditLogId", Types.BIGINT },
+			{ "fieldName", Types.VARCHAR },
+			{ "oldValue", Types.VARCHAR },
+			{ "newValue", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,9 +92,13 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("crmContactAuditLogId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("fieldName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("oldValue", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("newValue", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlogchange (uuid_ VARCHAR(75) null,crmContactAuditLogChangeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlogchange (uuid_ VARCHAR(75) null,crmContactAuditLogChangeId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactAuditLogId LONG,fieldName VARCHAR(75) null,oldValue TEXT null,newValue TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_contactauditlogchange";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmContactAuditLogChange.crmContactAuditLogChangeId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_contactauditlogchange.crmContactAuditLogChangeId ASC";
@@ -107,9 +115,10 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 				"value.object.column.bitmask.enabled.contact.manager.model.CrmContactAuditLogChange"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMCONTACTAUDITLOGCHANGEID_COLUMN_BITMASK = 8L;
+	public static final long CRMCONTACTAUDITLOGID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long CRMCONTACTAUDITLOGCHANGEID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmContactAuditLogChange"));
 
@@ -159,6 +168,10 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactAuditLogId", getCrmContactAuditLogId());
+		attributes.put("fieldName", getFieldName());
+		attributes.put("oldValue", getOldValue());
+		attributes.put("newValue", getNewValue());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -216,6 +229,30 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+
+		Long crmContactAuditLogId = (Long)attributes.get("crmContactAuditLogId");
+
+		if (crmContactAuditLogId != null) {
+			setCrmContactAuditLogId(crmContactAuditLogId);
+		}
+
+		String fieldName = (String)attributes.get("fieldName");
+
+		if (fieldName != null) {
+			setFieldName(fieldName);
+		}
+
+		String oldValue = (String)attributes.get("oldValue");
+
+		if (oldValue != null) {
+			setOldValue(oldValue);
+		}
+
+		String newValue = (String)attributes.get("newValue");
+
+		if (newValue != null) {
+			setNewValue(newValue);
+		}
 	}
 
 	@Override
@@ -248,6 +285,8 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 
 	@Override
 	public void setCrmContactAuditLogChangeId(long crmContactAuditLogChangeId) {
+		_columnBitmask = -1L;
+
 		_crmContactAuditLogChangeId = crmContactAuditLogChangeId;
 	}
 
@@ -363,6 +402,73 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 	}
 
 	@Override
+	public long getCrmContactAuditLogId() {
+		return _crmContactAuditLogId;
+	}
+
+	@Override
+	public void setCrmContactAuditLogId(long crmContactAuditLogId) {
+		_columnBitmask |= CRMCONTACTAUDITLOGID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrmContactAuditLogId) {
+			_setOriginalCrmContactAuditLogId = true;
+
+			_originalCrmContactAuditLogId = _crmContactAuditLogId;
+		}
+
+		_crmContactAuditLogId = crmContactAuditLogId;
+	}
+
+	public long getOriginalCrmContactAuditLogId() {
+		return _originalCrmContactAuditLogId;
+	}
+
+	@Override
+	public String getFieldName() {
+		if (_fieldName == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _fieldName;
+		}
+	}
+
+	@Override
+	public void setFieldName(String fieldName) {
+		_fieldName = fieldName;
+	}
+
+	@Override
+	public String getOldValue() {
+		if (_oldValue == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _oldValue;
+		}
+	}
+
+	@Override
+	public void setOldValue(String oldValue) {
+		_oldValue = oldValue;
+	}
+
+	@Override
+	public String getNewValue() {
+		if (_newValue == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _newValue;
+		}
+	}
+
+	@Override
+	public void setNewValue(String newValue) {
+		_newValue = newValue;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmContactAuditLogChange.class.getName()));
@@ -407,6 +513,10 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		crmContactAuditLogChangeImpl.setUserName(getUserName());
 		crmContactAuditLogChangeImpl.setCreateDate(getCreateDate());
 		crmContactAuditLogChangeImpl.setModifiedDate(getModifiedDate());
+		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(getCrmContactAuditLogId());
+		crmContactAuditLogChangeImpl.setFieldName(getFieldName());
+		crmContactAuditLogChangeImpl.setOldValue(getOldValue());
+		crmContactAuditLogChangeImpl.setNewValue(getNewValue());
 
 		crmContactAuditLogChangeImpl.resetOriginalValues();
 
@@ -415,17 +525,23 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 
 	@Override
 	public int compareTo(CrmContactAuditLogChange crmContactAuditLogChange) {
-		long primaryKey = crmContactAuditLogChange.getPrimaryKey();
+		int value = 0;
 
-		if (getPrimaryKey() < primaryKey) {
-			return -1;
+		if (getCrmContactAuditLogChangeId() < crmContactAuditLogChange.getCrmContactAuditLogChangeId()) {
+			value = -1;
 		}
-		else if (getPrimaryKey() > primaryKey) {
-			return 1;
+		else if (getCrmContactAuditLogChangeId() > crmContactAuditLogChange.getCrmContactAuditLogChangeId()) {
+			value = 1;
 		}
 		else {
-			return 0;
+			value = 0;
 		}
+
+		if (value != 0) {
+			return value;
+		}
+
+		return 0;
 	}
 
 	@Override
@@ -481,6 +597,10 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 
 		crmContactAuditLogChangeModelImpl._setModifiedDate = false;
 
+		crmContactAuditLogChangeModelImpl._originalCrmContactAuditLogId = crmContactAuditLogChangeModelImpl._crmContactAuditLogId;
+
+		crmContactAuditLogChangeModelImpl._setOriginalCrmContactAuditLogId = false;
+
 		crmContactAuditLogChangeModelImpl._columnBitmask = 0;
 	}
 
@@ -530,12 +650,38 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 			crmContactAuditLogChangeCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmContactAuditLogChangeCacheModel.crmContactAuditLogId = getCrmContactAuditLogId();
+
+		crmContactAuditLogChangeCacheModel.fieldName = getFieldName();
+
+		String fieldName = crmContactAuditLogChangeCacheModel.fieldName;
+
+		if ((fieldName != null) && (fieldName.length() == 0)) {
+			crmContactAuditLogChangeCacheModel.fieldName = null;
+		}
+
+		crmContactAuditLogChangeCacheModel.oldValue = getOldValue();
+
+		String oldValue = crmContactAuditLogChangeCacheModel.oldValue;
+
+		if ((oldValue != null) && (oldValue.length() == 0)) {
+			crmContactAuditLogChangeCacheModel.oldValue = null;
+		}
+
+		crmContactAuditLogChangeCacheModel.newValue = getNewValue();
+
+		String newValue = crmContactAuditLogChangeCacheModel.newValue;
+
+		if ((newValue != null) && (newValue.length() == 0)) {
+			crmContactAuditLogChangeCacheModel.newValue = null;
+		}
+
 		return crmContactAuditLogChangeCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -553,6 +699,14 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", crmContactAuditLogId=");
+		sb.append(getCrmContactAuditLogId());
+		sb.append(", fieldName=");
+		sb.append(getFieldName());
+		sb.append(", oldValue=");
+		sb.append(getOldValue());
+		sb.append(", newValue=");
+		sb.append(getNewValue());
 		sb.append("}");
 
 		return sb.toString();
@@ -560,7 +714,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmContactAuditLogChange");
@@ -598,6 +752,22 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>crmContactAuditLogId</column-name><column-value><![CDATA[");
+		sb.append(getCrmContactAuditLogId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>fieldName</column-name><column-value><![CDATA[");
+		sb.append(getFieldName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>oldValue</column-name><column-value><![CDATA[");
+		sb.append(getOldValue());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>newValue</column-name><column-value><![CDATA[");
+		sb.append(getNewValue());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -622,6 +792,12 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _crmContactAuditLogId;
+	private long _originalCrmContactAuditLogId;
+	private boolean _setOriginalCrmContactAuditLogId;
+	private String _fieldName;
+	private String _oldValue;
+	private String _newValue;
 	private long _columnBitmask;
 	private CrmContactAuditLogChange _escapedModel;
 }

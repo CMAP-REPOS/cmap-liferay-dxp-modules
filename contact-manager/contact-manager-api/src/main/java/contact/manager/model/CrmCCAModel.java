@@ -210,6 +210,36 @@ public interface CrmCCAModel extends BaseModel<CrmCCA>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM CCA.
+	 *
+	 * @return the name of this CRM CCA
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM CCA.
+	 *
+	 * @param name the name of this CRM CCA
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the zip code of this CRM CCA.
+	 *
+	 * @return the zip code of this CRM CCA
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM CCA.
+	 *
+	 * @param zipCode the zip code of this CRM CCA
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

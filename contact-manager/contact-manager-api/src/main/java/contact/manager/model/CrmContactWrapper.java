@@ -61,12 +61,50 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("constantContactId", getConstantContactId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("prefix", getPrefix());
+		attributes.put("salutation", getSalutation());
+		attributes.put("firstName", getFirstName());
+		attributes.put("middleName", getMiddleName());
+		attributes.put("lastName", getLastName());
+		attributes.put("organization", getOrganization());
+		attributes.put("jobTitle", getJobTitle());
+		attributes.put("primaryAddress1", getPrimaryAddress1());
+		attributes.put("primaryAddress2", getPrimaryAddress2());
+		attributes.put("primaryAddressCity", getPrimaryAddressCity());
+		attributes.put("primaryAddressState", getPrimaryAddressState());
+		attributes.put("primaryAddressZip", getPrimaryAddressZip());
+		attributes.put("primaryAddressCounty", getPrimaryAddressCounty());
+		attributes.put("primaryAddressCountry", getPrimaryAddressCountry());
+		attributes.put("secondaryAddress1", getSecondaryAddress1());
+		attributes.put("secondaryAddress2", getSecondaryAddress2());
+		attributes.put("secondaryAddressCity", getSecondaryAddressCity());
+		attributes.put("secondaryAddressState", getSecondaryAddressState());
+		attributes.put("secondaryAddressZip", getSecondaryAddressZip());
+		attributes.put("secondaryAddressCounty", getSecondaryAddressCounty());
+		attributes.put("secondaryAddressCountry", getSecondaryAddressCountry());
+		attributes.put("primaryPhone", getPrimaryPhone());
+		attributes.put("primaryPhoneExtension", getPrimaryPhoneExtension());
+		attributes.put("primaryFax", getPrimaryFax());
+		attributes.put("primaryCell", getPrimaryCell());
+		attributes.put("primaryEmailAddress", getPrimaryEmailAddress());
+		attributes.put("alternateContact", getAlternateContact());
+		attributes.put("alternateEmail", getAlternateEmail());
+		attributes.put("isVip", getIsVip());
+		attributes.put("facebookId", getFacebookId());
+		attributes.put("twitterHandle", getTwitterHandle());
+		attributes.put("linkedInUrl", getLinkedInUrl());
+		attributes.put("status", getStatus());
+		attributes.put("kioskUuid", getKioskUuid());
+		attributes.put("imageFileEntryId", getImageFileEntryId());
+		attributes.put("tagsList", getTagsList());
+		attributes.put("groupsList", getGroupsList());
 
 		return attributes;
 	}
@@ -83,6 +121,12 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 
 		if (crmContactId != null) {
 			setCrmContactId(crmContactId);
+		}
+
+		Long constantContactId = (Long)attributes.get("constantContactId");
+
+		if (constantContactId != null) {
+			setConstantContactId(constantContactId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -120,6 +164,248 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+
+		String prefix = (String)attributes.get("prefix");
+
+		if (prefix != null) {
+			setPrefix(prefix);
+		}
+
+		String salutation = (String)attributes.get("salutation");
+
+		if (salutation != null) {
+			setSalutation(salutation);
+		}
+
+		String firstName = (String)attributes.get("firstName");
+
+		if (firstName != null) {
+			setFirstName(firstName);
+		}
+
+		String middleName = (String)attributes.get("middleName");
+
+		if (middleName != null) {
+			setMiddleName(middleName);
+		}
+
+		String lastName = (String)attributes.get("lastName");
+
+		if (lastName != null) {
+			setLastName(lastName);
+		}
+
+		String organization = (String)attributes.get("organization");
+
+		if (organization != null) {
+			setOrganization(organization);
+		}
+
+		String jobTitle = (String)attributes.get("jobTitle");
+
+		if (jobTitle != null) {
+			setJobTitle(jobTitle);
+		}
+
+		String primaryAddress1 = (String)attributes.get("primaryAddress1");
+
+		if (primaryAddress1 != null) {
+			setPrimaryAddress1(primaryAddress1);
+		}
+
+		String primaryAddress2 = (String)attributes.get("primaryAddress2");
+
+		if (primaryAddress2 != null) {
+			setPrimaryAddress2(primaryAddress2);
+		}
+
+		String primaryAddressCity = (String)attributes.get("primaryAddressCity");
+
+		if (primaryAddressCity != null) {
+			setPrimaryAddressCity(primaryAddressCity);
+		}
+
+		String primaryAddressState = (String)attributes.get(
+				"primaryAddressState");
+
+		if (primaryAddressState != null) {
+			setPrimaryAddressState(primaryAddressState);
+		}
+
+		String primaryAddressZip = (String)attributes.get("primaryAddressZip");
+
+		if (primaryAddressZip != null) {
+			setPrimaryAddressZip(primaryAddressZip);
+		}
+
+		String primaryAddressCounty = (String)attributes.get(
+				"primaryAddressCounty");
+
+		if (primaryAddressCounty != null) {
+			setPrimaryAddressCounty(primaryAddressCounty);
+		}
+
+		String primaryAddressCountry = (String)attributes.get(
+				"primaryAddressCountry");
+
+		if (primaryAddressCountry != null) {
+			setPrimaryAddressCountry(primaryAddressCountry);
+		}
+
+		String secondaryAddress1 = (String)attributes.get("secondaryAddress1");
+
+		if (secondaryAddress1 != null) {
+			setSecondaryAddress1(secondaryAddress1);
+		}
+
+		String secondaryAddress2 = (String)attributes.get("secondaryAddress2");
+
+		if (secondaryAddress2 != null) {
+			setSecondaryAddress2(secondaryAddress2);
+		}
+
+		String secondaryAddressCity = (String)attributes.get(
+				"secondaryAddressCity");
+
+		if (secondaryAddressCity != null) {
+			setSecondaryAddressCity(secondaryAddressCity);
+		}
+
+		String secondaryAddressState = (String)attributes.get(
+				"secondaryAddressState");
+
+		if (secondaryAddressState != null) {
+			setSecondaryAddressState(secondaryAddressState);
+		}
+
+		String secondaryAddressZip = (String)attributes.get(
+				"secondaryAddressZip");
+
+		if (secondaryAddressZip != null) {
+			setSecondaryAddressZip(secondaryAddressZip);
+		}
+
+		String secondaryAddressCounty = (String)attributes.get(
+				"secondaryAddressCounty");
+
+		if (secondaryAddressCounty != null) {
+			setSecondaryAddressCounty(secondaryAddressCounty);
+		}
+
+		String secondaryAddressCountry = (String)attributes.get(
+				"secondaryAddressCountry");
+
+		if (secondaryAddressCountry != null) {
+			setSecondaryAddressCountry(secondaryAddressCountry);
+		}
+
+		String primaryPhone = (String)attributes.get("primaryPhone");
+
+		if (primaryPhone != null) {
+			setPrimaryPhone(primaryPhone);
+		}
+
+		String primaryPhoneExtension = (String)attributes.get(
+				"primaryPhoneExtension");
+
+		if (primaryPhoneExtension != null) {
+			setPrimaryPhoneExtension(primaryPhoneExtension);
+		}
+
+		String primaryFax = (String)attributes.get("primaryFax");
+
+		if (primaryFax != null) {
+			setPrimaryFax(primaryFax);
+		}
+
+		String primaryCell = (String)attributes.get("primaryCell");
+
+		if (primaryCell != null) {
+			setPrimaryCell(primaryCell);
+		}
+
+		String primaryEmailAddress = (String)attributes.get(
+				"primaryEmailAddress");
+
+		if (primaryEmailAddress != null) {
+			setPrimaryEmailAddress(primaryEmailAddress);
+		}
+
+		String alternateContact = (String)attributes.get("alternateContact");
+
+		if (alternateContact != null) {
+			setAlternateContact(alternateContact);
+		}
+
+		String alternateEmail = (String)attributes.get("alternateEmail");
+
+		if (alternateEmail != null) {
+			setAlternateEmail(alternateEmail);
+		}
+
+		Boolean isVip = (Boolean)attributes.get("isVip");
+
+		if (isVip != null) {
+			setIsVip(isVip);
+		}
+
+		String facebookId = (String)attributes.get("facebookId");
+
+		if (facebookId != null) {
+			setFacebookId(facebookId);
+		}
+
+		String twitterHandle = (String)attributes.get("twitterHandle");
+
+		if (twitterHandle != null) {
+			setTwitterHandle(twitterHandle);
+		}
+
+		String linkedInUrl = (String)attributes.get("linkedInUrl");
+
+		if (linkedInUrl != null) {
+			setLinkedInUrl(linkedInUrl);
+		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
+
+		String kioskUuid = (String)attributes.get("kioskUuid");
+
+		if (kioskUuid != null) {
+			setKioskUuid(kioskUuid);
+		}
+
+		Long imageFileEntryId = (Long)attributes.get("imageFileEntryId");
+
+		if (imageFileEntryId != null) {
+			setImageFileEntryId(imageFileEntryId);
+		}
+
+		String tagsList = (String)attributes.get("tagsList");
+
+		if (tagsList != null) {
+			setTagsList(tagsList);
+		}
+
+		String groupsList = (String)attributes.get("groupsList");
+
+		if (groupsList != null) {
+			setGroupsList(groupsList);
+		}
+	}
+
+	/**
+	* Returns the is vip of this CRM Contact.
+	*
+	* @return the is vip of this CRM Contact
+	*/
+	@Override
+	public boolean getIsVip() {
+		return _crmContact.getIsVip();
 	}
 
 	@Override
@@ -130,6 +416,16 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public boolean isEscapedModel() {
 		return _crmContact.isEscapedModel();
+	}
+
+	/**
+	* Returns <code>true</code> if this CRM Contact is is vip.
+	*
+	* @return <code>true</code> if this CRM Contact is is vip; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isIsVip() {
+		return _crmContact.isIsVip();
 	}
 
 	@Override
@@ -175,6 +471,356 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public java.lang.Object clone() {
 		return new CrmContactWrapper((CrmContact)_crmContact.clone());
+	}
+
+	/**
+	* Returns the alternate contact of this CRM Contact.
+	*
+	* @return the alternate contact of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getAlternateContact() {
+		return _crmContact.getAlternateContact();
+	}
+
+	/**
+	* Returns the alternate email of this CRM Contact.
+	*
+	* @return the alternate email of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getAlternateEmail() {
+		return _crmContact.getAlternateEmail();
+	}
+
+	/**
+	* Returns the facebook ID of this CRM Contact.
+	*
+	* @return the facebook ID of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getFacebookId() {
+		return _crmContact.getFacebookId();
+	}
+
+	/**
+	* Returns the first name of this CRM Contact.
+	*
+	* @return the first name of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getFirstName() {
+		return _crmContact.getFirstName();
+	}
+
+	/**
+	* Returns the groups list of this CRM Contact.
+	*
+	* @return the groups list of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getGroupsList() {
+		return _crmContact.getGroupsList();
+	}
+
+	/**
+	* Returns the job title of this CRM Contact.
+	*
+	* @return the job title of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getJobTitle() {
+		return _crmContact.getJobTitle();
+	}
+
+	/**
+	* Returns the kiosk uuid of this CRM Contact.
+	*
+	* @return the kiosk uuid of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getKioskUuid() {
+		return _crmContact.getKioskUuid();
+	}
+
+	/**
+	* Returns the last name of this CRM Contact.
+	*
+	* @return the last name of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getLastName() {
+		return _crmContact.getLastName();
+	}
+
+	/**
+	* Returns the linked in url of this CRM Contact.
+	*
+	* @return the linked in url of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getLinkedInUrl() {
+		return _crmContact.getLinkedInUrl();
+	}
+
+	/**
+	* Returns the middle name of this CRM Contact.
+	*
+	* @return the middle name of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getMiddleName() {
+		return _crmContact.getMiddleName();
+	}
+
+	/**
+	* Returns the organization of this CRM Contact.
+	*
+	* @return the organization of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getOrganization() {
+		return _crmContact.getOrganization();
+	}
+
+	/**
+	* Returns the prefix of this CRM Contact.
+	*
+	* @return the prefix of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrefix() {
+		return _crmContact.getPrefix();
+	}
+
+	/**
+	* Returns the primary address1 of this CRM Contact.
+	*
+	* @return the primary address1 of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddress1() {
+		return _crmContact.getPrimaryAddress1();
+	}
+
+	/**
+	* Returns the primary address2 of this CRM Contact.
+	*
+	* @return the primary address2 of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddress2() {
+		return _crmContact.getPrimaryAddress2();
+	}
+
+	/**
+	* Returns the primary address city of this CRM Contact.
+	*
+	* @return the primary address city of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddressCity() {
+		return _crmContact.getPrimaryAddressCity();
+	}
+
+	/**
+	* Returns the primary address country of this CRM Contact.
+	*
+	* @return the primary address country of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddressCountry() {
+		return _crmContact.getPrimaryAddressCountry();
+	}
+
+	/**
+	* Returns the primary address county of this CRM Contact.
+	*
+	* @return the primary address county of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddressCounty() {
+		return _crmContact.getPrimaryAddressCounty();
+	}
+
+	/**
+	* Returns the primary address state of this CRM Contact.
+	*
+	* @return the primary address state of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddressState() {
+		return _crmContact.getPrimaryAddressState();
+	}
+
+	/**
+	* Returns the primary address zip of this CRM Contact.
+	*
+	* @return the primary address zip of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryAddressZip() {
+		return _crmContact.getPrimaryAddressZip();
+	}
+
+	/**
+	* Returns the primary cell of this CRM Contact.
+	*
+	* @return the primary cell of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryCell() {
+		return _crmContact.getPrimaryCell();
+	}
+
+	/**
+	* Returns the primary email address of this CRM Contact.
+	*
+	* @return the primary email address of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryEmailAddress() {
+		return _crmContact.getPrimaryEmailAddress();
+	}
+
+	/**
+	* Returns the primary fax of this CRM Contact.
+	*
+	* @return the primary fax of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryFax() {
+		return _crmContact.getPrimaryFax();
+	}
+
+	/**
+	* Returns the primary phone of this CRM Contact.
+	*
+	* @return the primary phone of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryPhone() {
+		return _crmContact.getPrimaryPhone();
+	}
+
+	/**
+	* Returns the primary phone extension of this CRM Contact.
+	*
+	* @return the primary phone extension of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getPrimaryPhoneExtension() {
+		return _crmContact.getPrimaryPhoneExtension();
+	}
+
+	/**
+	* Returns the salutation of this CRM Contact.
+	*
+	* @return the salutation of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSalutation() {
+		return _crmContact.getSalutation();
+	}
+
+	/**
+	* Returns the secondary address1 of this CRM Contact.
+	*
+	* @return the secondary address1 of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddress1() {
+		return _crmContact.getSecondaryAddress1();
+	}
+
+	/**
+	* Returns the secondary address2 of this CRM Contact.
+	*
+	* @return the secondary address2 of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddress2() {
+		return _crmContact.getSecondaryAddress2();
+	}
+
+	/**
+	* Returns the secondary address city of this CRM Contact.
+	*
+	* @return the secondary address city of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddressCity() {
+		return _crmContact.getSecondaryAddressCity();
+	}
+
+	/**
+	* Returns the secondary address country of this CRM Contact.
+	*
+	* @return the secondary address country of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddressCountry() {
+		return _crmContact.getSecondaryAddressCountry();
+	}
+
+	/**
+	* Returns the secondary address county of this CRM Contact.
+	*
+	* @return the secondary address county of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddressCounty() {
+		return _crmContact.getSecondaryAddressCounty();
+	}
+
+	/**
+	* Returns the secondary address state of this CRM Contact.
+	*
+	* @return the secondary address state of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddressState() {
+		return _crmContact.getSecondaryAddressState();
+	}
+
+	/**
+	* Returns the secondary address zip of this CRM Contact.
+	*
+	* @return the secondary address zip of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getSecondaryAddressZip() {
+		return _crmContact.getSecondaryAddressZip();
+	}
+
+	/**
+	* Returns the status of this CRM Contact.
+	*
+	* @return the status of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getStatus() {
+		return _crmContact.getStatus();
+	}
+
+	/**
+	* Returns the tags list of this CRM Contact.
+	*
+	* @return the tags list of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getTagsList() {
+		return _crmContact.getTagsList();
+	}
+
+	/**
+	* Returns the twitter handle of this CRM Contact.
+	*
+	* @return the twitter handle of this CRM Contact
+	*/
+	@Override
+	public java.lang.String getTwitterHandle() {
+		return _crmContact.getTwitterHandle();
 	}
 
 	/**
@@ -248,6 +894,16 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	}
 
 	/**
+	* Returns the constant contact ID of this CRM Contact.
+	*
+	* @return the constant contact ID of this CRM Contact
+	*/
+	@Override
+	public long getConstantContactId() {
+		return _crmContact.getConstantContactId();
+	}
+
+	/**
 	* Returns the crm contact ID of this CRM Contact.
 	*
 	* @return the crm contact ID of this CRM Contact
@@ -265,6 +921,16 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public long getGroupId() {
 		return _crmContact.getGroupId();
+	}
+
+	/**
+	* Returns the image file entry ID of this CRM Contact.
+	*
+	* @return the image file entry ID of this CRM Contact
+	*/
+	@Override
+	public long getImageFileEntryId() {
+		return _crmContact.getImageFileEntryId();
 	}
 
 	/**
@@ -292,6 +958,26 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 		_crmContact.persist();
 	}
 
+	/**
+	* Sets the alternate contact of this CRM Contact.
+	*
+	* @param alternateContact the alternate contact of this CRM Contact
+	*/
+	@Override
+	public void setAlternateContact(java.lang.String alternateContact) {
+		_crmContact.setAlternateContact(alternateContact);
+	}
+
+	/**
+	* Sets the alternate email of this CRM Contact.
+	*
+	* @param alternateEmail the alternate email of this CRM Contact
+	*/
+	@Override
+	public void setAlternateEmail(java.lang.String alternateEmail) {
+		_crmContact.setAlternateEmail(alternateEmail);
+	}
+
 	@Override
 	public void setCachedModel(boolean cachedModel) {
 		_crmContact.setCachedModel(cachedModel);
@@ -305,6 +991,16 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmContact.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the constant contact ID of this CRM Contact.
+	*
+	* @param constantContactId the constant contact ID of this CRM Contact
+	*/
+	@Override
+	public void setConstantContactId(long constantContactId) {
+		_crmContact.setConstantContactId(constantContactId);
 	}
 
 	/**
@@ -344,6 +1040,26 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	}
 
 	/**
+	* Sets the facebook ID of this CRM Contact.
+	*
+	* @param facebookId the facebook ID of this CRM Contact
+	*/
+	@Override
+	public void setFacebookId(java.lang.String facebookId) {
+		_crmContact.setFacebookId(facebookId);
+	}
+
+	/**
+	* Sets the first name of this CRM Contact.
+	*
+	* @param firstName the first name of this CRM Contact
+	*/
+	@Override
+	public void setFirstName(java.lang.String firstName) {
+		_crmContact.setFirstName(firstName);
+	}
+
+	/**
 	* Sets the group ID of this CRM Contact.
 	*
 	* @param groupId the group ID of this CRM Contact
@@ -351,6 +1067,86 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public void setGroupId(long groupId) {
 		_crmContact.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the groups list of this CRM Contact.
+	*
+	* @param groupsList the groups list of this CRM Contact
+	*/
+	@Override
+	public void setGroupsList(java.lang.String groupsList) {
+		_crmContact.setGroupsList(groupsList);
+	}
+
+	/**
+	* Sets the image file entry ID of this CRM Contact.
+	*
+	* @param imageFileEntryId the image file entry ID of this CRM Contact
+	*/
+	@Override
+	public void setImageFileEntryId(long imageFileEntryId) {
+		_crmContact.setImageFileEntryId(imageFileEntryId);
+	}
+
+	/**
+	* Sets whether this CRM Contact is is vip.
+	*
+	* @param isVip the is vip of this CRM Contact
+	*/
+	@Override
+	public void setIsVip(boolean isVip) {
+		_crmContact.setIsVip(isVip);
+	}
+
+	/**
+	* Sets the job title of this CRM Contact.
+	*
+	* @param jobTitle the job title of this CRM Contact
+	*/
+	@Override
+	public void setJobTitle(java.lang.String jobTitle) {
+		_crmContact.setJobTitle(jobTitle);
+	}
+
+	/**
+	* Sets the kiosk uuid of this CRM Contact.
+	*
+	* @param kioskUuid the kiosk uuid of this CRM Contact
+	*/
+	@Override
+	public void setKioskUuid(java.lang.String kioskUuid) {
+		_crmContact.setKioskUuid(kioskUuid);
+	}
+
+	/**
+	* Sets the last name of this CRM Contact.
+	*
+	* @param lastName the last name of this CRM Contact
+	*/
+	@Override
+	public void setLastName(java.lang.String lastName) {
+		_crmContact.setLastName(lastName);
+	}
+
+	/**
+	* Sets the linked in url of this CRM Contact.
+	*
+	* @param linkedInUrl the linked in url of this CRM Contact
+	*/
+	@Override
+	public void setLinkedInUrl(java.lang.String linkedInUrl) {
+		_crmContact.setLinkedInUrl(linkedInUrl);
+	}
+
+	/**
+	* Sets the middle name of this CRM Contact.
+	*
+	* @param middleName the middle name of this CRM Contact
+	*/
+	@Override
+	public void setMiddleName(java.lang.String middleName) {
+		_crmContact.setMiddleName(middleName);
 	}
 
 	/**
@@ -369,6 +1165,126 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	}
 
 	/**
+	* Sets the organization of this CRM Contact.
+	*
+	* @param organization the organization of this CRM Contact
+	*/
+	@Override
+	public void setOrganization(java.lang.String organization) {
+		_crmContact.setOrganization(organization);
+	}
+
+	/**
+	* Sets the prefix of this CRM Contact.
+	*
+	* @param prefix the prefix of this CRM Contact
+	*/
+	@Override
+	public void setPrefix(java.lang.String prefix) {
+		_crmContact.setPrefix(prefix);
+	}
+
+	/**
+	* Sets the primary address1 of this CRM Contact.
+	*
+	* @param primaryAddress1 the primary address1 of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddress1(java.lang.String primaryAddress1) {
+		_crmContact.setPrimaryAddress1(primaryAddress1);
+	}
+
+	/**
+	* Sets the primary address2 of this CRM Contact.
+	*
+	* @param primaryAddress2 the primary address2 of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddress2(java.lang.String primaryAddress2) {
+		_crmContact.setPrimaryAddress2(primaryAddress2);
+	}
+
+	/**
+	* Sets the primary address city of this CRM Contact.
+	*
+	* @param primaryAddressCity the primary address city of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddressCity(java.lang.String primaryAddressCity) {
+		_crmContact.setPrimaryAddressCity(primaryAddressCity);
+	}
+
+	/**
+	* Sets the primary address country of this CRM Contact.
+	*
+	* @param primaryAddressCountry the primary address country of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddressCountry(java.lang.String primaryAddressCountry) {
+		_crmContact.setPrimaryAddressCountry(primaryAddressCountry);
+	}
+
+	/**
+	* Sets the primary address county of this CRM Contact.
+	*
+	* @param primaryAddressCounty the primary address county of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddressCounty(java.lang.String primaryAddressCounty) {
+		_crmContact.setPrimaryAddressCounty(primaryAddressCounty);
+	}
+
+	/**
+	* Sets the primary address state of this CRM Contact.
+	*
+	* @param primaryAddressState the primary address state of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddressState(java.lang.String primaryAddressState) {
+		_crmContact.setPrimaryAddressState(primaryAddressState);
+	}
+
+	/**
+	* Sets the primary address zip of this CRM Contact.
+	*
+	* @param primaryAddressZip the primary address zip of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryAddressZip(java.lang.String primaryAddressZip) {
+		_crmContact.setPrimaryAddressZip(primaryAddressZip);
+	}
+
+	/**
+	* Sets the primary cell of this CRM Contact.
+	*
+	* @param primaryCell the primary cell of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryCell(java.lang.String primaryCell) {
+		_crmContact.setPrimaryCell(primaryCell);
+	}
+
+	/**
+	* Sets the primary email address of this CRM Contact.
+	*
+	* @param primaryEmailAddress the primary email address of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryEmailAddress(java.lang.String primaryEmailAddress) {
+		_crmContact.setPrimaryEmailAddress(primaryEmailAddress);
+	}
+
+	/**
+	* Sets the primary fax of this CRM Contact.
+	*
+	* @param primaryFax the primary fax of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryFax(java.lang.String primaryFax) {
+		_crmContact.setPrimaryFax(primaryFax);
+	}
+
+	/**
 	* Sets the primary key of this CRM Contact.
 	*
 	* @param primaryKey the primary key of this CRM Contact
@@ -381,6 +1297,138 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
 		_crmContact.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the primary phone of this CRM Contact.
+	*
+	* @param primaryPhone the primary phone of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryPhone(java.lang.String primaryPhone) {
+		_crmContact.setPrimaryPhone(primaryPhone);
+	}
+
+	/**
+	* Sets the primary phone extension of this CRM Contact.
+	*
+	* @param primaryPhoneExtension the primary phone extension of this CRM Contact
+	*/
+	@Override
+	public void setPrimaryPhoneExtension(java.lang.String primaryPhoneExtension) {
+		_crmContact.setPrimaryPhoneExtension(primaryPhoneExtension);
+	}
+
+	/**
+	* Sets the salutation of this CRM Contact.
+	*
+	* @param salutation the salutation of this CRM Contact
+	*/
+	@Override
+	public void setSalutation(java.lang.String salutation) {
+		_crmContact.setSalutation(salutation);
+	}
+
+	/**
+	* Sets the secondary address1 of this CRM Contact.
+	*
+	* @param secondaryAddress1 the secondary address1 of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddress1(java.lang.String secondaryAddress1) {
+		_crmContact.setSecondaryAddress1(secondaryAddress1);
+	}
+
+	/**
+	* Sets the secondary address2 of this CRM Contact.
+	*
+	* @param secondaryAddress2 the secondary address2 of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddress2(java.lang.String secondaryAddress2) {
+		_crmContact.setSecondaryAddress2(secondaryAddress2);
+	}
+
+	/**
+	* Sets the secondary address city of this CRM Contact.
+	*
+	* @param secondaryAddressCity the secondary address city of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddressCity(java.lang.String secondaryAddressCity) {
+		_crmContact.setSecondaryAddressCity(secondaryAddressCity);
+	}
+
+	/**
+	* Sets the secondary address country of this CRM Contact.
+	*
+	* @param secondaryAddressCountry the secondary address country of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddressCountry(
+		java.lang.String secondaryAddressCountry) {
+		_crmContact.setSecondaryAddressCountry(secondaryAddressCountry);
+	}
+
+	/**
+	* Sets the secondary address county of this CRM Contact.
+	*
+	* @param secondaryAddressCounty the secondary address county of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddressCounty(
+		java.lang.String secondaryAddressCounty) {
+		_crmContact.setSecondaryAddressCounty(secondaryAddressCounty);
+	}
+
+	/**
+	* Sets the secondary address state of this CRM Contact.
+	*
+	* @param secondaryAddressState the secondary address state of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddressState(java.lang.String secondaryAddressState) {
+		_crmContact.setSecondaryAddressState(secondaryAddressState);
+	}
+
+	/**
+	* Sets the secondary address zip of this CRM Contact.
+	*
+	* @param secondaryAddressZip the secondary address zip of this CRM Contact
+	*/
+	@Override
+	public void setSecondaryAddressZip(java.lang.String secondaryAddressZip) {
+		_crmContact.setSecondaryAddressZip(secondaryAddressZip);
+	}
+
+	/**
+	* Sets the status of this CRM Contact.
+	*
+	* @param status the status of this CRM Contact
+	*/
+	@Override
+	public void setStatus(java.lang.String status) {
+		_crmContact.setStatus(status);
+	}
+
+	/**
+	* Sets the tags list of this CRM Contact.
+	*
+	* @param tagsList the tags list of this CRM Contact
+	*/
+	@Override
+	public void setTagsList(java.lang.String tagsList) {
+		_crmContact.setTagsList(tagsList);
+	}
+
+	/**
+	* Sets the twitter handle of this CRM Contact.
+	*
+	* @param twitterHandle the twitter handle of this CRM Contact
+	*/
+	@Override
+	public void setTwitterHandle(java.lang.String twitterHandle) {
+		_crmContact.setTwitterHandle(twitterHandle);
 	}
 
 	/**

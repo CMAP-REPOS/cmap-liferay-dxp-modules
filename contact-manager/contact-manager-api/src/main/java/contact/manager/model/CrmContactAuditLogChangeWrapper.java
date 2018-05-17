@@ -70,6 +70,10 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactAuditLogId", getCrmContactAuditLogId());
+		attributes.put("fieldName", getFieldName());
+		attributes.put("oldValue", getOldValue());
+		attributes.put("newValue", getNewValue());
 
 		return attributes;
 	}
@@ -123,6 +127,30 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactAuditLogId = (Long)attributes.get("crmContactAuditLogId");
+
+		if (crmContactAuditLogId != null) {
+			setCrmContactAuditLogId(crmContactAuditLogId);
+		}
+
+		String fieldName = (String)attributes.get("fieldName");
+
+		if (fieldName != null) {
+			setFieldName(fieldName);
+		}
+
+		String oldValue = (String)attributes.get("oldValue");
+
+		if (oldValue != null) {
+			setOldValue(oldValue);
+		}
+
+		String newValue = (String)attributes.get("newValue");
+
+		if (newValue != null) {
+			setNewValue(newValue);
 		}
 	}
 
@@ -180,6 +208,36 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	@Override
 	public java.lang.Object clone() {
 		return new CrmContactAuditLogChangeWrapper((CrmContactAuditLogChange)_crmContactAuditLogChange.clone());
+	}
+
+	/**
+	* Returns the field name of this CRM Contact Audit Log Change.
+	*
+	* @return the field name of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public java.lang.String getFieldName() {
+		return _crmContactAuditLogChange.getFieldName();
+	}
+
+	/**
+	* Returns the new value of this CRM Contact Audit Log Change.
+	*
+	* @return the new value of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public java.lang.String getNewValue() {
+		return _crmContactAuditLogChange.getNewValue();
+	}
+
+	/**
+	* Returns the old value of this CRM Contact Audit Log Change.
+	*
+	* @return the old value of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public java.lang.String getOldValue() {
+		return _crmContactAuditLogChange.getOldValue();
 	}
 
 	/**
@@ -263,6 +321,16 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
+	* Returns the crm contact audit log ID of this CRM Contact Audit Log Change.
+	*
+	* @return the crm contact audit log ID of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public long getCrmContactAuditLogId() {
+		return _crmContactAuditLogChange.getCrmContactAuditLogId();
+	}
+
+	/**
 	* Returns the group ID of this CRM Contact Audit Log Change.
 	*
 	* @return the group ID of this CRM Contact Audit Log Change
@@ -332,6 +400,16 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 		_crmContactAuditLogChange.setCrmContactAuditLogChangeId(crmContactAuditLogChangeId);
 	}
 
+	/**
+	* Sets the crm contact audit log ID of this CRM Contact Audit Log Change.
+	*
+	* @param crmContactAuditLogId the crm contact audit log ID of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public void setCrmContactAuditLogId(long crmContactAuditLogId) {
+		_crmContactAuditLogChange.setCrmContactAuditLogId(crmContactAuditLogId);
+	}
+
 	@Override
 	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
 		_crmContactAuditLogChange.setExpandoBridgeAttributes(expandoBridge);
@@ -346,6 +424,16 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
 		_crmContactAuditLogChange.setExpandoBridgeAttributes(serviceContext);
+	}
+
+	/**
+	* Sets the field name of this CRM Contact Audit Log Change.
+	*
+	* @param fieldName the field name of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public void setFieldName(java.lang.String fieldName) {
+		_crmContactAuditLogChange.setFieldName(fieldName);
 	}
 
 	/**
@@ -371,6 +459,26 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	@Override
 	public void setNew(boolean n) {
 		_crmContactAuditLogChange.setNew(n);
+	}
+
+	/**
+	* Sets the new value of this CRM Contact Audit Log Change.
+	*
+	* @param newValue the new value of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public void setNewValue(java.lang.String newValue) {
+		_crmContactAuditLogChange.setNewValue(newValue);
+	}
+
+	/**
+	* Sets the old value of this CRM Contact Audit Log Change.
+	*
+	* @param oldValue the old value of this CRM Contact Audit Log Change
+	*/
+	@Override
+	public void setOldValue(java.lang.String oldValue) {
+		_crmContactAuditLogChange.setOldValue(oldValue);
 	}
 
 	/**

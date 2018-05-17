@@ -210,6 +210,79 @@ public interface CrmOutreachLogModel extends BaseModel<CrmOutreachLog>,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the crm contact ID of this CRM Outreach Log.
+	 *
+	 * @return the crm contact ID of this CRM Outreach Log
+	 */
+	public long getCrmContactId();
+
+	/**
+	 * Sets the crm contact ID of this CRM Outreach Log.
+	 *
+	 * @param crmContactId the crm contact ID of this CRM Outreach Log
+	 */
+	public void setCrmContactId(long crmContactId);
+
+	/**
+	 * Returns the note of this CRM Outreach Log.
+	 *
+	 * @return the note of this CRM Outreach Log
+	 */
+	@AutoEscape
+	public String getNote();
+
+	/**
+	 * Sets the note of this CRM Outreach Log.
+	 *
+	 * @param note the note of this CRM Outreach Log
+	 */
+	public void setNote(String note);
+
+	/**
+	 * Returns the medium of this CRM Outreach Log.
+	 *
+	 * @return the medium of this CRM Outreach Log
+	 */
+	@AutoEscape
+	public String getMedium();
+
+	/**
+	 * Sets the medium of this CRM Outreach Log.
+	 *
+	 * @param medium the medium of this CRM Outreach Log
+	 */
+	public void setMedium(String medium);
+
+	/**
+	 * Returns the activity type of this CRM Outreach Log.
+	 *
+	 * @return the activity type of this CRM Outreach Log
+	 */
+	@AutoEscape
+	public String getActivityType();
+
+	/**
+	 * Sets the activity type of this CRM Outreach Log.
+	 *
+	 * @param activityType the activity type of this CRM Outreach Log
+	 */
+	public void setActivityType(String activityType);
+
+	/**
+	 * Returns the outreach date of this CRM Outreach Log.
+	 *
+	 * @return the outreach date of this CRM Outreach Log
+	 */
+	public Date getOutreachDate();
+
+	/**
+	 * Sets the outreach date of this CRM Outreach Log.
+	 *
+	 * @param outreachDate the outreach date of this CRM Outreach Log
+	 */
+	public void setOutreachDate(Date outreachDate);
+
 	@Override
 	public boolean isNew();
 

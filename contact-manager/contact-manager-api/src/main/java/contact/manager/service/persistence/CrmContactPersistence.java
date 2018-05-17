@@ -370,6 +370,607 @@ public interface CrmContactPersistence extends BasePersistence<CrmContact> {
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns all the CRM Contacts where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @return the matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddress(
+		java.lang.String primaryEmailAddress);
+
+	/**
+	* Returns a range of all the CRM Contacts where primaryEmailAddress = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddress(
+		java.lang.String primaryEmailAddress, int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where primaryEmailAddress = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddress(
+		java.lang.String primaryEmailAddress, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where primaryEmailAddress = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddress(
+		java.lang.String primaryEmailAddress, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Contact in the ordered set where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByPrimaryEmailAddress_First(
+		java.lang.String primaryEmailAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the first CRM Contact in the ordered set where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByPrimaryEmailAddress_First(
+		java.lang.String primaryEmailAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the last CRM Contact in the ordered set where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByPrimaryEmailAddress_Last(
+		java.lang.String primaryEmailAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the last CRM Contact in the ordered set where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByPrimaryEmailAddress_Last(
+		java.lang.String primaryEmailAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the CRM Contacts before and after the current CRM Contact in the ordered set where primaryEmailAddress = &#63;.
+	*
+	* @param crmContactId the primary key of the current CRM Contact
+	* @param primaryEmailAddress the primary email address
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Contact
+	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	*/
+	public CrmContact[] findByPrimaryEmailAddress_PrevAndNext(
+		long crmContactId, java.lang.String primaryEmailAddress,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Removes all the CRM Contacts where primaryEmailAddress = &#63; from the database.
+	*
+	* @param primaryEmailAddress the primary email address
+	*/
+	public void removeByPrimaryEmailAddress(
+		java.lang.String primaryEmailAddress);
+
+	/**
+	* Returns the number of CRM Contacts where primaryEmailAddress = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByPrimaryEmailAddress(java.lang.String primaryEmailAddress);
+
+	/**
+	* Returns all the CRM Contacts where status = &#63;.
+	*
+	* @param status the status
+	* @return the matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByStatus(java.lang.String status);
+
+	/**
+	* Returns a range of all the CRM Contacts where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByStatus(java.lang.String status,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByStatus(java.lang.String status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByStatus(java.lang.String status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Contact in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByStatus_First(java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the first CRM Contact in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByStatus_First(java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the last CRM Contact in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByStatus_Last(java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the last CRM Contact in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByStatus_Last(java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the CRM Contacts before and after the current CRM Contact in the ordered set where status = &#63;.
+	*
+	* @param crmContactId the primary key of the current CRM Contact
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Contact
+	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	*/
+	public CrmContact[] findByStatus_PrevAndNext(long crmContactId,
+		java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Removes all the CRM Contacts where status = &#63; from the database.
+	*
+	* @param status the status
+	*/
+	public void removeByStatus(java.lang.String status);
+
+	/**
+	* Returns the number of CRM Contacts where status = &#63;.
+	*
+	* @param status the status
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByStatus(java.lang.String status);
+
+	/**
+	* Returns all the CRM Contacts where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @return the matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status);
+
+	/**
+	* Returns a range of all the CRM Contacts where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Contact in the ordered set where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByPrimaryEmailAddressAndStatus_First(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the first CRM Contact in the ordered set where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByPrimaryEmailAddressAndStatus_First(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the last CRM Contact in the ordered set where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByPrimaryEmailAddressAndStatus_Last(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the last CRM Contact in the ordered set where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByPrimaryEmailAddressAndStatus_Last(
+		java.lang.String primaryEmailAddress, java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the CRM Contacts before and after the current CRM Contact in the ordered set where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param crmContactId the primary key of the current CRM Contact
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Contact
+	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	*/
+	public CrmContact[] findByPrimaryEmailAddressAndStatus_PrevAndNext(
+		long crmContactId, java.lang.String primaryEmailAddress,
+		java.lang.String status,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Removes all the CRM Contacts where primaryEmailAddress = &#63; and status = &#63; from the database.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	*/
+	public void removeByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status);
+
+	/**
+	* Returns the number of CRM Contacts where primaryEmailAddress = &#63; and status = &#63;.
+	*
+	* @param primaryEmailAddress the primary email address
+	* @param status the status
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByPrimaryEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status);
+
+	/**
+	* Returns the CRM Contact where constantContactId = &#63; or throws a {@link NoSuchCrmContactException} if it could not be found.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByConstantContactId(long constantContactId)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the CRM Contact where constantContactId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByConstantContactId(long constantContactId);
+
+	/**
+	* Returns the CRM Contact where constantContactId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param constantContactId the constant contact ID
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByConstantContactId(long constantContactId,
+		boolean retrieveFromCache);
+
+	/**
+	* Removes the CRM Contact where constantContactId = &#63; from the database.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the CRM Contact that was removed
+	*/
+	public CrmContact removeByConstantContactId(long constantContactId)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the number of CRM Contacts where constantContactId = &#63;.
+	*
+	* @param constantContactId the constant contact ID
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByConstantContactId(long constantContactId);
+
+	/**
+	* Returns all the CRM Contacts where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @return the matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByVipFlag(boolean isVip);
+
+	/**
+	* Returns a range of all the CRM Contacts where isVip = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param isVip the is vip
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByVipFlag(boolean isVip, int start,
+		int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where isVip = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param isVip the is vip
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByVipFlag(boolean isVip, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where isVip = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param isVip the is vip
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByVipFlag(boolean isVip, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Contact in the ordered set where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByVipFlag_First(boolean isVip,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the first CRM Contact in the ordered set where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByVipFlag_First(boolean isVip,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the last CRM Contact in the ordered set where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByVipFlag_Last(boolean isVip,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the last CRM Contact in the ordered set where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByVipFlag_Last(boolean isVip,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the CRM Contacts before and after the current CRM Contact in the ordered set where isVip = &#63;.
+	*
+	* @param crmContactId the primary key of the current CRM Contact
+	* @param isVip the is vip
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Contact
+	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	*/
+	public CrmContact[] findByVipFlag_PrevAndNext(long crmContactId,
+		boolean isVip,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Removes all the CRM Contacts where isVip = &#63; from the database.
+	*
+	* @param isVip the is vip
+	*/
+	public void removeByVipFlag(boolean isVip);
+
+	/**
+	* Returns the number of CRM Contacts where isVip = &#63;.
+	*
+	* @param isVip the is vip
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByVipFlag(boolean isVip);
+
+	/**
 	* Caches the CRM Contact in the entity cache if it is enabled.
 	*
 	* @param crmContact the CRM Contact
@@ -488,6 +1089,332 @@ public interface CrmContactPersistence extends BasePersistence<CrmContact> {
 	* @return the number of CRM Contacts
 	*/
 	public int countAll();
+
+	/**
+	* Returns the primaryKeys of CRM Groups associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return long[] of the primaryKeys of CRM Groups associated with the CRM Contact
+	*/
+	public long[] getCrmGroupPrimaryKeys(long pk);
+
+	/**
+	* Returns all the CRM Groups associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return the CRM Groups associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(long pk);
+
+	/**
+	* Returns a range of all the CRM Groups associated with the CRM Contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of CRM Groups associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
+		long pk, int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Groups associated with the CRM Contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of CRM Groups associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator);
+
+	/**
+	* Returns the number of CRM Groups associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return the number of CRM Groups associated with the CRM Contact
+	*/
+	public int getCrmGroupsSize(long pk);
+
+	/**
+	* Returns <code>true</code> if the CRM Group is associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPK the primary key of the CRM Group
+	* @return <code>true</code> if the CRM Group is associated with the CRM Contact; <code>false</code> otherwise
+	*/
+	public boolean containsCrmGroup(long pk, long crmGroupPK);
+
+	/**
+	* Returns <code>true</code> if the CRM Contact has any CRM Groups associated with it.
+	*
+	* @param pk the primary key of the CRM Contact to check for associations with CRM Groups
+	* @return <code>true</code> if the CRM Contact has any CRM Groups associated with it; <code>false</code> otherwise
+	*/
+	public boolean containsCrmGroups(long pk);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPK the primary key of the CRM Group
+	*/
+	public void addCrmGroup(long pk, long crmGroupPK);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroup the CRM Group
+	*/
+	public void addCrmGroup(long pk, contact.manager.model.CrmGroup crmGroup);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPKs the primary keys of the CRM Groups
+	*/
+	public void addCrmGroups(long pk, long[] crmGroupPKs);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroups the CRM Groups
+	*/
+	public void addCrmGroups(long pk,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups);
+
+	/**
+	* Clears all associations between the CRM Contact and its CRM Groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact to clear the associated CRM Groups from
+	*/
+	public void clearCrmGroups(long pk);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPK the primary key of the CRM Group
+	*/
+	public void removeCrmGroup(long pk, long crmGroupPK);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Group. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroup the CRM Group
+	*/
+	public void removeCrmGroup(long pk, contact.manager.model.CrmGroup crmGroup);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPKs the primary keys of the CRM Groups
+	*/
+	public void removeCrmGroups(long pk, long[] crmGroupPKs);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Groups. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroups the CRM Groups
+	*/
+	public void removeCrmGroups(long pk,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups);
+
+	/**
+	* Sets the CRM Groups associated with the CRM Contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroupPKs the primary keys of the CRM Groups to be associated with the CRM Contact
+	*/
+	public void setCrmGroups(long pk, long[] crmGroupPKs);
+
+	/**
+	* Sets the CRM Groups associated with the CRM Contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmGroups the CRM Groups to be associated with the CRM Contact
+	*/
+	public void setCrmGroups(long pk,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups);
+
+	/**
+	* Returns the primaryKeys of CRM Tags associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return long[] of the primaryKeys of CRM Tags associated with the CRM Contact
+	*/
+	public long[] getCrmTagPrimaryKeys(long pk);
+
+	/**
+	* Returns all the CRM Tags associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return the CRM Tags associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmTag> getCrmTags(long pk);
+
+	/**
+	* Returns a range of all the CRM Tags associated with the CRM Contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of CRM Tags associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmTag> getCrmTags(long pk,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Tags associated with the CRM Contact.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of CRM Tags associated with the CRM Contact
+	*/
+	public java.util.List<contact.manager.model.CrmTag> getCrmTags(long pk,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmTag> orderByComparator);
+
+	/**
+	* Returns the number of CRM Tags associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @return the number of CRM Tags associated with the CRM Contact
+	*/
+	public int getCrmTagsSize(long pk);
+
+	/**
+	* Returns <code>true</code> if the CRM Tag is associated with the CRM Contact.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPK the primary key of the CRM Tag
+	* @return <code>true</code> if the CRM Tag is associated with the CRM Contact; <code>false</code> otherwise
+	*/
+	public boolean containsCrmTag(long pk, long crmTagPK);
+
+	/**
+	* Returns <code>true</code> if the CRM Contact has any CRM Tags associated with it.
+	*
+	* @param pk the primary key of the CRM Contact to check for associations with CRM Tags
+	* @return <code>true</code> if the CRM Contact has any CRM Tags associated with it; <code>false</code> otherwise
+	*/
+	public boolean containsCrmTags(long pk);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPK the primary key of the CRM Tag
+	*/
+	public void addCrmTag(long pk, long crmTagPK);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTag the CRM Tag
+	*/
+	public void addCrmTag(long pk, contact.manager.model.CrmTag crmTag);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPKs the primary keys of the CRM Tags
+	*/
+	public void addCrmTags(long pk, long[] crmTagPKs);
+
+	/**
+	* Adds an association between the CRM Contact and the CRM Tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTags the CRM Tags
+	*/
+	public void addCrmTags(long pk,
+		java.util.List<contact.manager.model.CrmTag> crmTags);
+
+	/**
+	* Clears all associations between the CRM Contact and its CRM Tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact to clear the associated CRM Tags from
+	*/
+	public void clearCrmTags(long pk);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPK the primary key of the CRM Tag
+	*/
+	public void removeCrmTag(long pk, long crmTagPK);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Tag. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTag the CRM Tag
+	*/
+	public void removeCrmTag(long pk, contact.manager.model.CrmTag crmTag);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPKs the primary keys of the CRM Tags
+	*/
+	public void removeCrmTags(long pk, long[] crmTagPKs);
+
+	/**
+	* Removes the association between the CRM Contact and the CRM Tags. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTags the CRM Tags
+	*/
+	public void removeCrmTags(long pk,
+		java.util.List<contact.manager.model.CrmTag> crmTags);
+
+	/**
+	* Sets the CRM Tags associated with the CRM Contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTagPKs the primary keys of the CRM Tags to be associated with the CRM Contact
+	*/
+	public void setCrmTags(long pk, long[] crmTagPKs);
+
+	/**
+	* Sets the CRM Tags associated with the CRM Contact, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the CRM Contact
+	* @param crmTags the CRM Tags to be associated with the CRM Contact
+	*/
+	public void setCrmTags(long pk,
+		java.util.List<contact.manager.model.CrmTag> crmTags);
 
 	@Override
 	public java.util.Set<java.lang.String> getBadColumnNames();

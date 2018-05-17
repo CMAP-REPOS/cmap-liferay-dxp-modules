@@ -41,6 +41,10 @@ public class CrmContactAuditLogSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCrmContactId(model.getCrmContactId());
+		soapModel.setConstantContactId(model.getConstantContactId());
+		soapModel.setOldSnapshot(model.getOldSnapshot());
+		soapModel.setNewSnapshot(model.getNewSnapshot());
 
 		return soapModel;
 	}
@@ -160,6 +164,38 @@ public class CrmContactAuditLogSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	public void setCrmContactId(long crmContactId) {
+		_crmContactId = crmContactId;
+	}
+
+	public long getConstantContactId() {
+		return _constantContactId;
+	}
+
+	public void setConstantContactId(long constantContactId) {
+		_constantContactId = constantContactId;
+	}
+
+	public String getOldSnapshot() {
+		return _oldSnapshot;
+	}
+
+	public void setOldSnapshot(String oldSnapshot) {
+		_oldSnapshot = oldSnapshot;
+	}
+
+	public String getNewSnapshot() {
+		return _newSnapshot;
+	}
+
+	public void setNewSnapshot(String newSnapshot) {
+		_newSnapshot = newSnapshot;
+	}
+
 	private String _uuid;
 	private long _crmContactAuditLogId;
 	private long _groupId;
@@ -168,4 +204,8 @@ public class CrmContactAuditLogSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _crmContactId;
+	private long _constantContactId;
+	private String _oldSnapshot;
+	private String _newSnapshot;
 }

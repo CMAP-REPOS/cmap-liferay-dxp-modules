@@ -211,6 +211,51 @@ public interface CrmCountyCommissionerModel extends BaseModel<CrmCountyCommissio
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM County Commissioner.
+	 *
+	 * @return the name of this CRM County Commissioner
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM County Commissioner.
+	 *
+	 * @param name the name of this CRM County Commissioner
+	 */
+	public void setName(String name);
+
+	/**
+	 * Returns the number of this CRM County Commissioner.
+	 *
+	 * @return the number of this CRM County Commissioner
+	 */
+	@AutoEscape
+	public String getNumber();
+
+	/**
+	 * Sets the number of this CRM County Commissioner.
+	 *
+	 * @param number the number of this CRM County Commissioner
+	 */
+	public void setNumber(String number);
+
+	/**
+	 * Returns the zip code of this CRM County Commissioner.
+	 *
+	 * @return the zip code of this CRM County Commissioner
+	 */
+	@AutoEscape
+	public String getZipCode();
+
+	/**
+	 * Sets the zip code of this CRM County Commissioner.
+	 *
+	 * @param zipCode the zip code of this CRM County Commissioner
+	 */
+	public void setZipCode(String zipCode);
+
 	@Override
 	public boolean isNew();
 

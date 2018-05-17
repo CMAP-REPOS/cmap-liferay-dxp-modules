@@ -41,6 +41,8 @@ public class CrmNoteSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setCrmContactId(model.getCrmContactId());
+		soapModel.setNote(model.getNote());
 
 		return soapModel;
 	}
@@ -157,6 +159,22 @@ public class CrmNoteSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	public void setCrmContactId(long crmContactId) {
+		_crmContactId = crmContactId;
+	}
+
+	public String getNote() {
+		return _note;
+	}
+
+	public void setNote(String note) {
+		_note = note;
+	}
+
 	private String _uuid;
 	private long _crmNoteId;
 	private long _groupId;
@@ -165,4 +183,6 @@ public class CrmNoteSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private long _crmContactId;
+	private String _note;
 }

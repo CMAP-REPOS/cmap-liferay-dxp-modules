@@ -210,6 +210,21 @@ public interface CrmTagModel extends BaseModel<CrmTag>, GroupedModel,
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the name of this CRM Tag.
+	 *
+	 * @return the name of this CRM Tag
+	 */
+	@AutoEscape
+	public String getName();
+
+	/**
+	 * Sets the name of this CRM Tag.
+	 *
+	 * @param name the name of this CRM Tag
+	 */
+	public void setName(String name);
+
 	@Override
 	public boolean isNew();
 

@@ -75,7 +75,12 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
-			{ "modifiedDate", Types.TIMESTAMP }
+			{ "modifiedDate", Types.TIMESTAMP },
+			{ "crmContactId", Types.BIGINT },
+			{ "note", Types.VARCHAR },
+			{ "medium", Types.VARCHAR },
+			{ "activityType", Types.VARCHAR },
+			{ "outreachDate", Types.TIMESTAMP }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -88,9 +93,14 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("crmContactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("note", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("medium", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("activityType", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("outreachDate", Types.TIMESTAMP);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_outreachlog (uuid_ VARCHAR(75) null,crmOutreachLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_outreachlog (uuid_ VARCHAR(75) null,crmOutreachLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactId LONG,note TEXT null,medium VARCHAR(75) null,activityType VARCHAR(75) null,outreachDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_outreachlog";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmOutreachLog.crmOutreachLogId ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_outreachlog.crmOutreachLogId ASC";
@@ -107,9 +117,10 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 				"value.object.column.bitmask.enabled.contact.manager.model.CrmOutreachLog"),
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long CRMOUTREACHLOGID_COLUMN_BITMASK = 8L;
+	public static final long CRMCONTACTID_COLUMN_BITMASK = 2L;
+	public static final long GROUPID_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long CRMOUTREACHLOGID_COLUMN_BITMASK = 16L;
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmOutreachLog"));
 
@@ -158,6 +169,11 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("note", getNote());
+		attributes.put("medium", getMedium());
+		attributes.put("activityType", getActivityType());
+		attributes.put("outreachDate", getOutreachDate());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -213,6 +229,36 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		String note = (String)attributes.get("note");
+
+		if (note != null) {
+			setNote(note);
+		}
+
+		String medium = (String)attributes.get("medium");
+
+		if (medium != null) {
+			setMedium(medium);
+		}
+
+		String activityType = (String)attributes.get("activityType");
+
+		if (activityType != null) {
+			setActivityType(activityType);
+		}
+
+		Date outreachDate = (Date)attributes.get("outreachDate");
+
+		if (outreachDate != null) {
+			setOutreachDate(outreachDate);
 		}
 	}
 
@@ -361,6 +407,83 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	}
 
 	@Override
+	public long getCrmContactId() {
+		return _crmContactId;
+	}
+
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_columnBitmask |= CRMCONTACTID_COLUMN_BITMASK;
+
+		if (!_setOriginalCrmContactId) {
+			_setOriginalCrmContactId = true;
+
+			_originalCrmContactId = _crmContactId;
+		}
+
+		_crmContactId = crmContactId;
+	}
+
+	public long getOriginalCrmContactId() {
+		return _originalCrmContactId;
+	}
+
+	@Override
+	public String getNote() {
+		if (_note == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _note;
+		}
+	}
+
+	@Override
+	public void setNote(String note) {
+		_note = note;
+	}
+
+	@Override
+	public String getMedium() {
+		if (_medium == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _medium;
+		}
+	}
+
+	@Override
+	public void setMedium(String medium) {
+		_medium = medium;
+	}
+
+	@Override
+	public String getActivityType() {
+		if (_activityType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _activityType;
+		}
+	}
+
+	@Override
+	public void setActivityType(String activityType) {
+		_activityType = activityType;
+	}
+
+	@Override
+	public Date getOutreachDate() {
+		return _outreachDate;
+	}
+
+	@Override
+	public void setOutreachDate(Date outreachDate) {
+		_outreachDate = outreachDate;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmOutreachLog.class.getName()));
@@ -405,6 +528,11 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		crmOutreachLogImpl.setUserName(getUserName());
 		crmOutreachLogImpl.setCreateDate(getCreateDate());
 		crmOutreachLogImpl.setModifiedDate(getModifiedDate());
+		crmOutreachLogImpl.setCrmContactId(getCrmContactId());
+		crmOutreachLogImpl.setNote(getNote());
+		crmOutreachLogImpl.setMedium(getMedium());
+		crmOutreachLogImpl.setActivityType(getActivityType());
+		crmOutreachLogImpl.setOutreachDate(getOutreachDate());
 
 		crmOutreachLogImpl.resetOriginalValues();
 
@@ -479,6 +607,10 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 
 		crmOutreachLogModelImpl._setModifiedDate = false;
 
+		crmOutreachLogModelImpl._originalCrmContactId = crmOutreachLogModelImpl._crmContactId;
+
+		crmOutreachLogModelImpl._setOriginalCrmContactId = false;
+
 		crmOutreachLogModelImpl._columnBitmask = 0;
 	}
 
@@ -528,12 +660,47 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 			crmOutreachLogCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		crmOutreachLogCacheModel.crmContactId = getCrmContactId();
+
+		crmOutreachLogCacheModel.note = getNote();
+
+		String note = crmOutreachLogCacheModel.note;
+
+		if ((note != null) && (note.length() == 0)) {
+			crmOutreachLogCacheModel.note = null;
+		}
+
+		crmOutreachLogCacheModel.medium = getMedium();
+
+		String medium = crmOutreachLogCacheModel.medium;
+
+		if ((medium != null) && (medium.length() == 0)) {
+			crmOutreachLogCacheModel.medium = null;
+		}
+
+		crmOutreachLogCacheModel.activityType = getActivityType();
+
+		String activityType = crmOutreachLogCacheModel.activityType;
+
+		if ((activityType != null) && (activityType.length() == 0)) {
+			crmOutreachLogCacheModel.activityType = null;
+		}
+
+		Date outreachDate = getOutreachDate();
+
+		if (outreachDate != null) {
+			crmOutreachLogCacheModel.outreachDate = outreachDate.getTime();
+		}
+		else {
+			crmOutreachLogCacheModel.outreachDate = Long.MIN_VALUE;
+		}
+
 		return crmOutreachLogCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -551,6 +718,16 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
+		sb.append(", crmContactId=");
+		sb.append(getCrmContactId());
+		sb.append(", note=");
+		sb.append(getNote());
+		sb.append(", medium=");
+		sb.append(getMedium());
+		sb.append(", activityType=");
+		sb.append(getActivityType());
+		sb.append(", outreachDate=");
+		sb.append(getOutreachDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -558,7 +735,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmOutreachLog");
@@ -596,6 +773,26 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 			"<column><column-name>modifiedDate</column-name><column-value><![CDATA[");
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>crmContactId</column-name><column-value><![CDATA[");
+		sb.append(getCrmContactId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>note</column-name><column-value><![CDATA[");
+		sb.append(getNote());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>medium</column-name><column-value><![CDATA[");
+		sb.append(getMedium());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>activityType</column-name><column-value><![CDATA[");
+		sb.append(getActivityType());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>outreachDate</column-name><column-value><![CDATA[");
+		sb.append(getOutreachDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -620,6 +817,13 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private long _crmContactId;
+	private long _originalCrmContactId;
+	private boolean _setOriginalCrmContactId;
+	private String _note;
+	private String _medium;
+	private String _activityType;
+	private Date _outreachDate;
 	private long _columnBitmask;
 	private CrmOutreachLog _escapedModel;
 }

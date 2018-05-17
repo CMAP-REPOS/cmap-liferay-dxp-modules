@@ -67,6 +67,8 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -178,6 +192,16 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	}
 
 	/**
+	* Returns the name of this CRM County.
+	*
+	* @return the name of this CRM County
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmCounty.getName();
+	}
+
+	/**
 	* Returns the user name of this CRM County.
 	*
 	* @return the user name of this CRM County
@@ -205,6 +229,16 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	@Override
 	public java.lang.String getUuid() {
 		return _crmCounty.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM County.
+	*
+	* @return the zip code of this CRM County
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmCounty.getZipCode();
 	}
 
 	@Override
@@ -363,6 +397,16 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 		_crmCounty.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM County.
+	*
+	* @param name the name of this CRM County
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmCounty.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmCounty.setNew(n);
@@ -421,6 +465,16 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmCounty.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM County.
+	*
+	* @param zipCode the zip code of this CRM County
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmCounty.setZipCode(zipCode);
 	}
 
 	@Override

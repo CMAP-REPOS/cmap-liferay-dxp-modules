@@ -67,6 +67,8 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("name", getName());
+		attributes.put("zipCode", getZipCode());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String zipCode = (String)attributes.get("zipCode");
+
+		if (zipCode != null) {
+			setZipCode(zipCode);
 		}
 	}
 
@@ -178,6 +192,16 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
+	* Returns the name of this CRM Chi Ward.
+	*
+	* @return the name of this CRM Chi Ward
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _crmChiWard.getName();
+	}
+
+	/**
 	* Returns the user name of this CRM Chi Ward.
 	*
 	* @return the user name of this CRM Chi Ward
@@ -205,6 +229,16 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	@Override
 	public java.lang.String getUuid() {
 		return _crmChiWard.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM Chi Ward.
+	*
+	* @return the zip code of this CRM Chi Ward
+	*/
+	@Override
+	public java.lang.String getZipCode() {
+		return _crmChiWard.getZipCode();
 	}
 
 	@Override
@@ -363,6 +397,16 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 		_crmChiWard.setModifiedDate(modifiedDate);
 	}
 
+	/**
+	* Sets the name of this CRM Chi Ward.
+	*
+	* @param name the name of this CRM Chi Ward
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_crmChiWard.setName(name);
+	}
+
 	@Override
 	public void setNew(boolean n) {
 		_crmChiWard.setNew(n);
@@ -421,6 +465,16 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	@Override
 	public void setUuid(java.lang.String uuid) {
 		_crmChiWard.setUuid(uuid);
+	}
+
+	/**
+	* Sets the zip code of this CRM Chi Ward.
+	*
+	* @param zipCode the zip code of this CRM Chi Ward
+	*/
+	@Override
+	public void setZipCode(java.lang.String zipCode) {
+		_crmChiWard.setZipCode(zipCode);
 	}
 
 	@Override

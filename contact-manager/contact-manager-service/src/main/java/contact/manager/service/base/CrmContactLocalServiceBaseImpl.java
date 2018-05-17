@@ -448,6 +448,261 @@ public abstract class CrmContactLocalServiceBaseImpl
 	}
 
 	/**
+	 */
+	@Override
+	public void addCrmGroupCrmContact(long crmGroupId, long crmContactId) {
+		crmGroupPersistence.addCrmContact(crmGroupId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmGroupCrmContact(long crmGroupId, CrmContact crmContact) {
+		crmGroupPersistence.addCrmContact(crmGroupId, crmContact);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
+		crmGroupPersistence.addCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmGroupCrmContacts(long crmGroupId,
+		List<CrmContact> crmContacts) {
+		crmGroupPersistence.addCrmContacts(crmGroupId, crmContacts);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearCrmGroupCrmContacts(long crmGroupId) {
+		crmGroupPersistence.clearCrmContacts(crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmGroupCrmContact(long crmGroupId, long crmContactId) {
+		crmGroupPersistence.removeCrmContact(crmGroupId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmGroupCrmContact(long crmGroupId, CrmContact crmContact) {
+		crmGroupPersistence.removeCrmContact(crmGroupId, crmContact);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
+		crmGroupPersistence.removeCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmGroupCrmContacts(long crmGroupId,
+		List<CrmContact> crmContacts) {
+		crmGroupPersistence.removeCrmContacts(crmGroupId, crmContacts);
+	}
+
+	/**
+	 * Returns the crmGroupIds of the CRM Groups associated with the CRM Contact.
+	 *
+	 * @param crmContactId the crmContactId of the CRM Contact
+	 * @return long[] the crmGroupIds of CRM Groups associated with the CRM Contact
+	 */
+	@Override
+	public long[] getCrmGroupPrimaryKeys(long crmContactId) {
+		return crmContactPersistence.getCrmGroupPrimaryKeys(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId) {
+		return crmGroupPersistence.getCrmContacts(crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId, int start,
+		int end) {
+		return crmGroupPersistence.getCrmContacts(crmGroupId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmGroupCrmContacts(long crmGroupId, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator) {
+		return crmGroupPersistence.getCrmContacts(crmGroupId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getCrmGroupCrmContactsCount(long crmGroupId) {
+		return crmGroupPersistence.getCrmContactsSize(crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmGroupCrmContact(long crmGroupId, long crmContactId) {
+		return crmGroupPersistence.containsCrmContact(crmGroupId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmGroupCrmContacts(long crmGroupId) {
+		return crmGroupPersistence.containsCrmContacts(crmGroupId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
+		crmGroupPersistence.setCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmTagCrmContact(long crmTagId, long crmContactId) {
+		crmTagPersistence.addCrmContact(crmTagId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmTagCrmContact(long crmTagId, CrmContact crmContact) {
+		crmTagPersistence.addCrmContact(crmTagId, crmContact);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		crmTagPersistence.addCrmContacts(crmTagId, crmContactIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void addCrmTagCrmContacts(long crmTagId, List<CrmContact> crmContacts) {
+		crmTagPersistence.addCrmContacts(crmTagId, crmContacts);
+	}
+
+	/**
+	 */
+	@Override
+	public void clearCrmTagCrmContacts(long crmTagId) {
+		crmTagPersistence.clearCrmContacts(crmTagId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmTagCrmContact(long crmTagId, long crmContactId) {
+		crmTagPersistence.removeCrmContact(crmTagId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmTagCrmContact(long crmTagId, CrmContact crmContact) {
+		crmTagPersistence.removeCrmContact(crmTagId, crmContact);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		crmTagPersistence.removeCrmContacts(crmTagId, crmContactIds);
+	}
+
+	/**
+	 */
+	@Override
+	public void deleteCrmTagCrmContacts(long crmTagId,
+		List<CrmContact> crmContacts) {
+		crmTagPersistence.removeCrmContacts(crmTagId, crmContacts);
+	}
+
+	/**
+	 * Returns the crmTagIds of the CRM Tags associated with the CRM Contact.
+	 *
+	 * @param crmContactId the crmContactId of the CRM Contact
+	 * @return long[] the crmTagIds of CRM Tags associated with the CRM Contact
+	 */
+	@Override
+	public long[] getCrmTagPrimaryKeys(long crmContactId) {
+		return crmContactPersistence.getCrmTagPrimaryKeys(crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId) {
+		return crmTagPersistence.getCrmContacts(crmTagId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId, int start,
+		int end) {
+		return crmTagPersistence.getCrmContacts(crmTagId, start, end);
+	}
+
+	/**
+	 */
+	@Override
+	public List<CrmContact> getCrmTagCrmContacts(long crmTagId, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator) {
+		return crmTagPersistence.getCrmContacts(crmTagId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 */
+	@Override
+	public int getCrmTagCrmContactsCount(long crmTagId) {
+		return crmTagPersistence.getCrmContactsSize(crmTagId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmTagCrmContact(long crmTagId, long crmContactId) {
+		return crmTagPersistence.containsCrmContact(crmTagId, crmContactId);
+	}
+
+	/**
+	 */
+	@Override
+	public boolean hasCrmTagCrmContacts(long crmTagId) {
+		return crmTagPersistence.containsCrmContacts(crmTagId);
+	}
+
+	/**
+	 */
+	@Override
+	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		crmTagPersistence.setCrmContacts(crmTagId, crmContactIds);
+	}
+
+	/**
 	 * Returns the CRM CCA local service.
 	 *
 	 * @return the CRM CCA local service

@@ -67,6 +67,8 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("crmContactId", getCrmContactId());
+		attributes.put("note", getNote());
 
 		return attributes;
 	}
@@ -119,6 +121,18 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Long crmContactId = (Long)attributes.get("crmContactId");
+
+		if (crmContactId != null) {
+			setCrmContactId(crmContactId);
+		}
+
+		String note = (String)attributes.get("note");
+
+		if (note != null) {
+			setNote(note);
 		}
 	}
 
@@ -175,6 +189,16 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public java.lang.Object clone() {
 		return new CrmNoteWrapper((CrmNote)_crmNote.clone());
+	}
+
+	/**
+	* Returns the note of this CRM Note.
+	*
+	* @return the note of this CRM Note
+	*/
+	@Override
+	public java.lang.String getNote() {
+		return _crmNote.getNote();
 	}
 
 	/**
@@ -248,6 +272,16 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
+	* Returns the crm contact ID of this CRM Note.
+	*
+	* @return the crm contact ID of this CRM Note
+	*/
+	@Override
+	public long getCrmContactId() {
+		return _crmNote.getCrmContactId();
+	}
+
+	/**
 	* Returns the crm note ID of this CRM Note.
 	*
 	* @return the crm note ID of this CRM Note
@@ -318,6 +352,16 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
+	* Sets the crm contact ID of this CRM Note.
+	*
+	* @param crmContactId the crm contact ID of this CRM Note
+	*/
+	@Override
+	public void setCrmContactId(long crmContactId) {
+		_crmNote.setCrmContactId(crmContactId);
+	}
+
+	/**
 	* Sets the crm note ID of this CRM Note.
 	*
 	* @param crmNoteId the crm note ID of this CRM Note
@@ -366,6 +410,16 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public void setNew(boolean n) {
 		_crmNote.setNew(n);
+	}
+
+	/**
+	* Sets the note of this CRM Note.
+	*
+	* @param note the note of this CRM Note
+	*/
+	@Override
+	public void setNote(java.lang.String note) {
+		_crmNote.setNote(note);
 	}
 
 	/**
