@@ -1,5 +1,0 @@
-Bundle-Name: contact-manager-service-service
-Bundle-SymbolicName: contact.manager.service.service
-Bundle-Version: 1.0.0
-Liferay-Require-SchemaVersion: 1.0.0
-Liferay-Service: true
