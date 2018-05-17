@@ -112,6 +112,15 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long CRMTAGID_COLUMN_BITMASK = 8L;
+	public static final String MAPPING_TABLE_CRM_CONTACTS_TAGS_NAME = "crm_contacts_tags";
+	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_TAGS_COLUMNS = {
+			{ "companyId", Types.BIGINT },
+			{ "crmContactId", Types.BIGINT },
+			{ "crmTagId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_CRM_CONTACTS_TAGS_SQL_CREATE = "create table crm_contacts_tags (companyId LONG not null,crmContactId LONG not null,crmTagId LONG not null,primary key (crmContactId, crmTagId))";
+	public static final boolean FINDER_CACHE_ENABLED_CRM_CONTACTS_TAGS = GetterUtil.getBoolean(contact.manager.service.util.ServiceProps.get(
+				"value.object.finder.cache.enabled.crm_contacts_tags"), true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmTag"));
 

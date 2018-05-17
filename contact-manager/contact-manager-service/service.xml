@@ -196,6 +196,7 @@
 			<finder-column name="zipCode" />
 		</finder>
 	</entity>
+
 	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
 		local-service="true" remote-service="false">
 		<column name="crmGroupId" type="long" primary="true"></column>
@@ -206,11 +207,11 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="name" type="String"></column>
+		<column name="crmContacts" type="Collection" entity="CrmContact"
+			mapping-table="crm_contacts_groups" />
 		<order by="asc">
 			<order-column name="name" />
 		</order>
-		<column name="crmContacts" type="Collection" entity="CrmContact"
-			mapping-table="crm_contacts_groups" />
 	</entity>
 	<entity human-name="CRM Kiosk Contact" local-service="true"
 		name="CrmKioskContact" remote-service="false" table="crm_kioskcontact"
@@ -355,6 +356,8 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="name" type="String"></column>
+		<column name="crmContact" type="Collection" entity="CrmContact"
+			mapping-table="crm_contacts_tags" />
 	</entity>
 	<entity human-name="CRM US Rep" local-service="true" name="CrmUsRep"
 		remote-service="false" table="crm_usrep" uuid="true">

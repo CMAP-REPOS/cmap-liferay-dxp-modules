@@ -41,6 +41,14 @@ public class CrmTagLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmTagLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static boolean hasCrmContactCrmTag(long crmContactId, long crmTagId) {
+		return getService().hasCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	public static boolean hasCrmContactCrmTags(long crmContactId) {
+		return getService().hasCrmContactCrmTags(crmContactId);
+	}
+
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return getService().getActionableDynamicQuery();
 	}
@@ -170,6 +178,10 @@ public class CrmTagLocalServiceUtil {
 		return getService().updateCrmTag(crmTag);
 	}
 
+	public static int getCrmContactCrmTagsCount(long crmContactId) {
+		return getService().getCrmContactCrmTagsCount(crmContactId);
+	}
+
 	/**
 	* Returns the number of CRM Tags.
 	*
@@ -236,6 +248,24 @@ public class CrmTagLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	public static java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId) {
+		return getService().getCrmContactCrmTags(crmContactId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId, int start, int end) {
+		return getService().getCrmContactCrmTags(crmContactId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmTag> orderByComparator) {
+		return getService()
+				   .getCrmContactCrmTags(crmContactId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -306,6 +336,61 @@ public class CrmTagLocalServiceUtil {
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Tag.
+	*
+	* @param crmTagId the crmTagId of the CRM Tag
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Tag
+	*/
+	public static long[] getCrmContactPrimaryKeys(long crmTagId) {
+		return getService().getCrmContactPrimaryKeys(crmTagId);
+	}
+
+	public static void addCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		getService().addCrmContactCrmTag(crmContactId, crmTag);
+	}
+
+	public static void addCrmContactCrmTag(long crmContactId, long crmTagId) {
+		getService().addCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	public static void addCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		getService().addCrmContactCrmTags(crmContactId, crmTags);
+	}
+
+	public static void addCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		getService().addCrmContactCrmTags(crmContactId, crmTagIds);
+	}
+
+	public static void clearCrmContactCrmTags(long crmContactId) {
+		getService().clearCrmContactCrmTags(crmContactId);
+	}
+
+	public static void deleteCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		getService().deleteCrmContactCrmTag(crmContactId, crmTag);
+	}
+
+	public static void deleteCrmContactCrmTag(long crmContactId, long crmTagId) {
+		getService().deleteCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	public static void deleteCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		getService().deleteCrmContactCrmTags(crmContactId, crmTags);
+	}
+
+	public static void deleteCrmContactCrmTags(long crmContactId,
+		long[] crmTagIds) {
+		getService().deleteCrmContactCrmTags(crmContactId, crmTagIds);
+	}
+
+	public static void setCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		getService().setCrmContactCrmTags(crmContactId, crmTagIds);
 	}
 
 	public static CrmTagLocalService getService() {

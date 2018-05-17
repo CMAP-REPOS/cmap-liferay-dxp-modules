@@ -33,6 +33,16 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 	}
 
 	@Override
+	public boolean hasCrmContactCrmTag(long crmContactId, long crmTagId) {
+		return _crmTagLocalService.hasCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	@Override
+	public boolean hasCrmContactCrmTags(long crmContactId) {
+		return _crmTagLocalService.hasCrmContactCrmTags(crmContactId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 		return _crmTagLocalService.getActionableDynamicQuery();
 	}
@@ -176,6 +186,11 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		return _crmTagLocalService.updateCrmTag(crmTag);
 	}
 
+	@Override
+	public int getCrmContactCrmTagsCount(long crmContactId) {
+		return _crmTagLocalService.getCrmContactCrmTagsCount(crmContactId);
+	}
+
 	/**
 	* Returns the number of CRM Tags.
 	*
@@ -247,6 +262,26 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _crmTagLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId) {
+		return _crmTagLocalService.getCrmContactCrmTags(crmContactId);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId, int start, int end) {
+		return _crmTagLocalService.getCrmContactCrmTags(crmContactId, start, end);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
+		long crmContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmTag> orderByComparator) {
+		return _crmTagLocalService.getCrmContactCrmTags(crmContactId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -321,6 +356,71 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
 		return _crmTagLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Tag.
+	*
+	* @param crmTagId the crmTagId of the CRM Tag
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Tag
+	*/
+	@Override
+	public long[] getCrmContactPrimaryKeys(long crmTagId) {
+		return _crmTagLocalService.getCrmContactPrimaryKeys(crmTagId);
+	}
+
+	@Override
+	public void addCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTag);
+	}
+
+	@Override
+	public void addCrmContactCrmTag(long crmContactId, long crmTagId) {
+		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	@Override
+	public void addCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTags);
+	}
+
+	@Override
+	public void addCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTagIds);
+	}
+
+	@Override
+	public void clearCrmContactCrmTags(long crmContactId) {
+		_crmTagLocalService.clearCrmContactCrmTags(crmContactId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTag);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTag(long crmContactId, long crmTagId) {
+		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTags);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTagIds);
+	}
+
+	@Override
+	public void setCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		_crmTagLocalService.setCrmContactCrmTags(crmContactId, crmTagIds);
 	}
 
 	@Override

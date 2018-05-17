@@ -64,6 +64,12 @@ public interface CrmTagLocalService extends BaseLocalService,
 	 * Never modify or reference this interface directly. Always use {@link CrmTagLocalServiceUtil} to access the CRM Tag local service. Add custom service methods to {@link contact.manager.service.impl.CrmTagLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmContactCrmTag(long crmContactId, long crmTagId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasCrmContactCrmTags(long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
@@ -168,6 +174,9 @@ public interface CrmTagLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmTag updateCrmTag(CrmTag crmTag);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmContactCrmTagsCount(long crmContactId);
+
 	/**
 	* Returns the number of CRM Tags.
 	*
@@ -221,6 +230,17 @@ public interface CrmTagLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmTag> getCrmContactCrmTags(long crmContactId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmTag> getCrmContactCrmTags(long crmContactId, int start,
+		int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmTag> getCrmContactCrmTags(long crmContactId, int start,
+		int end, OrderByComparator<CrmTag> orderByComparator);
 
 	/**
 	* Returns a range of all the CRM Tags.
@@ -279,4 +299,33 @@ public interface CrmTagLocalService extends BaseLocalService,
 	*/
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
 		Projection projection);
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Tag.
+	*
+	* @param crmTagId the crmTagId of the CRM Tag
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Tag
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getCrmContactPrimaryKeys(long crmTagId);
+
+	public void addCrmContactCrmTag(long crmContactId, CrmTag crmTag);
+
+	public void addCrmContactCrmTag(long crmContactId, long crmTagId);
+
+	public void addCrmContactCrmTags(long crmContactId, List<CrmTag> crmTags);
+
+	public void addCrmContactCrmTags(long crmContactId, long[] crmTagIds);
+
+	public void clearCrmContactCrmTags(long crmContactId);
+
+	public void deleteCrmContactCrmTag(long crmContactId, CrmTag crmTag);
+
+	public void deleteCrmContactCrmTag(long crmContactId, long crmTagId);
+
+	public void deleteCrmContactCrmTags(long crmContactId, List<CrmTag> crmTags);
+
+	public void deleteCrmContactCrmTags(long crmContactId, long[] crmTagIds);
+
+	public void setCrmContactCrmTags(long crmContactId, long[] crmTagIds);
 }

@@ -16,6 +16,7 @@ package contact.manager.service.persistence.impl;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.orm.EntityCache;
 import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
@@ -30,6 +31,10 @@ import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
+import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ReflectionUtil;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -45,6 +50,7 @@ import contact.manager.model.CrmTag;
 import contact.manager.model.impl.CrmTagImpl;
 import contact.manager.model.impl.CrmTagModelImpl;
 
+import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmTagPersistence;
 
 import java.io.Serializable;
@@ -1685,6 +1691,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	protected CrmTag removeImpl(CrmTag crmTag) {
 		crmTag = toUnwrappedModel(crmTag);
 
+		crmTagToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(crmTag.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -2246,6 +2254,309 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		return count.intValue();
 	}
 
+	/**
+	 * Returns the primaryKeys of CRM Contacts associated with the CRM Tag.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @return long[] of the primaryKeys of CRM Contacts associated with the CRM Tag
+	 */
+	@Override
+	public long[] getCrmContactPrimaryKeys(long pk) {
+		long[] pks = crmTagToCrmContactTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.clone();
+	}
+
+	/**
+	 * Returns all the CRM Contacts associated with the CRM Tag.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @return the CRM Contacts associated with the CRM Tag
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk) {
+		return getCrmContacts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the CRM Contacts associated with the CRM Tag.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param start the lower bound of the range of CRM Tags
+	 * @param end the upper bound of the range of CRM Tags (not inclusive)
+	 * @return the range of CRM Contacts associated with the CRM Tag
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
+		int start, int end) {
+		return getCrmContacts(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contacts associated with the CRM Tag.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param start the lower bound of the range of CRM Tags
+	 * @param end the upper bound of the range of CRM Tags (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of CRM Contacts associated with the CRM Tag
+	 */
+	@Override
+	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
+		int start, int end,
+		OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return crmTagToCrmContactTableMapper.getRightBaseModels(pk, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the number of CRM Contacts associated with the CRM Tag.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @return the number of CRM Contacts associated with the CRM Tag
+	 */
+	@Override
+	public int getCrmContactsSize(long pk) {
+		long[] pks = crmTagToCrmContactTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the CRM Contact is associated with the CRM Tag.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPK the primary key of the CRM Contact
+	 * @return <code>true</code> if the CRM Contact is associated with the CRM Tag; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCrmContact(long pk, long crmContactPK) {
+		return crmTagToCrmContactTableMapper.containsTableMapping(pk,
+			crmContactPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the CRM Tag has any CRM Contacts associated with it.
+	 *
+	 * @param pk the primary key of the CRM Tag to check for associations with CRM Contacts
+	 * @return <code>true</code> if the CRM Tag has any CRM Contacts associated with it; <code>false</code> otherwise
+	 */
+	@Override
+	public boolean containsCrmContacts(long pk) {
+		if (getCrmContactsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Tag and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPK the primary key of the CRM Contact
+	 */
+	@Override
+	public void addCrmContact(long pk, long crmContactPK) {
+		CrmTag crmTag = fetchByPrimaryKey(pk);
+
+		if (crmTag == null) {
+			crmTagToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, crmContactPK);
+		}
+		else {
+			crmTagToCrmContactTableMapper.addTableMapping(crmTag.getCompanyId(),
+				pk, crmContactPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Tag and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContact the CRM Contact
+	 */
+	@Override
+	public void addCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact) {
+		CrmTag crmTag = fetchByPrimaryKey(pk);
+
+		if (crmTag == null) {
+			crmTagToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, crmContact.getPrimaryKey());
+		}
+		else {
+			crmTagToCrmContactTableMapper.addTableMapping(crmTag.getCompanyId(),
+				pk, crmContact.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Adds an association between the CRM Tag and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPKs the primary keys of the CRM Contacts
+	 */
+	@Override
+	public void addCrmContacts(long pk, long[] crmContactPKs) {
+		long companyId = 0;
+
+		CrmTag crmTag = fetchByPrimaryKey(pk);
+
+		if (crmTag == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = crmTag.getCompanyId();
+		}
+
+		crmTagToCrmContactTableMapper.addTableMappings(companyId, pk,
+			crmContactPKs);
+	}
+
+	/**
+	 * Adds an association between the CRM Tag and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContacts the CRM Contacts
+	 */
+	@Override
+	public void addCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		addCrmContacts(pk,
+			ListUtil.toLongArray(crmContacts,
+				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
+	}
+
+	/**
+	 * Clears all associations between the CRM Tag and its CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag to clear the associated CRM Contacts from
+	 */
+	@Override
+	public void clearCrmContacts(long pk) {
+		crmTagToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the CRM Tag and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPK the primary key of the CRM Contact
+	 */
+	@Override
+	public void removeCrmContact(long pk, long crmContactPK) {
+		crmTagToCrmContactTableMapper.deleteTableMapping(pk, crmContactPK);
+	}
+
+	/**
+	 * Removes the association between the CRM Tag and the CRM Contact. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContact the CRM Contact
+	 */
+	@Override
+	public void removeCrmContact(long pk,
+		contact.manager.model.CrmContact crmContact) {
+		crmTagToCrmContactTableMapper.deleteTableMapping(pk,
+			crmContact.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the CRM Tag and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPKs the primary keys of the CRM Contacts
+	 */
+	@Override
+	public void removeCrmContacts(long pk, long[] crmContactPKs) {
+		crmTagToCrmContactTableMapper.deleteTableMappings(pk, crmContactPKs);
+	}
+
+	/**
+	 * Removes the association between the CRM Tag and the CRM Contacts. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContacts the CRM Contacts
+	 */
+	@Override
+	public void removeCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		removeCrmContacts(pk,
+			ListUtil.toLongArray(crmContacts,
+				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
+	}
+
+	/**
+	 * Sets the CRM Contacts associated with the CRM Tag, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContactPKs the primary keys of the CRM Contacts to be associated with the CRM Tag
+	 */
+	@Override
+	public void setCrmContacts(long pk, long[] crmContactPKs) {
+		Set<Long> newCrmContactPKsSet = SetUtil.fromArray(crmContactPKs);
+		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(crmTagToCrmContactTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(oldCrmContactPKsSet);
+
+		removeCrmContactPKsSet.removeAll(newCrmContactPKsSet);
+
+		crmTagToCrmContactTableMapper.deleteTableMappings(pk,
+			ArrayUtil.toLongArray(removeCrmContactPKsSet));
+
+		newCrmContactPKsSet.removeAll(oldCrmContactPKsSet);
+
+		long companyId = 0;
+
+		CrmTag crmTag = fetchByPrimaryKey(pk);
+
+		if (crmTag == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = crmTag.getCompanyId();
+		}
+
+		crmTagToCrmContactTableMapper.addTableMappings(companyId, pk,
+			ArrayUtil.toLongArray(newCrmContactPKsSet));
+	}
+
+	/**
+	 * Sets the CRM Contacts associated with the CRM Tag, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the CRM Tag
+	 * @param crmContacts the CRM Contacts to be associated with the CRM Tag
+	 */
+	@Override
+	public void setCrmContacts(long pk,
+		List<contact.manager.model.CrmContact> crmContacts) {
+		try {
+			long[] crmContactPKs = new long[crmContacts.size()];
+
+			for (int i = 0; i < crmContacts.size(); i++) {
+				contact.manager.model.CrmContact crmContact = crmContacts.get(i);
+
+				crmContactPKs[i] = crmContact.getPrimaryKey();
+			}
+
+			setCrmContacts(pk, crmContactPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+	}
+
 	@Override
 	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -2260,6 +2571,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Initializes the CRM Tag persistence.
 	 */
 	public void afterPropertiesSet() {
+		crmTagToCrmContactTableMapper = TableMapperFactory.getTableMapper("crm_contacts_tags",
+				"companyId", "crmTagId", "crmContactId", this,
+				crmContactPersistence);
 	}
 
 	public void destroy() {
@@ -2267,6 +2581,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		TableMapperFactory.removeTableMapper("crm_contacts_tags");
 	}
 
 	@ServiceReference(type = CompanyProviderWrapper.class)
@@ -2275,6 +2591,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+	@BeanReference(type = CrmContactPersistence.class)
+	protected CrmContactPersistence crmContactPersistence;
+	protected TableMapper<CrmTag, contact.manager.model.CrmContact> crmTagToCrmContactTableMapper;
 	private static final String _SQL_SELECT_CRMTAG = "SELECT crmTag FROM CrmTag crmTag";
 	private static final String _SQL_SELECT_CRMTAG_WHERE_PKS_IN = "SELECT crmTag FROM CrmTag crmTag WHERE crmTagId IN (";
 	private static final String _SQL_SELECT_CRMTAG_WHERE = "SELECT crmTag FROM CrmTag crmTag WHERE ";
