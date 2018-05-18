@@ -6,17 +6,21 @@
 
 <%-- TODO: https://itsliferay.blogspot.com/2011/07/orderable-search-container.html --%>
 
-<liferay-ui:panel title="Contact Manager">
+<%
+	List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContacts(QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS);
+%>
 
+<liferay-ui:panel title="Contact Manager">
 	<aui:button onClick="<%= addContactURL.toString() %>"
 		value="Add Contact"></aui:button>
-
 	<liferay-ui:panel title="All Contacts">
-
-		<liferay-ui:search-container
-			total="<%=CrmContactLocalServiceUtil.getCrmContactsCount()%>">
+		<liferay-ui:search-container delta="20" deltaConfigurable="true"
+			emptyResultsMessage="No contacts found"
+			total="<%=crmContacts.size()%>" var="crmContactsSearchContainer">
 			<liferay-ui:search-container-results
-				results="<%=CrmContactLocalServiceUtil.getCrmContacts(QueryUtil.ALL_POS, QueryUtil.ALL_POS)%>" />
+				results="<%=ListUtil.subList(crmContacts, crmContactsSearchContainer.getStart(),
+								crmContactsSearchContainer.getEnd())%>" />
 			<liferay-ui:search-container-row
 				className="contact.manager.model.CrmContact" modelVar="crmContact">
 				<liferay-ui:search-container-column-jsp path="/view_actions.jsp"
@@ -51,13 +55,8 @@
 					name="Tags" />
 				<liferay-ui:search-container-column-text property="modifiedDate"
 					name="Modified" />
-
 			</liferay-ui:search-container-row>
-
 			<liferay-ui:search-iterator />
-
 		</liferay-ui:search-container>
-
 	</liferay-ui:panel>
-
 </liferay-ui:panel>
