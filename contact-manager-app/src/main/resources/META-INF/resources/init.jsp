@@ -8,7 +8,15 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
-<%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
+<%@ page import="java.util.List" %>
+
+<%@ page import="com.liferay.portal.kernel.dao.search.ResultRow" %>
+<%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry" %>
+<%@ page import="com.liferay.portal.kernel.model.PersistedModel" %>
+<%@ page import="com.liferay.portal.kernel.util.HtmlUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.ParamUtil" %>
+<%@ page import="com.liferay.portal.kernel.util.StringPool" %>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 
 <%@ page import="contact.manager.model.CrmContact"%>
 <%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
