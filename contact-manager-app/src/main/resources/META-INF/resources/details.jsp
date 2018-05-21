@@ -12,132 +12,152 @@
 		<aui:row>
 			<aui:col md="4">
 				<p>
-					<strong>First Name</strong>
+					<strong><liferay-ui:message key="crm.label.firstName" /></strong>
 				</p>
-				<p><%=crmContact.getFirstName() %></p>
+				<p><%=crmContact.getFirstName()%></p>
 				<p>
-					<strong>Middle Name/Initial</strong>
+					<strong><liferay-ui:message key="crm.label.middleName" /></strong>
 				</p>
-				<p><%=crmContact.getFirstName() %></p>
+				<p><%=crmContact.getMiddleName()%></p>
 				<p>
-					<strong>Last Name</strong>
+					<strong><liferay-ui:message key="crm.label.lastName" /></strong>
 				</p>
-				<p><%=crmContact.getLastName() %></p>
+				<p><%=crmContact.getLastName()%></p>
 				<p>
-					<strong>Organization</strong>
+					<strong><liferay-ui:message key="crm.label.organization" /></strong>
 				</p>
-				<p><%=crmContact.getOrganization() %></p>
+				<p><%=crmContact.getOrganization()%></p>
 				<p>
-					<strong>Subscriber Alert</strong>
+					<strong><liferay-ui:message key="crm.label.isVip" /></strong>
 				</p>
 				<p></p>
 				<p>
-					<strong>Groups</strong>
+					<strong><liferay-ui:message key="crm.label.groupsList" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getGroupsList()%></p>
 				<p>
-					<strong>Tags</strong>
+					<strong><liferay-ui:message key="crm.label.tagsList" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getTagsList()%></p>
 				<p>
-					<strong>Prefix</strong>
+					<strong><liferay-ui:message key="crm.label.prefix" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrefix()%></p>
 				<p>
-					<strong>Salutation</strong>
+					<strong><liferay-ui:message key="crm.label.salutation" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSalutation()%></p>
 				<p>
-					<strong>Job Title</strong>
+					<strong><liferay-ui:message key="crm.label.jobTitle" /></strong>
 				</p>
+				<p><%=crmContact.getJobTitle()%></p>
 			</aui:col>
 			<aui:col md="4">
 				<p>
-					<strong>Primary Address</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddress1" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddress1()%></p>
 				<p>
-					<strong>Primary Address 2</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddress2" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddress2()%></p>
 				<p>
-					<strong>Primary Address City</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddressCity" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddressCity()%></p>
 				<p>
-					<strong>Primary Address State</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddressState" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddressState()%></p>
 				<p>
-					<strong>Primary Address Zip</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddressZip" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddressZip()%></p>
 				<p>
-					<strong>Primary County</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryAddressCounty" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryAddressCounty()%></p>
 				<p>
-					<strong>Secondary Address</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddress1" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddress1()%></p>
 				<p>
-					<strong>Secondary Address 2</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddress2" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddress2()%></p>
 				<p>
-					<strong>Secondary Address City</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddressCity" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddressCity()%></p>
 				<p>
-					<strong>Secondary Address State</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddressState" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddressState()%></p>
 				<p>
-					<strong>Secondary Address Zip</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddressZip" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddressZip()%></p>
 				<p>
-					<strong>Secondary County</strong>
+					<strong><liferay-ui:message
+							key="crm.label.secondaryAddressCounty" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getSecondaryAddressCounty()%></p>
 			</aui:col>
 			<aui:col md="4">
 				<p>
-					<strong>Primary Phone</strong>
+					<strong><liferay-ui:message key="crm.label.primaryPhone" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryPhone()%></p>
 				<p>
-					<strong>Primary Email Address</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryPhoneExtension" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryPhoneExtension()%></p>
 				<p>
-					<strong>Primary Fax</strong>
+					<strong><liferay-ui:message
+							key="crm.label.primaryEmailAddress" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryEmailAddress()%></p>
 				<p>
-					<strong>Primary Cell</strong>
+					<strong><liferay-ui:message key="crm.label.primaryFax" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryFax()%></p>
 				<p>
-					<strong>Alternate Contact</strong>
+					<strong><liferay-ui:message key="crm.label.primaryCell" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getPrimaryCell()%></p>
 				<p>
-					<strong>Alternate Email</strong>
+					<strong><liferay-ui:message
+							key="crm.label.alternateContact" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getAlternateContact()%></p>
 				<p>
-					<strong>Facebook ID</strong>
+					<strong><liferay-ui:message key="crm.label.alternateEmail" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getAlternateEmail()%></p>
 				<p>
-					<strong>Twitter Handle</strong>
+					<strong><liferay-ui:message key="crm.label.facebookId" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getFacebookId()%></p>
 				<p>
-					<strong>LinkedIn URL</strong>
+					<strong><liferay-ui:message key="crm.label.twitterHandle" /></strong>
 				</p>
-				<p></p>
+				<p><%=crmContact.getTwitterHandle()%></p>
+				<p>
+					<strong><liferay-ui:message key="crm.label.linkedInUrl" /></strong>
+				</p>
+				<p><%=crmContact.getLinkedInUrl()%></p>
 			</aui:col>
 		</aui:row>
 
