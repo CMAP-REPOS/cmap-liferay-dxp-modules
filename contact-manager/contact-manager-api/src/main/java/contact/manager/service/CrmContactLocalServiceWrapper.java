@@ -93,6 +93,12 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		return _crmContactLocalService.getPersistedModel(primaryKeyObj);
 	}
 
+	@Override
+	public contact.manager.model.CrmContact addContact(
+		contact.manager.model.CrmContact crmContact) {
+		return _crmContactLocalService.addContact(crmContact);
+	}
+
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -114,6 +120,13 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	@Override
 	public contact.manager.model.CrmContact createCrmContact(long crmContactId) {
 		return _crmContactLocalService.createCrmContact(crmContactId);
+	}
+
+	@Override
+	public contact.manager.model.CrmContact deleteContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _crmContactLocalService.deleteContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -161,12 +174,12 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
-	public contact.manager.model.CrmContact getCrContactByConstantContactId(
+	public contact.manager.model.CrmContact findByConstantContactId(
 		long constantContactId)
 		throws com.liferay.portal.kernel.exception.NoSuchContactException,
 			com.liferay.portal.kernel.exception.SystemException,
 			contact.manager.exception.NoSuchCrmContactException {
-		return _crmContactLocalService.getCrContactByConstantContactId(constantContactId);
+		return _crmContactLocalService.findByConstantContactId(constantContactId);
 	}
 
 	/**
@@ -196,6 +209,13 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _crmContactLocalService.getCrmContactByUuidAndGroupId(uuid,
 			groupId);
+	}
+
+	@Override
+	public contact.manager.model.CrmContact updateContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return _crmContactLocalService.updateContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -294,32 +314,32 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmContact> getContactsByEmailAddress(
+	public java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddress(
 		java.lang.String primaryEmailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getContactsByEmailAddress(primaryEmailAddress);
+		return _crmContactLocalService.findByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmContact> getContactsByEmailAddressAndStatus(
+	public java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddressAndStatus(
 		java.lang.String primaryEmailAddress, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getContactsByEmailAddressAndStatus(primaryEmailAddress,
+		return _crmContactLocalService.findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status);
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmContact> getContactsByStatus(
+	public java.util.List<contact.manager.model.CrmContact> findByStatus(
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getContactsByStatus(status);
+		return _crmContactLocalService.findByStatus(status);
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmContact> getContactsByVipStatus(
+	public java.util.List<contact.manager.model.CrmContact> findByVipFlag(
 		boolean isVip)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getContactsByVipStatus(isVip);
+		return _crmContactLocalService.findByVipFlag(isVip);
 	}
 
 	/**
@@ -393,6 +413,13 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmContactLocalService.getCrmGroups(contactId);
+	}
+
+	@Override
 	public java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
 		long crmTagId) {
 		return _crmContactLocalService.getCrmTagCrmContacts(crmTagId);
@@ -413,16 +440,10 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getGroups(
+	public java.util.List<contact.manager.model.CrmTag> getCrmTags(
 		long contactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getGroups(contactId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmTag> getTags(long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getTags(contactId);
+		return _crmContactLocalService.getCrmTags(contactId);
 	}
 
 	/**
@@ -581,20 +602,20 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
+	public void setCrmGroups(long contactId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_crmContactLocalService.setCrmGroups(contactId, groupIds);
+	}
+
+	@Override
 	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
 		_crmContactLocalService.setCrmTagCrmContacts(crmTagId, crmContactIds);
 	}
 
 	@Override
-	public void setGroups(long contactId, long[] groupIds)
+	public void setCrmTags(long contactId, long[] tagIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		_crmContactLocalService.setGroups(contactId, groupIds);
-	}
-
-	@Override
-	public void setTags(long contactId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_crmContactLocalService.setTags(contactId, tagIds);
+		_crmContactLocalService.setCrmTags(contactId, tagIds);
 	}
 
 	@Override

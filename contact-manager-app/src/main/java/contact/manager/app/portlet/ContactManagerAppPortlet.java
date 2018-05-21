@@ -6,9 +6,13 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -68,13 +72,16 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		long crmContactId = CounterLocalServiceUtil.increment(CrmContact.class.getName());
-
 		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			long crmContactId = CounterLocalServiceUtil.increment(CrmContact.class.getName());
+
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(crmContactId);
-			crmContact = updateCrmContactProperties(crmContact, request);
+			crmContact = updateCrmContactProperties(crmContact, request, serviceContext, true);
+
 			_crmContactLocalService.addCrmContact(crmContact);
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
+			response.setRenderParameter("mvcPath", "/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.addContact: " + e.getMessage());
 		}
@@ -82,13 +89,16 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void updateContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		long crmContactId = ParamUtil.getLong(request, "crmContactId");
-
 		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			long crmContactId = ParamUtil.getLong(request, "crmContactId");
+
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
-			crmContact = updateCrmContactProperties(crmContact, request);
+			crmContact = updateCrmContactProperties(crmContact, request, serviceContext, false);
+
 			_crmContactLocalService.updateCrmContact(crmContact);
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
+			response.setRenderParameter("mvcPath", "/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
 		}
@@ -96,19 +106,30 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		long crmContactId = ParamUtil.getLong(request, "crmContactId");
-
 		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			long crmContactId = ParamUtil.getLong(request, "crmContactId");
+			long userId = serviceContext.getUserId();
+			Date now = new Date();
+
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
-			_crmContactLocalService.updateCrmContact(crmContact);
-			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
+			crmContact.setUserId(userId);
+			crmContact.setUserName(StringPool.BLANK);
+			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
+
+			_crmContactLocalService.deleteCrmContact(crmContact);
+			response.setRenderParameter("mvcPath", "/view.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
 		}
 	}
 
-	private CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request) {
+	private CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
+			ServiceContext serviceContext, boolean isNew) {
+
+		Date now = new Date();
+		long userId = serviceContext.getUserId();
 
 		String alternateContact = ParamUtil.getString(request, "alternateContact");
 		String alternateEmail = ParamUtil.getString(request, "alternateEmail");
@@ -145,7 +166,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		String tagsList = ParamUtil.getString(request, "tagsList");
 		String twitterHandle = ParamUtil.getString(request, "twitterHandle");
 
-		// String imageFileEntryId = ParamUtil.getString(request, "imageFileEntryId");
+		// String imageFileEntryId = ParamUtil.getString(request,
+		// "imageFileEntryId");
 		// String kioskUuid = ParamUtil.getString(request, "kioskUuid");
 		// String status = ParamUtil.getString(request, "status");
 
@@ -183,6 +205,20 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		crmContact.setSecondaryAddressZip(secondaryAddressZip);
 		crmContact.setTagsList(tagsList);
 		crmContact.setTwitterHandle(twitterHandle);
+
+		crmContact.setUserId(userId);
+		crmContact.setUserName(StringPool.BLANK);
+		crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		if (isNew) {
+			long companyId = serviceContext.getCompanyId();
+			long groupId = serviceContext.getScopeGroupId();
+
+			crmContact.setGroupId(groupId);
+			crmContact.setCompanyId(companyId);
+			crmContact.setCreateDate(serviceContext.getCreateDate(now));
+			crmContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+		}
 
 		return crmContact;
 	}

@@ -15,8 +15,15 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchContactException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.Date;
 import java.util.List;
 
 import contact.manager.exception.NoSuchCrmContactException;
@@ -52,41 +59,55 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	 * Contact local service.
 	 */
 
-	public CrmContact getCrContactByConstantContactId(long constantContactId)
+	private static Log LOGGER = LogFactoryUtil.getLog(CrmContactLocalServiceImpl.class);
+
+	public CrmContact addContact(CrmContact crmContact) {
+		return crmContactPersistence.update(crmContact);
+	}
+
+	public CrmContact updateContact(CrmContact crmContact, ServiceContext serviceContext) {
+		return crmContactPersistence.update(crmContact);
+	}
+
+	public CrmContact deleteContact(CrmContact crmContact, ServiceContext serviceContext) {
+		return crmContactPersistence.update(crmContact);
+	}
+
+	public CrmContact findByConstantContactId(long constantContactId)
 			throws SystemException, NoSuchContactException, NoSuchCrmContactException {
 		return crmContactPersistence.findByConstantContactId(constantContactId);
 	}
 
-	public List<CrmContact> getContactsByEmailAddress(String primaryEmailAddress) throws SystemException {
+	public List<CrmContact> findByPrimaryEmailAddress(String primaryEmailAddress) throws SystemException {
 		return crmContactPersistence.findByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
-	public List<CrmContact> getContactsByEmailAddressAndStatus(String primaryEmailAddress, String status)
+	public List<CrmContact> findByPrimaryEmailAddressAndStatus(String primaryEmailAddress, String status)
 			throws SystemException {
 		return crmContactPersistence.findByPrimaryEmailAddressAndStatus(primaryEmailAddress, status);
 	}
 
-	public List<CrmContact> getContactsByStatus(String status) throws SystemException {
+	public List<CrmContact> findByStatus(String status) throws SystemException {
 		return crmContactPersistence.findByStatus(status);
 	}
 
-	public List<CrmContact> getContactsByVipStatus(boolean isVip) throws SystemException {
+	public List<CrmContact> findByVipFlag(boolean isVip) throws SystemException {
 		return crmContactPersistence.findByVipFlag(isVip);
 	}
 
-	public List<CrmTag> getTags(long contactId) throws SystemException {
+	public List<CrmTag> getCrmTags(long contactId) throws SystemException {
 		return crmContactPersistence.getCrmTags(contactId);
 	}
 
-	public void setTags(long contactId, long[] tagIds) throws SystemException {
+	public void setCrmTags(long contactId, long[] tagIds) throws SystemException {
 		crmContactPersistence.setCrmTags(contactId, tagIds);
 	}
 
-	public List<CrmGroup> getGroups(long contactId) throws SystemException {
+	public List<CrmGroup> getCrmGroups(long contactId) throws SystemException {
 		return crmContactPersistence.getCrmGroups(contactId);
 	}
 
-	public void setGroups(long contactId, long[] groupIds) throws SystemException {
+	public void setCrmGroups(long contactId, long[] groupIds) throws SystemException {
 		crmContactPersistence.setCrmGroups(contactId, groupIds);
 	}
 }

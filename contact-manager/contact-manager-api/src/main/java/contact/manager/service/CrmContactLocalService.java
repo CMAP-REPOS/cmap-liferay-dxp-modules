@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -104,6 +105,8 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public CrmContact addContact(CrmContact crmContact);
+
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -120,6 +123,9 @@ public interface CrmContactLocalService extends BaseLocalService,
 	* @return the new CRM Contact
 	*/
 	public CrmContact createCrmContact(long crmContactId);
+
+	public CrmContact deleteContact(CrmContact crmContact,
+		ServiceContext serviceContext);
 
 	/**
 	* Deletes the CRM Contact from the database. Also notifies the appropriate model listeners.
@@ -155,8 +161,7 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public CrmContact fetchCrmContactByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmContact getCrContactByConstantContactId(long constantContactId)
+	public CrmContact findByConstantContactId(long constantContactId)
 		throws NoSuchContactException, SystemException,
 			NoSuchCrmContactException;
 
@@ -182,6 +187,9 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CrmContact getCrmContactByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
+
+	public CrmContact updateContact(CrmContact crmContact,
+		ServiceContext serviceContext);
 
 	/**
 	* Updates the CRM Contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -252,21 +260,17 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getContactsByEmailAddress(
+	public List<CrmContact> findByPrimaryEmailAddress(
 		java.lang.String primaryEmailAddress) throws SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getContactsByEmailAddressAndStatus(
+	public List<CrmContact> findByPrimaryEmailAddressAndStatus(
 		java.lang.String primaryEmailAddress, java.lang.String status)
 		throws SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getContactsByStatus(java.lang.String status)
+	public List<CrmContact> findByStatus(java.lang.String status)
 		throws SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getContactsByVipStatus(boolean isVip)
+	public List<CrmContact> findByVipFlag(boolean isVip)
 		throws SystemException;
 
 	/**
@@ -321,6 +325,10 @@ public interface CrmContactLocalService extends BaseLocalService,
 		int end, OrderByComparator<CrmContact> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmGroups(long contactId)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContact> getCrmTagCrmContacts(long crmTagId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -332,10 +340,7 @@ public interface CrmContactLocalService extends BaseLocalService,
 		int end, OrderByComparator<CrmContact> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmGroup> getGroups(long contactId) throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmTag> getTags(long contactId) throws SystemException;
+	public List<CrmTag> getCrmTags(long contactId) throws SystemException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -414,11 +419,11 @@ public interface CrmContactLocalService extends BaseLocalService,
 
 	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
 
-	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
-
-	public void setGroups(long contactId, long[] groupIds)
+	public void setCrmGroups(long contactId, long[] groupIds)
 		throws SystemException;
 
-	public void setTags(long contactId, long[] tagIds)
+	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
+
+	public void setCrmTags(long contactId, long[] tagIds)
 		throws SystemException;
 }

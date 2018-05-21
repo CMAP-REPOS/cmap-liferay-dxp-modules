@@ -90,6 +90,11 @@ public class CrmContactLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static contact.manager.model.CrmContact addContact(
+		contact.manager.model.CrmContact crmContact) {
+		return getService().addContact(crmContact);
+	}
+
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -110,6 +115,12 @@ public class CrmContactLocalServiceUtil {
 	public static contact.manager.model.CrmContact createCrmContact(
 		long crmContactId) {
 		return getService().createCrmContact(crmContactId);
+	}
+
+	public static contact.manager.model.CrmContact deleteContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService().deleteContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -153,12 +164,12 @@ public class CrmContactLocalServiceUtil {
 		return getService().fetchCrmContactByUuidAndGroupId(uuid, groupId);
 	}
 
-	public static contact.manager.model.CrmContact getCrContactByConstantContactId(
+	public static contact.manager.model.CrmContact findByConstantContactId(
 		long constantContactId)
 		throws com.liferay.portal.kernel.exception.NoSuchContactException,
 			com.liferay.portal.kernel.exception.SystemException,
 			contact.manager.exception.NoSuchCrmContactException {
-		return getService().getCrContactByConstantContactId(constantContactId);
+		return getService().findByConstantContactId(constantContactId);
 	}
 
 	/**
@@ -186,6 +197,12 @@ public class CrmContactLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCrmContactByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static contact.manager.model.CrmContact updateContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService().updateContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -275,30 +292,30 @@ public class CrmContactLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getContactsByEmailAddress(
+	public static java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddress(
 		java.lang.String primaryEmailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getContactsByEmailAddress(primaryEmailAddress);
+		return getService().findByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getContactsByEmailAddressAndStatus(
+	public static java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddressAndStatus(
 		java.lang.String primaryEmailAddress, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getContactsByEmailAddressAndStatus(primaryEmailAddress,
+				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status);
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getContactsByStatus(
+	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
 		java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getContactsByStatus(status);
+		return getService().findByStatus(status);
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getContactsByVipStatus(
+	public static java.util.List<contact.manager.model.CrmContact> findByVipFlag(
 		boolean isVip)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getContactsByVipStatus(isVip);
+		return getService().findByVipFlag(isVip);
 	}
 
 	/**
@@ -365,6 +382,12 @@ public class CrmContactLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCrmGroups(contactId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
 		long crmTagId) {
 		return getService().getCrmTagCrmContacts(crmTagId);
@@ -382,16 +405,10 @@ public class CrmContactLocalServiceUtil {
 				   .getCrmTagCrmContacts(crmTagId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<contact.manager.model.CrmGroup> getGroups(
+	public static java.util.List<contact.manager.model.CrmTag> getCrmTags(
 		long contactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getGroups(contactId);
-	}
-
-	public static java.util.List<contact.manager.model.CrmTag> getTags(
-		long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTags(contactId);
+		return getService().getCrmTags(contactId);
 	}
 
 	/**
@@ -527,18 +544,18 @@ public class CrmContactLocalServiceUtil {
 		getService().setCrmGroupCrmContacts(crmGroupId, crmContactIds);
 	}
 
+	public static void setCrmGroups(long contactId, long[] groupIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setCrmGroups(contactId, groupIds);
+	}
+
 	public static void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
 		getService().setCrmTagCrmContacts(crmTagId, crmContactIds);
 	}
 
-	public static void setGroups(long contactId, long[] groupIds)
+	public static void setCrmTags(long contactId, long[] tagIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().setGroups(contactId, groupIds);
-	}
-
-	public static void setTags(long contactId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().setTags(contactId, tagIds);
+		getService().setCrmTags(contactId, tagIds);
 	}
 
 	public static CrmContactLocalService getService() {
