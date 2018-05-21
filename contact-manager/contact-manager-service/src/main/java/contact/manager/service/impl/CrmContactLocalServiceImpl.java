@@ -14,16 +14,29 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.exception.NoSuchContactException;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
+
+import contact.manager.exception.NoSuchCrmContactException;
+import contact.manager.model.CrmContact;
+import contact.manager.model.CrmGroup;
+import contact.manager.model.CrmTag;
 import contact.manager.service.base.CrmContactLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM Contact local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmContactLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmContactLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -34,6 +47,46 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmContactLocalServiceUtil} to access the CRM Contact local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmContactLocalServiceUtil} to access the CRM
+	 * Contact local service.
 	 */
+
+	public CrmContact getCrContactByConstantContactId(long constantContactId)
+			throws SystemException, NoSuchContactException, NoSuchCrmContactException {
+		return crmContactPersistence.findByConstantContactId(constantContactId);
+	}
+
+	public List<CrmContact> getContactsByEmailAddress(String primaryEmailAddress) throws SystemException {
+		return crmContactPersistence.findByPrimaryEmailAddress(primaryEmailAddress);
+	}
+
+	public List<CrmContact> getContactsByEmailAddressAndStatus(String primaryEmailAddress, String status)
+			throws SystemException {
+		return crmContactPersistence.findByPrimaryEmailAddressAndStatus(primaryEmailAddress, status);
+	}
+
+	public List<CrmContact> getContactsByStatus(String status) throws SystemException {
+		return crmContactPersistence.findByStatus(status);
+	}
+
+	public List<CrmContact> getContactsByVipStatus(boolean isVip) throws SystemException {
+		return crmContactPersistence.findByVipFlag(isVip);
+	}
+
+	public List<CrmTag> getTags(long contactId) throws SystemException {
+		return crmContactPersistence.getCrmTags(contactId);
+	}
+
+	public void setTags(long contactId, long[] tagIds) throws SystemException {
+		crmContactPersistence.setCrmTags(contactId, tagIds);
+	}
+
+	public List<CrmGroup> getGroups(long contactId) throws SystemException {
+		return crmContactPersistence.getCrmGroups(contactId);
+	}
+
+	public void setGroups(long contactId, long[] groupIds) throws SystemException {
+		crmContactPersistence.setCrmGroups(contactId, groupIds);
+	}
 }

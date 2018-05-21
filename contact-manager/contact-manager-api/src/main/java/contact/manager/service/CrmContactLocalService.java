@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
+import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.PersistedModel;
@@ -35,7 +36,11 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import contact.manager.exception.NoSuchCrmContactException;
+
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmGroup;
+import contact.manager.model.CrmTag;
 
 import java.io.Serializable;
 
@@ -150,6 +155,11 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public CrmContact fetchCrmContactByUuidAndGroupId(java.lang.String uuid,
 		long groupId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmContact getCrContactByConstantContactId(long constantContactId)
+		throws NoSuchContactException, SystemException,
+			NoSuchCrmContactException;
+
 	/**
 	* Returns the CRM Contact with the primary key.
 	*
@@ -242,6 +252,23 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getContactsByEmailAddress(
+		java.lang.String primaryEmailAddress) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getContactsByEmailAddressAndStatus(
+		java.lang.String primaryEmailAddress, java.lang.String status)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getContactsByStatus(java.lang.String status)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getContactsByVipStatus(boolean isVip)
+		throws SystemException;
+
 	/**
 	* Returns a range of all the CRM Contacts.
 	*
@@ -303,6 +330,12 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContact> getCrmTagCrmContacts(long crmTagId, int start,
 		int end, OrderByComparator<CrmContact> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getGroups(long contactId) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmTag> getTags(long contactId) throws SystemException;
 
 	/**
 	* Returns the number of rows matching the dynamic query.
@@ -382,4 +415,10 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
 
 	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds);
+
+	public void setGroups(long contactId, long[] groupIds)
+		throws SystemException;
+
+	public void setTags(long contactId, long[] tagIds)
+		throws SystemException;
 }
