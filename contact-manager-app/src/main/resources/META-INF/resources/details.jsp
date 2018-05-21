@@ -2,13 +2,24 @@
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
-	CrmContact crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+
+	CrmContact crmContact = null;
+
+	if (crmContactId > 0) {
+		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+	}
+
+	String redirect = ParamUtil.getString(request, "redirect");
+	portletDisplay.setShowBackIcon(true);
+	portletDisplay.setURLBack(redirect);
+
+	renderResponse.setTitle((crmContact != null) ? (crmContact.getFirstName() + " " + crmContact.getLastName())
+			: "New Contact");
 %>
 
-<liferay-ui:panel title="Contact Manager">
+<div class="container-fluid-1280">
 
-	<liferay-ui:panel title="Contact Details">
-
+	<aui:fieldset-group markupView="lexicon">
 		<aui:row>
 			<aui:col md="4">
 				<p>
@@ -160,7 +171,5 @@
 				<p><%=crmContact.getLinkedInUrl()%></p>
 			</aui:col>
 		</aui:row>
-
-	</liferay-ui:panel>
-
-</liferay-ui:panel>
+	</aui:fieldset-group>
+</div>
