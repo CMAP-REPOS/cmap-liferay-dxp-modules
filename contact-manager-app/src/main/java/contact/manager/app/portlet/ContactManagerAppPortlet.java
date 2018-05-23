@@ -118,10 +118,10 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setUserName(StringPool.BLANK);
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 
-			_crmContactLocalService.deleteCrmContact(crmContact);
+			_crmContactLocalService.updateCrmContact(crmContact);
 			response.setRenderParameter("mvcPath", "/view.jsp");
 		} catch (Exception e) {
-			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
+			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
 		}
 	}
 
@@ -165,11 +165,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		String secondaryAddressZip = ParamUtil.getString(request, "secondaryAddressZip");
 		String tagsList = ParamUtil.getString(request, "tagsList");
 		String twitterHandle = ParamUtil.getString(request, "twitterHandle");
-
-		// String imageFileEntryId = ParamUtil.getString(request,
-		// "imageFileEntryId");
-		// String kioskUuid = ParamUtil.getString(request, "kioskUuid");
-		// String status = ParamUtil.getString(request, "status");
 
 		crmContact.setAlternateContact(alternateContact);
 		crmContact.setAlternateEmail(alternateEmail);

@@ -28,6 +28,9 @@
 <div class="container-fluid-1280">
 
 	<aui:form action="<%=editContactURL%>" name="<portlet:namespace />fm">
+		<aui:input type="hidden" name="crmContactId"
+			value='<%=crmContact == null ? "" : crmContact.getCrmContactId()%>'>
+		</aui:input>
 		<aui:row>
 			<aui:col md="4">
 				<aui:fieldset-group markupView="lexicon">
@@ -125,7 +128,6 @@
 					<aui:fieldset>
 						<aui:input name="secondaryAddress1" label="Secondary Address"
 							value='<%=crmContact == null ? "" : crmContact.getSecondaryAddress1()%>'>
-							<aui:validator name="required" />
 							<aui:validator name="maxLength">500</aui:validator>
 						</aui:input>
 						<aui:input name="secondaryAddress2" label="Secondary Address 2"
@@ -135,19 +137,16 @@
 						<aui:input name="secondaryAddressCity"
 							label="Secondary Address City"
 							value='<%=crmContact == null ? "" : crmContact.getSecondaryAddressCity()%>'>
-							<aui:validator name="required" />
 							<aui:validator name="maxLength">500</aui:validator>
 						</aui:input>
 						<aui:input name="secondaryAddressState"
 							label="Secondary Address State"
 							value='<%=crmContact == null ? "" : crmContact.getSecondaryAddressState()%>'>
-							<aui:validator name="required" />
 							<aui:validator name="maxLength">2</aui:validator>
 						</aui:input>
 						<aui:input name="secondaryAddressZip"
 							label="Secondary Address ZIP"
 							value='<%=crmContact == null ? "" : crmContact.getSecondaryAddressZip()%>'>
-							<aui:validator name="required" />
 							<aui:validator name="maxLength">10</aui:validator>
 						</aui:input>
 						<aui:input name="secondaryAddressCounty"

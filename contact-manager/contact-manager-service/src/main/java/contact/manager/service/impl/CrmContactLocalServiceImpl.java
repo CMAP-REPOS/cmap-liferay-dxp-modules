@@ -61,18 +61,6 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 
 	private static Log LOGGER = LogFactoryUtil.getLog(CrmContactLocalServiceImpl.class);
 
-	public CrmContact addContact(CrmContact crmContact) {
-		return crmContactPersistence.update(crmContact);
-	}
-
-	public CrmContact updateContact(CrmContact crmContact, ServiceContext serviceContext) {
-		return crmContactPersistence.update(crmContact);
-	}
-
-	public CrmContact deleteContact(CrmContact crmContact, ServiceContext serviceContext) {
-		return crmContactPersistence.update(crmContact);
-	}
-
 	public CrmContact findByConstantContactId(long constantContactId)
 			throws SystemException, NoSuchContactException, NoSuchCrmContactException {
 		return crmContactPersistence.findByConstantContactId(constantContactId);

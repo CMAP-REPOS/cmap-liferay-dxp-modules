@@ -90,11 +90,6 @@ public class CrmContactLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static contact.manager.model.CrmContact addContact(
-		contact.manager.model.CrmContact crmContact) {
-		return getService().addContact(crmContact);
-	}
-
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -115,12 +110,6 @@ public class CrmContactLocalServiceUtil {
 	public static contact.manager.model.CrmContact createCrmContact(
 		long crmContactId) {
 		return getService().createCrmContact(crmContactId);
-	}
-
-	public static contact.manager.model.CrmContact deleteContact(
-		contact.manager.model.CrmContact crmContact,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return getService().deleteContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -197,12 +186,6 @@ public class CrmContactLocalServiceUtil {
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCrmContactByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static contact.manager.model.CrmContact updateContact(
-		contact.manager.model.CrmContact crmContact,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return getService().updateContact(crmContact, serviceContext);
 	}
 
 	/**

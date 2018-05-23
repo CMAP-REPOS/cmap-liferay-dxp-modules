@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
-import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -105,8 +104,6 @@ public interface CrmContactLocalService extends BaseLocalService,
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
-	public CrmContact addContact(CrmContact crmContact);
-
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -123,9 +120,6 @@ public interface CrmContactLocalService extends BaseLocalService,
 	* @return the new CRM Contact
 	*/
 	public CrmContact createCrmContact(long crmContactId);
-
-	public CrmContact deleteContact(CrmContact crmContact,
-		ServiceContext serviceContext);
 
 	/**
 	* Deletes the CRM Contact from the database. Also notifies the appropriate model listeners.
@@ -187,9 +181,6 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CrmContact getCrmContactByUuidAndGroupId(java.lang.String uuid,
 		long groupId) throws PortalException;
-
-	public CrmContact updateContact(CrmContact crmContact,
-		ServiceContext serviceContext);
 
 	/**
 	* Updates the CRM Contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.

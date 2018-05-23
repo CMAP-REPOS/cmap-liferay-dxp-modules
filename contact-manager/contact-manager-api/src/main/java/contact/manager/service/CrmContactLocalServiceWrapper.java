@@ -93,12 +93,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		return _crmContactLocalService.getPersistedModel(primaryKeyObj);
 	}
 
-	@Override
-	public contact.manager.model.CrmContact addContact(
-		contact.manager.model.CrmContact crmContact) {
-		return _crmContactLocalService.addContact(crmContact);
-	}
-
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
 	*
@@ -120,13 +114,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	@Override
 	public contact.manager.model.CrmContact createCrmContact(long crmContactId) {
 		return _crmContactLocalService.createCrmContact(crmContactId);
-	}
-
-	@Override
-	public contact.manager.model.CrmContact deleteContact(
-		contact.manager.model.CrmContact crmContact,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _crmContactLocalService.deleteContact(crmContact, serviceContext);
 	}
 
 	/**
@@ -209,13 +196,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _crmContactLocalService.getCrmContactByUuidAndGroupId(uuid,
 			groupId);
-	}
-
-	@Override
-	public contact.manager.model.CrmContact updateContact(
-		contact.manager.model.CrmContact crmContact,
-		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
-		return _crmContactLocalService.updateContact(crmContact, serviceContext);
 	}
 
 	/**
