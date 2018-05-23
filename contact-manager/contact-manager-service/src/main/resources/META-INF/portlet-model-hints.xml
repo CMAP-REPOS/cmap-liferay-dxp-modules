@@ -193,6 +193,7 @@
 		<field name="zipCode" type="String" />
 	</model>
 	<model name="contact.manager.model.CrmGroup">
+		<field name="uuid" type="String" />
 		<field name="crmGroupId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
@@ -203,26 +204,6 @@
 		<field name="name" type="String">
 			<hint name="max-length">500</hint>
 		</field>
-	</model>
-	<model name="contact.manager.model.CrmKioskContact">
-		<field name="uuid" type="String" />
-		<field name="crmKioskContactId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-	</model>
-	<model name="contact.manager.model.CrmKioskSurvey">
-		<field name="uuid" type="String" />
-		<field name="crmKioskSurveyId" type="long" />
-		<field name="groupId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="contact.manager.model.CrmLTA">
 		<field name="uuid" type="String" />

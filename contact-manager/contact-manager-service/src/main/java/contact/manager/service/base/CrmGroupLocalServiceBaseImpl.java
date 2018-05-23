@@ -16,6 +16,12 @@ package contact.manager.service.base;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.ExportImportHelperUtil;
+import com.liferay.exportimport.kernel.lar.ManifestSummary;
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -25,6 +31,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -52,8 +59,6 @@ import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmCountyCommissionerPersistence;
 import contact.manager.service.persistence.CrmCountyPersistence;
 import contact.manager.service.persistence.CrmGroupPersistence;
-import contact.manager.service.persistence.CrmKioskContactPersistence;
-import contact.manager.service.persistence.CrmKioskSurveyPersistence;
 import contact.manager.service.persistence.CrmLTAPersistence;
 import contact.manager.service.persistence.CrmMuniPersistence;
 import contact.manager.service.persistence.CrmNotePersistence;
@@ -228,6 +233,18 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the CRM Group matching the UUID and group.
+	 *
+	 * @param uuid the CRM Group's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	 */
+	@Override
+	public CrmGroup fetchCrmGroupByUuidAndGroupId(String uuid, long groupId) {
+		return crmGroupPersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the CRM Group with the primary key.
 	 *
 	 * @param crmGroupId the primary key of the CRM Group
@@ -274,6 +291,57 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 		actionableDynamicQuery.setPrimaryKeyPropertyName("crmGroupId");
 	}
 
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CrmGroup>() {
+				@Override
+				public void performAction(CrmGroup crmGroup)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						crmGroup);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(CrmGroup.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
 	/**
 	 * @throws PortalException
 	 */
@@ -287,6 +355,51 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
 		return crmGroupPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns all the CRM Groups matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the CRM Groups
+	 * @param companyId the primary key of the company
+	 * @return the matching CRM Groups, or an empty list if no matches were found
+	 */
+	@Override
+	public List<CrmGroup> getCrmGroupsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return crmGroupPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of CRM Groups matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the CRM Groups
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of CRM Groups
+	 * @param end the upper bound of the range of CRM Groups (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching CRM Groups, or an empty list if no matches were found
+	 */
+	@Override
+	public List<CrmGroup> getCrmGroupsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
+		return crmGroupPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * Returns the CRM Group matching the UUID and group.
+	 *
+	 * @param uuid the CRM Group's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching CRM Group
+	 * @throws PortalException if a matching CRM Group could not be found
+	 */
+	@Override
+	public CrmGroup getCrmGroupByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException {
+		return crmGroupPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -755,82 +868,6 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmGroupPersistence(CrmGroupPersistence crmGroupPersistence) {
 		this.crmGroupPersistence = crmGroupPersistence;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Contact local service.
-	 *
-	 * @return the CRM Kiosk Contact local service
-	 */
-	public contact.manager.service.CrmKioskContactLocalService getCrmKioskContactLocalService() {
-		return crmKioskContactLocalService;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Contact local service.
-	 *
-	 * @param crmKioskContactLocalService the CRM Kiosk Contact local service
-	 */
-	public void setCrmKioskContactLocalService(
-		contact.manager.service.CrmKioskContactLocalService crmKioskContactLocalService) {
-		this.crmKioskContactLocalService = crmKioskContactLocalService;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Contact persistence.
-	 *
-	 * @return the CRM Kiosk Contact persistence
-	 */
-	public CrmKioskContactPersistence getCrmKioskContactPersistence() {
-		return crmKioskContactPersistence;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Contact persistence.
-	 *
-	 * @param crmKioskContactPersistence the CRM Kiosk Contact persistence
-	 */
-	public void setCrmKioskContactPersistence(
-		CrmKioskContactPersistence crmKioskContactPersistence) {
-		this.crmKioskContactPersistence = crmKioskContactPersistence;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Survey local service.
-	 *
-	 * @return the CRM Kiosk Survey local service
-	 */
-	public contact.manager.service.CrmKioskSurveyLocalService getCrmKioskSurveyLocalService() {
-		return crmKioskSurveyLocalService;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Survey local service.
-	 *
-	 * @param crmKioskSurveyLocalService the CRM Kiosk Survey local service
-	 */
-	public void setCrmKioskSurveyLocalService(
-		contact.manager.service.CrmKioskSurveyLocalService crmKioskSurveyLocalService) {
-		this.crmKioskSurveyLocalService = crmKioskSurveyLocalService;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Survey persistence.
-	 *
-	 * @return the CRM Kiosk Survey persistence
-	 */
-	public CrmKioskSurveyPersistence getCrmKioskSurveyPersistence() {
-		return crmKioskSurveyPersistence;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Survey persistence.
-	 *
-	 * @param crmKioskSurveyPersistence the CRM Kiosk Survey persistence
-	 */
-	public void setCrmKioskSurveyPersistence(
-		CrmKioskSurveyPersistence crmKioskSurveyPersistence) {
-		this.crmKioskSurveyPersistence = crmKioskSurveyPersistence;
 	}
 
 	/**
@@ -1329,14 +1366,6 @@ public abstract class CrmGroupLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected CrmGroupLocalService crmGroupLocalService;
 	@BeanReference(type = CrmGroupPersistence.class)
 	protected CrmGroupPersistence crmGroupPersistence;
-	@BeanReference(type = contact.manager.service.CrmKioskContactLocalService.class)
-	protected contact.manager.service.CrmKioskContactLocalService crmKioskContactLocalService;
-	@BeanReference(type = CrmKioskContactPersistence.class)
-	protected CrmKioskContactPersistence crmKioskContactPersistence;
-	@BeanReference(type = contact.manager.service.CrmKioskSurveyLocalService.class)
-	protected contact.manager.service.CrmKioskSurveyLocalService crmKioskSurveyLocalService;
-	@BeanReference(type = CrmKioskSurveyPersistence.class)
-	protected CrmKioskSurveyPersistence crmKioskSurveyPersistence;
 	@BeanReference(type = contact.manager.service.CrmLTALocalService.class)
 	protected contact.manager.service.CrmLTALocalService crmLTALocalService;
 	@BeanReference(type = CrmLTAPersistence.class)

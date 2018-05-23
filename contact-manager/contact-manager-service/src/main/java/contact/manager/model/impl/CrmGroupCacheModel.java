@@ -65,9 +65,11 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{crmGroupId=");
+		sb.append("{uuid=");
+		sb.append(uuid);
+		sb.append(", crmGroupId=");
 		sb.append(crmGroupId);
 		sb.append(", groupId=");
 		sb.append(groupId);
@@ -91,6 +93,13 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	@Override
 	public CrmGroup toEntityModel() {
 		CrmGroupImpl crmGroupImpl = new CrmGroupImpl();
+
+		if (uuid == null) {
+			crmGroupImpl.setUuid(StringPool.BLANK);
+		}
+		else {
+			crmGroupImpl.setUuid(uuid);
+		}
 
 		crmGroupImpl.setCrmGroupId(crmGroupId);
 		crmGroupImpl.setGroupId(groupId);
@@ -132,6 +141,8 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
+		uuid = objectInput.readUTF();
+
 		crmGroupId = objectInput.readLong();
 
 		groupId = objectInput.readLong();
@@ -148,6 +159,13 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
+		if (uuid == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(uuid);
+		}
+
 		objectOutput.writeLong(crmGroupId);
 
 		objectOutput.writeLong(groupId);
@@ -174,6 +192,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		}
 	}
 
+	public String uuid;
 	public long crmGroupId;
 	public long groupId;
 	public long companyId;

@@ -33,6 +33,7 @@ public class CrmGroupSoap implements Serializable {
 	public static CrmGroupSoap toSoapModel(CrmGroup model) {
 		CrmGroupSoap soapModel = new CrmGroupSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setCrmGroupId(model.getCrmGroupId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
@@ -91,6 +92,14 @@ public class CrmGroupSoap implements Serializable {
 
 	public void setPrimaryKey(long pk) {
 		setCrmGroupId(pk);
+	}
+
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
 	}
 
 	public long getCrmGroupId() {
@@ -157,6 +166,7 @@ public class CrmGroupSoap implements Serializable {
 		_name = name;
 	}
 
+	private String _uuid;
 	private long _crmGroupId;
 	private long _groupId;
 	private long _companyId;

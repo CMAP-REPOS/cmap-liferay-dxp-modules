@@ -145,6 +145,7 @@ create table crm_countycommissioner (
 );
 
 create table crm_group (
+	uuid_ VARCHAR(75) null,
 	crmGroupId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -153,28 +154,6 @@ create table crm_group (
 	createDate DATE null,
 	modifiedDate DATE null,
 	name VARCHAR(500) null
-);
-
-create table crm_kioskcontact (
-	uuid_ VARCHAR(75) null,
-	crmKioskContactId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null
-);
-
-create table crm_kiosksurvey (
-	uuid_ VARCHAR(75) null,
-	crmKioskSurveyId LONG not null primary key,
-	groupId LONG,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null
 );
 
 create table crm_lta (

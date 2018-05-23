@@ -19,6 +19,8 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.expando.kernel.model.ExpandoBridge;
 import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
@@ -27,6 +29,7 @@ import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -65,6 +68,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	 */
 	public static final String TABLE_NAME = "crm_group";
 	public static final Object[][] TABLE_COLUMNS = {
+			{ "uuid_", Types.VARCHAR },
 			{ "crmGroupId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
@@ -77,6 +81,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
 	static {
+		TABLE_COLUMNS_MAP.put("uuid_", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("crmGroupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -87,7 +92,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_group (crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_group (uuid_ VARCHAR(75) null,crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_group";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_group.name ASC";
@@ -100,7 +105,13 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public static final boolean FINDER_CACHE_ENABLED = GetterUtil.getBoolean(contact.manager.service.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.contact.manager.model.CrmGroup"),
 			true);
-	public static final boolean COLUMN_BITMASK_ENABLED = false;
+	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(contact.manager.service.util.ServiceProps.get(
+				"value.object.column.bitmask.enabled.contact.manager.model.CrmGroup"),
+			true);
+	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long UUID_COLUMN_BITMASK = 4L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -150,6 +161,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("crmGroupId", getCrmGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -167,6 +179,12 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long crmGroupId = (Long)attributes.get("crmGroupId");
 
 		if (crmGroupId != null) {
@@ -217,6 +235,29 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	}
 
 	@Override
+	public String getUuid() {
+		if (_uuid == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _uuid;
+		}
+	}
+
+	@Override
+	public void setUuid(String uuid) {
+		if (_originalUuid == null) {
+			_originalUuid = _uuid;
+		}
+
+		_uuid = uuid;
+	}
+
+	public String getOriginalUuid() {
+		return GetterUtil.getString(_originalUuid);
+	}
+
+	@Override
 	public long getCrmGroupId() {
 		return _crmGroupId;
 	}
@@ -233,7 +274,19 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public void setGroupId(long groupId) {
+		_columnBitmask |= GROUPID_COLUMN_BITMASK;
+
+		if (!_setOriginalGroupId) {
+			_setOriginalGroupId = true;
+
+			_originalGroupId = _groupId;
+		}
+
 		_groupId = groupId;
+	}
+
+	public long getOriginalGroupId() {
+		return _originalGroupId;
 	}
 
 	@Override
@@ -243,7 +296,19 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public void setCompanyId(long companyId) {
+		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
+
+		if (!_setOriginalCompanyId) {
+			_setOriginalCompanyId = true;
+
+			_originalCompanyId = _companyId;
+		}
+
 		_companyId = companyId;
+	}
+
+	public long getOriginalCompanyId() {
+		return _originalCompanyId;
 	}
 
 	@Override
@@ -325,7 +390,19 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask = -1L;
+
 		_name = name;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				CrmGroup.class.getName()));
+	}
+
+	public long getColumnBitmask() {
+		return _columnBitmask;
 	}
 
 	@Override
@@ -355,6 +432,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public Object clone() {
 		CrmGroupImpl crmGroupImpl = new CrmGroupImpl();
 
+		crmGroupImpl.setUuid(getUuid());
 		crmGroupImpl.setCrmGroupId(getCrmGroupId());
 		crmGroupImpl.setGroupId(getGroupId());
 		crmGroupImpl.setCompanyId(getCompanyId());
@@ -423,12 +501,32 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public void resetOriginalValues() {
 		CrmGroupModelImpl crmGroupModelImpl = this;
 
+		crmGroupModelImpl._originalUuid = crmGroupModelImpl._uuid;
+
+		crmGroupModelImpl._originalGroupId = crmGroupModelImpl._groupId;
+
+		crmGroupModelImpl._setOriginalGroupId = false;
+
+		crmGroupModelImpl._originalCompanyId = crmGroupModelImpl._companyId;
+
+		crmGroupModelImpl._setOriginalCompanyId = false;
+
 		crmGroupModelImpl._setModifiedDate = false;
+
+		crmGroupModelImpl._columnBitmask = 0;
 	}
 
 	@Override
 	public CacheModel<CrmGroup> toCacheModel() {
 		CrmGroupCacheModel crmGroupCacheModel = new CrmGroupCacheModel();
+
+		crmGroupCacheModel.uuid = getUuid();
+
+		String uuid = crmGroupCacheModel.uuid;
+
+		if ((uuid != null) && (uuid.length() == 0)) {
+			crmGroupCacheModel.uuid = null;
+		}
 
 		crmGroupCacheModel.crmGroupId = getCrmGroupId();
 
@@ -477,9 +575,11 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(17);
+		StringBundler sb = new StringBundler(19);
 
-		sb.append("{crmGroupId=");
+		sb.append("{uuid=");
+		sb.append(getUuid());
+		sb.append(", crmGroupId=");
 		sb.append(getCrmGroupId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
@@ -502,12 +602,16 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(28);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmGroup");
 		sb.append("</model-name>");
 
+		sb.append(
+			"<column><column-name>uuid</column-name><column-value><![CDATA[");
+		sb.append(getUuid());
+		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>crmGroupId</column-name><column-value><![CDATA[");
 		sb.append(getCrmGroupId());
@@ -550,14 +654,21 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
 			CrmGroup.class
 		};
+	private String _uuid;
+	private String _originalUuid;
 	private long _crmGroupId;
 	private long _groupId;
+	private long _originalGroupId;
+	private boolean _setOriginalGroupId;
 	private long _companyId;
+	private long _originalCompanyId;
+	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private long _columnBitmask;
 	private CrmGroup _escapedModel;
 }

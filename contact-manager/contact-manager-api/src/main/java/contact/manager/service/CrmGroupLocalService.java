@@ -16,8 +16,11 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.exportimport.kernel.lar.PortletDataContext;
+
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -70,6 +73,10 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	public DynamicQuery dynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -126,6 +133,17 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public CrmGroup fetchCrmGroup(long crmGroupId);
 
 	/**
+	* Returns the CRM Group matching the UUID and group.
+	*
+	* @param uuid the CRM Group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmGroup fetchCrmGroupByUuidAndGroupId(java.lang.String uuid,
+		long groupId);
+
+	/**
 	* Returns the CRM Group with the primary key.
 	*
 	* @param crmGroupId the primary key of the CRM Group
@@ -134,6 +152,18 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CrmGroup getCrmGroup(long crmGroupId) throws PortalException;
+
+	/**
+	* Returns the CRM Group matching the UUID and group.
+	*
+	* @param uuid the CRM Group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Group
+	* @throws PortalException if a matching CRM Group could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmGroup getCrmGroupByUuidAndGroupId(java.lang.String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Updates the CRM Group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -225,6 +255,32 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmGroups(int start, int end);
+
+	/**
+	* Returns all the CRM Groups matching the UUID and company.
+	*
+	* @param uuid the UUID of the CRM Groups
+	* @param companyId the primary key of the company
+	* @return the matching CRM Groups, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmGroupsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of CRM Groups matching the UUID and company.
+	*
+	* @param uuid the UUID of the CRM Groups
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching CRM Groups, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmGroupsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator);
 
 	/**
 	* Returns the number of rows matching the dynamic query.

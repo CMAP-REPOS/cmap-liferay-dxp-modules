@@ -18,6 +18,8 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
 
+import com.liferay.exportimport.kernel.lar.StagedModelType;
+
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -57,6 +59,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("crmGroupId", getCrmGroupId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -71,6 +74,12 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long crmGroupId = (Long)attributes.get("crmGroupId");
 
 		if (crmGroupId != null) {
@@ -203,6 +212,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public java.lang.String getUserUuid() {
 		return _crmGroup.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Group.
+	*
+	* @return the uuid of this CRM Group
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _crmGroup.getUuid();
 	}
 
 	@Override
@@ -421,6 +440,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		_crmGroup.setUserUuid(userUuid);
 	}
 
+	/**
+	* Sets the uuid of this CRM Group.
+	*
+	* @param uuid the uuid of this CRM Group
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_crmGroup.setUuid(uuid);
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -438,6 +467,11 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _crmGroup.getStagedModelType();
 	}
 
 	@Override

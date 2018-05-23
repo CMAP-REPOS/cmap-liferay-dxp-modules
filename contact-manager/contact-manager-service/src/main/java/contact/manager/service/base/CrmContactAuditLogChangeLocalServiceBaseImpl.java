@@ -59,8 +59,6 @@ import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmCountyCommissionerPersistence;
 import contact.manager.service.persistence.CrmCountyPersistence;
 import contact.manager.service.persistence.CrmGroupPersistence;
-import contact.manager.service.persistence.CrmKioskContactPersistence;
-import contact.manager.service.persistence.CrmKioskSurveyPersistence;
 import contact.manager.service.persistence.CrmLTAPersistence;
 import contact.manager.service.persistence.CrmMuniPersistence;
 import contact.manager.service.persistence.CrmNotePersistence;
@@ -761,82 +759,6 @@ public abstract class CrmContactAuditLogChangeLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the CRM Kiosk Contact local service.
-	 *
-	 * @return the CRM Kiosk Contact local service
-	 */
-	public contact.manager.service.CrmKioskContactLocalService getCrmKioskContactLocalService() {
-		return crmKioskContactLocalService;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Contact local service.
-	 *
-	 * @param crmKioskContactLocalService the CRM Kiosk Contact local service
-	 */
-	public void setCrmKioskContactLocalService(
-		contact.manager.service.CrmKioskContactLocalService crmKioskContactLocalService) {
-		this.crmKioskContactLocalService = crmKioskContactLocalService;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Contact persistence.
-	 *
-	 * @return the CRM Kiosk Contact persistence
-	 */
-	public CrmKioskContactPersistence getCrmKioskContactPersistence() {
-		return crmKioskContactPersistence;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Contact persistence.
-	 *
-	 * @param crmKioskContactPersistence the CRM Kiosk Contact persistence
-	 */
-	public void setCrmKioskContactPersistence(
-		CrmKioskContactPersistence crmKioskContactPersistence) {
-		this.crmKioskContactPersistence = crmKioskContactPersistence;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Survey local service.
-	 *
-	 * @return the CRM Kiosk Survey local service
-	 */
-	public contact.manager.service.CrmKioskSurveyLocalService getCrmKioskSurveyLocalService() {
-		return crmKioskSurveyLocalService;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Survey local service.
-	 *
-	 * @param crmKioskSurveyLocalService the CRM Kiosk Survey local service
-	 */
-	public void setCrmKioskSurveyLocalService(
-		contact.manager.service.CrmKioskSurveyLocalService crmKioskSurveyLocalService) {
-		this.crmKioskSurveyLocalService = crmKioskSurveyLocalService;
-	}
-
-	/**
-	 * Returns the CRM Kiosk Survey persistence.
-	 *
-	 * @return the CRM Kiosk Survey persistence
-	 */
-	public CrmKioskSurveyPersistence getCrmKioskSurveyPersistence() {
-		return crmKioskSurveyPersistence;
-	}
-
-	/**
-	 * Sets the CRM Kiosk Survey persistence.
-	 *
-	 * @param crmKioskSurveyPersistence the CRM Kiosk Survey persistence
-	 */
-	public void setCrmKioskSurveyPersistence(
-		CrmKioskSurveyPersistence crmKioskSurveyPersistence) {
-		this.crmKioskSurveyPersistence = crmKioskSurveyPersistence;
-	}
-
-	/**
 	 * Returns the CRM LTA local service.
 	 *
 	 * @return the CRM LTA local service
@@ -1332,14 +1254,6 @@ public abstract class CrmContactAuditLogChangeLocalServiceBaseImpl
 	protected contact.manager.service.CrmGroupLocalService crmGroupLocalService;
 	@BeanReference(type = CrmGroupPersistence.class)
 	protected CrmGroupPersistence crmGroupPersistence;
-	@BeanReference(type = contact.manager.service.CrmKioskContactLocalService.class)
-	protected contact.manager.service.CrmKioskContactLocalService crmKioskContactLocalService;
-	@BeanReference(type = CrmKioskContactPersistence.class)
-	protected CrmKioskContactPersistence crmKioskContactPersistence;
-	@BeanReference(type = contact.manager.service.CrmKioskSurveyLocalService.class)
-	protected contact.manager.service.CrmKioskSurveyLocalService crmKioskSurveyLocalService;
-	@BeanReference(type = CrmKioskSurveyPersistence.class)
-	protected CrmKioskSurveyPersistence crmKioskSurveyPersistence;
 	@BeanReference(type = contact.manager.service.CrmLTALocalService.class)
 	protected contact.manager.service.CrmLTALocalService crmLTALocalService;
 	@BeanReference(type = CrmLTAPersistence.class)

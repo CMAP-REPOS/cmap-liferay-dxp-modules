@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.model.BaseModel;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.GroupedModel;
 import com.liferay.portal.kernel.model.ShardedModel;
+import com.liferay.portal.kernel.model.StagedAuditedModel;
 import com.liferay.portal.kernel.service.ServiceContext;
 
 import java.io.Serializable;
@@ -44,7 +45,7 @@ import java.util.Date;
  */
 @ProviderType
 public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
-	ShardedModel {
+	ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +65,23 @@ public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
 	 * @param primaryKey the primary key of this CRM Group
 	 */
 	public void setPrimaryKey(long primaryKey);
+
+	/**
+	 * Returns the uuid of this CRM Group.
+	 *
+	 * @return the uuid of this CRM Group
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this CRM Group.
+	 *
+	 * @param uuid the uuid of this CRM Group
+	 */
+	@Override
+	public void setUuid(String uuid);
 
 	/**
 	 * Returns the crm group ID of this CRM Group.

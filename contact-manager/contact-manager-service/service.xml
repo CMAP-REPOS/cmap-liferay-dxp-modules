@@ -198,7 +198,7 @@
 	</entity>
 
 	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
-		local-service="true" remote-service="false">
+		local-service="true" remote-service="false" uuid="true">
 		<column name="crmGroupId" type="long" primary="true"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -212,28 +212,6 @@
 		<order by="asc">
 			<order-column name="name" />
 		</order>
-	</entity>
-	<entity human-name="CRM Kiosk Contact" local-service="true"
-		name="CrmKioskContact" remote-service="false" table="crm_kioskcontact"
-		uuid="true">
-		<column name="crmKioskContactId" primary="true" type="long"></column>
-		<column name="groupId" type="long"></column>
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
-	</entity>
-	<entity human-name="CRM Kiosk Survey" local-service="true"
-		name="CrmKioskSurvey" remote-service="false" table="crm_kiosksurvey"
-		uuid="true">
-		<column name="crmKioskSurveyId" primary="true" type="long"></column>
-		<column name="groupId" type="long"></column>
-		<column name="companyId" type="long"></column>
-		<column name="userId" type="long"></column>
-		<column name="userName" type="String"></column>
-		<column name="createDate" type="Date"></column>
-		<column name="modifiedDate" type="Date"></column>
 	</entity>
 	<entity human-name="CRM LTA" local-service="true" name="CrmLTA"
 		remote-service="false" table="crm_lta" uuid="true">

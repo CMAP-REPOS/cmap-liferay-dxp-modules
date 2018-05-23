@@ -18,10 +18,6 @@
 	<bean class="contact.manager.service.persistence.impl.CrmCountyCommissionerPersistenceImpl" id="contact.manager.service.persistence.CrmCountyCommissionerPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmGroupLocalServiceImpl" id="contact.manager.service.CrmGroupLocalService" />
 	<bean class="contact.manager.service.persistence.impl.CrmGroupPersistenceImpl" id="contact.manager.service.persistence.CrmGroupPersistence" parent="basePersistence" />
-	<bean class="contact.manager.service.impl.CrmKioskContactLocalServiceImpl" id="contact.manager.service.CrmKioskContactLocalService" />
-	<bean class="contact.manager.service.persistence.impl.CrmKioskContactPersistenceImpl" id="contact.manager.service.persistence.CrmKioskContactPersistence" parent="basePersistence" />
-	<bean class="contact.manager.service.impl.CrmKioskSurveyLocalServiceImpl" id="contact.manager.service.CrmKioskSurveyLocalService" />
-	<bean class="contact.manager.service.persistence.impl.CrmKioskSurveyPersistenceImpl" id="contact.manager.service.persistence.CrmKioskSurveyPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmLTALocalServiceImpl" id="contact.manager.service.CrmLTALocalService" />
 	<bean class="contact.manager.service.persistence.impl.CrmLTAPersistenceImpl" id="contact.manager.service.persistence.CrmLTAPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmMuniLocalServiceImpl" id="contact.manager.service.CrmMuniLocalService" />
