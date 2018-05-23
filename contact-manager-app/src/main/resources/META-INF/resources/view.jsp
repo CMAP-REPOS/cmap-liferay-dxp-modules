@@ -8,8 +8,7 @@
 <%-- TODO: https://itsliferay.blogspot.com/2011/07/orderable-search-container.html --%>
 
 <%
-	List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContacts(QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS);
+	List<CrmContact> crmContacts = CrmContactLocalServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 %>
 
 <div class="container-fluid-1280">

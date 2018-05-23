@@ -119,7 +119,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 
 			_crmContactLocalService.updateCrmContact(crmContact);
-			response.setRenderParameter("mvcPath", "/view.jsp");
+			response.setRenderParameter("jspPage", "/view.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
 		}

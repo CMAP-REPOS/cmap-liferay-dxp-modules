@@ -25,7 +25,6 @@
 	<portlet:actionURL name="deleteContact" var="deleteContactURL">
 		<portlet:param name="crmContactId"
 			value="<%=String.valueOf(crmContact.getCrmContactId())%>" />
-		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon image="view_articles" message="View"
