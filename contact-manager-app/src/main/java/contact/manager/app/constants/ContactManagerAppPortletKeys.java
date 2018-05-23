@@ -9,6 +9,7 @@ import java.util.Map;
 public class ContactManagerAppPortletKeys {
 
 	public static final String ContactManagerApp = "ContactManagerApp";
+	public static final String GroupManagerApp = "GroupManagerApp";
 
 	public static final String UI_DATE_FORMAT_PATTERN = "yyyy-MM-dd 'at' HH:mm:ss z";
 
