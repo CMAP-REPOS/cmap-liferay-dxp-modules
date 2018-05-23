@@ -41,12 +41,6 @@ create index IX_7B0FDA55 on crm_countycommissioner (zipCode[$COLUMN_LENGTH:75$])
 create index IX_F137C218 on crm_group (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_A179EE9A on crm_group (uuid_[$COLUMN_LENGTH:75$], groupId);
 
-create index IX_5995A412 on crm_kioskcontact (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_21FC0714 on crm_kioskcontact (uuid_[$COLUMN_LENGTH:75$], groupId);
-
-create index IX_EFFC8FDC on crm_kiosksurvey (uuid_[$COLUMN_LENGTH:75$], companyId);
-create unique index IX_A3DF5D5E on crm_kiosksurvey (uuid_[$COLUMN_LENGTH:75$], groupId);
-
 create index IX_E326EA32 on crm_lta (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_D5685534 on crm_lta (uuid_[$COLUMN_LENGTH:75$], groupId);
 create index IX_4438F660 on crm_lta (zipCode[$COLUMN_LENGTH:75$]);
