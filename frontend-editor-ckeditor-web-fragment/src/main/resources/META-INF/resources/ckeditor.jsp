@@ -302,7 +302,6 @@ name = HtmlUtil.escapeJS(name);
 					},
 					'.cke_combo'
 				);
-
 				Liferay.Data['<%= name %>Handle'] = ckePanelDelegate;
 			}
 		}
@@ -426,71 +425,233 @@ name = HtmlUtil.escapeJS(name);
 		// CMAP - apply the current page's them to CKEDITOR config
 		// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
 		// editor is in an IFRAME, so query the parent window
-		var pathThemeImages = 	window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
+		var themePathRoot = window.parent.Liferay.ThemeDisplay.getPathThemeRoot();
 
 		if (pathThemeImages.indexOf('cmap') > -1) {
+
+			// find out user roles to limit editor options
+			var roles = [];
+			Liferay.Service('/role/get-user-roles', {
+				userId: Liferay.ThemeDisplay.getUserId()
+			}, function(response) {
+				response.forEach(function(e){
+					roles.push(e.name); // or e.roleId
+				});
+			});
+
+			// All CKEditor config options
+			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
 			var cmapConfig = {
+
+				// Loads every possible toolbar button
+				toolbar: null,
+				toolbarCanCollapse: true,
+
+				// Include external files, including main theme css file
 				contentsCss: [
 					pathThemeImages.replace(/\/images$/, '/css/main.css'),
 					'https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css',
 					'https://cloud.typography.com/7947314/7427752/css/fonts.css'
-				]
+				],
+
+				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
+				extraPlugins: 'scayt',
+
+				// spell check as you type
+				scayt_autoStartup: true,
+				// scayt_contextCommands: 'ignoreall|add',
+				scayt_ignoreAllCapsWords: true, // like CMAP
+				// scayt_elementsToIgnore: 'del,pre',
+				// scayt_ignoreWordsWithNumbers: true,
+				scayt_ignoreDomainNames: true,
+
+				// grammer review as you type
+				grayt_autoStartup: true,
+
+				// Create custom templates to output layout
+				// https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/templates/templates/default.js
+				// templates: 'my_templates',
+				// templates_files: [ '/editor_templates/site_default.js', 'http://www.example.com/user_templates.js' ],
+				// title: 'CMAP CKEditor',
+				// prevent people from deleting content when adding a template
+				templates_replaceContent: false,
+
+				// menu_groups: 'clipboard,table,anchor,link,image',
+				toolbarGroups: [
+					{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+					{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+					{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
+					{ name: 'links', groups: [ 'links' ] },
+					{ name: 'insert', groups: [ 'insert' ] },
+					{ name: 'tools', groups: [ 'tools' ] },
+					{ name: 'forms', groups: [ 'forms' ] },
+					'/',
+					{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+					{ name: 'colors', groups: [ 'colors' ] },
+					{ name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] },
+					{ name: 'styles', groups: [ 'styles' ] },
+					{ name: 'others', groups: [ 'others' ] },
+					{ name: 'about', groups: [ 'about' ] }
+				],
+
+
+
+				// obfuscated email addresses to prevent spam
+				emailProtection: 'encode',
+
+				// highlight the first field when a popup is generated
+				// dialog_startupFocusTab: true,
+
+				// prevents placing &nbws; in empty paragraph tags
+				// fillEmptyBlocks: false,
+				// ignoreEmptyParagraph: false,
+
+				// on: {
+				// 	instanceReady: function(){
+				// 		console.log(this.name, this);
+				// 	}
+				// },
+
+				startupFocus: 'end',
+
+				// disables info and success notifications
+				notification_duration: 0,
+
+				// don't load any languages besides english
+				language_list: [],
+
+				// to apply our own custom styles in the theme
+				bodyId: 'cmap-ckeditor',
+				// to apply styles from the rest of the website
+				bodyClass: 'journal-content-article',
+
+				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_uicolor.html
+				uiColor: '#E4EBEE',
+
+				removeButtons:  'Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Format,Font,FontSize',
+
+				stylesSet: 'cmap_styles',
 			};
 
+			if(roles.includes("Administrator")){
+				cmapConfig.fontSize_sizes = 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;Huge/72px;';
+				cmapConfig.font_names = 'Whitney/"Whitney SSm A", "Whitney SSm B", sans-serif;Prensa/"Prensa LF", serif';
+				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_colorbutton.html
+				cmapConfig.colorButton_colors = '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA';
+				cmapConfig.colorButton_enableAutomatic = false;
+			}
 
-			// All CKEditor config options
-			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
 
-			// All of the plugins available by default
+			CKEDITOR.stylesSet.add( 'cmap_styles', [
+		    // Block-level styles
+		    {
+					name: 'Header 1',
+					element: 'h1',
+					styles: {
+						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
+						'font-size': '36px',
+						'color': '#000000'
+					}
+				},
+		    {
+					name: 'Header 1 Grey',
+					element: 'h1',
+					styles: {
+						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
+						'font-size': '36px',
+						'color': '#88a0b2'
+					}
+				},
+		    {
+					name: 'Header 2 Blue',
+					element: 'h2',
+					styles: {
+						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
+						'font-size': '30px',
+						'color': '#1b84bc'
+					}
+				},
+		    {
+					name: 'Header 4',
+					element: 'h4',
+					styles: {
+						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
+						'font-size': '16px',
+						'color': '#000000'
+					}
+				},
+		    {
+					name: 'Header 4 Blue',
+					element: 'h4',
+					styles: {
+						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
+						'font-size': '16px',
+						'color': '#1b84bc'
+					}
+				},
+		    {
+					name: 'Huge Paragraph',
+					element: 'p',
+					styles: {
+						'font-family': '"Prensa LF", serif',
+						'font-size': '30px',
+						'color': '#000000'
+					}
+				},
+		    {
+					name: 'Paragraph',
+					element: 'p',
+					styles: {
+						'font-family': '"Prensa LF", serif',
+						'font-size': '15px',
+						'color': '#000000'
+					}
+				},
+
+		    // Inline styles
+		    {
+					name: 'CSS Style',
+					element: 'span',
+					attributes: {
+						'class': 'my_style'
+					}
+				},
+		    {
+					name: 'Marker: Yellow',
+					element: 'span',
+					styles: {
+						'background-color': 'Yellow'
+					}
+				}
+			]);
+
+			// removed the simple characters such as letters, numbers, and punctuation
+			// keep the actual special characters not available on the keyboard
+			CKEDITOR.config.specialChars = [
+				'&euro;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&ndash;', '&mdash;', '&iexcl;', '&cent;', '&pound;', '&curren;', '&yen;', '&brvbar;', '&sect;', '&uml;', '&copy;', '&ordf;', '&laquo;', '&not;', '&reg;', '&macr;', '&deg;', '&sup2;', '&sup3;', '&acute;', '&micro;', '&para;', '&middot;', '&cedil;', '&sup1;', '&ordm;', '&raquo;', '&frac14;', '&frac12;', '&frac34;', '&iquest;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '&Aring;', '&AElig;', '&Ccedil;', '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;', '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;', '&ETH;', '&Ntilde;', '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;', '&times;', '&Oslash;', '&Ugrave;', '&Uacute;', '&Ucirc;', '&Uuml;', '&Yacute;', '&THORN;', '&szlig;', '&agrave;', '&aacute;', '&acirc;', '&atilde;', '&auml;', '&aring;', '&aelig;', '&ccedil;', '&egrave;', '&eacute;', '&ecirc;', '&euml;', '&igrave;', '&iacute;', '&icirc;', '&iuml;', '&eth;', '&ntilde;', '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;', '&divide;', '&oslash;', '&ugrave;', '&uacute;', '&ucirc;', '&uuml;', '&yacute;', '&thorn;', '&yuml;', '&OElig;', '&oelig;', '&#372;', '&#374', '&#373', '&#375;', '&sbquo;', '&#8219;', '&bdquo;', '&hellip;', '&trade;', '&#9658;', '&bull;', '&rarr;', '&rArr;', '&hArr;', '&diams;', '&asymp;'
+			];
+
+			// All of the liferay ckeditor plugins available by default
 			// https://dev.liferay.com/pt/develop/reference/-/knowledge_base/7-0/ckeditor-plugin-reference-guide
-
-			// And How to Include Them
 			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
-
-			// cmapConfig.removePlugins = '';
-			// cmapConfig.extraPlugins = cmapConfig.extraPlugins+'';
-
-			// Enable Spell Check
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
-			cmapConfig.extraPlugins = 'scayt';
-			cmapConfig.scayt_autoStartup = true;
-
-			// Set Font Sizes
-			cmapConfig.fontSize_sizes = 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;';
 
 			// Set Formatting options (incomplete)
 			// Should probably be using styles
 			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
-			cmapConfig.format_tags = 'p;h2;h3;pre';
-			cmapConfig.format_h1 = {
-				element: 'h1',
-				attributes: { 'class': 'editorTitle1' }
-			};
-			cmapConfig.format_h2 = {
-				element: 'h2',
-				attributes: { 'class': 'editorTitle2' }
-			};
-			cmapConfig.format_pre = {
-				element: 'pre',
-				attributes: { 'class': 'editorCode' }
-			};
-
-			// Basic Styles
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_basicstyles.html
-
-			// span[style="color:#ffffff;"]{
-			//   background-color: black;
-			// }
-
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_uicolor.html
-			cmapConfig.uiColor = '#E4EBEE';
-
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_colorbutton.html
-			// cmapConfig.colorButton_colorsPerRow = 3;
-			cmapConfig.colorButton_colors = '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA';
-
-			cmapConfig.font_names = '"Whitney SSm A";"Helvetica Neue";Helvetica;Arial;sans-serif';
-			cmapConfig.font_defaultLabel = 'Whitney SSm A';
+			// cmapConfig.format_tags = 'p;h2;h3;pre';
+			// cmapConfig.format_h1 = {
+			// 	element: 'h1',
+			// 	attributes: { 'class': 'editorTitle1' }
+			// };
+			// cmapConfig.format_h2 = {
+			// 	element: 'h2',
+			// 	attributes: { 'class': 'editorTitle2' }
+			// };
+			// cmapConfig.format_pre = {
+			// 	element: 'pre',
+			// 	attributes: { 'class': 'editorCode' }
+			// };
 
 			config = A.merge(config, cmapConfig);
 		}
@@ -529,7 +690,6 @@ name = HtmlUtil.escapeJS(name);
 				'customDataProcessorLoaded',
 				function() {
 					customDataProcessorLoaded = true;
-
 					if (instanceReady) {
 						initData();
 					}
@@ -565,9 +725,7 @@ name = HtmlUtil.escapeJS(name);
 							try {
 								window['<%= name %>'].onChangeCallback();
 							}
-							catch (e) {
-
-							}
+							catch (e) { }
 						},
 						300
 					);
@@ -601,19 +759,13 @@ name = HtmlUtil.escapeJS(name);
 
 										if (currentEditor === initialEditor) {
 											var currentDialog = CKEDITOR.dialog.getCurrent();
-
 											if (currentDialog) {
 												currentDialog.hide();
 											}
-
 											ckEditorContent = ckeditorInstance.getData();
-
 											window['<%= name %>'].dispose();
-
 											window['<%= name %>'].create();
-
 											window['<%= name %>'].setHTML(ckEditorContent);
-
 											initialEditor = CKEDITOR.instances['<%= name %>'].id;
 										}
 									}
@@ -642,9 +794,7 @@ name = HtmlUtil.escapeJS(name);
 						}
 						catch (e) {
 						}
-
 						(new A.EventHandle(eventHandles)).detach();
-
 						Liferay.detach('destroyPortlet', destroyInstance);
 					}
 				};
@@ -691,7 +841,6 @@ name = HtmlUtil.escapeJS(name);
 				'instanceReady',
 				function() {
 					var editorWrapper = A.one('#cke_<%= name %>');
-
 					if (editorWrapper) {
 						editorWrapper.once(
 							'mouseenter',
