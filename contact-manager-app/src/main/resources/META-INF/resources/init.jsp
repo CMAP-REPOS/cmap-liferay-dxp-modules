@@ -20,8 +20,11 @@
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
+
 <%@ page import="contact.manager.model.CrmContact"%>
+<%@ page import="contact.manager.model.CrmGroup"%>
 <%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
+<%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
 
 <liferay-theme:defineObjects />
 

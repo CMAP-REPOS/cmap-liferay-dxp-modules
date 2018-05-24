@@ -1,4 +1,4 @@
-<%@ include file="/init.jsp"%>
+<%@ include file="../init.jsp"%>
 
 <portlet:renderURL var="addContactURL">
 	<portlet:param name="mvcPath" value="/edit.jsp"></portlet:param>
@@ -6,13 +6,13 @@
 </portlet:renderURL>
 
 <%-- TODO: https://itsliferay.blogspot.com/2011/07/orderable-search-container.html --%>
-
 <%
 	List<CrmContact> crmContacts = CrmContactLocalServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 %>
 
 <div class="container-fluid-1280">
 
+	<%-- TODO: check role --%>
 	<aui:button onClick="<%= addContactURL.toString() %>"
 		value="Add Contact"></aui:button>
 
@@ -24,7 +24,7 @@
 						crmContactsSearchContainer.getEnd())%>" />
 		<liferay-ui:search-container-row
 			className="contact.manager.model.CrmContact" modelVar="crmContact">
-			<liferay-ui:search-container-column-jsp path="/view_actions.jsp"
+			<liferay-ui:search-container-column-jsp path="/contacts/view_actions.jsp"
 				name="Actions" />
 			<liferay-ui:search-container-column-text property="firstName"
 				name="First Name" />

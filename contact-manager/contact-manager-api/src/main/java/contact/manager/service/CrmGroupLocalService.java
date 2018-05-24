@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 
 import java.io.Serializable;
@@ -177,6 +178,9 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCrmContactCrmGroupsCount(long crmContactId);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmContactsCount(long crmGroupPk) throws SystemException;
+
 	/**
 	* Returns the number of CRM Groups.
 	*
@@ -242,6 +246,10 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId, int start,
 		int end, OrderByComparator<CrmGroup> orderByComparator);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmContacts(long crmGroupPk)
+		throws SystemException;
+
 	/**
 	* Returns a range of all the CRM Groups.
 	*
@@ -255,6 +263,10 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmGroups(int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmGroup> getCrmGroupsByName(java.lang.String crmGroupName)
+		throws SystemException;
 
 	/**
 	* Returns all the CRM Groups matching the UUID and company.
@@ -330,4 +342,7 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public void deleteCrmContactCrmGroups(long crmContactId, long[] crmGroupIds);
 
 	public void setCrmContactCrmGroups(long crmContactId, long[] crmGroupIds);
+
+	public void setCrmContacts(long crmGroupPk, long[] crmContactPks)
+		throws SystemException;
 }

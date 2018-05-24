@@ -183,6 +183,11 @@ public class CrmGroupLocalServiceUtil {
 		return getService().getCrmContactCrmGroupsCount(crmContactId);
 	}
 
+	public static int getCrmContactsCount(long crmGroupPk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCrmContactsCount(crmGroupPk);
+	}
+
 	/**
 	* Returns the number of CRM Groups.
 	*
@@ -269,6 +274,12 @@ public class CrmGroupLocalServiceUtil {
 			orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupPk)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCrmContacts(crmGroupPk);
+	}
+
 	/**
 	* Returns a range of all the CRM Groups.
 	*
@@ -283,6 +294,12 @@ public class CrmGroupLocalServiceUtil {
 	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
 		int start, int end) {
 		return getService().getCrmGroups(start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
+		java.lang.String crmGroupName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCrmGroupsByName(crmGroupName);
 	}
 
 	/**
@@ -395,6 +412,11 @@ public class CrmGroupLocalServiceUtil {
 	public static void setCrmContactCrmGroups(long crmContactId,
 		long[] crmGroupIds) {
 		getService().setCrmContactCrmGroups(crmContactId, crmGroupIds);
+	}
+
+	public static void setCrmContacts(long crmGroupPk, long[] crmContactPks)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getService().setCrmContacts(crmGroupPk, crmContactPks);
 	}
 
 	public static CrmGroupLocalService getService() {

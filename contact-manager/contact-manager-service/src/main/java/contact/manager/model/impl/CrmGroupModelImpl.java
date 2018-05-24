@@ -110,8 +110,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
-	public static final long UUID_COLUMN_BITMASK = 4L;
-	public static final long NAME_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 4L;
+	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -392,7 +392,15 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public void setName(String name) {
 		_columnBitmask = -1L;
 
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -512,6 +520,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		crmGroupModelImpl._setOriginalCompanyId = false;
 
 		crmGroupModelImpl._setModifiedDate = false;
+
+		crmGroupModelImpl._originalName = crmGroupModelImpl._name;
 
 		crmGroupModelImpl._columnBitmask = 0;
 	}
@@ -669,6 +679,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
 	private String _name;
+	private String _originalName;
 	private long _columnBitmask;
 	private CrmGroup _escapedModel;
 }

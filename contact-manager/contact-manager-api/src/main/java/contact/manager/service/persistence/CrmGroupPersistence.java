@@ -369,6 +369,138 @@ public interface CrmGroupPersistence extends BasePersistence<CrmGroup> {
 	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
+	* Returns all the CRM Groups where name = &#63;.
+	*
+	* @param name the name
+	* @return the matching CRM Groups
+	*/
+	public java.util.List<CrmGroup> findByName(java.lang.String name);
+
+	/**
+	* Returns a range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @return the range of matching CRM Groups
+	*/
+	public java.util.List<CrmGroup> findByName(java.lang.String name,
+		int start, int end);
+
+	/**
+	* Returns an ordered range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Groups
+	*/
+	public java.util.List<CrmGroup> findByName(java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Groups
+	*/
+	public java.util.List<CrmGroup> findByName(java.lang.String name,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public CrmGroup findByName_First(java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator)
+		throws NoSuchCrmGroupException;
+
+	/**
+	* Returns the first CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public CrmGroup fetchByName_First(java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator);
+
+	/**
+	* Returns the last CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public CrmGroup findByName_Last(java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator)
+		throws NoSuchCrmGroupException;
+
+	/**
+	* Returns the last CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public CrmGroup fetchByName_Last(java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator);
+
+	/**
+	* Returns the CRM Groups before and after the current CRM Group in the ordered set where name = &#63;.
+	*
+	* @param crmGroupId the primary key of the current CRM Group
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Group
+	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
+	*/
+	public CrmGroup[] findByName_PrevAndNext(long crmGroupId,
+		java.lang.String name,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmGroup> orderByComparator)
+		throws NoSuchCrmGroupException;
+
+	/**
+	* Removes all the CRM Groups where name = &#63; from the database.
+	*
+	* @param name the name
+	*/
+	public void removeByName(java.lang.String name);
+
+	/**
+	* Returns the number of CRM Groups where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching CRM Groups
+	*/
+	public int countByName(java.lang.String name);
+
+	/**
 	* Caches the CRM Group in the entity cache if it is enabled.
 	*
 	* @param crmGroup the CRM Group

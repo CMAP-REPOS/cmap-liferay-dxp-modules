@@ -38,6 +38,7 @@ create index IX_E6A8A9DD on crm_countycommissioner (uuid_[$COLUMN_LENGTH:75$], c
 create unique index IX_771C039F on crm_countycommissioner (uuid_[$COLUMN_LENGTH:75$], groupId);
 create index IX_7B0FDA55 on crm_countycommissioner (zipCode[$COLUMN_LENGTH:75$]);
 
+create index IX_303BA5E3 on crm_group (name[$COLUMN_LENGTH:500$]);
 create index IX_F137C218 on crm_group (uuid_[$COLUMN_LENGTH:75$], companyId);
 create unique index IX_A179EE9A on crm_group (uuid_[$COLUMN_LENGTH:75$], groupId);
 

@@ -196,7 +196,6 @@
 			<finder-column name="zipCode" />
 		</finder>
 	</entity>
-
 	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
 		local-service="true" remote-service="false" uuid="true">
 		<column name="crmGroupId" type="long" primary="true"></column>
@@ -212,6 +211,9 @@
 		<order by="asc">
 			<order-column name="name" />
 		</order>
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
 	</entity>
 	<entity human-name="CRM LTA" local-service="true" name="CrmLTA"
 		remote-service="false" table="crm_lta" uuid="true">

@@ -1,4 +1,4 @@
-<%@ include file="/init.jsp"%>
+<%@ include file="../init.jsp"%>
 
 <%-- https://web.liferay.com/community/forums/-/message_boards/message/40902770 --%>
 <%
@@ -6,6 +6,7 @@
 	CrmContact crmContact = (CrmContact) searchContainerRow.getObject();
 %>
 
+<%-- TODO: check role --%>
 <liferay-ui:icon-menu>
 
 	<portlet:renderURL var="viewContactURL">

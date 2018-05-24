@@ -46,7 +46,7 @@ import contact.manager.service.CrmContactLocalService;
 			"javax.portlet.display-name=Contact Manager", 
 			"javax.portlet.expiration-cache=0",
 			"javax.portlet.init-param.template-path=/", 
-			"javax.portlet.init-param.view-template=/view.jsp",
+			"javax.portlet.init-param.view-template=/contacts/view.jsp",
 			"javax.portlet.name=" + ContactManagerAppPortletKeys.ContactManagerApp,
 			"javax.portlet.resource-bundle=content.Language",
 			"javax.portlet.security-role-ref=power-user,user",
@@ -60,13 +60,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-
-		try {
-			List<CrmContact> contacts = _crmContactLocalService.getCrmContacts(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-			request.setAttribute("contacts", contacts);
-		} catch (Exception e) {
-			LOGGER.error("Exception in ContactManagerAppPortlet.render: " + e.getMessage());
-		}
 		super.render(request, response);
 	}
 

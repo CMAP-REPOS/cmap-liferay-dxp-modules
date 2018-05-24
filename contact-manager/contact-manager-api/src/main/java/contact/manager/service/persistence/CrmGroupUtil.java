@@ -499,6 +499,160 @@ public class CrmGroupUtil {
 	}
 
 	/**
+	* Returns all the CRM Groups where name = &#63;.
+	*
+	* @param name the name
+	* @return the matching CRM Groups
+	*/
+	public static List<CrmGroup> findByName(java.lang.String name) {
+		return getPersistence().findByName(name);
+	}
+
+	/**
+	* Returns a range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @return the range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByName(java.lang.String name, int start,
+		int end) {
+		return getPersistence().findByName(name, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByName(java.lang.String name, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence().findByName(name, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Groups where name = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param name the name
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByName(java.lang.String name, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByName(name, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public static CrmGroup findByName_First(java.lang.String name,
+		OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence().findByName_First(name, orderByComparator);
+	}
+
+	/**
+	* Returns the first CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public static CrmGroup fetchByName_First(java.lang.String name,
+		OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence().fetchByName_First(name, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public static CrmGroup findByName_Last(java.lang.String name,
+		OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence().findByName_Last(name, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Group in the ordered set where name = &#63;.
+	*
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public static CrmGroup fetchByName_Last(java.lang.String name,
+		OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence().fetchByName_Last(name, orderByComparator);
+	}
+
+	/**
+	* Returns the CRM Groups before and after the current CRM Group in the ordered set where name = &#63;.
+	*
+	* @param crmGroupId the primary key of the current CRM Group
+	* @param name the name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Group
+	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
+	*/
+	public static CrmGroup[] findByName_PrevAndNext(long crmGroupId,
+		java.lang.String name, OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence()
+				   .findByName_PrevAndNext(crmGroupId, name, orderByComparator);
+	}
+
+	/**
+	* Removes all the CRM Groups where name = &#63; from the database.
+	*
+	* @param name the name
+	*/
+	public static void removeByName(java.lang.String name) {
+		getPersistence().removeByName(name);
+	}
+
+	/**
+	* Returns the number of CRM Groups where name = &#63;.
+	*
+	* @param name the name
+	* @return the number of matching CRM Groups
+	*/
+	public static int countByName(java.lang.String name) {
+		return getPersistence().countByName(name);
+	}
+
+	/**
 	* Caches the CRM Group in the entity cache if it is enabled.
 	*
 	* @param crmGroup the CRM Group
