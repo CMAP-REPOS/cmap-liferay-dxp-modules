@@ -1,31 +1,29 @@
 <%@ include file="../init.jsp"%>
 
-<%-- https://web.liferay.com/community/forums/-/message_boards/message/40902770 --%>
 <%
 	ResultRow searchContainerRow = (ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
-	CrmContact crmContact = (CrmContact) searchContainerRow.getObject();
+	CrmContactViewModel viewModel = (CrmContactViewModel) searchContainerRow.getObject();
 %>
 
-<%-- TODO: check role --%>
 <liferay-ui:icon-menu>
 
 	<portlet:renderURL var="viewContactURL">
 		<portlet:param name="mvcPath" value="/details.jsp" />
 		<portlet:param name="crmContactId"
-			value="<%=String.valueOf(crmContact.getCrmContactId())%>" />
+			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:renderURL>
 
 	<portlet:renderURL var="editContactURL">
 		<portlet:param name="mvcPath" value="/edit.jsp" />
 		<portlet:param name="crmContactId"
-			value="<%=String.valueOf(crmContact.getCrmContactId())%>" />
+			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:renderURL>
 
 	<portlet:actionURL name="deleteContact" var="deleteContactURL">
 		<portlet:param name="crmContactId"
-			value="<%=String.valueOf(crmContact.getCrmContactId())%>" />
+			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 	</portlet:actionURL>
 
 	<liferay-ui:icon image="view_articles" message="View"

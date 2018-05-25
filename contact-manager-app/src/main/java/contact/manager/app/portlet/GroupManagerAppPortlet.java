@@ -1,11 +1,8 @@
 package contact.manager.app.portlet;
 
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.portlet.Portlet;
 import javax.portlet.PortletException;
@@ -13,11 +10,10 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
-import contact.manager.app.viewmodel.CrmGroupViewModel;
-import contact.manager.model.CrmGroup;
-import contact.manager.service.CrmGroupLocalServiceUtil;
+import contact.manager.service.CrmGroupLocalService;
 
 /**
  * @author jon
@@ -48,8 +44,14 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-
 		super.render(request, response);
 	}
+
+	@Reference(unbind = "-")
+	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
+		_crmGroupLocalService = crmGroupLocalService;
+	}
+
+	private CrmGroupLocalService _crmGroupLocalService;
 
 }

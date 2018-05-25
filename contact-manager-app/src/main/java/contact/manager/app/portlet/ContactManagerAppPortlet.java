@@ -1,7 +1,6 @@
 package contact.manager.app.portlet;
 
 import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -12,6 +11,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +27,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
+import contact.manager.app.viewmodel.CrmContactViewModel;
 import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalService;
 
@@ -60,6 +61,15 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
+
+		List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
+		List<CrmContact> crmContacts = _crmContactLocalService.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+
+		for (CrmContact crmContact : crmContacts) {
+			viewModels.add(new CrmContactViewModel(crmContact));
+		}
+
+		request.setAttribute("viewModels", viewModels);
 		super.render(request, response);
 	}
 

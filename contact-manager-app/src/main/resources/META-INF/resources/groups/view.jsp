@@ -1,5 +1,3 @@
-<%@page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
-<%@page import="java.util.ArrayList"%>
 <%@ include file="../init.jsp"%>
 
 <portlet:renderURL var="addGroupURL">
@@ -14,12 +12,11 @@
 	for (CrmGroup crmGroup : crmGroups) {
 		viewModels.add(new CrmGroupViewModel(crmGroup));
 	}
+
+	request.setAttribute("viewModels", viewModels);
 %>
 
 <div class="container-fluid-1280">
-
-	<%-- TODO: check role --%>
-	<%=viewModels.size()%>
 
 	<liferay-ui:search-container delta="20" deltaConfigurable="true"
 		emptyResultsMessage="No groups found" total="<%=viewModels.size()%>"
@@ -28,6 +25,8 @@
 		<liferay-ui:search-container-row
 			className="contact.manager.app.viewmodel.CrmGroupViewModel"
 			modelVar="viewModel">
+			<liferay-ui:search-container-column-jsp
+				path="/groups/view_actions.jsp" name="Actions" />
 			<liferay-ui:search-container-column-text property="name" name="Name" />
 			<liferay-ui:search-container-column-text property="crmContactsCount"
 				name="Contacts" />

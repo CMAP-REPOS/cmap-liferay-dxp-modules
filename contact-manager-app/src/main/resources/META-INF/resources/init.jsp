@@ -6,6 +6,7 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
+<%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.List"%>
 
 <%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil"%>
@@ -21,9 +22,12 @@
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
 
+<%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
 <%@ page import="contact.manager.model.CrmContact"%>
-<%@ page import="contact.manager.model.CrmGroup"%>
 <%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
+
+<%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
+<%@ page import="contact.manager.model.CrmGroup"%>
 <%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
 
 <liferay-theme:defineObjects />

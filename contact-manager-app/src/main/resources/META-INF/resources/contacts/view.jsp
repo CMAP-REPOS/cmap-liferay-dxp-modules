@@ -5,9 +5,13 @@
 	<portlet:param name="redirect" value="<%=currentURL%>" />
 </portlet:renderURL>
 
-<%-- TODO: https://itsliferay.blogspot.com/2011/07/orderable-search-container.html --%>
 <%
+	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 	List<CrmContact> crmContacts = CrmContactLocalServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+
+	for (CrmContact crmContact : crmContacts) {
+		viewModels.add(new CrmContactViewModel(crmContact));
+	}
 %>
 
 <div class="container-fluid-1280">
@@ -17,15 +21,15 @@
 		value="Add Contact"></aui:button>
 
 	<liferay-ui:search-container delta="20" deltaConfigurable="true"
-		emptyResultsMessage="No contacts found"
-		total="<%=crmContacts.size()%>" var="crmContactsSearchContainer">
+		emptyResultsMessage="No contacts found" total="<%=viewModels.size()%>"
+		var="crmContactsSearchContainer">
 		<liferay-ui:search-container-results
-			results="<%=ListUtil.subList(crmContacts, crmContactsSearchContainer.getStart(),
+			results="<%=ListUtil.subList(viewModels, crmContactsSearchContainer.getStart(),
 						crmContactsSearchContainer.getEnd())%>" />
 		<liferay-ui:search-container-row
-			className="contact.manager.model.CrmContact" modelVar="crmContact">
-			<liferay-ui:search-container-column-jsp path="/contacts/view_actions.jsp"
-				name="Actions" />
+			className="contact.manager.app.viewmodel.CrmContactViewModel" modelVar="viewModel">
+			<liferay-ui:search-container-column-jsp
+				path="/contacts/view_actions.jsp" name="Actions" />
 			<liferay-ui:search-container-column-text property="firstName"
 				name="First Name" />
 			<liferay-ui:search-container-column-text property="lastName"

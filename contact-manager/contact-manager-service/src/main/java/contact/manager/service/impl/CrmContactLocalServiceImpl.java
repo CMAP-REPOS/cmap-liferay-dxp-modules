@@ -15,15 +15,10 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchContactException;
-import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.Date;
 import java.util.List;
 
 import contact.manager.exception.NoSuchCrmContactException;
