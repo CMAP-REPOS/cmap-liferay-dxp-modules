@@ -1,4 +1,5 @@
 Bundle-Name: frontend-editor-ckeditor-web-fragment
 Bundle-SymbolicName: frontend.editor.ckeditor.web.fragment
-Bundle-Version: 1.0.0
-Fragment-Host: com.liferay.frontend.editor.ckeditor.web;bundle-version="1.0.42"
+Bundle-Version: 2.0.0
+Fragment-Host: com.liferay.frontend.editor.ckeditor.web
+Import-Package: com.liferay.petra.string; version="[1.0.0,2.0.0)"

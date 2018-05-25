@@ -427,7 +427,8 @@ name = HtmlUtil.escapeJS(name);
 		// editor is in an IFRAME, so query the parent window
 		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
 		var themePathRoot = window.parent.Liferay.ThemeDisplay.getPathThemeRoot();
-
+		var serverAddr = window.parent.Liferay.ThemeDisplay.getCDNBaseURL();
+		console.log(serverAddr + themePathRoot + '/css/main.css?browserId=other&themeId=cmaponto2050theme_WAR_cmaponto2050theme&languageId=en_US&b=7010&t=1527089237237', pathThemeImages);
 		if (pathThemeImages.indexOf('cmap') > -1) {
 
 			// find out user roles to limit editor options
@@ -439,6 +440,7 @@ name = HtmlUtil.escapeJS(name);
 					roles.push(e.name); // or e.roleId
 				});
 			});
+			if(roles.includes("Administrator")){ }
 
 			// All CKEditor config options
 			// https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html
@@ -451,6 +453,7 @@ name = HtmlUtil.escapeJS(name);
 				// Include external files, including main theme css file
 				contentsCss: [
 					pathThemeImages.replace(/\/images$/, '/css/main.css'),
+					(serverAddr + themePathRoot + '/css/main.css?browserId=other&themeId=cmaponto2050theme_WAR_cmaponto2050theme&languageId=en_US&b=7010&t=1527089237237'),
 					'https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css',
 					'https://cloud.typography.com/7947314/7427752/css/fonts.css'
 				],
@@ -471,9 +474,9 @@ name = HtmlUtil.escapeJS(name);
 
 				// Create custom templates to output layout
 				// https://github.com/ckeditor/ckeditor-dev/blob/master/plugins/templates/templates/default.js
-				// templates: 'my_templates',
+				templates: 'cmap',
 				// templates_files: [ '/editor_templates/site_default.js', 'http://www.example.com/user_templates.js' ],
-				// title: 'CMAP CKEditor',
+
 				// prevent people from deleting content when adding a template
 				templates_replaceContent: false,
 
@@ -482,12 +485,12 @@ name = HtmlUtil.escapeJS(name);
 					{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
 					{ name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
 					{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] },
-					{ name: 'links', groups: [ 'links' ] },
 					{ name: 'insert', groups: [ 'insert' ] },
 					{ name: 'tools', groups: [ 'tools' ] },
 					{ name: 'forms', groups: [ 'forms' ] },
 					'/',
 					{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+					{ name: 'links', groups: [ 'links' ] },
 					{ name: 'colors', groups: [ 'colors' ] },
 					{ name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] },
 					{ name: 'styles', groups: [ 'styles' ] },
@@ -495,25 +498,19 @@ name = HtmlUtil.escapeJS(name);
 					{ name: 'about', groups: [ 'about' ] }
 				],
 
+				format_h1: { element: 'h1', attributes: { 'class': 'whitney-huge' } },
+				format_h2: { element: 'h2', attributes: { 'class': 'whitney-large' } },
+				format_h3: { element: 'h3', attributes: { 'class': 'whitney-semi-large' } },
+				format_h4: { element: 'h4', attributes: { 'class': 'whitney-middle' } },
+				format_h5: { element: 'h5', attributes: { 'class': 'whitney-normal' } },
+				format_h6: { element: 'h6', attributes: { 'class': 'whitney-small' } },
+				format_p: { element: 'p', attributes: { 'class': 'presna-normal' } },
 
+
+				devtools_styles: '#cke_tooltip { padding: 5px; border: 2px solid #333; background: #ffffff } #cke_tooltip h2 { font-size: 1.1em; border-bottom: 1px solid; margin: 0; padding: 1px; } #cke_tooltip ul { padding: 0pt; list-style-type: none; }',
 
 				// obfuscated email addresses to prevent spam
 				emailProtection: 'encode',
-
-				// highlight the first field when a popup is generated
-				// dialog_startupFocusTab: true,
-
-				// prevents placing &nbws; in empty paragraph tags
-				// fillEmptyBlocks: false,
-				// ignoreEmptyParagraph: false,
-
-				// on: {
-				// 	instanceReady: function(){
-				// 		console.log(this.name, this);
-				// 	}
-				// },
-
-				startupFocus: 'end',
 
 				// disables info and success notifications
 				notification_duration: 0,
@@ -529,102 +526,69 @@ name = HtmlUtil.escapeJS(name);
 				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_uicolor.html
 				uiColor: '#E4EBEE',
 
-				removeButtons:  'Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Format,Font,FontSize',
+				removeButtons:  'Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Font,FontSize',
 
 				stylesSet: 'cmap_styles',
 			};
 
-			if(roles.includes("Administrator")){
-				cmapConfig.fontSize_sizes = 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;Huge/72px;';
-				cmapConfig.font_names = 'Whitney/"Whitney SSm A", "Whitney SSm B", sans-serif;Prensa/"Prensa LF", serif';
+			var extraConfig = {
+				// HIGHLIGHT THE FIRST FIELD IN A POPUP
+				// dialog_startupFocusTab: true,
+
+				// PREVENTS &nbws; IN EMPTY PARAGRAPHS
+				// fillEmptyBlocks: false,
+				// ignoreEmptyParagraph: false,
+
+				// EVENT CALLBACKS
+				// on: {
+				// 	instanceReady: function(){
+				// 		console.log(this.name, this);
+				// 	}
+				// },
+
+				// GRABS FOCUS RIGHT AWAY
+				// startupFocus: 'end',
+
+				fontSize_sizes: 'Small/12px;Normal/15px;Large/18px;H3/26px;H2/30px;H1/36px;Huge/72px;',
+
+				font_names: 'Whitney/"Whitney SSm A", "Whitney SSm B", sans-serif;Prensa/"Prensa LF", serif',
+
 				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_colorbutton.html
-				cmapConfig.colorButton_colors = '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA';
-				cmapConfig.colorButton_enableAutomatic = false;
+				colorButton_colors: '000,3C5976,004F93,88a0b2,E4EBEE,FFF,750709,DB2028,F47932,5E5011,9E7A38,E7BB20,346139,6CAD4E,A2D06D,008FD4,5E7A87,E2E7EA,587387,F7F9FA',
+				colorButton_enableAutomatic: false,
 			}
 
+			if(Object.keys(CKEDITOR.stylesSet.registered).includes('cmap_styles')){
+				console.log('cmap_styles already registered, ignoring');
+			} else {
+				// INLINE STYLES LIKE TEXT COLOR AND MARGINS
+				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
+				CKEDITOR.stylesSet.add( 'cmap_styles', [
+			    { name: 'Huge Paragraph', element: 'p', attributes: { 'class': 'presna-large' } },
+			    { name: 'Button', element: 'a', attributes: { 'href': '', 'class': 'button' } },
+			    { name: 'Grey Blue Color', element: 'span', attributes: { 'class': 'grey-blue-color' } },
+			    { name: 'Dark Blue Color', element: 'span', attributes: { 'class': 'dark-blue-color' } },
+			    { name: 'Light Blue Color', element: 'span', attributes: { 'class': 'light-blue-color' } },
+			    { name: 'Off White Color', element: 'span', attributes: { 'class': 'off-white-color' } },
+			    { name: 'Small Top Margin', element: 'span', attributes: { 'class': 'margin-top-small' } },
+			    { name: 'Small Bottom Margin', element: 'span', attributes: { 'class': 'margin-bottom-small' } },
+					{ name: 'Large Top Margin', element: 'span', attributes: { 'class': 'margin-top-large' } },
+			    { name: 'Large Bottom Margin', element: 'span', attributes: { 'class': 'margin-bottom-large' } },
+				]);
+			}
 
-			CKEDITOR.stylesSet.add( 'cmap_styles', [
-		    // Block-level styles
-		    {
-					name: 'Header 1',
-					element: 'h1',
-					styles: {
-						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
-						'font-size': '36px',
-						'color': '#000000'
+			CKEDITOR.addTemplates( 'cmap', {
+				imagesPath: pathThemeImages,
+				templates: [
+					{
+						title: 'Advertisement',
+						image: '',
+						description: 'Information and content on the right side.',
+						html: '<div class="advertisement"> <div class="row"> <div class="col-md-8">&nbws;</div><div class="col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"> <div class="cmap-ad-content"><h4>Map</h4><p> This is where the content will go </p> </div> </div> </div> <img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /> </div>'
 					}
-				},
-		    {
-					name: 'Header 1 Grey',
-					element: 'h1',
-					styles: {
-						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
-						'font-size': '36px',
-						'color': '#88a0b2'
-					}
-				},
-		    {
-					name: 'Header 2 Blue',
-					element: 'h2',
-					styles: {
-						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
-						'font-size': '30px',
-						'color': '#1b84bc'
-					}
-				},
-		    {
-					name: 'Header 4',
-					element: 'h4',
-					styles: {
-						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
-						'font-size': '16px',
-						'color': '#000000'
-					}
-				},
-		    {
-					name: 'Header 4 Blue',
-					element: 'h4',
-					styles: {
-						'font-family': '"Whitney SSm A", "Whitney SSm B", sans-serif',
-						'font-size': '16px',
-						'color': '#1b84bc'
-					}
-				},
-		    {
-					name: 'Huge Paragraph',
-					element: 'p',
-					styles: {
-						'font-family': '"Prensa LF", serif',
-						'font-size': '30px',
-						'color': '#000000'
-					}
-				},
-		    {
-					name: 'Paragraph',
-					element: 'p',
-					styles: {
-						'font-family': '"Prensa LF", serif',
-						'font-size': '15px',
-						'color': '#000000'
-					}
-				},
+				]
+			});
 
-		    // Inline styles
-		    {
-					name: 'CSS Style',
-					element: 'span',
-					attributes: {
-						'class': 'my_style'
-					}
-				},
-		    {
-					name: 'Marker: Yellow',
-					element: 'span',
-					styles: {
-						'background-color': 'Yellow'
-					}
-				}
-			]);
 
 			// removed the simple characters such as letters, numbers, and punctuation
 			// keep the actual special characters not available on the keyboard
@@ -632,26 +596,11 @@ name = HtmlUtil.escapeJS(name);
 				'&euro;', '&lsquo;', '&rsquo;', '&ldquo;', '&rdquo;', '&ndash;', '&mdash;', '&iexcl;', '&cent;', '&pound;', '&curren;', '&yen;', '&brvbar;', '&sect;', '&uml;', '&copy;', '&ordf;', '&laquo;', '&not;', '&reg;', '&macr;', '&deg;', '&sup2;', '&sup3;', '&acute;', '&micro;', '&para;', '&middot;', '&cedil;', '&sup1;', '&ordm;', '&raquo;', '&frac14;', '&frac12;', '&frac34;', '&iquest;', '&Agrave;', '&Aacute;', '&Acirc;', '&Atilde;', '&Auml;', '&Aring;', '&AElig;', '&Ccedil;', '&Egrave;', '&Eacute;', '&Ecirc;', '&Euml;', '&Igrave;', '&Iacute;', '&Icirc;', '&Iuml;', '&ETH;', '&Ntilde;', '&Ograve;', '&Oacute;', '&Ocirc;', '&Otilde;', '&Ouml;', '&times;', '&Oslash;', '&Ugrave;', '&Uacute;', '&Ucirc;', '&Uuml;', '&Yacute;', '&THORN;', '&szlig;', '&agrave;', '&aacute;', '&acirc;', '&atilde;', '&auml;', '&aring;', '&aelig;', '&ccedil;', '&egrave;', '&eacute;', '&ecirc;', '&euml;', '&igrave;', '&iacute;', '&icirc;', '&iuml;', '&eth;', '&ntilde;', '&ograve;', '&oacute;', '&ocirc;', '&otilde;', '&ouml;', '&divide;', '&oslash;', '&ugrave;', '&uacute;', '&ucirc;', '&uuml;', '&yacute;', '&thorn;', '&yuml;', '&OElig;', '&oelig;', '&#372;', '&#374', '&#373', '&#375;', '&sbquo;', '&#8219;', '&bdquo;', '&hellip;', '&trade;', '&#9658;', '&bull;', '&rarr;', '&rArr;', '&hArr;', '&diams;', '&asymp;'
 			];
 
-			// All of the liferay ckeditor plugins available by default
+			// LIFERAY CKEDITOR CONFIGURATION DOCS
 			// https://dev.liferay.com/pt/develop/reference/-/knowledge_base/7-0/ckeditor-plugin-reference-guide
 			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
 
-			// Set Formatting options (incomplete)
-			// Should probably be using styles
-			// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_styles.html
-			// cmapConfig.format_tags = 'p;h2;h3;pre';
-			// cmapConfig.format_h1 = {
-			// 	element: 'h1',
-			// 	attributes: { 'class': 'editorTitle1' }
-			// };
-			// cmapConfig.format_h2 = {
-			// 	element: 'h2',
-			// 	attributes: { 'class': 'editorTitle2' }
-			// };
-			// cmapConfig.format_pre = {
-			// 	element: 'pre',
-			// 	attributes: { 'class': 'editorCode' }
-			// };
+
 
 			config = A.merge(config, cmapConfig);
 		}
