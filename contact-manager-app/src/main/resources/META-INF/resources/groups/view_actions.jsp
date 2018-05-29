@@ -8,14 +8,14 @@
 <liferay-ui:icon-menu>
 
 	<portlet:renderURL var="viewGroupURL">
-		<portlet:param name="mvcPath" value="/details.jsp" />
+		<portlet:param name="mvcPath" value="/groups/details.jsp" />
 		<portlet:param name="crmGroupId"
 			value="<%=String.valueOf(viewModel.getCrmGroupId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:renderURL>
 
 	<portlet:renderURL var="editGroupURL">
-		<portlet:param name="mvcPath" value="/edit.jsp" />
+		<portlet:param name="mvcPath" value="/groups/edit.jsp" />
 		<portlet:param name="crmGroupId"
 			value="<%=String.valueOf(viewModel.getCrmGroupId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
