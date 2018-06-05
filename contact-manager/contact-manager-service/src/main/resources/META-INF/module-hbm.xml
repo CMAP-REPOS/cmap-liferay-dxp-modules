@@ -1,0 +1,290 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="contact.manager.model.CrmCCA" />
+	<import class="contact.manager.model.CrmChiWard" />
+	<import class="contact.manager.model.CrmContact" />
+	<import class="contact.manager.model.CrmContactAuditLog" />
+	<import class="contact.manager.model.CrmContactAuditLogChange" />
+	<import class="contact.manager.model.CrmCounty" />
+	<import class="contact.manager.model.CrmCountyCommissioner" />
+	<import class="contact.manager.model.CrmGroup" />
+	<import class="contact.manager.model.CrmLTA" />
+	<import class="contact.manager.model.CrmMuni" />
+	<import class="contact.manager.model.CrmNote" />
+	<import class="contact.manager.model.CrmOutreachLog" />
+	<import class="contact.manager.model.CrmStateRep" />
+	<import class="contact.manager.model.CrmStateSenate" />
+	<import class="contact.manager.model.CrmTag" />
+	<import class="contact.manager.model.CrmUsRep" />
+	<class name="contact.manager.model.impl.CrmCCAImpl" table="crm_cca">
+		<id name="crmCCAId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmChiWardImpl" table="crm_chiward">
+		<id name="crmChiWardId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmContactImpl" table="crm_contact">
+		<id name="crmContactId" type="long">
+			<generator class="increment" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="constantContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="prefix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="salutation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="middleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="organization" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddress1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddress2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCounty" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryAddressCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddress1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddress2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCounty" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="secondaryAddressCountry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryPhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryPhoneExtension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryFax" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryCell" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="primaryEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="alternateContact" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="alternateEmail" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="isVip" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="facebookId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="twitterHandle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="linkedInUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="status" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="kioskUuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="imageFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="tagsList" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupsList" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmContactAuditLogImpl" table="crm_contactauditlog">
+		<id name="crmContactAuditLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="crmContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="constantContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="oldSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="newSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmContactAuditLogChangeImpl" table="crm_contactauditlogchange">
+		<id name="crmContactAuditLogChangeId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="crmContactAuditLogId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fieldName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="oldValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="newValue" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmCountyImpl" table="crm_county">
+		<id name="crmCountyId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmCountyCommissionerImpl" table="crm_countycommissioner">
+		<id name="crmCountyCommissionerOrBoardDistId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmGroupImpl" table="crm_group">
+		<id name="crmGroupId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmLTAImpl" table="crm_lta">
+		<id name="crmLTAId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmMuniImpl" table="crm_muni">
+		<id name="crmMuniId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmNoteImpl" table="crm_note">
+		<id name="crmNoteId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="crmContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmOutreachLogImpl" table="crm_outreachlog">
+		<id name="crmOutreachLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="crmContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="note" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="medium" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="activityType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="outreachDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmStateRepImpl" table="crm_staterep">
+		<id name="crmStateRepId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmStateSenateImpl" table="crm_statesenate">
+		<id name="crmStateSenateId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmTagImpl" table="crm_tag">
+		<id name="crmTagId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="contact.manager.model.impl.CrmUsRepImpl" table="crm_usrep">
+		<id name="crmUsRepId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="zipCode" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+</hibernate-mapping>

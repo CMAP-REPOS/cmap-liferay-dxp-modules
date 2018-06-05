@@ -1,0 +1,325 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="contact.manager.model.CrmCCA">
+		<field name="uuid" type="String" />
+		<field name="crmCCAId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmChiWard">
+		<field name="uuid" type="String" />
+		<field name="crmChiWardId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmContact">
+		<field name="uuid" type="String" />
+		<field name="crmContactId" type="long" />
+		<field name="constantContactId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="prefix" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="salutation" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="firstName" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="middleName" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="lastName" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="organization" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="jobTitle" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryAddress1" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryAddress2" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryAddressCity" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryAddressState" type="String" />
+		<field name="primaryAddressZip" type="String" />
+		<field name="primaryAddressCounty" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryAddressCountry" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="secondaryAddress1" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="secondaryAddress2" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="secondaryAddressCity" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="secondaryAddressState" type="String" />
+		<field name="secondaryAddressZip" type="String" />
+		<field name="secondaryAddressCounty" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="secondaryAddressCountry" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="primaryPhone" type="String" />
+		<field name="primaryPhoneExtension" type="String" />
+		<field name="primaryFax" type="String" />
+		<field name="primaryCell" type="String" />
+		<field name="primaryEmailAddress" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="alternateContact" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="alternateEmail" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="isVip" type="boolean" />
+		<field name="facebookId" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="twitterHandle" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="linkedInUrl" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="status" type="String" />
+		<field name="kioskUuid" type="String" />
+		<field name="imageFileEntryId" type="long" />
+		<field name="tagsList" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+		<field name="groupsList" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmContactAuditLog">
+		<field name="uuid" type="String" />
+		<field name="crmContactAuditLogId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="crmContactId" type="long" />
+		<field name="constantContactId" type="long" />
+		<field name="oldSnapshot" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+		<field name="newSnapshot" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmContactAuditLogChange">
+		<field name="uuid" type="String" />
+		<field name="crmContactAuditLogChangeId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="crmContactAuditLogId" type="long" />
+		<field name="fieldName" type="String" />
+		<field name="oldValue" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+		<field name="newValue" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmCounty">
+		<field name="uuid" type="String" />
+		<field name="crmCountyId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmCountyCommissioner">
+		<field name="uuid" type="String" />
+		<field name="crmCountyCommissionerOrBoardDistId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="number" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmGroup">
+		<field name="uuid" type="String" />
+		<field name="crmGroupId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmLTA">
+		<field name="uuid" type="String" />
+		<field name="crmLTAId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmMuni">
+		<field name="uuid" type="String" />
+		<field name="crmMuniId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmNote">
+		<field name="uuid" type="String" />
+		<field name="crmNoteId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="crmContactId" type="long" />
+		<field name="note" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmOutreachLog">
+		<field name="uuid" type="String" />
+		<field name="crmOutreachLogId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="crmContactId" type="long" />
+		<field name="note" type="String">
+			<hint name="max-length">5000</hint>
+		</field>
+		<field name="medium" type="String" />
+		<field name="activityType" type="String" />
+		<field name="outreachDate" type="Date" />
+	</model>
+	<model name="contact.manager.model.CrmStateRep">
+		<field name="uuid" type="String" />
+		<field name="crmStateRepId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="number" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmStateSenate">
+		<field name="uuid" type="String" />
+		<field name="crmStateSenateId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="number" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+	<model name="contact.manager.model.CrmTag">
+		<field name="uuid" type="String" />
+		<field name="crmTagId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+	</model>
+	<model name="contact.manager.model.CrmUsRep">
+		<field name="uuid" type="String" />
+		<field name="crmUsRepId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String">
+			<hint name="max-length">500</hint>
+		</field>
+		<field name="number" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+</model-hints>

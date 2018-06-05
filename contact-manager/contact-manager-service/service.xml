@@ -1,0 +1,362 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 7.0.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_7_0_0.dtd">
+
+<service-builder package-path="contact.manager"
+	auto-namespace-tables="false">
+	<namespace>CRM</namespace>
+	<entity human-name="CRM CCA" local-service="true" name="CrmCCA"
+		remote-service="false" table="crm_cca" uuid="true">
+		<column name="crmCCAId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Chi Ward" local-service="true" name="CrmChiWard"
+		remote-service="false" table="crm_chiward" uuid="true">
+		<column name="crmChiWardId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity name="CrmContact" human-name="CRM Contact" table="crm_contact"
+		local-service="true" remote-service="false" uuid="true">
+		<column name="crmContactId" primary="true" type="long" id-type="increment"></column>
+		<column name="constantContactId" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="prefix" type="String"></column>
+		<column name="salutation" type="String"></column>
+		<column name="firstName" type="String"></column>
+		<column name="middleName" type="String"></column>
+		<column name="lastName" type="String"></column>
+		<column name="organization" type="String"></column>
+		<column name="jobTitle" type="String"></column>
+		<column name="primaryAddress1" type="String"></column>
+		<column name="primaryAddress2" type="String"></column>
+		<column name="primaryAddressCity" type="String"></column>
+		<column name="primaryAddressState" type="String"></column>
+		<column name="primaryAddressZip" type="String"></column>
+		<column name="primaryAddressCounty" type="String"></column>
+		<column name="primaryAddressCountry" type="String"></column>
+		<column name="secondaryAddress1" type="String"></column>
+		<column name="secondaryAddress2" type="String"></column>
+		<column name="secondaryAddressCity" type="String"></column>
+		<column name="secondaryAddressState" type="String"></column>
+		<column name="secondaryAddressZip" type="String"></column>
+		<column name="secondaryAddressCounty" type="String"></column>
+		<column name="secondaryAddressCountry" type="String"></column>
+		<column name="primaryPhone" type="String"></column>
+		<column name="primaryPhoneExtension" type="String"></column>
+		<column name="primaryFax" type="String"></column>
+		<column name="primaryCell" type="String"></column>
+		<column name="primaryEmailAddress" type="String"></column>
+		<column name="alternateContact" type="String"></column>
+		<column name="alternateEmail" type="String"></column>
+		<column name="isVip" type="boolean"></column>
+		<column name="facebookId" type="String"></column>
+		<column name="twitterHandle" type="String"></column>
+		<column name="linkedInUrl" type="String"></column>
+		<column name="status" type="String"></column>
+		<column name="kioskUuid" type="String"></column>
+		<column name="imageFileEntryId" type="long"></column>
+		<column name="tagsList" type="String"></column>
+		<column name="groupsList" type="String"></column>
+		<column name="crmGroups" type="Collection" entity="CrmGroup"
+			mapping-table="crm_contacts_groups" />
+		<column name="crmTags" type="Collection" entity="CrmTag"
+			mapping-table="crm_contacts_tags" />
+		<order by="asc">
+			<order-column name="lastName" />
+		</order>
+		<finder name="PrimaryEmailAddress" return-type="Collection">
+			<finder-column name="primaryEmailAddress" />
+		</finder>
+		<finder name="Status" return-type="Collection">
+			<finder-column name="status" />
+		</finder>
+		<finder name="PrimaryEmailAddressAndStatus" return-type="Collection">
+			<finder-column name="primaryEmailAddress" />
+			<finder-column name="status" />
+		</finder>
+		<finder name="ConstantContactId" return-type="Contact">
+			<finder-column name="constantContactId" />
+		</finder>
+		<finder name="VipFlag" return-type="Collection">
+			<finder-column name="isVip" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Contact Audit Log" local-service="true"
+		name="CrmContactAuditLog" remote-service="false" table="crm_contactauditlog"
+		uuid="true">
+		<column name="crmContactAuditLogId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="crmContactId" type="long"></column>
+		<column name="constantContactId" type="long"></column>
+		<column name="oldSnapshot" type="String"></column>
+		<column name="newSnapshot" type="String"></column>
+		<order>
+			<order-column name="createDate" order-by="desc" />
+		</order>
+		<finder name="CrmContactId" return-type="Collection">
+			<finder-column name="crmContactId" />
+		</finder>
+		<finder name="ConstantContactId" return-type="Collection">
+			<finder-column name="constantContactId" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Contact Audit Log Change" local-service="true"
+		name="CrmContactAuditLogChange" remote-service="false"
+		table="crm_contactauditlogchange" uuid="true">
+		<column name="crmContactAuditLogChangeId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="crmContactAuditLogId" type="long"></column>
+		<column name="fieldName" type="String"></column>
+		<column name="oldValue" type="String"></column>
+		<column name="newValue" type="String"></column>
+		<order>
+			<order-column name="crmContactAuditLogChangeId"
+				order-by="asc" />
+		</order>
+		<finder name="CrmContactAuditLogId" return-type="Collection">
+			<finder-column name="crmContactAuditLogId" />
+		</finder>
+	</entity>
+	<entity human-name="CRM County" local-service="true" name="CrmCounty"
+		remote-service="false" table="crm_county" uuid="true">
+		<column name="crmCountyId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity human-name="CRM County Commissioner" local-service="true"
+		name="CrmCountyCommissioner" table="crm_countycommissioner" uuid="true">
+		<column name="crmCountyCommissionerOrBoardDistId" primary="true"
+			type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="number" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="number" />
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
+		local-service="true" remote-service="false" uuid="true">
+		<column name="crmGroupId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="crmContacts" type="Collection" entity="CrmContact"
+			mapping-table="crm_contacts_groups" />
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="Name" return-type="Collection">
+			<finder-column name="name" />
+		</finder>
+	</entity>
+	<entity human-name="CRM LTA" local-service="true" name="CrmLTA"
+		remote-service="false" table="crm_lta" uuid="true">
+		<column name="crmLTAId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity name="CrmMuni" local-service="true" remote-service="false"
+		human-name="CRM Muni" table="crm_muni" uuid="true">
+		<column name="crmMuniId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Note" local-service="true" name="CrmNote"
+		remote-service="false" table="crm_note" uuid="true">
+		<column name="crmNoteId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="crmContactId" type="long"></column>
+		<column name="note" type="String"></column>
+		<finder name="CrmContactId" return-type="Collection">
+			<finder-column name="crmContactId" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Outreach Log" local-service="true"
+		name="CrmOutreachLog" remote-service="false" table="crm_outreachlog"
+		uuid="true">
+		<column name="crmOutreachLogId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="crmContactId" type="long"></column>
+		<column name="note" type="String"></column>
+		<column name="medium" type="String"></column>
+		<column name="activityType" type="String"></column>
+		<column name="outreachDate" type="Date"></column>
+		<finder name="CrmContactId" return-type="Collection">
+			<finder-column name="crmContactId" />
+		</finder>
+	</entity>
+	<entity human-name="CRM State Rep" local-service="true" name="CrmStateRep"
+		remote-service="false" table="crm_staterep" uuid="true">
+		<column name="crmStateRepId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="number" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="number" />
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity name="CrmStateSenate" human-name="CRM State Senate"
+		table="crm_statesenate" uuid="true" local-service="true"
+		remote-service="false">
+		<column name="crmStateSenateId" type="long" primary="true"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="number" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="number" />
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+	<entity human-name="CRM Tag" local-service="true" name="CrmTag"
+		remote-service="false" table="crm_tag" uuid="true">
+		<column name="crmTagId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="crmContact" type="Collection" entity="CrmContact"
+			mapping-table="crm_contacts_tags" />
+	</entity>
+	<entity human-name="CRM US Rep" local-service="true" name="CrmUsRep"
+		remote-service="false" table="crm_usrep" uuid="true">
+		<column name="crmUsRepId" primary="true" type="long"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<column name="name" type="String"></column>
+		<column name="number" type="String"></column>
+		<column name="zipCode" type="String"></column>
+		<order by="asc">
+			<order-column name="number" />
+			<order-column name="name" />
+		</order>
+		<finder name="ZipCode" return-type="Collection">
+			<finder-column name="zipCode" />
+		</finder>
+	</entity>
+</service-builder>
