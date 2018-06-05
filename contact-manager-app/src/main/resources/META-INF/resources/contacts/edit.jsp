@@ -18,7 +18,7 @@
 %>
 
 <portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/view.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/contacts/view.jsp"></portlet:param>
 </portlet:renderURL>
 
 <portlet:actionURL

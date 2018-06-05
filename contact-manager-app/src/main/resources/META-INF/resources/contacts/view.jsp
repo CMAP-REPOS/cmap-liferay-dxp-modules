@@ -1,7 +1,7 @@
 <%@ include file="../init.jsp"%>
 
 <portlet:renderURL var="addContactURL">
-	<portlet:param name="mvcPath" value="/edit.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/contacts/edit.jsp"></portlet:param>
 	<portlet:param name="redirect" value="<%=currentURL%>" />
 </portlet:renderURL>
 
@@ -12,6 +12,7 @@
 	for (CrmContact crmContact : crmContacts) {
 		viewModels.add(new CrmContactViewModel(crmContact));
 	}
+
 %>
 
 <div class="container-fluid-1280">

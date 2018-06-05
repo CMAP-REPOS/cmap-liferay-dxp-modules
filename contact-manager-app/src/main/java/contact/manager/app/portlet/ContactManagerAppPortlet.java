@@ -4,11 +4,16 @@ import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayPortletSession;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -81,10 +86,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(crmContactId);
 			crmContact = updateCrmContactProperties(crmContact, request, serviceContext, true);
-
 			_crmContactLocalService.addCrmContact(crmContact);
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
-			response.setRenderParameter("mvcPath", "/details.jsp");
+			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.addContact: " + e.getMessage());
 		}
@@ -101,7 +105,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			_crmContactLocalService.updateCrmContact(crmContact);
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
-			response.setRenderParameter("mvcPath", "/details.jsp");
+			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
 		}
@@ -114,15 +118,13 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 			long userId = serviceContext.getUserId();
 			Date now = new Date();
-
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
 			crmContact.setUserId(userId);
 			crmContact.setUserName(StringPool.BLANK);
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
-
 			_crmContactLocalService.updateCrmContact(crmContact);
-			response.setRenderParameter("jspPage", "/view.jsp");
+			response.setRenderParameter("jspPage", "/contacts/view.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
 		}

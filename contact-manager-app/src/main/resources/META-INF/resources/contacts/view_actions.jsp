@@ -8,14 +8,14 @@
 <liferay-ui:icon-menu>
 
 	<portlet:renderURL var="viewContactURL">
-		<portlet:param name="mvcPath" value="/details.jsp" />
+		<portlet:param name="mvcPath" value="/contacts/details.jsp" />
 		<portlet:param name="crmContactId"
 			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:renderURL>
 
 	<portlet:renderURL var="editContactURL">
-		<portlet:param name="mvcPath" value="/edit.jsp" />
+		<portlet:param name="mvcPath" value="/contacts/edit.jsp" />
 		<portlet:param name="crmContactId"
 			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />

@@ -42,7 +42,7 @@
 	</entity>
 	<entity name="CrmContact" human-name="CRM Contact" table="crm_contact"
 		local-service="true" remote-service="false" uuid="true">
-		<column name="crmContactId" primary="true" type="long"></column>
+		<column name="crmContactId" primary="true" type="long" id-type="increment"></column>
 		<column name="constantContactId" type="long"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>

@@ -30,6 +30,11 @@
 <%@ page import="contact.manager.model.CrmGroup"%>
 <%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
 
+<%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>
+<%@ page import="contact.manager.service.permission.CrmContactPermission" %>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
