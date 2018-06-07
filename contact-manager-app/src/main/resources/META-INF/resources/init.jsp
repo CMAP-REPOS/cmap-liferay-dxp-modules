@@ -28,6 +28,7 @@
 
 <%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
 <%@ page import="contact.manager.model.CrmGroup"%>
+<%@ page import="contact.manager.model.CrmContact"%>
 <%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
 
 <%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>

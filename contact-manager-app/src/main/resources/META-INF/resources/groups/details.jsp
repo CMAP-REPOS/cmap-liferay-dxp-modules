@@ -14,6 +14,8 @@
 	portletDisplay.setURLBack(redirect);
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");
+
+	List<CrmContact> crmContactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
 %>
 
 <div class="container-fluid-1280">
@@ -26,7 +28,27 @@
 				</p>
 				<p><%=crmGroup.getName()%></p>
 			</aui:col>
-
 		</aui:row>
 	</aui:fieldset-group>
+
+	 <liferay-ui:search-container delta="20" deltaConfigurable="true"
+		emptyResultsMessage="No contacts found" total="<%=crmContactList.size()%>"
+		var="crmGroupsSearchContainer">
+		<liferay-ui:search-container-results results="<%=crmContactList%>" />
+
+	    <liferay-ui:search-container-row
+			className="contact.manager.model.CrmContact" modelVar="crmContact">
+
+			<liferay-ui:search-container-column-jsp
+				path="/groups/view_contact_actions.jsp" name="Actions" />
+
+			<liferay-ui:search-container-column-text property="firstName" name="First Name"  orderableProperty="firstName" orderable="<%= true %>" />
+			<liferay-ui:search-container-column-text property="lastName" name="Last Name" />
+			<liferay-ui:search-container-column-text property="primaryEmailAddress" name="Primary Email Address" />
+			<liferay-ui:search-container-column-text property="primaryPhone" name="Primary Phone" />
+		</liferay-ui:search-container-row>
+
+		<liferay-ui:search-iterator />
+	</liferay-ui:search-container>
+
 </div>
