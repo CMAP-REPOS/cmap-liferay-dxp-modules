@@ -16,17 +16,21 @@
 	request.setAttribute("viewModels", viewModels);
 %>
 
+
+
 <div class="container-fluid-1280">
 
 	<liferay-ui:search-container delta="20" deltaConfigurable="true"
 		emptyResultsMessage="No groups found" total="<%=viewModels.size()%>"
 		var="crmGroupsSearchContainer">
 		<liferay-ui:search-container-results results="<%=viewModels%>" />
+
 		<liferay-ui:search-container-row
 			className="contact.manager.app.viewmodel.CrmGroupViewModel"
 			modelVar="viewModel">
-			<liferay-ui:search-container-column-jsp
-				path="/groups/view_actions.jsp" name="Actions" />
+			 <liferay-ui:search-container-column-jsp
+				path="/groups/view_group_actions.jsp" name="Actions" />
+
 			<liferay-ui:search-container-column-text property="name" name="Name" />
 			<liferay-ui:search-container-column-text property="crmContactsCount"
 				name="Contacts" />

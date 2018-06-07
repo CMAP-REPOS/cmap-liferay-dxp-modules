@@ -5,7 +5,19 @@
 	CrmGroupViewModel viewModel = (CrmGroupViewModel) searchContainerRow.getObject();
 %>
 
-<liferay-ui:icon-menu>
+<aui:button-row cssClass="group-buttons">
+
+   <portlet:renderURL var="viewGroupURL">
+		<portlet:param name="mvcPath" value="/groups/details.jsp" />
+		<portlet:param name="crmGroupId"
+			value="<%=String.valueOf(viewModel.getCrmGroupId())%>" />
+		<portlet:param name="redirect" value="<%=currentURL%>" />
+	</portlet:renderURL>	
+    <aui:button onClick="<%=viewGroupURL.toString()%>" value="Details"></aui:button>
+    
+</aui:button-row>
+
+<%-- <liferay-ui:icon-menu>
 
 	<portlet:renderURL var="viewGroupURL">
 		<portlet:param name="mvcPath" value="/groups/details.jsp" />
@@ -27,4 +39,4 @@
 	<liferay-ui:icon image="edit" message="Edit"
 		url="<%=editGroupURL.toString()%>" />
 
-</liferay-ui:icon-menu>
+</liferay-ui:icon-menu> --%>
