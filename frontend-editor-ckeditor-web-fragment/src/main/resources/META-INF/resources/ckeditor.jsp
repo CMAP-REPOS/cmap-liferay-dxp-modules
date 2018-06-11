@@ -54,6 +54,7 @@ if (Validator.isNotNull(onInitMethod)) {
 }
 
 boolean skipEditorLoading = GetterUtil.getBoolean((String)request.getAttribute("liferay-ui:input-editor:skipEditorLoading"));
+
 String toolbarSet = (String)request.getAttribute("liferay-ui:input-editor:toolbarSet");
 
 if (!inlineEdit) {
@@ -90,7 +91,6 @@ if (editorOptions != null) {
 		<%
 		long javaScriptLastModified = PortalWebResourcesUtil.getLastModified(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR);
 		%>
-
 
 		<script>
 		console.log('<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified) %>');
@@ -428,7 +428,7 @@ name = HtmlUtil.escapeJS(name);
 		var pathThemeImages = window.parent.Liferay.ThemeDisplay.getPathThemeImages();
 		var themePathRoot = window.parent.Liferay.ThemeDisplay.getPathThemeRoot();
 		var serverAddr = window.parent.Liferay.ThemeDisplay.getCDNBaseURL();
-		console.log(serverAddr + themePathRoot + '/css/main.css?browserId=other&themeId=cmaponto2050theme_WAR_cmaponto2050theme&languageId=en_US&b=7010&t=1527089237237', pathThemeImages);
+
 		if (pathThemeImages.indexOf('cmap') > -1) {
 
 			// find out user roles to limit editor options
@@ -440,6 +440,7 @@ name = HtmlUtil.escapeJS(name);
 					roles.push(e.name); // or e.roleId
 				});
 			});
+
 			if(roles.includes("Administrator")){ }
 
 			// All CKEditor config options
@@ -453,13 +454,15 @@ name = HtmlUtil.escapeJS(name);
 				// Include external files, including main theme css file
 				contentsCss: [
 					pathThemeImages.replace(/\/images$/, '/css/main.css'),
-					(serverAddr + themePathRoot + '/css/main.css?browserId=other&themeId=cmaponto2050theme_WAR_cmaponto2050theme&languageId=en_US&b=7010&t=1527089237237'),
+					(serverAddr + themePathRoot + '/css/main.css'),
+					(serverAddr + themePathRoot + '/css/aui.css'),
 					'https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css',
 					'https://cloud.typography.com/7947314/7427752/css/fonts.css'
 				],
 
 				// https://docs.ckeditor.com/ckeditor4/latest/guide/dev_spellcheck.html
-				extraPlugins: 'scayt',
+				// extraPlugins: 'scayt,filebrowser,lfrpopup,itemselector',
+				extraPlugins: 'scayt,itemselector',
 
 				// spell check as you type
 				scayt_autoStartup: true,
@@ -468,6 +471,11 @@ name = HtmlUtil.escapeJS(name);
 				// scayt_elementsToIgnore: 'del,pre',
 				// scayt_ignoreWordsWithNumbers: true,
 				scayt_ignoreDomainNames: true,
+
+				// remove the language and dictionary ui tabs
+				scayt_uiTabs: '1,0,0',
+				// set dictionary name manually
+				scayt_userDictionaryName: 'CMAP',
 
 				// grammer review as you type
 				grayt_autoStartup: true,
@@ -581,13 +589,44 @@ name = HtmlUtil.escapeJS(name);
 				imagesPath: pathThemeImages,
 				templates: [
 					{
-						title: 'Advertisement',
+						title: 'Center Column',
 						image: '',
-						description: 'Information and content on the right side.',
-						html: '<div class="advertisement"> <div class="row"> <div class="col-md-8">&nbws;</div><div class="col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"> <div class="cmap-ad-content"><h4>Map</h4><p> This is where the content will go </p> </div> </div> </div> <img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /> </div>'
+						description: 'Used to place centered content inside of a full width widget. Generates a grid with the center column at the correct size.',
+						html: '<div class="inline-center-col row"><div class="col-lg-4 col-md-3 col-sm-16"></div><div class="col-lg-8 col-md-10 col-sm-16"><h4>Hello World</h4><p>Enter content here...</p></div><div class="col-lg-4 col-md-3 col-sm-16"></div></div>'
+					},
+					{
+						title: 'Advertisement',
+						image: 'https://clarknelson.com/drop/Screen-Shot-2018-05-31-15-36-08.png',
+						description: 'A widget designed to point to another page. Should contain a picture, headline, description, and button.',
+						html: '<div class="advertisement"><div class="row"><div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"><div class="cmap-ad-content"><h5>Headline</h5><p class="margin-bottom-small">Here is where the content will go, you can delete this content or change it. If you wish to change the picture, double click on the bottom of the image.</p><a href="google.com" class="button">Double click to edit</a></div></div></div><img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /><div class="widget-spacer"></div></div>'
+					},
+					{
+						title: 'Page Cards (Single)',
+						image: '',
+						description: 'A widget designed to point to another page. Should contain an image above, and link to the page below.',
+						html: '<div class="page-cards"><div class="row"><div class="page-card col-sm-8 col-xs-16"><div class="top"><img src="https://clarknelson.com/drop/Cook_116.jpg" /></div><div class="bottom"><h5><a href="google.com" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a></h5></div></div></div></div>'
+					},
+					{
+						title: 'Page Cards (Double)',
+						image: '',
+						description: 'Similar to previous page cards widget, but contains two blocks side-by-side.',
+						html: '<div class="page-cards"><div class="row"><div class="page-card col-sm-8 col-xs-16"><div class="top"><img src="https://clarknelson.com/drop/Cook_116.jpg" /></div><div class="bottom"><h5><a href="google.com" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a></h5></div></div><div class="page-card col-sm-8 col-xs-16"><div class="top"><img src="https://clarknelson.com/drop/Cook_116.jpg" /></div><div class="bottom"><h5><a href="google.com" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a></h5></div></div></div></div>'
+					},
+					{
+						title: 'Ad Grid (Single)',
+						image: '',
+						description: 'Similar to advertisement, but in a grid.',
+						html: '<div class="ad-grid"><div class="row"> <div class="left advertisement"><div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"><div class="cmap-ad-content"><h5>Headline</h5><p class="margin-bottom-small">Here is where the content will go, you can delete this content or change it. If you wish to change the picture, double click on the bottom of the image</p><a href="" class="button">View Page</a></div></div><img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /><div class="widget-spacer"></div></div> </div></div>'
+					},
+					{
+						title: 'Ad Grid (Double)',
+						image: '',
+						description: 'Similar to advertisement, but in a grid.',
+						html: '<div class="ad-grid"><div class="row"> <div class="left advertisement"><div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"><div class="cmap-ad-content"><h5>Headline</h5><p class="margin-bottom-small">Here is where the content will go, you can delete this content or change it. If you wish to change the picture, double click on the bottom of the image.</p><a href="" class="button">View Page</a></div></div><img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /><div class="widget-spacer"></div></div> <div class="right advertisement"><div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"><div class="cmap-ad-content"><h5>Headline</h5><p class="margin-bottom-small">Here is where the content will go, you can delete this content or change it. If you wish to change the picture, double click on the bottom of the image.</p><a href="" class="button">View Page</a></div></div><img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /><div class="widget-spacer"></div></div></div></div>'
 					}
 				]
 			});
+
 
 
 			// removed the simple characters such as letters, numbers, and punctuation
@@ -599,8 +638,6 @@ name = HtmlUtil.escapeJS(name);
 			// LIFERAY CKEDITOR CONFIGURATION DOCS
 			// https://dev.liferay.com/pt/develop/reference/-/knowledge_base/7-0/ckeditor-plugin-reference-guide
 			// https://dev.liferay.com/pt/develop/tutorials/-/knowledge_base/7-0/using-ckeditor-plugins-in-alloyeditor
-
-
 
 			config = A.merge(config, cmapConfig);
 		}
