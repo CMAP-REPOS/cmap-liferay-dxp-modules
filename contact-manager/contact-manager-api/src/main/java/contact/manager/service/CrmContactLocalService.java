@@ -278,6 +278,10 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContact> getCrmContacts(int start, int end);
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmContactsByStatus(java.lang.String status,
+		int start, int end, OrderByComparator obc) throws SystemException;
+
 	/**
 	* Returns all the CRM Contacts matching the UUID and company.
 	*

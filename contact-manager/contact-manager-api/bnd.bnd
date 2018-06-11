@@ -1,9 +1,10 @@
 Bundle-Name: contact-manager-api
 Bundle-SymbolicName: contact.manager.api
 Bundle-Version: 1.0.0
-Export-Package:\
+Export-Package: \
 	contact.manager.exception,\
 	contact.manager.model,\
 	contact.manager.service,\
-	contact.manager.service.persistence
+	contact.manager.service.persistence,\
+	contact.manager.comparator
 -includeresource: META-INF/service.xml=../contact-manager-service/service.xml
