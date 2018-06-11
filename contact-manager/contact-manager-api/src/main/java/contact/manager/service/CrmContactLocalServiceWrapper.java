@@ -339,6 +339,15 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		return _crmContactLocalService.getCrmContacts(start, end);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
+		java.lang.String status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmContactLocalService.getCrmContactsByStatus(status, start,
+			end, obc);
+	}
+
 	/**
 	* Returns all the CRM Contacts matching the UUID and company.
 	*

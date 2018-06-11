@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -72,6 +73,10 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 
 	public List<CrmContact> findByStatus(String status) throws SystemException {
 		return crmContactPersistence.findByStatus(status);
+	}
+
+	public List<CrmContact> getCrmContactsByStatus(String status, int start, int end, OrderByComparator obc) throws SystemException {
+		return crmContactPersistence.findByStatus(status, start, end, obc);
 	}
 
 	public List<CrmContact> findByVipFlag(boolean isVip) throws SystemException {

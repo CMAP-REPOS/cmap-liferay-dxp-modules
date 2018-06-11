@@ -20,6 +20,10 @@
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 
+<%@ page import="contact.manager.comparator.*"%>
+
+<%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
+
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
 
 <%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
