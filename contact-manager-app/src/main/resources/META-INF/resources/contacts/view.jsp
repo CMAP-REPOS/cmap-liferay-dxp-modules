@@ -1,8 +1,3 @@
-<%@page import="contact.manager.comparator.CrmContactModifiedDateComparator"%>
-<%@page import="contact.manager.comparator.CrmContactPrimaryEmailAddressComparator"%>
-<%@page import="contact.manager.comparator.CrmContactPrimaryCellComparator"%>
-<%@page import="contact.manager.comparator.CrmContactPrimaryPhoneComparator"%>
-<%@page import="contact.manager.comparator.CrmContactPrimaryAddressCountyComparator"%>
 <%@ include file="../init.jsp"%>
 
 <portlet:renderURL var="addContactURL">
