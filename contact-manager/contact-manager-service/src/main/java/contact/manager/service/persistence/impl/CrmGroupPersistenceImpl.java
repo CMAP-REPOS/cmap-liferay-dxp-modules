@@ -2443,6 +2443,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		crmGroupImpl.setCreateDate(crmGroup.getCreateDate());
 		crmGroupImpl.setModifiedDate(crmGroup.getModifiedDate());
 		crmGroupImpl.setName(crmGroup.getName());
+		crmGroupImpl.setCrmContactsCount(crmGroup.getCrmContactsCount());
 
 		return crmGroupImpl;
 	}

@@ -225,6 +225,20 @@ public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
 	 */
 	public void setName(String name);
 
+	/**
+	 * Returns the crm contacts count of this CRM Group.
+	 *
+	 * @return the crm contacts count of this CRM Group
+	 */
+	public long getCrmContactsCount();
+
+	/**
+	 * Sets the crm contacts count of this CRM Group.
+	 *
+	 * @param crmContactsCount the crm contacts count of this CRM Group
+	 */
+	public void setCrmContactsCount(long crmContactsCount);
+
 	@Override
 	public boolean isNew();
 

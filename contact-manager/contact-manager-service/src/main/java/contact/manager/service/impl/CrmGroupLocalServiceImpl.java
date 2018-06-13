@@ -15,6 +15,7 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -53,6 +54,10 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 		return crmGroupPersistence.getCrmContacts(crmGroupPk);
 	}
 	
+	public List<CrmGroup> findAll(int start, int end, OrderByComparator obc) {
+			return crmGroupPersistence.findAll(start, end, obc);
+	}
+	
 	public void setCrmContacts(long crmGroupPk, long[] crmContactPks) throws SystemException {
 		crmGroupPersistence.setCrmContacts(crmGroupPk, crmContactPks);
 	}
@@ -63,6 +68,10 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 		
 	public List<CrmGroup> getCrmGroupsByName(String crmGroupName) throws SystemException {
 		return crmGroupPersistence.findByName(crmGroupName);
+	}
+	
+	public int countAll() {
+		return crmGroupPersistence.countAll();
 	}
 	
 }

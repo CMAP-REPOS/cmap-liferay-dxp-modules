@@ -175,6 +175,8 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmGroup updateCrmGroup(CrmGroup crmGroup);
 
+	public int countAll();
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCrmContactCrmGroupsCount(long crmContactId);
 
@@ -234,6 +236,8 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<CrmGroup> findAll(int start, int end, OrderByComparator obc);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId);
