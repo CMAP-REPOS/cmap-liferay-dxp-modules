@@ -42,6 +42,7 @@ public class CrmGroupSoap implements Serializable {
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setName(model.getName());
+		soapModel.setCrmContactsCount(model.getCrmContactsCount());
 
 		return soapModel;
 	}
@@ -166,6 +167,14 @@ public class CrmGroupSoap implements Serializable {
 		_name = name;
 	}
 
+	public long getCrmContactsCount() {
+		return _crmContactsCount;
+	}
+
+	public void setCrmContactsCount(long crmContactsCount) {
+		_crmContactsCount = crmContactsCount;
+	}
+
 	private String _uuid;
 	private long _crmGroupId;
 	private long _groupId;
@@ -175,4 +184,5 @@ public class CrmGroupSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+	private long _crmContactsCount;
 }

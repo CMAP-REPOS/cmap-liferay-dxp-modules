@@ -206,6 +206,7 @@
 		<column name="createDate" type="Date"></column>
 		<column name="modifiedDate" type="Date"></column>
 		<column name="name" type="String"></column>
+		<column name="crmContactsCount" type="long"></column>
 		<column name="crmContacts" type="Collection" entity="CrmContact"
 			mapping-table="crm_contacts_groups" />
 		<order by="asc">

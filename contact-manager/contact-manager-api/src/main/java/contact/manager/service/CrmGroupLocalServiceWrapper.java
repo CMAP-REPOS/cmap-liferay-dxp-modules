@@ -189,6 +189,11 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	}
 
 	@Override
+	public int countAll() {
+		return _crmGroupLocalService.countAll();
+	}
+
+	@Override
 	public int getCrmContactCrmGroupsCount(long crmContactId) {
 		return _crmGroupLocalService.getCrmContactCrmGroupsCount(crmContactId);
 	}
@@ -270,6 +275,12 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _crmGroupLocalService.dynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
+		int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
+		return _crmGroupLocalService.findAll(start, end, obc);
 	}
 
 	@Override

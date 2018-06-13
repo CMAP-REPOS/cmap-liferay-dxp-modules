@@ -204,6 +204,7 @@
 		<field name="name" type="String">
 			<hint name="max-length">500</hint>
 		</field>
+		<field name="crmContactsCount" type="long" />
 	</model>
 	<model name="contact.manager.model.CrmLTA">
 		<field name="uuid" type="String" />

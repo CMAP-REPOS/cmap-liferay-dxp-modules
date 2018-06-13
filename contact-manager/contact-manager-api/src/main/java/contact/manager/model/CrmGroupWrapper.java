@@ -68,6 +68,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("crmContactsCount", getCrmContactsCount());
 
 		return attributes;
 	}
@@ -126,6 +127,12 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long crmContactsCount = (Long)attributes.get("crmContactsCount");
+
+		if (crmContactsCount != null) {
+			setCrmContactsCount(crmContactsCount);
 		}
 	}
 
@@ -265,6 +272,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	}
 
 	/**
+	* Returns the crm contacts count of this CRM Group.
+	*
+	* @return the crm contacts count of this CRM Group
+	*/
+	@Override
+	public long getCrmContactsCount() {
+		return _crmGroup.getCrmContactsCount();
+	}
+
+	/**
 	* Returns the crm group ID of this CRM Group.
 	*
 	* @return the crm group ID of this CRM Group
@@ -332,6 +349,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmGroup.setCreateDate(createDate);
+	}
+
+	/**
+	* Sets the crm contacts count of this CRM Group.
+	*
+	* @param crmContactsCount the crm contacts count of this CRM Group
+	*/
+	@Override
+	public void setCrmContactsCount(long crmContactsCount) {
+		_crmGroup.setCrmContactsCount(crmContactsCount);
 	}
 
 	/**

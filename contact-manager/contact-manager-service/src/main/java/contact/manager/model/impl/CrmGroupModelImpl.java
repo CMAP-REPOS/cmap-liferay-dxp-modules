@@ -76,7 +76,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			{ "userName", Types.VARCHAR },
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
-			{ "name", Types.VARCHAR }
+			{ "name", Types.VARCHAR },
+			{ "crmContactsCount", Types.BIGINT }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -90,9 +91,10 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("crmContactsCount", Types.BIGINT);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_group (uuid_ VARCHAR(75) null,crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_group (uuid_ VARCHAR(75) null,crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,crmContactsCount LONG)";
 	public static final String TABLE_SQL_DROP = "drop table crm_group";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_group.name ASC";
@@ -170,6 +172,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
+		attributes.put("crmContactsCount", getCrmContactsCount());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -231,6 +234,12 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 		if (name != null) {
 			setName(name);
+		}
+
+		Long crmContactsCount = (Long)attributes.get("crmContactsCount");
+
+		if (crmContactsCount != null) {
+			setCrmContactsCount(crmContactsCount);
 		}
 	}
 
@@ -404,6 +413,16 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	}
 
 	@Override
+	public long getCrmContactsCount() {
+		return _crmContactsCount;
+	}
+
+	@Override
+	public void setCrmContactsCount(long crmContactsCount) {
+		_crmContactsCount = crmContactsCount;
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CrmGroup.class.getName()));
@@ -449,6 +468,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		crmGroupImpl.setCreateDate(getCreateDate());
 		crmGroupImpl.setModifiedDate(getModifiedDate());
 		crmGroupImpl.setName(getName());
+		crmGroupImpl.setCrmContactsCount(getCrmContactsCount());
 
 		crmGroupImpl.resetOriginalValues();
 
@@ -580,12 +600,14 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			crmGroupCacheModel.name = null;
 		}
 
+		crmGroupCacheModel.crmContactsCount = getCrmContactsCount();
+
 		return crmGroupCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -605,6 +627,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		sb.append(getModifiedDate());
 		sb.append(", name=");
 		sb.append(getName());
+		sb.append(", crmContactsCount=");
+		sb.append(getCrmContactsCount());
 		sb.append("}");
 
 		return sb.toString();
@@ -612,7 +636,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmGroup");
@@ -654,6 +678,10 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			"<column><column-name>name</column-name><column-value><![CDATA[");
 		sb.append(getName());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>crmContactsCount</column-name><column-value><![CDATA[");
+		sb.append(getCrmContactsCount());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -680,6 +708,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	private boolean _setModifiedDate;
 	private String _name;
 	private String _originalName;
+	private long _crmContactsCount;
 	private long _columnBitmask;
 	private CrmGroup _escapedModel;
 }
