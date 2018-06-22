@@ -35,55 +35,55 @@
 
 	OrderByComparator orderByComparator = null;
 
-    if (firstName.equals("firstName")) {
+    if (firstName.equals(CrmContactFieldKeys.FIRST_NAME)) {
 	    orderByComparator = new CrmContactFirstNameComparator(orderByAsc);
 	}
 
-    if (lastName.equals("lastName")) {
+    if (lastName.equals(CrmContactFieldKeys.LAST_NAME)) {
 	    orderByComparator = new CrmContactLastNameComparator(orderByAsc);
 	}
 
-    if (organization.equals("organization")) {
+    if (organization.equals(CrmContactFieldKeys.ORGANIZATION)) {
 	    orderByComparator = new CrmContactOrganizationComparator(orderByAsc);
 	}
 
-    if (jobTitle.equals("jobTitle")) {
+    if (jobTitle.equals(CrmContactFieldKeys.JOB_TITLE)) {
 	    orderByComparator = new CrmContactJobTitleComparator(orderByAsc);
 	}
 
-    if (primaryAddress1.equals("primaryAddress1")) {
+    if (primaryAddress1.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_1)) {
 	    orderByComparator = new CrmContactPrimaryAddress1Comparator(orderByAsc);
 	}
 
-    if (primaryAddress2.equals("primaryAddress2")) {
+    if (primaryAddress2.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_2)) {
 	    orderByComparator = new CrmContactPrimaryAddress2Comparator(orderByAsc);
 	}
 
-    if (primaryAddressCity.equals("primaryAddressCity")) {
+    if (primaryAddressCity.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_CITY)) {
 	    orderByComparator = new CrmContactPrimaryAddressCityComparator(orderByAsc);
 	}
 
-    if (primaryAddressZip.equals("primaryAddressZip")) {
+    if (primaryAddressZip.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_ZIP)) {
 	    orderByComparator = new CrmContactPrimaryAddressZipComparator(orderByAsc);
 	}
 
-    if (primaryAddressCounty.equals("primaryAddressCounty")) {
+    if (primaryAddressCounty.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_COUNTY)) {
 	    orderByComparator = new CrmContactPrimaryAddressCountyComparator(orderByAsc);
 	}
 
-    if (primaryPhone.equals("primaryPhone")) {
+    if (primaryPhone.equals(CrmContactFieldKeys.PRIMARY_PHONE)) {
 	    orderByComparator = new CrmContactPrimaryPhoneComparator(orderByAsc);
 	}
 
-    if (primaryCell.equals("primaryCell")) {
+    if (primaryCell.equals(CrmContactFieldKeys.PRIMARY_CELL)) {
 	    orderByComparator = new CrmContactPrimaryCellComparator(orderByAsc);
 	}
 
-    if (primaryEmailAddress.equals("primaryEmailAddress")) {
+    if (primaryEmailAddress.equals(CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS)) {
 	    orderByComparator = new CrmContactPrimaryEmailAddressComparator(orderByAsc);
 	}
 
-    if (modifiedDate.equals("modifiedDate")) {
+    if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 	    orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
 	}
 %>
