@@ -14,27 +14,42 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
+
+import contact.manager.model.CrmContactAuditLog;
 import contact.manager.service.base.CrmContactAuditLogLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM Contact Audit Log local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmContactAuditLogLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmContactAuditLogLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
  * @see CrmContactAuditLogLocalServiceBaseImpl
  * @see contact.manager.service.CrmContactAuditLogLocalServiceUtil
  */
-public class CrmContactAuditLogLocalServiceImpl
-	extends CrmContactAuditLogLocalServiceBaseImpl {
+public class CrmContactAuditLogLocalServiceImpl extends CrmContactAuditLogLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmContactAuditLogLocalServiceUtil} to access the CRM Contact Audit Log local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmContactAuditLogLocalServiceUtil} to access the
+	 * CRM Contact Audit Log local service.
 	 */
+
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId) throws SystemException {
+		return crmContactAuditLogPersistence.findByCrmContactId(crmContactId);
+	}
+
 }

@@ -257,6 +257,13 @@ public class CrmOutreachLogLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
+		long crmContactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmOutreachLogLocalService.findByCrmContactId(crmContactId);
+	}
+
 	/**
 	* Returns a range of all the CRM Outreach Logs.
 	*

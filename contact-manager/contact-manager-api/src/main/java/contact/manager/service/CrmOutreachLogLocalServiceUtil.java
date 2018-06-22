@@ -242,6 +242,12 @@ public class CrmOutreachLogLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
+		long crmContactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByCrmContactId(crmContactId);
+	}
+
 	/**
 	* Returns a range of all the CRM Outreach Logs.
 	*

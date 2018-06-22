@@ -258,6 +258,13 @@ public class CrmContactAuditLogLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmContactAuditLog> findByCrmContactId(
+		long crmContactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmContactAuditLogLocalService.findByCrmContactId(crmContactId);
+	}
+
 	/**
 	* Returns a range of all the CRM Contact Audit Logs.
 	*

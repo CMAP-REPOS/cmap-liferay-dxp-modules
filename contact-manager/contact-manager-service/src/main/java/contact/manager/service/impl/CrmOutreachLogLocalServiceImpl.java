@@ -14,27 +14,41 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
+
+import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.base.CrmOutreachLogLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM Outreach Log local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmOutreachLogLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmOutreachLogLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
  * @see CrmOutreachLogLocalServiceBaseImpl
  * @see contact.manager.service.CrmOutreachLogLocalServiceUtil
  */
-public class CrmOutreachLogLocalServiceImpl
-	extends CrmOutreachLogLocalServiceBaseImpl {
+public class CrmOutreachLogLocalServiceImpl extends CrmOutreachLogLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmOutreachLogLocalServiceUtil} to access the CRM Outreach Log local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmOutreachLogLocalServiceUtil} to access the CRM
+	 * Outreach Log local service.
 	 */
+
+	public List<CrmOutreachLog> findByCrmContactId(long crmContactId) throws SystemException {
+		return crmOutreachLogPersistence.findByCrmContactId(crmContactId);
+	}
 }

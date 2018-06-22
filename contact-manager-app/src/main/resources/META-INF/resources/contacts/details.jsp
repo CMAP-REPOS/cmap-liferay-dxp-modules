@@ -1,8 +1,9 @@
 <%@ include file="../init.jsp"%>
+<%@ include file="init.jsp"%>
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
-
+	String crmContactIdString = ParamUtil.getString(request, "crmContactId");
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
@@ -13,12 +14,14 @@
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	renderResponse.setTitle((crmContact != null) ? (crmContact.getFirstName() + " " + crmContact.getLastName())
-			: "New Contact");
+	renderResponse.setTitle((crmContact != null) ? ("Contact Information for " + crmContact.getFirstName() + " " + crmContact.getLastName())
+			: "Contact Information");
 %>
 
 <div class="container-fluid-1280">
-
+	
+	<%@ include file="nav.jsp"%>
+	
 	<aui:fieldset-group markupView="lexicon">
 		<aui:row>
 			<aui:col md="4">

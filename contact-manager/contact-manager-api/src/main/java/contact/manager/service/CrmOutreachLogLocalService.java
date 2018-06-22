@@ -224,6 +224,9 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<CrmOutreachLog> findByCrmContactId(long crmContactId)
+		throws SystemException;
+
 	/**
 	* Returns a range of all the CRM Outreach Logs.
 	*

@@ -228,6 +228,9 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId)
+		throws SystemException;
+
 	/**
 	* Returns a range of all the CRM Contact Audit Logs.
 	*

@@ -8,10 +8,8 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -24,6 +22,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
+import contact.manager.app.util.GroupUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.service.CrmGroupLocalService;
@@ -69,7 +68,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			long crmGroupId = CounterLocalServiceUtil.increment(CrmGroup.class.getName());
 
 			CrmGroup crmGroup = _crmGroupLocalService.createCrmGroup(crmGroupId);
-			crmGroup = updateCrmGroupProperties(crmGroup, request, serviceContext, true);
+			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, true);
 
 			_crmGroupLocalService.addCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
@@ -86,7 +85,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
 
 			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
-			crmGroup = updateCrmGroupProperties(crmGroup, request, serviceContext, false);
+			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
@@ -116,33 +115,6 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 		//		} catch (Exception e) {
 		//			LOGGER.error("Exception in GroupManagerAppPortlet.delete: " + e.getMessage());
 		//		}
-	}
-	
-	private CrmGroup updateCrmGroupProperties(CrmGroup crmGroup, ActionRequest request,
-			ServiceContext serviceContext, boolean isNew) {
-		
-		Date now = new Date();
-		long userId = serviceContext.getUserId();
-
-		String name = ParamUtil.getString(request, "name");
-
-		crmGroup.setName(name);
-		crmGroup.setUserId(userId);
-		crmGroup.setUserName(StringPool.BLANK);
-		crmGroup.setModifiedDate(serviceContext.getModifiedDate(now));
-
-		if (isNew) {
-			long companyId = serviceContext.getCompanyId();
-			long groupId = serviceContext.getScopeGroupId();
-
-			crmGroup.setGroupId(groupId);
-			crmGroup.setCompanyId(companyId);
-			crmGroup.setCreateDate(serviceContext.getCreateDate(now));
-			// TODO: implement status
-			// crmGroup.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
-		}
-
-		return crmGroup;
 	}
 	
 	@Reference(unbind = "-")

@@ -153,7 +153,8 @@ create table crm_group (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null,
-	name VARCHAR(500) null
+	name VARCHAR(500) null,
+	crmContactsCount LONG
 );
 
 create table crm_lta (
