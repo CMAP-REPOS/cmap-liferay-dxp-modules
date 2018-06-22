@@ -7,10 +7,10 @@
 
 <%
 	List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
-	String name = ParamUtil.getString(request, "orderByCol", "name");
-	String crmContactsCount = ParamUtil.getString(request, "orderByCol", "crmContactsCount");
-	String createDate = ParamUtil.getString(request, "orderByCol", "createDate");
-	String modifiedDate = ParamUtil.getString(request, "orderByCol", "modifiedDate");
+	String name = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.NAME);
+	String crmContactsCount = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.CRM_CONTACTS_COUNT);
+	String createDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.CREATE_DATE);
+	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
 
 	boolean orderByAsc = false;
 
@@ -22,19 +22,19 @@
 
 	OrderByComparator orderByComparator = null;
 
-   if (name.equals("name")) {
+   if (name.equals(CrmContactFieldKeys.NAME)) {
 	    orderByComparator = new CrmGroupNameComparator(orderByAsc);
 	}
 
-   if (crmContactsCount.equals("crmContactsCount")) {
+   if (crmContactsCount.equals(CrmContactFieldKeys.CRM_CONTACTS_COUNT)) {
 	    orderByComparator = new CrmGroupCrmContactsCountComparator(orderByAsc);
 	}
 
-    if (createDate.equals("createDate")) {
+    if (createDate.equals(CrmContactFieldKeys.CREATE_DATE)) {
     	orderByComparator = new CrmGroupCreateDateComparator(orderByAsc);
 	}
 
-    if (modifiedDate.equals("modifiedDate")) {
+    if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 	    orderByComparator = new CrmGroupModifiedDateComparator(orderByAsc);
 	} 
 %>
