@@ -9,19 +9,19 @@
 <%
 	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 
-	String firstName = ParamUtil.getString(request, "orderByCol", "firstName");
-	String lastName = ParamUtil.getString(request, "orderByCol", "lastName");
-	String organization = ParamUtil.getString(request, "orderByCol", "organization");
-	String jobTitle = ParamUtil.getString(request, "orderByCol", "jobTitle");
-	String primaryAddress1 = ParamUtil.getString(request, "orderByCol", "primaryAddress1");
-	String primaryAddress2 = ParamUtil.getString(request, "orderByCol", "primaryAddress2");
-	String primaryAddressCity = ParamUtil.getString(request, "orderByCol", "primaryAddressCity");
-	String primaryAddressZip = ParamUtil.getString(request, "orderByCol", "primaryAddressZip");
-	String primaryAddressCounty = ParamUtil.getString(request, "orderByCol", "primaryAddressCounty");
-	String primaryPhone = ParamUtil.getString(request, "orderByCol", "primaryPhone");
-	String primaryCell = ParamUtil.getString(request, "orderByCol", "primaryCell");
-	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol", "primaryEmailAddress");
-	String modifiedDate = ParamUtil.getString(request, "orderByCol", "modifiedDate");
+	String firstName = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.FIRST_NAME);
+	String lastName = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.LAST_NAME);
+	String organization = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.ORGANIZATION);
+	String jobTitle = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.JOB_TITLE);
+	String primaryAddress1 = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_1);
+	String primaryAddress2 = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_2);
+	String primaryAddressCity = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_CITY);
+	String primaryAddressZip = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_ZIP);
+	String primaryAddressCounty = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_COUNTY);
+	String primaryPhone = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_PHONE);
+	String primaryCell = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_CELL);
+	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS);
+	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
 
 
 

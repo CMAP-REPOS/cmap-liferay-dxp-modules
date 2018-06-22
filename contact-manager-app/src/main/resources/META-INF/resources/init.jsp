@@ -25,6 +25,7 @@
 <%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
+<%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
 
 <%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
 <%@ page import="contact.manager.model.CrmContact"%>
