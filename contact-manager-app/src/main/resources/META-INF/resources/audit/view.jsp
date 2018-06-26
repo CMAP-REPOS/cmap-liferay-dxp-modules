@@ -3,7 +3,6 @@
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
-	String crmContactIdString = ParamUtil.getString(request, "crmContactId");
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
@@ -12,7 +11,7 @@
 	
 	PortletURL iteratorURL = renderResponse.createRenderURL();
 	iteratorURL.setParameter("mvcPath", "/audit/view.jsp");
-	iteratorURL.setParameter("crmContactId", crmContactIdString);
+	iteratorURL.setParameter("crmContactId", String.valueOf(crmContactId));
 
 	String redirect = ParamUtil.getString(request, "redirect");
 	portletDisplay.setShowBackIcon(true);

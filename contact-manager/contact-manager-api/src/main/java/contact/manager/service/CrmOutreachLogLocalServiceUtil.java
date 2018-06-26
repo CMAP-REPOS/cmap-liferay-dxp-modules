@@ -174,6 +174,10 @@ public class CrmOutreachLogLocalServiceUtil {
 		return getService().updateCrmOutreachLog(crmOutreachLog);
 	}
 
+	public static int countByCrmContactIdId(long crmContactId) {
+		return getService().countByCrmContactIdId(crmContactId);
+	}
+
 	/**
 	* Returns the number of CRM Outreach Logs.
 	*
@@ -246,6 +250,21 @@ public class CrmOutreachLogLocalServiceUtil {
 		long crmContactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByCrmContactId(crmContactId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
+		long crmContactId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByCrmContactId(crmContactId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
+		long crmContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmOutreachLog> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .findByCrmContactId(crmContactId, start, end,
+			orderByComparator);
 	}
 
 	/**

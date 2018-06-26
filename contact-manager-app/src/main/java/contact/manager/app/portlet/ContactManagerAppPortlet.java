@@ -11,9 +11,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -28,9 +26,13 @@ import org.osgi.service.component.annotations.Reference;
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.ContactUtil;
-import contact.manager.app.viewmodel.CrmContactViewModel;
+import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmContactAuditLog;
+import contact.manager.model.CrmOutreachLog;
+import contact.manager.service.CrmContactAuditLogLocalService;
 import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmOutreachLogLocalService;
 
 /**
  * @author jon
@@ -62,21 +64,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-
-		List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
-		List<CrmContact> crmContacts = _crmContactLocalService.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
-
-		for (CrmContact crmContact : crmContacts) {
-			viewModels.add(new CrmContactViewModel(crmContact));
-		}
-
-		request.setAttribute("viewModels", viewModels);
 		super.render(request, response);
 	}
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = CounterLocalServiceUtil.increment(CrmContact.class.getName());
@@ -84,6 +76,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(crmContactId);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
 			_crmContactLocalService.addCrmContact(crmContact);
+
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 		} catch (Exception e) {
@@ -99,8 +92,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, false);
-
 			_crmContactLocalService.updateCrmContact(crmContact);
+
 			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 		} catch (Exception e) {
@@ -115,22 +108,88 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 			long userId = serviceContext.getUserId();
 			Date now = new Date();
+			
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
 			crmContact.setUserId(userId);
 			crmContact.setUserName(StringPool.BLANK);
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			_crmContactLocalService.updateCrmContact(crmContact);
+			
 			response.setRenderParameter("jspPage", "/contacts/view.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
 		}
 	}
 
-	@Reference(unbind = "-")
-	protected void setEntryService(CrmContactLocalService crmContactLocalService) {
-		_crmContactLocalService = crmContactLocalService;
+	public void addOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
+			long crmOutreachLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.createCrmOutreachLog(crmOutreachLogId);
+
+			crmOutreachLog = OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext, true);
+			_crmOutreachLogLocalService.addCrmOutreachLog(crmOutreachLog);
+
+			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
+
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.addOutreachLog: " + e.getMessage());
+		}
 	}
 
+	public void updateOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
+		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
+			long crmOutreachLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.createCrmOutreachLog(crmOutreachLogId);
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.addOutreachLog: " + e.getMessage());
+		}
+	}
+
+	public void deleteOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
+		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
+			long crmOutreachLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.createCrmOutreachLog(crmOutreachLogId);
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.deleteOutreachLog: " + e.getMessage());
+		}
+	}
+	
+	public void addAuditLog(ActionRequest request, ActionResponse response) throws PortalException {
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContactAuditLog.class.getName(), request);
+			long crmContactAuditLogId = CounterLocalServiceUtil.increment(CrmContactAuditLog.class.getName());
+			CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService.createCrmContactAuditLog(crmContactAuditLogId);
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.addAuditLog: " + e.getMessage());
+		}
+	}
+
+	@Reference
+	protected void setCrmContactService(CrmContactLocalService crmContactLocalService) {
+
+		_crmContactLocalService = crmContactLocalService;
+	}
 	private CrmContactLocalService _crmContactLocalService;
+
+	@Reference
+	protected void setCrmContactAuditLogService(CrmContactAuditLogLocalService crmContactAuditLogLocalService) {
+
+		_crmContactAuditLogLocalService = crmContactAuditLogLocalService;
+	}
+	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
+
+	@Reference
+	protected void setCrmOutreachLogService(CrmOutreachLogLocalService crmOutreachLogLocalService) {
+
+		_crmOutreachLogLocalService = crmOutreachLogLocalService;
+	}
+	private CrmOutreachLogLocalService _crmOutreachLogLocalService;
 }

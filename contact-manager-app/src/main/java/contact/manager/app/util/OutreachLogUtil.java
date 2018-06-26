@@ -1,40 +1,46 @@
 package contact.manager.app.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.util.List;
+import java.util.Date;
 
+import javax.portlet.ActionRequest;
+
+import contact.manager.app.constants.CrmOutreachLogKeys;
 import contact.manager.model.CrmOutreachLog;
-import contact.manager.service.CrmOutreachLogLocalServiceUtil;
 
 public class OutreachLogUtil {
 
-	private static final Log LOGGER = LogFactoryUtil.getLog(OutreachLogUtil.class);
+	public static CrmOutreachLog updateCrmOutreachLogProperties(CrmOutreachLog crmOutreachLog, ActionRequest request,
+			ServiceContext serviceContext, boolean isNew) {
 
-	public static void addOutreachLog() {
-		// TODO: implement
-		// TODO: check permission
-	}
+		Date now = new Date();
+		long userId = serviceContext.getUserId();
+		String userName = UserUtil.getUserName(userId);
+		
+		Date outreachDate = ParamUtil.getDate(request, CrmOutreachLogKeys.OUTREACH_DATE, null);
+		String medium = ParamUtil.getString(request, CrmOutreachLogKeys.MEDIUM);
+		String note = ParamUtil.getString(request, CrmOutreachLogKeys.NOTE);
+		long crmContactId = ParamUtil.getLong(request, CrmOutreachLogKeys.CRM_CONTACT_ID);
 
-	public static CrmOutreachLog getOutreachLog(long crmOutreachLogId) {
-		// TODO: implement
-		// TODO: check permission
-		CrmOutreachLog contactOutreachLog = null;
-		try {
-			contactOutreachLog = CrmOutreachLogLocalServiceUtil.getCrmOutreachLog(crmOutreachLogId);
-		} catch (PortalException e) {
-			LOGGER.error("Exception in OutreachLogUtil.getOutreachLog: " + e.getMessage());
-			e.printStackTrace();
+		crmOutreachLog.setOutreachDate(outreachDate);
+		crmOutreachLog.setMedium(medium);
+		crmOutreachLog.setNote(note);
+		crmOutreachLog.setUserId(userId);
+		crmOutreachLog.setUserName(userName);
+		crmOutreachLog.setModifiedDate(serviceContext.getCreateDate(now));
+		crmOutreachLog.setCrmContactId(crmContactId);
+
+		if (isNew) {
+			long companyId = serviceContext.getCompanyId();
+			long groupId = serviceContext.getScopeGroupId();
+
+			crmOutreachLog.setGroupId(groupId);
+			crmOutreachLog.setCompanyId(companyId);
+			crmOutreachLog.setCreateDate(serviceContext.getCreateDate(now));
 		}
-		return contactOutreachLog;
-	}
 
-	public static List<CrmOutreachLog> getOutreachLogs(long crmContactId) {
-		// TODO: implement
-		// TODO: check permission
-		List<CrmOutreachLog> contactOutreachLogs = CrmOutreachLogLocalServiceUtil.findByCrmContactId(crmContactId);
-		return contactOutreachLogs;
-	}
+		return crmOutreachLog;
+	}	
 }
