@@ -84,6 +84,7 @@ create table crm_contactauditlog (
 	modifiedDate DATE null,
 	crmContactId LONG,
 	constantContactId LONG,
+	action VARCHAR(75) null,
 	oldSnapshot TEXT null,
 	newSnapshot TEXT null
 );

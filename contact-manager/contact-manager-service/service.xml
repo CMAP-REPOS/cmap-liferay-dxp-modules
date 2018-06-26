@@ -123,6 +123,7 @@
 		<column name="modifiedDate" type="Date"></column>
 		<column name="crmContactId" type="long"></column>
 		<column name="constantContactId" type="long"></column>
+		<column name="action" type="String"></column>
 		<column name="oldSnapshot" type="String"></column>
 		<column name="newSnapshot" type="String"></column>
 		<order>

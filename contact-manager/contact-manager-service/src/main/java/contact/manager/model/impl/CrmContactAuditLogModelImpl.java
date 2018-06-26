@@ -79,6 +79,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "crmContactId", Types.BIGINT },
 			{ "constantContactId", Types.BIGINT },
+			{ "action", Types.VARCHAR },
 			{ "oldSnapshot", Types.VARCHAR },
 			{ "newSnapshot", Types.VARCHAR }
 		};
@@ -95,11 +96,12 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("crmContactId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("constantContactId", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("action", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("oldSnapshot", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("newSnapshot", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlog (uuid_ VARCHAR(75) null,crmContactAuditLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactId LONG,constantContactId LONG,oldSnapshot TEXT null,newSnapshot TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table crm_contactauditlog (uuid_ VARCHAR(75) null,crmContactAuditLogId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,crmContactId LONG,constantContactId LONG,action VARCHAR(75) null,oldSnapshot TEXT null,newSnapshot TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_contactauditlog";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmContactAuditLog.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_contactauditlog.createDate DESC";
@@ -171,6 +173,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("crmContactId", getCrmContactId());
 		attributes.put("constantContactId", getConstantContactId());
+		attributes.put("action", getAction());
 		attributes.put("oldSnapshot", getOldSnapshot());
 		attributes.put("newSnapshot", getNewSnapshot());
 
@@ -240,6 +243,12 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 		if (constantContactId != null) {
 			setConstantContactId(constantContactId);
+		}
+
+		String action = (String)attributes.get("action");
+
+		if (action != null) {
+			setAction(action);
 		}
 
 		String oldSnapshot = (String)attributes.get("oldSnapshot");
@@ -446,6 +455,21 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	}
 
 	@Override
+	public String getAction() {
+		if (_action == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _action;
+		}
+	}
+
+	@Override
+	public void setAction(String action) {
+		_action = action;
+	}
+
+	@Override
 	public String getOldSnapshot() {
 		if (_oldSnapshot == null) {
 			return StringPool.BLANK;
@@ -522,6 +546,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		crmContactAuditLogImpl.setModifiedDate(getModifiedDate());
 		crmContactAuditLogImpl.setCrmContactId(getCrmContactId());
 		crmContactAuditLogImpl.setConstantContactId(getConstantContactId());
+		crmContactAuditLogImpl.setAction(getAction());
 		crmContactAuditLogImpl.setOldSnapshot(getOldSnapshot());
 		crmContactAuditLogImpl.setNewSnapshot(getNewSnapshot());
 
@@ -660,6 +685,14 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 		crmContactAuditLogCacheModel.constantContactId = getConstantContactId();
 
+		crmContactAuditLogCacheModel.action = getAction();
+
+		String action = crmContactAuditLogCacheModel.action;
+
+		if ((action != null) && (action.length() == 0)) {
+			crmContactAuditLogCacheModel.action = null;
+		}
+
 		crmContactAuditLogCacheModel.oldSnapshot = getOldSnapshot();
 
 		String oldSnapshot = crmContactAuditLogCacheModel.oldSnapshot;
@@ -681,7 +714,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -703,6 +736,8 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		sb.append(getCrmContactId());
 		sb.append(", constantContactId=");
 		sb.append(getConstantContactId());
+		sb.append(", action=");
+		sb.append(getAction());
 		sb.append(", oldSnapshot=");
 		sb.append(getOldSnapshot());
 		sb.append(", newSnapshot=");
@@ -714,7 +749,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(40);
+		StringBundler sb = new StringBundler(43);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmContactAuditLog");
@@ -761,6 +796,10 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 		sb.append(getConstantContactId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>action</column-name><column-value><![CDATA[");
+		sb.append(getAction());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>oldSnapshot</column-name><column-value><![CDATA[");
 		sb.append(getOldSnapshot());
 		sb.append("]]></column-value></column>");
@@ -798,6 +837,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	private long _constantContactId;
 	private long _originalConstantContactId;
 	private boolean _setOriginalConstantContactId;
+	private String _action;
 	private String _oldSnapshot;
 	private String _newSnapshot;
 	private long _columnBitmask;

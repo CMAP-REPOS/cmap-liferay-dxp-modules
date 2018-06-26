@@ -239,6 +239,21 @@ public interface CrmContactAuditLogModel extends BaseModel<CrmContactAuditLog>,
 	public void setConstantContactId(long constantContactId);
 
 	/**
+	 * Returns the action of this CRM Contact Audit Log.
+	 *
+	 * @return the action of this CRM Contact Audit Log
+	 */
+	@AutoEscape
+	public String getAction();
+
+	/**
+	 * Sets the action of this CRM Contact Audit Log.
+	 *
+	 * @param action the action of this CRM Contact Audit Log
+	 */
+	public void setAction(String action);
+
+	/**
 	 * Returns the old snapshot of this CRM Contact Audit Log.
 	 *
 	 * @return the old snapshot of this CRM Contact Audit Log

@@ -70,6 +70,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("crmContactId", getCrmContactId());
 		attributes.put("constantContactId", getConstantContactId());
+		attributes.put("action", getAction());
 		attributes.put("oldSnapshot", getOldSnapshot());
 		attributes.put("newSnapshot", getNewSnapshot());
 
@@ -136,6 +137,12 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 
 		if (constantContactId != null) {
 			setConstantContactId(constantContactId);
+		}
+
+		String action = (String)attributes.get("action");
+
+		if (action != null) {
+			setAction(action);
 		}
 
 		String oldSnapshot = (String)attributes.get("oldSnapshot");
@@ -205,6 +212,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public java.lang.Object clone() {
 		return new CrmContactAuditLogWrapper((CrmContactAuditLog)_crmContactAuditLog.clone());
+	}
+
+	/**
+	* Returns the action of this CRM Contact Audit Log.
+	*
+	* @return the action of this CRM Contact Audit Log
+	*/
+	@Override
+	public java.lang.String getAction() {
+		return _crmContactAuditLog.getAction();
 	}
 
 	/**
@@ -360,6 +377,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public void persist() {
 		_crmContactAuditLog.persist();
+	}
+
+	/**
+	* Sets the action of this CRM Contact Audit Log.
+	*
+	* @param action the action of this CRM Contact Audit Log
+	*/
+	@Override
+	public void setAction(java.lang.String action) {
+		_crmContactAuditLog.setAction(action);
 	}
 
 	@Override

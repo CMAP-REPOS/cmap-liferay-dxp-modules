@@ -174,6 +174,8 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	public CrmContactAuditLog updateCrmContactAuditLog(
 		CrmContactAuditLog crmContactAuditLog);
 
+	public int countByCrmContactId(long crmContactId);
+
 	/**
 	* Returns the number of CRM Contact Audit Logs.
 	*
@@ -229,6 +231,14 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 		int end, OrderByComparator<T> orderByComparator);
 
 	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId)
+		throws SystemException;
+
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId,
+		int start, int end) throws SystemException;
+
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId,
+		int start, int end,
+		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws SystemException;
 
 	/**

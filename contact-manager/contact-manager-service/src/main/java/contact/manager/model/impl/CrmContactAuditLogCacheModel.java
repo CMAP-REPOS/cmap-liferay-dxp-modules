@@ -66,7 +66,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(27);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -88,6 +88,8 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		sb.append(crmContactId);
 		sb.append(", constantContactId=");
 		sb.append(constantContactId);
+		sb.append(", action=");
+		sb.append(action);
 		sb.append(", oldSnapshot=");
 		sb.append(oldSnapshot);
 		sb.append(", newSnapshot=");
@@ -137,6 +139,13 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		crmContactAuditLogImpl.setCrmContactId(crmContactId);
 		crmContactAuditLogImpl.setConstantContactId(constantContactId);
 
+		if (action == null) {
+			crmContactAuditLogImpl.setAction(StringPool.BLANK);
+		}
+		else {
+			crmContactAuditLogImpl.setAction(action);
+		}
+
 		if (oldSnapshot == null) {
 			crmContactAuditLogImpl.setOldSnapshot(StringPool.BLANK);
 		}
@@ -174,6 +183,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		crmContactId = objectInput.readLong();
 
 		constantContactId = objectInput.readLong();
+		action = objectInput.readUTF();
 		oldSnapshot = objectInput.readUTF();
 		newSnapshot = objectInput.readUTF();
 	}
@@ -210,6 +220,13 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 
 		objectOutput.writeLong(constantContactId);
 
+		if (action == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(action);
+		}
+
 		if (oldSnapshot == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -235,6 +252,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 	public long modifiedDate;
 	public long crmContactId;
 	public long constantContactId;
+	public String action;
 	public String oldSnapshot;
 	public String newSnapshot;
 }

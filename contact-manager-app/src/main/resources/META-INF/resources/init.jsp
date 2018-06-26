@@ -41,6 +41,9 @@
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
 
+<%@ page import="javax.portlet.PortletURL" %>
+
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />

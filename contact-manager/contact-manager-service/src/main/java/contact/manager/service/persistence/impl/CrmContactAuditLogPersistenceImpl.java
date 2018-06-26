@@ -3009,6 +3009,7 @@ public class CrmContactAuditLogPersistenceImpl extends BasePersistenceImpl<CrmCo
 		crmContactAuditLogImpl.setModifiedDate(crmContactAuditLog.getModifiedDate());
 		crmContactAuditLogImpl.setCrmContactId(crmContactAuditLog.getCrmContactId());
 		crmContactAuditLogImpl.setConstantContactId(crmContactAuditLog.getConstantContactId());
+		crmContactAuditLogImpl.setAction(crmContactAuditLog.getAction());
 		crmContactAuditLogImpl.setOldSnapshot(crmContactAuditLog.getOldSnapshot());
 		crmContactAuditLogImpl.setNewSnapshot(crmContactAuditLog.getNewSnapshot());
 

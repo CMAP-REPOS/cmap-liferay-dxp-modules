@@ -109,6 +109,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="crmContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="constantContactId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="action" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="oldSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="newSnapshot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>

@@ -15,6 +15,7 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
@@ -50,6 +51,19 @@ public class CrmContactAuditLogLocalServiceImpl extends CrmContactAuditLogLocalS
 
 	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId) throws SystemException {
 		return crmContactAuditLogPersistence.findByCrmContactId(crmContactId);
+	}
+
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId, int start, int end) throws SystemException {
+		return crmContactAuditLogPersistence.findByCrmContactId(crmContactId, start, end);
+	}
+
+	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId, int start, int end,
+			OrderByComparator<CrmContactAuditLog> orderByComparator) throws SystemException {
+		return crmContactAuditLogPersistence.findByCrmContactId(crmContactId, start, end, orderByComparator);
+	}
+
+	public int countByCrmContactId(long crmContactId) {
+		return crmContactAuditLogPersistence.countByCrmContactId(crmContactId);
 	}
 
 }

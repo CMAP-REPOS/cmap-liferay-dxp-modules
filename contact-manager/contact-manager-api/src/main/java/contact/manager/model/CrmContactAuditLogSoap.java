@@ -43,6 +43,7 @@ public class CrmContactAuditLogSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setCrmContactId(model.getCrmContactId());
 		soapModel.setConstantContactId(model.getConstantContactId());
+		soapModel.setAction(model.getAction());
 		soapModel.setOldSnapshot(model.getOldSnapshot());
 		soapModel.setNewSnapshot(model.getNewSnapshot());
 
@@ -180,6 +181,14 @@ public class CrmContactAuditLogSoap implements Serializable {
 		_constantContactId = constantContactId;
 	}
 
+	public String getAction() {
+		return _action;
+	}
+
+	public void setAction(String action) {
+		_action = action;
+	}
+
 	public String getOldSnapshot() {
 		return _oldSnapshot;
 	}
@@ -206,6 +215,7 @@ public class CrmContactAuditLogSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _crmContactId;
 	private long _constantContactId;
+	private String _action;
 	private String _oldSnapshot;
 	private String _newSnapshot;
 }

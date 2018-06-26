@@ -138,6 +138,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="crmContactId" type="long" />
 		<field name="constantContactId" type="long" />
+		<field name="action" type="String" />
 		<field name="oldSnapshot" type="String">
 			<hint name="max-length">5000</hint>
 		</field>

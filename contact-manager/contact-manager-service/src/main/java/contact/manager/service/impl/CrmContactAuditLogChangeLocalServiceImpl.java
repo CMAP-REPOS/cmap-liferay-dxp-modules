@@ -14,27 +14,57 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+
+import contact.manager.model.CrmContactAuditLog;
+import contact.manager.model.CrmContactAuditLogChange;
 import contact.manager.service.base.CrmContactAuditLogChangeLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM Contact Audit Log Change local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmContactAuditLogChangeLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmContactAuditLogChangeLocalService}
+ * interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
  * @see CrmContactAuditLogChangeLocalServiceBaseImpl
  * @see contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil
  */
-public class CrmContactAuditLogChangeLocalServiceImpl
-	extends CrmContactAuditLogChangeLocalServiceBaseImpl {
+public class CrmContactAuditLogChangeLocalServiceImpl extends CrmContactAuditLogChangeLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil} to access the CRM Contact Audit Log Change local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil} to
+	 * access the CRM Contact Audit Log Change local service.
 	 */
+
+	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId) {
+		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId);
+	}
+
+	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId, int start, int end) throws SystemException {
+		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId, start, end);
+	}
+
+	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId, int start, int end,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator) throws SystemException {
+		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId, start, end, orderByComparator);
+	}
+
+	public int countByCrmContactAuditLogId(long crmContactAuditLogId) {
+		return crmContactAuditLogChangePersistence.countByCrmContactAuditLogId(crmContactAuditLogId);
+	}
 }
