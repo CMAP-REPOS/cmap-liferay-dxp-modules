@@ -187,9 +187,9 @@ public class CrmGroupLocalServiceUtil {
 		return getService().getCrmContactCrmGroupsCount(crmContactId);
 	}
 
-	public static int getCrmContactsCount(long crmGroupPk)
+	public static int getCrmContactsCount(long crmGroupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmContactsCount(crmGroupPk);
+		return getService().getCrmContactsCount(crmGroupId);
 	}
 
 	/**
@@ -260,11 +260,6 @@ public class CrmGroupLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
-	public static java.util.List<contact.manager.model.CrmGroup> findAll(
-		int start, int end, com.liferay.portal.kernel.util.OrderByComparator obc) {
-		return getService().findAll(start, end, obc);
-	}
-
 	public static java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
 		long crmContactId) {
 		return getService().getCrmContactCrmGroups(crmContactId);
@@ -284,9 +279,20 @@ public class CrmGroupLocalServiceUtil {
 	}
 
 	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupPk)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmContacts(crmGroupPk);
+		long crmGroupId) {
+		return getService().getCrmContacts(crmGroupId);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupId, int start, int end) {
+		return getService().getCrmContacts(crmGroupId, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return getService()
+				   .getCrmContacts(crmGroupId, start, end, orderByComparator);
 	}
 
 	/**

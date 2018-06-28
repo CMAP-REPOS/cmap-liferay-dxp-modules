@@ -2,7 +2,6 @@ package contact.manager.app.util;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
 
@@ -16,8 +15,10 @@ public class ContactUtil {
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
 
+		// TODO: handle file uploads for photo
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
+		String userName = UserUtil.getUserName(userId);
 
 		String alternateContact = ParamUtil.getString(request, "alternateContact");
 		String alternateEmail = ParamUtil.getString(request, "alternateEmail");
@@ -90,7 +91,7 @@ public class ContactUtil {
 		crmContact.setTwitterHandle(twitterHandle);
 
 		crmContact.setUserId(userId);
-		crmContact.setUserName(StringPool.BLANK);
+		crmContact.setUserName(userName);
 		crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		if (isNew) {

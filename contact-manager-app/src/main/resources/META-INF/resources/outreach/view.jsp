@@ -56,51 +56,52 @@
 <portlet:renderURL var="addOutreachLogURL">
 	<portlet:param name="mvcPath" value="/outreach/edit.jsp"></portlet:param>
 	<portlet:param name="redirect" value="<%=currentURL%>" />
-	<portlet:param name="crmContactId" value="<%=String.valueOf(crmContactId)%>" />
+	<portlet:param name="crmContactId"
+		value="<%=String.valueOf(crmContactId)%>" />
 </portlet:renderURL>
 
 <div class="container-fluid-1280">
 	<%@ include file="nav.jsp"%>
-
 	<aui:row>
 		<aui:col md="12">
-			<div class="panel-body">
-				<%-- TODO: check role --%>
-				<aui:button onClick="<%= addOutreachLogURL.toString() %>"
-					value="Add Outreach Log"></aui:button>
+			<%-- TODO: check role --%>
+			<aui:button onClick="<%= addOutreachLogURL.toString() %>"
+				value="Add Outreach Log"></aui:button>
+		</aui:col>
+	</aui:row>
+	<aui:row>
+		<aui:col md="12">
+			<liferay-ui:search-container delta="20" deltaConfigurable="true"
+				emptyResultsMessage="No outreach logs found"
+				iteratorURL="<%=iteratorURL%>"
+				total="<%=CrmOutreachLogLocalServiceUtil.countByCrmContactIdId(crmContactId)%>"
+				var="crmOutreachLogSearchContainer">
+				<liferay-ui:search-container-results>
+					<%
+						List<CrmOutreachLog> crmOutreachLogs = CrmOutreachLogLocalServiceUtil.findByCrmContactId(
+												crmContactId, crmOutreachLogSearchContainer.getStart(),
+												crmOutreachLogSearchContainer.getEnd(), orderByComparator);
 
-				<liferay-ui:search-container delta="20" deltaConfigurable="true"
-					emptyResultsMessage="No outreach logs found"
-					iteratorURL="<%=iteratorURL%>"
-					total="<%=CrmOutreachLogLocalServiceUtil.countByCrmContactIdId(crmContactId)%>"
-					var="crmOutreachLogSearchContainer">
-					<liferay-ui:search-container-results>
-						<%
-							List<CrmOutreachLog> crmOutreachLogs = CrmOutreachLogLocalServiceUtil.findByCrmContactId(
-													crmContactId, crmOutreachLogSearchContainer.getStart(),
-													crmOutreachLogSearchContainer.getEnd(), orderByComparator);
-
-											pageContext.setAttribute("results", crmOutreachLogs);
-						%>
-					</liferay-ui:search-container-results>
-					<liferay-ui:search-container-row
-						className="contact.manager.model.CrmOutreachLog"
-						modelVar="outreachLog">
-						<liferay-ui:search-container-column-text property="outreachDate"
-							name="Date" orderable="true" orderableProperty="outreachDate" />
-						<liferay-ui:search-container-column-text property="userName"
-							name="User Name" orderable="true" orderableProperty="userName" />
-						<liferay-ui:search-container-column-text property="medium"
-							name="Medium" orderable="true" orderableProperty="medium" />
-						<liferay-ui:search-container-column-text property="activityType"
-							name="Activity Type" orderable="true"
-							orderableProperty="activityType" />
-						<liferay-ui:search-container-column-text property="note"
-							name="Note" orderableProperty="note" />
-					</liferay-ui:search-container-row>
-					<liferay-ui:search-iterator />
-				</liferay-ui:search-container>
-			</div>
+										pageContext.setAttribute("results", crmOutreachLogs);
+					%>
+				</liferay-ui:search-container-results>
+				<liferay-ui:search-container-row
+					className="contact.manager.model.CrmOutreachLog"
+					modelVar="outreachLog">
+					<liferay-ui:search-container-column-text property="outreachDate"
+						name="Date" orderable="true" orderableProperty="outreachDate" />
+					<liferay-ui:search-container-column-text property="userName"
+						name="User Name" orderable="true" orderableProperty="userName" />
+					<liferay-ui:search-container-column-text property="medium"
+						name="Medium" orderable="true" orderableProperty="medium" />
+					<liferay-ui:search-container-column-text property="activityType"
+						name="Activity Type" orderable="true"
+						orderableProperty="activityType" />
+					<liferay-ui:search-container-column-text property="note"
+						name="Note" orderableProperty="note" />
+				</liferay-ui:search-container-row>
+				<liferay-ui:search-iterator />
+			</liferay-ui:search-container>
 		</aui:col>
 	</aui:row>
 </div>

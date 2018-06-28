@@ -98,7 +98,7 @@
 	</class>
 	<class name="contact.manager.model.impl.CrmContactAuditLogImpl" table="crm_contactauditlog">
 		<id name="crmContactAuditLogId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -115,7 +115,7 @@
 	</class>
 	<class name="contact.manager.model.impl.CrmContactAuditLogChangeImpl" table="crm_contactauditlogchange">
 		<id name="crmContactAuditLogChangeId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -160,7 +160,7 @@
 	</class>
 	<class name="contact.manager.model.impl.CrmGroupImpl" table="crm_group">
 		<id name="crmGroupId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -202,7 +202,7 @@
 	</class>
 	<class name="contact.manager.model.impl.CrmNoteImpl" table="crm_note">
 		<id name="crmNoteId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -216,7 +216,7 @@
 	</class>
 	<class name="contact.manager.model.impl.CrmOutreachLogImpl" table="crm_outreachlog">
 		<id name="crmOutreachLogId" type="long">
-			<generator class="assigned" />
+			<generator class="increment" />
 		</id>
 		<property column="uuid_" name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

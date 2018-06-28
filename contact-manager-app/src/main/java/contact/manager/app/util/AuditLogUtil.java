@@ -1,39 +1,32 @@
 package contact.manager.app.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 
-import java.util.List;
+import java.util.Date;
 
 import contact.manager.model.CrmContactAuditLog;
-import contact.manager.service.CrmContactAuditLogLocalServiceUtil;
 
 public class AuditLogUtil {
 
-	private static final Log LOGGER = LogFactoryUtil.getLog(AuditLogUtil.class);
+	public static CrmContactAuditLog updateCrmContactAuditLogProperties(CrmContactAuditLog crmContactAuditLog,
+			ServiceContext serviceContext, long crmContactId, String action) {
+		Date now = new Date();
+		long userId = serviceContext.getUserId();
+		String userName = UserUtil.getUserName(userId);
 
-	public static void addAuditLog() {
-		// TODO: implement
-		// TODO: check permissions
-	}
+		crmContactAuditLog.setAction(action);
+		crmContactAuditLog.setUserId(userId);
+		crmContactAuditLog.setUserName(userName);
+		crmContactAuditLog.setModifiedDate(serviceContext.getCreateDate(now));
+		crmContactAuditLog.setCrmContactId(crmContactId);
 
-	public static CrmContactAuditLog getContactAuditLog(long crmContactAuditLogId) {
-		// TODO: implement
-		// TODO: check permissions
-		CrmContactAuditLog contactAuditLog = null;
-		try {
-			contactAuditLog = CrmContactAuditLogLocalServiceUtil.getCrmContactAuditLog(crmContactAuditLogId);
-		} catch (PortalException e) {
-			LOGGER.error("Exception in AuditLogUtil.getContactAuditLog: " + e.getMessage());
-		}
-		return contactAuditLog;
-	}
+		long companyId = serviceContext.getCompanyId();
+		long groupId = serviceContext.getScopeGroupId();
 
-	public static List<CrmContactAuditLog> getContactAuditLogs(long crmContactId) {
-		// TODO: implement
-		// TODO: check permissions
-		List<CrmContactAuditLog> contactAuditLogs = CrmContactAuditLogLocalServiceUtil.findByCrmContactId(crmContactId);
-		return contactAuditLogs;
+		crmContactAuditLog.setGroupId(groupId);
+		crmContactAuditLog.setCompanyId(companyId);
+		crmContactAuditLog.setCreateDate(serviceContext.getCreateDate(now));
+
+		return crmContactAuditLog;
 	}
 }

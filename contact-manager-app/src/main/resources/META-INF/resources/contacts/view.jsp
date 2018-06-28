@@ -1,11 +1,5 @@
 <%@ include file="../init.jsp"%>
 
-<portlet:renderURL var="addContactURL">
-	<portlet:param name="mvcPath" value="/contacts/edit.jsp"></portlet:param>
-	<portlet:param name="redirect" value="<%=currentURL%>" />
-</portlet:renderURL>
-
-
 <%
 	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 
@@ -90,74 +84,88 @@
 	}
 %>
 
+<portlet:renderURL var="addContactURL">
+	<portlet:param name="mvcPath" value="/contacts/edit.jsp"></portlet:param>
+	<portlet:param name="redirect" value="<%=currentURL%>" />
+</portlet:renderURL>
+
 <div class="container-fluid-1280">
+	<aui:row>
+		<aui:col md="12">
+			<%-- TODO: check role --%>
+			<aui:button onClick="<%= addContactURL.toString() %>"
+				value="Add Contact"></aui:button>
+		</aui:col>
+	</aui:row>
+	<aui:row>
+		<aui:col md="12">
+			<liferay-ui:search-container delta="20" deltaConfigurable="true"
+				emptyResultsMessage="No contacts found"
+				total="<%=CrmContactLocalServiceUtil.getCrmContactsCount()%>"
+				var="crmContactsSearchContainer">
 
-	<%-- TODO: check role --%>
-	<aui:button onClick="<%= addContactURL.toString() %>"
-		value="Add Contact"></aui:button>
+				<liferay-ui:search-container-results>
+					<%
+						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
+												ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
+												crmContactsSearchContainer.getEnd(), orderByComparator);
 
-	<liferay-ui:search-container delta="20" deltaConfigurable="true"
-		emptyResultsMessage="No contacts found"
-		total="<%=CrmContactLocalServiceUtil.getCrmContactsCount()%>"
-		var="crmContactsSearchContainer">
+										for (CrmContact crmContact : crmContacts) {
+											viewModels.add(new CrmContactViewModel(crmContact));
+										}
 
-		<liferay-ui:search-container-results>
-			<%
-				List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
-								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
-								crmContactsSearchContainer.getEnd(), orderByComparator);
+										pageContext.setAttribute("results", viewModels);
+					%>
+				</liferay-ui:search-container-results>
 
-						for (CrmContact crmContact : crmContacts) {
-							viewModels.add(new CrmContactViewModel(crmContact));
-						}
+				<liferay-ui:search-container-row
+					className="contact.manager.app.viewmodel.CrmContactViewModel"
+					modelVar="viewModel">
+					<liferay-ui:search-container-column-jsp
+						path="/contacts/view_actions.jsp" name="Actions" />
+					<liferay-ui:search-container-column-text property="firstName"
+						name="First Name" orderable="true" orderableProperty="firstName" />
+					<liferay-ui:search-container-column-text property="lastName"
+						name="Last Name" orderable="true" orderableProperty="lastName" />
+					<liferay-ui:search-container-column-text property="organization"
+						name="Organization" orderable="true"
+						orderableProperty="organization" />
+					<liferay-ui:search-container-column-text property="jobTitle"
+						name="Job Title" orderable="true" orderableProperty="jobTitle" />
+					<liferay-ui:search-container-column-text property="primaryAddress1"
+						name="Address 1" orderable="true"
+						orderableProperty="primaryAddress1" />
+					<liferay-ui:search-container-column-text property="primaryAddress2"
+						name="Address 2" orderable="true"
+						orderableProperty="primaryAddress2" />
+					<liferay-ui:search-container-column-text
+						property="primaryAddressCity" name="City" orderable="true"
+						orderableProperty="primaryAddressCity" />
+					<liferay-ui:search-container-column-text
+						property="primaryAddressZip" name="ZIP" orderable="true"
+						orderableProperty="primaryAddressZip" />
+					<liferay-ui:search-container-column-text
+						property="primaryAddressCounty" name="County" orderable="true"
+						orderableProperty="primaryAddressCounty" />
+					<liferay-ui:search-container-column-text property="primaryPhone"
+						name="Phone" orderable="true" orderableProperty="primaryPhone" />
+					<liferay-ui:search-container-column-text property="primaryCell"
+						name="Cell" orderable="true" orderableProperty="primaryCell" />
+					<liferay-ui:search-container-column-text
+						property="primaryEmailAddress" name="Email Address"
+						orderable="true" orderableProperty="primaryEmailAddress" />
+					<liferay-ui:search-container-column-text property="groupsList"
+						name="Groups" />
+					<liferay-ui:search-container-column-text property="tagsList"
+						name="Tags" />
+					<liferay-ui:search-container-column-text property="modifiedDate"
+						name="Modified" orderable="true" orderableProperty="modifiedDate" />
+				</liferay-ui:search-container-row>
+				<liferay-ui:search-iterator />
+			</liferay-ui:search-container>
+		</aui:col>
+	</aui:row>
 
-						pageContext.setAttribute("results", viewModels);
-			%>
-		</liferay-ui:search-container-results>
 
-		<liferay-ui:search-container-row
-			className="contact.manager.app.viewmodel.CrmContactViewModel"
-			modelVar="viewModel">
-			<liferay-ui:search-container-column-jsp
-				path="/contacts/view_actions.jsp" name="Actions" />
-			<liferay-ui:search-container-column-text property="firstName"
-				name="First Name" orderable="true" orderableProperty="firstName" />
-			<liferay-ui:search-container-column-text property="lastName"
-				name="Last Name" orderable="true" orderableProperty="lastName" />
-			<liferay-ui:search-container-column-text property="organization"
-				name="Organization" orderable="true"
-				orderableProperty="organization" />
-			<liferay-ui:search-container-column-text property="jobTitle"
-				name="Job Title" orderable="true" orderableProperty="jobTitle" />
-			<liferay-ui:search-container-column-text property="primaryAddress1"
-				name="Address 1" orderable="true"
-				orderableProperty="primaryAddress1" />
-			<liferay-ui:search-container-column-text property="primaryAddress2"
-				name="Address 2" orderable="true"
-				orderableProperty="primaryAddress2" />
-			<liferay-ui:search-container-column-text
-				property="primaryAddressCity" name="City" orderable="true"
-				orderableProperty="primaryAddressCity" />
-			<liferay-ui:search-container-column-text property="primaryAddressZip"
-				name="ZIP" orderable="true" orderableProperty="primaryAddressZip" />
-			<liferay-ui:search-container-column-text
-				property="primaryAddressCounty" name="County" orderable="true"
-				orderableProperty="primaryAddressCounty" />
-			<liferay-ui:search-container-column-text property="primaryPhone"
-				name="Phone" orderable="true" orderableProperty="primaryPhone" />
-			<liferay-ui:search-container-column-text property="primaryCell"
-				name="Cell" orderable="true" orderableProperty="primaryCell" />
-			<liferay-ui:search-container-column-text
-				property="primaryEmailAddress" name="Email Address" orderable="true"
-				orderableProperty="primaryEmailAddress" />
-			<liferay-ui:search-container-column-text property="groupsList"
-				name="Groups" />
-			<liferay-ui:search-container-column-text property="tagsList"
-				name="Tags" />
-			<liferay-ui:search-container-column-text property="modifiedDate"
-				name="Modified" orderable="true" orderableProperty="modifiedDate" />
-		</liferay-ui:search-container-row>
-		<liferay-ui:search-iterator />
-	</liferay-ui:search-container>
 
 </div>

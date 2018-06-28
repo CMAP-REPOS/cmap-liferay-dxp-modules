@@ -18,13 +18,14 @@ public class CrmContactAuditLogViewModel {
 		this.modifiedDate = DateUtil.Format(crmContactAuditLog.getModifiedDate());
 		this.crmContactId = crmContactAuditLog.getCrmContactId();
 		this.constantContactId = crmContactAuditLog.getConstantContactId();
+		this.setAction(crmContactAuditLog.getAction());
 		this.oldSnapshot = crmContactAuditLog.getOldSnapshot();
 		this.newSnapshot = crmContactAuditLog.getNewSnapshot();
 	}
 
 	public CrmContactAuditLogViewModel(long crmContactAuditLogId, long groupId, long companyId, long userId,
 			String userName, Date createDate, Date modifiedDate, long crmContactId, long constantContactId,
-			String oldSnapshot, String newSnapshot) {
+			String action, String oldSnapshot, String newSnapshot) {
 
 		this.crmContactAuditLogId = crmContactAuditLogId;
 		this.groupId = groupId;
@@ -35,6 +36,7 @@ public class CrmContactAuditLogViewModel {
 		this.modifiedDate = DateUtil.Format(modifiedDate);
 		this.crmContactId = crmContactId;
 		this.constantContactId = constantContactId;
+		this.setAction(action);
 		this.oldSnapshot = oldSnapshot;
 		this.newSnapshot = newSnapshot;
 	}
@@ -48,6 +50,7 @@ public class CrmContactAuditLogViewModel {
 	private String modifiedDate;
 	private long crmContactId;
 	private long constantContactId;
+	private String action;
 	private String oldSnapshot;
 	private String newSnapshot;
 
@@ -123,6 +126,14 @@ public class CrmContactAuditLogViewModel {
 		this.constantContactId = constantContactId;
 	}
 
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
 	public String getOldSnapshot() {
 		return oldSnapshot;
 	}
@@ -138,4 +149,5 @@ public class CrmContactAuditLogViewModel {
 	public void setNewSnapshot(String newSnapshot) {
 		this.newSnapshot = newSnapshot;
 	}
+
 }

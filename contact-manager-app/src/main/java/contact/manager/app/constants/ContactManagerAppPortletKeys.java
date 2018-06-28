@@ -77,6 +77,7 @@ public class ContactManagerAppPortletKeys {
 
 	public static final String ACTION_ADD = "add";
 	public static final String ACTION_UPDATE = "update";
+	public static final String ACTION_DELETE = "delete";
 
 	public static final Map<String, String> LOCALITIES_MAP;
 	static {

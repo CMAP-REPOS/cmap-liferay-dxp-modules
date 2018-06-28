@@ -181,7 +181,7 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public int getCrmContactCrmGroupsCount(long crmContactId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmContactsCount(long crmGroupPk) throws SystemException;
+	public int getCrmContactsCount(long crmGroupId) throws SystemException;
 
 	/**
 	* Returns the number of CRM Groups.
@@ -237,8 +237,6 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmGroup> findAll(int start, int end, OrderByComparator obc);
-
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId);
 
@@ -251,8 +249,14 @@ public interface CrmGroupLocalService extends BaseLocalService,
 		int end, OrderByComparator<CrmGroup> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getCrmContacts(long crmGroupPk)
-		throws SystemException;
+	public List<CrmContact> getCrmContacts(long crmGroupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator);
 
 	/**
 	* Returns a range of all the CRM Groups.

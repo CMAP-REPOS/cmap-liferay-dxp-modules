@@ -2,7 +2,6 @@ package contact.manager.app.util;
 
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Date;
 
@@ -17,12 +16,13 @@ public class GroupUtil {
 		
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
-
+		String userName = UserUtil.getUserName(userId);
+		
 		String name = ParamUtil.getString(request, "name");
 
 		crmGroup.setName(name);
 		crmGroup.setUserId(userId);
-		crmGroup.setUserName(StringPool.BLANK);
+		crmGroup.setUserName(userName);
 		crmGroup.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		if (isNew) {
@@ -32,8 +32,6 @@ public class GroupUtil {
 			crmGroup.setGroupId(groupId);
 			crmGroup.setCompanyId(companyId);
 			crmGroup.setCreateDate(serviceContext.getCreateDate(now));
-			// TODO: implement status
-			// crmGroup.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 		}
 
 		return crmGroup;

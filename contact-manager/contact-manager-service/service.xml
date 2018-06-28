@@ -114,7 +114,7 @@
 	<entity human-name="CRM Contact Audit Log" local-service="true"
 		name="CrmContactAuditLog" remote-service="false" table="crm_contactauditlog"
 		uuid="true">
-		<column name="crmContactAuditLogId" primary="true" type="long"></column>
+		<column name="crmContactAuditLogId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
@@ -139,7 +139,7 @@
 	<entity human-name="CRM Contact Audit Log Change" local-service="true"
 		name="CrmContactAuditLogChange" remote-service="false"
 		table="crm_contactauditlogchange" uuid="true">
-		<column name="crmContactAuditLogChangeId" primary="true" type="long"></column>
+		<column name="crmContactAuditLogChangeId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
@@ -199,7 +199,7 @@
 	</entity>
 	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
 		local-service="true" remote-service="false" uuid="true">
-		<column name="crmGroupId" type="long" primary="true"></column>
+		<column name="crmGroupId" type="long" primary="true" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
@@ -255,7 +255,7 @@
 	</entity>
 	<entity human-name="CRM Note" local-service="true" name="CrmNote"
 		remote-service="false" table="crm_note" uuid="true">
-		<column name="crmNoteId" primary="true" type="long"></column>
+		<column name="crmNoteId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>
@@ -271,7 +271,7 @@
 	<entity human-name="CRM Outreach Log" local-service="true"
 		name="CrmOutreachLog" remote-service="false" table="crm_outreachlog"
 		uuid="true">
-		<column name="crmOutreachLogId" primary="true" type="long"></column>
+		<column name="crmOutreachLogId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
 		<column name="userId" type="long"></column>

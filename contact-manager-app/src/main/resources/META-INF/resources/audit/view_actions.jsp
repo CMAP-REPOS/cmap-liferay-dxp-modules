@@ -8,12 +8,12 @@
 
 <aui:button-row cssClass="group-buttons">
 
-   <portlet:renderURL var="viewGroupURL">
-		<portlet:param name="mvcPath" value="/groups/details.jsp" />
+   <portlet:renderURL var="viewAuditLogURL">
+		<portlet:param name="mvcPath" value="/audit/details.jsp" />
 		<portlet:param name="crmGroupId"
 			value="<%=String.valueOf(viewModel.getCrmGroupId())%>" />
 		<portlet:param name="redirect" value="<%=currentURL%>" />
-	</portlet:renderURL>	
-    <aui:button onClick="<%=viewGroupURL.toString()%>" value="Details"></aui:button>
-    
+	</portlet:renderURL>
+	<aui:button onClick="<%=viewAuditLogURL.toString()%>" value="Details"></aui:button>
+
 </aui:button-row>
