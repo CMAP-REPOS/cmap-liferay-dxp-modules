@@ -75,7 +75,8 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 		return crmContactPersistence.findByStatus(status);
 	}
 
-	public List<CrmContact> getCrmContactsByStatus(String status, int start, int end, OrderByComparator obc) throws SystemException {
+	public List<CrmContact> getCrmContactsByStatus(String status, int start, int end, OrderByComparator obc)
+			throws SystemException {
 		return crmContactPersistence.findByStatus(status, start, end, obc);
 	}
 

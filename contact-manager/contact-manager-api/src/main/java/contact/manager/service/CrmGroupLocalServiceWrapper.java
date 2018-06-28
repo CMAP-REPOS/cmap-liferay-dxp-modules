@@ -278,6 +278,26 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	}
 
 	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll();
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll(start, end);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll(start, end, orderByComparator);
+	}
+
+	@Override
 	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
 		long crmContactId) {
 		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId);

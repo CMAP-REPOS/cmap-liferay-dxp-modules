@@ -31,6 +31,8 @@
 <%@ page import="contact.manager.model.CrmContact"%>
 <%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
 
+<%@page
+	import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
 <%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
 <%@ page import="contact.manager.model.CrmGroup"%>
 <%@ page import="contact.manager.model.CrmContact"%>
@@ -40,6 +42,14 @@
 <%@ page import="contact.manager.service.permission.CrmContactPermission" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
+
+<%@ page import="java.util.Calendar "%>
+
+<%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
+
+<%@ page import="contact.manager.model.CrmOutreachLog"%>
+
+<%@ page import="contact.manager.service.CrmOutreachLogLocalServiceUtil"%>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

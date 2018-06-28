@@ -237,6 +237,14 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	public List<CrmGroup> findAll() throws SystemException;
+
+	public List<CrmGroup> findAll(int start, int end) throws SystemException;
+
+	public List<CrmGroup> findAll(int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator)
+		throws SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmContactCrmGroups(long crmContactId);
 

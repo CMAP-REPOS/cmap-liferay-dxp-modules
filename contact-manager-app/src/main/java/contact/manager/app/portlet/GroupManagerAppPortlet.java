@@ -72,7 +72,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 			_crmGroupLocalService.addCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
-			response.setRenderParameter("mvcPath", "/details.jsp");
+			response.setRenderParameter("mvcPath", "/groups/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.add: " + e.getMessage());
 		}
@@ -89,7 +89,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
-			response.setRenderParameter("mvcPath", "/details.jsp");
+			response.setRenderParameter("mvcPath", "/groups/details.jsp");
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.update: " + e.getMessage());
 		}

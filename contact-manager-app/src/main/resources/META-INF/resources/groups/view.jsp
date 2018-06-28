@@ -1,14 +1,6 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="init.jsp"%>
-
-<portlet:renderURL var="addGroupURL">
-	<portlet:param name="mvcPath" value="/edit.jsp"></portlet:param>
-	<portlet:param name="redirect" value="<%=currentURL%>" />
-</portlet:renderURL>
 
 <%
-	List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
-
 	String name = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.NAME);
 	String crmContactsCount = ParamUtil.getString(request, "orderByCol",
 			CrmContactFieldKeys.CRM_CONTACTS_COUNT);
@@ -42,6 +34,10 @@
 	}
 %>
 
+<portlet:renderURL var="addGroupURL">
+	<portlet:param name="mvcPath" value="/edit.jsp"></portlet:param>
+	<portlet:param name="redirect" value="<%=currentURL%>" />
+</portlet:renderURL>
 
 <div class="container-fluid-1280">
 	<aui:row>
@@ -58,13 +54,14 @@
 				var="crmGroupsSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
+						List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
 						List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.findAll(
-												crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
-												orderByComparator);
-										for (CrmGroup crmGroup : crmGroups) {
-											viewModels.add(new CrmGroupViewModel(crmGroup));
-										}
-										pageContext.setAttribute("results", viewModels);
+								crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
+								orderByComparator);
+						for (CrmGroup crmGroup : crmGroups) {
+							viewModels.add(new CrmGroupViewModel(crmGroup));
+						}
+						pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row

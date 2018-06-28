@@ -260,6 +260,24 @@ public class CrmGroupLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmGroup> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findAll();
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> findAll(
+		int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findAll(start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findAll(start, end, orderByComparator);
+	}
+
 	public static java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
 		long crmContactId) {
 		return getService().getCrmContactCrmGroups(crmContactId);

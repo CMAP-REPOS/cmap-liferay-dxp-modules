@@ -1,5 +1,4 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="init.jsp"%>
 
 <%
 	ResultRow searchContainerRow = (ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);

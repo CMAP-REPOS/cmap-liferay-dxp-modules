@@ -10,15 +10,9 @@
 	}
 
 	String redirect = ParamUtil.getString(request, "redirect");
-	portletDisplay.setShowBackIcon(true);
-	portletDisplay.setURLBack(redirect);
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");
 %>
-
-<portlet:renderURL var="viewURL">
-	<portlet:param name="mvcPath" value="/view.jsp"></portlet:param>
-</portlet:renderURL>
 
 <portlet:actionURL name='<%=crmGroup == null ? "add" : "update"%>'
 	var="editURL" />

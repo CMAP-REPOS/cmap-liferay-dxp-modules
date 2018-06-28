@@ -1,5 +1,4 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="init.jsp"%>
 
 <%
 	long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");

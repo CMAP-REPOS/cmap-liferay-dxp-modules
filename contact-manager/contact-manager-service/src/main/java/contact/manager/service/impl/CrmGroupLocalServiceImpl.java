@@ -50,6 +50,19 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 	 * local service.
 	 */
 
+	public List<CrmGroup> findAll() throws SystemException {
+		return crmGroupPersistence.findAll();
+	}
+
+	public List<CrmGroup> findAll(int start, int end) throws SystemException {
+		return crmGroupPersistence.findAll(start, end);
+	}
+
+	public List<CrmGroup> findAll(int start, int end, OrderByComparator<CrmGroup> orderByComparator)
+			throws SystemException {
+		return crmGroupPersistence.findAll(start, end, orderByComparator);
+	}
+
 	public List<CrmContact> getCrmContacts(long crmGroupId) {
 		return crmGroupPersistence.getCrmContacts(crmGroupId);
 	}
