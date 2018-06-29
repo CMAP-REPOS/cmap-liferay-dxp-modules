@@ -11,7 +11,6 @@
 	if (crmGroupId > 0) {
 		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
 		crmGroupContacts = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
-		/* 		crmGroupPotentialContacts = GroupUtil.getPotentialCrmContacts(crmGroupId); */
 	}
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");
@@ -20,7 +19,7 @@
 <portlet:actionURL name='<%=crmGroup == null ? "add" : "update"%>'
 	var="editURL" />
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 
 	<aui:form action="<%=editURL%>" name="<portlet:namespace />fm">
 		<aui:input type="hidden" name="crmGroupId"

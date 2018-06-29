@@ -28,7 +28,7 @@
 	name='<%=crmOutreachLog == null ? "addOutreachLog" : "updateOutreachLog"%>'
 	var="editOutreachLogURL" />
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 
 	<aui:form action="<%=editOutreachLogURL%>"
 		name="<portlet:namespace />fm">

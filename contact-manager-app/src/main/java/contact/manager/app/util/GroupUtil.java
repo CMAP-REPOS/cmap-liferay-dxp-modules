@@ -26,7 +26,7 @@ public class GroupUtil {
 
 		String name = ParamUtil.getString(request, "name");
 		long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
-
+				
 		crmGroup.setName(name);
 		crmGroup.setUserId(userId);
 		crmGroup.setUserName(userName);

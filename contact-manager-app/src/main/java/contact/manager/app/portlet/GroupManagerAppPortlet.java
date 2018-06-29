@@ -56,11 +56,6 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 	private static final Log LOGGER = LogFactoryUtil.getLog(GroupManagerAppPortlet.class);
 
-	@Override
-	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-		super.render(request, response);
-	}
-
 	public void add(ActionRequest request, ActionResponse response) throws PortalException {
 
 		try {
@@ -73,6 +68,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			_crmGroupLocalService.addCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
 			response.setRenderParameter("mvcPath", "/groups/details.jsp");
+
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.add: " + e.getMessage());
 		}
@@ -90,20 +86,16 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
 			response.setRenderParameter("mvcPath", "/groups/details.jsp");
+
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.update: " + e.getMessage());
 		}
 	}
 
-	public void delete(ActionRequest request, ActionResponse response) throws PortalException {
-		// TODO: implement if requested
-	}
-	
 	@Reference(unbind = "-")
 	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
 		_crmGroupLocalService = crmGroupLocalService;
 	}
 
 	private CrmGroupLocalService _crmGroupLocalService;
-
 }

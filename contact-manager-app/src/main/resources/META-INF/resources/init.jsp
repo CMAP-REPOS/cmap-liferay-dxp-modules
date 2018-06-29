@@ -6,54 +6,56 @@
 <%@ taglib uri="http://liferay.com/tld/theme" prefix="liferay-theme"%>
 <%@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui"%>
 
-<%@ page import="java.util.ArrayList"%>
-<%@ page import="java.util.List"%>
-
 <%@ page import="com.liferay.portal.kernel.dao.orm.QueryUtil"%>
 <%@ page import="com.liferay.portal.kernel.dao.search.ResultRow"%>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry"%>
+
 <%@ page import="com.liferay.portal.kernel.model.PersistedModel"%>
+
+<%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
+
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
+<%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
 <%@ page import="com.liferay.portal.kernel.util.ParamUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
+<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
+
+<%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
+<%@ page import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
+<%@ page import="contact.manager.app.constants.CrmContactAuditLogKeys" %>
+<%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
+<%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
+
+<%@ page import="contact.manager.app.util.GroupUtil" %>
+
+<%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
+<%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
 
 <%@ page import="contact.manager.comparator.*"%>
 
-<%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
-
-<%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
-<%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
-
-<%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
 <%@ page import="contact.manager.model.CrmContact"%>
-<%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
-
-<%@page
-	import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
-<%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
+<%@ page import="contact.manager.model.CrmContactAuditLog"%>
+<%@ page import="contact.manager.model.CrmContactAuditLogChange"%>
 <%@ page import="contact.manager.model.CrmGroup"%>
-<%@ page import="contact.manager.model.CrmContact"%>
+<%@ page import="contact.manager.model.CrmOutreachLog"%>
+
+<%@ page import="contact.manager.service.CrmContactAuditLogLocalServiceUtil"%>
+<%@ page import="contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil"%>
+
+<%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
 <%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
+<%@ page import="contact.manager.service.CrmOutreachLogLocalServiceUtil"%>
 
 <%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>
 <%@ page import="contact.manager.service.permission.CrmContactPermission" %>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
 
+<%@ page import="java.util.List "%>
 <%@ page import="java.util.Calendar "%>
 
-<%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
-
-<%@ page import="contact.manager.model.CrmOutreachLog"%>
-
-<%@ page import="contact.manager.service.CrmOutreachLogLocalServiceUtil"%>
-
 <%@ page import="javax.portlet.PortletURL" %>
-
-<%@ page import="contact.manager.app.util.GroupUtil" %>
 
 <liferay-theme:defineObjects />
 

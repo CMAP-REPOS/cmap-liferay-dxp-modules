@@ -35,15 +35,15 @@
 %>
 
 <portlet:renderURL var="addGroupURL">
-	<portlet:param name="mvcPath" value="/edit.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/groups/edit.jsp"></portlet:param>
 	<portlet:param name="redirect" value="<%=currentURL%>" />
 </portlet:renderURL>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>
-			<aui:button onClick="" value="Add Group"></aui:button>
+			<aui:button onClick="<%= addGroupURL.toString() %>" value="Add Group"></aui:button>
 		</aui:col>
 	</aui:row>
 	<aui:row>

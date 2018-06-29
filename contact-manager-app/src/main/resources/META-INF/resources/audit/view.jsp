@@ -1,8 +1,9 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="init.jsp"%>
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
+	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+	
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
@@ -17,13 +18,11 @@
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
-	String createDate = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogFieldKeys.CREATE_DATE);
-	String userName = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogFieldKeys.USER_NAME);
-	String action = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogFieldKeys.ACTION);
+	String createDate = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogKeys.CREATE_DATE);
+	String userName = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogKeys.USER_NAME);
+	String action = ParamUtil.getString(request, "orderByCol", CrmContactAuditLogKeys.ACTION);
 
 	boolean orderByAsc = false;
-
-	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 	if (orderByType.equals("asc")) {
 		orderByAsc = true;
@@ -31,15 +30,15 @@
 
 	OrderByComparator orderByComparator = null;
 
-	if (createDate.equals(CrmContactAuditLogFieldKeys.CREATE_DATE)) {
+	if (createDate.equals(CrmContactAuditLogKeys.CREATE_DATE)) {
 		orderByComparator = new CrmContactAuditLogCreateDateComparator(orderByAsc);
 	}
 
-	if (userName.equals(CrmContactAuditLogFieldKeys.USER_NAME)) {
+	if (userName.equals(CrmContactAuditLogKeys.USER_NAME)) {
 		orderByComparator = new CrmContactAuditLogUserNameComparator(orderByAsc);
 	}
 
-	if (action.equals(CrmContactAuditLogFieldKeys.ACTION)) {
+	if (action.equals(CrmContactAuditLogKeys.ACTION)) {
 		orderByComparator = new CrmContactAuditLogActionComparator(orderByAsc);
 	}
 

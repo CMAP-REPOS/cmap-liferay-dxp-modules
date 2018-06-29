@@ -2,6 +2,8 @@
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
+	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+	
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
@@ -22,8 +24,6 @@
 	String activityType = ParamUtil.getString(request, "orderByCol", CrmOutreachLogKeys.ACTIVITY_TYPE);
 
 	boolean orderByAsc = false;
-
-	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
 
 	if (orderByType.equals("asc")) {
 		orderByAsc = true;
@@ -59,7 +59,7 @@
 		value="<%=String.valueOf(crmContactId)%>" />
 </portlet:renderURL>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<%@ include file="nav.jsp"%>
 	<aui:row>
 		<aui:col md="12">
