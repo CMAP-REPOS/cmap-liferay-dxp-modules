@@ -96,25 +96,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void delete(ActionRequest request, ActionResponse response) throws PortalException {
-
-		//		TODO: implement status
-		//		try {
-		//			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-		//			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
-		//			long userId = serviceContext.getUserId();
-		//			Date now = new Date();
-		//
-		//			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
-		//			crmGroup.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
-		//			crmGroup.setUserId(userId);
-		//			crmGroup.setUserName(StringPool.BLANK);
-		//			crmGroup.setModifiedDate(serviceContext.getModifiedDate(now));
-		//
-		//			_crmGroupLocalService.updateCrmGroup(crmGroup);
-		//			response.setRenderParameter("jspPage", "/view.jsp");
-		//		} catch (Exception e) {
-		//			LOGGER.error("Exception in GroupManagerAppPortlet.delete: " + e.getMessage());
-		//		}
+		// TODO: implement if requested
 	}
 	
 	@Reference(unbind = "-")

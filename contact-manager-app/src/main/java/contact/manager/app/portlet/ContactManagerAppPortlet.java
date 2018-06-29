@@ -28,6 +28,7 @@ import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
 import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.OutreachLogUtil;
+import contact.manager.app.util.UserUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmOutreachLog;
@@ -38,15 +39,26 @@ import contact.manager.service.CrmOutreachLogLocalService;
 /**
  * @author jon
  */
-@Component(immediate = true, property = { "com.liferay.portlet.add-default-resource=true",
-		"com.liferay.portlet.display-category=category.hidden", "com.liferay.portlet.layout-cacheable=true",
-		"com.liferay.portlet.private-request-attributes=false", "com.liferay.portlet.private-session-attributes=false",
-		"com.liferay.portlet.render-weight=50", "com.liferay.portlet.use-default-template=true",
-		"javax.portlet.display-name=Contact Manager", "javax.portlet.expiration-cache=0",
-		"javax.portlet.init-param.template-path=/", "javax.portlet.init-param.view-template=/contacts/view.jsp",
-		"javax.portlet.name=" + ContactManagerAppPortletKeys.ContactManagerApp,
-		"javax.portlet.resource-bundle=content.Language", "javax.portlet.security-role-ref=power-user,user",
-		"javax.portlet.supports.mime-type=text/html" }, service = Portlet.class)
+@Component(
+		immediate = true, 
+		property = { 
+				"com.liferay.portlet.add-default-resource=true", 
+				"com.liferay.portlet.display-category=category.hidden", 
+				"com.liferay.portlet.layout-cacheable=true", 
+				"com.liferay.portlet.private-request-attributes=false", 
+				"com.liferay.portlet.private-session-attributes=false", 
+				"com.liferay.portlet.render-weight=50", 
+				"com.liferay.portlet.use-default-template=true", 
+				"javax.portlet.display-name=Contact Manager", 
+				"javax.portlet.expiration-cache=0", 
+				"javax.portlet.init-param.template-path=/", 
+				"javax.portlet.init-param.view-template=/contacts/view.jsp", 
+				"javax.portlet.name=" + ContactManagerAppPortletKeys.ContactManagerApp, 
+				"javax.portlet.resource-bundle=content.Language", 
+				"javax.portlet.security-role-ref=power-user,user", 
+				"javax.portlet.supports.mime-type=text/html" 
+		}, service = Portlet.class
+)
 public class ContactManagerAppPortlet extends MVCPortlet {
 
 	private static final Log LOGGER = LogFactoryUtil.getLog(ContactManagerAppPortlet.class);
@@ -71,7 +83,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				// TODO: pass to Constant Contact API
 			}
 
-			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
+			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 
 		} catch (Exception e) {
@@ -94,7 +106,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				// TODO: pass to Constant Contact API
 			}
 
-			response.setRenderParameter("crmContactId", Long.toString(crmContactId));
+			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 
 		} catch (Exception e) {
@@ -113,7 +125,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
 			crmContact.setUserId(userId);
-			crmContact.setUserName(StringPool.BLANK);
+			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact);
 
@@ -179,6 +191,16 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action) {
+
+		long crmContactAuditLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
+		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
+				.createCrmContactAuditLog(crmContactAuditLogId);
+		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext,
+				crmContactId, action);
+		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
+	}
+
+	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String[] foo, String action) {
 
 		long crmContactAuditLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
 		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService

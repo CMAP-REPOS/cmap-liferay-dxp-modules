@@ -2,14 +2,17 @@
 
 <%
 	long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+	String redirect = ParamUtil.getString(request, "redirect");
 
 	CrmGroup crmGroup = null;
+	List<CrmContact> crmGroupContacts = new ArrayList<CrmContact>();
+	List<CrmContact> crmGroupPotentialContacts = new ArrayList<CrmContact>();
 
 	if (crmGroupId > 0) {
 		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
+		crmGroupContacts = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
+		/* 		crmGroupPotentialContacts = GroupUtil.getPotentialCrmContacts(crmGroupId); */
 	}
-
-	String redirect = ParamUtil.getString(request, "redirect");
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");
 %>
@@ -25,7 +28,7 @@
 		</aui:input>
 
 		<aui:row>
-			<aui:col md="4">
+			<aui:col md="12">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
 						<aui:input name="name"
@@ -33,6 +36,26 @@
 							<aui:validator name="required" />
 							<aui:validator name="maxLength">500</aui:validator>
 						</aui:input>
+					</aui:fieldset>
+					<aui:fieldset>
+						<aui:row>
+							<aui:col md="6">
+								<div class="form-group">
+									<label class="control-label"> Assigned Contacts </label>
+									<ul>
+										<%
+											for (CrmContact crmContact : crmGroupContacts) {
+										%>
+										<li><%=crmContact.getFirstName() + ' ' + crmContact.getLastName()%>
+											<aui:input name="crmContactIds" type="hidden"
+												value="<%=crmContact.getCrmContactId()%>"></aui:input></li>
+										<%
+											}
+										%>
+									</ul>
+								</div>
+							</aui:col>
+						</aui:row>
 					</aui:fieldset>
 				</aui:fieldset-group>
 			</aui:col>

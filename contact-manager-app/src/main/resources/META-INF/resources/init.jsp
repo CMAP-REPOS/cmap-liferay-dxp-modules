@@ -53,6 +53,7 @@
 
 <%@ page import="javax.portlet.PortletURL" %>
 
+<%@ page import="contact.manager.app.util.GroupUtil" %>
 
 <liferay-theme:defineObjects />
 

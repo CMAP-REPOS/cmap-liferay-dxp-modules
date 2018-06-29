@@ -107,14 +107,14 @@
 				<liferay-ui:search-container-results>
 					<%
 						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
-												ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
-												crmContactsSearchContainer.getEnd(), orderByComparator);
+								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
+								crmContactsSearchContainer.getEnd(), orderByComparator);
 
-										for (CrmContact crmContact : crmContacts) {
-											viewModels.add(new CrmContactViewModel(crmContact));
-										}
+						for (CrmContact crmContact : crmContacts) {
+							viewModels.add(new CrmContactViewModel(crmContact));
+						}
 
-										pageContext.setAttribute("results", viewModels);
+						pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
 
