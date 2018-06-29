@@ -10,6 +10,6 @@ FROM contactmanager_cmapsubgroup;
 -- SET SQL_SAFE_UPDATES = 0;
 -- and then run the query.
 update crm_group c
-inner join (SELECT crmGroupId, count(crmContactId) as count FROM lportal2.crm_contacts_groups group by crmGroupId) t 
+inner join (SELECT crmGroupId, count(crmContactId) as count FROM crm_contacts_groups group by crmGroupId) t 
 on c.crmGroupId = t.crmGroupId
 set c.crmContactsCount = t.count;

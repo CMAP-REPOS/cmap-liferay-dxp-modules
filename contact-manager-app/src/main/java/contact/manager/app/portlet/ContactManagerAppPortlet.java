@@ -1,6 +1,5 @@
 package contact.manager.app.portlet;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -8,10 +7,10 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -29,6 +28,7 @@ import contact.manager.app.util.AuditLogUtil;
 import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.app.util.UserUtil;
+import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmOutreachLog;
@@ -53,7 +53,7 @@ import contact.manager.service.CrmOutreachLogLocalService;
 				"javax.portlet.expiration-cache=0", 
 				"javax.portlet.init-param.template-path=/", 
 				"javax.portlet.init-param.view-template=/contacts/view.jsp", 
-				"javax.portlet.name=" + ContactManagerAppPortletKeys.ContactManagerApp, 
+				"javax.portlet.name=" + ContactManagerAppPortletKeys.ContactManagerApp,
 				"javax.portlet.resource-bundle=content.Language", 
 				"javax.portlet.security-role-ref=power-user,user", 
 				"javax.portlet.supports.mime-type=text/html" 
@@ -72,18 +72,17 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-			long crmContactId = CounterLocalServiceUtil.increment(CrmContact.class.getName());
 
-			CrmContact crmContact = _crmContactLocalService.createCrmContact(crmContactId);
+			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
 			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact);
 
 			if (addedContact != null) {
-				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_ADD);
+				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
 				// TODO: pass to Constant Contact API
 			}
 
-			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
+			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 
 		} catch (Exception e) {
@@ -98,11 +97,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
+			CrmContact originalContact = (CrmContact)crmContact.clone();
+
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, false);
 			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact);
 
 			if (updatedContact != null) {
-				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE);
+				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
+						updatedContact);
 				// TODO: pass to Constant Contact API
 			}
 
@@ -145,10 +147,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
-			long crmOutreachLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 
-			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.createCrmOutreachLog(crmOutreachLogId);
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.createCrmOutreachLog(0);
 			crmOutreachLog = OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext,
 					true);
 			_crmOutreachLogLocalService.addCrmOutreachLog(crmOutreachLog);
@@ -192,22 +193,28 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action) {
 
-		long crmContactAuditLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
 		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
-				.createCrmContactAuditLog(crmContactAuditLogId);
+				.createCrmContactAuditLog(0);
 		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext,
 				crmContactId, action);
 		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
 	}
 
-	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String[] foo, String action) {
+	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action,
+			CrmContact oldContact, CrmContact newContact) {
 
-		long crmContactAuditLogId = CounterLocalServiceUtil.increment(CrmOutreachLog.class.getName());
 		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
-				.createCrmContactAuditLog(crmContactAuditLogId);
+				.createCrmContactAuditLog(0);
 		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext,
 				crmContactId, action);
 		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
+
+		if (crmContactAuditLog != null) {
+			List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChangeViewModels = AuditLogUtil
+					.collectCrmContactAuditLogChanges(oldContact, newContact);
+			AuditLogUtil.setCrmContactAuditLogChanges(crmContactAuditLogChangeViewModels, serviceContext,
+					crmContactAuditLog.getCrmContactAuditLogId());
+		}
 	}
 
 	@Reference

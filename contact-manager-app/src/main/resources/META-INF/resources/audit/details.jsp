@@ -19,40 +19,38 @@
 	renderResponse.setTitle("Audit Log Details");
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<aui:row>
 		<aui:col md="12">
-			<div class="panel-body">
-				<liferay-ui:search-container delta="20" deltaConfigurable="true"
-					emptyResultsMessage="No details found for this audit log"
-					iteratorURL="<%=iteratorURL%>"
-					total="<%=CrmContactAuditLogChangeLocalServiceUtil
+			<liferay-ui:search-container delta="20" deltaConfigurable="true"
+				emptyResultsMessage="No details found for this audit log"
+				iteratorURL="<%=iteratorURL%>"
+				total="<%=CrmContactAuditLogChangeLocalServiceUtil
 								.countByCrmContactAuditLogId(crmContactAuditLogId)%>"
-					var="crmContactAuditLogChangeSearchContainer">
-					<liferay-ui:search-container-results>
-						<%
-							List<CrmContactAuditLogChange> crmContactAuditLogChanges = CrmContactAuditLogChangeLocalServiceUtil
-													.findByCrmContactAuditLogId(crmContactAuditLogId,
-															crmContactAuditLogChangeSearchContainer.getStart(),
-															crmContactAuditLogChangeSearchContainer.getEnd());
+				var="crmContactAuditLogChangeSearchContainer">
+				<liferay-ui:search-container-results>
+					<%
+						List<CrmContactAuditLogChange> crmContactAuditLogChanges = CrmContactAuditLogChangeLocalServiceUtil
+								.findByCrmContactAuditLogId(crmContactAuditLogId,
+										crmContactAuditLogChangeSearchContainer.getStart(),
+										crmContactAuditLogChangeSearchContainer.getEnd());
 
-											pageContext.setAttribute("results", crmContactAuditLogChanges);
-						%>
-					</liferay-ui:search-container-results>
+						pageContext.setAttribute("results", crmContactAuditLogChanges);
+					%>
+				</liferay-ui:search-container-results>
 
-					<liferay-ui:search-container-row
-						className="contact.manager.model.CrmContactAuditLogChange"
-						modelVar="auditLogChange">
-						<liferay-ui:search-container-column-text property="fieldName"
-							name="Field" orderableProperty="fieldName" />
-						<liferay-ui:search-container-column-text property="oldValue"
-							name="Old Value" orderableProperty="oldValue" />
-						<liferay-ui:search-container-column-text property="newValue"
-							name="New Value" orderableProperty="newValue" />
-					</liferay-ui:search-container-row>
-					<liferay-ui:search-iterator />
-				</liferay-ui:search-container>
-			</div>
+				<liferay-ui:search-container-row
+					className="contact.manager.model.CrmContactAuditLogChange"
+					modelVar="auditLogChange">
+					<liferay-ui:search-container-column-text property="fieldName"
+						name="Field" orderableProperty="fieldName" />
+					<liferay-ui:search-container-column-text property="oldValue"
+						name="Old Value" orderableProperty="oldValue" />
+					<liferay-ui:search-container-column-text property="newValue"
+						name="New Value" orderableProperty="newValue" />
+				</liferay-ui:search-container-row>
+				<liferay-ui:search-iterator />
+			</liferay-ui:search-container>
 		</aui:col>
 	</aui:row>
 </div>

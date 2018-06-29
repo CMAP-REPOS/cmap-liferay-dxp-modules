@@ -25,7 +25,7 @@
 	name='<%=crmContact == null ? "addContact" : "updateContact"%>'
 	var="editContactURL" />
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 
 	<aui:form action="<%=editContactURL%>" name="<portlet:namespace />fm">
 		<aui:input type="hidden" name="crmContactId"

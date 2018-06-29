@@ -22,6 +22,14 @@ public class CrmContactAuditLogChangeViewModel {
 		this.newValue = crmContactAuditLogChange.getNewValue();
 	}
 
+	public CrmContactAuditLogChangeViewModel(String fieldName,
+			String oldValue, String newValue) {
+
+		this.fieldName = fieldName;
+		this.oldValue = oldValue;
+		this.newValue = newValue;
+	}
+
 	public CrmContactAuditLogChangeViewModel(long crmContactAuditLogChangeId, long groupId, long companyId, long userId,
 			String userName, Date createDate, Date modifiedDate, long crmContactAuditLogId, String fieldName,
 			String oldValue, String newValue) {

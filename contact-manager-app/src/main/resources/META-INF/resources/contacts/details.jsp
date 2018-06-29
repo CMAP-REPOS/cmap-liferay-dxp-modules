@@ -19,7 +19,7 @@
 			: "Contact Information");
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<%@ include file="nav.jsp"%>
 	<aui:fieldset-group markupView="lexicon">
 		<aui:row>

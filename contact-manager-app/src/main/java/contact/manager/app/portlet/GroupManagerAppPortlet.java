@@ -1,6 +1,5 @@
 package contact.manager.app.portlet;
 
-import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -9,14 +8,9 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import java.io.IOException;
-
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -60,13 +54,12 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-			long crmGroupId = CounterLocalServiceUtil.increment(CrmGroup.class.getName());
 
-			CrmGroup crmGroup = _crmGroupLocalService.createCrmGroup(crmGroupId);
+			CrmGroup crmGroup = _crmGroupLocalService.createCrmGroup(0);
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, true);
 
 			_crmGroupLocalService.addCrmGroup(crmGroup);
-			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
+			response.setRenderParameter("crmGroupId", Long.toString(crmGroup.getCrmGroupId()));
 			response.setRenderParameter("mvcPath", "/groups/details.jsp");
 
 		} catch (Exception e) {

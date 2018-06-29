@@ -52,6 +52,7 @@
 <%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>
 <%@ page import="contact.manager.service.permission.CrmContactPermission" %>
 
+<%@ page import="java.util.ArrayList "%>
 <%@ page import="java.util.List "%>
 <%@ page import="java.util.Calendar "%>
 

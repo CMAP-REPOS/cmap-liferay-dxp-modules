@@ -89,7 +89,7 @@
 	<portlet:param name="redirect" value="<%=currentURL%>" />
 </portlet:renderURL>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>

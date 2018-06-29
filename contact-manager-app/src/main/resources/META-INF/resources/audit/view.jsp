@@ -3,7 +3,7 @@
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
-	
+
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
@@ -46,7 +46,7 @@
 			? ("Audit Log for " + crmContact.getFirstName() + " " + crmContact.getLastName()) : "Audit Log");
 %>
 
-<div class="container-fluid-1280">
+<div class="container-fluid">
 	<%@ include file="nav.jsp"%>
 	<aui:row>
 		<aui:col md="12">
@@ -57,12 +57,15 @@
 				var="crmContactAuditLogSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmContactAuditLog> crmContactAuditLogs = CrmContactAuditLogLocalServiceUtil.findByCrmContactId(crmContactId, 
-							crmContactAuditLogSearchContainer.getStart(), crmContactAuditLogSearchContainer.getEnd(), orderByComparator);
+						List<CrmContactAuditLog> crmContactAuditLogs = CrmContactAuditLogLocalServiceUtil
+								.findByCrmContactId(crmContactId, crmContactAuditLogSearchContainer.getStart(),
+										crmContactAuditLogSearchContainer.getEnd(), orderByComparator);
 						pageContext.setAttribute("results", crmContactAuditLogs);
 					%>
 				</liferay-ui:search-container-results>
-				<liferay-ui:search-container-row className="contact.manager.model.CrmContactAuditLog" modelVar="auditLog">
+				<liferay-ui:search-container-row
+					className="contact.manager.model.CrmContactAuditLog"
+					modelVar="auditLog">
 					<portlet:renderURL var="detailsURL">
 						<portlet:param name="jspPage" value="/audit/details.jsp" />
 						<portlet:param name="redirect" value="<%=currentURL%>" />
