@@ -14,27 +14,40 @@
 
 package contact.manager.service.impl;
 
+import java.util.List;
+
+import contact.manager.model.CrmCountyCommissioner;
 import contact.manager.service.base.CrmCountyCommissionerLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM County Commissioner local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmCountyCommissionerLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmCountyCommissionerLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerLocalServiceBaseImpl
  * @see contact.manager.service.CrmCountyCommissionerLocalServiceUtil
  */
-public class CrmCountyCommissionerLocalServiceImpl
-	extends CrmCountyCommissionerLocalServiceBaseImpl {
+public class CrmCountyCommissionerLocalServiceImpl extends CrmCountyCommissionerLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmCountyCommissionerLocalServiceUtil} to access the CRM County Commissioner local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmCountyCommissionerLocalServiceUtil} to access
+	 * the CRM County Commissioner local service.
 	 */
+
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode) {
+		return crmCountyCommissionerPersistence.findByZipCode(zipCode);
+	}
+
 }

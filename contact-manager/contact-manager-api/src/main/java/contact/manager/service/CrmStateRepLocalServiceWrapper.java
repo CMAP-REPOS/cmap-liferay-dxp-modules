@@ -255,6 +255,12 @@ public class CrmStateRepLocalServiceWrapper implements CrmStateRepLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmStateRep> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmStateRepLocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM State Reps.
 	*

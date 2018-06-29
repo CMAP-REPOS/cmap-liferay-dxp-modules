@@ -257,6 +257,12 @@ public class CrmStateSenateLocalServiceWrapper
 			end, orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmStateSenate> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmStateSenateLocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM State Senates.
 	*

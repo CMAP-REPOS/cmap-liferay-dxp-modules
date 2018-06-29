@@ -14,16 +14,23 @@
 
 package contact.manager.service.impl;
 
+import java.util.List;
+
+import contact.manager.model.CrmStateRep;
 import contact.manager.service.base.CrmStateRepLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM State Rep local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmStateRepLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmStateRepLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -34,6 +41,12 @@ public class CrmStateRepLocalServiceImpl extends CrmStateRepLocalServiceBaseImpl
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmStateRepLocalServiceUtil} to access the CRM State Rep local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmStateRepLocalServiceUtil} to access the CRM
+	 * State Rep local service.
 	 */
+	
+	public List<CrmStateRep> findByZipCode(String zipCode) {
+		return crmStateRepPersistence.findByZipCode(zipCode);
+	}
 }

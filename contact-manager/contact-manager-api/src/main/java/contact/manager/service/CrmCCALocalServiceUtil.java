@@ -238,6 +238,11 @@ public class CrmCCALocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmCCA> findByZipCode(
+		java.lang.String zipCode) {
+		return getService().findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM CCAs.
 	*

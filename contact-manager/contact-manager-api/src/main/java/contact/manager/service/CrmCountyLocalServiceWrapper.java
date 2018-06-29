@@ -251,6 +251,12 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmCounty> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmCountyLocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM Counties.
 	*

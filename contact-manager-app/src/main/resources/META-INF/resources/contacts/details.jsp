@@ -1,13 +1,14 @@
 <%@ include file="../init.jsp"%>
-<%@ include file="init.jsp"%>
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	String crmContactIdString = ParamUtil.getString(request, "crmContactId");
 	CrmContact crmContact = null;
+	CrmContactViewModel viewModel = null;
 
 	if (crmContactId > 0) {
 		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		viewModel = new CrmContactViewModel(crmContact);
 	}
 
 	String redirect = ParamUtil.getString(request, "redirect");
@@ -28,19 +29,19 @@
 					<p>
 						<strong><liferay-ui:message key="crm.label.firstName" /></strong>
 					</p>
-					<p><%=crmContact.getFirstName()%></p>
+					<p><%=viewModel.getFirstName()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.middleName" /></strong>
 					</p>
-					<p><%=crmContact.getMiddleName()%></p>
+					<p><%=viewModel.getMiddleName()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.lastName" /></strong>
 					</p>
-					<p><%=crmContact.getLastName()%></p>
+					<p><%=viewModel.getLastName()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.organization" /></strong>
 					</p>
-					<p><%=crmContact.getOrganization()%></p>
+					<p><%=viewModel.getOrganization()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.isVip" /></strong>
 					</p>
@@ -48,144 +49,192 @@
 					<p>
 						<strong><liferay-ui:message key="crm.label.groupsList" /></strong>
 					</p>
-					<p><%=crmContact.getGroupsList()%></p>
+					<p><%=viewModel.getGroupsList()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.tagsList" /></strong>
 					</p>
-					<p><%=crmContact.getTagsList()%></p>
+					<p><%=viewModel.getTagsList()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.prefix" /></strong>
 					</p>
-					<p><%=crmContact.getPrefix()%></p>
+					<p><%=viewModel.getPrefix()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.salutation" /></strong>
 					</p>
-					<p><%=crmContact.getSalutation()%></p>
+					<p><%=viewModel.getSalutation()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.jobTitle" /></strong>
 					</p>
-					<p><%=crmContact.getJobTitle()%></p>
+					<p><%=viewModel.getJobTitle()%></p>
 				</div>
 			</aui:col>
 			<aui:col md="4">
 				<div class="panel-body">
-
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddress1" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddress1()%></p>
+					<p><%=viewModel.getPrimaryAddress1()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddress2" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddress2()%></p>
+					<p><%=viewModel.getPrimaryAddress2()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddressCity" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddressCity()%></p>
+					<p><%=viewModel.getPrimaryAddressCity()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddressState" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddressState()%></p>
+					<p><%=viewModel.getPrimaryAddressState()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddressZip" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddressZip()%></p>
+					<p><%=viewModel.getPrimaryAddressZip()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryAddressCounty" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryAddressCounty()%></p>
+					<p><%=viewModel.getPrimaryAddressCounty()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddress1" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddress1()%></p>
+					<p><%=viewModel.getSecondaryAddress1()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddress2" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddress2()%></p>
+					<p><%=viewModel.getSecondaryAddress2()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddressCity" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddressCity()%></p>
+					<p><%=viewModel.getSecondaryAddressCity()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddressState" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddressState()%></p>
+					<p><%=viewModel.getSecondaryAddressState()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddressZip" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddressZip()%></p>
+					<p><%=viewModel.getSecondaryAddressZip()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.secondaryAddressCounty" /></strong>
 					</p>
-					<p><%=crmContact.getSecondaryAddressCounty()%></p>
+					<p><%=viewModel.getSecondaryAddressCounty()%></p>
 				</div>
 			</aui:col>
 			<aui:col md="4">
 				<div class="panel-body">
-
 					<p>
 						<strong><liferay-ui:message key="crm.label.primaryPhone" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryPhone()%></p>
+					<p><%=viewModel.getPrimaryPhone()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryPhoneExtension" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryPhoneExtension()%></p>
+					<p><%=viewModel.getPrimaryPhoneExtension()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.primaryEmailAddress" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryEmailAddress()%></p>
+					<p><%=viewModel.getPrimaryEmailAddress()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.primaryFax" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryFax()%></p>
+					<p><%=viewModel.getPrimaryFax()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.primaryCell" /></strong>
 					</p>
-					<p><%=crmContact.getPrimaryCell()%></p>
+					<p><%=viewModel.getPrimaryCell()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.alternateContact" /></strong>
 					</p>
-					<p><%=crmContact.getAlternateContact()%></p>
+					<p><%=viewModel.getAlternateContact()%></p>
 					<p>
 						<strong><liferay-ui:message
 								key="crm.label.alternateEmail" /></strong>
 					</p>
-					<p><%=crmContact.getAlternateEmail()%></p>
+					<p><%=viewModel.getAlternateEmail()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.facebookId" /></strong>
 					</p>
-					<p><%=crmContact.getFacebookId()%></p>
+					<p><%=viewModel.getFacebookId()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.twitterHandle" /></strong>
 					</p>
-					<p><%=crmContact.getTwitterHandle()%></p>
+					<p><%=viewModel.getTwitterHandle()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.linkedInUrl" /></strong>
 					</p>
-					<p><%=crmContact.getLinkedInUrl()%></p>
+					<p><%=viewModel.getLinkedInUrl()%></p>
+				</div>
+			</aui:col>
+		</aui:row>
+	</aui:fieldset-group>
+	<aui:fieldset-group markupView="lexicon">
+		<aui:row>
+			<aui:col md="4">
+				<div class="panel-body">
+					<p>
+						<strong>Muni</strong>
+					</p>
+					<p><%=viewModel.getCrmMuniNames()%></p>
+					<p>
+						<strong>County</strong>
+					</p>
+					<p><%=viewModel.getCrmCountyNames()%></p>
+					<p>
+						<strong>LTA</strong>
+					</p>
+					<p><%=viewModel.getCrmLTANames()%></p>
+				</div>
+			</aui:col>
+			<aui:col md="4">
+				<div class="panel-body">
+					<p>
+						<strong>US Representative</strong>
+					</p>
+					<p><%=viewModel.getCrmUsRepNames()%></p>
+					<p>
+						<strong>State Representatives</strong>
+					</p>
+					<p><%=viewModel.getCrmStateRepNames()%></p>
+					<p>
+						<strong>State Senators</strong>
+					</p>
+					<p><%=viewModel.getCrmStateSenateNames()%></p>
+				</div>
+			</aui:col>
+			<aui:col md="4">
+				<div class="panel-body">
+					<p>
+						<strong>County Commissioner Districts</strong>
+					</p>
+					<p><%=viewModel.getCrmCountyCommissionerNames()%></p>
+					<p>
+						<strong>Aldermanic Wards</strong>
+					</p>
+					<p><%=viewModel.getCrmChiWardNames()%></p>
+					<p>
+						<strong>Chicago Neighborhood</strong>
+					</p>
+					<p><%=viewModel.getCrmCCANames()%></p>
 				</div>
 			</aui:col>
 		</aui:row>
 	</aui:fieldset-group>
 
-<aui:button-row>
-</aui:button-row>
 
 
 </div>

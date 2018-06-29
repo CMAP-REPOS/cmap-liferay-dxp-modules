@@ -2,10 +2,22 @@ package contact.manager.app.viewmodel;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import contact.manager.app.util.DateUtil;
+import contact.manager.app.util.ZipCodeUtil;
+import contact.manager.model.CrmCCA;
+import contact.manager.model.CrmChiWard;
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmCounty;
+import contact.manager.model.CrmCountyCommissioner;
+import contact.manager.model.CrmLTA;
+import contact.manager.model.CrmMuni;
+import contact.manager.model.CrmStateRep;
+import contact.manager.model.CrmStateSenate;
+import contact.manager.model.CrmUsRep;
 
 public class CrmContactViewModel {
 
@@ -56,6 +68,15 @@ public class CrmContactViewModel {
 		this.imageFileEntryId = crmContact.getImageFileEntryId();
 		this.tagsList = crmContact.getTagsList();
 		this.groupsList = crmContact.getGroupsList();
+		this.crmCCANames = getCrmCCANames(crmContact.getPrimaryAddressZip());
+		this.crmChiWardNames = getCrmChiWardNames(crmContact.getPrimaryAddressZip());
+		this.crmCountyNames = getCrmCountyNames(crmContact.getPrimaryAddressZip());
+		this.crmCountyCommissionerNames = getCrmCountyCommissionerNames(crmContact.getPrimaryAddressZip());
+		this.crmLTANames = getCrmLTANames(crmContact.getPrimaryAddressZip());
+		this.crmMuniNames = getCrmMuniNames(crmContact.getPrimaryAddressZip());
+		this.crmStateRepNames = getCrmStateRepNumbers(crmContact.getPrimaryAddressZip());
+		this.crmStateSenateNames = getCrmStateSenateNumbers(crmContact.getPrimaryAddressZip());
+		this.crmUsRepNames = getCrmUsRepNumbers(crmContact.getPrimaryAddressZip());
 	}
 
 	public CrmContactViewModel(long crmContactId, long constantContactId, long groupId, long companyId, long userId,
@@ -68,7 +89,10 @@ public class CrmContactViewModel {
 			String primaryPhone, String primaryPhoneExtension, String primaryFax, String primaryCell,
 			String primaryEmailAddress, String alternateContact, String alternateEmail, boolean isVip,
 			String facebookId, String twitterHandle, String linkedInUrl, String status, String kioskUuid,
-			long imageFileEntryId, String tagsList, String groupsList) {
+			long imageFileEntryId, String tagsList, String groupsList, List<String> crmCCANames,
+			List<String> crmChiWardNames, List<String> crmCountyNames, List<String> crmCountyCommissionerNames,
+			List<String> crmLTANames, List<String> crmMuniNames, List<String> crmStateRepNames,
+			List<String> crmStateSenateNames, List<String> crmUsRepNames) {
 
 		this.crmContactId = crmContactId;
 		this.constantContactId = constantContactId;
@@ -115,6 +139,15 @@ public class CrmContactViewModel {
 		this.imageFileEntryId = imageFileEntryId;
 		this.tagsList = tagsList;
 		this.groupsList = groupsList;
+		this.crmCCANames = crmCCANames;
+		this.crmChiWardNames = crmChiWardNames;
+		this.crmCountyNames = crmCountyNames;
+		this.crmCountyCommissionerNames = crmCountyCommissionerNames;
+		this.crmLTANames = crmLTANames;
+		this.crmMuniNames = crmMuniNames;
+		this.crmStateRepNames = crmStateRepNames;
+		this.crmStateSenateNames = crmStateSenateNames;
+		this.crmUsRepNames = crmUsRepNames;
 	}
 
 	private long crmContactId;
@@ -163,6 +196,16 @@ public class CrmContactViewModel {
 	private long imageFileEntryId;
 	private String tagsList;
 	private String groupsList;
+
+	public List<String> crmCCANames;
+	public List<String> crmChiWardNames;
+	public List<String> crmCountyNames;
+	public List<String> crmCountyCommissionerNames;
+	public List<String> crmLTANames;
+	public List<String> crmMuniNames;
+	public List<String> crmStateRepNames;
+	public List<String> crmStateSenateNames;
+	public List<String> crmUsRepNames;
 
 	public long getCrmContactId() {
 		return crmContactId;
@@ -522,5 +565,158 @@ public class CrmContactViewModel {
 
 	public void setGroupsList(String groupsList) {
 		this.groupsList = groupsList;
+	}
+
+	public List<String> getCrmCCANames() {
+		return crmCCANames;
+	}
+
+	public void setCrmCCANames(List<String> crmCCANames) {
+		this.crmCCANames = crmCCANames;
+	}
+
+	public List<String> getCrmChiWardNames() {
+		return crmChiWardNames;
+	}
+
+	public void setCrmChiWardNames(List<String> crmChiWardNames) {
+		this.crmChiWardNames = crmChiWardNames;
+	}
+
+	public List<String> getCrmCountyNames() {
+		return crmCountyNames;
+	}
+
+	public void setCrmCountyNames(List<String> crmCountyNames) {
+		this.crmCountyNames = crmCountyNames;
+	}
+
+	public List<String> getCrmCountyCommissionerNames() {
+		return crmCountyCommissionerNames;
+	}
+
+	public void setCrmCountyCommissionerNames(List<String> crmCountyCommissionerNames) {
+		this.crmCountyCommissionerNames = crmCountyCommissionerNames;
+	}
+
+	public List<String> getCrmLTANames() {
+		return crmLTANames;
+	}
+
+	public void setCrmLTANames(List<String> crmLTANames) {
+		this.crmLTANames = crmLTANames;
+	}
+
+	public List<String> getCrmMuniNames() {
+		return crmMuniNames;
+	}
+
+	public void setCrmMuniNames(List<String> crmMuniNames) {
+		this.crmMuniNames = crmMuniNames;
+	}
+
+	public List<String> getCrmStateRepNames() {
+		return crmStateRepNames;
+	}
+
+	public void setCrmStateRepNames(List<String> crmStateRepNames) {
+		this.crmStateRepNames = crmStateRepNames;
+	}
+
+	public List<String> getCrmStateSenateNames() {
+		return crmStateSenateNames;
+	}
+
+	public void setCrmStateSenateNames(List<String> crmStateSenateNames) {
+		this.crmStateSenateNames = crmStateSenateNames;
+	}
+
+	public List<String> getCrmUsRepNames() {
+		return crmUsRepNames;
+	}
+
+	public void setCrmUsRepNames(List<String> crmUsRepNames) {
+		this.crmUsRepNames = crmUsRepNames;
+	}
+
+	private List<String> getCrmCCANames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmCCA> items = ZipCodeUtil.getCrmCCAByZipCode(zipCode);
+		for (CrmCCA item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmChiWardNames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmChiWard> items = ZipCodeUtil.getCrmChiWardByZipCode(zipCode);
+		for (CrmChiWard item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmCountyNames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmCounty> items = ZipCodeUtil.getCrmCountyByZipCode(zipCode);
+		for (CrmCounty item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmCountyCommissionerNames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmCountyCommissioner> items = ZipCodeUtil.getCrmCountyCommissionerByZipCode(zipCode);
+		for (CrmCountyCommissioner item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmLTANames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmLTA> items = ZipCodeUtil.getCrmLTAByZipCode(zipCode);
+		for (CrmLTA item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmMuniNames(String zipCode) {
+		List<String> names = new ArrayList<String>();
+		List<CrmMuni> items = ZipCodeUtil.getCrmMuniByZipCode(zipCode);
+		for (CrmMuni item : items) {
+			names.add(item.getName());
+		}
+		return names;
+	}
+
+	private List<String> getCrmStateRepNumbers(String zipCode) {
+		List<String> numbers = new ArrayList<String>();
+		List<CrmStateRep> items = ZipCodeUtil.getCrmStateRepByZipCode(zipCode);
+		for (CrmStateRep item : items) {
+			numbers.add(item.getNumber());
+		}
+		return numbers;
+	}
+
+	private List<String> getCrmStateSenateNumbers(String zipCode) {
+		List<String> numbers = new ArrayList<String>();
+		List<CrmStateSenate> items = ZipCodeUtil.getCrmStateSenateByZipCode(zipCode);
+		for (CrmStateSenate item : items) {
+			numbers.add(item.getNumber());
+		}
+		return numbers;
+	}
+
+	private List<String> getCrmUsRepNumbers(String zipCode) {
+		List<String> numbers = new ArrayList<String>();
+		List<CrmUsRep> items = ZipCodeUtil.getCrmUsRepByZipCode(zipCode);
+		for (CrmUsRep item : items) {
+			numbers.add(item.getNumber());
+		}
+		return numbers;
 	}
 }

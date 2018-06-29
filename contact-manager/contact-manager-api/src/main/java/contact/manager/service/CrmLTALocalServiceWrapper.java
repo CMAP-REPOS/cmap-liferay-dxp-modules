@@ -249,6 +249,12 @@ public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmLTA> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmLTALocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM LTAs.
 	*

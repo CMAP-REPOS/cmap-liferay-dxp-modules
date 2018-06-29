@@ -14,16 +14,23 @@
 
 package contact.manager.service.impl;
 
+import java.util.List;
+
+import contact.manager.model.CrmCounty;
 import contact.manager.service.base.CrmCountyLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM County local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmCountyLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmCountyLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -34,6 +41,12 @@ public class CrmCountyLocalServiceImpl extends CrmCountyLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmCountyLocalServiceUtil} to access the CRM County local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmCountyLocalServiceUtil} to access the CRM
+	 * County local service.
 	 */
+	
+	public List<CrmCounty> findByZipCode(String zipCode) {
+		return crmCountyPersistence.findByZipCode(zipCode);
+	}
 }

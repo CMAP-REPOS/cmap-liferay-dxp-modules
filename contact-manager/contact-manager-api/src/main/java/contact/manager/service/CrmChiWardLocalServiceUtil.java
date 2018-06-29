@@ -242,6 +242,11 @@ public class CrmChiWardLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	public static java.util.List<contact.manager.model.CrmChiWard> findByZipCode(
+		java.lang.String zipCode) {
+		return getService().findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM Chi Wards.
 	*

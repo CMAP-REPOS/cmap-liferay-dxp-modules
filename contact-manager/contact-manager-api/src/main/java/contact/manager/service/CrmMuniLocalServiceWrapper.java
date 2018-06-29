@@ -249,6 +249,12 @@ public class CrmMuniLocalServiceWrapper implements CrmMuniLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmMuni> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmMuniLocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM Munis.
 	*

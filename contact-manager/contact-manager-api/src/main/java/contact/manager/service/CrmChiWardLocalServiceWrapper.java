@@ -252,6 +252,12 @@ public class CrmChiWardLocalServiceWrapper implements CrmChiWardLocalService,
 			orderByComparator);
 	}
 
+	@Override
+	public java.util.List<contact.manager.model.CrmChiWard> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmChiWardLocalService.findByZipCode(zipCode);
+	}
+
 	/**
 	* Returns a range of all the CRM Chi Wards.
 	*
