@@ -65,7 +65,7 @@ public class CrmContactPermission implements BaseModelPermissionChecker {
     }
 
     @Reference(unbind = "-")
-    protected void setGuestbookLocalService(CrmContactLocalService crmContactLocalService) {
+    protected void setCrmContactLocalService(CrmContactLocalService crmContactLocalService) {
         _crmContactLocalService = crmContactLocalService;
     }
 
