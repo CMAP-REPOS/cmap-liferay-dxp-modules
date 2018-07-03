@@ -168,6 +168,8 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmNote updateCrmNote(CrmNote crmNote);
 
+	public int countByCrmContactId(long crmContactId);
+
 	/**
 	* Returns the number of CRM Notes.
 	*
@@ -221,6 +223,14 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
+
+	public List<CrmNote> findByCrmContactId(long crmContactId);
+
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
+		int end);
+
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
+		int end, OrderByComparator<CrmNote> orderByComparator);
 
 	/**
 	* Returns a range of all the CRM Notes.

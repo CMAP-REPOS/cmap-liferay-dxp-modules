@@ -2,7 +2,6 @@
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
-	String crmContactIdString = ParamUtil.getString(request, "crmContactId");
 	CrmContact crmContact = null;
 	CrmContactViewModel viewModel = null;
 

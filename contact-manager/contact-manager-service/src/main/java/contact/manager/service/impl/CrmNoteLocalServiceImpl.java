@@ -14,16 +14,25 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.util.OrderByComparator;
+
+import java.util.List;
+
+import contact.manager.model.CrmNote;
 import contact.manager.service.base.CrmNoteLocalServiceBaseImpl;
 
 /**
  * The implementation of the CRM Note local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link contact.manager.service.CrmNoteLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link contact.manager.service.CrmNoteLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
@@ -34,6 +43,25 @@ public class CrmNoteLocalServiceImpl extends CrmNoteLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Always use {@link contact.manager.service.CrmNoteLocalServiceUtil} to access the CRM Note local service.
+	 * Never reference this class directly. Always use {@link
+	 * contact.manager.service.CrmNoteLocalServiceUtil} to access the CRM Note
+	 * local service.
 	 */
+
+	public List<CrmNote> findByCrmContactId(long crmContactId) {
+		return crmNotePersistence.findByCrmContactId(crmContactId);
+	}
+
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start, int end) {
+		return crmNotePersistence.findByCrmContactId(crmContactId, start, end);
+	}
+
+	public List<CrmNote> findByCrmContactId(long crmContactId, int start, int end,
+			OrderByComparator<CrmNote> orderByComparator) {
+		return crmNotePersistence.findByCrmContactId(crmContactId, start, end, orderByComparator);
+	}
+
+	public int countByCrmContactId(long crmContactId) {
+		return crmNotePersistence.countByCrmContactId(crmContactId);
+	}
 }

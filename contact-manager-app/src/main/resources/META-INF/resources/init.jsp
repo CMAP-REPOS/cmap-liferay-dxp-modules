@@ -27,6 +27,7 @@
 <%@ page import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
 <%@ page import="contact.manager.app.constants.CrmContactAuditLogKeys" %>
 <%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
+<%@page import="contact.manager.app.constants.CrmNoteKeys"%>
 <%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
 
 <%@ page import="contact.manager.app.util.GroupUtil" %>
@@ -40,6 +41,7 @@
 <%@ page import="contact.manager.model.CrmContactAuditLog"%>
 <%@ page import="contact.manager.model.CrmContactAuditLogChange"%>
 <%@ page import="contact.manager.model.CrmGroup"%>
+<%@ page import="contact.manager.model.CrmNote"%>
 <%@ page import="contact.manager.model.CrmOutreachLog"%>
 
 <%@ page import="contact.manager.service.CrmContactAuditLogLocalServiceUtil"%>
@@ -47,6 +49,7 @@
 
 <%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
 <%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
+<%@ page import="contact.manager.service.CrmNoteLocalServiceUtil"%>
 <%@ page import="contact.manager.service.CrmOutreachLogLocalServiceUtil"%>
 
 <%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>
@@ -55,6 +58,11 @@
 <%@ page import="java.util.ArrayList "%>
 <%@ page import="java.util.List "%>
 <%@ page import="java.util.Calendar "%>
+
+<%@ page import="contact.manager.service.permission.CrmContactPermission "%>
+<%@ page import="contact.manager.service.permission.CrmContactAuditLogPermission "%>
+<%@ page import="contact.manager.service.permission.CrmGroupPermission "%>
+<%@ page import="contact.manager.service.permission.CrmOutreachLogPermission"%>
 
 <%@ page import="javax.portlet.PortletURL" %>
 

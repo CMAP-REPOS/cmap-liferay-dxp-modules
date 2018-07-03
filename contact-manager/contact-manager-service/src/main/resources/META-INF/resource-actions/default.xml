@@ -40,4 +40,30 @@ Mapping 7.0.0//EN" "http://www.liferay.com/dtd/liferay-resource-action-mapping_7
 			</guest-unsupported>
 	    </permissions>
 	</model-resource>
+	<model-resource>
+	    <model-name>contact.manager.model.CrmGroup</model-name>
+	    <portlet-ref>
+	        <portlet-name>GroupManagerApp</portlet-name>
+	    </portlet-ref>
+	    <permissions>
+	        <supports>
+	            <action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>VIEW</action-key>
+				<action-key>ADD_GROUP</action-key>
+				<action-key>MODIFY_GROUP</action-key>
+				<action-key>DELETE_GROUP</action-key>
+				<action-key>VIEW_GROUPS</action-key>
+	        </supports>
+	        <site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>ACCESS_IN_CONTROL_PANEL</action-key>
+				<action-key>VIEW</action-key>
+				<action-key>ADD_GROUP</action-key>
+				<action-key>MODIFY_GROUP</action-key>
+				<action-key>DELETE_GROUP</action-key>
+				<action-key>VIEW_GROUPS</action-key>
+			</guest-unsupported>
+	    </permissions>
+	</model-resource>
 </resource-action-mapping>
