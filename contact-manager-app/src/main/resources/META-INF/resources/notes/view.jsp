@@ -7,7 +7,7 @@
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 	}
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -52,11 +52,11 @@
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No notes found" iteratorURL="<%=iteratorURL%>"
-				total="<%=CrmNoteLocalServiceUtil.countByCrmContactId(crmContactId)%>"
+				total="<%=CrmNoteServiceUtil.countByCrmContactId(crmContactId)%>"
 				var="crmNoteSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContactId,
+						List<CrmNote> crmNotes = CrmNoteServiceUtil.findByCrmContactId(crmContactId,
 												crmNoteSearchContainer.getStart(), crmNoteSearchContainer.getEnd(),
 												orderByComparator);
 										pageContext.setAttribute("results", crmNotes);

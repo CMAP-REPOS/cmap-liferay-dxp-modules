@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmMuni;
 import contact.manager.service.base.CrmMuniLocalServiceBaseImpl;
 
 /**
@@ -45,8 +42,5 @@ public class CrmMuniLocalServiceImpl extends CrmMuniLocalServiceBaseImpl {
 	 * contact.manager.service.CrmMuniLocalServiceUtil} to access the CRM Muni
 	 * local service.
 	 */
-	
-	public List<CrmMuni> findByZipCode(String zipCode) {
-		return crmMuniPersistence.findByZipCode(zipCode);
-	}
+
 }

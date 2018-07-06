@@ -14,13 +14,6 @@
 
 package contact.manager.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
-
-import contact.manager.model.CrmContactAuditLog;
-import contact.manager.model.CrmContactAuditLogChange;
 import contact.manager.service.base.CrmContactAuditLogChangeLocalServiceBaseImpl;
 
 /**
@@ -51,20 +44,4 @@ public class CrmContactAuditLogChangeLocalServiceImpl extends CrmContactAuditLog
 	 * access the CRM Contact Audit Log Change local service.
 	 */
 
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId) {
-		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId);
-	}
-
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId, int start, int end) throws SystemException {
-		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId, start, end);
-	}
-
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(long crmContactAuditLogId, int start, int end,
-			OrderByComparator<CrmContactAuditLogChange> orderByComparator) throws SystemException {
-		return crmContactAuditLogChangePersistence.findByCrmContactAuditLogId(crmContactAuditLogId, start, end, orderByComparator);
-	}
-
-	public int countByCrmContactAuditLogId(long crmContactAuditLogId) {
-		return crmContactAuditLogChangePersistence.countByCrmContactAuditLogId(crmContactAuditLogId);
-	}
 }

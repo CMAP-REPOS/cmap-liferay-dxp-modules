@@ -175,10 +175,6 @@ public class CrmContactAuditLogLocalServiceUtil {
 		return getService().updateCrmContactAuditLog(crmContactAuditLog);
 	}
 
-	public static int countByCrmContactId(long crmContactId) {
-		return getService().countByCrmContactId(crmContactId);
-	}
-
 	/**
 	* Returns the number of CRM Contact Audit Logs.
 	*
@@ -245,27 +241,6 @@ public class CrmContactAuditLogLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	public static java.util.List<contact.manager.model.CrmContactAuditLog> findByCrmContactId(
-		long crmContactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByCrmContactId(crmContactId);
-	}
-
-	public static java.util.List<contact.manager.model.CrmContactAuditLog> findByCrmContactId(
-		long crmContactId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().findByCrmContactId(crmContactId, start, end);
-	}
-
-	public static java.util.List<contact.manager.model.CrmContactAuditLog> findByCrmContactId(
-		long crmContactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContactAuditLog> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .findByCrmContactId(crmContactId, start, end,
-			orderByComparator);
 	}
 
 	/**

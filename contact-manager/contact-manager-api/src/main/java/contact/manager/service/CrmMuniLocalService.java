@@ -222,8 +222,6 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmMuni> findByZipCode(java.lang.String zipCode);
-
 	/**
 	* Returns a range of all the CRM Munis.
 	*

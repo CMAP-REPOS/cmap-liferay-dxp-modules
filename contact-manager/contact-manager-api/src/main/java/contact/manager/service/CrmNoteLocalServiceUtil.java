@@ -170,10 +170,6 @@ public class CrmNoteLocalServiceUtil {
 		return getService().updateCrmNote(crmNote);
 	}
 
-	public static int countByCrmContactId(long crmContactId) {
-		return getService().countByCrmContactId(crmContactId);
-	}
-
 	/**
 	* Returns the number of CRM Notes.
 	*
@@ -240,24 +236,6 @@ public class CrmNoteLocalServiceUtil {
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	public static java.util.List<contact.manager.model.CrmNote> findByCrmContactId(
-		long crmContactId) {
-		return getService().findByCrmContactId(crmContactId);
-	}
-
-	public static java.util.List<contact.manager.model.CrmNote> findByCrmContactId(
-		long crmContactId, int start, int end) {
-		return getService().findByCrmContactId(crmContactId, start, end);
-	}
-
-	public static java.util.List<contact.manager.model.CrmNote> findByCrmContactId(
-		long crmContactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmNote> orderByComparator) {
-		return getService()
-				   .findByCrmContactId(crmContactId, start, end,
-			orderByComparator);
 	}
 
 	/**

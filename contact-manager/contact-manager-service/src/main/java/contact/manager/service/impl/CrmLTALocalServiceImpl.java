@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmLTA;
 import contact.manager.service.base.CrmLTALocalServiceBaseImpl;
 
 /**
@@ -45,8 +42,5 @@ public class CrmLTALocalServiceImpl extends CrmLTALocalServiceBaseImpl {
 	 * contact.manager.service.CrmLTALocalServiceUtil} to access the CRM LTA
 	 * local service.
 	 */
-	
-	public List<CrmLTA> findByZipCode(String zipCode) {
-		return crmLTAPersistence.findByZipCode(zipCode);
-	}
+
 }

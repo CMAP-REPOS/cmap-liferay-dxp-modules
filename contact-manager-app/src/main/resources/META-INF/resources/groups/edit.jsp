@@ -9,8 +9,8 @@
 	List<CrmContact> crmGroupPotentialContacts = new ArrayList<CrmContact>();
 
 	if (crmGroupId > 0) {
-		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
-		crmGroupContacts = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
+		crmGroup = CrmGroupServiceUtil.getCrmGroup(crmGroupId);
+		crmGroupContacts = CrmGroupServiceUtil.getCrmContacts(crmGroupId);
 	}
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");

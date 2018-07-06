@@ -14,13 +14,6 @@
 
 package contact.manager.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
-
-import contact.manager.model.CrmContact;
-import contact.manager.model.CrmGroup;
 import contact.manager.service.base.CrmGroupLocalServiceBaseImpl;
 
 /**
@@ -49,47 +42,4 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 	 * contact.manager.service.CrmGroupLocalServiceUtil} to access the CRM Group
 	 * local service.
 	 */
-
-	public List<CrmGroup> findAll() throws SystemException {
-		return crmGroupPersistence.findAll();
-	}
-
-	public List<CrmGroup> findAll(int start, int end) throws SystemException {
-		return crmGroupPersistence.findAll(start, end);
-	}
-
-	public List<CrmGroup> findAll(int start, int end, OrderByComparator<CrmGroup> orderByComparator)
-			throws SystemException {
-		return crmGroupPersistence.findAll(start, end, orderByComparator);
-	}
-
-	public List<CrmContact> getCrmContacts(long crmGroupId) {
-		return crmGroupPersistence.getCrmContacts(crmGroupId);
-	}
-
-	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end) {
-		return crmGroupPersistence.getCrmContacts(crmGroupId, start, end);
-	}
-
-	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end,
-			OrderByComparator<CrmContact> orderByComparator) {
-		return crmGroupPersistence.getCrmContacts(crmGroupId, start, end, orderByComparator);
-	}
-
-	public void setCrmContacts(long crmGroupPk, long[] crmContactPks) throws SystemException {
-		crmGroupPersistence.setCrmContacts(crmGroupPk, crmContactPks);
-	}
-
-	public int getCrmContactsCount(long crmGroupId) throws SystemException {
-		return crmGroupPersistence.getCrmContactsSize(crmGroupId);
-	}
-
-	public List<CrmGroup> getCrmGroupsByName(String crmGroupName) throws SystemException {
-		return crmGroupPersistence.findByName(crmGroupName);
-	}
-
-	public int countAll() {
-		return crmGroupPersistence.countAll();
-	}
-
 }

@@ -184,11 +184,6 @@ public class CrmOutreachLogLocalServiceWrapper
 		return _crmOutreachLogLocalService.updateCrmOutreachLog(crmOutreachLog);
 	}
 
-	@Override
-	public int countByCrmContactIdId(long crmContactId) {
-		return _crmOutreachLogLocalService.countByCrmContactIdId(crmContactId);
-	}
-
 	/**
 	* Returns the number of CRM Outreach Logs.
 	*
@@ -260,30 +255,6 @@ public class CrmOutreachLogLocalServiceWrapper
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _crmOutreachLogLocalService.dynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
-		long crmContactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmOutreachLogLocalService.findByCrmContactId(crmContactId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
-		long crmContactId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmOutreachLogLocalService.findByCrmContactId(crmContactId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
-		long crmContactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmOutreachLog> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmOutreachLogLocalService.findByCrmContactId(crmContactId,
-			start, end, orderByComparator);
 	}
 
 	/**

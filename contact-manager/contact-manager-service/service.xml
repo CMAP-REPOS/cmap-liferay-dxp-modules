@@ -5,7 +5,7 @@
 	auto-namespace-tables="false">
 	<namespace>CRM</namespace>
 	<entity human-name="CRM CCA" local-service="true" name="CrmCCA"
-		remote-service="false" table="crm_cca" uuid="true">
+		remote-service="true" table="crm_cca" uuid="true">
 		<column name="crmCCAId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -23,7 +23,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Chi Ward" local-service="true" name="CrmChiWard"
-		remote-service="false" table="crm_chiward" uuid="true">
+		remote-service="true" table="crm_chiward" uuid="true">
 		<column name="crmChiWardId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -41,7 +41,7 @@
 		</finder>
 	</entity>
 	<entity name="CrmContact" human-name="CRM Contact" table="crm_contact"
-		local-service="true" remote-service="false" uuid="true">
+		local-service="true" remote-service="true" uuid="true">
 		<column name="crmContactId" primary="true" type="long" id-type="increment"></column>
 		<column name="constantContactId" type="long"></column>
 		<column name="groupId" type="long"></column>
@@ -112,7 +112,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Contact Audit Log" local-service="true"
-		name="CrmContactAuditLog" remote-service="false" table="crm_contactauditlog"
+		name="CrmContactAuditLog" remote-service="true" table="crm_contactauditlog"
 		uuid="true">
 		<column name="crmContactAuditLogId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
@@ -137,7 +137,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Contact Audit Log Change" local-service="true"
-		name="CrmContactAuditLogChange" remote-service="false"
+		name="CrmContactAuditLogChange" remote-service="true"
 		table="crm_contactauditlogchange" uuid="true">
 		<column name="crmContactAuditLogChangeId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
@@ -159,7 +159,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM County" local-service="true" name="CrmCounty"
-		remote-service="false" table="crm_county" uuid="true">
+		remote-service="true" table="crm_county" uuid="true">
 		<column name="crmCountyId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -198,7 +198,7 @@
 		</finder>
 	</entity>
 	<entity name="CrmGroup" human-name="CRM Group" table="crm_group"
-		local-service="true" remote-service="false" uuid="true">
+		local-service="true" remote-service="true" uuid="true">
 		<column name="crmGroupId" type="long" primary="true" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -218,7 +218,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM LTA" local-service="true" name="CrmLTA"
-		remote-service="false" table="crm_lta" uuid="true">
+		remote-service="true" table="crm_lta" uuid="true">
 		<column name="crmLTAId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -235,7 +235,7 @@
 			<finder-column name="zipCode" />
 		</finder>
 	</entity>
-	<entity name="CrmMuni" local-service="true" remote-service="false"
+	<entity name="CrmMuni" local-service="true" remote-service="true"
 		human-name="CRM Muni" table="crm_muni" uuid="true">
 		<column name="crmMuniId" type="long" primary="true" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
@@ -254,7 +254,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Note" local-service="true" name="CrmNote"
-		remote-service="false" table="crm_note" uuid="true">
+		remote-service="true" table="crm_note" uuid="true">
 		<column name="crmNoteId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -269,7 +269,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Outreach Log" local-service="true"
-		name="CrmOutreachLog" remote-service="false" table="crm_outreachlog"
+		name="CrmOutreachLog" remote-service="true" table="crm_outreachlog"
 		uuid="true">
 		<column name="crmOutreachLogId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
@@ -288,7 +288,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM State Rep" local-service="true" name="CrmStateRep"
-		remote-service="false" table="crm_staterep" uuid="true">
+		remote-service="true" table="crm_staterep" uuid="true">
 		<column name="crmStateRepId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -309,7 +309,7 @@
 	</entity>
 	<entity name="CrmStateSenate" human-name="CRM State Senate"
 		table="crm_statesenate" uuid="true" local-service="true"
-		remote-service="false">
+		remote-service="true">
 		<column name="crmStateSenateId" type="long" primary="true" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -329,7 +329,7 @@
 		</finder>
 	</entity>
 	<entity human-name="CRM Tag" local-service="true" name="CrmTag"
-		remote-service="false" table="crm_tag" uuid="true">
+		remote-service="true" table="crm_tag" uuid="true">
 		<column name="crmTagId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>
@@ -342,7 +342,7 @@
 			mapping-table="crm_contacts_tags" />
 	</entity>
 	<entity human-name="CRM US Rep" local-service="true" name="CrmUsRep"
-		remote-service="false" table="crm_usrep" uuid="true">
+		remote-service="true" table="crm_usrep" uuid="true">
 		<column name="crmUsRepId" primary="true" type="long" id-type="increment"></column>
 		<column name="groupId" type="long"></column>
 		<column name="companyId" type="long"></column>

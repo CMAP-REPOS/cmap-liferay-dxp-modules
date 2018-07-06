@@ -7,7 +7,7 @@
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 	}
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -73,11 +73,11 @@
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No outreach logs found"
 				iteratorURL="<%=iteratorURL%>"
-				total="<%=CrmOutreachLogLocalServiceUtil.countByCrmContactIdId(crmContactId)%>"
+				total="<%=CrmOutreachLogServiceUtil.countByCrmContactIdId(crmContactId)%>"
 				var="crmOutreachLogSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmOutreachLog> crmOutreachLogs = CrmOutreachLogLocalServiceUtil.findByCrmContactId(
+						List<CrmOutreachLog> crmOutreachLogs = CrmOutreachLogServiceUtil.findByCrmContactId(
 												crmContactId, crmOutreachLogSearchContainer.getStart(),
 												crmOutreachLogSearchContainer.getEnd(), orderByComparator);
 

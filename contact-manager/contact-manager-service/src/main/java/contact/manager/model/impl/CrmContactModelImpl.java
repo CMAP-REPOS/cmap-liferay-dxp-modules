@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactModel;
+import contact.manager.model.CrmContactSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmContactModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	implements CrmContactModel {
@@ -190,6 +195,90 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	public static final long STATUS_COLUMN_BITMASK = 32L;
 	public static final long UUID_COLUMN_BITMASK = 64L;
 	public static final long LASTNAME_COLUMN_BITMASK = 128L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmContact toModel(CrmContactSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmContact model = new CrmContactImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmContactId(soapModel.getCrmContactId());
+		model.setConstantContactId(soapModel.getConstantContactId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setPrefix(soapModel.getPrefix());
+		model.setSalutation(soapModel.getSalutation());
+		model.setFirstName(soapModel.getFirstName());
+		model.setMiddleName(soapModel.getMiddleName());
+		model.setLastName(soapModel.getLastName());
+		model.setOrganization(soapModel.getOrganization());
+		model.setJobTitle(soapModel.getJobTitle());
+		model.setPrimaryAddress1(soapModel.getPrimaryAddress1());
+		model.setPrimaryAddress2(soapModel.getPrimaryAddress2());
+		model.setPrimaryAddressCity(soapModel.getPrimaryAddressCity());
+		model.setPrimaryAddressState(soapModel.getPrimaryAddressState());
+		model.setPrimaryAddressZip(soapModel.getPrimaryAddressZip());
+		model.setPrimaryAddressCounty(soapModel.getPrimaryAddressCounty());
+		model.setPrimaryAddressCountry(soapModel.getPrimaryAddressCountry());
+		model.setSecondaryAddress1(soapModel.getSecondaryAddress1());
+		model.setSecondaryAddress2(soapModel.getSecondaryAddress2());
+		model.setSecondaryAddressCity(soapModel.getSecondaryAddressCity());
+		model.setSecondaryAddressState(soapModel.getSecondaryAddressState());
+		model.setSecondaryAddressZip(soapModel.getSecondaryAddressZip());
+		model.setSecondaryAddressCounty(soapModel.getSecondaryAddressCounty());
+		model.setSecondaryAddressCountry(soapModel.getSecondaryAddressCountry());
+		model.setPrimaryPhone(soapModel.getPrimaryPhone());
+		model.setPrimaryPhoneExtension(soapModel.getPrimaryPhoneExtension());
+		model.setPrimaryFax(soapModel.getPrimaryFax());
+		model.setPrimaryCell(soapModel.getPrimaryCell());
+		model.setPrimaryEmailAddress(soapModel.getPrimaryEmailAddress());
+		model.setAlternateContact(soapModel.getAlternateContact());
+		model.setAlternateEmail(soapModel.getAlternateEmail());
+		model.setIsVip(soapModel.getIsVip());
+		model.setFacebookId(soapModel.getFacebookId());
+		model.setTwitterHandle(soapModel.getTwitterHandle());
+		model.setLinkedInUrl(soapModel.getLinkedInUrl());
+		model.setStatus(soapModel.getStatus());
+		model.setKioskUuid(soapModel.getKioskUuid());
+		model.setImageFileEntryId(soapModel.getImageFileEntryId());
+		model.setTagsList(soapModel.getTagsList());
+		model.setGroupsList(soapModel.getGroupsList());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmContact> toModels(CrmContactSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmContact> models = new ArrayList<CrmContact>(soapModels.length);
+
+		for (CrmContactSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -590,6 +679,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -613,6 +703,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmContactId() {
 		return _crmContactId;
@@ -623,6 +714,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_crmContactId = crmContactId;
 	}
 
+	@JSON
 	@Override
 	public long getConstantContactId() {
 		return _constantContactId;
@@ -645,6 +737,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return _originalConstantContactId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -667,6 +760,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -689,6 +783,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -715,6 +810,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -730,6 +826,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -740,6 +837,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -756,6 +854,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getPrefix() {
 		if (_prefix == null) {
@@ -771,6 +870,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_prefix = prefix;
 	}
 
+	@JSON
 	@Override
 	public String getSalutation() {
 		if (_salutation == null) {
@@ -786,6 +886,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_salutation = salutation;
 	}
 
+	@JSON
 	@Override
 	public String getFirstName() {
 		if (_firstName == null) {
@@ -801,6 +902,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_firstName = firstName;
 	}
 
+	@JSON
 	@Override
 	public String getMiddleName() {
 		if (_middleName == null) {
@@ -816,6 +918,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_middleName = middleName;
 	}
 
+	@JSON
 	@Override
 	public String getLastName() {
 		if (_lastName == null) {
@@ -833,6 +936,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_lastName = lastName;
 	}
 
+	@JSON
 	@Override
 	public String getOrganization() {
 		if (_organization == null) {
@@ -848,6 +952,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_organization = organization;
 	}
 
+	@JSON
 	@Override
 	public String getJobTitle() {
 		if (_jobTitle == null) {
@@ -863,6 +968,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_jobTitle = jobTitle;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddress1() {
 		if (_primaryAddress1 == null) {
@@ -878,6 +984,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddress1 = primaryAddress1;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddress2() {
 		if (_primaryAddress2 == null) {
@@ -893,6 +1000,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddress2 = primaryAddress2;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddressCity() {
 		if (_primaryAddressCity == null) {
@@ -908,6 +1016,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddressCity = primaryAddressCity;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddressState() {
 		if (_primaryAddressState == null) {
@@ -923,6 +1032,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddressState = primaryAddressState;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddressZip() {
 		if (_primaryAddressZip == null) {
@@ -938,6 +1048,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddressZip = primaryAddressZip;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddressCounty() {
 		if (_primaryAddressCounty == null) {
@@ -953,6 +1064,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddressCounty = primaryAddressCounty;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryAddressCountry() {
 		if (_primaryAddressCountry == null) {
@@ -968,6 +1080,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryAddressCountry = primaryAddressCountry;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddress1() {
 		if (_secondaryAddress1 == null) {
@@ -983,6 +1096,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddress1 = secondaryAddress1;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddress2() {
 		if (_secondaryAddress2 == null) {
@@ -998,6 +1112,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddress2 = secondaryAddress2;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddressCity() {
 		if (_secondaryAddressCity == null) {
@@ -1013,6 +1128,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddressCity = secondaryAddressCity;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddressState() {
 		if (_secondaryAddressState == null) {
@@ -1028,6 +1144,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddressState = secondaryAddressState;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddressZip() {
 		if (_secondaryAddressZip == null) {
@@ -1043,6 +1160,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddressZip = secondaryAddressZip;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddressCounty() {
 		if (_secondaryAddressCounty == null) {
@@ -1058,6 +1176,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddressCounty = secondaryAddressCounty;
 	}
 
+	@JSON
 	@Override
 	public String getSecondaryAddressCountry() {
 		if (_secondaryAddressCountry == null) {
@@ -1073,6 +1192,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_secondaryAddressCountry = secondaryAddressCountry;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryPhone() {
 		if (_primaryPhone == null) {
@@ -1088,6 +1208,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryPhone = primaryPhone;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryPhoneExtension() {
 		if (_primaryPhoneExtension == null) {
@@ -1103,6 +1224,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryPhoneExtension = primaryPhoneExtension;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryFax() {
 		if (_primaryFax == null) {
@@ -1118,6 +1240,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryFax = primaryFax;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryCell() {
 		if (_primaryCell == null) {
@@ -1133,6 +1256,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_primaryCell = primaryCell;
 	}
 
+	@JSON
 	@Override
 	public String getPrimaryEmailAddress() {
 		if (_primaryEmailAddress == null) {
@@ -1158,6 +1282,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return GetterUtil.getString(_originalPrimaryEmailAddress);
 	}
 
+	@JSON
 	@Override
 	public String getAlternateContact() {
 		if (_alternateContact == null) {
@@ -1173,6 +1298,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_alternateContact = alternateContact;
 	}
 
+	@JSON
 	@Override
 	public String getAlternateEmail() {
 		if (_alternateEmail == null) {
@@ -1188,11 +1314,13 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_alternateEmail = alternateEmail;
 	}
 
+	@JSON
 	@Override
 	public boolean getIsVip() {
 		return _isVip;
 	}
 
+	@JSON
 	@Override
 	public boolean isIsVip() {
 		return _isVip;
@@ -1215,6 +1343,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return _originalIsVip;
 	}
 
+	@JSON
 	@Override
 	public String getFacebookId() {
 		if (_facebookId == null) {
@@ -1230,6 +1359,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_facebookId = facebookId;
 	}
 
+	@JSON
 	@Override
 	public String getTwitterHandle() {
 		if (_twitterHandle == null) {
@@ -1245,6 +1375,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_twitterHandle = twitterHandle;
 	}
 
+	@JSON
 	@Override
 	public String getLinkedInUrl() {
 		if (_linkedInUrl == null) {
@@ -1260,6 +1391,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_linkedInUrl = linkedInUrl;
 	}
 
+	@JSON
 	@Override
 	public String getStatus() {
 		if (_status == null) {
@@ -1285,6 +1417,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		return GetterUtil.getString(_originalStatus);
 	}
 
+	@JSON
 	@Override
 	public String getKioskUuid() {
 		if (_kioskUuid == null) {
@@ -1300,6 +1433,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_kioskUuid = kioskUuid;
 	}
 
+	@JSON
 	@Override
 	public long getImageFileEntryId() {
 		return _imageFileEntryId;
@@ -1310,6 +1444,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_imageFileEntryId = imageFileEntryId;
 	}
 
+	@JSON
 	@Override
 	public String getTagsList() {
 		if (_tagsList == null) {
@@ -1325,6 +1460,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		_tagsList = tagsList;
 	}
 
+	@JSON
 	@Override
 	public String getGroupsList() {
 		if (_groupsList == null) {

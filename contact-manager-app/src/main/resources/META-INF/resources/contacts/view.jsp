@@ -101,12 +101,12 @@
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No contacts found"
-				total="<%=CrmContactLocalServiceUtil.getCrmContactsCount()%>"
+				total="<%=CrmContactServiceUtil.countCrmContactsByStatus(ConstantContactKeys.CC_STATUS_ACTIVE)%>"
 				var="crmContactsSearchContainer">
 
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
+						List<CrmContact> crmContacts = CrmContactServiceUtil.getCrmContactsByStatus(
 								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
 								crmContactsSearchContainer.getEnd(), orderByComparator);
 

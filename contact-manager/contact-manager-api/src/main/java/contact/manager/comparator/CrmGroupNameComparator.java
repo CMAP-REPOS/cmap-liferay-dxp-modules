@@ -1,22 +1,19 @@
 package contact.manager.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import contact.manager.model.CrmContact;
+
 import contact.manager.model.CrmGroup;
 
 public class CrmGroupNameComparator extends OrderByComparator<CrmGroup> {
 	
+	private static final long serialVersionUID = 1L;
 	public static final String ORDER_BY_ASC = "CrmGroup.name ASC";
-
 	public static final String ORDER_BY_DESC = "CrmGroup.name DESC";
-
 	public static final String[] ORDER_BY_FIELDS = {"name"};
 	
-
 	public CrmGroupNameComparator() {
 	    this(false);
 	}
-
 
 	public CrmGroupNameComparator(boolean ascending) {
 	    _ascending = ascending;

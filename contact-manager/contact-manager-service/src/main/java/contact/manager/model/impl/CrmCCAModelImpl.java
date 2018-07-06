@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmCCA;
 import contact.manager.model.CrmCCAModel;
+import contact.manager.model.CrmCCASoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmCCAModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 	implements CrmCCAModel {
@@ -115,6 +120,54 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long ZIPCODE_COLUMN_BITMASK = 8L;
 	public static final long NAME_COLUMN_BITMASK = 16L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmCCA toModel(CrmCCASoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmCCA model = new CrmCCAImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmCCAId(soapModel.getCrmCCAId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setZipCode(soapModel.getZipCode());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmCCA> toModels(CrmCCASoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmCCA> models = new ArrayList<CrmCCA>(soapModels.length);
+
+		for (CrmCCASoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmCCA"));
 
@@ -235,6 +288,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -258,6 +312,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmCCAId() {
 		return _crmCCAId;
@@ -268,6 +323,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		_crmCCAId = crmCCAId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -290,6 +346,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -312,6 +369,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -338,6 +396,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -353,6 +412,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -363,6 +423,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -379,6 +440,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -396,6 +458,7 @@ public class CrmCCAModelImpl extends BaseModelImpl<CrmCCA>
 		_name = name;
 	}
 
+	@JSON
 	@Override
 	public String getZipCode() {
 		if (_zipCode == null) {

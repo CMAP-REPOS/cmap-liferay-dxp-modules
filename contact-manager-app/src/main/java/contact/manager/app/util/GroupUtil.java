@@ -12,8 +12,8 @@ import javax.portlet.ActionRequest;
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
-import contact.manager.service.CrmContactLocalServiceUtil;
-import contact.manager.service.CrmGroupLocalServiceUtil;
+import contact.manager.service.CrmContactServiceUtil;
+import contact.manager.service.CrmGroupServiceUtil;
 
 public class GroupUtil {
 
@@ -41,7 +41,7 @@ public class GroupUtil {
 			crmGroup.setCreateDate(serviceContext.getCreateDate(now));
 		}
 
-		CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+		CrmGroupServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 
 		return crmGroup;
 	}
@@ -49,8 +49,8 @@ public class GroupUtil {
 	public static List<CrmContact> getPotentialCrmContacts(long crmGroupId) {
 
 		List<CrmContact> potentialContacts = new ArrayList<CrmContact>();
-		List<CrmContact> assignedContacts = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
-		List<CrmContact> activeContacts = CrmContactLocalServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+		List<CrmContact> assignedContacts = CrmGroupServiceUtil.getCrmContacts(crmGroupId);
+		List<CrmContact> activeContacts = CrmContactServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 
 		for (CrmContact crmContact : activeContacts) {
 			if (!assignedContacts.contains(crmContact)) {

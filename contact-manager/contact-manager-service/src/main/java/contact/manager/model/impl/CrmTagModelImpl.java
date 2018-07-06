@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmTag;
 import contact.manager.model.CrmTagModel;
+import contact.manager.model.CrmTagSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmTagModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 	implements CrmTagModel {
@@ -112,6 +117,53 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long CRMTAGID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmTag toModel(CrmTagSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmTag model = new CrmTagImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmTagId(soapModel.getCrmTagId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmTag> toModels(CrmTagSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmTag> models = new ArrayList<CrmTag>(soapModels.length);
+
+		for (CrmTagSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final String MAPPING_TABLE_CRM_CONTACTS_TAGS_NAME = "crm_contacts_tags";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_TAGS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -234,6 +286,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -257,6 +310,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmTagId() {
 		return _crmTagId;
@@ -267,6 +321,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		_crmTagId = crmTagId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -289,6 +344,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -311,6 +367,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -337,6 +394,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -352,6 +410,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -362,6 +421,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -378,6 +438,7 @@ public class CrmTagModelImpl extends BaseModelImpl<CrmTag>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {

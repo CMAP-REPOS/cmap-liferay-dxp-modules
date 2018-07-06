@@ -50,12 +50,12 @@
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No groups found"
-				total="<%=CrmGroupLocalServiceUtil.countAll()%>"
+				total="<%=CrmGroupServiceUtil.countAll()%>"
 				var="crmGroupsSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
 						List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
-						List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.findAll(
+						List<CrmGroup> crmGroups = CrmGroupServiceUtil.findAll(
 								crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
 								orderByComparator);
 						for (CrmGroup crmGroup : crmGroups) {

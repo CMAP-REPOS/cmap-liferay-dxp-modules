@@ -170,8 +170,6 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmOutreachLog updateCrmOutreachLog(CrmOutreachLog crmOutreachLog);
 
-	public int countByCrmContactIdId(long crmContactId);
-
 	/**
 	* Returns the number of CRM Outreach Logs.
 	*
@@ -225,16 +223,6 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	public List<CrmOutreachLog> findByCrmContactId(long crmContactId)
-		throws SystemException;
-
-	public List<CrmOutreachLog> findByCrmContactId(long crmContactId,
-		int start, int end) throws SystemException;
-
-	public List<CrmOutreachLog> findByCrmContactId(long crmContactId,
-		int start, int end, OrderByComparator<CrmOutreachLog> orderByComparator)
-		throws SystemException;
 
 	/**
 	* Returns a range of all the CRM Outreach Logs.

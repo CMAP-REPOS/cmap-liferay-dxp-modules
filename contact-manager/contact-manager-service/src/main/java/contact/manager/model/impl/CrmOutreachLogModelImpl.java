@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.model.CrmOutreachLogModel;
+import contact.manager.model.CrmOutreachLogSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmOutreachLogModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	implements CrmOutreachLogModel {
@@ -121,6 +126,57 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final long CRMOUTREACHLOGID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmOutreachLog toModel(CrmOutreachLogSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmOutreachLog model = new CrmOutreachLogImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmOutreachLogId(soapModel.getCrmOutreachLogId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setCrmContactId(soapModel.getCrmContactId());
+		model.setNote(soapModel.getNote());
+		model.setMedium(soapModel.getMedium());
+		model.setActivityType(soapModel.getActivityType());
+		model.setOutreachDate(soapModel.getOutreachDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmOutreachLog> toModels(CrmOutreachLogSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmOutreachLog> models = new ArrayList<CrmOutreachLog>(soapModels.length);
+
+		for (CrmOutreachLogSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmOutreachLog"));
 
@@ -262,6 +318,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -285,6 +342,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmOutreachLogId() {
 		return _crmOutreachLogId;
@@ -295,6 +353,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_crmOutreachLogId = crmOutreachLogId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -317,6 +376,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -339,6 +399,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -365,6 +426,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -380,6 +442,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -390,6 +453,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -406,6 +470,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getCrmContactId() {
 		return _crmContactId;
@@ -428,6 +493,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		return _originalCrmContactId;
 	}
 
+	@JSON
 	@Override
 	public String getNote() {
 		if (_note == null) {
@@ -443,6 +509,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_note = note;
 	}
 
+	@JSON
 	@Override
 	public String getMedium() {
 		if (_medium == null) {
@@ -458,6 +525,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_medium = medium;
 	}
 
+	@JSON
 	@Override
 	public String getActivityType() {
 		if (_activityType == null) {
@@ -473,6 +541,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 		_activityType = activityType;
 	}
 
+	@JSON
 	@Override
 	public Date getOutreachDate() {
 		return _outreachDate;

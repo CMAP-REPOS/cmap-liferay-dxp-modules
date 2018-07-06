@@ -16,9 +16,16 @@ package contact.manager.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import contact.manager.service.CrmCountyCommissionerServiceUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
- * {@link contact.manager.service.CrmCountyCommissionerServiceUtil} service utility. The
+ * {@link CrmCountyCommissionerServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -53,9 +60,25 @@ import aQute.bnd.annotation.ProviderType;
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerServiceHttp
  * @see contact.manager.model.CrmCountyCommissionerSoap
- * @see contact.manager.service.CrmCountyCommissionerServiceUtil
+ * @see CrmCountyCommissionerServiceUtil
  * @generated
  */
 @ProviderType
 public class CrmCountyCommissionerServiceSoap {
+	public static contact.manager.model.CrmCountyCommissionerSoap[] findByZipCode(
+		java.lang.String zipCode) throws RemoteException {
+		try {
+			java.util.List<contact.manager.model.CrmCountyCommissioner> returnValue =
+				CrmCountyCommissionerServiceUtil.findByZipCode(zipCode);
+
+			return contact.manager.model.CrmCountyCommissionerSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CrmCountyCommissionerServiceSoap.class);
 }

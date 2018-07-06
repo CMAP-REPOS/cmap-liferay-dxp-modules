@@ -45,6 +45,12 @@ public class CrmCountyCommissionerServiceWrapper
 	}
 
 	@Override
+	public java.util.List<contact.manager.model.CrmCountyCommissioner> findByZipCode(
+		java.lang.String zipCode) {
+		return _crmCountyCommissionerService.findByZipCode(zipCode);
+	}
+
+	@Override
 	public CrmCountyCommissionerService getWrappedService() {
 		return _crmCountyCommissionerService;
 	}

@@ -1,22 +1,19 @@
 package contact.manager.comparator;
 
 import com.liferay.portal.kernel.util.OrderByComparator;
-import contact.manager.model.CrmContact;
+
 import contact.manager.model.CrmGroup;
 
 public class CrmGroupCrmContactsCountComparator extends OrderByComparator<CrmGroup> {
 	
+	private static final long serialVersionUID = 1L;
 	public static final String ORDER_BY_ASC = "CrmGroup.crmContactsCount ASC";
-
 	public static final String ORDER_BY_DESC = "CrmGroup.crmContactsCount DESC";
-
 	public static final String[] ORDER_BY_FIELDS = {"crmContactsCount"};
-	
 
 	public CrmGroupCrmContactsCountComparator() {
 	    this(false);
 	}
-
 
 	public CrmGroupCrmContactsCountComparator(boolean ascending) {
 	    _ascending = ascending;

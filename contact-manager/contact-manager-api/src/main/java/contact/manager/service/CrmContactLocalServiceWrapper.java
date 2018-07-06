@@ -160,15 +160,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 			groupId);
 	}
 
-	@Override
-	public contact.manager.model.CrmContact findByConstantContactId(
-		long constantContactId)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException,
-			contact.manager.exception.NoSuchCrmContactException {
-		return _crmContactLocalService.findByConstantContactId(constantContactId);
-	}
-
 	/**
 	* Returns the CRM Contact with the primary key.
 	*
@@ -293,35 +284,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.findByPrimaryEmailAddress(primaryEmailAddress);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
-			status);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> findByStatus(
-		java.lang.String status)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.findByStatus(status);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> findByVipFlag(
-		boolean isVip)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.findByVipFlag(isVip);
-	}
-
 	/**
 	* Returns a range of all the CRM Contacts.
 	*
@@ -337,15 +299,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
 		int start, int end) {
 		return _crmContactLocalService.getCrmContacts(start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
-		java.lang.String status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getCrmContactsByStatus(status, start,
-			end, obc);
 	}
 
 	/**
@@ -402,13 +355,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
-		long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getCrmGroups(contactId);
-	}
-
-	@Override
 	public java.util.List<contact.manager.model.CrmContact> getCrmTagCrmContacts(
 		long crmTagId) {
 		return _crmContactLocalService.getCrmTagCrmContacts(crmTagId);
@@ -426,13 +372,6 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
 		return _crmContactLocalService.getCrmTagCrmContacts(crmTagId, start,
 			end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmTag> getCrmTags(
-		long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactLocalService.getCrmTags(contactId);
 	}
 
 	/**
@@ -591,20 +530,8 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
-	public void setCrmGroups(long contactId, long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_crmContactLocalService.setCrmGroups(contactId, groupIds);
-	}
-
-	@Override
 	public void setCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
 		_crmContactLocalService.setCrmTagCrmContacts(crmTagId, crmContactIds);
-	}
-
-	@Override
-	public void setCrmTags(long contactId, long[] tagIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_crmContactLocalService.setCrmTags(contactId, tagIds);
 	}
 
 	@Override

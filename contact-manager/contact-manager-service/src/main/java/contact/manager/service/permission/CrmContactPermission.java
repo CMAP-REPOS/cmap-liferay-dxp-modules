@@ -1,14 +1,13 @@
 package contact.manager.service.permission;
 
-import contact.manager.model.CrmContact;
-import contact.manager.service.CrmContactLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import contact.manager.model.CrmContact;
 
 @Component(
     immediate = true,
@@ -16,64 +15,45 @@ import org.osgi.service.component.annotations.Reference;
 )
 public class CrmContactPermission implements BaseModelPermissionChecker {
 
-    public static void check(
-        PermissionChecker permissionChecker, long crmContactId, String actionId)
-        throws PortalException, SystemException {
+	public static void check(PermissionChecker permissionChecker, long groupId, long assignmentId, String actionId)
+			throws AuthException {
 
-        if (!contains(permissionChecker, crmContactId, actionId)) {
-            throw new PrincipalException();
-        }
-    }
+		if (!contains(permissionChecker, groupId, assignmentId, actionId)) {
+			throw new AuthException();
+		}
+	}
 
-    public static void check(
-        PermissionChecker permissionChecker, long groupId, long crmContactId,
-        String actionId)
-        throws PortalException {
+	public static boolean contains(PermissionChecker permissionChecker, long groupId, long assignmentId,
+			String actionId) {
 
-        if (!contains(permissionChecker, groupId, actionId)) {
-            throw new PrincipalException.MustHavePermission(
-                permissionChecker, CrmContact.class.getName(), crmContactId,
-                actionId);
-        }
-    }
+		return (permissionChecker.hasPermission(groupId, RESOURCE_NAME, assignmentId, actionId));
+	}
 
-    public static boolean contains(
-        PermissionChecker permissionChecker, long groupId, long crmContactId, String actionId) 
-            throws PortalException {
+	public static void checkTopLevel(PermissionChecker permissionChecker, long groupId, String actionId)
+			throws AuthException {
 
-    	CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
+		if (!containsTopLevel(permissionChecker, groupId, actionId)) {
+			throw new AuthException();
+		}
+	}
 
-        return CrmContactModelPermission.contains(permissionChecker, groupId, actionId);
-    }
+	public static boolean containsTopLevel(PermissionChecker permissionChecker, long groupId, String actionId) {
 
-    public static boolean contains(
-        PermissionChecker permissionChecker, long crmContactId, String actionId)
-        throws PortalException, SystemException {
+		return (permissionChecker.hasPermission(groupId, TOP_LEVEL_RESOURCE, groupId, actionId));
+	}
 
-    	CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
-    	
-        return contains(permissionChecker, crmContact, actionId);
-    }
+	public static final String ADD_CONTACT = "ADD_CONTACT";
+	public static final String UPDATE_CONTACT = "UPDATE_CONTACT";
+	public static final String DELETE_CONTACT = "DELETE_CONTACT";
+	public static final String VIEW_CONTACT = "VIEW_CONTACT";
+	public static final String VIEW_MEDIA_CONTACT = "VIEW_MEDIA_CONTACT";
 
-    public static boolean contains(
-        PermissionChecker permissionChecker, CrmContact crmContact, String actionId) 
-            throws PortalException, SystemException {
+	private static final String RESOURCE_NAME = CrmContact.class.getName();
+	private static final String TOP_LEVEL_RESOURCE = "contact.manager.model";
 
-        return permissionChecker.hasPermission(
-        		crmContact.getGroupId(), CrmContact.class.getName(), crmContact.getCrmContactId(), actionId);
-
-    }
-
-    @Reference(unbind = "-")
-    protected void setCrmContactLocalService(CrmContactLocalService crmContactLocalService) {
-        _crmContactLocalService = crmContactLocalService;
-    }
-
-    private static CrmContactLocalService _crmContactLocalService;
-
-    @Override
-    public void checkBaseModel(
-        PermissionChecker permissionChecker, long groupId, long crmContactId, String actionId) throws PortalException {
-            check(permissionChecker, crmContactId, actionId);
-    }
+	@Override
+	public void checkBaseModel(PermissionChecker permissionChecker, long groupId, long primaryKey, String actionId)
+			throws PortalException {
+		check(permissionChecker, groupId, primaryKey, actionId);
+	}
 }

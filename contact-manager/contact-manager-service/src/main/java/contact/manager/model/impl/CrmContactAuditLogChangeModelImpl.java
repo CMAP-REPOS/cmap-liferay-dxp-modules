@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContactAuditLogChange;
 import contact.manager.model.CrmContactAuditLogChangeModel;
+import contact.manager.model.CrmContactAuditLogChangeSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmContactAuditLogChangeModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactAuditLogChange>
 	implements CrmContactAuditLogChangeModel {
@@ -119,6 +124,58 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 	public static final long GROUPID_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
 	public static final long CRMCONTACTAUDITLOGCHANGEID_COLUMN_BITMASK = 16L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmContactAuditLogChange toModel(
+		CrmContactAuditLogChangeSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmContactAuditLogChange model = new CrmContactAuditLogChangeImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmContactAuditLogChangeId(soapModel.getCrmContactAuditLogChangeId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setCrmContactAuditLogId(soapModel.getCrmContactAuditLogId());
+		model.setFieldName(soapModel.getFieldName());
+		model.setOldValue(soapModel.getOldValue());
+		model.setNewValue(soapModel.getNewValue());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmContactAuditLogChange> toModels(
+		CrmContactAuditLogChangeSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmContactAuditLogChange> models = new ArrayList<CrmContactAuditLogChange>(soapModels.length);
+
+		for (CrmContactAuditLogChangeSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmContactAuditLogChange"));
 
@@ -255,6 +312,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -278,6 +336,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmContactAuditLogChangeId() {
 		return _crmContactAuditLogChangeId;
@@ -290,6 +349,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_crmContactAuditLogChangeId = crmContactAuditLogChangeId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -312,6 +372,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -334,6 +395,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -360,6 +422,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -375,6 +438,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -385,6 +449,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -401,6 +466,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public long getCrmContactAuditLogId() {
 		return _crmContactAuditLogId;
@@ -423,6 +489,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		return _originalCrmContactAuditLogId;
 	}
 
+	@JSON
 	@Override
 	public String getFieldName() {
 		if (_fieldName == null) {
@@ -438,6 +505,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_fieldName = fieldName;
 	}
 
+	@JSON
 	@Override
 	public String getOldValue() {
 		if (_oldValue == null) {
@@ -453,6 +521,7 @@ public class CrmContactAuditLogChangeModelImpl extends BaseModelImpl<CrmContactA
 		_oldValue = oldValue;
 	}
 
+	@JSON
 	@Override
 	public String getNewValue() {
 		if (_newValue == null) {

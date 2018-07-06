@@ -25,6 +25,10 @@ import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
+import contact.manager.model.CrmCountyCommissioner;
+
+import java.util.List;
+
 /**
  * Provides the remote service interface for CrmCountyCommissioner. Methods of this
  * service are expected to have security checks based on the propagated JAAS
@@ -56,4 +60,6 @@ public interface CrmCountyCommissionerService extends BaseService {
 	* @return the OSGi service identifier
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
+
+	public List<CrmCountyCommissioner> findByZipCode(java.lang.String zipCode);
 }

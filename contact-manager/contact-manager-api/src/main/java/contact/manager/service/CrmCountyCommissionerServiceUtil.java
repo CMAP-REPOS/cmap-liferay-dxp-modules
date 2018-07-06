@@ -51,6 +51,11 @@ public class CrmCountyCommissionerServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
+	public static java.util.List<contact.manager.model.CrmCountyCommissioner> findByZipCode(
+		java.lang.String zipCode) {
+		return getService().findByZipCode(zipCode);
+	}
+
 	public static CrmCountyCommissionerService getService() {
 		return _serviceTracker.getService();
 	}

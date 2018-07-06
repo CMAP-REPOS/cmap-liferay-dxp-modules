@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmGroupModel;
+import contact.manager.model.CrmGroupSoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmGroupModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	implements CrmGroupModel {
@@ -114,6 +119,54 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
 	public static final long UUID_COLUMN_BITMASK = 8L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmGroup toModel(CrmGroupSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmGroup model = new CrmGroupImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmGroupId(soapModel.getCrmGroupId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setCrmContactsCount(soapModel.getCrmContactsCount());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmGroup> toModels(CrmGroupSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmGroup> models = new ArrayList<CrmGroup>(soapModels.length);
+
+		for (CrmGroupSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -243,6 +296,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -266,6 +320,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmGroupId() {
 		return _crmGroupId;
@@ -276,6 +331,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		_crmGroupId = crmGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -298,6 +354,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -320,6 +377,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -346,6 +404,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -361,6 +420,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -371,6 +431,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -387,6 +448,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -412,6 +474,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	@Override
 	public long getCrmContactsCount() {
 		return _crmContactsCount;

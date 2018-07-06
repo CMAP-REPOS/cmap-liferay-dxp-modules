@@ -184,11 +184,6 @@ public class CrmContactAuditLogChangeLocalServiceWrapper
 		return _crmContactAuditLogChangeLocalService.updateCrmContactAuditLogChange(crmContactAuditLogChange);
 	}
 
-	@Override
-	public int countByCrmContactAuditLogId(long crmContactAuditLogId) {
-		return _crmContactAuditLogChangeLocalService.countByCrmContactAuditLogId(crmContactAuditLogId);
-	}
-
 	/**
 	* Returns the number of CRM Contact Audit Log Changes.
 	*
@@ -260,29 +255,6 @@ public class CrmContactAuditLogChangeLocalServiceWrapper
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return _crmContactAuditLogChangeLocalService.dynamicQuery(dynamicQuery,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId) {
-		return _crmContactAuditLogChangeLocalService.findByCrmContactAuditLogId(crmContactAuditLogId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactAuditLogChangeLocalService.findByCrmContactAuditLogId(crmContactAuditLogId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContactAuditLogChange> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactAuditLogChangeLocalService.findByCrmContactAuditLogId(crmContactAuditLogId,
 			start, end, orderByComparator);
 	}
 

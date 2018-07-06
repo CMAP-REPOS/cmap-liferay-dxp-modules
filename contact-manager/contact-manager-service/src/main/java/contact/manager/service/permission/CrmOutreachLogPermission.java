@@ -1,72 +1,58 @@
 package contact.manager.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.security.auth.PrincipalException;
+import com.liferay.portal.kernel.security.auth.AuthException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
-import contact.manager.model.CrmContact;
-import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmOutreachLog;
-import contact.manager.service.CrmOutreachLogLocalService;
 
-@Component(immediate = true, property = { "model.class.name=com.contact.manager.model.CrmOutreachLog" })
+@Component(
+		immediate = true, 
+		property = { "model.class.name=com.contact.manager.model.CrmOutreachLog" }
+)
 public class CrmOutreachLogPermission implements BaseModelPermissionChecker {
 
-	public static void check(PermissionChecker permissionChecker, long guestbookId, String actionId)
-			throws PortalException, SystemException {
+	public static void check(PermissionChecker permissionChecker, long groupId, long assignmentId, String actionId)
+			throws AuthException {
 
-		if (!contains(permissionChecker, guestbookId, actionId)) {
-			throw new PrincipalException();
+		if (!contains(permissionChecker, groupId, assignmentId, actionId)) {
+			throw new AuthException();
 		}
 	}
 
-	public static void check(PermissionChecker permissionChecker, long groupId, long guestbookId, String actionId)
-			throws PortalException {
+	public static boolean contains(PermissionChecker permissionChecker, long groupId, long assignmentId,
+			String actionId) {
 
-		if (!contains(permissionChecker, groupId, actionId)) {
-			throw new PrincipalException.MustHavePermission(permissionChecker, CrmGroup.class.getName(), guestbookId,
-					actionId);
+		return (permissionChecker.hasPermission(groupId, RESOURCE_NAME, assignmentId, actionId));
+	}
+
+	public static void checkTopLevel(PermissionChecker permissionChecker, long groupId, String actionId)
+			throws AuthException {
+
+		if (!containsTopLevel(permissionChecker, groupId, actionId)) {
+			throw new AuthException();
 		}
 	}
 
-	public static boolean contains(PermissionChecker permissionChecker, long groupId, long crmOutreachLogId,
-			String actionId) throws PortalException {
+	public static boolean containsTopLevel(PermissionChecker permissionChecker, long groupId, String actionId) {
 
-		CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);
-
-		return CrmGroupModelPermission.contains(permissionChecker, groupId, actionId);
+		return (permissionChecker.hasPermission(groupId, TOP_LEVEL_RESOURCE, groupId, actionId));
 	}
 
-	public static boolean contains(PermissionChecker permissionChecker, long crmOutreachLogId, String actionId)
-			throws PortalException, SystemException {
+	public static final String ADD_OUTREACH = "ADD_OUTREACH";
+	public static final String UPDATE_OUTREACH = "UPDATE_OUTREACH";
+	public static final String DELETE_OUTREACH = "DELETE_OUTREACH";
+	public static final String VIEW_OUTREACH = "VIEW_OUTREACH";
 
-		CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);
-		return contains(permissionChecker, crmOutreachLog, actionId);
-	}
-
-	public static boolean contains(PermissionChecker permissionChecker, CrmOutreachLog crmOutreachLog, String actionId)
-			throws PortalException, SystemException {
-
-		return permissionChecker.hasPermission(crmOutreachLog.getGroupId(), CrmContact.class.getName(),
-				crmOutreachLog.getCrmOutreachLogId(), actionId);
-
-	}
-
-	@Reference(unbind = "-")
-	protected void setCrmGroupLocalService(CrmOutreachLogLocalService crmOutreachLogLocalService) {
-		_crmOutreachLogLocalService = crmOutreachLogLocalService;
-	}
-
-	private static CrmOutreachLogLocalService _crmOutreachLogLocalService;
+	private static final String RESOURCE_NAME = CrmOutreachLog.class.getName();
+	private static final String TOP_LEVEL_RESOURCE = "contact.manager.model";
 
 	@Override
-	public void checkBaseModel(PermissionChecker permissionChecker, long groupId, long guestbookId, String actionId)
+	public void checkBaseModel(PermissionChecker permissionChecker, long groupId, long primaryKey, String actionId)
 			throws PortalException {
-		check(permissionChecker, guestbookId, actionId);
+		check(permissionChecker, groupId, primaryKey, actionId);
 	}
 }

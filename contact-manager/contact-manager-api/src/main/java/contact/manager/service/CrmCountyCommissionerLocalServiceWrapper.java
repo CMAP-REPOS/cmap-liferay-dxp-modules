@@ -258,12 +258,6 @@ public class CrmCountyCommissionerLocalServiceWrapper
 			start, end, orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.model.CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode) {
-		return _crmCountyCommissionerLocalService.findByZipCode(zipCode);
-	}
-
 	/**
 	* Returns a range of all the CRM County Commissioners.
 	*

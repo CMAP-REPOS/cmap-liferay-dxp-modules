@@ -8,7 +8,7 @@ import java.util.List;
 import contact.manager.app.util.DateUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
-import contact.manager.service.CrmGroupLocalServiceUtil;
+import contact.manager.service.CrmGroupServiceUtil;
 
 public class CrmGroupViewModel {
 
@@ -22,7 +22,7 @@ public class CrmGroupViewModel {
 		this.createDate = DateUtil.Format(crmGroup.getCreateDate());
 		this.modifiedDate = DateUtil.Format(crmGroup.getModifiedDate());
 		this.name = crmGroup.getName();
-		this.crmContactsCount = CrmGroupLocalServiceUtil.getCrmContactsCount(crmGroup.getCrmGroupId());
+		this.crmContactsCount = CrmGroupServiceUtil.getCrmContactsCount(crmGroup.getCrmGroupId());
 	}
 
 	public CrmGroupViewModel(long crmGroupId, long groupId, long companyId, long userId, String userName,

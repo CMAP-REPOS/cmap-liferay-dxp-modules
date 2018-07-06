@@ -14,6 +14,9 @@
 
 package contact.manager.service.impl;
 
+import java.util.List;
+
+import contact.manager.model.CrmCountyCommissioner;
 import contact.manager.service.base.CrmCountyCommissionerServiceBaseImpl;
 
 /**
@@ -37,4 +40,8 @@ public class CrmCountyCommissionerServiceImpl
 	 *
 	 * Never reference this class directly. Always use {@link contact.manager.service.CrmCountyCommissionerServiceUtil} to access the CRM County Commissioner remote service.
 	 */
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode) {
+		return crmCountyCommissionerPersistence.findByZipCode(zipCode);
+	}
+
 }

@@ -6,7 +6,7 @@
 	CrmGroup crmGroup = null;
 
 	if (crmGroupId > 0) {
-		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
+		crmGroup = CrmGroupServiceUtil.getCrmGroup(crmGroupId);
 	}
 
 	String redirect = ParamUtil.getString(request, "redirect");
@@ -15,7 +15,7 @@
 
 	renderResponse.setTitle((crmGroup != null) ? ("Details for " + crmGroup.getName()) : "New Group");
 
-	List<CrmContact> crmContactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
+	List<CrmContact> crmContactList = CrmGroupServiceUtil.getCrmContacts(crmGroupId);
 %>
 
 <portlet:renderURL var="editGroupURL">

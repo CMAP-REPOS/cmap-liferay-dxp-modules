@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmUsRep;
 import contact.manager.service.base.CrmUsRepLocalServiceBaseImpl;
 
 /**
@@ -44,10 +41,5 @@ public class CrmUsRepLocalServiceImpl extends CrmUsRepLocalServiceBaseImpl {
 	 * Never reference this class directly. Always use {@link
 	 * contact.manager.service.CrmUsRepLocalServiceUtil} to access the CRM US
 	 * Rep local service.
-	 */
-	
-	public List<CrmUsRep> findByZipCode(String zipCode) {
-		return crmUsRepPersistence.findByZipCode(zipCode);
-	}
-	
+	 */	
 }

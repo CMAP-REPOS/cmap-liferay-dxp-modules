@@ -16,12 +16,21 @@ package contact.manager.service.http;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
+import com.liferay.portal.kernel.service.http.TunnelUtil;
+import com.liferay.portal.kernel.util.MethodHandler;
+import com.liferay.portal.kernel.util.MethodKey;
+
+import contact.manager.service.CrmCountyCommissionerServiceUtil;
+
 /**
  * Provides the HTTP utility for the
- * {@link contact.manager.service.CrmCountyCommissionerServiceUtil} service utility. The
+ * {@link CrmCountyCommissionerServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it requires an additional
- * {@link com.liferay.portal.kernel.security.auth.HttpPrincipal} parameter.
+ * {@link HttpPrincipal} parameter.
  *
  * <p>
  * The benefits of using the HTTP utility is that it is fast and allows for
@@ -40,10 +49,40 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerServiceSoap
- * @see com.liferay.portal.kernel.security.auth.HttpPrincipal
- * @see contact.manager.service.CrmCountyCommissionerServiceUtil
+ * @see HttpPrincipal
+ * @see CrmCountyCommissionerServiceUtil
  * @generated
  */
 @ProviderType
 public class CrmCountyCommissionerServiceHttp {
+	public static java.util.List<contact.manager.model.CrmCountyCommissioner> findByZipCode(
+		HttpPrincipal httpPrincipal, java.lang.String zipCode) {
+		try {
+			MethodKey methodKey = new MethodKey(CrmCountyCommissionerServiceUtil.class,
+					"findByZipCode", _findByZipCodeParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, zipCode);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<contact.manager.model.CrmCountyCommissioner>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(CrmCountyCommissionerServiceHttp.class);
+	private static final Class<?>[] _findByZipCodeParameterTypes0 = new Class[] {
+			java.lang.String.class
+		};
 }

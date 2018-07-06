@@ -8,11 +8,11 @@
 	CrmContact crmContact = null;
 
 	if (crmOutreachLogId > 0) {
-		crmOutreachLog = CrmOutreachLogLocalServiceUtil.getCrmOutreachLog(crmOutreachLogId);
+		crmOutreachLog = CrmOutreachLogServiceUtil.getCrmOutreachLog(crmOutreachLogId);
 	}
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 	}
 
 	Calendar today = Calendar.getInstance();

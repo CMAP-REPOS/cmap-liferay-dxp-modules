@@ -2,36 +2,51 @@
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean class="contact.manager.service.impl.CrmCCALocalServiceImpl" id="contact.manager.service.CrmCCALocalService" />
+	<bean class="contact.manager.service.impl.CrmCCAServiceImpl" id="contact.manager.service.CrmCCAService" />
 	<bean class="contact.manager.service.persistence.impl.CrmCCAPersistenceImpl" id="contact.manager.service.persistence.CrmCCAPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmChiWardLocalServiceImpl" id="contact.manager.service.CrmChiWardLocalService" />
+	<bean class="contact.manager.service.impl.CrmChiWardServiceImpl" id="contact.manager.service.CrmChiWardService" />
 	<bean class="contact.manager.service.persistence.impl.CrmChiWardPersistenceImpl" id="contact.manager.service.persistence.CrmChiWardPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmContactLocalServiceImpl" id="contact.manager.service.CrmContactLocalService" />
+	<bean class="contact.manager.service.impl.CrmContactServiceImpl" id="contact.manager.service.CrmContactService" />
 	<bean class="contact.manager.service.persistence.impl.CrmContactPersistenceImpl" id="contact.manager.service.persistence.CrmContactPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmContactAuditLogLocalServiceImpl" id="contact.manager.service.CrmContactAuditLogLocalService" />
+	<bean class="contact.manager.service.impl.CrmContactAuditLogServiceImpl" id="contact.manager.service.CrmContactAuditLogService" />
 	<bean class="contact.manager.service.persistence.impl.CrmContactAuditLogPersistenceImpl" id="contact.manager.service.persistence.CrmContactAuditLogPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmContactAuditLogChangeLocalServiceImpl" id="contact.manager.service.CrmContactAuditLogChangeLocalService" />
+	<bean class="contact.manager.service.impl.CrmContactAuditLogChangeServiceImpl" id="contact.manager.service.CrmContactAuditLogChangeService" />
 	<bean class="contact.manager.service.persistence.impl.CrmContactAuditLogChangePersistenceImpl" id="contact.manager.service.persistence.CrmContactAuditLogChangePersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmCountyLocalServiceImpl" id="contact.manager.service.CrmCountyLocalService" />
+	<bean class="contact.manager.service.impl.CrmCountyServiceImpl" id="contact.manager.service.CrmCountyService" />
 	<bean class="contact.manager.service.persistence.impl.CrmCountyPersistenceImpl" id="contact.manager.service.persistence.CrmCountyPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmCountyCommissionerLocalServiceImpl" id="contact.manager.service.CrmCountyCommissionerLocalService" />
 	<bean class="contact.manager.service.impl.CrmCountyCommissionerServiceImpl" id="contact.manager.service.CrmCountyCommissionerService" />
 	<bean class="contact.manager.service.persistence.impl.CrmCountyCommissionerPersistenceImpl" id="contact.manager.service.persistence.CrmCountyCommissionerPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmGroupLocalServiceImpl" id="contact.manager.service.CrmGroupLocalService" />
+	<bean class="contact.manager.service.impl.CrmGroupServiceImpl" id="contact.manager.service.CrmGroupService" />
 	<bean class="contact.manager.service.persistence.impl.CrmGroupPersistenceImpl" id="contact.manager.service.persistence.CrmGroupPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmLTALocalServiceImpl" id="contact.manager.service.CrmLTALocalService" />
+	<bean class="contact.manager.service.impl.CrmLTAServiceImpl" id="contact.manager.service.CrmLTAService" />
 	<bean class="contact.manager.service.persistence.impl.CrmLTAPersistenceImpl" id="contact.manager.service.persistence.CrmLTAPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmMuniLocalServiceImpl" id="contact.manager.service.CrmMuniLocalService" />
+	<bean class="contact.manager.service.impl.CrmMuniServiceImpl" id="contact.manager.service.CrmMuniService" />
 	<bean class="contact.manager.service.persistence.impl.CrmMuniPersistenceImpl" id="contact.manager.service.persistence.CrmMuniPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmNoteLocalServiceImpl" id="contact.manager.service.CrmNoteLocalService" />
+	<bean class="contact.manager.service.impl.CrmNoteServiceImpl" id="contact.manager.service.CrmNoteService" />
 	<bean class="contact.manager.service.persistence.impl.CrmNotePersistenceImpl" id="contact.manager.service.persistence.CrmNotePersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmOutreachLogLocalServiceImpl" id="contact.manager.service.CrmOutreachLogLocalService" />
+	<bean class="contact.manager.service.impl.CrmOutreachLogServiceImpl" id="contact.manager.service.CrmOutreachLogService" />
 	<bean class="contact.manager.service.persistence.impl.CrmOutreachLogPersistenceImpl" id="contact.manager.service.persistence.CrmOutreachLogPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmStateRepLocalServiceImpl" id="contact.manager.service.CrmStateRepLocalService" />
+	<bean class="contact.manager.service.impl.CrmStateRepServiceImpl" id="contact.manager.service.CrmStateRepService" />
 	<bean class="contact.manager.service.persistence.impl.CrmStateRepPersistenceImpl" id="contact.manager.service.persistence.CrmStateRepPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmStateSenateLocalServiceImpl" id="contact.manager.service.CrmStateSenateLocalService" />
+	<bean class="contact.manager.service.impl.CrmStateSenateServiceImpl" id="contact.manager.service.CrmStateSenateService" />
 	<bean class="contact.manager.service.persistence.impl.CrmStateSenatePersistenceImpl" id="contact.manager.service.persistence.CrmStateSenatePersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmTagLocalServiceImpl" id="contact.manager.service.CrmTagLocalService" />
+	<bean class="contact.manager.service.impl.CrmTagServiceImpl" id="contact.manager.service.CrmTagService" />
 	<bean class="contact.manager.service.persistence.impl.CrmTagPersistenceImpl" id="contact.manager.service.persistence.CrmTagPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmUsRepLocalServiceImpl" id="contact.manager.service.CrmUsRepLocalService" />
+	<bean class="contact.manager.service.impl.CrmUsRepServiceImpl" id="contact.manager.service.CrmUsRepService" />
 	<bean class="contact.manager.service.persistence.impl.CrmUsRepPersistenceImpl" id="contact.manager.service.persistence.CrmUsRepPersistence" parent="basePersistence" />
 </beans>

@@ -6,7 +6,7 @@
 	CrmContactViewModel viewModel = null;
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 		viewModel = new CrmContactViewModel(crmContact);
 	}
 

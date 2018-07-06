@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmCCA;
 import contact.manager.service.base.CrmCCALocalServiceBaseImpl;
 
 /**
@@ -46,7 +43,4 @@ public class CrmCCALocalServiceImpl extends CrmCCALocalServiceBaseImpl {
 	 * local service.
 	 */
 	
-	public List<CrmCCA> findByZipCode(String zipCode) {
-		return crmCCAPersistence.findByZipCode(zipCode);
-	}
 }

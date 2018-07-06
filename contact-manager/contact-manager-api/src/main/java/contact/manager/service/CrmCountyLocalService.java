@@ -223,8 +223,6 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmCounty> findByZipCode(java.lang.String zipCode);
-
 	/**
 	* Returns a range of all the CRM Counties.
 	*

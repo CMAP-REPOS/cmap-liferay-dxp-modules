@@ -250,12 +250,6 @@ public class CrmUsRepLocalServiceWrapper implements CrmUsRepLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.model.CrmUsRep> findByZipCode(
-		java.lang.String zipCode) {
-		return _crmUsRepLocalService.findByZipCode(zipCode);
-	}
-
 	/**
 	* Returns a range of all the CRM US Reps.
 	*

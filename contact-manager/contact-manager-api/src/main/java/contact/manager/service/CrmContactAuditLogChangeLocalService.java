@@ -175,8 +175,6 @@ public interface CrmContactAuditLogChangeLocalService extends BaseLocalService,
 	public CrmContactAuditLogChange updateCrmContactAuditLogChange(
 		CrmContactAuditLogChange crmContactAuditLogChange);
 
-	public int countByCrmContactAuditLogId(long crmContactAuditLogId);
-
 	/**
 	* Returns the number of CRM Contact Audit Log Changes.
 	*
@@ -230,18 +228,6 @@ public interface CrmContactAuditLogChangeLocalService extends BaseLocalService,
 	*/
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
-
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId);
-
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId, int start, int end)
-		throws SystemException;
-
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId, int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
-		throws SystemException;
 
 	/**
 	* Returns a range of all the CRM Contact Audit Log Changes.

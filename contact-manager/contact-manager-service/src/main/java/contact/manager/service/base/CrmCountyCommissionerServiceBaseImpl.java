@@ -90,6 +90,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM CCA remote service.
+	 *
+	 * @return the CRM CCA remote service
+	 */
+	public contact.manager.service.CrmCCAService getCrmCCAService() {
+		return crmCCAService;
+	}
+
+	/**
+	 * Sets the CRM CCA remote service.
+	 *
+	 * @param crmCCAService the CRM CCA remote service
+	 */
+	public void setCrmCCAService(
+		contact.manager.service.CrmCCAService crmCCAService) {
+		this.crmCCAService = crmCCAService;
+	}
+
+	/**
 	 * Returns the CRM CCA persistence.
 	 *
 	 * @return the CRM CCA persistence
@@ -124,6 +143,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmChiWardLocalService(
 		contact.manager.service.CrmChiWardLocalService crmChiWardLocalService) {
 		this.crmChiWardLocalService = crmChiWardLocalService;
+	}
+
+	/**
+	 * Returns the CRM Chi Ward remote service.
+	 *
+	 * @return the CRM Chi Ward remote service
+	 */
+	public contact.manager.service.CrmChiWardService getCrmChiWardService() {
+		return crmChiWardService;
+	}
+
+	/**
+	 * Sets the CRM Chi Ward remote service.
+	 *
+	 * @param crmChiWardService the CRM Chi Ward remote service
+	 */
+	public void setCrmChiWardService(
+		contact.manager.service.CrmChiWardService crmChiWardService) {
+		this.crmChiWardService = crmChiWardService;
 	}
 
 	/**
@@ -165,6 +203,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Contact remote service.
+	 *
+	 * @return the CRM Contact remote service
+	 */
+	public contact.manager.service.CrmContactService getCrmContactService() {
+		return crmContactService;
+	}
+
+	/**
+	 * Sets the CRM Contact remote service.
+	 *
+	 * @param crmContactService the CRM Contact remote service
+	 */
+	public void setCrmContactService(
+		contact.manager.service.CrmContactService crmContactService) {
+		this.crmContactService = crmContactService;
+	}
+
+	/**
 	 * Returns the CRM Contact persistence.
 	 *
 	 * @return the CRM Contact persistence
@@ -200,6 +257,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmContactAuditLogLocalService(
 		contact.manager.service.CrmContactAuditLogLocalService crmContactAuditLogLocalService) {
 		this.crmContactAuditLogLocalService = crmContactAuditLogLocalService;
+	}
+
+	/**
+	 * Returns the CRM Contact Audit Log remote service.
+	 *
+	 * @return the CRM Contact Audit Log remote service
+	 */
+	public contact.manager.service.CrmContactAuditLogService getCrmContactAuditLogService() {
+		return crmContactAuditLogService;
+	}
+
+	/**
+	 * Sets the CRM Contact Audit Log remote service.
+	 *
+	 * @param crmContactAuditLogService the CRM Contact Audit Log remote service
+	 */
+	public void setCrmContactAuditLogService(
+		contact.manager.service.CrmContactAuditLogService crmContactAuditLogService) {
+		this.crmContactAuditLogService = crmContactAuditLogService;
 	}
 
 	/**
@@ -241,6 +317,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Contact Audit Log Change remote service.
+	 *
+	 * @return the CRM Contact Audit Log Change remote service
+	 */
+	public contact.manager.service.CrmContactAuditLogChangeService getCrmContactAuditLogChangeService() {
+		return crmContactAuditLogChangeService;
+	}
+
+	/**
+	 * Sets the CRM Contact Audit Log Change remote service.
+	 *
+	 * @param crmContactAuditLogChangeService the CRM Contact Audit Log Change remote service
+	 */
+	public void setCrmContactAuditLogChangeService(
+		contact.manager.service.CrmContactAuditLogChangeService crmContactAuditLogChangeService) {
+		this.crmContactAuditLogChangeService = crmContactAuditLogChangeService;
+	}
+
+	/**
 	 * Returns the CRM Contact Audit Log Change persistence.
 	 *
 	 * @return the CRM Contact Audit Log Change persistence
@@ -276,6 +371,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmCountyLocalService(
 		contact.manager.service.CrmCountyLocalService crmCountyLocalService) {
 		this.crmCountyLocalService = crmCountyLocalService;
+	}
+
+	/**
+	 * Returns the CRM County remote service.
+	 *
+	 * @return the CRM County remote service
+	 */
+	public contact.manager.service.CrmCountyService getCrmCountyService() {
+		return crmCountyService;
+	}
+
+	/**
+	 * Sets the CRM County remote service.
+	 *
+	 * @param crmCountyService the CRM County remote service
+	 */
+	public void setCrmCountyService(
+		contact.manager.service.CrmCountyService crmCountyService) {
+		this.crmCountyService = crmCountyService;
 	}
 
 	/**
@@ -374,6 +488,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Group remote service.
+	 *
+	 * @return the CRM Group remote service
+	 */
+	public contact.manager.service.CrmGroupService getCrmGroupService() {
+		return crmGroupService;
+	}
+
+	/**
+	 * Sets the CRM Group remote service.
+	 *
+	 * @param crmGroupService the CRM Group remote service
+	 */
+	public void setCrmGroupService(
+		contact.manager.service.CrmGroupService crmGroupService) {
+		this.crmGroupService = crmGroupService;
+	}
+
+	/**
 	 * Returns the CRM Group persistence.
 	 *
 	 * @return the CRM Group persistence
@@ -408,6 +541,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmLTALocalService(
 		contact.manager.service.CrmLTALocalService crmLTALocalService) {
 		this.crmLTALocalService = crmLTALocalService;
+	}
+
+	/**
+	 * Returns the CRM LTA remote service.
+	 *
+	 * @return the CRM LTA remote service
+	 */
+	public contact.manager.service.CrmLTAService getCrmLTAService() {
+		return crmLTAService;
+	}
+
+	/**
+	 * Sets the CRM LTA remote service.
+	 *
+	 * @param crmLTAService the CRM LTA remote service
+	 */
+	public void setCrmLTAService(
+		contact.manager.service.CrmLTAService crmLTAService) {
+		this.crmLTAService = crmLTAService;
 	}
 
 	/**
@@ -448,6 +600,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Muni remote service.
+	 *
+	 * @return the CRM Muni remote service
+	 */
+	public contact.manager.service.CrmMuniService getCrmMuniService() {
+		return crmMuniService;
+	}
+
+	/**
+	 * Sets the CRM Muni remote service.
+	 *
+	 * @param crmMuniService the CRM Muni remote service
+	 */
+	public void setCrmMuniService(
+		contact.manager.service.CrmMuniService crmMuniService) {
+		this.crmMuniService = crmMuniService;
+	}
+
+	/**
 	 * Returns the CRM Muni persistence.
 	 *
 	 * @return the CRM Muni persistence
@@ -485,6 +656,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Note remote service.
+	 *
+	 * @return the CRM Note remote service
+	 */
+	public contact.manager.service.CrmNoteService getCrmNoteService() {
+		return crmNoteService;
+	}
+
+	/**
+	 * Sets the CRM Note remote service.
+	 *
+	 * @param crmNoteService the CRM Note remote service
+	 */
+	public void setCrmNoteService(
+		contact.manager.service.CrmNoteService crmNoteService) {
+		this.crmNoteService = crmNoteService;
+	}
+
+	/**
 	 * Returns the CRM Note persistence.
 	 *
 	 * @return the CRM Note persistence
@@ -519,6 +709,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmOutreachLogLocalService(
 		contact.manager.service.CrmOutreachLogLocalService crmOutreachLogLocalService) {
 		this.crmOutreachLogLocalService = crmOutreachLogLocalService;
+	}
+
+	/**
+	 * Returns the CRM Outreach Log remote service.
+	 *
+	 * @return the CRM Outreach Log remote service
+	 */
+	public contact.manager.service.CrmOutreachLogService getCrmOutreachLogService() {
+		return crmOutreachLogService;
+	}
+
+	/**
+	 * Sets the CRM Outreach Log remote service.
+	 *
+	 * @param crmOutreachLogService the CRM Outreach Log remote service
+	 */
+	public void setCrmOutreachLogService(
+		contact.manager.service.CrmOutreachLogService crmOutreachLogService) {
+		this.crmOutreachLogService = crmOutreachLogService;
 	}
 
 	/**
@@ -560,6 +769,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM State Rep remote service.
+	 *
+	 * @return the CRM State Rep remote service
+	 */
+	public contact.manager.service.CrmStateRepService getCrmStateRepService() {
+		return crmStateRepService;
+	}
+
+	/**
+	 * Sets the CRM State Rep remote service.
+	 *
+	 * @param crmStateRepService the CRM State Rep remote service
+	 */
+	public void setCrmStateRepService(
+		contact.manager.service.CrmStateRepService crmStateRepService) {
+		this.crmStateRepService = crmStateRepService;
+	}
+
+	/**
 	 * Returns the CRM State Rep persistence.
 	 *
 	 * @return the CRM State Rep persistence
@@ -595,6 +823,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmStateSenateLocalService(
 		contact.manager.service.CrmStateSenateLocalService crmStateSenateLocalService) {
 		this.crmStateSenateLocalService = crmStateSenateLocalService;
+	}
+
+	/**
+	 * Returns the CRM State Senate remote service.
+	 *
+	 * @return the CRM State Senate remote service
+	 */
+	public contact.manager.service.CrmStateSenateService getCrmStateSenateService() {
+		return crmStateSenateService;
+	}
+
+	/**
+	 * Sets the CRM State Senate remote service.
+	 *
+	 * @param crmStateSenateService the CRM State Senate remote service
+	 */
+	public void setCrmStateSenateService(
+		contact.manager.service.CrmStateSenateService crmStateSenateService) {
+		this.crmStateSenateService = crmStateSenateService;
 	}
 
 	/**
@@ -636,6 +883,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	}
 
 	/**
+	 * Returns the CRM Tag remote service.
+	 *
+	 * @return the CRM Tag remote service
+	 */
+	public contact.manager.service.CrmTagService getCrmTagService() {
+		return crmTagService;
+	}
+
+	/**
+	 * Sets the CRM Tag remote service.
+	 *
+	 * @param crmTagService the CRM Tag remote service
+	 */
+	public void setCrmTagService(
+		contact.manager.service.CrmTagService crmTagService) {
+		this.crmTagService = crmTagService;
+	}
+
+	/**
 	 * Returns the CRM Tag persistence.
 	 *
 	 * @return the CRM Tag persistence
@@ -670,6 +936,25 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	public void setCrmUsRepLocalService(
 		contact.manager.service.CrmUsRepLocalService crmUsRepLocalService) {
 		this.crmUsRepLocalService = crmUsRepLocalService;
+	}
+
+	/**
+	 * Returns the CRM US Rep remote service.
+	 *
+	 * @return the CRM US Rep remote service
+	 */
+	public contact.manager.service.CrmUsRepService getCrmUsRepService() {
+		return crmUsRepService;
+	}
+
+	/**
+	 * Sets the CRM US Rep remote service.
+	 *
+	 * @param crmUsRepService the CRM US Rep remote service
+	 */
+	public void setCrmUsRepService(
+		contact.manager.service.CrmUsRepService crmUsRepService) {
+		this.crmUsRepService = crmUsRepService;
 	}
 
 	/**
@@ -891,26 +1176,38 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 
 	@BeanReference(type = contact.manager.service.CrmCCALocalService.class)
 	protected contact.manager.service.CrmCCALocalService crmCCALocalService;
+	@BeanReference(type = contact.manager.service.CrmCCAService.class)
+	protected contact.manager.service.CrmCCAService crmCCAService;
 	@BeanReference(type = CrmCCAPersistence.class)
 	protected CrmCCAPersistence crmCCAPersistence;
 	@BeanReference(type = contact.manager.service.CrmChiWardLocalService.class)
 	protected contact.manager.service.CrmChiWardLocalService crmChiWardLocalService;
+	@BeanReference(type = contact.manager.service.CrmChiWardService.class)
+	protected contact.manager.service.CrmChiWardService crmChiWardService;
 	@BeanReference(type = CrmChiWardPersistence.class)
 	protected CrmChiWardPersistence crmChiWardPersistence;
 	@BeanReference(type = contact.manager.service.CrmContactLocalService.class)
 	protected contact.manager.service.CrmContactLocalService crmContactLocalService;
+	@BeanReference(type = contact.manager.service.CrmContactService.class)
+	protected contact.manager.service.CrmContactService crmContactService;
 	@BeanReference(type = CrmContactPersistence.class)
 	protected CrmContactPersistence crmContactPersistence;
 	@BeanReference(type = contact.manager.service.CrmContactAuditLogLocalService.class)
 	protected contact.manager.service.CrmContactAuditLogLocalService crmContactAuditLogLocalService;
+	@BeanReference(type = contact.manager.service.CrmContactAuditLogService.class)
+	protected contact.manager.service.CrmContactAuditLogService crmContactAuditLogService;
 	@BeanReference(type = CrmContactAuditLogPersistence.class)
 	protected CrmContactAuditLogPersistence crmContactAuditLogPersistence;
 	@BeanReference(type = contact.manager.service.CrmContactAuditLogChangeLocalService.class)
 	protected contact.manager.service.CrmContactAuditLogChangeLocalService crmContactAuditLogChangeLocalService;
+	@BeanReference(type = contact.manager.service.CrmContactAuditLogChangeService.class)
+	protected contact.manager.service.CrmContactAuditLogChangeService crmContactAuditLogChangeService;
 	@BeanReference(type = CrmContactAuditLogChangePersistence.class)
 	protected CrmContactAuditLogChangePersistence crmContactAuditLogChangePersistence;
 	@BeanReference(type = contact.manager.service.CrmCountyLocalService.class)
 	protected contact.manager.service.CrmCountyLocalService crmCountyLocalService;
+	@BeanReference(type = contact.manager.service.CrmCountyService.class)
+	protected contact.manager.service.CrmCountyService crmCountyService;
 	@BeanReference(type = CrmCountyPersistence.class)
 	protected CrmCountyPersistence crmCountyPersistence;
 	@BeanReference(type = contact.manager.service.CrmCountyCommissionerLocalService.class)
@@ -921,38 +1218,56 @@ public abstract class CrmCountyCommissionerServiceBaseImpl
 	protected CrmCountyCommissionerPersistence crmCountyCommissionerPersistence;
 	@BeanReference(type = contact.manager.service.CrmGroupLocalService.class)
 	protected contact.manager.service.CrmGroupLocalService crmGroupLocalService;
+	@BeanReference(type = contact.manager.service.CrmGroupService.class)
+	protected contact.manager.service.CrmGroupService crmGroupService;
 	@BeanReference(type = CrmGroupPersistence.class)
 	protected CrmGroupPersistence crmGroupPersistence;
 	@BeanReference(type = contact.manager.service.CrmLTALocalService.class)
 	protected contact.manager.service.CrmLTALocalService crmLTALocalService;
+	@BeanReference(type = contact.manager.service.CrmLTAService.class)
+	protected contact.manager.service.CrmLTAService crmLTAService;
 	@BeanReference(type = CrmLTAPersistence.class)
 	protected CrmLTAPersistence crmLTAPersistence;
 	@BeanReference(type = contact.manager.service.CrmMuniLocalService.class)
 	protected contact.manager.service.CrmMuniLocalService crmMuniLocalService;
+	@BeanReference(type = contact.manager.service.CrmMuniService.class)
+	protected contact.manager.service.CrmMuniService crmMuniService;
 	@BeanReference(type = CrmMuniPersistence.class)
 	protected CrmMuniPersistence crmMuniPersistence;
 	@BeanReference(type = contact.manager.service.CrmNoteLocalService.class)
 	protected contact.manager.service.CrmNoteLocalService crmNoteLocalService;
+	@BeanReference(type = contact.manager.service.CrmNoteService.class)
+	protected contact.manager.service.CrmNoteService crmNoteService;
 	@BeanReference(type = CrmNotePersistence.class)
 	protected CrmNotePersistence crmNotePersistence;
 	@BeanReference(type = contact.manager.service.CrmOutreachLogLocalService.class)
 	protected contact.manager.service.CrmOutreachLogLocalService crmOutreachLogLocalService;
+	@BeanReference(type = contact.manager.service.CrmOutreachLogService.class)
+	protected contact.manager.service.CrmOutreachLogService crmOutreachLogService;
 	@BeanReference(type = CrmOutreachLogPersistence.class)
 	protected CrmOutreachLogPersistence crmOutreachLogPersistence;
 	@BeanReference(type = contact.manager.service.CrmStateRepLocalService.class)
 	protected contact.manager.service.CrmStateRepLocalService crmStateRepLocalService;
+	@BeanReference(type = contact.manager.service.CrmStateRepService.class)
+	protected contact.manager.service.CrmStateRepService crmStateRepService;
 	@BeanReference(type = CrmStateRepPersistence.class)
 	protected CrmStateRepPersistence crmStateRepPersistence;
 	@BeanReference(type = contact.manager.service.CrmStateSenateLocalService.class)
 	protected contact.manager.service.CrmStateSenateLocalService crmStateSenateLocalService;
+	@BeanReference(type = contact.manager.service.CrmStateSenateService.class)
+	protected contact.manager.service.CrmStateSenateService crmStateSenateService;
 	@BeanReference(type = CrmStateSenatePersistence.class)
 	protected CrmStateSenatePersistence crmStateSenatePersistence;
 	@BeanReference(type = contact.manager.service.CrmTagLocalService.class)
 	protected contact.manager.service.CrmTagLocalService crmTagLocalService;
+	@BeanReference(type = contact.manager.service.CrmTagService.class)
+	protected contact.manager.service.CrmTagService crmTagService;
 	@BeanReference(type = CrmTagPersistence.class)
 	protected CrmTagPersistence crmTagPersistence;
 	@BeanReference(type = contact.manager.service.CrmUsRepLocalService.class)
 	protected contact.manager.service.CrmUsRepLocalService crmUsRepLocalService;
+	@BeanReference(type = contact.manager.service.CrmUsRepService.class)
+	protected contact.manager.service.CrmUsRepService crmUsRepService;
 	@BeanReference(type = CrmUsRepPersistence.class)
 	protected CrmUsRepPersistence crmUsRepPersistence;
 	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)

@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmCounty;
 import contact.manager.service.base.CrmCountyLocalServiceBaseImpl;
 
 /**
@@ -46,7 +43,4 @@ public class CrmCountyLocalServiceImpl extends CrmCountyLocalServiceBaseImpl {
 	 * County local service.
 	 */
 	
-	public List<CrmCounty> findByZipCode(String zipCode) {
-		return crmCountyPersistence.findByZipCode(zipCode);
-	}
 }

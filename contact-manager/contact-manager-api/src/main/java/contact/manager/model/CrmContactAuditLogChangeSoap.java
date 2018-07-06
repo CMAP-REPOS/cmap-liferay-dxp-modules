@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services.
+ * This class is used by SOAP remote services, specifically {@link contact.manager.service.http.CrmContactAuditLogChangeServiceSoap}.
  *
  * @author Brian Wing Shun Chan
+ * @see contact.manager.service.http.CrmContactAuditLogChangeServiceSoap
  * @generated
  */
 @ProviderType

@@ -14,18 +14,6 @@
 
 package contact.manager.service.impl;
 
-import com.liferay.portal.kernel.exception.NoSuchContactException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
-
-import contact.manager.exception.NoSuchCrmContactException;
-import contact.manager.model.CrmContact;
-import contact.manager.model.CrmGroup;
-import contact.manager.model.CrmTag;
 import contact.manager.service.base.CrmContactLocalServiceBaseImpl;
 
 /**
@@ -54,49 +42,4 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	 * contact.manager.service.CrmContactLocalServiceUtil} to access the CRM
 	 * Contact local service.
 	 */
-
-	private static Log LOGGER = LogFactoryUtil.getLog(CrmContactLocalServiceImpl.class);
-
-	public CrmContact findByConstantContactId(long constantContactId)
-			throws SystemException, NoSuchContactException, NoSuchCrmContactException {
-		return crmContactPersistence.findByConstantContactId(constantContactId);
-	}
-
-	public List<CrmContact> findByPrimaryEmailAddress(String primaryEmailAddress) throws SystemException {
-		return crmContactPersistence.findByPrimaryEmailAddress(primaryEmailAddress);
-	}
-
-	public List<CrmContact> findByPrimaryEmailAddressAndStatus(String primaryEmailAddress, String status)
-			throws SystemException {
-		return crmContactPersistence.findByPrimaryEmailAddressAndStatus(primaryEmailAddress, status);
-	}
-
-	public List<CrmContact> findByStatus(String status) throws SystemException {
-		return crmContactPersistence.findByStatus(status);
-	}
-
-	public List<CrmContact> getCrmContactsByStatus(String status, int start, int end, OrderByComparator obc)
-			throws SystemException {
-		return crmContactPersistence.findByStatus(status, start, end, obc);
-	}
-
-	public List<CrmContact> findByVipFlag(boolean isVip) throws SystemException {
-		return crmContactPersistence.findByVipFlag(isVip);
-	}
-
-	public List<CrmTag> getCrmTags(long contactId) throws SystemException {
-		return crmContactPersistence.getCrmTags(contactId);
-	}
-
-	public void setCrmTags(long contactId, long[] tagIds) throws SystemException {
-		crmContactPersistence.setCrmTags(contactId, tagIds);
-	}
-
-	public List<CrmGroup> getCrmGroups(long contactId) throws SystemException {
-		return crmContactPersistence.getCrmGroups(contactId);
-	}
-
-	public void setCrmGroups(long contactId, long[] groupIds) throws SystemException {
-		crmContactPersistence.setCrmGroups(contactId, groupIds);
-	}
 }

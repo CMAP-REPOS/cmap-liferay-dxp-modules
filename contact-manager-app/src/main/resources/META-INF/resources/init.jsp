@@ -44,16 +44,13 @@
 <%@ page import="contact.manager.model.CrmNote"%>
 <%@ page import="contact.manager.model.CrmOutreachLog"%>
 
-<%@ page import="contact.manager.service.CrmContactAuditLogLocalServiceUtil"%>
-<%@ page import="contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil"%>
+<%@ page import="contact.manager.service.CrmContactAuditLogServiceUtil"%>
+<%@ page import="contact.manager.service.CrmContactAuditLogChangeServiceUtil"%>
+<%@ page import="contact.manager.service.CrmContactServiceUtil"%>
+<%@ page import="contact.manager.service.CrmGroupServiceUtil"%>
+<%@ page import="contact.manager.service.CrmNoteServiceUtil"%>
+<%@ page import="contact.manager.service.CrmOutreachLogServiceUtil"%>
 
-<%@ page import="contact.manager.service.CrmContactLocalServiceUtil"%>
-<%@ page import="contact.manager.service.CrmGroupLocalServiceUtil"%>
-<%@ page import="contact.manager.service.CrmNoteLocalServiceUtil"%>
-<%@ page import="contact.manager.service.CrmOutreachLogLocalServiceUtil"%>
-
-<%@ page import="contact.manager.service.permission.CrmContactModelPermission" %>
-<%@ page import="contact.manager.service.permission.CrmContactPermission" %>
 
 <%@ page import="java.util.ArrayList "%>
 <%@ page import="java.util.List "%>

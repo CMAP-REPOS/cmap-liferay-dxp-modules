@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmChiWard;
 import contact.manager.service.base.CrmChiWardLocalServiceBaseImpl;
 
 /**
@@ -45,8 +42,5 @@ public class CrmChiWardLocalServiceImpl extends CrmChiWardLocalServiceBaseImpl {
 	 * contact.manager.service.CrmChiWardLocalServiceUtil} to access the CRM Chi
 	 * Ward local service.
 	 */
-	
-	public List<CrmChiWard> findByZipCode(String zipCode) {
-		return crmChiWardPersistence.findByZipCode(zipCode);
-	}
+
 }

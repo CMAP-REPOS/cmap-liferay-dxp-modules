@@ -14,11 +14,6 @@
 
 package contact.manager.service.impl;
 
-import com.liferay.portal.kernel.util.OrderByComparator;
-
-import java.util.List;
-
-import contact.manager.model.CrmNote;
 import contact.manager.service.base.CrmNoteLocalServiceBaseImpl;
 
 /**
@@ -47,21 +42,4 @@ public class CrmNoteLocalServiceImpl extends CrmNoteLocalServiceBaseImpl {
 	 * contact.manager.service.CrmNoteLocalServiceUtil} to access the CRM Note
 	 * local service.
 	 */
-
-	public List<CrmNote> findByCrmContactId(long crmContactId) {
-		return crmNotePersistence.findByCrmContactId(crmContactId);
-	}
-
-	public List<CrmNote> findByCrmContactId(long crmContactId, int start, int end) {
-		return crmNotePersistence.findByCrmContactId(crmContactId, start, end);
-	}
-
-	public List<CrmNote> findByCrmContactId(long crmContactId, int start, int end,
-			OrderByComparator<CrmNote> orderByComparator) {
-		return crmNotePersistence.findByCrmContactId(crmContactId, start, end, orderByComparator);
-	}
-
-	public int countByCrmContactId(long crmContactId) {
-		return crmNotePersistence.countByCrmContactId(crmContactId);
-	}
 }

@@ -249,12 +249,6 @@ public class CrmCCALocalServiceWrapper implements CrmCCALocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.model.CrmCCA> findByZipCode(
-		java.lang.String zipCode) {
-		return _crmCCALocalService.findByZipCode(zipCode);
-	}
-
 	/**
 	* Returns a range of all the CRM CCAs.
 	*

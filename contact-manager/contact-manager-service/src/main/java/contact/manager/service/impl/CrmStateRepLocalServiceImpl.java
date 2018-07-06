@@ -14,9 +14,6 @@
 
 package contact.manager.service.impl;
 
-import java.util.List;
-
-import contact.manager.model.CrmStateRep;
 import contact.manager.service.base.CrmStateRepLocalServiceBaseImpl;
 
 /**
@@ -45,8 +42,4 @@ public class CrmStateRepLocalServiceImpl extends CrmStateRepLocalServiceBaseImpl
 	 * contact.manager.service.CrmStateRepLocalServiceUtil} to access the CRM
 	 * State Rep local service.
 	 */
-	
-	public List<CrmStateRep> findByZipCode(String zipCode) {
-		return crmStateRepPersistence.findByZipCode(zipCode);
-	}
 }

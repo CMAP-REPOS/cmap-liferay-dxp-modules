@@ -6,7 +6,7 @@
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 	}
 
 	String redirect = ParamUtil.getString(request, "redirect");

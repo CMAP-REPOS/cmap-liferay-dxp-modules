@@ -5,7 +5,7 @@
 	CrmContactAuditLog crmContactAuditLog = null;
 
 	if (crmContactAuditLogId > 0) {
-		crmContactAuditLog = CrmContactAuditLogLocalServiceUtil.getCrmContactAuditLog(crmContactAuditLogId);
+		crmContactAuditLog = CrmContactAuditLogServiceUtil.getCrmContactAuditLog(crmContactAuditLogId);
 	}
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -25,12 +25,12 @@
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No details found for this audit log"
 				iteratorURL="<%=iteratorURL%>"
-				total="<%=CrmContactAuditLogChangeLocalServiceUtil
+				total="<%=CrmContactAuditLogChangeServiceUtil
 								.countByCrmContactAuditLogId(crmContactAuditLogId)%>"
 				var="crmContactAuditLogChangeSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmContactAuditLogChange> crmContactAuditLogChanges = CrmContactAuditLogChangeLocalServiceUtil
+						List<CrmContactAuditLogChange> crmContactAuditLogChanges = CrmContactAuditLogChangeServiceUtil
 								.findByCrmContactAuditLogId(crmContactAuditLogId,
 										crmContactAuditLogChangeSearchContainer.getStart(),
 										crmContactAuditLogChangeSearchContainer.getEnd());

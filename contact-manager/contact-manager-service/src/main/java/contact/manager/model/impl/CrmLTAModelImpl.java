@@ -23,6 +23,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
@@ -36,13 +37,16 @@ import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmLTA;
 import contact.manager.model.CrmLTAModel;
+import contact.manager.model.CrmLTASoap;
 
 import java.io.Serializable;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -58,6 +62,7 @@ import java.util.Map;
  * @see CrmLTAModel
  * @generated
  */
+@JSON(strict = true)
 @ProviderType
 public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 	implements CrmLTAModel {
@@ -115,6 +120,54 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 	public static final long UUID_COLUMN_BITMASK = 4L;
 	public static final long ZIPCODE_COLUMN_BITMASK = 8L;
 	public static final long NAME_COLUMN_BITMASK = 16L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static CrmLTA toModel(CrmLTASoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		CrmLTA model = new CrmLTAImpl();
+
+		model.setUuid(soapModel.getUuid());
+		model.setCrmLTAId(soapModel.getCrmLTAId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setName(soapModel.getName());
+		model.setZipCode(soapModel.getZipCode());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<CrmLTA> toModels(CrmLTASoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<CrmLTA> models = new ArrayList<CrmLTA>(soapModels.length);
+
+		for (CrmLTASoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
+
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(contact.manager.service.util.ServiceProps.get(
 				"lock.expiration.time.contact.manager.model.CrmLTA"));
 
@@ -235,6 +288,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		}
 	}
 
+	@JSON
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
@@ -258,6 +312,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		return GetterUtil.getString(_originalUuid);
 	}
 
+	@JSON
 	@Override
 	public long getCrmLTAId() {
 		return _crmLTAId;
@@ -268,6 +323,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		_crmLTAId = crmLTAId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -290,6 +346,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -312,6 +369,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -338,6 +396,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -353,6 +412,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -363,6 +423,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -379,6 +440,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -396,6 +458,7 @@ public class CrmLTAModelImpl extends BaseModelImpl<CrmLTA>
 		_name = name;
 	}
 
+	@JSON
 	@Override
 	public String getZipCode() {
 		if (_zipCode == null) {

@@ -7,7 +7,7 @@
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
-		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
+		crmContact = CrmContactServiceUtil.getCrmContact(crmContactId);
 	}
 
 	PortletURL iteratorURL = renderResponse.createRenderURL();
@@ -53,11 +53,11 @@
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No audit logs found"
 				iteratorURL="<%=iteratorURL%>"
-				total="<%=CrmContactAuditLogLocalServiceUtil.countByCrmContactId(crmContactId)%>"
+				total="<%=CrmContactAuditLogServiceUtil.countByCrmContactId(crmContactId)%>"
 				var="crmContactAuditLogSearchContainer">
 				<liferay-ui:search-container-results>
 					<%
-						List<CrmContactAuditLog> crmContactAuditLogs = CrmContactAuditLogLocalServiceUtil
+						List<CrmContactAuditLog> crmContactAuditLogs = CrmContactAuditLogServiceUtil
 								.findByCrmContactId(crmContactId, crmContactAuditLogSearchContainer.getStart(),
 										crmContactAuditLogSearchContainer.getEnd(), orderByComparator);
 						pageContext.setAttribute("results", crmContactAuditLogs);
