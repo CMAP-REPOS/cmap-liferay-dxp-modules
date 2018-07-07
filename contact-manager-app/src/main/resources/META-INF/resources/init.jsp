@@ -11,8 +11,11 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry"%>
 
 <%@ page import="com.liferay.portal.kernel.model.PersistedModel"%>
+<%@ page import="com.liferay.portal.kernel.model.User" %>
 
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
+
+<%@ page import="com.liferay.portal.kernel.theme.ThemeDisplay" %>
 
 <%@ page import="com.liferay.portal.kernel.util.HtmlUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.ListUtil"%>
@@ -21,16 +24,16 @@
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
 <%@ page import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
 <%@ page import="contact.manager.app.constants.CrmContactAuditLogKeys" %>
 <%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
-<%@page import="contact.manager.app.constants.CrmNoteKeys"%>
+<%@ page import="contact.manager.app.constants.CrmNoteKeys"%>
 <%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
 
 <%@ page import="contact.manager.app.util.GroupUtil" %>
+<%@ page import="contact.manager.app.util.PermissionUtil"%>
 
 <%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
 <%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
@@ -51,15 +54,9 @@
 <%@ page import="contact.manager.service.CrmNoteServiceUtil"%>
 <%@ page import="contact.manager.service.CrmOutreachLogServiceUtil"%>
 
-
-<%@ page import="java.util.ArrayList "%>
-<%@ page import="java.util.List "%>
-<%@ page import="java.util.Calendar "%>
-
-<%@ page import="contact.manager.service.permission.CrmContactPermission "%>
-<%@ page import="contact.manager.service.permission.CrmContactAuditLogPermission "%>
-<%@ page import="contact.manager.service.permission.CrmGroupPermission "%>
-<%@ page import="contact.manager.service.permission.CrmOutreachLogPermission"%>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.Calendar" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
 
@@ -69,4 +66,5 @@
 
 <%
 	String currentURL = PortalUtil.getCurrentURL(request);
+	User currentUser =  PortalUtil.getUser(request);
 %>

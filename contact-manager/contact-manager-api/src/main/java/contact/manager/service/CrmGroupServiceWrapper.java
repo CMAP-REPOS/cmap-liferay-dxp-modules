@@ -33,8 +33,38 @@ public class CrmGroupServiceWrapper implements CrmGroupService,
 	}
 
 	@Override
-	public contact.manager.model.CrmGroup getCrmGroup(long crmGroupId) {
+	public contact.manager.model.CrmGroup addCrmGroup(
+		contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupService.addCrmGroup(crmGroup);
+	}
+
+	@Override
+	public contact.manager.model.CrmGroup deleteCrmGroup(
+		contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupService.deleteCrmGroup(crmGroup, serviceContext);
+	}
+
+	@Override
+	public contact.manager.model.CrmGroup deleteCrmGroup(long crmGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupService.deleteCrmGroup(crmGroupId, serviceContext);
+	}
+
+	@Override
+	public contact.manager.model.CrmGroup getCrmGroup(long crmGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _crmGroupService.getCrmGroup(crmGroupId);
+	}
+
+	@Override
+	public contact.manager.model.CrmGroup updateCrmGroup(
+		contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupService.updateCrmGroup(crmGroup);
 	}
 
 	@Override
@@ -43,9 +73,8 @@ public class CrmGroupServiceWrapper implements CrmGroupService,
 	}
 
 	@Override
-	public int getCrmContactsCount(long crmGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupService.getCrmContactsCount(crmGroupId);
+	public int getCrmContactsSize(long crmGroupId) {
+		return _crmGroupService.getCrmContactsSize(crmGroupId);
 	}
 
 	/**
@@ -59,22 +88,20 @@ public class CrmGroupServiceWrapper implements CrmGroupService,
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmGroup> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<contact.manager.model.CrmGroup> findAll() {
 		return _crmGroupService.findAll();
 	}
 
 	@Override
 	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		int end) {
 		return _crmGroupService.findAll(start, end);
 	}
 
 	@Override
 	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
 		return _crmGroupService.findAll(start, end, orderByComparator);
 	}
 
@@ -85,30 +112,8 @@ public class CrmGroupServiceWrapper implements CrmGroupService,
 	}
 
 	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end) {
-		return _crmGroupService.getCrmContacts(crmGroupId, start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		return _crmGroupService.getCrmContacts(crmGroupId, start, end,
-			orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
-		java.lang.String crmGroupName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupService.getCrmGroupsByName(crmGroupName);
-	}
-
-	@Override
-	public void setCrmContacts(long crmGroupPk, long[] crmContactPks)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_crmGroupService.setCrmContacts(crmGroupPk, crmContactPks);
+	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
+		_crmGroupService.setCrmGroupCrmContacts(crmGroupId, crmContactIds);
 	}
 
 	@Override

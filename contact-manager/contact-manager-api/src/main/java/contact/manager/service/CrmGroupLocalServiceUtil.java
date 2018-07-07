@@ -93,6 +93,13 @@ public class CrmGroupLocalServiceUtil {
 		return getService().addCrmGroup(crmGroup);
 	}
 
+	public static contact.manager.model.CrmGroup addCrmGroup(
+		contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCrmGroup(crmGroup, serviceContext);
+	}
+
 	/**
 	* Creates a new CRM Group with the primary key. Does not add the CRM Group to the database.
 	*
@@ -112,6 +119,12 @@ public class CrmGroupLocalServiceUtil {
 	public static contact.manager.model.CrmGroup deleteCrmGroup(
 		contact.manager.model.CrmGroup crmGroup) {
 		return getService().deleteCrmGroup(crmGroup);
+	}
+
+	public static contact.manager.model.CrmGroup deleteCrmGroup(
+		contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService().deleteCrmGroup(crmGroup, serviceContext);
 	}
 
 	/**
@@ -177,6 +190,12 @@ public class CrmGroupLocalServiceUtil {
 	public static contact.manager.model.CrmGroup updateCrmGroup(
 		contact.manager.model.CrmGroup crmGroup) {
 		return getService().updateCrmGroup(crmGroup);
+	}
+
+	public static contact.manager.model.CrmGroup updateCrmGroup(
+		contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext) {
+		return getService().updateCrmGroup(crmGroup, serviceContext);
 	}
 
 	public static int getCrmContactCrmGroupsCount(long crmContactId) {

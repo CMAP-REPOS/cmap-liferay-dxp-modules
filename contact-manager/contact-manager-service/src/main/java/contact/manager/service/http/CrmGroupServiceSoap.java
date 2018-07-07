@@ -65,6 +65,96 @@ import java.rmi.RemoteException;
  */
 @ProviderType
 public class CrmGroupServiceSoap {
+	public static contact.manager.model.CrmGroupSoap getCrmGroup(
+		long crmGroupId) throws RemoteException {
+		try {
+			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.getCrmGroup(crmGroupId);
+
+			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmGroupSoap deleteCrmGroup(
+		contact.manager.model.CrmGroupSoap crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.deleteCrmGroup(contact.manager.model.impl.CrmGroupModelImpl.toModel(
+						crmGroup), serviceContext);
+
+			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmGroupSoap deleteCrmGroup(
+		long crmGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.deleteCrmGroup(crmGroupId,
+					serviceContext);
+
+			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmGroupSoap addCrmGroup(
+		contact.manager.model.CrmGroupSoap crmGroup) throws RemoteException {
+		try {
+			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.addCrmGroup(contact.manager.model.impl.CrmGroupModelImpl.toModel(
+						crmGroup));
+
+			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmGroupSoap updateCrmGroup(
+		contact.manager.model.CrmGroupSoap crmGroup) throws RemoteException {
+		try {
+			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.updateCrmGroup(contact.manager.model.impl.CrmGroupModelImpl.toModel(
+						crmGroup));
+
+			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static void setCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) throws RemoteException {
+		try {
+			CrmGroupServiceUtil.setCrmGroupCrmContacts(crmGroupId, crmContactIds);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static contact.manager.model.CrmGroupSoap[] findAll()
 		throws RemoteException {
 		try {
@@ -111,6 +201,19 @@ public class CrmGroupServiceSoap {
 		}
 	}
 
+	public static int countAll() throws RemoteException {
+		try {
+			int returnValue = CrmGroupServiceUtil.countAll();
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static contact.manager.model.CrmContactSoap[] getCrmContacts(
 		long crmGroupId) throws RemoteException {
 		try {
@@ -125,95 +228,10 @@ public class CrmGroupServiceSoap {
 		}
 	}
 
-	public static contact.manager.model.CrmContactSoap[] getCrmContacts(
-		long crmGroupId, int start, int end) throws RemoteException {
-		try {
-			java.util.List<contact.manager.model.CrmContact> returnValue = CrmGroupServiceUtil.getCrmContacts(crmGroupId,
-					start, end);
-
-			return contact.manager.model.CrmContactSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static contact.manager.model.CrmContactSoap[] getCrmContacts(
-		long crmGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator)
+	public static int getCrmContactsSize(long crmGroupId)
 		throws RemoteException {
 		try {
-			java.util.List<contact.manager.model.CrmContact> returnValue = CrmGroupServiceUtil.getCrmContacts(crmGroupId,
-					start, end, orderByComparator);
-
-			return contact.manager.model.CrmContactSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static void setCrmContacts(long crmGroupPk, long[] crmContactPks)
-		throws RemoteException {
-		try {
-			CrmGroupServiceUtil.setCrmContacts(crmGroupPk, crmContactPks);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int getCrmContactsCount(long crmGroupId)
-		throws RemoteException {
-		try {
-			int returnValue = CrmGroupServiceUtil.getCrmContactsCount(crmGroupId);
-
-			return returnValue;
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static contact.manager.model.CrmGroupSoap[] getCrmGroupsByName(
-		java.lang.String crmGroupName) throws RemoteException {
-		try {
-			java.util.List<contact.manager.model.CrmGroup> returnValue = CrmGroupServiceUtil.getCrmGroupsByName(crmGroupName);
-
-			return contact.manager.model.CrmGroupSoap.toSoapModels(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static contact.manager.model.CrmGroupSoap getCrmGroup(
-		long crmGroupId) throws RemoteException {
-		try {
-			contact.manager.model.CrmGroup returnValue = CrmGroupServiceUtil.getCrmGroup(crmGroupId);
-
-			return contact.manager.model.CrmGroupSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static int countAll() throws RemoteException {
-		try {
-			int returnValue = CrmGroupServiceUtil.countAll();
+			int returnValue = CrmGroupServiceUtil.getCrmContactsSize(crmGroupId);
 
 			return returnValue;
 		}

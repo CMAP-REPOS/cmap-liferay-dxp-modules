@@ -41,6 +41,12 @@ public class CrmContactServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmContactServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static contact.manager.model.CrmContact addCrmContact(
+		contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCrmContact(crmContact);
+	}
+
 	public static contact.manager.model.CrmContact findByConstantContactId(
 		long constantContactId)
 		throws com.liferay.portal.kernel.exception.NoSuchContactException,
@@ -53,6 +59,12 @@ public class CrmContactServiceUtil {
 		long crmContactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCrmContact(crmContactId);
+	}
+
+	public static contact.manager.model.CrmContact updateCrmContact(
+		contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCrmContact(crmContact);
 	}
 
 	public static int countCrmContactsByStatus(java.lang.String status)
@@ -89,17 +101,23 @@ public class CrmContactServiceUtil {
 		return getService().findByStatus(status);
 	}
 
+	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
+		java.lang.String status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByStatus(status, start, end);
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
+		java.lang.String status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().findByStatus(status, start, end, orderByComparator);
+	}
+
 	public static java.util.List<contact.manager.model.CrmContact> findByVipFlag(
 		boolean isVip)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByVipFlag(isVip);
-	}
-
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
-		java.lang.String status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmContactsByStatus(status, start, end, obc);
 	}
 
 	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroups(

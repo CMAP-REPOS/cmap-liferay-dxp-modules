@@ -33,6 +33,13 @@ public class CrmContactServiceWrapper implements CrmContactService,
 	}
 
 	@Override
+	public contact.manager.model.CrmContact addCrmContact(
+		contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmContactService.addCrmContact(crmContact);
+	}
+
+	@Override
 	public contact.manager.model.CrmContact findByConstantContactId(
 		long constantContactId)
 		throws com.liferay.portal.kernel.exception.NoSuchContactException,
@@ -45,6 +52,13 @@ public class CrmContactServiceWrapper implements CrmContactService,
 	public contact.manager.model.CrmContact getCrmContact(long crmContactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _crmContactService.getCrmContact(crmContactId);
+	}
+
+	@Override
+	public contact.manager.model.CrmContact updateCrmContact(
+		contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmContactService.updateCrmContact(crmContact);
 	}
 
 	@Override
@@ -86,18 +100,26 @@ public class CrmContactServiceWrapper implements CrmContactService,
 	}
 
 	@Override
+	public java.util.List<contact.manager.model.CrmContact> findByStatus(
+		java.lang.String status, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmContactService.findByStatus(status, start, end);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmContact> findByStatus(
+		java.lang.String status, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmContactService.findByStatus(status, start, end,
+			orderByComparator);
+	}
+
+	@Override
 	public java.util.List<contact.manager.model.CrmContact> findByVipFlag(
 		boolean isVip)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _crmContactService.findByVipFlag(isVip);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
-		java.lang.String status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmContactService.getCrmContactsByStatus(status, start, end, obc);
 	}
 
 	@Override

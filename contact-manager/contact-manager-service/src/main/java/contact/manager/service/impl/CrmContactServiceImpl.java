@@ -15,7 +15,9 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchContactException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -66,14 +68,26 @@ public class CrmContactServiceImpl extends CrmContactServiceBaseImpl {
 			throws SystemException {
 		return crmContactPersistence.findByPrimaryEmailAddressAndStatus(primaryEmailAddress, status);
 	}
+	
+	public CrmContact addCrmContact(CrmContact crmContact) throws PortalException {
+		return crmContactLocalService.addCrmContact(crmContact);
+	}
+
+	public CrmContact updateCrmContact(CrmContact crmContact) throws PortalException {
+		return crmContactLocalService.updateCrmContact(crmContact);
+	}	
 
 	public List<CrmContact> findByStatus(String status) throws SystemException {
 		return crmContactPersistence.findByStatus(status);
 	}
 
-	public List<CrmContact> getCrmContactsByStatus(String status, int start, int end, OrderByComparator obc)
-			throws SystemException {
-		return crmContactPersistence.findByStatus(status, start, end, obc);
+	public List<CrmContact> findByStatus(String status, int start, int end) throws SystemException {
+		return crmContactPersistence.findByStatus(status, start, end);
+	}
+
+	public List<CrmContact> findByStatus(String status, int start, int end,
+			OrderByComparator<CrmContact> orderByComparator) throws SystemException {
+		return crmContactPersistence.findByStatus(status, start, end, orderByComparator);
 	}
 
 	public int countCrmContactsByStatus(String status) throws SystemException {

@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -102,6 +103,9 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmGroup addCrmGroup(CrmGroup crmGroup);
 
+	public CrmGroup addCrmGroup(CrmGroup crmGroup, ServiceContext serviceContext)
+		throws PortalException;
+
 	/**
 	* Creates a new CRM Group with the primary key. Does not add the CRM Group to the database.
 	*
@@ -118,6 +122,9 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.DELETE)
 	public CrmGroup deleteCrmGroup(CrmGroup crmGroup);
+
+	public CrmGroup deleteCrmGroup(CrmGroup crmGroup,
+		ServiceContext serviceContext);
 
 	/**
 	* Deletes the CRM Group with the primary key from the database. Also notifies the appropriate model listeners.
@@ -173,6 +180,9 @@ public interface CrmGroupLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmGroup updateCrmGroup(CrmGroup crmGroup);
+
+	public CrmGroup updateCrmGroup(CrmGroup crmGroup,
+		ServiceContext serviceContext);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCrmContactCrmGroupsCount(long crmContactId);

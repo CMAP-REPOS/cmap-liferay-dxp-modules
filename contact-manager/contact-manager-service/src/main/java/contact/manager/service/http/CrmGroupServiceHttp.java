@@ -55,12 +55,195 @@ import contact.manager.service.CrmGroupServiceUtil;
  */
 @ProviderType
 public class CrmGroupServiceHttp {
-	public static java.util.List<contact.manager.model.CrmGroup> findAll(
-		HttpPrincipal httpPrincipal)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static contact.manager.model.CrmGroup getCrmGroup(
+		HttpPrincipal httpPrincipal, long crmGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"findAll", _findAllParameterTypes0);
+					"getCrmGroup", _getCrmGroupParameterTypes0);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmGroupId);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static contact.manager.model.CrmGroup deleteCrmGroup(
+		HttpPrincipal httpPrincipal, contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"deleteCrmGroup", _deleteCrmGroupParameterTypes1);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmGroup, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static contact.manager.model.CrmGroup deleteCrmGroup(
+		HttpPrincipal httpPrincipal, long crmGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"deleteCrmGroup", _deleteCrmGroupParameterTypes2);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmGroupId, serviceContext);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static contact.manager.model.CrmGroup addCrmGroup(
+		HttpPrincipal httpPrincipal, contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"addCrmGroup", _addCrmGroupParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, crmGroup);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static contact.manager.model.CrmGroup updateCrmGroup(
+		HttpPrincipal httpPrincipal, contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"updateCrmGroup", _updateCrmGroupParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, crmGroup);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmGroup)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static void setCrmGroupCrmContacts(HttpPrincipal httpPrincipal,
+		long crmGroupId, long[] crmContactIds) {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"setCrmGroupCrmContacts",
+					_setCrmGroupCrmContactsParameterTypes5);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmGroupId, crmContactIds);
+
+			try {
+				TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<contact.manager.model.CrmGroup> findAll(
+		HttpPrincipal httpPrincipal) {
+		try {
+			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
+					"findAll", _findAllParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey);
 
@@ -70,10 +253,6 @@ public class CrmGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -87,11 +266,10 @@ public class CrmGroupServiceHttp {
 	}
 
 	public static java.util.List<contact.manager.model.CrmGroup> findAll(
-		HttpPrincipal httpPrincipal, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, int start, int end) {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"findAll", _findAllParameterTypes1);
+					"findAll", _findAllParameterTypes7);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, start,
 					end);
@@ -102,10 +280,6 @@ public class CrmGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -120,11 +294,10 @@ public class CrmGroupServiceHttp {
 
 	public static java.util.List<contact.manager.model.CrmGroup> findAll(
 		HttpPrincipal httpPrincipal, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"findAll", _findAllParameterTypes2);
+					"findAll", _findAllParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, start,
 					end, orderByComparator);
@@ -135,10 +308,6 @@ public class CrmGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -151,14 +320,12 @@ public class CrmGroupServiceHttp {
 		}
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		HttpPrincipal httpPrincipal, long crmGroupId) {
+	public static int countAll(HttpPrincipal httpPrincipal) {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmContacts", _getCrmContactsParameterTypes3);
+					"countAll", _countAllParameterTypes9);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupId);
+			MethodHandler methodHandler = new MethodHandler(methodKey);
 
 			Object returnObj = null;
 
@@ -166,121 +333,6 @@ public class CrmGroupServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<contact.manager.model.CrmContact>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		HttpPrincipal httpPrincipal, long crmGroupId, int start, int end) {
-		try {
-			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmContacts", _getCrmContactsParameterTypes4);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupId, start, end);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<contact.manager.model.CrmContact>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		HttpPrincipal httpPrincipal, long crmGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		try {
-			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmContacts", _getCrmContactsParameterTypes5);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupId, start, end, orderByComparator);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<contact.manager.model.CrmContact>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static void setCrmContacts(HttpPrincipal httpPrincipal,
-		long crmGroupPk, long[] crmContactPks)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"setCrmContacts", _setCrmContactsParameterTypes6);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupPk, crmContactPks);
-
-			try {
-				TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static int getCrmContactsCount(HttpPrincipal httpPrincipal,
-		long crmGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmContactsCount", _getCrmContactsCountParameterTypes7);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupId);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -293,43 +345,11 @@ public class CrmGroupServiceHttp {
 		}
 	}
 
-	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
-		HttpPrincipal httpPrincipal, java.lang.String crmGroupName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		try {
-			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmGroupsByName", _getCrmGroupsByNameParameterTypes8);
-
-			MethodHandler methodHandler = new MethodHandler(methodKey,
-					crmGroupName);
-
-			Object returnObj = null;
-
-			try {
-				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
-			}
-			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
-				throw new com.liferay.portal.kernel.exception.SystemException(e);
-			}
-
-			return (java.util.List<contact.manager.model.CrmGroup>)returnObj;
-		}
-		catch (com.liferay.portal.kernel.exception.SystemException se) {
-			_log.error(se, se);
-
-			throw se;
-		}
-	}
-
-	public static contact.manager.model.CrmGroup getCrmGroup(
+	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
 		HttpPrincipal httpPrincipal, long crmGroupId) {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"getCrmGroup", _getCrmGroupParameterTypes9);
+					"getCrmContacts", _getCrmContactsParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					crmGroupId);
@@ -343,7 +363,7 @@ public class CrmGroupServiceHttp {
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
-			return (contact.manager.model.CrmGroup)returnObj;
+			return (java.util.List<contact.manager.model.CrmContact>)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException se) {
 			_log.error(se, se);
@@ -352,12 +372,14 @@ public class CrmGroupServiceHttp {
 		}
 	}
 
-	public static int countAll(HttpPrincipal httpPrincipal) {
+	public static int getCrmContactsSize(HttpPrincipal httpPrincipal,
+		long crmGroupId) {
 		try {
 			MethodKey methodKey = new MethodKey(CrmGroupServiceUtil.class,
-					"countAll", _countAllParameterTypes10);
+					"getCrmContactsSize", _getCrmContactsSizeParameterTypes11);
 
-			MethodHandler methodHandler = new MethodHandler(methodKey);
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmGroupId);
 
 			Object returnObj = null;
 
@@ -378,35 +400,38 @@ public class CrmGroupServiceHttp {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CrmGroupServiceHttp.class);
-	private static final Class<?>[] _findAllParameterTypes0 = new Class[] {  };
-	private static final Class<?>[] _findAllParameterTypes1 = new Class[] {
+	private static final Class<?>[] _getCrmGroupParameterTypes0 = new Class[] {
+			long.class
+		};
+	private static final Class<?>[] _deleteCrmGroupParameterTypes1 = new Class[] {
+			contact.manager.model.CrmGroup.class,
+			com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _deleteCrmGroupParameterTypes2 = new Class[] {
+			long.class, com.liferay.portal.kernel.service.ServiceContext.class
+		};
+	private static final Class<?>[] _addCrmGroupParameterTypes3 = new Class[] {
+			contact.manager.model.CrmGroup.class
+		};
+	private static final Class<?>[] _updateCrmGroupParameterTypes4 = new Class[] {
+			contact.manager.model.CrmGroup.class
+		};
+	private static final Class<?>[] _setCrmGroupCrmContactsParameterTypes5 = new Class[] {
+			long.class, long[].class
+		};
+	private static final Class<?>[] _findAllParameterTypes6 = new Class[] {  };
+	private static final Class<?>[] _findAllParameterTypes7 = new Class[] {
 			int.class, int.class
 		};
-	private static final Class<?>[] _findAllParameterTypes2 = new Class[] {
+	private static final Class<?>[] _findAllParameterTypes8 = new Class[] {
 			int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _getCrmContactsParameterTypes3 = new Class[] {
+	private static final Class<?>[] _countAllParameterTypes9 = new Class[] {  };
+	private static final Class<?>[] _getCrmContactsParameterTypes10 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCrmContactsParameterTypes4 = new Class[] {
-			long.class, int.class, int.class
-		};
-	private static final Class<?>[] _getCrmContactsParameterTypes5 = new Class[] {
-			long.class, int.class, int.class,
-			com.liferay.portal.kernel.util.OrderByComparator.class
-		};
-	private static final Class<?>[] _setCrmContactsParameterTypes6 = new Class[] {
-			long.class, long[].class
-		};
-	private static final Class<?>[] _getCrmContactsCountParameterTypes7 = new Class[] {
+	private static final Class<?>[] _getCrmContactsSizeParameterTypes11 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _getCrmGroupsByNameParameterTypes8 = new Class[] {
-			java.lang.String.class
-		};
-	private static final Class<?>[] _getCrmGroupParameterTypes9 = new Class[] {
-			long.class
-		};
-	private static final Class<?>[] _countAllParameterTypes10 = new Class[] {  };
 }

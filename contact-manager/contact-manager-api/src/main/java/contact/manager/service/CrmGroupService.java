@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.security.access.control.AccessControlled;
 import com.liferay.portal.kernel.service.BaseService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
@@ -56,13 +57,23 @@ public interface CrmGroupService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmGroupServiceUtil} to access the CRM Group remote service. Add custom service methods to {@link contact.manager.service.impl.CrmGroupServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CrmGroup addCrmGroup(CrmGroup crmGroup) throws PortalException;
+
+	public CrmGroup deleteCrmGroup(CrmGroup crmGroup,
+		ServiceContext serviceContext) throws PortalException;
+
+	public CrmGroup deleteCrmGroup(long crmGroupId,
+		ServiceContext serviceContext) throws PortalException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmGroup getCrmGroup(long crmGroupId);
+	public CrmGroup getCrmGroup(long crmGroupId) throws PortalException;
+
+	public CrmGroup updateCrmGroup(CrmGroup crmGroup) throws PortalException;
 
 	public int countAll();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmContactsCount(long crmGroupId) throws SystemException;
+	public int getCrmContactsSize(long crmGroupId);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -71,28 +82,15 @@ public interface CrmGroupService extends BaseService {
 	*/
 	public java.lang.String getOSGiServiceIdentifier();
 
-	public List<CrmGroup> findAll() throws SystemException;
+	public List<CrmGroup> findAll();
 
-	public List<CrmGroup> findAll(int start, int end) throws SystemException;
+	public List<CrmGroup> findAll(int start, int end);
 
 	public List<CrmGroup> findAll(int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator)
-		throws SystemException;
+		OrderByComparator<CrmGroup> orderByComparator);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContact> getCrmContacts(long crmGroupId);
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getCrmContacts(long crmGroupId, int start, int end,
-		OrderByComparator<CrmContact> orderByComparator);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmGroup> getCrmGroupsByName(java.lang.String crmGroupName)
-		throws SystemException;
-
-	public void setCrmContacts(long crmGroupPk, long[] crmContactPks)
-		throws SystemException;
+	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
 }

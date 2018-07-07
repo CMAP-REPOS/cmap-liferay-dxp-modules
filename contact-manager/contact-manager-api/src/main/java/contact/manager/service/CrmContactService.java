@@ -60,6 +60,9 @@ public interface CrmContactService extends BaseService {
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmContactServiceUtil} to access the CRM Contact remote service. Add custom service methods to {@link contact.manager.service.impl.CrmContactServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public CrmContact addCrmContact(CrmContact crmContact)
+		throws PortalException;
+
 	public CrmContact findByConstantContactId(long constantContactId)
 		throws NoSuchContactException, SystemException,
 			NoSuchCrmContactException;
@@ -67,6 +70,9 @@ public interface CrmContactService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public CrmContact getCrmContact(long crmContactId)
 		throws SystemException;
+
+	public CrmContact updateCrmContact(CrmContact crmContact)
+		throws PortalException;
 
 	public int countCrmContactsByStatus(java.lang.String status)
 		throws SystemException;
@@ -88,12 +94,15 @@ public interface CrmContactService extends BaseService {
 	public List<CrmContact> findByStatus(java.lang.String status)
 		throws SystemException;
 
-	public List<CrmContact> findByVipFlag(boolean isVip)
+	public List<CrmContact> findByStatus(java.lang.String status, int start,
+		int end) throws SystemException;
+
+	public List<CrmContact> findByStatus(java.lang.String status, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator)
 		throws SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmContact> getCrmContactsByStatus(java.lang.String status,
-		int start, int end, OrderByComparator obc) throws SystemException;
+	public List<CrmContact> findByVipFlag(boolean isVip)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmGroup> getCrmGroups(long contactId)

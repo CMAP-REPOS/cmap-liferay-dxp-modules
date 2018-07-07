@@ -15,7 +15,6 @@ public class ContactUtil {
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
 
-		// TODO: handle file uploads for photo
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
 		String userName = UserUtil.getUserName(userId);

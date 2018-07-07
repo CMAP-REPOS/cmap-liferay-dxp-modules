@@ -34,6 +34,7 @@ import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmContactAuditLogLocalService;
 import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmContactService;
 import contact.manager.service.CrmOutreachLogLocalService;
 
 /**
@@ -75,7 +76,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
-			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact);
+			CrmContact addedContact = _crmContactService.addCrmContact(crmContact);
 
 			if (addedContact != null) {
 				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
@@ -100,7 +101,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmContact originalContact = (CrmContact)crmContact.clone();
 
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, false);
-			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact);
+			CrmContact updatedContact = _crmContactService.updateCrmContact(crmContact);
 
 			if (updatedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
@@ -218,26 +219,27 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	@Reference
-	protected void setCrmContactService(CrmContactLocalService crmContactLocalService) {
-
+	protected void setCrmContactLocalService(CrmContactLocalService crmContactLocalService) {
 		_crmContactLocalService = crmContactLocalService;
 	}
 
-	private CrmContactLocalService _crmContactLocalService;
+	@Reference
+	protected void setCrmContactService(CrmContactService crmContactService) {
+		_crmContactService = crmContactService;
+	}
 
 	@Reference
 	protected void setCrmContactAuditLogService(CrmContactAuditLogLocalService crmContactAuditLogLocalService) {
-
 		_crmContactAuditLogLocalService = crmContactAuditLogLocalService;
 	}
 
-	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
-
 	@Reference
 	protected void setCrmOutreachLogService(CrmOutreachLogLocalService crmOutreachLogLocalService) {
-
 		_crmOutreachLogLocalService = crmOutreachLogLocalService;
 	}
 
+	private CrmContactLocalService _crmContactLocalService;
+	private CrmContactService _crmContactService;
+	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
 	private CrmOutreachLogLocalService _crmOutreachLogLocalService;
 }

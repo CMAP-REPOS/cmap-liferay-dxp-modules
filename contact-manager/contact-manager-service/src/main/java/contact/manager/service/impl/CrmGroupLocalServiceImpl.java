@@ -14,6 +14,15 @@
 
 package contact.manager.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.service.ServiceContext;
+
+import java.util.Date;
+import java.util.List;
+
+import contact.manager.model.CrmGroup;
 import contact.manager.service.base.CrmGroupLocalServiceBaseImpl;
 
 /**
@@ -42,4 +51,65 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 	 * contact.manager.service.CrmGroupLocalServiceUtil} to access the CRM Group
 	 * local service.
 	 */
+
+	public CrmGroup addCrmGroup(CrmGroup crmGroup, ServiceContext serviceContext) throws PortalException {
+
+		long crmGroupId = counterLocalService.increment(CrmGroup.class.getName());
+
+		crmGroup.setCrmGroupId(crmGroupId);
+		crmGroup.setCompanyId(serviceContext.getCompanyId());
+		crmGroup.setGroupId(serviceContext.getScopeGroupId());
+		crmGroup.setUserId(serviceContext.getUserId());
+
+		User user = getUserLocalService().fetchUser(serviceContext.getUserId());
+
+		if (user != null) {
+			crmGroup.setUserName(user.getScreenName());
+		}
+
+		crmGroup.setCreateDate(serviceContext.getCreateDate(new Date()));
+		crmGroup.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+
+		crmGroup = super.addCrmGroup(crmGroup);
+
+		return crmGroup;
+	}
+
+	public CrmGroup updateCrmGroup(CrmGroup crmGroup, ServiceContext serviceContext) {
+		
+		crmGroup.setCompanyId(serviceContext.getCompanyId());
+		crmGroup.setGroupId(serviceContext.getScopeGroupId());
+		crmGroup.setUserId(serviceContext.getUserId());
+
+		User user = getUserLocalService().fetchUser(serviceContext.getUserId());
+
+		if (user != null) {
+			crmGroup.setUserName(user.getScreenName());
+		}
+
+		crmGroup.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+		
+		crmGroup = super.updateCrmGroup(crmGroup);
+
+		return crmGroup;
+	}
+	
+	public CrmGroup deleteCrmGroup(CrmGroup crmGroup, ServiceContext serviceContext) {
+
+		crmGroup.setCompanyId(serviceContext.getCompanyId());
+		crmGroup.setGroupId(serviceContext.getScopeGroupId());
+		crmGroup.setUserId(serviceContext.getUserId());
+
+		User user = getUserLocalService().fetchUser(serviceContext.getUserId());
+
+		if (user != null) {
+			crmGroup.setUserName(user.getScreenName());
+		}
+
+		crmGroup.setModifiedDate(serviceContext.getModifiedDate(new Date()));
+
+		crmGroup = super.deleteCrmGroup(crmGroup);
+
+		return crmGroup;
+	}
 }

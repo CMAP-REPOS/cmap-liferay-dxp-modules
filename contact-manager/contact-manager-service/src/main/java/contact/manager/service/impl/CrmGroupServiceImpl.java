@@ -14,7 +14,8 @@
 
 package contact.manager.service.impl;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -50,4 +51,52 @@ public class CrmGroupServiceImpl extends CrmGroupServiceBaseImpl {
 	 * remote service.
 	 */
 
+	public CrmGroup getCrmGroup(long crmGroupId) throws PortalException {
+		return crmGroupLocalService.getCrmGroup(crmGroupId);
+	}
+
+	public CrmGroup deleteCrmGroup(CrmGroup crmGroup, ServiceContext serviceContext) throws PortalException {
+		return crmGroupLocalService.deleteCrmGroup(crmGroup);
+	}
+
+	public CrmGroup deleteCrmGroup(long crmGroupId, ServiceContext serviceContext) throws PortalException {
+		CrmGroup crmGroup = crmGroupLocalService.getCrmGroup(crmGroupId);
+		return crmGroupLocalService.deleteCrmGroup(crmGroup);
+	}
+
+	public CrmGroup addCrmGroup(CrmGroup crmGroup) throws PortalException {
+		return crmGroupLocalService.addCrmGroup(crmGroup);
+	}
+
+	public CrmGroup updateCrmGroup(CrmGroup crmGroup) throws PortalException {
+		return crmGroupLocalService.updateCrmGroup(crmGroup);
+	}
+
+	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
+		crmContactLocalService.setCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public List<CrmGroup> findAll() {
+		return crmGroupPersistence.findAll();
+	}
+
+	public List<CrmGroup> findAll(int start, int end) {
+		return crmGroupPersistence.findAll(start, end);
+	}
+
+	public List<CrmGroup> findAll(int start, int end, OrderByComparator<CrmGroup> orderByComparator) {
+		return crmGroupPersistence.findAll(start, end, orderByComparator);
+	}
+
+	public int countAll() {
+		return crmGroupPersistence.countAll();
+	}
+
+	public List<CrmContact> getCrmContacts(long crmGroupId) {
+		return crmGroupPersistence.getCrmContacts(crmGroupId);
+	}
+
+	public int getCrmContactsSize(long crmGroupId) {
+		return crmGroupPersistence.getCrmContactsSize(crmGroupId);
+	}
 }

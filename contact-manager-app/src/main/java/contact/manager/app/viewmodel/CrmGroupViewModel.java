@@ -22,7 +22,7 @@ public class CrmGroupViewModel {
 		this.createDate = DateUtil.Format(crmGroup.getCreateDate());
 		this.modifiedDate = DateUtil.Format(crmGroup.getModifiedDate());
 		this.name = crmGroup.getName();
-		this.crmContactsCount = CrmGroupServiceUtil.getCrmContactsCount(crmGroup.getCrmGroupId());
+		this.crmContactsCount = 0;
 	}
 
 	public CrmGroupViewModel(long crmGroupId, long groupId, long companyId, long userId, String userName,

@@ -3,10 +3,13 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -16,10 +19,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
-import contact.manager.app.util.GroupUtil;
+import contact.manager.app.util.PermissionUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.service.CrmGroupLocalService;
+import contact.manager.service.CrmGroupService;
 
 /**
  * @author jon
@@ -51,14 +55,26 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 	private static final Log LOGGER = LogFactoryUtil.getLog(GroupManagerAppPortlet.class);
 
 	public void add(ActionRequest request, ActionResponse response) throws PortalException {
-
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddGroup(user)) {
+			// TODO: set session message
+			return;
+		}
+		
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-
 			CrmGroup crmGroup = _crmGroupLocalService.createCrmGroup(0);
-			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, true);
+			
+			String name = ParamUtil.getString(request, "name");
+			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
+		
+			crmGroup.setName(name);
+			
+			_crmGroupService.setCrmGroupCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+			_crmGroupService.addCrmGroup(crmGroup);
 
-			_crmGroupLocalService.addCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroup.getCrmGroupId()));
 			response.setRenderParameter("mvcPath", "/groups/details.jsp");
 
@@ -69,14 +85,27 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 	public void update(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateGroup(user)) {
+			// TODO: set session message
+			return;
+		}
+		
 		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+			String name = ParamUtil.getString(request, "name");
+			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
 
-			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
-			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
+			CrmGroup crmGroup = _crmGroupService.getCrmGroup(crmGroupId);
 
-			_crmGroupLocalService.updateCrmGroup(crmGroup);
+			crmGroup.setName(name);
+			System.out.println(crmGroup.getName());
+
+			_crmGroupService.setCrmGroupCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+			_crmGroupService.updateCrmGroup(crmGroup);
+
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
 			response.setRenderParameter("mvcPath", "/groups/details.jsp");
 
@@ -86,9 +115,15 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 	}
 
 	@Reference(unbind = "-")
-	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
-		_crmGroupLocalService = crmGroupLocalService;
+	protected void setCrmGroupService(CrmGroupService crmGroupService ) {
+		_crmGroupService  = crmGroupService;
 	}
 
+	@Reference(unbind = "-")
+	protected void setCrmGroupLocalService(CrmGroupLocalService crmGroupLocalService ) {
+		_crmGroupLocalService  = crmGroupLocalService;
+	}
+
+	private CrmGroupService _crmGroupService;
 	private CrmGroupLocalService _crmGroupLocalService;
 }

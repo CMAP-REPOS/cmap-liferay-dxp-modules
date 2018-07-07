@@ -32,6 +32,8 @@
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 		orderByComparator = new CrmGroupModifiedDateComparator(orderByAsc);
 	}
+
+	long groupId = themeDisplay.getScopeGroupId();
 %>
 
 <portlet:renderURL var="addGroupURL">
@@ -40,12 +42,14 @@
 </portlet:renderURL>
 
 <div class="container-fluid">
+	<% if (PermissionUtil.canUserAddGroup(currentUser)) { %>
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>
 			<aui:button onClick="<%= addGroupURL.toString() %>" value="Add Group"></aui:button>
 		</aui:col>
 	</aui:row>
+	<% } %>
 	<aui:row>
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
@@ -55,13 +59,12 @@
 				<liferay-ui:search-container-results>
 					<%
 						List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
-						List<CrmGroup> crmGroups = CrmGroupServiceUtil.findAll(
-								crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
-								orderByComparator);
-						for (CrmGroup crmGroup : crmGroups) {
-							viewModels.add(new CrmGroupViewModel(crmGroup));
-						}
-						pageContext.setAttribute("results", viewModels);
+										List<CrmGroup> crmGroups = CrmGroupServiceUtil.findAll(crmGroupsSearchContainer.getStart(),
+												crmGroupsSearchContainer.getEnd(), orderByComparator);
+										for (CrmGroup crmGroup : crmGroups) {
+											viewModels.add(new CrmGroupViewModel(crmGroup));
+										}
+										pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row

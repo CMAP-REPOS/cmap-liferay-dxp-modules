@@ -41,17 +41,43 @@ public class CrmGroupServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmGroupServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static contact.manager.model.CrmGroup getCrmGroup(long crmGroupId) {
+	public static contact.manager.model.CrmGroup addCrmGroup(
+		contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCrmGroup(crmGroup);
+	}
+
+	public static contact.manager.model.CrmGroup deleteCrmGroup(
+		contact.manager.model.CrmGroup crmGroup,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCrmGroup(crmGroup, serviceContext);
+	}
+
+	public static contact.manager.model.CrmGroup deleteCrmGroup(
+		long crmGroupId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCrmGroup(crmGroupId, serviceContext);
+	}
+
+	public static contact.manager.model.CrmGroup getCrmGroup(long crmGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCrmGroup(crmGroupId);
+	}
+
+	public static contact.manager.model.CrmGroup updateCrmGroup(
+		contact.manager.model.CrmGroup crmGroup)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCrmGroup(crmGroup);
 	}
 
 	public static int countAll() {
 		return getService().countAll();
 	}
 
-	public static int getCrmContactsCount(long crmGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmContactsCount(crmGroupId);
+	public static int getCrmContactsSize(long crmGroupId) {
+		return getService().getCrmContactsSize(crmGroupId);
 	}
 
 	/**
@@ -63,21 +89,18 @@ public class CrmGroupServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static java.util.List<contact.manager.model.CrmGroup> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<contact.manager.model.CrmGroup> findAll() {
 		return getService().findAll();
 	}
 
 	public static java.util.List<contact.manager.model.CrmGroup> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		int start, int end) {
 		return getService().findAll(start, end);
 	}
 
 	public static java.util.List<contact.manager.model.CrmGroup> findAll(
 		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
 		return getService().findAll(start, end, orderByComparator);
 	}
 
@@ -86,27 +109,9 @@ public class CrmGroupServiceUtil {
 		return getService().getCrmContacts(crmGroupId);
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end) {
-		return getService().getCrmContacts(crmGroupId, start, end);
-	}
-
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		return getService()
-				   .getCrmContacts(crmGroupId, start, end, orderByComparator);
-	}
-
-	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
-		java.lang.String crmGroupName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmGroupsByName(crmGroupName);
-	}
-
-	public static void setCrmContacts(long crmGroupPk, long[] crmContactPks)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getService().setCrmContacts(crmGroupPk, crmContactPks);
+	public static void setCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().setCrmGroupCrmContacts(crmGroupId, crmContactIds);
 	}
 
 	public static CrmGroupService getService() {

@@ -90,13 +90,14 @@
 </portlet:renderURL>
 
 <div class="container-fluid">
+	<% if (PermissionUtil.canUserAddContact(currentUser)) { %>
 	<aui:row>
 		<aui:col md="12">
-			<%-- TODO: check role --%>
 			<aui:button onClick="<%= addContactURL.toString() %>"
 				value="Add Contact"></aui:button>
 		</aui:col>
 	</aui:row>
+	<% } %>
 	<aui:row>
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"

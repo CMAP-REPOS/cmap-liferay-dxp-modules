@@ -109,6 +109,38 @@ public class CrmContactServiceSoap {
 		}
 	}
 
+	public static contact.manager.model.CrmContactSoap addCrmContact(
+		contact.manager.model.CrmContactSoap crmContact)
+		throws RemoteException {
+		try {
+			contact.manager.model.CrmContact returnValue = CrmContactServiceUtil.addCrmContact(contact.manager.model.impl.CrmContactModelImpl.toModel(
+						crmContact));
+
+			return contact.manager.model.CrmContactSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmContactSoap updateCrmContact(
+		contact.manager.model.CrmContactSoap crmContact)
+		throws RemoteException {
+		try {
+			contact.manager.model.CrmContact returnValue = CrmContactServiceUtil.updateCrmContact(contact.manager.model.impl.CrmContactModelImpl.toModel(
+						crmContact));
+
+			return contact.manager.model.CrmContactSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static contact.manager.model.CrmContactSoap[] findByStatus(
 		java.lang.String status) throws RemoteException {
 		try {
@@ -123,13 +155,28 @@ public class CrmContactServiceSoap {
 		}
 	}
 
-	public static contact.manager.model.CrmContactSoap[] getCrmContactsByStatus(
+	public static contact.manager.model.CrmContactSoap[] findByStatus(
+		java.lang.String status, int start, int end) throws RemoteException {
+		try {
+			java.util.List<contact.manager.model.CrmContact> returnValue = CrmContactServiceUtil.findByStatus(status,
+					start, end);
+
+			return contact.manager.model.CrmContactSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static contact.manager.model.CrmContactSoap[] findByStatus(
 		java.lang.String status, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator)
 		throws RemoteException {
 		try {
-			java.util.List<contact.manager.model.CrmContact> returnValue = CrmContactServiceUtil.getCrmContactsByStatus(status,
-					start, end, obc);
+			java.util.List<contact.manager.model.CrmContact> returnValue = CrmContactServiceUtil.findByStatus(status,
+					start, end, orderByComparator);
 
 			return contact.manager.model.CrmContactSoap.toSoapModels(returnValue);
 		}

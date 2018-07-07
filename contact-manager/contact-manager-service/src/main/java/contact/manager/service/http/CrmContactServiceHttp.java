@@ -165,12 +165,76 @@ public class CrmContactServiceHttp {
 		}
 	}
 
+	public static contact.manager.model.CrmContact addCrmContact(
+		HttpPrincipal httpPrincipal, contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
+					"addCrmContact", _addCrmContactParameterTypes3);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmContact);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmContact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static contact.manager.model.CrmContact updateCrmContact(
+		HttpPrincipal httpPrincipal, contact.manager.model.CrmContact crmContact)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
+					"updateCrmContact", _updateCrmContactParameterTypes4);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey,
+					crmContact);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
+					throw (com.liferay.portal.kernel.exception.PortalException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (contact.manager.model.CrmContact)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
 	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
 		HttpPrincipal httpPrincipal, java.lang.String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"findByStatus", _findByStatusParameterTypes3);
+					"findByStatus", _findByStatusParameterTypes5);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, status);
 
@@ -196,17 +260,49 @@ public class CrmContactServiceHttp {
 		}
 	}
 
-	public static java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
-		HttpPrincipal httpPrincipal, java.lang.String status, int start,
-		int end, com.liferay.portal.kernel.util.OrderByComparator obc)
+	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
+		HttpPrincipal httpPrincipal, java.lang.String status, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"getCrmContactsByStatus",
-					_getCrmContactsByStatusParameterTypes4);
+					"findByStatus", _findByStatusParameterTypes6);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, status,
-					start, end, obc);
+					start, end);
+
+			Object returnObj = null;
+
+			try {
+				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
+			}
+			catch (Exception e) {
+				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
+					throw (com.liferay.portal.kernel.exception.SystemException)e;
+				}
+
+				throw new com.liferay.portal.kernel.exception.SystemException(e);
+			}
+
+			return (java.util.List<contact.manager.model.CrmContact>)returnObj;
+		}
+		catch (com.liferay.portal.kernel.exception.SystemException se) {
+			_log.error(se, se);
+
+			throw se;
+		}
+	}
+
+	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
+		HttpPrincipal httpPrincipal, java.lang.String status, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
+					"findByStatus", _findByStatusParameterTypes7);
+
+			MethodHandler methodHandler = new MethodHandler(methodKey, status,
+					start, end, orderByComparator);
 
 			Object returnObj = null;
 
@@ -236,7 +332,7 @@ public class CrmContactServiceHttp {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
 					"countCrmContactsByStatus",
-					_countCrmContactsByStatusParameterTypes5);
+					_countCrmContactsByStatusParameterTypes8);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, status);
 
@@ -267,7 +363,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"getCrmContact", _getCrmContactParameterTypes6);
+					"getCrmContact", _getCrmContactParameterTypes9);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					crmContactId);
@@ -299,7 +395,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"findByVipFlag", _findByVipFlagParameterTypes7);
+					"findByVipFlag", _findByVipFlagParameterTypes10);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, isVip);
 
@@ -330,7 +426,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"getCrmTags", _getCrmTagsParameterTypes8);
+					"getCrmTags", _getCrmTagsParameterTypes11);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, contactId);
 
@@ -361,7 +457,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"setCrmTags", _setCrmTagsParameterTypes9);
+					"setCrmTags", _setCrmTagsParameterTypes12);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					contactId, tagIds);
@@ -389,7 +485,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"getCrmGroups", _getCrmGroupsParameterTypes10);
+					"getCrmGroups", _getCrmGroupsParameterTypes13);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey, contactId);
 
@@ -420,7 +516,7 @@ public class CrmContactServiceHttp {
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			MethodKey methodKey = new MethodKey(CrmContactServiceUtil.class,
-					"setCrmGroups", _setCrmGroupsParameterTypes11);
+					"setCrmGroups", _setCrmGroupsParameterTypes14);
 
 			MethodHandler methodHandler = new MethodHandler(methodKey,
 					contactId, groupIds);
@@ -452,32 +548,41 @@ public class CrmContactServiceHttp {
 		};
 	private static final Class<?>[] _findByPrimaryEmailAddressAndStatusParameterTypes2 =
 		new Class[] { java.lang.String.class, java.lang.String.class };
-	private static final Class<?>[] _findByStatusParameterTypes3 = new Class[] {
+	private static final Class<?>[] _addCrmContactParameterTypes3 = new Class[] {
+			contact.manager.model.CrmContact.class
+		};
+	private static final Class<?>[] _updateCrmContactParameterTypes4 = new Class[] {
+			contact.manager.model.CrmContact.class
+		};
+	private static final Class<?>[] _findByStatusParameterTypes5 = new Class[] {
 			java.lang.String.class
 		};
-	private static final Class<?>[] _getCrmContactsByStatusParameterTypes4 = new Class[] {
+	private static final Class<?>[] _findByStatusParameterTypes6 = new Class[] {
+			java.lang.String.class, int.class, int.class
+		};
+	private static final Class<?>[] _findByStatusParameterTypes7 = new Class[] {
 			java.lang.String.class, int.class, int.class,
 			com.liferay.portal.kernel.util.OrderByComparator.class
 		};
-	private static final Class<?>[] _countCrmContactsByStatusParameterTypes5 = new Class[] {
+	private static final Class<?>[] _countCrmContactsByStatusParameterTypes8 = new Class[] {
 			java.lang.String.class
 		};
-	private static final Class<?>[] _getCrmContactParameterTypes6 = new Class[] {
+	private static final Class<?>[] _getCrmContactParameterTypes9 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _findByVipFlagParameterTypes7 = new Class[] {
+	private static final Class<?>[] _findByVipFlagParameterTypes10 = new Class[] {
 			boolean.class
 		};
-	private static final Class<?>[] _getCrmTagsParameterTypes8 = new Class[] {
+	private static final Class<?>[] _getCrmTagsParameterTypes11 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _setCrmTagsParameterTypes9 = new Class[] {
+	private static final Class<?>[] _setCrmTagsParameterTypes12 = new Class[] {
 			long.class, long[].class
 		};
-	private static final Class<?>[] _getCrmGroupsParameterTypes10 = new Class[] {
+	private static final Class<?>[] _getCrmGroupsParameterTypes13 = new Class[] {
 			long.class
 		};
-	private static final Class<?>[] _setCrmGroupsParameterTypes11 = new Class[] {
+	private static final Class<?>[] _setCrmGroupsParameterTypes14 = new Class[] {
 			long.class, long[].class
 		};
 }
