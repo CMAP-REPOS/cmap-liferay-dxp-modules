@@ -46,8 +46,23 @@
 			? ("Notes " + crmContact.getFirstName() + " " + crmContact.getLastName()) : "Notes");
 %>
 
+<portlet:renderURL var="addNoteURL">
+	<portlet:param name="mvcPath" value="/notes/edit.jsp"></portlet:param>
+	<portlet:param name="redirect" value="<%=currentURL%>" />
+	<portlet:param name="crmContactId"
+		value="<%=String.valueOf(crmContactId)%>" />
+</portlet:renderURL>
+
 <div class="container-fluid">
 	<%@ include file="nav.jsp"%>
+	<% if (PermissionUtil.canUserAddNote(currentUser)) { %>
+	<aui:row>
+		<aui:col md="12">
+			<aui:button onClick="<%= addNoteURL.toString() %>"
+				value="Add Note"></aui:button>
+		</aui:col>
+	</aui:row>
+	<% } %>
 	<aui:row>
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"

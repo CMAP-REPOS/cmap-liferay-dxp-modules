@@ -3,10 +3,13 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.util.Date;
@@ -26,14 +29,18 @@ import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
 import contact.manager.app.util.ContactUtil;
+import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
+import contact.manager.app.util.PermissionUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
+import contact.manager.model.CrmNote;
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmContactAuditLogLocalService;
 import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmNoteLocalService;
 import contact.manager.service.CrmOutreachLogLocalService;
 
 /**
@@ -70,6 +77,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddContact(user)) {
+			// TODO: set session message
+			return;
+		}
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 
@@ -83,7 +98,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			}
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
-			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
+			response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.addContact: " + e.getMessage());
@@ -91,7 +106,15 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void updateContact(ActionRequest request, ActionResponse response) throws PortalException {
-
+		
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateContact(user)) {
+			// TODO: set session message
+			return;
+		}
+		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
@@ -118,6 +141,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserDeleteContact(user)) {
+			// TODO: set session message
+			return;
+		}		
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
@@ -143,7 +174,85 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		}
 	}
 
+	public void addNote(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddNote(user)) {
+			// TODO: set session message
+			return;
+		}		
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
+			long crmContactId = ParamUtil.getLong(request, "crmContactId");
+
+			CrmNote crmNote = _crmNoteLocalService.createCrmNote(0);
+			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, true);
+			_crmNoteLocalService.addCrmNote(crmNote);
+
+			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
+			response.setRenderParameter("mvcPath", "/notes/view.jsp");
+
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.addNote: " + e.getMessage());
+		}
+	}
+
+	public void updateNote(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateNote(user)) {
+			// TODO: set session message
+			return;
+		}		
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
+			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
+
+			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
+			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, false);
+			_crmNoteLocalService.updateCrmNote(crmNote);
+
+			response.setRenderParameter("crmContactId", String.valueOf(crmNote.getCrmContactId()));
+			response.setRenderParameter("mvcPath", "/notes/view.jsp");
+
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.updateNote: " + e.getMessage());
+		}
+	}
+
+	public void deleteNote(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserDeleteNote(user)) {
+			// TODO: set session message
+			return;
+		}		
+
+		try {
+			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
+			_crmNoteLocalService.deleteCrmNote(crmNoteId);
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.deleteNote: " + e.getMessage());
+		}
+	}
+
 	public void addOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddOutreach(user)) {
+			// TODO: set session message
+			return;
+		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -164,12 +273,20 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void updateOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateOutreach(user)) {
+			// TODO: set session message
+			return;
+		}
+
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 
-			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);			
 			OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext, true);
 			_crmOutreachLogLocalService.updateCrmOutreachLog(crmOutreachLog);
 
@@ -183,14 +300,22 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserDeleteOutreach(user)) {
+			// TODO: set session message
+			return;
+		}
+		
 		try {
 			long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");
 			_crmOutreachLogLocalService.deleteCrmOutreachLog(crmOutreachLogId);
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteOutreachLog: " + e.getMessage());
 		}
-	}
-
+	}	
+	
 	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action) {
 
 		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
@@ -219,25 +344,26 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	@Reference
 	protected void setCrmContactService(CrmContactLocalService crmContactLocalService) {
-
 		_crmContactLocalService = crmContactLocalService;
 	}
 
-	private CrmContactLocalService _crmContactLocalService;
-
 	@Reference
 	protected void setCrmContactAuditLogService(CrmContactAuditLogLocalService crmContactAuditLogLocalService) {
-
 		_crmContactAuditLogLocalService = crmContactAuditLogLocalService;
 	}
 
-	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
-
 	@Reference
 	protected void setCrmOutreachLogService(CrmOutreachLogLocalService crmOutreachLogLocalService) {
-
 		_crmOutreachLogLocalService = crmOutreachLogLocalService;
 	}
 
+	@Reference
+	protected void setCrmNoteService(CrmNoteLocalService crmNoteLocalService) {
+		_crmNoteLocalService = crmNoteLocalService;
+	}
+
+	private CrmContactLocalService _crmContactLocalService;
+	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
 	private CrmOutreachLogLocalService _crmOutreachLogLocalService;
+	private CrmNoteLocalService _crmNoteLocalService;
 }

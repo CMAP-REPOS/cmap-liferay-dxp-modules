@@ -33,6 +33,7 @@ public class ContactManagerAppPortletKeys {
 	public static final long MEDIA_CONTACTS_SUBGROUP_ID = 92;
 	public static final long WEEKLY_EMAIL_SUBGROUP_ID = 100;
 
+	public static final String ROLE_LR_ADMINISTRATOR = "Administrator";
 	public static final String ROLE_ADMINISTRATOR = "Contact Administrator";
 	public static final String ROLE_MANAGER = "Contact Manager";
 	public static final String ROLE_USER = "Contact User";

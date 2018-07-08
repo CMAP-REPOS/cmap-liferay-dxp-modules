@@ -61,6 +61,7 @@
 
 <div class="container-fluid">
 	<%@ include file="nav.jsp"%>
+	<% if (PermissionUtil.canUserAddOutreach(currentUser)) { %>
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>
@@ -68,6 +69,7 @@
 				value="Add Outreach Log"></aui:button>
 		</aui:col>
 	</aui:row>
+	<% } %>
 	<aui:row>
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
@@ -78,10 +80,10 @@
 				<liferay-ui:search-container-results>
 					<%
 						List<CrmOutreachLog> crmOutreachLogs = CrmOutreachLogLocalServiceUtil.findByCrmContactId(
-												crmContactId, crmOutreachLogSearchContainer.getStart(),
-												crmOutreachLogSearchContainer.getEnd(), orderByComparator);
+								crmContactId, crmOutreachLogSearchContainer.getStart(),
+								crmOutreachLogSearchContainer.getEnd(), orderByComparator);
 
-										pageContext.setAttribute("results", crmOutreachLogs);
+						pageContext.setAttribute("results", crmOutreachLogs);
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row

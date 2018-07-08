@@ -40,12 +40,17 @@
 </portlet:renderURL>
 
 <div class="container-fluid">
+	<%
+		if (PermissionUtil.canUserAddGroup(currentUser)) {
+	%>
 	<aui:row>
 		<aui:col md="12">
-			<%-- TODO: check role --%>
 			<aui:button onClick="<%= addGroupURL.toString() %>" value="Add Group"></aui:button>
 		</aui:col>
 	</aui:row>
+	<%
+		}
+	%>
 	<aui:row>
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"

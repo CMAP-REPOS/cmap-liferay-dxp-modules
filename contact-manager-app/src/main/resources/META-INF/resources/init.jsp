@@ -11,6 +11,7 @@
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchEntry"%>
 
 <%@ page import="com.liferay.portal.kernel.model.PersistedModel"%>
+<%@ page import="com.liferay.portal.kernel.model.User" %>
 
 <%@ page import="com.liferay.portal.kernel.security.permission.ActionKeys" %>
 
@@ -21,16 +22,16 @@
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
-<%@ page import="com.liferay.portal.kernel.util.WebKeys"%>
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
 <%@ page import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
 <%@ page import="contact.manager.app.constants.CrmContactAuditLogKeys" %>
 <%@ page import="contact.manager.app.constants.CrmContactFieldKeys"%>
-<%@page import="contact.manager.app.constants.CrmNoteKeys"%>
+<%@ page import="contact.manager.app.constants.CrmNoteKeys"%>
 <%@ page import="contact.manager.app.constants.CrmOutreachLogKeys" %>
 
 <%@ page import="contact.manager.app.util.GroupUtil" %>
+<%@ page import="contact.manager.app.util.PermissionUtil"%>
 
 <%@ page import="contact.manager.app.viewmodel.CrmContactViewModel" %>
 <%@ page import="contact.manager.app.viewmodel.CrmGroupViewModel"%>
@@ -72,4 +73,5 @@
 
 <%
 	String currentURL = PortalUtil.getCurrentURL(request);
+	User currentUser =  PortalUtil.getUser(request);
 %>
