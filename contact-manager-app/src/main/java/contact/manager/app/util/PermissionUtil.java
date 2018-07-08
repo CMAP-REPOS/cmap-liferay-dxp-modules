@@ -5,8 +5,6 @@ import com.liferay.portal.kernel.model.User;
 
 import java.util.List;
 
-import javax.portlet.PortletRequest;
-
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 
 public class PermissionUtil {

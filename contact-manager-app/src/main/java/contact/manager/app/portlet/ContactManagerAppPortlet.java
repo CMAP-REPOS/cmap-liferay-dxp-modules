@@ -3,10 +3,13 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.util.Date;
@@ -27,6 +30,7 @@ import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
 import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.OutreachLogUtil;
+import contact.manager.app.util.PermissionUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
 import contact.manager.model.CrmContact;
@@ -71,6 +75,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddContact(user)) {
+			// TODO: set session message
+			return;
+		}		
+		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 
@@ -92,6 +104,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void updateContact(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateContact(user)) {
+			// TODO: set session message
+			return;
+		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
@@ -118,6 +138,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserDeleteContact(user)) {
+			// TODO: set session message
+			return;
+		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
@@ -146,6 +174,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void addOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserAddOutreach(user)) {
+			// TODO: set session message
+			return;
+		}		
+		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
@@ -164,6 +200,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void updateOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserUpdateOutreach(user)) {
+			// TODO: set session message
+			return;
+		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -184,6 +228,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteOutreachLog(ActionRequest request, ActionResponse response) throws PortalException {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+		User user = themeDisplay.getUser();
+		
+		if (!PermissionUtil.canUserDeleteOutreach(user)) {
+			// TODO: set session message
+			return;
+		}		
+		
 		try {
 			long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");
 			_crmOutreachLogLocalService.deleteCrmOutreachLog(crmOutreachLogId);

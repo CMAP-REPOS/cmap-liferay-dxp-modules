@@ -5,8 +5,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.service.ServiceContext;
-import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -20,7 +18,6 @@ import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.PermissionUtil;
-import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.service.CrmGroupLocalService;
 import contact.manager.service.CrmGroupService;
