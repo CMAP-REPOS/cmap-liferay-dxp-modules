@@ -73,8 +73,25 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("contentsCss", contentsCss);
 		jsonObject.put("emailProtection", "encode");
 		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,endnotes");
+		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;div");
+		jsonObject.put("format_p", "p;h1;h2;h3;h4;h5;h6;div");
+
+		try{
+			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'huge-headline' } }"));
+			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'page-headline' } }"));
+			jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'section-headline' } }"));
+			jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline' } }"));
+			jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline' } }"));
+			jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline' } }"));
+			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
+
+		} catch( Exception e ){
+			logger.error(e.getMessage());
+
+		}
+
 		jsonObject.put("grayt_autoStartup", true);
-		jsonObject.put("height", 420);
+		jsonObject.put("height", 320);
 		jsonObject.put("notification_duration", 0);
 		jsonObject.put("language_list", JSONFactoryUtil.createJSONArray());
 		jsonObject.put("removeButtons", "Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Font,FontSize");
