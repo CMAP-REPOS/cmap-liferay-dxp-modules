@@ -1,5 +1,4 @@
-CKEDITOR.dtd.$editable['abbr'] = 1;
-CKEDITOR.dtd.$editable['svg'] = 1;
+console.log('search for endnotes plugin', CKEDITOR.plugins.get('endnotes'));
 
 if(CKEDITOR.plugins.get('endnotes')){
 	// ignore if the plugin is already registered 
