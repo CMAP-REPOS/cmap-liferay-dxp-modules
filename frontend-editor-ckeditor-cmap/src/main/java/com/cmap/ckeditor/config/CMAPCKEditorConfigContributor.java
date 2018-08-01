@@ -74,13 +74,13 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("format_p", "p;h1;h2;h3;h4;h5;h6;div");
 
 		try{
-			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'huge-headline' } }"));
-			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'page-headline' } }"));
-			jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'section-headline' } }"));
-			jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline' } }"));
-			jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline' } }"));
-			jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline' } }"));
-			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
+			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'huge-headline bold' } }"));
+			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'page-headline bold' } }"));
+			jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'section-headline bold' } }"));
+			jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline bold' } }"));
+			jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline bold' } }"));
+			jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline bold' } }"));
+			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal bold' } }"));
 
 		} catch( Exception e ){
 			logger.error(e.getMessage());
