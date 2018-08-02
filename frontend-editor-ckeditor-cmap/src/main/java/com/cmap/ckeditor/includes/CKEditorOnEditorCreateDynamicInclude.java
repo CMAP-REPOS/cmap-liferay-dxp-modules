@@ -48,12 +48,16 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL editor_templates = bundle.getEntry("/META-INF/resources/ckeditor/templates.js");
 		URL endnotes_plugin = bundle.getEntry("/META-INF/resources/plugins/endnotes/plugin.js");
 		URL endnotes_dialog = bundle.getEntry("/META-INF/resources/plugins/endnotes/dialogs/endnotes.js");
+		URL actions_plugin = bundle.getEntry("/META-INF/resources/plugins/actions/plugin.js");
+		URL advertisement_plugin = bundle.getEntry("/META-INF/resources/plugins/advertisement/plugin.js");
 
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_styles.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_templates.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(endnotes_plugin.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(endnotes_dialog.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(actions_plugin.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(advertisement_plugin.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override

@@ -34,7 +34,8 @@ import java.util.*;
 
 @Component(
   property = {
-   	"editor.name=ckeditor"
+		 "editor.name=ckeditor",
+		 "service.ranking:Integer=100"
   },
 
   // https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/editor/configuration/EditorConfigContributor.html
@@ -69,7 +70,7 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("contentsCss", contentsCss);
 		jsonObject.put("emailProtection", "encode");
-		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,endnotes");
+		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,actions");
 		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;div");
 		jsonObject.put("format_p", "p;h1;h2;h3;h4;h5;h6;div");
 

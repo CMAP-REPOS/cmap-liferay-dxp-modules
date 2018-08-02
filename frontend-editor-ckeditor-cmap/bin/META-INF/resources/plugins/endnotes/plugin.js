@@ -4,6 +4,7 @@ CKEDITOR.dtd.$editable['svg'] = 1;
 if(CKEDITOR.plugins.get('endnotes')){
 	// ignore if the plugin is already registered 
 } else {
+
 	CKEDITOR.plugins.add( 'endnotes', {
 		icons: 'endnotes',
 		requires: 'widget',
