@@ -50,6 +50,7 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL endnotes_dialog = bundle.getEntry("/META-INF/resources/plugins/endnotes/dialogs/endnotes.js");
 		URL actions_plugin = bundle.getEntry("/META-INF/resources/plugins/actions/plugin.js");
 		URL advertisement_plugin = bundle.getEntry("/META-INF/resources/plugins/advertisement/plugin.js");
+		URL page_cards_plugin = bundle.getEntry("/META-INF/resources/plugins/page-cards/plugin.js");
 
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_styles.openStream(), response.getOutputStream(), false);
@@ -58,6 +59,7 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		StreamUtil.transfer(endnotes_dialog.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(actions_plugin.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(advertisement_plugin.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(page_cards_plugin.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override

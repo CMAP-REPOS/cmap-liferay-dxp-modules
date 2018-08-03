@@ -5,7 +5,6 @@ if(CKEDITOR.plugins.get('actions')){
   CKEDITOR.plugins.add( 'actions', {
     requires: 'widget',
     init: function( editor ) {
-      console.log(editor);
 
       editor.ui.addButton( 'Actions', {
         label: 'Add new action item',

@@ -2,10 +2,11 @@
 if(CKEDITOR.plugins.get('advertisement')){
 	// ignore if the plugin is already registered 
 } else {
+  CKEDITOR.dialog.add( 'advertisement', '/o/custom-ckeditor/plugins/advertisement/dialogs/advertisement.js' );
+
   CKEDITOR.plugins.add( 'advertisement', {
     requires: 'widget',
     init: function( editor ) {
-      console.log(editor);
 
       editor.ui.addButton( 'Advertisement', {
         label: 'Add a new advertisement',
@@ -17,7 +18,7 @@ if(CKEDITOR.plugins.get('advertisement')){
 
       // https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_plugins_widget_definition.html
       editor.widgets.add( 'advertisement', {
-
+        dialog: 'advertisement',
         template: '<div class="advertisement">'+
           '<div class="row">'+
             '<div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16">'+
@@ -50,6 +51,34 @@ if(CKEDITOR.plugins.get('advertisement')){
 
         upcast: function( element ) {
           return element.name == 'div' && element.hasClass( 'advertisement' );
+        },
+        init: function() {
+          // console.log('init widget function', this);
+          var width = this.element.getStyle( 'width' );
+          if ( width )
+              this.setData( 'width', width );
+          if ( this.element.hasClass( 'align-left' ) )
+              this.setData( 'align', 'left' );
+          if ( this.element.hasClass( 'align-right' ) )
+              this.setData( 'align', 'right' );
+          if ( this.element.hasClass( 'align-center' ) )
+              this.setData( 'align', 'center' );
+        },
+
+        data: function() {
+          // console.log('data widget function', this);
+          // console.log(this.element.find('.small-headline'));
+          if ( this.data.width == '' ){
+            this.element.removeStyle( 'width' );
+          } else {
+            this.element.setStyle( 'width', this.data.width );
+          }
+  
+          this.element.removeClass( 'align-left' );
+          this.element.removeClass( 'align-right' );
+          this.element.removeClass( 'align-center' );
+          if ( this.data.align )
+            this.element.addClass( 'align-' + this.data.align );
         }
       });
     }
