@@ -17,11 +17,6 @@ CKEDITOR.addTemplates( 'cmap', {
 			html: '<div class="onto2050-actions row"> <div class="col-sm-8"> <div class="normal-headline">Revisit parking requirements</div> <p>Municipalities should prioritize capital projects that enhance pedestrian and bicycle access to transit stations.</p> </div> <div class="col-sm-8"><div class="normal-headline">Revisit parking requirements</div> <p>Municipalities should prioritize capital projects that enhance pedestrian and bicycle access to transit stations.</p></div> </div>'
 		},
 		{
-			title: 'Advertisement',
-			description: 'A widget designed to point to another page. Should contain a picture, headline, description, and button.',
-			html: '<div class="advertisement"><div class="row"><div class="col-md-offset-8 col-md-8 col-sm-offset-0 col-sm-12 col-xs-16"><div class="cmap-ad-content"><div class="small-headline">Topic</div><p>Here is where the content will go, you can delete this content or change it. If you wish to change the picture, double click on the bottom of the image.</p><a href="google.com" class="button">Double click to edit</a></div></div></div><img class="background" alt="This is the alt description for the advertisement term" src="https://clarknelson.com/drop/lazaro-advertisement-background.jpg" /><div class="widget-spacer"></div></div>'
-		},
-		{
 			title: 'Page Cards (Single)',
 			description: 'A widget designed to point to another page. Should contain an image above, and link to the page below.',
 			html: '<div class="page-cards"><div class="row"><div class="page-card col-sm-8 col-xs-16"><div class="top"><img src="https://clarknelson.com/drop/Cook_116.jpg" /></div><div class="bottom"><div class="normal-headline"><a href="google.com" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a></div></div></div></div></div>'
