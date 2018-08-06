@@ -49,7 +49,7 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL endnotes_plugin = bundle.getEntry("/META-INF/resources/plugins/endnotes/plugin.js");
 		URL endnotes_dialog = bundle.getEntry("/META-INF/resources/plugins/endnotes/dialogs/endnotes.js");
 		URL actions_plugin = bundle.getEntry("/META-INF/resources/plugins/actions/plugin.js");
-		URL advertisement_plugin = bundle.getEntry("/META-INF/resources/plugins/advertisement/plugin.js");
+		URL advertisement_plugin = bundle.getEntry("/META-INF/resources/plugins/cta/plugin.js");
 		URL page_cards_plugin = bundle.getEntry("/META-INF/resources/plugins/page-cards/plugin.js");
 
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);

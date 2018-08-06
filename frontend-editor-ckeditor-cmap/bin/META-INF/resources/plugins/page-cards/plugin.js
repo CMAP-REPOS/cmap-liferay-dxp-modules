@@ -20,7 +20,7 @@ if(CKEDITOR.plugins.get('page-cards')){
       editor.widgets.add( 'page-card', {
         template: '<div class="page-card col-sm-8 col-xs-16">'+
           '<div class="top-content">'+
-            '<img src="https://clarknelson.com/drop/Cook_116.jpg" />'+
+            '<img src="/o/custom-ckeditor/plugins/page-cards/images/DuPage_026.jpg" />'+
           '</div>'+
           '<div class="bottom-content">'+
             '<div class="normal-headline">'+
@@ -39,7 +39,6 @@ if(CKEDITOR.plugins.get('page-cards')){
         },
 
         upcast: function( element, data ) {
-          console.log('page card upcast', element, data);
           return element.name == 'div' && element.hasClass( 'page-card' );
         },
       });
