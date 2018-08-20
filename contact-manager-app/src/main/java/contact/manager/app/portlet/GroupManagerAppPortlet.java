@@ -1,6 +1,7 @@
 package contact.manager.app.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -8,9 +9,16 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.Portlet;
+import javax.portlet.PortletException;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -49,6 +57,22 @@ import contact.manager.service.CrmGroupLocalService;
 public class GroupManagerAppPortlet extends MVCPortlet {
 
 	private static final Log LOGGER = LogFactoryUtil.getLog(GroupManagerAppPortlet.class);
+
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+
+		String command = ParamUtil.getString(resourceRequest, "cmd");
+
+		if (command.equals("getPotentialContacts")) {
+			String crmGroupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
+			long crmGroupId = Long.parseLong(crmGroupIdParam);
+			String potentialContactsSerialized = GroupUtil.getPotentialCrmContactsSerialized(crmGroupId);
+
+			PrintWriter writer = resourceResponse.getWriter();
+			writer.write(potentialContactsSerialized);
+			writer.close();
+		}
+	}
 
 	public void add(ActionRequest request, ActionResponse response) throws PortalException {
 

@@ -1,7 +1,11 @@
 package contact.manager.app.util;
 
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,6 +48,25 @@ public class GroupUtil {
 		CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 
 		return crmGroup;
+	}
+
+	public static String getPotentialCrmContactsSerialized(long crmGroupId) {
+		
+		String result = StringPool.BLANK;
+		System.out.println("crmGroupId: " + crmGroupId);
+		List<CrmContact> potentialContacts = getPotentialCrmContacts(crmGroupId);
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+
+		for (CrmContact crmContact : potentialContacts) {
+			JSONObject obj = JSONFactoryUtil.createJSONObject();
+			obj.put("crmContactId", crmContact.getCrmContactId());
+			obj.put("firstName", crmContact.getFirstName());
+			obj.put("lastName", crmContact.getLastName());
+			jsonArray.put(obj);
+		}
+		
+		result = jsonArray.toString();
+		return result;
 	}
 
 	public static List<CrmContact> getPotentialCrmContacts(long crmGroupId) {

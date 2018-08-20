@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.List;
 
@@ -21,6 +22,8 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+import javax.portlet.ResourceRequest;
+import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,6 +32,7 @@ import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
 import contact.manager.app.util.ContactUtil;
+import contact.manager.app.util.GroupUtil;
 import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.app.util.PermissionUtil;
@@ -73,6 +77,22 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
 		super.render(request, response);
+	}
+
+	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
+			throws IOException, PortletException {
+
+		String command = ParamUtil.getString(resourceRequest, "cmd");
+
+		if (command.equals("getPotentialContacts")) {
+			String crmGroupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
+			long crmGroupId = Long.parseLong(crmGroupIdParam);
+			String potentialContactsSerialized = GroupUtil.getPotentialCrmContactsSerialized(crmGroupId);
+
+			PrintWriter writer = resourceResponse.getWriter();
+			writer.write(potentialContactsSerialized);
+			writer.close();
+		}
 	}
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {

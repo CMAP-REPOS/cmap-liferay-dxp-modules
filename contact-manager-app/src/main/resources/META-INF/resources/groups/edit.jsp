@@ -19,6 +19,40 @@
 <portlet:actionURL name='<%=crmGroup == null ? "add" : "update"%>'
 	var="editURL" />
 
+<portlet:resourceURL var="ajaxCallResourceURL" />
+
+<script>
+
+var cmap = cmap || {};
+
+AUI().ready(
+		
+	function () {
+
+		cmap.groupManager =  cmap.groupManager || {};
+	    cmap.groupManager.resourceUrl = '<%=ajaxCallResourceURL %>';
+
+		$('.contact-toggler').change(function() {
+			var input = $(this).next('input:hidden');
+			input.prop('disabled', function(i, v) { return !v; });
+		});
+
+		cmap.groupManager.getPotentialContacts = function () {
+	        $.get(
+	        	cmap.groupManager.resourceUrl,
+				{
+					'<portlet:namespace />cmd': 'getPotentialContacts',
+					'<portlet:namespace />crmGroupId': <%=crmGroupId%>
+				},
+				function (data) {
+	            	console.log(data);
+	          	})
+		}
+	}
+)
+
+</script>
+
 <div class="container-fluid">
 
 	<aui:form action="<%=editURL%>" name="<portlet:namespace />fm">
@@ -45,9 +79,13 @@
 										<%
 											for (CrmContact crmContact : crmGroupContacts) {
 										%>
-										<li><%=crmContact.getFirstName() + ' ' + crmContact.getLastName()%>
-											<aui:input name="crmContactIds" type="hidden"
-												value="<%=crmContact.getCrmContactId()%>"></aui:input></li>
+										<li><input type="checkbox" class="contact-toggler"
+											name="chk_<%=crmContact.getCrmContactId()%>"
+											id="chk_<%=crmContact.getCrmContactId()%>" checked="checked">
+											<aui:input name="crmContactIds" class="contact-toggler-value"
+												type="hidden" value="<%=crmContact.getCrmContactId()%>"></aui:input>
+											<%=crmContact.getFirstName() + ' ' + crmContact.getLastName()%>
+										</li>
 										<%
 											}
 										%>
