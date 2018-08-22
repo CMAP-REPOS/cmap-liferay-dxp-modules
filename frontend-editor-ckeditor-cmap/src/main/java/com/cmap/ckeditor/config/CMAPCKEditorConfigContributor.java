@@ -70,18 +70,17 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("contentsCss", contentsCss);
 		jsonObject.put("emailProtection", "encode");
-		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions");
-		jsonObject.put("format_tags", "p;h1;h2;h3;h4;h5;h6;div");
-		jsonObject.put("format_p", "p;h1;h2;h3;h4;h5;h6;div");
+		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations");
+		jsonObject.put("format_tags", "p;h1;h2");
 
 		try{
-			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'huge-headline bold' } }"));
-			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'page-headline bold' } }"));
-			jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'section-headline bold' } }"));
-			jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline bold' } }"));
-			jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline bold' } }"));
-			jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline bold' } }"));
-			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal bold' } }"));
+			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h1', attributes: { 'class': 'page-headline bold alt-color' } }"));
+			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'section-sub-headline bold alt-color' } }"));
+			// jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'normal-headline bold' } }"));
+			// jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline bold' } }"));
+			// jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline bold' } }"));
+			// jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline bold' } }"));
+			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
 
 		} catch( Exception e ){
 			logger.error(e.getMessage());
@@ -106,7 +105,6 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("templates_replaceContent", false);
 		jsonObject.put("toolbarCanCollapse", true);
 		jsonObject.put("uiColor", "#E4EBEE");
-
 		try{
 			jsonObject.put("toolbarGroups", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
 		} catch (Exception e) {

@@ -418,9 +418,7 @@ name = HtmlUtil.escapeJS(name);
 		};
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
-		console.log('init config', editorConfig);
 		var config = A.merge(defaultConfig, editorConfig);
-		console.log('final config', config);
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 
 		Liferay.on(
