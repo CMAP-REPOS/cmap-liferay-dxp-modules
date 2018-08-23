@@ -47,28 +47,21 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL editor_characters = bundle.getEntry("/META-INF/resources/ckeditor/characters.js");
 		URL editor_styles = bundle.getEntry("/META-INF/resources/ckeditor/styles.js");
 		URL editor_templates = bundle.getEntry("/META-INF/resources/ckeditor/templates.js");
-		URL editor_plugins = bundle.getEntry("/META-INF/resources/ckeditor/plugins.js");
 
-
-		URL endnotes_plugin = bundle.getEntry("/META-INF/resources/plugins/endnotes/plugin.js");
-		URL endnotes_dialog = bundle.getEntry("/META-INF/resources/plugins/endnotes/dialogs/endnotes.js");
-		// URL actions_plugin = bundle.getEntry("/META-INF/resources/plugins/actions/plugin.js");
-		URL advertisement_plugin = bundle.getEntry("/META-INF/resources/plugins/cta/plugin.js");
-		URL page_cards_plugin = bundle.getEntry("/META-INF/resources/plugins/page-cards/plugin.js");
-		URL recommendation_plugin = bundle.getEntry("/META-INF/resources/plugins/recommendations/plugin.js");
+		URL plugin_actions = bundle.getEntry("/META-INF/resources/plugins/actions.js");
+		URL plugin_advertisement = bundle.getEntry("/META-INF/resources/plugins/cta.js");
+		URL plugin_page_cards = bundle.getEntry("/META-INF/resources/plugins/page-cards.js");
+		URL plugin_recommendation = bundle.getEntry("/META-INF/resources/plugins/recommendations.js");
 
 		StreamUtil.transfer(editor_config.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_styles.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_templates.openStream(), response.getOutputStream(), false);
-		StreamUtil.transfer(editor_plugins.openStream(), response.getOutputStream(), false);
 
-		StreamUtil.transfer(endnotes_plugin.openStream(), response.getOutputStream(), false);
-		StreamUtil.transfer(endnotes_dialog.openStream(), response.getOutputStream(), false);
-		// StreamUtil.transfer(actions_plugin.openStream(), response.getOutputStream(), false);
-		StreamUtil.transfer(advertisement_plugin.openStream(), response.getOutputStream(), false);
-		StreamUtil.transfer(page_cards_plugin.openStream(), response.getOutputStream(), false);
-		StreamUtil.transfer(recommendation_plugin.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(plugin_actions.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(plugin_advertisement.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(plugin_page_cards.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(plugin_recommendation.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override

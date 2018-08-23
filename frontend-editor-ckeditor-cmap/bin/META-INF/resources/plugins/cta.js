@@ -3,6 +3,7 @@ if(CKEDITOR.plugins.get('advertisement')){
 	// ignore if the plugin is already registered 
 } else {
 
+
   CKEDITOR.plugins.add( 'advertisement', {
     requires: 'widget',
     init: function( editor ) {
@@ -11,8 +12,8 @@ if(CKEDITOR.plugins.get('advertisement')){
         label: 'Add a new advertisement',
         command: 'advertisement',
         toolbar: 'insert,2',
-        icon: '/o/custom-ckeditor/plugins/cta/icons/cta.png',
-        iconHiDpi: '/o/custom-ckeditor/plugins/cta/icons/cta@2x.png'
+        icon: '/o/custom-ckeditor/images/icons/cta.png',
+        iconHiDpi: '/o/custom-ckeditor/images/icons/cta@2x.png'
       });
 
       // https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_plugins_widget_definition.html
@@ -30,7 +31,7 @@ if(CKEDITOR.plugins.get('advertisement')){
             '</div>'+
           '</div>'+
           '<div class="background">'+
-            '<img src="/o/custom-ckeditor/plugins/cta/images/example2.png" alt="This is the alt description for the advertisement term" />'+
+            '<img src="/o/custom-ckeditor/images/examples/cta2.png" alt="This is the alt description for the advertisement term" />'+
           '</div>'+
           '<div class="widget-spacer"></div>'+
         '</div>',
