@@ -67,20 +67,20 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		contentsCss.put("/o/cmap-onto-2050-theme/css/aui.css");
 		contentsCss.put("https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css");
 		contentsCss.put("https://cloud.typography.com/7947314/7427752/css/fonts.css");
-
 		jsonObject.put("contentsCss", contentsCss);
+
 		jsonObject.put("emailProtection", "encode");
-		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations");
+		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,full-width-image");
 		jsonObject.put("format_tags", "p;h1;h2");
 
 		try{
 			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h1', attributes: { 'class': 'page-headline bold alt-color' } }"));
 			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'section-sub-headline bold alt-color' } }"));
+			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
 			// jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'normal-headline bold' } }"));
 			// jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline bold' } }"));
 			// jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline bold' } }"));
 			// jsonObject.put("format_h6", JSONFactoryUtil.createJSONObject("{ element: 'h6', attributes: { 'class': 'small-headline bold' } }"));
-			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
 
 		} catch( Exception e ){
 			logger.error(e.getMessage());

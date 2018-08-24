@@ -52,6 +52,9 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL plugin_advertisement = bundle.getEntry("/META-INF/resources/plugins/cta.js");
 		URL plugin_page_cards = bundle.getEntry("/META-INF/resources/plugins/page-cards.js");
 		URL plugin_recommendation = bundle.getEntry("/META-INF/resources/plugins/recommendations.js");
+		URL plugin_full_width_image = bundle.getEntry("/META-INF/resources/plugins/full-image.js");
+
+		URL site_javascript = bundle.getEntry("/o/cmap-onto-2050-theme/js/main.js");
 
 		StreamUtil.transfer(editor_config.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);
@@ -62,6 +65,9 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		StreamUtil.transfer(plugin_advertisement.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(plugin_page_cards.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(plugin_recommendation.openStream(), response.getOutputStream(), false);
+		StreamUtil.transfer(plugin_full_width_image.openStream(), response.getOutputStream(), false);
+
+		StreamUtil.transfer(site_javascript.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override
