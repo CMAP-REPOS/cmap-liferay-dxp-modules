@@ -45,19 +45,24 @@ cmap.groupManager.addContactsToList = function(data) {
 	    <input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="662" type="hidden"> Bruce Gould 
 	</li>
 	 */	
-	<!-- TODO: check for duplicates -->
 	var selectedContacts = $('#<portlet:namespace />findName').select2('data');
+	
 	for (var i = 0; i < selectedContacts.length; i++) {
 		var contact = selectedContacts[i];
 		
-		$('#<portlet:namespace />pendingContactsList').append('<li>' +
-		    '<input class="contact-toggler" name="chk_'+contact.id+'" id="chk_'+contact.id+'" checked="checked" type="checkbox">' + 
-		    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="'+contact.id+'" type="hidden"> '+contact.text + 
-		'</li>');
+		if (!$('input[value="' + contact.id + '"]:hidden').length) {
+			$('#<portlet:namespace />pendingContactsList').append('<li>' +
+				    '<input class="contact-toggler" name="chk_' + contact.id + '" id="chk_' + contact.id + '" checked="checked" type="checkbox">' + 
+				    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="' + contact.id + '" type="hidden"> ' + contact.text + 
+				'</li>');
+		};
 	}
+	
+	$('#<portlet:namespace />findName').select2('val', '');
 }
 
 cmap.groupManager.initSelect2 = function() {
+	$('#<portlet:namespace />findName').val('');
 	$('#<portlet:namespace />findName').select2({
 	    minimumInputLength: 2,
 	    tags: [],

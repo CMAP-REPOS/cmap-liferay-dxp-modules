@@ -69,8 +69,6 @@ public class GroupUtil {
 			jsonArray.put(obj);
 		}
 
-		System.out.println(jsonArray.length());
-
 		result = jsonArray.toString();
 		return result;
 
@@ -92,16 +90,12 @@ public class GroupUtil {
 			}
 		}
 
-		System.out.println(jsonArray.length());
-
 		result = jsonArray.toString();
 		return result;
 	}
 
 	public static String getCrmContactsByName(String name) {
-		
-		System.out.println(name);
-		
+				
 		String result = StringPool.BLANK;
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
 		
@@ -123,8 +117,6 @@ public class GroupUtil {
 				jsonArray.put(obj);
 			}
 		}
-
-		System.out.println(jsonArray.length());
 
 		result = jsonArray.toString();
 		return result;
