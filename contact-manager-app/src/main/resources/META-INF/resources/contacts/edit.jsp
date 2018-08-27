@@ -1,7 +1,9 @@
+<%@page import="contact.manager.service.persistence.CrmGroupUtil"%>
 <%@ include file="../init.jsp"%>
 
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
+	List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContactId);
 
 	CrmContact crmContact = null;
 
@@ -24,6 +26,60 @@
 <portlet:actionURL
 	name='<%=crmContact == null ? "addContact" : "updateContact"%>'
 	var="editContactURL" />
+
+<portlet:resourceURL var="ajaxCallResourceURL" />
+
+<script>
+
+var cmap = cmap || {};
+cmap.contactManager =  cmap.contactManager || {};
+cmap.contactManager.resourceUrl = '<%=ajaxCallResourceURL %>';
+cmap.existingGroups = <%= GroupUtil.getCrmGroupsByContactId(crmContactId) %>;
+
+cmap.contactManager.initSelect2 = function() {
+	$('#<portlet:namespace />crmGroupIds').select2({
+	    minimumInputLength: 2,
+	    tags: [],
+	    ajax: {
+	        url: cmap.contactManager.resourceUrl,
+	        dataType: 'json',
+	        type: "GET",
+	        quietMillis: 50,
+	        data: function (term) {
+	            return {
+	            	'<portlet:namespace />name': term,
+	                '<portlet:namespace />cmd': 'getPotentialGroups'
+	            };
+	        },
+	        results: function (data) {
+	            return {
+	                results: $.map(data, function (item) {
+	                    return {
+	                        text: item.crmGroupName,
+	                        slug: item.crmGroupName,
+	                        id: item.crmGroupId
+	                    }
+	                })
+	            };
+	        }
+	    }
+	});
+	
+	if (cmap.existingGroups) {
+		$('#<portlet:namespace />crmGroupIds').select2('data', cmap.existingGroups);
+	}
+}
+
+
+AUI().ready(
+	function () {
+		cmap.contactManager.initSelect2();
+	}
+)
+
+</script>
+
+
 
 <div class="container-fluid">
 
@@ -61,8 +117,7 @@
 				</aui:fieldset-group>
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input name="crmGroups" label="Groups"
-							value='<%=crmContact == null ? "" : crmContact.getGroupsList()%>'>
+						<aui:input name="crmGroupIds" label="Groups">
 						</aui:input>
 						<aui:input name="crmTags" label="Tags"
 							value='<%=crmContact == null ? "" : crmContact.getTagsList()%>'>

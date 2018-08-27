@@ -6,7 +6,6 @@
 
 	CrmGroup crmGroup = null;
 	List<CrmContact> crmGroupContacts = new ArrayList<CrmContact>();
-	List<CrmContact> crmGroupPotentialContacts = new ArrayList<CrmContact>();
 
 	if (crmGroupId > 0) {
 		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
@@ -46,15 +45,15 @@ cmap.groupManager.addContactsToList = function(data) {
 	    <input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="662" type="hidden"> Bruce Gould 
 	</li>
 	 */	
+	<!-- TODO: check for duplicates -->
 	var selectedContacts = $('#<portlet:namespace />findName').select2('data');
 	for (var i = 0; i < selectedContacts.length; i++) {
 		var contact = selectedContacts[i];
 		
 		$('#<portlet:namespace />pendingContactsList').append('<li>' +
-			    '<input class="contact-toggler" name="chk_'+contact.id+'" id="chk_'+contact.id+'" checked="checked" type="checkbox">' + 
-			    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="'+contact.id+'" type="hidden"> '+contact.text + 
-			'</li>');
-		
+		    '<input class="contact-toggler" name="chk_'+contact.id+'" id="chk_'+contact.id+'" checked="checked" type="checkbox">' + 
+		    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="'+contact.id+'" type="hidden"> '+contact.text + 
+		'</li>');
 	}
 }
 
@@ -119,6 +118,7 @@ AUI().ready(
 							<aui:col md="6">
 								<div class="form-group" id="<portlet:namespace />contactsLists">
 									<label class="control-label"> Assigned Contacts </label>
+									<!-- TODO: visually differentiate pending contacts -->
 									<ul id="<portlet:namespace />pendingContactsList">
 									</ul>
 									<ul id="<portlet:namespace />assignedContactsList">
@@ -157,12 +157,5 @@ AUI().ready(
 				</aui:button-row>
 			</aui:col>
 		</aui:row>
-
 	</aui:form>
-
-<div class="yui3-skin-sam">
-  <div id="modal"></div>
-</div>
-
-
 </div>

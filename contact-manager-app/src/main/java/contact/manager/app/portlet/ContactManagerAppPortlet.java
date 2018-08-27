@@ -60,6 +60,8 @@ import contact.manager.service.CrmOutreachLogLocalService;
 				"com.liferay.portlet.private-session-attributes=false", 
 				"com.liferay.portlet.render-weight=50", 
 				"com.liferay.portlet.use-default-template=true", 
+				"com.liferay.portlet.header-portlet-css=/css/select2.css",
+				"com.liferay.portlet.header-portlet-javascript=/js/select2.js",
 				"javax.portlet.display-name=Contact Manager", 
 				"javax.portlet.expiration-cache=0", 
 				"javax.portlet.init-param.template-path=/", 

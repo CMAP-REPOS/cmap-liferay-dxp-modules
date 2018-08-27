@@ -3,12 +3,17 @@ package contact.manager.app.util;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmGroup;
+import contact.manager.service.CrmContactLocalServiceUtil;
+import contact.manager.service.CrmGroupLocalServiceUtil;
 
 public class ContactUtil {
 
@@ -19,12 +24,12 @@ public class ContactUtil {
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
 		String userName = UserUtil.getUserName(userId);
-
+		long[] crmGroupIds = ParamUtil.getLongValues(request, "crmGroupIds");
+		
 		String alternateContact = ParamUtil.getString(request, "alternateContact");
 		String alternateEmail = ParamUtil.getString(request, "alternateEmail");
 		String facebookId = ParamUtil.getString(request, "facebookId");
 		String firstName = ParamUtil.getString(request, "firstName");
-		String groupsList = ParamUtil.getString(request, "groupsList");
 		boolean isVip = ParamUtil.getBoolean(request, "isVip");
 		String jobTitle = ParamUtil.getString(request, "jobTitle");
 		String lastName = ParamUtil.getString(request, "lastName");
@@ -59,7 +64,6 @@ public class ContactUtil {
 		crmContact.setAlternateEmail(alternateEmail);
 		crmContact.setFacebookId(facebookId);
 		crmContact.setFirstName(firstName);
-		crmContact.setGroupsList(groupsList);
 		crmContact.setIsVip(isVip);
 		crmContact.setJobTitle(jobTitle);
 		crmContact.setLastName(lastName);
@@ -103,6 +107,17 @@ public class ContactUtil {
 			crmContact.setCreateDate(serviceContext.getCreateDate(now));
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 		}
+		
+		CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		
+		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
+		List<String> crmGroupNames = new ArrayList<String>();
+		for (CrmGroup crmGroup : crmGroups) {
+			crmGroupNames.add(crmGroup.getName());
+		}
+		
+		String groupsList = String.join(" | ", crmGroupNames);
+		crmContact.setGroupsList(groupsList);
 
 		return crmContact;
 	}
