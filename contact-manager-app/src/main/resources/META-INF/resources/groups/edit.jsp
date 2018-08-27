@@ -24,30 +24,74 @@
 <script>
 
 var cmap = cmap || {};
+cmap.groupManager =  cmap.groupManager || {};
+cmap.groupManager.resourceUrl = '<%=ajaxCallResourceURL %>';
+
+cmap.groupManager.bindEvents = function() {
+	$('#<portlet:namespace />contactsLists').on('change', '.contact-toggler', function() {
+		var input = $(this).next('input:hidden');
+		input.prop('disabled', function(i, v) { return !v; });
+	});
+	
+	$('#<portlet:namespace />addContacts').on('click', function(e) {
+		e.preventDefault();
+		cmap.groupManager.addContactsToList();
+	});
+}
+
+cmap.groupManager.addContactsToList = function(data) {
+	/* 
+	<li>
+	    <input class="contact-toggler" name="chk_662" id="chk_662" checked="checked" type="checkbox">
+	    <input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="662" type="hidden"> Bruce Gould 
+	</li>
+	 */	
+	var selectedContacts = $('#<portlet:namespace />findName').select2('data');
+	for (var i = 0; i < selectedContacts.length; i++) {
+		var contact = selectedContacts[i];
+		
+		$('#<portlet:namespace />pendingContactsList').append('<li>' +
+			    '<input class="contact-toggler" name="chk_'+contact.id+'" id="chk_'+contact.id+'" checked="checked" type="checkbox">' + 
+			    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="'+contact.id+'" type="hidden"> '+contact.text + 
+			'</li>');
+		
+	}
+}
+
+cmap.groupManager.initSelect2 = function() {
+	$('#<portlet:namespace />findName').select2({
+	    minimumInputLength: 2,
+	    tags: [],
+	    ajax: {
+	        url: cmap.groupManager.resourceUrl,
+	        dataType: 'json',
+	        type: "GET",
+	        quietMillis: 50,
+	        data: function (term) {
+	            return {
+	            	'<portlet:namespace />name': term,
+	                '<portlet:namespace />cmd': 'getPotentialContacts'
+	            };
+	        },
+	        results: function (data) {
+	            return {
+	                results: $.map(data, function (item) {
+	                    return {
+	                        text: item.crmContactName,
+	                        slug: item.crmContactName,
+	                        id: item.crmContactId
+	                    }
+	                })
+	            };
+	        }
+	    }
+	});
+}
 
 AUI().ready(
-		
 	function () {
-
-		cmap.groupManager =  cmap.groupManager || {};
-	    cmap.groupManager.resourceUrl = '<%=ajaxCallResourceURL %>';
-
-		$('.contact-toggler').change(function() {
-			var input = $(this).next('input:hidden');
-			input.prop('disabled', function(i, v) { return !v; });
-		});
-
-		cmap.groupManager.getPotentialContacts = function () {
-	        $.get(
-	        	cmap.groupManager.resourceUrl,
-				{
-					'<portlet:namespace />cmd': 'getPotentialContacts',
-					'<portlet:namespace />crmGroupId': <%=crmGroupId%>
-				},
-				function (data) {
-	            	console.log(data);
-	          	})
-		}
+		cmap.groupManager.bindEvents();
+		cmap.groupManager.initSelect2();
 	}
 )
 
@@ -73,9 +117,11 @@ AUI().ready(
 					<aui:fieldset>
 						<aui:row>
 							<aui:col md="6">
-								<div class="form-group">
+								<div class="form-group" id="<portlet:namespace />contactsLists">
 									<label class="control-label"> Assigned Contacts </label>
-									<ul>
+									<ul id="<portlet:namespace />pendingContactsList">
+									</ul>
+									<ul id="<portlet:namespace />assignedContactsList">
 										<%
 											for (CrmContact crmContact : crmGroupContacts) {
 										%>
@@ -92,6 +138,12 @@ AUI().ready(
 									</ul>
 								</div>
 							</aui:col>
+							<aui:col md="6">
+								<aui:input name="findName" label="Find Contacts">
+								</aui:input>
+								
+								<button class="btn btn-primary btn-default" id="<portlet:namespace />addContacts"> <span class="lfr-btn-label">Add Contacts</span> </button>
+							</aui:col>
 						</aui:row>
 					</aui:fieldset>
 				</aui:fieldset-group>
@@ -107,5 +159,10 @@ AUI().ready(
 		</aui:row>
 
 	</aui:form>
+
+<div class="yui3-skin-sam">
+  <div id="modal"></div>
+</div>
+
 
 </div>

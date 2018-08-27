@@ -84,10 +84,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		String command = ParamUtil.getString(resourceRequest, "cmd");
 
-		if (command.equals("getPotentialContacts")) {
-			String crmGroupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
-			long crmGroupId = Long.parseLong(crmGroupIdParam);
-			String potentialContactsSerialized = GroupUtil.getPotentialCrmContactsSerialized(crmGroupId);
+		if (command.equals("getPotentialGroups")) {
+			String nameParam = ParamUtil.getString(resourceRequest, "name");
+			String potentialContactsSerialized = GroupUtil.getCrmGroupsByName(nameParam);
 
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);

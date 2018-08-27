@@ -184,12 +184,14 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 			true);
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long CONSTANTCONTACTID_COLUMN_BITMASK = 2L;
-	public static final long GROUPID_COLUMN_BITMASK = 4L;
-	public static final long ISVIP_COLUMN_BITMASK = 8L;
-	public static final long PRIMARYEMAILADDRESS_COLUMN_BITMASK = 16L;
-	public static final long STATUS_COLUMN_BITMASK = 32L;
-	public static final long UUID_COLUMN_BITMASK = 64L;
-	public static final long LASTNAME_COLUMN_BITMASK = 128L;
+	public static final long FIRSTNAME_COLUMN_BITMASK = 4L;
+	public static final long GROUPID_COLUMN_BITMASK = 8L;
+	public static final long ISVIP_COLUMN_BITMASK = 16L;
+	public static final long LASTNAME_COLUMN_BITMASK = 32L;
+	public static final long MIDDLENAME_COLUMN_BITMASK = 64L;
+	public static final long PRIMARYEMAILADDRESS_COLUMN_BITMASK = 128L;
+	public static final long STATUS_COLUMN_BITMASK = 256L;
+	public static final long UUID_COLUMN_BITMASK = 512L;
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -798,7 +800,17 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 
 	@Override
 	public void setFirstName(String firstName) {
+		_columnBitmask |= FIRSTNAME_COLUMN_BITMASK;
+
+		if (_originalFirstName == null) {
+			_originalFirstName = _firstName;
+		}
+
 		_firstName = firstName;
+	}
+
+	public String getOriginalFirstName() {
+		return GetterUtil.getString(_originalFirstName);
 	}
 
 	@Override
@@ -813,7 +825,17 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 
 	@Override
 	public void setMiddleName(String middleName) {
+		_columnBitmask |= MIDDLENAME_COLUMN_BITMASK;
+
+		if (_originalMiddleName == null) {
+			_originalMiddleName = _middleName;
+		}
+
 		_middleName = middleName;
+	}
+
+	public String getOriginalMiddleName() {
+		return GetterUtil.getString(_originalMiddleName);
 	}
 
 	@Override
@@ -830,7 +852,15 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	public void setLastName(String lastName) {
 		_columnBitmask = -1L;
 
+		if (_originalLastName == null) {
+			_originalLastName = _lastName;
+		}
+
 		_lastName = lastName;
+	}
+
+	public String getOriginalLastName() {
+		return GetterUtil.getString(_originalLastName);
 	}
 
 	@Override
@@ -1498,6 +1528,12 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		crmContactModelImpl._setOriginalCompanyId = false;
 
 		crmContactModelImpl._setModifiedDate = false;
+
+		crmContactModelImpl._originalFirstName = crmContactModelImpl._firstName;
+
+		crmContactModelImpl._originalMiddleName = crmContactModelImpl._middleName;
+
+		crmContactModelImpl._originalLastName = crmContactModelImpl._lastName;
 
 		crmContactModelImpl._originalPrimaryEmailAddress = crmContactModelImpl._primaryEmailAddress;
 
@@ -2178,8 +2214,11 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	private String _prefix;
 	private String _salutation;
 	private String _firstName;
+	private String _originalFirstName;
 	private String _middleName;
+	private String _originalMiddleName;
 	private String _lastName;
+	private String _originalLastName;
 	private String _organization;
 	private String _jobTitle;
 	private String _primaryAddress1;

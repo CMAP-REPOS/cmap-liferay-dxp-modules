@@ -1,5 +1,10 @@
 package contact.manager.app.util;
 
+import com.liferay.portal.kernel.dao.orm.Disjunction;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -50,37 +55,76 @@ public class GroupUtil {
 		return crmGroup;
 	}
 
-	public static String getPotentialCrmContactsSerialized(long crmGroupId) {
+	public static String getCrmContactsByName(String name) {
+		
+		System.out.println(name);
 		
 		String result = StringPool.BLANK;
-		System.out.println("crmGroupId: " + crmGroupId);
-		List<CrmContact> potentialContacts = getPotentialCrmContacts(crmGroupId);
 		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		
+		DynamicQuery crmContactQuery = CrmContactLocalServiceUtil.dynamicQuery();
 
-		for (CrmContact crmContact : potentialContacts) {
+		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+		disjunction.add(RestrictionsFactoryUtil.like("firstName", name));
+		disjunction.add(RestrictionsFactoryUtil.like("middleName", name));
+		disjunction.add(RestrictionsFactoryUtil.like("lastName", name));
+		crmContactQuery.add(disjunction);
+
+		List<CrmContact> matchingContacts = CrmContactLocalServiceUtil.dynamicQuery(crmContactQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		//		{
+		//			  "results": [
+		//			    {
+		//			      "id": 1,
+		//			      "text": "Option 1"
+		//			    },
+		//			    {
+		//			      "id": 2,
+		//			      "text": "Option 2"
+		//			    }
+		//			  ],
+		//			  "pagination": {
+		//			    "more": true
+		//			  }
+		//		}
+		
+		for (CrmContact crmContact : matchingContacts) {
+			if (!crmContact.getStatus().equals(ConstantContactKeys.CC_STATUS_REMOVED)) {
+				JSONObject obj = JSONFactoryUtil.createJSONObject();
+				obj.put("crmContactId", crmContact.getCrmContactId());
+				obj.put("crmContactName", crmContact.getFirstName() + " " + crmContact.getLastName());
+				jsonArray.put(obj);
+			}
+		}
+
+		System.out.println(jsonArray.length());
+
+		result = jsonArray.toString();
+		return result;
+	}
+	
+	public static String getCrmGroupsByName(String name) {
+		
+		String result = StringPool.BLANK;
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		
+		DynamicQuery crmGroupQuery = CrmGroupLocalServiceUtil.dynamicQuery();
+		crmGroupQuery.add(RestrictionsFactoryUtil.like("name", name));
+
+		List<CrmGroup> matchingGroups = CrmGroupLocalServiceUtil.dynamicQuery(crmGroupQuery , QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		
+		for (CrmGroup crmGroup : matchingGroups) {
+
 			JSONObject obj = JSONFactoryUtil.createJSONObject();
-			obj.put("crmContactId", crmContact.getCrmContactId());
-			obj.put("firstName", crmContact.getFirstName());
-			obj.put("lastName", crmContact.getLastName());
+			obj.put("crmGroupId", crmGroup.getCrmGroupId());
+			obj.put("name", crmGroup.getName());
 			jsonArray.put(obj);
 		}
-		
+
 		result = jsonArray.toString();
 		return result;
 	}
 
-	public static List<CrmContact> getPotentialCrmContacts(long crmGroupId) {
-
-		List<CrmContact> potentialContacts = new ArrayList<CrmContact>();
-		List<CrmContact> assignedContacts = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
-		List<CrmContact> activeContacts = CrmContactLocalServiceUtil.findByStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
-
-		for (CrmContact crmContact : activeContacts) {
-			if (!assignedContacts.contains(crmContact)) {
-				potentialContacts.add(crmContact);
-			}
-		}
-
-		return potentialContacts;
-	}
 }
+
+

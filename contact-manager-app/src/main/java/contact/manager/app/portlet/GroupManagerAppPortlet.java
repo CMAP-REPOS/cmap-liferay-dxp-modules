@@ -42,6 +42,8 @@ import contact.manager.service.CrmGroupLocalService;
 			"com.liferay.portlet.private-session-attributes=false",
 			"com.liferay.portlet.render-weight=50", 
 			"com.liferay.portlet.use-default-template=true",
+			"com.liferay.portlet.header-portlet-css=/css/select2.css",
+			"com.liferay.portlet.header-portlet-javascript=/js/select2.js",
 			"javax.portlet.display-name=Group Manager", 
 			"javax.portlet.expiration-cache=0",
 			"javax.portlet.init-param.template-path=/", 
@@ -64,9 +66,8 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 		String command = ParamUtil.getString(resourceRequest, "cmd");
 
 		if (command.equals("getPotentialContacts")) {
-			String crmGroupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
-			long crmGroupId = Long.parseLong(crmGroupIdParam);
-			String potentialContactsSerialized = GroupUtil.getPotentialCrmContactsSerialized(crmGroupId);
+			String nameParam = ParamUtil.getString(resourceRequest, "name");
+			String potentialContactsSerialized = GroupUtil.getCrmContactsByName(nameParam);
 
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);

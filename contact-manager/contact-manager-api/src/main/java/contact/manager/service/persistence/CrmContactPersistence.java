@@ -794,6 +794,171 @@ public interface CrmContactPersistence extends BasePersistence<CrmContact> {
 		java.lang.String primaryEmailAddress, java.lang.String status);
 
 	/**
+	* Returns all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @return the matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName);
+
+	/**
+	* Returns a range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @return the range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int start,
+		int end);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param start the lower bound of the range of CRM Contacts
+	* @param end the upper bound of the range of CRM Contacts (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Contacts
+	*/
+	public java.util.List<CrmContact> findByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByName_First(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the first CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByName_First(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the last CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact
+	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	*/
+	public CrmContact findByName_Last(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Returns the last CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public CrmContact fetchByName_Last(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator);
+
+	/**
+	* Returns the CRM Contacts before and after the current CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param crmContactId the primary key of the current CRM Contact
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Contact
+	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	*/
+	public CrmContact[] findByName_PrevAndNext(long crmContactId,
+		java.lang.String firstName, java.lang.String middleName,
+		java.lang.String lastName,
+		com.liferay.portal.kernel.util.OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException;
+
+	/**
+	* Removes all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63; from the database.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	*/
+	public void removeByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName);
+
+	/**
+	* Returns the number of CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	*
+	* @param firstName the first name
+	* @param middleName the middle name
+	* @param lastName the last name
+	* @return the number of matching CRM Contacts
+	*/
+	public int countByName(java.lang.String firstName,
+		java.lang.String middleName, java.lang.String lastName);
+
+	/**
 	* Returns the CRM Contact where constantContactId = &#63; or throws a {@link NoSuchCrmContactException} if it could not be found.
 	*
 	* @param constantContactId the constant contact ID

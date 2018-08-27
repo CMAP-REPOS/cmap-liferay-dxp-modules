@@ -104,6 +104,11 @@
 			<finder-column name="primaryEmailAddress" />
 			<finder-column name="status" />
 		</finder>
+		<finder name="Name" return-type="Collection">
+			<finder-column name="firstName" />
+			<finder-column name="middleName" />
+			<finder-column name="lastName" />
+		</finder>
 		<finder name="ConstantContactId" return-type="Contact">
 			<finder-column name="constantContactId" />
 		</finder>

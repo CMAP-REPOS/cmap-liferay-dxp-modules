@@ -7,6 +7,7 @@ create unique index IX_CE69673B on crm_chiward (uuid_[$COLUMN_LENGTH:75$], group
 create index IX_1D5F0E39 on crm_chiward (zipCode[$COLUMN_LENGTH:75$]);
 
 create index IX_98423322 on crm_contact (constantContactId);
+create index IX_F1BBF5F5 on crm_contact (firstName[$COLUMN_LENGTH:500$], middleName[$COLUMN_LENGTH:500$], lastName[$COLUMN_LENGTH:500$], status[$COLUMN_LENGTH:75$]);
 create index IX_8C31621E on crm_contact (isVip);
 create index IX_55D6EBCB on crm_contact (primaryEmailAddress[$COLUMN_LENGTH:500$], status[$COLUMN_LENGTH:75$]);
 create index IX_511088AB on crm_contact (status[$COLUMN_LENGTH:75$]);

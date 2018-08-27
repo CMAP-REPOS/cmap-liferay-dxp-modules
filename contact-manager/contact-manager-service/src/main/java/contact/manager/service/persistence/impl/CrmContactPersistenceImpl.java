@@ -3263,6 +3263,725 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		"crmContact.status = ?";
 	private static final String _FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_3 =
 		"(crmContact.status IS NULL OR crmContact.status = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_NAME = new FinderPath(CrmContactModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactModelImpl.FINDER_CACHE_ENABLED, CrmContactImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME = new FinderPath(CrmContactModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactModelImpl.FINDER_CACHE_ENABLED, CrmContactImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			CrmContactModelImpl.FIRSTNAME_COLUMN_BITMASK |
+			CrmContactModelImpl.MIDDLENAME_COLUMN_BITMASK |
+			CrmContactModelImpl.LASTNAME_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(CrmContactModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {
+				String.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @return the matching CRM Contacts
+	 */
+	@Override
+	public List<CrmContact> findByName(String firstName, String middleName,
+		String lastName) {
+		return findByName(firstName, middleName, lastName, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of CRM Contacts
+	 * @param end the upper bound of the range of CRM Contacts (not inclusive)
+	 * @return the range of matching CRM Contacts
+	 */
+	@Override
+	public List<CrmContact> findByName(String firstName, String middleName,
+		String lastName, int start, int end) {
+		return findByName(firstName, middleName, lastName, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of CRM Contacts
+	 * @param end the upper bound of the range of CRM Contacts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching CRM Contacts
+	 */
+	@Override
+	public List<CrmContact> findByName(String firstName, String middleName,
+		String lastName, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator) {
+		return findByName(firstName, middleName, lastName, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param start the lower bound of the range of CRM Contacts
+	 * @param end the upper bound of the range of CRM Contacts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching CRM Contacts
+	 */
+	@Override
+	public List<CrmContact> findByName(String firstName, String middleName,
+		String lastName, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME;
+			finderArgs = new Object[] { firstName, middleName, lastName };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_NAME;
+			finderArgs = new Object[] {
+					firstName, middleName, lastName,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CrmContact> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<CrmContact>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (CrmContact crmContact : list) {
+					if (!Objects.equals(firstName, crmContact.getFirstName()) ||
+							!Objects.equals(middleName,
+								crmContact.getMiddleName()) ||
+							!Objects.equals(lastName, crmContact.getLastName())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_CRMCONTACT_WHERE);
+
+			boolean bindFirstName = false;
+
+			if (firstName == null) {
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
+			}
+			else if (firstName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
+			}
+			else {
+				bindFirstName = true;
+
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_2);
+			}
+
+			boolean bindMiddleName = false;
+
+			if (middleName == null) {
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
+			}
+			else if (middleName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
+			}
+			else {
+				bindMiddleName = true;
+
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_2);
+			}
+
+			boolean bindLastName = false;
+
+			if (lastName == null) {
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
+			}
+			else if (lastName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
+			}
+			else {
+				bindLastName = true;
+
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CrmContactModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindFirstName) {
+					qPos.add(firstName);
+				}
+
+				if (bindMiddleName) {
+					qPos.add(middleName);
+				}
+
+				if (bindLastName) {
+					qPos.add(lastName);
+				}
+
+				if (!pagination) {
+					list = (List<CrmContact>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<CrmContact>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact
+	 * @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	 */
+	@Override
+	public CrmContact findByName_First(String firstName, String middleName,
+		String lastName, OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException {
+		CrmContact crmContact = fetchByName_First(firstName, middleName,
+				lastName, orderByComparator);
+
+		if (crmContact != null) {
+			return crmContact;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("firstName=");
+		msg.append(firstName);
+
+		msg.append(", middleName=");
+		msg.append(middleName);
+
+		msg.append(", lastName=");
+		msg.append(lastName);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactException(msg.toString());
+	}
+
+	/**
+	 * Returns the first CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	 */
+	@Override
+	public CrmContact fetchByName_First(String firstName, String middleName,
+		String lastName, OrderByComparator<CrmContact> orderByComparator) {
+		List<CrmContact> list = findByName(firstName, middleName, lastName, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact
+	 * @throws NoSuchCrmContactException if a matching CRM Contact could not be found
+	 */
+	@Override
+	public CrmContact findByName_Last(String firstName, String middleName,
+		String lastName, OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException {
+		CrmContact crmContact = fetchByName_Last(firstName, middleName,
+				lastName, orderByComparator);
+
+		if (crmContact != null) {
+			return crmContact;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("firstName=");
+		msg.append(firstName);
+
+		msg.append(", middleName=");
+		msg.append(middleName);
+
+		msg.append(", lastName=");
+		msg.append(lastName);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCrmContactException(msg.toString());
+	}
+
+	/**
+	 * Returns the last CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	 */
+	@Override
+	public CrmContact fetchByName_Last(String firstName, String middleName,
+		String lastName, OrderByComparator<CrmContact> orderByComparator) {
+		int count = countByName(firstName, middleName, lastName);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CrmContact> list = findByName(firstName, middleName, lastName,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the CRM Contacts before and after the current CRM Contact in the ordered set where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param crmContactId the primary key of the current CRM Contact
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next CRM Contact
+	 * @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
+	 */
+	@Override
+	public CrmContact[] findByName_PrevAndNext(long crmContactId,
+		String firstName, String middleName, String lastName,
+		OrderByComparator<CrmContact> orderByComparator)
+		throws NoSuchCrmContactException {
+		CrmContact crmContact = findByPrimaryKey(crmContactId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CrmContact[] array = new CrmContactImpl[3];
+
+			array[0] = getByName_PrevAndNext(session, crmContact, firstName,
+					middleName, lastName, orderByComparator, true);
+
+			array[1] = crmContact;
+
+			array[2] = getByName_PrevAndNext(session, crmContact, firstName,
+					middleName, lastName, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CrmContact getByName_PrevAndNext(Session session,
+		CrmContact crmContact, String firstName, String middleName,
+		String lastName, OrderByComparator<CrmContact> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_CRMCONTACT_WHERE);
+
+		boolean bindFirstName = false;
+
+		if (firstName == null) {
+			query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
+		}
+		else if (firstName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
+		}
+		else {
+			bindFirstName = true;
+
+			query.append(_FINDER_COLUMN_NAME_FIRSTNAME_2);
+		}
+
+		boolean bindMiddleName = false;
+
+		if (middleName == null) {
+			query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
+		}
+		else if (middleName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
+		}
+		else {
+			bindMiddleName = true;
+
+			query.append(_FINDER_COLUMN_NAME_MIDDLENAME_2);
+		}
+
+		boolean bindLastName = false;
+
+		if (lastName == null) {
+			query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
+		}
+		else if (lastName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
+		}
+		else {
+			bindLastName = true;
+
+			query.append(_FINDER_COLUMN_NAME_LASTNAME_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CrmContactModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindFirstName) {
+			qPos.add(firstName);
+		}
+
+		if (bindMiddleName) {
+			qPos.add(middleName);
+		}
+
+		if (bindLastName) {
+			qPos.add(lastName);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(crmContact);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CrmContact> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63; from the database.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 */
+	@Override
+	public void removeByName(String firstName, String middleName,
+		String lastName) {
+		for (CrmContact crmContact : findByName(firstName, middleName,
+				lastName, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(crmContact);
+		}
+	}
+
+	/**
+	 * Returns the number of CRM Contacts where firstName = &#63; and middleName = &#63; and lastName = &#63;.
+	 *
+	 * @param firstName the first name
+	 * @param middleName the middle name
+	 * @param lastName the last name
+	 * @return the number of matching CRM Contacts
+	 */
+	@Override
+	public int countByName(String firstName, String middleName, String lastName) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
+
+		Object[] finderArgs = new Object[] { firstName, middleName, lastName };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_CRMCONTACT_WHERE);
+
+			boolean bindFirstName = false;
+
+			if (firstName == null) {
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
+			}
+			else if (firstName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
+			}
+			else {
+				bindFirstName = true;
+
+				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_2);
+			}
+
+			boolean bindMiddleName = false;
+
+			if (middleName == null) {
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
+			}
+			else if (middleName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
+			}
+			else {
+				bindMiddleName = true;
+
+				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_2);
+			}
+
+			boolean bindLastName = false;
+
+			if (lastName == null) {
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
+			}
+			else if (lastName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
+			}
+			else {
+				bindLastName = true;
+
+				query.append(_FINDER_COLUMN_NAME_LASTNAME_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindFirstName) {
+					qPos.add(firstName);
+				}
+
+				if (bindMiddleName) {
+					qPos.add(middleName);
+				}
+
+				if (bindLastName) {
+					qPos.add(lastName);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_NAME_FIRSTNAME_1 = "crmContact.firstName IS NULL AND ";
+	private static final String _FINDER_COLUMN_NAME_FIRSTNAME_2 = "crmContact.firstName = ? AND ";
+	private static final String _FINDER_COLUMN_NAME_FIRSTNAME_3 = "(crmContact.firstName IS NULL OR crmContact.firstName = '') AND ";
+	private static final String _FINDER_COLUMN_NAME_MIDDLENAME_1 = "crmContact.middleName IS NULL AND ";
+	private static final String _FINDER_COLUMN_NAME_MIDDLENAME_2 = "crmContact.middleName = ? AND ";
+	private static final String _FINDER_COLUMN_NAME_MIDDLENAME_3 = "(crmContact.middleName IS NULL OR crmContact.middleName = '') AND ";
+	private static final String _FINDER_COLUMN_NAME_LASTNAME_1 = "crmContact.lastName IS NULL";
+	private static final String _FINDER_COLUMN_NAME_LASTNAME_2 = "crmContact.lastName = ?";
+	private static final String _FINDER_COLUMN_NAME_LASTNAME_3 = "(crmContact.lastName IS NULL OR crmContact.lastName = '')";
 	public static final FinderPath FINDER_PATH_FETCH_BY_CONSTANTCONTACTID = new FinderPath(CrmContactModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactModelImpl.FINDER_CACHE_ENABLED, CrmContactImpl.class,
 			FINDER_CLASS_NAME_ENTITY, "fetchByConstantContactId",
@@ -4366,6 +5085,16 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRIMARYEMAILADDRESSANDSTATUS,
 				args);
 
+			args = new Object[] {
+					crmContactModelImpl.getFirstName(),
+					crmContactModelImpl.getMiddleName(),
+					crmContactModelImpl.getLastName()
+				};
+
+			finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+				args);
+
 			args = new Object[] { crmContactModelImpl.getIsVip() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_VIPFLAG, args);
@@ -4472,6 +5201,29 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_PRIMARYEMAILADDRESSANDSTATUS,
 					args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_PRIMARYEMAILADDRESSANDSTATUS,
+					args);
+			}
+
+			if ((crmContactModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						crmContactModelImpl.getOriginalFirstName(),
+						crmContactModelImpl.getOriginalMiddleName(),
+						crmContactModelImpl.getOriginalLastName()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
+					args);
+
+				args = new Object[] {
+						crmContactModelImpl.getFirstName(),
+						crmContactModelImpl.getMiddleName(),
+						crmContactModelImpl.getLastName()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 					args);
 			}
 
