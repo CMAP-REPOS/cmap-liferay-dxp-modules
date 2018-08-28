@@ -18,6 +18,8 @@ import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -26,6 +28,7 @@ import contact.manager.exception.NoSuchCrmContactException;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmTag;
+import contact.manager.serachindexer.CrmContactIndexer;
 import contact.manager.service.base.CrmContactLocalServiceBaseImpl;
 
 /**
@@ -98,5 +101,15 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 
 	public void setCrmGroups(long contactId, long[] groupIds) throws SystemException {
 		crmContactPersistence.setCrmGroups(contactId, groupIds);
+	}
+	
+	public CrmContact updateCrmContact(CrmContact crmContact) {
+		//adding this in case the indexer is not auto registred.
+		Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
+		if (indexer == null){
+	    	CrmContactIndexer contactIndexer = new CrmContactIndexer();
+	    	IndexerRegistryUtil.register(contactIndexer);
+		}
+		return crmContactPersistence.update(crmContact);
 	}
 }

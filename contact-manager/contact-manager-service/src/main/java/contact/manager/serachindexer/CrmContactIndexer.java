@@ -220,20 +220,14 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
     protected void reindexEntries(long companyId)
         throws PortalException {
     	
-    	
-    	System.out.println("11111A "+companyId);
-    	
         final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
             _entryLocalService.getIndexableActionableDynamicQuery();
-        System.out.println("11111B");
         indexableActionableDynamicQuery.setCompanyId(companyId);
-        System.out.println("11111C");
         indexableActionableDynamicQuery.setPerformActionMethod(
             new ActionableDynamicQuery.PerformActionMethod<CrmContact>() {
             	
                 @Override
                 public void performAction(CrmContact entry) {
-                	System.out.println("11111D"  + entry.getCrmContactId());
                     try {
                         Document document = getDocument(entry);
                         indexableActionableDynamicQuery.addDocuments(document);
@@ -247,11 +241,8 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
                     }
                 }
             });
-        System.out.println("11111E");
         indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
-        System.out.println("11111F");
         indexableActionableDynamicQuery.performActions();
-        System.out.println("11111G");
     }
 
     private static final Log _log = LogFactoryUtil.getLog(CrmContactIndexer.class);
