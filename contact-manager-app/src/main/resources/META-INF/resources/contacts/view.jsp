@@ -96,6 +96,7 @@
 </liferay-portlet:renderURL>
 
 <div class="container-fluid">
+
 	<% if (PermissionUtil.canUserAddContact(currentUser)) { %>
 	<aui:row>
 		<aui:col md="12">
@@ -144,7 +145,7 @@
 						pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
-
+				
 				<liferay-ui:search-container-row
 					className="contact.manager.app.viewmodel.CrmContactViewModel"
 					modelVar="viewModel">
@@ -193,6 +194,58 @@
 		</aui:col>
 	</aui:row>
 
-
-
 </div>
+<script type="text/javascript">
+
+var toTitleCase = function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+}
+
+AUI().ready(function(){
+	/*getting the headers and removing the actions column*/
+	var tableTR = document.querySelector("table tr");
+	var baseTH = tableTR.querySelectorAll("th");
+	var tableColumnsArray = [].slice.call(baseTH, 1);
+	
+	/*creating element and adding the actions column*/
+	var searchRow = document.createElement('tr');
+	var emptyTHElement =  document.createElement('th');
+	emptyTHElement.textContent = "Search by: ";
+	searchRow.appendChild(emptyTHElement);
+
+	/*crating base searchElement*/
+	var existingForm = document.querySelector("form");/*getting the existing search form*/
+	var hiddenElementsinForm = existingForm.querySelectorAll("input[type='hidden']");/*getting the hidden inputs in the form*/
+	var baseSearchElement = document.createElement('th');/*create TH*/
+	baseSearchElement.className = "table-first-header";
+	var baseInnerForm = document.createElement('form');/*create form*/
+	baseInnerForm.setAttribute("action", existingForm.action);
+	var fmNameSpace = existingForm.getAttribute("data-fm-namespace");
+	baseInnerForm.setAttribute("data-fm-namespace", fmNameSpace);
+	baseInnerForm.setAttribute("name", existingForm.name);
+	var addingElements = function (element) {
+		baseInnerForm.appendChild(element.cloneNode(false));
+	};
+	hiddenElementsinForm.forEach(addingElements);
+	
+	var baseInnerInput = document.createElement('input');/*creating input for search*/
+	baseInnerInput.setAttribute("type", "text");
+	baseInnerInput.setAttribute("name", "");
+	baseInnerForm.appendChild(baseInnerInput);/*adding input to the form*/
+	baseSearchElement.appendChild(baseInnerForm);/*add form in TH*/
+	
+	/*creating new search elements based on the existing header*/
+	var arrangingColumns = function (element) {
+		elementID = element.id.substring(element.id.indexOf("_col-")+5, element.id.length);/*generating an id*/
+		var newSearchElement = baseSearchElement.cloneNode(true);/*cloning the TH*/
+		var newElement = newSearchElement.querySelector("input[type='text']");
+		newElement.name = fmNameSpace + elementID;
+		newElement.setAttribute("placeholder", elementID.replace("-", " ").replace(/\w\S*/g, toTitleCase));
+		searchRow.appendChild(newSearchElement);
+	};
+	
+	tableColumnsArray.forEach(arrangingColumns);
+	
+	tableTR.parentNode.insertBefore(searchRow, tableTR.nextSibling);
+});
+</script>

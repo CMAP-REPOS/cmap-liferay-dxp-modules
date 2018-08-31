@@ -26,8 +26,83 @@
 
 
 <%
-  String keywords = ParamUtil.getString(request, "keywords");
+  String keywords = "";
+  String[] columns =  new String[1];
+
+  String parameterAdd ="";
+  
+  
+  if (!"".equals(ParamUtil.getString(request, "keywords"))){
+	  keywords = ParamUtil.getString(request, "keywords");
+	  columns =  new String[]{"firstName", "lastName", 
+          "organization", "jobTitle", "primaryAddress1", "primaryAddress2", "primaryAddressCity", "primaryAddressZip", 
+          "primaryAddressCounty", "primaryPhone", "primaryCell", 
+          "primaryEmailAddress", "groupsList", "tagsList", "modifiedDate"};
+  } else if ( !"".equals(ParamUtil.getString(request, "first-name"))){
+	  keywords = ParamUtil.getString(request, "first-name");
+	  columns = new String[]{"firstName"};
+	  parameterAdd = "first-name";
+  } else if ( !"".equals(ParamUtil.getString(request, "last-name"))){
+	  keywords = ParamUtil.getString(request, "last-name");
+	  columns = new String[]{"lastName"};
+	  parameterAdd = "last-name";
+  } else if ( !"".equals(ParamUtil.getString(request, "organization"))){
+	  keywords = ParamUtil.getString(request, "organization");
+	  columns = new String[]{"organization"};
+	  parameterAdd = "organization";
+  } else if (!"".equals( ParamUtil.getString(request, "job-title") )){
+	  keywords = ParamUtil.getString(request, "job-title");
+	  columns = new String[]{"jobTitle"};
+	  parameterAdd = "job-title";
+  } else if ( !"".equals(ParamUtil.getString(request, "address-1") )){
+	  keywords = ParamUtil.getString(request, "address-1");
+	  columns = new String[]{"primaryAddress1"};
+	  parameterAdd = "address-1";
+  } else if ( !"".equals(ParamUtil.getString(request, "address-2"))){
+	  keywords = ParamUtil.getString(request, "address-2");
+	  columns = new String[]{"primaryAddress2"};
+	  parameterAdd = "address-2";
+  } else if ( !"".equals(ParamUtil.getString(request, "city") )){
+	  keywords = ParamUtil.getString(request, "city");
+	  columns = new String[]{"primaryAddressCity"};
+	  parameterAdd = "city";
+  } else if ( !"".equals(ParamUtil.getString(request, "zip"))){
+	  keywords = ParamUtil.getString(request, "zip");
+	  columns = new String[]{"primaryAddressZip"};
+	  parameterAdd = "zip";
+  } else if ( !"".equals(ParamUtil.getString(request, "county") )){
+	  keywords = ParamUtil.getString(request, "county");
+	  columns = new String[]{"primaryAddressCounty"};
+	  parameterAdd = "county";
+  } else if ( !"".equals(ParamUtil.getString(request, "phone") )){
+	  keywords = ParamUtil.getString(request, "phone");
+	  columns = new String[]{"primaryPhone"};
+	  parameterAdd = "phone";
+  } else if (!"".equals( ParamUtil.getString(request, "cell") )){
+	  keywords = ParamUtil.getString(request, "cell");
+	  columns = new String[]{"primaryCell"};
+	  parameterAdd = "cell";
+  } else if (!"".equals(ParamUtil.getString(request, "email-address"))){
+	  keywords = ParamUtil.getString(request, "email-address");
+	  columns = new String[]{"primaryEmailAddress"};
+	  parameterAdd = "email-address";
+  } else if (!"".equals( ParamUtil.getString(request, "groups") )){
+	  keywords = ParamUtil.getString(request, "groups");
+	  columns = new String[]{"groupsList"};
+	  parameterAdd = "groups";
+  }  else if ( !"".equals(ParamUtil.getString(request, "tags") )){
+	  keywords = ParamUtil.getString(request, "tags");
+	  columns = new String[]{"tagsList"};
+	  parameterAdd = "tags";
+  } else if ( !"".equals(ParamUtil.getString(request, "modified"))){
+	  keywords = ParamUtil.getString(request, "modified");
+	  columns = new String[]{"modifiedDate"};
+	  parameterAdd = "modified";
+  }
+  
   keywords = keywords!=null ? keywords.toLowerCase() : "";
+
+  
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -69,10 +144,7 @@
     
     
     MultiMatchQuery q = new MultiMatchQuery(keywords);
-	q.addFields( "firstName", "lastName", 
-            "organization", "jobTitle", "primaryAddress1", "primaryAddress2", "primaryAddressCity", "primaryAddressState", "primaryAddressZip", 
-            "primaryAddressCounty", "primaryAddressCountry", "primaryPhone", "primaryPhoneExtension", "primaryFax", "primaryCell", 
-            "primaryEmailAddress", "groupsList", "tagsList", "modifiedDate");
+	q.addFields(columns );
 	q.setAnalyzer("whitespace");
 	
 	BooleanQuery query = new BooleanQueryImpl();
@@ -82,8 +154,6 @@ TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.g
 query.add(termQuery, BooleanClauseOccur.MUST);
 
 Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
-
-PortletURL actionURL = renderResponse.createRenderURL();
 
 %>
 
@@ -164,3 +234,16 @@ PortletURL actionURL = renderResponse.createRenderURL();
 				
 		<liferay-ui:search-iterator />
 </liferay-ui:search-container>
+
+<script type="text/javascript">
+AUI().ready(function(){
+	if (<%=!"".equals(parameterAdd)%>){
+		document.querySelectorAll(".lfr-pagination a").forEach(function(element){
+			if (element.href.indexOf("http")>-1){
+				element.href = element.href + "&_ContactManagerApp_<%=parameterAdd%>=<%=keywords%>";
+			}
+		});
+	} 
+});
+
+</script>
