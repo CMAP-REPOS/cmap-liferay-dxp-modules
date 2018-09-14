@@ -1,6 +1,7 @@
 
 CKEDITOR.editorConfig = function( config ) {
   config.bodyId = "cmap-ckeditor";
+
   config.allowedContent = { 
     $1: { 
       elements: CKEDITOR.dtd, 
@@ -9,7 +10,54 @@ CKEDITOR.editorConfig = function( config ) {
       classes: true 
     } 
   };
+
+  config.toolbarGroups = [
+    { 
+      name: 'document', 
+      groups: [ 'mode', 'document', 'doctools' ] 
+    }, { 
+      name: 'clipboard', 
+      groups: [ 'clipboard', 'undo' ] 
+    }, { 
+      name: 'editing', 
+      groups: [ 'find', 'selection', 'spellchecker', 'editing' ] 
+    }, { 
+      name: 'insert', 
+      groups: [ 'insert' ] 
+    }, { 
+      name: 'tools', 
+      groups: [ 'tools' ] 
+    }, { 
+      name: 'forms', 
+      groups: [ 'forms' ] 
+    }, 
+    '/', 
+    { 
+      name: 'basicstyles', 
+      groups: [ 'basicstyles', 'cleanup' ] 
+    }, { 
+      name: 'links', 
+      groups: [ 'links' ] 
+    }, { 
+      name: 'colors', 
+      groups: [ 'colors' ] 
+    }, { 
+      name: 'paragraph', 
+      groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] 
+    }, { 
+      name: 'styles', 
+      groups: [ 'styles' ] 
+    }, { 
+      name: 'others', 
+      groups: [ 'others' ] 
+    }, { 
+      name: 'about', 
+      groups: [ 'about' ] 
+    } 
+  ];
   config.disallowedContent = "h3;h4;h5;h6;";
+
+  console.log(config);
   return config;
 };
 

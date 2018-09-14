@@ -29,13 +29,11 @@ import org.osgi.framework.BundleContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 
-/**
- * @author Chema Balsas
- */
 @Component(
 	immediate = true, 
 	service = DynamicInclude.class
 )
+
 public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 
 	@Override
@@ -54,7 +52,7 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		URL plugin_recommendation = bundle.getEntry("/META-INF/resources/plugins/recommendations.js");
 		URL plugin_full_width_image = bundle.getEntry("/META-INF/resources/plugins/full-image.js");
 
-		URL site_javascript = bundle.getEntry("/o/cmap-onto-2050-theme/js/main.js");
+		// URL site_javascript = bundle.getEntry("/o/cmap-onto-2050-theme/js/main.js");
 
 		StreamUtil.transfer(editor_config.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(editor_characters.openStream(), response.getOutputStream(), false);
@@ -67,7 +65,7 @@ public class CKEditorOnEditorCreateDynamicInclude implements DynamicInclude {
 		StreamUtil.transfer(plugin_recommendation.openStream(), response.getOutputStream(), false);
 		StreamUtil.transfer(plugin_full_width_image.openStream(), response.getOutputStream(), false);
 
-		StreamUtil.transfer(site_javascript.openStream(), response.getOutputStream(), false);
+		// StreamUtil.transfer(site_javascript.openStream(), response.getOutputStream(), false);
 	}
 
 	@Override

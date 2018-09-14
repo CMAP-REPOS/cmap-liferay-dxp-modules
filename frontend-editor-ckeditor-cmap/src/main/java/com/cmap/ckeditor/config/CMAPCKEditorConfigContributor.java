@@ -33,10 +33,10 @@ import org.osgi.service.component.annotations.Component;
 import java.util.*;
 
 @Component(
-  property = {
-		 "editor.name=ckeditor",
-		 "service.ranking:Integer=100"
-  },
+	property = {
+		"editor.name=ckeditor",
+		"service.ranking:Integer=100"
+	},
 
   // https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/editor/configuration/EditorConfigContributor.html
   service = EditorConfigContributor.class
@@ -58,6 +58,8 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/theme/ThemeDisplay.html
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/json/JSONObject.html
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/json/JSONArray.html
+
+		// logger.warn(jsonObject.toString());
 
 		jsonObject.put("bodyClass", "journal-content-article");
 		jsonObject.put("bodyId", "cmap-ckeditor");
@@ -84,7 +86,6 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		} catch( Exception e ){
 			logger.error(e.getMessage());
-
 		}
 
 		jsonObject.put("grayt_autoStartup", true);
@@ -105,8 +106,13 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("templates_replaceContent", false);
 		jsonObject.put("toolbarCanCollapse", true);
 		jsonObject.put("uiColor", "#E4EBEE");
+
+		jsonObject.put("toolbar", "null");
+
 		try{
 			jsonObject.put("toolbarGroups", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
+			// jsonObject.put("toolbar_liferayArticle", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
+			// jsonObject.put("toolbar_liferay", JSONFactoryUtil.createJSONArray("[ ['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],["TextColor","BGColor"],["JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock"],["NumberedList","BulletedList","-","Outdent","Indent"],"/",["Styles","FontSize"],["Link","Unlink","Anchor"],["Table","-","ImageSelector","Flash","-","Smiley","SpecialChar"],"/",["Cut","Copy","Paste","-","PasteText","PasteFromWord","-","SelectAll","-","Undo","Redo"],["Find","Replace","-","SpellChecker","Scayt"],["Source"],["A11YBtn"]]"));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
@@ -122,6 +128,6 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 			jsonObject.put("colorButton_enableAutomatic", false);
 		}
 
-		logger.warn(jsonObject.toString());
+		// logger.warn(jsonObject.toString());
 	}
 }
