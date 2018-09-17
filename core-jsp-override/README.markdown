@@ -7,11 +7,6 @@ For more details on this sample, see the
 [Core JSP Override](https://dev.liferay.com/develop/reference/-/knowledge_base/7-1/core-jsp-hook)
 article on Liferay's Developer Network.
 
-
-### Server Password
-
-C3L7&Ib!QrO3
-
 ### Login to server
 
 Connect with secure pipes
