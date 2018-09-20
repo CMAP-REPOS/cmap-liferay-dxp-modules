@@ -3,6 +3,7 @@ package com.cmap.portlets.custom.glossary.utility.portlet;
 import com.cmap.portlets.custom.glossary.utility.constants.GlossaryUtilityPortletKeys;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -27,25 +28,17 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author jon
  */
-@Component(
-		immediate = true,
-		property = {
-			"com.liferay.portlet.display-category=CMAP",
-			"com.liferay.portlet.instanceable=false",
-			"javax.portlet.display-name=Glossary Utility",
-			"javax.portlet.init-param.template-path=/",
-			"javax.portlet.init-param.view-template=/view.jsp",
-			"javax.portlet.name=" + GlossaryUtilityPortletKeys.GlossaryUtility,
-			"javax.portlet.resource-bundle=content.Language",
-			"javax.portlet.security-role-ref=power-user,user"
-		},
-		service = Portlet.class
-	)
+@Component(immediate = true, property = { "com.liferay.portlet.display-category=CMAP",
+		"com.liferay.portlet.instanceable=false", "javax.portlet.display-name=Glossary Utility",
+		"javax.portlet.init-param.template-path=/", "javax.portlet.init-param.view-template=/view.jsp",
+		"javax.portlet.name=" + GlossaryUtilityPortletKeys.GlossaryUtility,
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class GlossaryUtilityPortlet extends MVCPortlet {
-	
+
 	private static Log _log = LogFactoryUtil.getLog(GlossaryUtilityPortlet.class);
 	private static long _groupId = 10180;
-	private static String _ddmStructureKey = "853953";
+	private static String _urlTitle = "2050-glossary";
 
 	@Override
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -56,35 +49,43 @@ public class GlossaryUtilityPortlet extends MVCPortlet {
 		if (command.equals("getGlossaryItem")) {
 			String requestedTerm = ParamUtil.getString(resourceRequest, "term");
 			String returnedDefintion = StringPool.BLANK;
-			List<JournalArticle> glossaryArticles = JournalArticleLocalServiceUtil.getStructureArticles(_groupId, _ddmStructureKey);
-			// glossary *should* be the only one
-			if (glossaryArticles.size() > 1) {
-				_log.warn("Warning in GlossaryUtilityPortlet.serveResource: multiple glossary articles found.");
-			}
-			JournalArticle glossaryArticle = glossaryArticles.get(0);
 
-			Document doc;
+			JournalArticle glossaryArticle = null;
 			try {
-				doc = SAXReaderUtil.read(glossaryArticle.getContent());
-				List<Node> terms = doc.selectNodes("/root/dynamic-element[@name=\"Term\"]/dynamic-content");
-				for (Node term : terms) {
-					String termValue = term.getText();
-					if (termValue.toLowerCase().equals(requestedTerm.toLowerCase())) {
-						Node definition = term.getParent().selectSingleNode("dynamic-element[@name=\"Definition\"]/dynamic-content");
-						returnedDefintion = definition.getText();
+				glossaryArticle = JournalArticleLocalServiceUtil.getArticleByUrlTitle(_groupId, _urlTitle);
+			} catch (PortalException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			if (glossaryArticle != null) {
+
+				Document doc;
+				try {
+					doc = SAXReaderUtil.read(glossaryArticle.getContent());
+					List<Node> terms = doc.selectNodes("/root/dynamic-element[@name=\"Term\"]/dynamic-content");
+					for (Node term : terms) {
+						String termValue = term.getText();
+						if (termValue.toLowerCase().equals(requestedTerm.toLowerCase())) {
+							Node definition = term.getParent()
+									.selectSingleNode("dynamic-element[@name=\"Definition\"]/dynamic-content");
+							returnedDefintion = definition.getText();
+						}
 					}
+
+				} catch (DocumentException ex) {
+					_log.error("DocumentException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
 				}
 
-			} catch (DocumentException ex) {
-				_log.error("DocumentException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
-			}
-
-			try {
-				PrintWriter writer = resourceResponse.getWriter();
-				writer.write(returnedDefintion);
-				writer.close();
-			} catch (IOException ex) {
-				_log.error("IOException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
+				try {
+					PrintWriter writer = resourceResponse.getWriter();
+					writer.write(returnedDefintion);
+					writer.close();
+				} catch (IOException ex) {
+					_log.error("IOException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
+				}
+			} else {
+				_log.warn("Warning in GlossaryUtilityPortlet.serveResource: no 2050-glossary article found");
 			}
 		}
 
