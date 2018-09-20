@@ -61,6 +61,8 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		// logger.warn(jsonObject.toString());
 
+		String extra_plugins = "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,full-width-image";
+		
 		jsonObject.put("bodyClass", "journal-content-article");
 		jsonObject.put("bodyId", "cmap-ckeditor");
 		
@@ -72,10 +74,10 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("contentsCss", contentsCss);
 
 		jsonObject.put("emailProtection", "encode");
-		jsonObject.put("extraPlugins", "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,full-width-image");
-		jsonObject.put("format_tags", "p;h1;h2");
+		jsonObject.put("extraPlugins", extra_plugins);
 
 		try{
+			jsonObject.put("format_tags", "p;h1;h2");
 			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h1', attributes: { 'class': 'page-headline bold alt-color' } }"));
 			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'section-sub-headline bold alt-color' } }"));
 			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
@@ -90,8 +92,8 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		jsonObject.put("grayt_autoStartup", true);
 		jsonObject.put("height", 320);
-		jsonObject.put("notification_duration", 0);
 		jsonObject.put("language_list", JSONFactoryUtil.createJSONArray());
+		jsonObject.put("notification_duration", 0);
 		jsonObject.put("removeButtons", "Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Font,FontSize");
 		jsonObject.put("scayt_autoStartup", true);
 		jsonObject.put("scayt_ignoreAllCapsWords", true);
@@ -111,8 +113,6 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		try{
 			jsonObject.put("toolbarGroups", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
-			// jsonObject.put("toolbar_liferayArticle", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
-			// jsonObject.put("toolbar_liferay", JSONFactoryUtil.createJSONArray("[ ['Bold','Italic','Underline','Strike','-','Subscript','Superscript','-','RemoveFormat'],["TextColor","BGColor"],["JustifyLeft","JustifyCenter","JustifyRight","JustifyBlock"],["NumberedList","BulletedList","-","Outdent","Indent"],"/",["Styles","FontSize"],["Link","Unlink","Anchor"],["Table","-","ImageSelector","Flash","-","Smiley","SpecialChar"],"/",["Cut","Copy","Paste","-","PasteText","PasteFromWord","-","SelectAll","-","Undo","Redo"],["Find","Replace","-","SpellChecker","Scayt"],["Source"],["A11YBtn"]]"));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
