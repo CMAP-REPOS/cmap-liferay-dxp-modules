@@ -13,6 +13,8 @@
 	}
 
 	renderResponse.setTitle((crmGroup != null) ? (crmGroup.getName()) : "New Group");
+
+	List<CrmContact> crmContactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
 %>
 
 <portlet:actionURL name='<%=crmGroup == null ? "add" : "update"%>'
@@ -24,46 +26,34 @@
 
 var cmap = cmap || {};
 cmap.groupManager =  cmap.groupManager || {};
-cmap.groupManager.resourceUrl = '<%=ajaxCallResourceURL %>';
+cmap.groupManager.resourceUrl = '<%=ajaxCallResourceURL%>';
 
 cmap.groupManager.bindEvents = function() {
-	$('#<portlet:namespace />contactsLists').on('change', '.contact-toggler', function() {
-		var input = $(this).next('input:hidden');
-		input.prop('disabled', function(i, v) { return !v; });
-	});
-	
-	$('#<portlet:namespace />addContacts').on('click', function(e) {
-		e.preventDefault();
-		cmap.groupManager.addContactsToList();
-	});
-}
 
-cmap.groupManager.addContactsToList = function(data) {
-	/* 
-	<li>
-	    <input class="contact-toggler" name="chk_662" id="chk_662" checked="checked" type="checkbox">
-	    <input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="662" type="hidden"> Bruce Gould 
-	</li>
-	 */	
-	var selectedContacts = $('#<portlet:namespace />findName').select2('data');
-	
-	for (var i = 0; i < selectedContacts.length; i++) {
-		var contact = selectedContacts[i];
+	$("#_GroupManagerApp_submit").click(function(e) {
+		var $form = $('#<portlet:namespace />fm')
+		var contactsToAdd = $('#<portlet:namespace />findAddName').select2('data');
+		var contactsToRemove = $('#<portlet:namespace />findRemoveName').select2('data');
 		
-		if (!$('input[value="' + contact.id + '"]:hidden').length) {
-			$('#<portlet:namespace />pendingContactsList').append('<li>' +
-				    '<input class="contact-toggler" name="chk_' + contact.id + '" id="chk_' + contact.id + '" checked="checked" type="checkbox">' + 
-				    '<input class="field form-control" id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="' + contact.id + '" type="hidden"> ' + contact.text + 
-				'</li>');
-		};
-	}
-	
-	$('#<portlet:namespace />findName').select2('val', '');
+		$.each(contactsToAdd, function(i, v) {
+			var id = v.id;
+			if (!$('input[value="' + id + '"]:hidden').length) {
+				$form.append('<input id="_GroupManagerApp_crmContactIds" name="_GroupManagerApp_crmContactIds" value="'+id+'" type="hidden">');
+			};
+		});
+		
+		$.each(contactsToRemove, function(i, v) {
+			var id = v.id;
+			$form.find('input[value="' + id + '"]:hidden').remove();
+		});
+		
+		$form.submit();
+	});
 }
 
 cmap.groupManager.initSelect2 = function() {
-	$('#<portlet:namespace />findName').val('');
-	$('#<portlet:namespace />findName').select2({
+	$('#<portlet:namespace />findAddName').val('');
+	$('#<portlet:namespace />findAddName').select2({
 	    minimumInputLength: 2,
 	    tags: [],
 	    ajax: {
@@ -75,6 +65,36 @@ cmap.groupManager.initSelect2 = function() {
 	            return {
 	            	'<portlet:namespace />name': term,
 	                '<portlet:namespace />cmd': 'getPotentialContacts'
+	            };
+	        },
+	        results: function (data) {
+	            return {
+	                results: $.map(data, function (item) {
+	                    return {
+	                        text: item.crmContactName,
+	                        slug: item.crmContactName,
+	                        id: item.crmContactId
+	                    }
+	                })
+	            };
+	        }
+	    }
+	});
+
+	$('#<portlet:namespace />findRemoveName').val('');
+	$('#<portlet:namespace />findRemoveName').select2({
+	    minimumInputLength: 2,
+	    tags: [],
+	    ajax: {
+	        url: cmap.groupManager.resourceUrl,
+	        dataType: 'json',
+	        type: "GET",
+	        quietMillis: 50,
+	        data: function (term) {
+	            return {
+	            	'<portlet:namespace />name': term,
+	            	'<portlet:namespace />crmGroupId': <%=crmGroup.getCrmGroupId()%>,
+	                '<portlet:namespace />cmd': 'getExistingContacts'
 	            };
 	        },
 	        results: function (data) {
@@ -103,14 +123,22 @@ AUI().ready(
 
 <div class="container-fluid">
 
-	<aui:form action="<%=editURL%>" name="<portlet:namespace />fm">
+	<aui:form action="<%=editURL%>" name="fm">
 		<aui:input type="hidden" name="crmGroupId"
 			value='<%=crmGroup == null ? "" : crmGroup.getCrmGroupId()%>'>
 		</aui:input>
+		<%
+			for (CrmContact crmContact : crmGroupContacts) {
+		%>
+		<aui:input name="crmContactIds" class="contact-toggler-value"
+			type="hidden" value="<%=crmContact.getCrmContactId()%>"></aui:input>
+		<%
+			}
+		%>
 
-		<aui:row>
-			<aui:col md="12">
-				<aui:fieldset-group markupView="lexicon">
+		<aui:fieldset-group markupView="lexicon">
+			<aui:row>
+				<aui:col md="12">
 					<aui:fieldset>
 						<aui:input name="name"
 							value='<%=crmGroup == null ? "" : crmGroup.getName()%>'>
@@ -118,46 +146,35 @@ AUI().ready(
 							<aui:validator name="maxLength">500</aui:validator>
 						</aui:input>
 					</aui:fieldset>
+				</aui:col>
+				<aui:col md="6">
 					<aui:fieldset>
-						<aui:row>
-							<aui:col md="6">
-								<div class="form-group" id="<portlet:namespace />contactsLists">
-									<label class="control-label"> Assigned Contacts </label>
-									<!-- TODO: visually differentiate pending contacts -->
-									<ul id="<portlet:namespace />pendingContactsList">
-									</ul>
-									<ul id="<portlet:namespace />assignedContactsList">
-										<%
-											for (CrmContact crmContact : crmGroupContacts) {
-										%>
-										<li><input type="checkbox" class="contact-toggler"
-											name="chk_<%=crmContact.getCrmContactId()%>"
-											id="chk_<%=crmContact.getCrmContactId()%>" checked="checked">
-											<aui:input name="crmContactIds" class="contact-toggler-value"
-												type="hidden" value="<%=crmContact.getCrmContactId()%>"></aui:input>
-											<%=crmContact.getFirstName() + ' ' + crmContact.getLastName()%>
-										</li>
-										<%
-											}
-										%>
-									</ul>
-								</div>
-							</aui:col>
-							<aui:col md="6">
-								<aui:input name="findName" label="Find Contacts">
-								</aui:input>
-								
-								<button class="btn btn-primary btn-default" id="<portlet:namespace />addContacts"> <span class="lfr-btn-label">Add Contacts</span> </button>
-							</aui:col>
-						</aui:row>
+						<div class="form-group input-text-wrapper">
+							<label class="control-label"
+								for="<portlet:namespace />findAddName"> Contacts to Add
+							</label>
+						</div>
+						<aui:input name="findAddName" label="">
+						</aui:input>
 					</aui:fieldset>
-				</aui:fieldset-group>
-			</aui:col>
-		</aui:row>
+				</aui:col>
+				<aui:col md="6">
+					<aui:fieldset>
+						<div class="form-group input-text-wrapper">
+							<label class="control-label"
+								for="<portlet:namespace />findRemoveName"> Contacts to
+								Remove </label>
+						</div>
+						<aui:input name="findRemoveName" label="">
+						</aui:input>
+					</aui:fieldset>
+				</aui:col>
+			</aui:row>
+		</aui:fieldset-group>
 		<aui:row>
 			<aui:col md="12">
 				<aui:button-row>
-					<aui:button type="submit"></aui:button>
+					<button class="btn btn-primary btn-default" id="_GroupManagerApp_submit" type="button"> <span class="lfr-btn-label">Save</span> </button>
 					<aui:button type="cancel" onClick="<%=redirect%>"></aui:button>
 				</aui:button-row>
 			</aui:col>

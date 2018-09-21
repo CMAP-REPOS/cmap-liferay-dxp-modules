@@ -13,7 +13,6 @@ import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.service.CrmContactLocalServiceUtil;
-import contact.manager.service.CrmGroupLocalServiceUtil;
 
 public class ContactUtil {
 

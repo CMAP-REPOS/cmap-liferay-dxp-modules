@@ -1,7 +1,6 @@
 package contact.manager.app.portlet;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
@@ -11,7 +10,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -69,6 +67,14 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 		if (command.equals("getPotentialContacts")) {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String potentialContactsSerialized = GroupUtil.getCrmContactsByName(nameParam);
+
+			PrintWriter writer = resourceResponse.getWriter();
+			writer.write(potentialContactsSerialized);
+			writer.close();
+		} else if (command.equals("getExistingContacts")) {
+			String nameParam = ParamUtil.getString(resourceRequest, "name");
+			String groupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
+			String potentialContactsSerialized = GroupUtil.getCrmContactsByNameAndCrmGroupId(nameParam, Long.parseLong(groupIdParam));
 
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
