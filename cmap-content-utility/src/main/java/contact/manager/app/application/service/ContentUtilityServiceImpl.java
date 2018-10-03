@@ -140,16 +140,19 @@ public class ContentUtilityServiceImpl implements ContentUtilityService {
 	//include sitemap YES = sitemap-include=1
 	@Override
 	public String updateLayoutAndChildrenTypeSettingsProperty(long groupId, String friendlyURL, String typeSettingProperty, String value) {
-		
 		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(groupId, false, friendlyURL);
 		if (layout != null) {
 			List<Layout> layouts = layout.getAllChildren();
 			layouts.add(0, layout);
 			for (Layout childLayout : layouts) {
-				UnicodeProperties prop = childLayout.getTypeSettingsProperties();
-				prop.setProperty(typeSettingProperty, value);
-				childLayout.setTypeSettingsProperties(prop);
-				LayoutLocalServiceUtil.updateLayout(childLayout);
+				try {
+					UnicodeProperties prop = childLayout.getTypeSettingsProperties();
+					prop.setProperty(typeSettingProperty, value);
+					childLayout.setTypeSettingsProperties(prop);
+					LayoutLocalServiceUtil.updateLayout(childLayout);					
+				} catch (Exception e) {
+					System.out.println("PROBLEM PRICESSING LAYOUT: "+ childLayout);
+				}
 			}
 		}
 		return "";
