@@ -49,7 +49,7 @@ public class CMAPContentUtilityApplication extends Application {
 	}
 	
 	@POST
-	@Path("/updateLayourAndChildrenTSProp/")
+	@Path("/updateLayoutAndChildrenTSProp/")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String updateLayoutAndChildrenTypeSettingsProperty(@FormParam("groupId") long groupId, 
 			@FormParam("friendlyURL") String friendlyURL,
