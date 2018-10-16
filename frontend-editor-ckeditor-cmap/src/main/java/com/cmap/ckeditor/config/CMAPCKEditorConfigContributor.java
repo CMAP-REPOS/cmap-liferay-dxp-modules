@@ -42,8 +42,6 @@ import java.util.*;
   service = EditorConfigContributor.class
 )
 
-
-
 public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 	final Logger logger = LoggerFactory.getLogger(this.getClass().getName());
@@ -55,17 +53,18 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 			ThemeDisplay themeDisplay,
 			RequestBackedPortletURLFactory requestBackedPortletURLFactory
 		) {
+			
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/theme/ThemeDisplay.html
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/json/JSONObject.html
 		// https://docs.liferay.com/portal/7.0/javadocs/portal-kernel/com/liferay/portal/kernel/json/JSONArray.html
 
 		// logger.warn(jsonObject.toString());
 
-		String extra_plugins = "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,full-width-image";
+		String extra_plugins = "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,endnotes,centered-content";
 		
 		jsonObject.put("bodyClass", "journal-content-article");
 		jsonObject.put("bodyId", "cmap-ckeditor");
-		
+
 		JSONArray contentsCss = JSONFactoryUtil.createJSONArray();
 		contentsCss.put("/o/cmap-onto-2050-theme/css/main.css");
 		contentsCss.put("/o/cmap-onto-2050-theme/css/aui.css");
@@ -77,10 +76,11 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("extraPlugins", extra_plugins);
 
 		try{
-			jsonObject.put("format_tags", "p;h1;h2");
+			jsonObject.put("format_tags", "p;h1;h2;div");
 			jsonObject.put("format_h1", JSONFactoryUtil.createJSONObject("{ element: 'h1', attributes: { 'class': 'page-headline bold alt-color' } }"));
 			jsonObject.put("format_h2", JSONFactoryUtil.createJSONObject("{ element: 'h2', attributes: { 'class': 'section-sub-headline bold alt-color' } }"));
 			jsonObject.put("format_p", JSONFactoryUtil.createJSONObject("{ element: 'p', attributes: { 'class': 'presna-normal' } }"));
+			jsonObject.put("format_div", JSONFactoryUtil.createJSONObject("{ element: 'div', attributes: { 'class': 'whitney-normal' } }"));
 			// jsonObject.put("format_h3", JSONFactoryUtil.createJSONObject("{ element: 'h3', attributes: { 'class': 'normal-headline bold' } }"));
 			// jsonObject.put("format_h4", JSONFactoryUtil.createJSONObject("{ element: 'h4', attributes: { 'class': 'section-sub-headline bold' } }"));
 			// jsonObject.put("format_h5", JSONFactoryUtil.createJSONObject("{ element: 'h5', attributes: { 'class': 'normal-headline bold' } }"));
