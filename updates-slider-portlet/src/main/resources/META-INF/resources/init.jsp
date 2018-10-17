@@ -36,12 +36,20 @@
 		renderRequest.getAttribute(UpdatesSliderConfiguration.class.getName());
 
 	long assetCategoryId = 0;
+	long assetCategoryId2 = 0;
+	long assetCategoryId3 = 0;
 	int assetCount = 0;
 	int summaryLength = 0;
 
 	if (Validator.isNotNull(updatesSliderConfiguration)) {
 		String assetCategoryIdPref = 
 				portletPreferences.getValue("assetCategoryId", updatesSliderConfiguration.assetCategoryId());
+
+		String assetCategoryId2Pref = 
+				portletPreferences.getValue("assetCategoryId2", updatesSliderConfiguration.assetCategoryId2());
+
+		String assetCategoryId3Pref = 
+				portletPreferences.getValue("assetCategoryId3", updatesSliderConfiguration.assetCategoryId3());
 
 		String assetCountPref = 
 				portletPreferences.getValue("assetCount", updatesSliderConfiguration.assetCount());
@@ -51,6 +59,14 @@
 
 		if (Validator.isDigit(assetCategoryIdPref)) {
 			assetCategoryId = Long.parseLong(assetCategoryIdPref);
+		}
+
+		if (Validator.isDigit(assetCategoryId2Pref)) {
+			assetCategoryId2 = Long.parseLong(assetCategoryId2Pref);
+		}
+
+		if (Validator.isDigit(assetCategoryId3Pref)) {
+			assetCategoryId3 = Long.parseLong(assetCategoryId3Pref);
 		}
 
 		if (Validator.isDigit(assetCountPref)) {
