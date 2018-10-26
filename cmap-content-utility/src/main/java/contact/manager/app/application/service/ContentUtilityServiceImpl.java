@@ -3,14 +3,21 @@ package contact.manager.app.application.service;
 import com.liferay.document.library.kernel.service.DLAppLocalService;
 import com.liferay.journal.model.JournalArticle;
 import com.liferay.journal.service.JournalArticleLocalService;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.Layout;
 import com.liferay.portal.kernel.model.PortletPreferences;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.portlet.PortletPreferencesFactoryUtil;
 import com.liferay.portal.kernel.repository.model.FileEntry;
+import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.LayoutLocalService;
 import com.liferay.portal.kernel.service.LayoutLocalServiceUtil;
 import com.liferay.portal.kernel.service.PortletPreferencesLocalService;
+import com.liferay.portal.kernel.service.ResourcePermissionLocalService;
+import com.liferay.portal.kernel.service.RoleLocalService;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.service.UserGroupRoleLocalService;
+import com.liferay.portal.kernel.service.UserLocalService;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 
 import java.util.Date;
@@ -36,6 +43,19 @@ public class ContentUtilityServiceImpl implements ContentUtilityService {
 	
 	@Reference
 	LayoutLocalService _layoutLocalService;
+	
+	@Reference
+	UserLocalService _userLocalService;
+	
+	@Reference
+	UserGroupRoleLocalService _userGroupRoleLocalService;
+	
+	@Reference
+	RoleLocalService _roleLocalService;
+	
+	@Reference
+	ResourcePermissionLocalService _resourcePermissionLocalService;
+	
 	
 	@Override
 	public String touchElementsOfAllChilderPages(long groupId, String friendlyURL) {
@@ -156,5 +176,104 @@ public class ContentUtilityServiceImpl implements ContentUtilityService {
 			}
 		}
 		return "";
+	}
+
+
+	//add Role to users
+	@Override
+	public String addURolesToUsers(long roles[], long groupId, long userIds[]) {
+		
+		StringBuffer out = new StringBuffer();
+		
+		for (long roleId : roles) {
+			try {
+				_userGroupRoleLocalService.addUserGroupRoles(userIds, groupId, roleId);
+			} catch (Exception e) {
+				out.append("Could not add users role: ").append(roleId);
+				out.append("Reason: ").append(e.getMessage());
+			}	
+		}
+		
+		return out.toString();
+	}
+
+	//ActionKeys
+	@Override
+	public String addRolesToPages(long groupId, Map<Long, String[]> roles, String friendlyURL) {
+		StringBuffer out = new StringBuffer();
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(groupId, false, friendlyURL);
+		if (layout != null) {
+			Long companyId = layout.getCompanyId();
+			List<Layout> layouts = layout.getAllChildren();
+			layouts.add(0, layout);
+			for (Layout childLayout : layouts) {
+				try {
+					_resourcePermissionLocalService.setResourcePermissions(companyId, Layout.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, Long.toString(childLayout.getPrimaryKey()), roles);
+				} catch (Exception e) {
+					out.append("Error modifiying page: ").append(childLayout.getLayoutId()).append(", reason: ").append(e.getMessage());
+				}
+			}
+		} else {
+			out.append("Not able to retrieve: ").append(friendlyURL);
+		}
+		
+		return out.toString();
+	}
+
+
+	@Override
+	public String addRolesToContentInPages(long groupId, Map<Long, String[]>  roles, String friendlyURL) {
+		
+		StringBuffer out = new StringBuffer();
+		
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(groupId, false, friendlyURL);
+		if (layout != null) {
+			Long companyId = layout.getCompanyId();
+			List<Layout> layouts = layout.getAllChildren();
+			layouts.add(0, layout);
+			Set<String> articleIds = new HashSet<String>();
+			for (Layout childLayout : layouts) {
+				
+				
+				List<PortletPreferences> pagePortletPreferences = _portletPreferencesLocalService.getPortletPreferencesByPlid(childLayout.getPlid());
+				if (!pagePortletPreferences.isEmpty()) { //if portlers are found in the page
+					for (PortletPreferences portletPreferencesInPage : pagePortletPreferences) { //itereate portlets in page
+						String xmlPrteferences = portletPreferencesInPage.getPreferences();
+						javax.portlet.PortletPreferences prefs = PortletPreferencesFactoryUtil.fromDefaultXML(xmlPrteferences);
+						Map<String, String[]> prefMap = prefs.getMap();
+						for (String st : prefMap.keySet()) { // iterates preference for each portlet
+							if ("articleId".equals(st)) { //if the preference is articleId, then is a WebContentViwer Portlet
+								for (String articleId : prefMap.get(st)) {
+									if (articleIds.add(articleId)) { //if is the first time the content is found
+										JournalArticle journalArticle = null;
+										try {
+											journalArticle = _journalArticleLocalService.getArticle(groupId, articleId);
+										} catch (Exception e) {
+											out.append("PROBLEM GETTING ARTICLE: ").append(articleId);
+											articleIds.remove(articleId);
+										}
+										try {
+											if (journalArticle!= null) {
+												_resourcePermissionLocalService.setResourcePermissions(companyId, JournalArticle.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, Long.toString(journalArticle.getResourcePrimKey()), roles);
+											} else {
+												out.append("Found null article for articleID: ").append(articleId);
+											}
+										} catch (PortalException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		} else {
+			out.append("Not able to retrieve: ").append(friendlyURL);
+		}
+		
+		return out.toString();
+		
 	}
 }
