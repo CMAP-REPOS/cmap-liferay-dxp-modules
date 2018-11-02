@@ -23,6 +23,7 @@
 <%@ page import="java.util.HashMap" %>
 
 <%@ page import="javax.portlet.PortletURL" %>
+<%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
 
 
 <%
@@ -99,7 +100,7 @@
 	  columns = new String[]{"modifiedDate"};
 	  parameterAdd = "modified";
   }
-  
+  String kp2 = keywords;
   keywords = keywords!=null ? keywords.toLowerCase() : "";
 
   
@@ -137,23 +138,42 @@
 </aui:form>
 
 <%
-    SearchContext searchContext = SearchContextFactory.getInstance(request);
 
-    searchContext.setKeywords(keywords);
-    searchContext.setAttribute("paginationType", "more");
-    
-    
-    MultiMatchQuery q = new MultiMatchQuery(keywords);
-	q.addFields(columns );
-	q.setAnalyzer("whitespace");
+
+Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
+if (indexer != null && "ok".equals(ParamUtil.getString(request, "reset"))){
+	IndexerRegistryUtil.unregister(indexer);
+	CrmContactIndexer contactIndexer = new CrmContactIndexer();
+	IndexerRegistryUtil.register(contactIndexer);
+}
+
+
+
+    SearchContext searchContext = SearchContextFactory.getInstance(request);
 	
+	String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
+
+    searchContext.setAttribute("paginationType", "more");
+    String orderByCol = ParamUtil.getString(request, "orderByCol");
+    String orderByType = ParamUtil.getString(request, "orderByType");
+    if (orderByCol != null && !"".equals(orderByCol) && orderByType != null && !"".equals(orderByType)){
+    	try{
+    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_sortable", orderByType) };
+    		 searchContext.setSorts(sorts);
+    	 } catch(Exception e){
+    		 e.printStackTrace();
+    	 }
+    }
+    MultiMatchQuery q = new MultiMatchQuery(s);
+	q.addFields(columns);
+	q.setAnalyzer("whitespace");
 	BooleanQuery query = new BooleanQueryImpl();
 	query.add(q, BooleanClauseOccur.MUST);
-
-TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
-query.add(termQuery, BooleanClauseOccur.MUST);
-
-Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
+	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
+	query.add(termQuery, BooleanClauseOccur.MUST);
+	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
+	query.add(termQuery, BooleanClauseOccur.MUST);
+	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 
 %>
 
@@ -189,16 +209,19 @@ Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
         <liferay-ui:search-container-row
 					className="contact.manager.app.viewmodel.CrmContactViewModel"
 					modelVar="viewModel" escapedModel="<%=true%>">
+					
 					<liferay-ui:search-container-column-jsp
 						path="/contacts/view_actions.jsp" name="Actions" />
         
       				<liferay-ui:search-container-column-text property="firstName"
 						name="First Name" orderable="true" orderableProperty="firstName" />
+					
 					<liferay-ui:search-container-column-text property="lastName"
 						name="Last Name" orderable="true" orderableProperty="lastName" />
+					
 					<liferay-ui:search-container-column-text property="organization"
-						name="Organization" orderable="true"
-						orderableProperty="organization" />
+						name="Organization" orderable="true" orderableProperty="organization" />
+					
 					<liferay-ui:search-container-column-text property="jobTitle"
 						name="Job Title" orderable="true" orderableProperty="jobTitle" />
 					<liferay-ui:search-container-column-text property="primaryAddress1"
@@ -240,10 +263,72 @@ AUI().ready(function(){
 	if (<%=!"".equals(parameterAdd)%>){
 		document.querySelectorAll(".lfr-pagination a").forEach(function(element){
 			if (element.href.indexOf("http")>-1){
-				element.href = element.href + "&_ContactManagerApp_<%=parameterAdd%>=<%=keywords%>";
+				element.href = element.href + "&_ContactManagerApp_<%=parameterAdd%>=<%=java.net.URLEncoder.encode(kp2, "UTF-8")%>";
+			}
+		});
+		
+		document.querySelectorAll(".table-sort-liner a").forEach(function(element){
+			if (element.href.indexOf("http")>-1){
+				element.href = element.href + "&_ContactManagerApp_<%=parameterAdd%>=<%=java.net.URLEncoder.encode(kp2, "UTF-8")%>";
 			}
 		});
 	} 
+});
+
+var toTitleCase = function(txt) {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+}
+
+AUI().ready(function(){
+	/*getting the headers and removing the actions column*/
+	var tableTR = document.querySelector("table tr");
+	var baseTH = tableTR.querySelectorAll("th");
+	var tableColumnsArray = [].slice.call(baseTH, 1);
+	
+	/*creating element and adding the actions column*/
+	var searchRow = document.createElement('tr');
+	var emptyTHElement =  document.createElement('th');
+	emptyTHElement.textContent = "Search by: ";
+	searchRow.appendChild(emptyTHElement);
+
+	/*crating base searchElement*/
+	var existingForm = document.querySelector("form");/*getting the existing search form*/
+	var hiddenElementsinForm = existingForm.querySelectorAll("input[type='hidden']");/*getting the hidden inputs in the form*/
+	var baseSearchElement = document.createElement('th');/*create TH*/
+	baseSearchElement.className = "table-first-header";
+	var baseInnerForm = document.createElement('form');/*create form*/
+	baseInnerForm.setAttribute("action", existingForm.action);
+	var fmNameSpace = existingForm.getAttribute("data-fm-namespace");
+	baseInnerForm.setAttribute("data-fm-namespace", fmNameSpace);
+	baseInnerForm.setAttribute("name", existingForm.name);
+	var addingElements = function (element) {
+		baseInnerForm.appendChild(element.cloneNode(false));
+	};
+	hiddenElementsinForm.forEach(addingElements);
+	
+	var baseInnerInput = document.createElement('input');/*creating input for search*/
+	baseInnerInput.setAttribute("type", "text");
+	baseInnerInput.setAttribute("name", "");
+	baseInnerForm.appendChild(baseInnerInput);/*adding input to the form*/
+	baseSearchElement.appendChild(baseInnerForm);/*add form in TH*/
+	
+	/*creating new search elements based on the existing header*/
+	var arrangingColumns = function (element) {
+		elementID = element.id.substring(element.id.indexOf("_col-")+5, element.id.length);/*generating an id*/
+		var newSearchElement = baseSearchElement.cloneNode(true);/*cloning the TH*/
+		var newElement = newSearchElement.querySelector("input[type='text']");
+		newElement.name = fmNameSpace + elementID;
+		newElement.setAttribute("placeholder", elementID.replace("-", " ").replace(/\w\S*/g, toTitleCase));
+		searchRow.appendChild(newSearchElement);
+	};
+	
+	tableColumnsArray.forEach(arrangingColumns);
+	
+	tableTR.parentNode.insertBefore(searchRow, tableTR.nextSibling);
+	
+	if (<%=!"".equals(parameterAdd)%>){
+		document.querySelector("form [name=_ContactManagerApp_<%=parameterAdd%>]").value = "<%=kp2%>";		
+	}
 });
 
 </script>

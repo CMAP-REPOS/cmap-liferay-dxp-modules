@@ -32,7 +32,10 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 public class CrmContactIndexer extends BaseIndexer<CrmContact> {
 
     public static final String CLASS_NAME = CrmContact.class.getName();
-
+    public static String [] sortableElements = new String[]{"firstName","lastName","organization","jobTitle","primaryAddress1","primaryAddress2","primaryAddressCity","primaryAddressZip","primaryAddressCountry","primaryPhone"
+    		,"primaryCell","primaryEmailAddress","modifiedDate"};
+    
+    
     public CrmContactIndexer() {
 
         setDefaultSelectedFieldNames(
@@ -42,7 +45,7 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
                 "organization", "jobTitle", "primaryAddress1", "primaryAddress2", "primaryAddressCity", "primaryAddressState", "primaryAddressZip", 
                 "primaryAddressCounty", "primaryAddressCountry", "secondaryAddress1", "secondaryAddress2", "secondaryAddressCity", "secondaryAddressState", 
                 "secondaryAddressZip", "secondaryAddressCounty", "secondaryAddressCountry", "primaryPhone", "primaryPhoneExtension", "primaryFax", "primaryCell", 
-                "primaryEmailAddress", "alternateContact", "alternateEmail", "isVip", "facebookId", "twitterHandle", "linkedInUrl", "kioskUuid", "tagsList", "groupsList");
+                "primaryEmailAddress", "alternateContact", "alternateEmail", "isVip", "facebookId", "twitterHandle", "linkedInUrl", "status", "kioskUuid", "tagsList", "groupsList");
         
         setFilterSearch(true);
         setPermissionAware(true);
@@ -112,6 +115,7 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
     	addSearchLocalizedTerm(searchQuery, searchContext, "facebookId", false); 
     	addSearchLocalizedTerm(searchQuery, searchContext, "twitterHandle", false); 
     	addSearchLocalizedTerm(searchQuery, searchContext, "linkedInUrl", false); 
+    	addSearchLocalizedTerm(searchQuery, searchContext, "status", false);
     	addSearchLocalizedTerm(searchQuery, searchContext, "kioskUuid", false); 
     	addSearchLocalizedTerm(searchQuery, searchContext, "tagsList", false); 
     	addSearchLocalizedTerm(searchQuery, searchContext, "groupsList", false); 
@@ -129,26 +133,31 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
     protected Document doGetDocument(CrmContact CrmContact)
         throws Exception {
 
+    	//"firstName","lastName","organization","jobTitle","primaryAddress1","primaryAddress2","primaryAddressCity","primaryAddressZip","primaryAddressCountry","primaryPhone"
+		//,"primaryCell","primaryEmailAddress","modifiedDate"
+    	
         Document document = getBaseModelDocument(CLASS_NAME, CrmContact);
+        document.setSortableTextFields(sortableElements);
+        
         document.addNumber("crmContactId", CrmContact.getCrmContactId());
         document.addNumber("companyId", CrmContact.getCompanyId()); 
     	document.addNumber("userId", CrmContact.getUserId()); 
     	document.addText("userName", CrmContact.getUserName()); 
     	document.addDate("createDate", CrmContact.getCreateDate()); 
-    	document.addDate("modifiedDate", CrmContact.getModifiedDate()); 
+    	document.addDateSortable("modifiedDate", CrmContact.getModifiedDate()); 
     	document.addText("prefix", CrmContact.getPrefix()); 
     	document.addText("salutation", CrmContact.getSalutation()); 
-    	document.addText("firstName", CrmContact.getFirstName()); 
+    	document.addTextSortable("firstName", CrmContact.getFirstName()); 
     	document.addText("middleName", CrmContact.getMiddleName()); 
-    	document.addText("lastName", CrmContact.getLastName());
-    	document.addText("organization", CrmContact.getOrganization()); 
-    	document.addText("jobTitle", CrmContact.getJobTitle()); 
-    	document.addText("primaryAddress1", CrmContact.getPrimaryAddress1()); 
-    	document.addText("primaryAddress2", CrmContact.getPrimaryAddress2()); 
-    	document.addText("primaryAddressCity", CrmContact.getPrimaryAddressCity()); 
+    	document.addTextSortable("lastName", CrmContact.getLastName());
+    	document.addTextSortable("organization", CrmContact.getOrganization()); 
+    	document.addTextSortable("jobTitle", CrmContact.getJobTitle()); 
+    	document.addTextSortable("primaryAddress1", CrmContact.getPrimaryAddress1()); 
+    	document.addTextSortable("primaryAddress2", CrmContact.getPrimaryAddress2()); 
+    	document.addTextSortable("primaryAddressCity", CrmContact.getPrimaryAddressCity()); 
     	document.addText("primaryAddressState", CrmContact.getPrimaryAddressState()); 
-    	document.addText("primaryAddressZip", CrmContact.getPrimaryAddressZip()); 
-    	document.addText("primaryAddressCounty", CrmContact.getPrimaryAddressCounty()); 
+    	document.addTextSortable("primaryAddressZip", CrmContact.getPrimaryAddressZip()); 
+    	document.addTextSortable("primaryAddressCounty", CrmContact.getPrimaryAddressCounty()); 
     	document.addText("primaryAddressCountry", CrmContact.getPrimaryAddressCountry()); 
     	document.addText("secondaryAddress1", CrmContact.getSecondaryAddress1()); 
     	document.addText("secondaryAddress2", CrmContact.getSecondaryAddress2()); 
@@ -157,23 +166,21 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
     	document.addText("secondaryAddressZip", CrmContact.getSecondaryAddressZip()); 
     	document.addText("secondaryAddressCounty", CrmContact.getSecondaryAddressCounty()); 
     	document.addText("secondaryAddressCountry", CrmContact.getSecondaryAddressCountry()); 
-    	document.addText("primaryPhone", CrmContact.getPrimaryPhone()); 
+    	document.addTextSortable("primaryPhone", CrmContact.getPrimaryPhone()); 
     	document.addText("primaryPhoneExtension", CrmContact.getPrimaryPhoneExtension()); 
     	document.addText("primaryFax", CrmContact.getPrimaryFax()); 
-    	document.addText("primaryCell", CrmContact.getPrimaryCell()); 
-    	document.addText("primaryEmailAddress", CrmContact.getPrimaryEmailAddress()); 
+    	document.addTextSortable("primaryCell", CrmContact.getPrimaryCell()); 
+    	document.addTextSortable("primaryEmailAddress", CrmContact.getPrimaryEmailAddress()); 
     	document.addText("alternateContact", CrmContact.getAlternateContact()); 
     	document.addText("alternateEmail", CrmContact.getAlternateEmail()); 
 //    	document.addText("isVip", Boolean.toString(CrmContact.getIsVip())); 
     	document.addText("facebookId", CrmContact.getFacebookId()); 
     	document.addText("twitterHandle", CrmContact.getTwitterHandle()); 
-    	document.addText("linkedInUrl", CrmContact.getLinkedInUrl()); 
+    	document.addText("linkedInUrl", CrmContact.getLinkedInUrl());
+    	document.addText("status", CrmContact.getStatus());
     	document.addText("kioskUuid", CrmContact.getKioskUuid()); 
     	document.addText("tagsList", CrmContact.getTagsList()); 
     	document.addText("groupsList", CrmContact.getGroupsList()); 
-        
-        
-        
 
         return document;
     }
@@ -196,6 +203,7 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
         throws Exception {
 
     	Document document = getDocument(entry);
+    	
     	IndexWriterHelperUtil.updateDocument(
             getSearchEngineId(), entry.getCompanyId(), document,
             isCommitImmediately());

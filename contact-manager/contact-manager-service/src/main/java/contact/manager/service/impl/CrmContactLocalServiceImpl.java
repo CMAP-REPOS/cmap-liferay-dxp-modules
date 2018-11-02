@@ -110,6 +110,10 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	    	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	    	IndexerRegistryUtil.register(contactIndexer);
 		}
+		
+		
+		
+		
 		return crmContactPersistence.update(crmContact);
 	}
 }

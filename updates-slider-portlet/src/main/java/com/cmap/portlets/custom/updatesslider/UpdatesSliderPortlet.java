@@ -4,6 +4,8 @@ import com.cmap.portlets.custom.updatesslider.constants.UpdatesSliderPortletKeys
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
 import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
+import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
+import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,22 +32,13 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
-@Component(
-	configurationPid = "com.cmap.portlets.custom.updatesslider.UpdatesSliderConfiguration",
-	immediate = true,
-	property = {
-		"com.liferay.portlet.display-category=CMAP",
-		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=Updates Slider",
-		"javax.portlet.init-param.config-template=/configuration.jsp",
-		"javax.portlet.init-param.template-path=/",
-		"javax.portlet.init-param.view-template=/view.jsp",
+@Component(configurationPid = "com.cmap.portlets.custom.updatesslider.UpdatesSliderConfiguration", immediate = true, property = {
+		"com.liferay.portlet.display-category=CMAP", "com.liferay.portlet.instanceable=true",
+		"javax.portlet.display-name=Updates Slider", "javax.portlet.init-param.config-template=/configuration.jsp",
+		"javax.portlet.init-param.template-path=/", "javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + UpdatesSliderPortletKeys.UpdatesSliderPortlet,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user"
-	},
-	service = Portlet.class
-)
+		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
 public class UpdatesSliderPortlet extends MVCPortlet {
 
 	private static final Log _log = LogFactoryUtil.getLog(UpdatesSliderPortlet.class);
@@ -60,12 +53,23 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 		try {
 			PortletPreferences portletPreferences = renderRequest.getPreferences();
 			long assetCategoryId = 0;
+			long assetCategoryId2 = 0;
+			long assetCategoryId3 = 0;
 			int assetCount = 0;
 			int summaryLength = 0;
+			
+			List<String> assetCategoryParams = new ArrayList<String>();
+			List<Long> assetCategoryIds = new ArrayList<Long>();
 
 			if (Validator.isNotNull(_updatesSliderConfiguration)) {
 				String assetCategoryIdPref = portletPreferences.getValue("assetCategoryId",
 						_updatesSliderConfiguration.assetCategoryId());
+
+				String assetCategoryId2Pref = portletPreferences.getValue("assetCategoryId2",
+						_updatesSliderConfiguration.assetCategoryId2());
+
+				String assetCategoryId3Pref = portletPreferences.getValue("assetCategoryId3",
+						_updatesSliderConfiguration.assetCategoryId3());
 
 				String assetCountPref = portletPreferences.getValue("assetCount",
 						_updatesSliderConfiguration.assetCount());
@@ -75,6 +79,26 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 
 				if (Validator.isDigit(assetCategoryIdPref)) {
 					assetCategoryId = Long.parseLong(assetCategoryIdPref);
+					if (assetCategoryId != 0) {
+						assetCategoryIds.add(assetCategoryId);
+						assetCategoryParams.add(assetCategoryIdPref);
+					}
+				}
+
+				if (Validator.isDigit(assetCategoryId2Pref)) {
+					assetCategoryId2 = Long.parseLong(assetCategoryId2Pref);
+					if (assetCategoryId2 != 0) {
+						assetCategoryIds.add(assetCategoryId2);
+						assetCategoryParams.add(assetCategoryId2Pref);
+					}
+				}
+
+				if (Validator.isDigit(assetCategoryId3Pref)) {
+					assetCategoryId3 = Long.parseLong(assetCategoryId3Pref);
+					if (assetCategoryId3 != 0) {
+						assetCategoryIds.add(assetCategoryId3);
+						assetCategoryParams.add(assetCategoryId3Pref);
+					}
 				}
 
 				if (Validator.isDigit(assetCountPref)) {
@@ -86,27 +110,35 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				}
 			}
 
-			if (assetCategoryId != 0) {
-
-				AssetEntryPublishDateComparator comparator = new AssetEntryPublishDateComparator();
-
-				List<AssetEntry> assetEntries = AssetEntryLocalServiceUtil.getAssetCategoryAssetEntries(assetCategoryId,
-						0, assetCount, comparator);
-
-				List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
-
-				for (AssetEntry assetEntry : assetEntries) {
-					if (assetEntry.isVisible() && assetEntry.getClassNameId() == 10108L) {
-						UpdatesSliderAssetModel assetModel = getAssetModel(assetEntry, summaryLength);
-						if (assetModel != null) {
-							assetModels.add(assetModel);
-						}
-					}
-				}
-
-				renderRequest.setAttribute("assetModels", assetModels);
+			long[] anyCategoryIds = new long[assetCategoryIds.size()];
+			
+			for (int i = 0; i < assetCategoryIds.size(); i++) {
+				anyCategoryIds[i] = assetCategoryIds.get(i);
 			}
 
+			AssetEntryQuery assetEntryQuery = new AssetEntryQuery();
+
+			assetEntryQuery.setAnyCategoryIds(anyCategoryIds);
+			assetEntryQuery.setStart(-1);
+			assetEntryQuery.setEnd(assetCount);
+			assetEntryQuery.setVisible(true);
+			assetEntryQuery.setOrderByCol1("publishDate");
+			assetEntryQuery.setOrderByType1("DESC");
+			assetEntryQuery.setOrderByCol2("title");
+			assetEntryQuery.setOrderByType2("ASC");
+
+			List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
+			List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
+
+			for (AssetEntry assetEntry : assetEntries) {
+				UpdatesSliderAssetModel assetModel = getAssetModel(assetEntry, summaryLength);
+				if (assetModel != null) {
+					assetModels.add(assetModel);
+				}
+			}
+
+			renderRequest.setAttribute("assetModels", assetModels);
+			renderRequest.setAttribute("assetCategoryParams", String.join(",", assetCategoryParams));
 			renderRequest.setAttribute(UpdatesSliderConfiguration.class.getName(), _updatesSliderConfiguration);
 
 		} catch (Exception ex) {

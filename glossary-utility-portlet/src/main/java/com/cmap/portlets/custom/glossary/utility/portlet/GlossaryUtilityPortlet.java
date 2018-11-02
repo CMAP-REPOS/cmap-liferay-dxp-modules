@@ -41,11 +41,13 @@ import org.osgi.service.component.annotations.Component;
 		},
 		service = Portlet.class
 	)
+
 public class GlossaryUtilityPortlet extends MVCPortlet {
 	
 	private static Log _log = LogFactoryUtil.getLog(GlossaryUtilityPortlet.class);
 	private static long _groupId = 10180;
-	private static String _ddmStructureKey = "853953";
+	private static String _ddmStructureKey = "853952";
+	// private static String _ddmStructureKey = "830530";
 
 	@Override
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
@@ -55,36 +57,43 @@ public class GlossaryUtilityPortlet extends MVCPortlet {
 
 		if (command.equals("getGlossaryItem")) {
 			String requestedTerm = ParamUtil.getString(resourceRequest, "term");
+
 			String returnedDefintion = StringPool.BLANK;
+			String safe_requested_term = requestedTerm.toLowerCase().trim();
+			boolean definition_found = false;
 			List<JournalArticle> glossaryArticles = JournalArticleLocalServiceUtil.getStructureArticles(_groupId, _ddmStructureKey);
+			
 			// glossary *should* be the only one
 			if (glossaryArticles.size() > 1) {
-				_log.warn("Warning in GlossaryUtilityPortlet.serveResource: multiple glossary articles found.");
+				// _log.warn("Warning in GlossaryUtilityPortlet.serveResource: "+glossaryArticles.size()+" glossary articles found.");
 			}
-			JournalArticle glossaryArticle = glossaryArticles.get(0);
 
-			Document doc;
-			try {
-				doc = SAXReaderUtil.read(glossaryArticle.getContent());
-				List<Node> terms = doc.selectNodes("/root/dynamic-element[@name=\"Term\"]/dynamic-content");
-				for (Node term : terms) {
-					String termValue = term.getText();
-					if (termValue.toLowerCase().equals(requestedTerm.toLowerCase())) {
-						Node definition = term.getParent().selectSingleNode("dynamic-element[@name=\"Definition\"]/dynamic-content");
-						returnedDefintion = definition.getText();
+			for( JournalArticle widget : glossaryArticles ){
+				if(definition_found){ break; }
+				
+				try {
+					Document doc = SAXReaderUtil.read(widget.getContent());
+					List<Node> terms = doc.selectNodes("/root/dynamic-element[@name=\"Term\"]/dynamic-content");
+					for (Node term : terms) {
+						if(definition_found){ break; }
+						String termValue = term.getText().toLowerCase().trim();
+
+						
+						if (termValue.equals(safe_requested_term) || 
+								(termValue+"s").equals(safe_requested_term) || 
+								(termValue+"es").equals(safe_requested_term)) {
+							Node definition = term.getParent().selectSingleNode("dynamic-element[@name=\"Definition\"]/dynamic-content");
+							returnedDefintion = definition.getText();
+							definition_found = true;
+
+							PrintWriter writer = resourceResponse.getWriter();
+							writer.write(returnedDefintion);
+							writer.flush();
+						}
 					}
+				} catch (DocumentException ex) {
+					_log.error("DocumentException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
 				}
-
-			} catch (DocumentException ex) {
-				_log.error("DocumentException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
-			}
-
-			try {
-				PrintWriter writer = resourceResponse.getWriter();
-				writer.write(returnedDefintion);
-				writer.close();
-			} catch (IOException ex) {
-				_log.error("IOException in GlossaryUtilityPortlet.serveResource: " + ex.getMessage(), ex);
 			}
 		}
 

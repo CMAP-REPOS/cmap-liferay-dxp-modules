@@ -1,0 +1,4 @@
+Bundle-Name: cmap-content-utility
+Bundle-SymbolicName: cmap.content.util
+Bundle-Version: 1.0.0
+Liferay-Configuration-Path: /configuration
