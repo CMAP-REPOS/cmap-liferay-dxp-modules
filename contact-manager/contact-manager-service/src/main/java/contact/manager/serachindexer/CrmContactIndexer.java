@@ -8,6 +8,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.IndexWriterHelperUtil;
 import com.liferay.portal.kernel.search.Indexer;
@@ -181,7 +182,7 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
     	document.addText("kioskUuid", CrmContact.getKioskUuid()); 
     	document.addText("tagsList", CrmContact.getTagsList()); 
     	document.addText("groupsList", CrmContact.getGroupsList()); 
-
+    	
         return document;
     }
     
@@ -251,6 +252,8 @@ public class CrmContactIndexer extends BaseIndexer<CrmContact> {
             });
         indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
         indexableActionableDynamicQuery.performActions();
+        
+        System.out.println("Reindex Completed for CRM");
     }
 
     private static final Log _log = LogFactoryUtil.getLog(CrmContactIndexer.class);

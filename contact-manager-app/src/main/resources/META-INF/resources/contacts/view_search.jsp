@@ -141,11 +141,13 @@
 
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
-if (indexer != null && "ok".equals(ParamUtil.getString(request, "reset"))){
+if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	IndexerRegistryUtil.unregister(indexer);
+} else if (indexer == null && "reg".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	IndexerRegistryUtil.register(contactIndexer);
 }
+
 
 
 
@@ -156,23 +158,42 @@ if (indexer != null && "ok".equals(ParamUtil.getString(request, "reset"))){
     searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
+    System.out.println(orderByCol);
+    System.out.println(orderByType);
     if (orderByCol != null && !"".equals(orderByCol) && orderByType != null && !"".equals(orderByType)){
     	try{
     		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_sortable", orderByType) };
     		 searchContext.setSorts(sorts);
+    		 System.out.println(sorts[0]);
     	 } catch(Exception e){
     		 e.printStackTrace();
     	 }
     }
-    MultiMatchQuery q = new MultiMatchQuery(s);
-	q.addFields(columns);
-	q.setAnalyzer("whitespace");
+    
+    Query q = null;
+    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
+    	StringQuery qq = new StringQuery("{" + 
+    		"\"query_string\": {" + 
+    				"\"default_field\": \"primaryEmailAddress\"," + 
+    				"\"query\": \"aszwak@\"" + 
+    		"}}");
+    	q = qq;
+    } else {
+    	MultiMatchQuery qq = new MultiMatchQuery(s);
+    	qq.addFields(columns);
+    	qq.setAnalyzer("whitespace");
+    	q = qq;
+    }
+    
+	
 	BooleanQuery query = new BooleanQueryImpl();
 	query.add(q, BooleanClauseOccur.MUST);
 	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
 	query.add(termQuery, BooleanClauseOccur.MUST);
+	System.out.println(query);
+	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 
 %>
