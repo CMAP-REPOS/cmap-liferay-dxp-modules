@@ -160,9 +160,9 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
     String orderByType = ParamUtil.getString(request, "orderByType");
     System.out.println(orderByCol);
     System.out.println(orderByType);
-    if (orderByCol != null && !"".equals(orderByCol) && orderByType != null && !"".equals(orderByType)){
+    if (!"".equals(orderByCol) && !"".equals(orderByType)){
     	try{
-    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_sortable", orderByType) };
+    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
     		 searchContext.setSorts(sorts);
     		 System.out.println(sorts[0]);
     	 } catch(Exception e){
@@ -172,11 +172,7 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
     
     Query q = null;
     if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
-    	StringQuery qq = new StringQuery("{" + 
-    		"\"query_string\": {" + 
-    				"\"default_field\": \"primaryEmailAddress\"," + 
-    				"\"query\": \"aszwak@\"" + 
-    		"}}");
+    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
     	q = qq;
     } else {
     	MultiMatchQuery qq = new MultiMatchQuery(s);
