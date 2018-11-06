@@ -40,12 +40,12 @@ import contact.constantcontact.util.ConstantContactUtil;
 
 public class ConstantContactServiceImpl implements ConstantContactService {
 
-	private String apikey;
-	private String apitokenkey;
-	private String apitokenvalue;
-	private String apibaseurl;
-	private String apidefaultcontactlist;
-	private int apitimeout = 20000; 
+	private static String apikey = null;
+	private static String apitokenkey = null;
+	private static String apitokenvalue = null;
+	private static String apibaseurl = null;
+	private static String apidefaultcontactlist = null;
+	private static int apitimeout = 20000; 
 
 	private HttpURLConnection httpUrlConnection = null;
 
@@ -54,23 +54,35 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
 	public ConstantContactServiceImpl() {
-		this.apikey = PropsUtil.get(ConstantContactConstants.CONFIG_API_KEY);
-		this.apitokenkey = PropsUtil.get(ConstantContactConstants.CONFIG_API_TOKEN_KEY);
-		this.apitokenvalue = PropsUtil.get(ConstantContactConstants.CONFIG_API_TOKEN_VALUE);
-		this.apibaseurl = PropsUtil.get(ConstantContactConstants.CONFIG_API_BASE_URL);
-		this.apidefaultcontactlist = PropsUtil
-				.get(ConstantContactConstants.CONFIG_API_DEFAULT_CONTACT_LIST);
+		staticInitilization();
 	}
 
 	public ConstantContactServiceImpl(String apiKey, String apiTokenKey, String apiTokenValue,
 			String apiBaseUrl, String apiDefaultContactList) {
-		this.apikey = apiKey;
-		this.apitokenkey = apiTokenKey;
-		this.apitokenvalue = apiTokenValue;
-		this.apibaseurl = apiBaseUrl;
-		this.apidefaultcontactlist = apiDefaultContactList;
+		apikey = apiKey;
+		apitokenkey = apiTokenKey;
+		apitokenvalue = apiTokenValue;
+		apibaseurl = apiBaseUrl;
+		apidefaultcontactlist = apiDefaultContactList;
+	}
+	
+	public ConstantContactServiceImpl(boolean reset ) {
+		if (reset) {
+			apikey = null;	
+			staticInitilization();
+		}
 	}
 
+	private void staticInitilization() {
+		if (apikey == null) {
+			apikey = PropsUtil.get(ConstantContactConstants.CONFIG_API_KEY);
+			apitokenkey = PropsUtil.get(ConstantContactConstants.CONFIG_API_TOKEN_KEY);
+			apitokenvalue = PropsUtil.get(ConstantContactConstants.CONFIG_API_TOKEN_VALUE);
+			apibaseurl = PropsUtil.get(ConstantContactConstants.CONFIG_API_BASE_URL);
+			apidefaultcontactlist = PropsUtil
+					.get(ConstantContactConstants.CONFIG_API_DEFAULT_CONTACT_LIST);
+		}
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -89,11 +101,11 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			defaultListModel.id = apidefaultcontactlist;
 			model.setLists(new ArrayList<ContactList>());
 			model.getLists().add(defaultListModel);
-
 			String contactModelJson = OBJECT_MAPPER.writeValueAsString(model);
 			return this.invokeApiAddContact(contactModelJson);
 
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			LOGGER.error(ex.getMessage(), ex);
 			return null;
 		}
@@ -133,7 +145,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			ContactApiModel apiModel = this.buildApiModel(id, firstName, lastName, organization,
 					email);
 			ContactApiModel contactApiModel = this.addContact(apiModel);
-
 			constantContactId = contactApiModel.getId();
 		} catch (JsonParseException e) {
 			LOGGER.error(
@@ -492,22 +503,17 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 	private ContactApiModel invokeApiAddContact(String contactModelJson) {
 		LOGGER.trace("#invokeApiAddContact - enter");
-
 		ContactApiModel contactApiModel = null;
 		String apiUrl = apibaseurl + "contacts?action_by=ACTION_BY_OWNER&api_key=" + apikey;
-
 		HttpURLConnection connection = null;
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.POST,
 					Integer.toString(contactModelJson.getBytes().length), true, true);
-
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
 			out.write(contactModelJson);
 			out.close();
-
 			int status = connection.getResponseCode();
-
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("#invokeApiAddContact - apiUrl: " + apiUrl);
 				LOGGER.debug("#invokeApiAddContact - json: " + contactModelJson);
@@ -538,7 +544,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 					break;
 				}
 			}
-
 			if (status == HttpServletResponse.SC_CREATED) {
 				String jsonResponse = readApiResponse(connection);
 				contactApiModel = OBJECT_MAPPER.readValue(jsonResponse, ContactApiModel.class);
@@ -556,6 +561,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				}
 			}
 		}
+		
 		return contactApiModel;
 	}
 

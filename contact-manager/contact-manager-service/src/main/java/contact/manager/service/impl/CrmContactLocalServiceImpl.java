@@ -18,12 +18,15 @@ import com.liferay.portal.kernel.exception.NoSuchContactException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
 
+import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.manager.exception.NoSuchCrmContactException;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
@@ -103,6 +106,8 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 		crmContactPersistence.setCrmGroups(contactId, groupIds);
 	}
 	
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
 	public CrmContact updateCrmContact(CrmContact crmContact) {
 		//adding this in case the indexer is not auto registred.
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
@@ -111,9 +116,16 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	    	IndexerRegistryUtil.register(contactIndexer);
 		}
 		
-		
-		
-		
+		return crmContactPersistence.update(crmContact);
+	}
+	
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CrmContact addCrmContact(CrmContact crmContact) {
+		crmContact.setNew(true);
+		ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+		String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress());
+		crmContact.setConstantContactId(new Long(id));
 		return crmContactPersistence.update(crmContact);
 	}
 }
