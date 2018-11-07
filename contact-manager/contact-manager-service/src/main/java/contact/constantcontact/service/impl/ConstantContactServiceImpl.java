@@ -162,7 +162,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 					"IOException in addContact(String, String, String, String, String): "
 							+ e.getMessage(), e);
 		}
-		System.out.println("MOCOOSSSSS1"+messageResponse.toString());
 		return constantContactId;
 
 	}
@@ -266,12 +265,8 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#getContactByEmailAndContactStatus - apiUrl: " + apiUrl);
 			}
 			
-			System.out.println(status);
-			System.out.println(apiUrl);
-
 			if (status == HttpServletResponse.SC_OK) {
 				String jsonResponse = readApiResponse(connection);
-				System.out.println(jsonResponse);
 				ContactsCollectionResponse response = OBJECT_MAPPER.readValue(jsonResponse,
 						ContactsCollectionResponse.class);
 
@@ -453,10 +448,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#updateContact - HTTP response code: " + status);
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);
 			}
-			
-			System.out.println(contactModelJson);
-			System.out.println(status);
-			System.out.println(apiUrl);
 			
 			switch (status) {
 			case HttpServletResponse.SC_CREATED:
