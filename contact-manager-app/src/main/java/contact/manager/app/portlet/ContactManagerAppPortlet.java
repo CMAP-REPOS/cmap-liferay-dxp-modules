@@ -7,12 +7,14 @@ import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +30,9 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import contact.constantcontact.model.ContactApiModel;
+import contact.constantcontact.model.EmailAddress;
+import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
@@ -108,20 +113,26 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
+			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			StringBuffer messageResponse = new StringBuffer();
+			String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
+			if (id==null || id.trim().isEmpty()) {
+				SessionErrors.add(request, messageResponse.toString());
+				response.setRenderParameter("mvcPath", "/contacts/view.jsp");
+				return;
+			}
+			crmContact.setConstantContactId(new Long(id));
 			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact);
-
 			if (addedContact != null) {
 				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
-				// TODO: pass to Constant Contact API
 			}
-
 			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("Exception in ContactManagerAppPortlet.addContact: " + e.getMessage());
 		}
 	}
@@ -144,8 +155,69 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmContact originalContact = (CrmContact)crmContact.clone();
 
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, false);
-			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact);
 
+			//Code to update ConstantContact in case of any update in Fname, Lname, primaryEmail, organization;
+			boolean errorOnConstactContact = false;
+			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			StringBuffer messageResponse = new StringBuffer();
+			try {
+				if (crmContact.getConstantContactId()!= 0) {
+						ContactApiModel model = constantContactServiceImpl.getContact(new Long(crmContact.getConstantContactId()).toString());
+						boolean update = false;
+						if (model.getFirstName() == null || !crmContact.getFirstName().equals(model.getFirstName())){
+							update = true;
+							model.setFirstName(crmContact.getFirstName());
+						}
+						
+						if (model.getLastName() == null || !crmContact.getLastName().equals(model.getLastName())){
+							update = true;
+							model.setLastName(crmContact.getLastName());
+						}
+						
+						if (crmContact.getOrganization() != null && !crmContact.getOrganization().equals(model.getCompanyName())){
+							update = true;
+							model.setCompanyName(crmContact.getOrganization());
+						} else if (crmContact.getOrganization() == null && model.getCompanyName()!=null) {
+							update = true;
+							model.setCompanyName(crmContact.getOrganization());
+						}
+						
+						if (!isEmailInEmailAddressList(model.getEmailAddresses(), crmContact.getPrimaryEmailAddress())){
+							ContactApiModel modelP = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE, 1);
+							if (modelP== null) {
+								addEmailToEmailAddressList(model, crmContact.getPrimaryEmailAddress());
+								update = true;
+							} else {
+								update = false;
+								errorOnConstactContact = true;
+								SessionErrors.add(request, "409");
+							}
+						}
+						
+						if (update){
+							constantContactServiceImpl.updateContact(model, messageResponse);
+							String responseCode = messageResponse.toString();
+							if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
+								errorOnConstactContact = true;
+								SessionErrors.add(request, responseCode);
+							}
+						}
+				} else { 
+					String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
+					if (id==null || id.trim().isEmpty()) {
+						SessionErrors.add(request, messageResponse.toString());
+						errorOnConstactContact = true;
+					}
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			CrmContact updatedContact = null;
+			if (!errorOnConstactContact) {
+				updatedContact = _crmContactLocalService.updateCrmContact(crmContact);
+			}
+				
 			if (updatedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
 						updatedContact);
@@ -381,6 +453,25 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	@Reference
 	protected void setCrmNoteService(CrmNoteLocalService crmNoteLocalService) {
 		_crmNoteLocalService = crmNoteLocalService;
+	}
+	
+	private boolean isEmailInEmailAddressList(List<EmailAddress> emailAddresses, String emailAdrress){
+		if (emailAddresses != null){
+			for (EmailAddress emailAddressObj : emailAddresses) {
+				if (emailAddressObj != null && emailAdrress.equals(emailAddressObj.getEmailAddress())) {
+					return true;
+				}
+			}			
+		}
+		return false;
+	}
+	
+	//rules on ConstactContact specify one email address allowed
+	private void addEmailToEmailAddressList(ContactApiModel model, String emailAdrress){
+		model.setEmailAddresses(new ArrayList<EmailAddress>());
+		EmailAddress email = new EmailAddress();
+		email.setEmailAddress(emailAdrress);
+		model.getEmailAddresses().add(email);
 	}
 
 	private CrmContactLocalService _crmContactLocalService;

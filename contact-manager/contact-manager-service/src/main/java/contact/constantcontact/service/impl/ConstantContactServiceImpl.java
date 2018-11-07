@@ -90,7 +90,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	 * com.contactmanager.ContactContactService#addContact(com.contactmanager.model.ContactApiModel)
 	 */
 	@Override
-	public ContactApiModel addContact(ContactApiModel model) throws JsonProcessingException {
+	public ContactApiModel addContact(ContactApiModel model, StringBuffer messageResponse) throws JsonProcessingException {
 		LOGGER.trace("#addContact(ContactApiModel) - enter");
 		try {
 			/*
@@ -102,7 +102,8 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			model.setLists(new ArrayList<ContactList>());
 			model.getLists().add(defaultListModel);
 			String contactModelJson = OBJECT_MAPPER.writeValueAsString(model);
-			return this.invokeApiAddContact(contactModelJson);
+			ContactApiModel cm = this.invokeApiAddContact(contactModelJson, messageResponse);
+			return cm;
 
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -137,15 +138,17 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 	@Override
 	public String addContact(String id, String firstName, String lastName, String organization,
-			String email) {
+			String email, StringBuffer messageResponse) {
 
 		LOGGER.trace("#addContact(String, String, String, String, String) - enter");
 		String constantContactId = "";
 		try {
 			ContactApiModel apiModel = this.buildApiModel(id, firstName, lastName, organization,
 					email);
-			ContactApiModel contactApiModel = this.addContact(apiModel);
-			constantContactId = contactApiModel.getId();
+			ContactApiModel contactApiModel = this.addContact(apiModel, messageResponse);
+			if (contactApiModel !=null) {
+				constantContactId = contactApiModel.getId();				
+			}
 		} catch (JsonParseException e) {
 			LOGGER.error(
 					"JsonParseException in addContact(String, String, String, String, String): "
@@ -159,7 +162,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 					"IOException in addContact(String, String, String, String, String): "
 							+ e.getMessage(), e);
 		}
-
+		System.out.println("MOCOOSSSSS1"+messageResponse.toString());
 		return constantContactId;
 
 	}
@@ -248,7 +251,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			int limit) {
 		LOGGER.trace("#getContactByEmailAndContactStatus - enter");
 
-		String apiUrl = String.format("%scontacts?email=%s&status=%s&limit=%dapi_key=%s",
+		String apiUrl = String.format("%scontacts?email=%s&status=%s&limit=%d&api_key=%s",
 				apibaseurl, email, contactStatus, limit, apikey);
 
 		ContactApiModel contact = null;
@@ -262,9 +265,13 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#getContactByEmailAndContactStatus - HTTP response code: " + status);
 				LOGGER.debug("#getContactByEmailAndContactStatus - apiUrl: " + apiUrl);
 			}
+			
+			System.out.println(status);
+			System.out.println(apiUrl);
 
 			if (status == HttpServletResponse.SC_OK) {
 				String jsonResponse = readApiResponse(connection);
+				System.out.println(jsonResponse);
 				ContactsCollectionResponse response = OBJECT_MAPPER.readValue(jsonResponse,
 						ContactsCollectionResponse.class);
 
@@ -410,7 +417,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	 * )
 	 */
 	@Override
-	public String updateContact(ContactApiModel model) throws IOException {
+	public String updateContact(ContactApiModel model, StringBuffer response) throws IOException {
 		LOGGER.trace("#updateContact - enter");
 		/*
 		 * Lists and Notes aren't modified here, but are removed if they aren't passed back to the
@@ -447,7 +454,46 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);
 			}
 			
+			System.out.println(contactModelJson);
+			System.out.println(status);
+			System.out.println(apiUrl);
+			
+			switch (status) {
+			case HttpServletResponse.SC_CREATED:
+				LOGGER.debug("#invokeApiAddContact - 201: Contact was successfully created");
+				break;
+			case HttpServletResponse.SC_BAD_REQUEST:
+				LOGGER.debug("#invokeApiAddContact - 400: Either JSON was malformed or there was a data validation error");
+				response.append("400");
+				break;
+			case HttpServletResponse.SC_UNAUTHORIZED:
+				LOGGER.debug("#invokeApiAddContact - 401: Authentication failure");
+				response.append("401");
+				break;
+			case HttpServletResponse.SC_NOT_ACCEPTABLE:
+				LOGGER.debug("#invokeApiAddContact - 406: Unsupported Accept Header value, must be application/json");
+				response.append("406");
+				break;
+			case HttpServletResponse.SC_CONFLICT:
+				LOGGER.debug("#invokeApiAddContact - 409: The email address provided is already in use");
+				response.append("409");
+				break;
+			case HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE:
+				LOGGER.debug("#invokeApiAddContact - 415: Unsupported content-type in the header, use application/json");
+				response.append("415");
+				break;
+			case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
+				LOGGER.debug("#invokeApiAddContact - 500: Internal server error occurred");
+				response.append("500");
+				break;
+			default:
+				break;
+		}
+			
+			
+			
 			if (status == HttpServletResponse.SC_OK) {
+				response.append("200");
 				result = readApiResponse(connection);
 			}
 		} finally {
@@ -504,7 +550,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		return apiModel;
 	}
 
-	private ContactApiModel invokeApiAddContact(String contactModelJson) {
+	private ContactApiModel invokeApiAddContact(String contactModelJson, StringBuffer response) {
 		LOGGER.trace("#invokeApiAddContact - enter");
 		ContactApiModel contactApiModel = null;
 		String apiUrl = apibaseurl + "contacts?action_by=ACTION_BY_OWNER&api_key=" + apikey;
@@ -521,32 +567,40 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#invokeApiAddContact - apiUrl: " + apiUrl);
 				LOGGER.debug("#invokeApiAddContact - json: " + contactModelJson);
 				LOGGER.debug("#invokeApiAddContact - HTTP response code: " + status);
-				switch (status) {
+			}
+			
+			switch (status) {
 				case HttpServletResponse.SC_CREATED:
 					LOGGER.debug("#invokeApiAddContact - 201: Contact was successfully created");
 					break;
 				case HttpServletResponse.SC_BAD_REQUEST:
 					LOGGER.debug("#invokeApiAddContact - 400: Either JSON was malformed or there was a data validation error");
+					response.append("400");
 					break;
 				case HttpServletResponse.SC_UNAUTHORIZED:
 					LOGGER.debug("#invokeApiAddContact - 401: Authentication failure");
+					response.append("401");
 					break;
 				case HttpServletResponse.SC_NOT_ACCEPTABLE:
 					LOGGER.debug("#invokeApiAddContact - 406: Unsupported Accept Header value, must be application/json");
+					response.append("406");
 					break;
 				case HttpServletResponse.SC_CONFLICT:
 					LOGGER.debug("#invokeApiAddContact - 409: The email address provided is already in use");
+					response.append("409");
 					break;
 				case HttpServletResponse.SC_UNSUPPORTED_MEDIA_TYPE:
 					LOGGER.debug("#invokeApiAddContact - 415: Unsupported content-type in the header, use application/json");
+					response.append("415");
 					break;
 				case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:
 					LOGGER.debug("#invokeApiAddContact - 500: Internal server error occurred");
+					response.append("500");
 					break;
 				default:
 					break;
-				}
 			}
+			
 			if (status == HttpServletResponse.SC_CREATED) {
 				String jsonResponse = readApiResponse(connection);
 				contactApiModel = OBJECT_MAPPER.readValue(jsonResponse, ContactApiModel.class);
@@ -564,7 +618,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				}
 			}
 		}
-		
 		return contactApiModel;
 	}
 

@@ -11,7 +11,7 @@ import contact.constantcontact.model.EmailCampaign;
 
 public interface ConstantContactService {
 
-	ContactApiModel addContact(ContactApiModel model) throws JsonProcessingException;
+	ContactApiModel addContact(ContactApiModel model, StringBuffer messageResponse) throws JsonProcessingException;
 
 	/**
 	 * Add a new contact
@@ -21,7 +21,7 @@ public interface ConstantContactService {
 	 */
 	//String addContact(ContactViewModel contactViewModel);
 	
-	String addContact(String id, String firstName, String lastName, String organization, String email);
+	String addContact(String id, String firstName, String lastName, String organization, String email, StringBuffer messageResponse);
 
 	String deleteContact(String id) throws JsonProcessingException;
 
@@ -47,7 +47,7 @@ public interface ConstantContactService {
 	 */
 	List<Activity> getUnsubscribedContacts(String campaignId);
 
-	String updateContact(ContactApiModel model) throws JsonProcessingException, IOException;
+	String updateContact(ContactApiModel model, StringBuffer response) throws JsonProcessingException, IOException;
 
 	/**
 	 * Update an existing contact

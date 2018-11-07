@@ -1,5 +1,12 @@
 <%@ include file="../init.jsp"%>
 
+<liferay-ui:error key="409" message="The email address provided is already in use" />
+<liferay-ui:error key="400" message="400 Server error, message was malformed or there was a data validation error" />
+<liferay-ui:error key="401" message="401 Server error, authentication failure" />
+<liferay-ui:error key="406" message="406 Server error" />
+<liferay-ui:error key="415" message="415 Server error" />
+<liferay-ui:error key="500" message="500 Server error" />
+
 <%
 	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 

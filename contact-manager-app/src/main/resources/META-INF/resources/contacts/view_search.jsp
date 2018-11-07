@@ -158,13 +158,10 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
     searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
-    System.out.println(orderByCol);
-    System.out.println(orderByType);
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
     	try{
     		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
     		 searchContext.setSorts(sorts);
-    		 System.out.println(sorts[0]);
     	 } catch(Exception e){
     		 e.printStackTrace();
     	 }
@@ -188,7 +185,6 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
 	query.add(termQuery, BooleanClauseOccur.MUST);
-	System.out.println(query);
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 
