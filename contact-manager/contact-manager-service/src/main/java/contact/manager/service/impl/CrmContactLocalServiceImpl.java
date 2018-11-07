@@ -23,9 +23,14 @@ import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
+import contact.constantcontact.model.ContactApiModel;
+import contact.constantcontact.model.EmailAddress;
 import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.manager.exception.NoSuchCrmContactException;
 import contact.manager.model.CrmContact;
@@ -115,17 +120,78 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	    	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	    	IndexerRegistryUtil.register(contactIndexer);
 		}
-		
+		//Code to update ConstantContact in case of any update in Fname, Lname, primaryEmail, organization;
+		try {
+			if (crmContact.getConstantContactId()!= 0) {
+					ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+					ContactApiModel model = constantContactServiceImpl.getContact(new Long(crmContact.getConstantContactId()).toString());
+					boolean update = false;
+					if (model.getFirstName() == null || !crmContact.getFirstName().equals(model.getFirstName())){
+						update = true;
+						model.setFirstName(crmContact.getFirstName());
+					}
+					
+					if (model.getLastName() == null || !crmContact.getLastName().equals(model.getLastName())){
+						update = true;
+						model.setLastName(crmContact.getLastName());
+					}
+					
+					if (crmContact.getOrganization() != null && !crmContact.getOrganization().equals(model.getCompanyName())){
+						update = true;
+						model.setCompanyName(crmContact.getOrganization());
+					} else if (crmContact.getOrganization() == null && model.getCompanyName()!=null) {
+						update = true;
+						model.setCompanyName(crmContact.getOrganization());
+					}
+					
+					if (!isEmailInEmailAddressList(model.getEmailAddresses(), crmContact.getPrimaryEmailAddress())){
+						update = true;
+						addEmailToEmailAddressList(model, crmContact.getPrimaryEmailAddress());
+					}
+					
+					if (update){
+						constantContactServiceImpl.updateContact(model);
+					}
+			} else { 
+				
+				addContactToConstactContacts(crmContact);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return crmContactPersistence.update(crmContact);
+	}
+	
+	private boolean isEmailInEmailAddressList(List<EmailAddress> emailAddresses, String emailAdrress){
+		if (emailAddresses != null){
+			for (EmailAddress emailAddressObj : emailAddresses) {
+				if (emailAddressObj != null && emailAdrress.equals(emailAddressObj.getEmailAddress())) {
+					return true;
+				}
+			}			
+		}
+		return false;
+	}
+	
+	//rules on ConstactContact specify one email address allowed
+	private void addEmailToEmailAddressList(ContactApiModel model, String emailAdrress){
+		model.setEmailAddresses(new ArrayList<EmailAddress>());
+		EmailAddress email = new EmailAddress();
+		email.setEmailAddress(emailAdrress);
+		model.getEmailAddresses().add(email);
 	}
 	
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CrmContact addCrmContact(CrmContact crmContact) {
 		crmContact.setNew(true);
+		addContactToConstactContacts(crmContact);
+		return crmContactPersistence.update(crmContact);
+	}
+	
+	private void addContactToConstactContacts(CrmContact crmContact){
 		ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 		String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress());
 		crmContact.setConstantContactId(new Long(id));
-		return crmContactPersistence.update(crmContact);
 	}
 }

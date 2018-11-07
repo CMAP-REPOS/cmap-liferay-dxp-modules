@@ -421,10 +421,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			model.setLists(existingContact.getLists());
 			model.setNotes(existingContact.getNotes());
 		}
-
+		
+		
 		String contactModelJson = OBJECT_MAPPER.writeValueAsString(model);
 		String result = null;
-
+		
+		
 		String apiUrl = apibaseurl + "contacts/" + model.getId()
 				+ "?action_by=ACTION_BY_OWNER&api_key=" + apikey;
 
@@ -439,12 +441,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			out.close();
 
 			int status = connection.getResponseCode();
-
+			
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("#updateContact - HTTP response code: " + status);
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);
 			}
-
+			
 			if (status == HttpServletResponse.SC_OK) {
 				result = readApiResponse(connection);
 			}
@@ -453,6 +455,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				try {
 					connection.disconnect();
 				} catch (Exception ex) {
+					ex.printStackTrace();
 					LOGGER.error(ex.getMessage(), ex);
 				}
 			}
@@ -623,7 +626,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#invokeApiGetContact - HTTP response code: " + status);
 				LOGGER.debug("#invokeApiGetContact - apiUrl: " + apiUrl);
 			}
-
+			
 			if (status == HttpServletResponse.SC_OK) {
 				String jsonResponse = readApiResponse(connection);
 				contactApiModel = OBJECT_MAPPER.readValue(jsonResponse, ContactApiModel.class);
