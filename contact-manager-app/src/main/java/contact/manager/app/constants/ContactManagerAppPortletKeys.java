@@ -10,6 +10,7 @@ public class ContactManagerAppPortletKeys {
 
 	public static final String ContactManagerApp = "ContactManagerApp";
 	public static final String GroupManagerApp = "GroupManagerApp";
+	public static final String RecyclingBinApp = "RecyclingBin";
 
 	public static final String UI_DATE_FORMAT_PATTERN = "yyyy-MM-dd 'at' HH:mm:ss z";
 
@@ -79,6 +80,7 @@ public class ContactManagerAppPortletKeys {
 	public static final String ACTION_ADD = "add";
 	public static final String ACTION_UPDATE = "update";
 	public static final String ACTION_DELETE = "delete";
+	public static final String ACTION_REMOVED = "removed permanently";
 
 	public static final Map<String, String> LOCALITIES_MAP;
 	static {
