@@ -16,6 +16,7 @@ public class UserUtil {
 		try {
 			user = UserLocalServiceUtil.getUser(userId);
 		} catch (PortalException e) {
+			LOGGER.error("Exception in UserUtil.getUser: " + e.getMessage());
 		}
 		return user;
 	}
@@ -27,6 +28,7 @@ public class UserUtil {
 			user = UserLocalServiceUtil.getUser(userId);
 			userName = user.getFullName();
 		} catch (PortalException e) {
+			LOGGER.error("Exception in UserUtil.getUserName: " + e.getMessage());
 		}
 		return userName;
 	}

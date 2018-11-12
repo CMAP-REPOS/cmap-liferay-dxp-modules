@@ -13,6 +13,10 @@
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
+	PortletURL iteratorURL = renderResponse.createRenderURL();
+	iteratorURL.setParameter("mvcPath", "/groups/details.jsp");
+	iteratorURL.setParameter("crmGroupId", String.valueOf(crmGroupId));
+
 	renderResponse.setTitle((crmGroup != null) ? ("Details for " + crmGroup.getName()) : "New Group");
 
 	List<CrmContact> crmContactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
@@ -37,6 +41,7 @@
 		<aui:col md="12">
 			<h2>Contacts for <%= crmGroup.getName() %></h2>
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
+				iteratorURL="<%=iteratorURL%>"
 				emptyResultsMessage="No contacts found"
 				total="<%=crmContactList.size()%>" var="crmGroupsSearchContainer">
 				<liferay-ui:search-container-results results="<%=crmContactList%>" />

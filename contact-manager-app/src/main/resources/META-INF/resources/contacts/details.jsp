@@ -27,7 +27,9 @@
 %>
 
 <div class="container-fluid">
+	<% if (ParamUtil.getString(request, "p_p_id").equals("ContactManagerApp"))  { %>
 	<%@ include file="nav.jsp"%>
+	<% }  %>
 	<aui:fieldset-group markupView="lexicon">
 		<aui:row>
 			<aui:col md="4">
