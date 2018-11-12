@@ -38,14 +38,14 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 @Component(
 		immediate = true,
 		property = {"cron.expression=0 0 0 * * ?"},
-		service = ConstantContactActivityAlertMessageListener.class )
-public class ConstantContactActivityAlertMessageListener
+		service = UnsubscribedContactNotificationMessageListener.class )
+public class UnsubscribedContactNotificationMessageListener
 extends BaseMessageListener {
 
-	// the default cron expression is to run daily at midnight
-	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 0 * * ?";
+	// The default cron expression is set to every day at 11pm per requirement 3.1.1.
+	private static final String _DEFAULT_CRON_EXPRESSION = "0 0 23 * * ?";
 
-	private static final Log _log = LogFactoryUtil.getLog(ConstantContactActivityAlertMessageListener.class);
+	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
 
 	private ConstantContactService constantContactService;
 
@@ -55,16 +55,15 @@ extends BaseMessageListener {
 	private SchedulerEntryImpl _schedulerEntryImpl = null;
 
 	/**
-	 * doReceive: This is where the magic happens, this is where you want to do the work for
-	 * the scheduled job.
-	 * @param message This is the message object tied to the job.  If you stored data with the
-	 *                job, the message will contain that data.   
-	 * @throws Exception In case there is some sort of error processing the task.
+	 * doReceive: This method is called whenever the job must be executed.
+	 * 
+	 * @param message This is the message object tied to the job. The message will contain any data associated with the job.   
+	 * @throws Exception
 	 */
 	@Override
 	protected void doReceive(Message message) throws Exception {
 
-		_log.info("Scheduled task executed...");
+		_log.info("UnsubscribedContactNotificationMessageListener doReceive - Job being executed...");
 		
 		List<UnsubscribedContact> unsubscribedContactList = new ArrayList<UnsubscribedContact>();
 
@@ -96,55 +95,50 @@ extends BaseMessageListener {
 			}
 
 		} catch (SystemException ex) {
-			_log.error("Exception in ContactActivityAlertsJob. " + ex.getMessage(), ex);
+			_log.error("Exception in UnsubscribedContactNotificationMessageListener - " + ex.getMessage(), ex);
 		}
 
 		if (unsubscribedContactList.isEmpty()) {
-			_log.info("ContactActivityAlertsJob: No VIP unsubscribed.");
+			_log.info("UnsubscribedContactNotificationMessageListener: No VIP unsubscribed.");
 		}
 		
 		
-		//EmailUtil.sendUnsubEmail(emailRows);		
+		//TODO: Send email to contacts in unsubscribedContactList.		
 	}
 
 	/**
-	 * activate: Called whenever the properties for the component change (ala Config Admin)
-	 * or OSGi is activating the component.
-	 * @param properties The properties map from Config Admin.
-	 * @throws SchedulerException in case of error.
+	 * activate: This method is called whenever the configuration for the component changes.
+	 * 
+	 * @param properties Properties map from Config Admin.
+	 * @throws SchedulerException
 	 */
 	@Activate
 	@Modified
 	protected void activate(Map<String,Object> properties) throws SchedulerException {
 
-		// extract the cron expression from the properties
 		String cronExpression = GetterUtil.getString(properties.get("cron.expression"), _DEFAULT_CRON_EXPRESSION);
 
-		// create a new trigger definition for the job.
+		// Create a new trigger definition for the job.
 		String listenerClass = getClass().getName();
 		Trigger jobTrigger = _triggerFactory.createTrigger(listenerClass, listenerClass, new Date(), null, cronExpression);
 
-		// wrap the current scheduler entry in our new wrapper.
-		// use the persisted storaget type and set the wrapper back to the class field.
+		// Wrap the current scheduler entry in a new wrapper.
 		_schedulerEntryImpl = new SchedulerEntryImpl();
 		_schedulerEntryImpl.setEventListenerClass( getClass().getName() );
 		_schedulerEntryImpl.setTrigger( jobTrigger );
 		
 		_schedulerEntryImpl = new StorageTypeAwareSchedulerEntryImpl(_schedulerEntryImpl, StorageType.PERSISTED);
 
-		// update the trigger for the scheduled job.
+		// Update trigger for the scheduled job.
 		_schedulerEntryImpl.setTrigger(jobTrigger);
 
-		// if we were initialized (i.e. if this is called due to CA modification)
+		// If initialized, deactivate first the current job
 		if (_initialized) {
-			// first deactivate the current job before we schedule.
 			deactivate();
 		}
 
-		// register the scheduled task
+		// Register the job
 		_schedulerEngineHelper.register(this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
-
-		// set the initialized flag.
 		_initialized = true;
 	}
 
@@ -185,16 +179,8 @@ extends BaseMessageListener {
 	}
 
 	/**
-	 * setModuleServiceLifecycle: So this requires some explanation...
+	 * setModuleServiceLifecycle: Called to determine if the component should be initialized only after the portal has completed its startup.
 	 * 
-	 * OSGi will start a component once all of it's dependencies are satisfied.  However, there
-	 * are times where you want to hold off until the portal is completely ready to go.
-	 * 
-	 * This reference declaration is waiting for the ModuleServiceLifecycle's PORTAL_INITIALIZED
-	 * component which will not be available until, surprise surprise, the portal has finished
-	 * initializing.
-	 * 
-	 * With this reference, this component activation waits until portal initialization has completed.
 	 * @param moduleServiceLifecycle
 	 */
 	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
