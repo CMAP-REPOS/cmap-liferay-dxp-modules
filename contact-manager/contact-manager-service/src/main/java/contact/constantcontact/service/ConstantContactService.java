@@ -23,7 +23,7 @@ public interface ConstantContactService {
 	
 	String addContact(String id, String firstName, String lastName, String organization, String email, StringBuffer messageResponse);
 
-	String deleteContact(String id) throws JsonProcessingException;
+	String deleteContact(String id, StringBuffer response) throws JsonProcessingException;
 
 	ContactApiModel getContact(String contactId) throws IOException;
 	

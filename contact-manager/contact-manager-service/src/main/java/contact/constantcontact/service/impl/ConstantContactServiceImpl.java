@@ -172,10 +172,10 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	 * @see com.contactmanager.ContactContactService#deleteContact(java.lang.String)
 	 */
 	@Override
-	public String deleteContact(String id) throws JsonProcessingException {
+	public String deleteContact(String id, StringBuffer response) throws JsonProcessingException {
 		LOGGER.trace("#deleteContact - enter");
 		try {
-			String result = invokeApiDeleteContact(id);
+			String result = invokeApiDeleteContact(id, response);
 			return result;
 
 		} catch (Exception ex) {
@@ -612,7 +612,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		return contactApiModel;
 	}
 
-	private String invokeApiDeleteContact(String contactModelId) {
+	private String invokeApiDeleteContact(String contactModelId, StringBuffer response) {
 		LOGGER.trace("#invokeApiDeleteContact - enter");
 
 		String apiUrl = apibaseurl + "contacts/" + contactModelId + "?api_key=" + apikey;
@@ -628,7 +628,8 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				LOGGER.debug("#invokeApiDeleteContact - apiUrl: " + apiUrl);
 			}
 
-			if (status == HttpServletResponse.SC_OK) {
+			if (status == HttpServletResponse.SC_OK || status == HttpServletResponse.SC_NO_CONTENT) {
+				response.append(status);
 				return readApiResponse(connection);
 			}
 		} catch (MalformedURLException ex) {

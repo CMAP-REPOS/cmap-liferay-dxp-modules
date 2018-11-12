@@ -253,11 +253,18 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setUserId(userId);
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
+			long constantContactID =  crmContact.getConstantContactId();
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact);
-
+			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
-				// TODO: pass to Constant Contact API
+				StringBuffer statusCode = new StringBuffer();
+				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode); 
+				if (!statusCode.toString().equals("204") && !statusCode.toString().equals("200")) {
+					SessionErrors.add(request, statusCode.toString()); 
+					response.setRenderParameter("jspPage", "/contacts/view.jsp");
+					return;
+				}
 			}
 
 			response.setRenderParameter("jspPage", "/contacts/view.jsp");

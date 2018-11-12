@@ -32,6 +32,6 @@
 	<liferay-ui:icon image="edit" message="Edit"
 		url="<%=editContactURL.toString()%>" />
 
-	<liferay-ui:icon-delete url="<%=deleteContactURL.toString()%>" />
+	<liferay-ui:icon-delete  message="Move to Recycling bin" url="<%=deleteContactURL.toString()%>" />
 
 </liferay-ui:icon-menu>
