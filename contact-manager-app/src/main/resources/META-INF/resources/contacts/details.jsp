@@ -21,13 +21,16 @@
 	portletDisplay.setShowBackIcon(true);
 	portletDisplay.setURLBack(redirect);
 
+	
 	renderResponse.setTitle((crmContact != null)
 			? ("Contact Information for " + crmContact.getFirstName() + " " + crmContact.getLastName())
 			: "Contact Information");
 %>
 
 <div class="container-fluid">
-	<% if (ParamUtil.getString(request, "p_p_id").equals("ContactManagerApp"))  { %>
+	<%
+	if ("ContactManagerApp".equals(themeDisplay.getPpid()) ) { 
+		System.out.println("aqui esta");%>
 	<%@ include file="nav.jsp"%>
 	<% }  %>
 	<aui:fieldset-group markupView="lexicon">
