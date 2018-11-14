@@ -1,4 +1,6 @@
 <%@ include file="../init.jsp"%>
+<%@ page import="java.lang.Math" %>
+
 
 <%
 	long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
@@ -19,7 +21,7 @@
 
 	renderResponse.setTitle((crmGroup != null) ? ("Details for " + crmGroup.getName()) : "New Group");
 
-	List<CrmContact> crmContactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
+	
 %>
 
 <portlet:renderURL var="editGroupURL">
@@ -43,9 +45,9 @@
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				iteratorURL="<%=iteratorURL%>"
 				emptyResultsMessage="No contacts found"
-				total="<%=crmContactList.size()%>" var="crmGroupsSearchContainer">
-				<liferay-ui:search-container-results results="<%=crmContactList%>" />
-
+				total="<%=Math.toIntExact(crmGroup.getCrmContactsCount())%>" var="crmGroupsSearchContainer">
+				<liferay-ui:search-container-results results="<%=CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId, crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd())%>" />
+				
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmContact" modelVar="crmContact">
 					<liferay-ui:search-container-column-jsp
