@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Map;
 
+import javax.servlet.ServletContext;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Modified;
@@ -33,6 +35,7 @@ extends BaseMessageListener {
 	protected TriggerFactory _triggerFactory;
 	protected SchedulerEngineHelper _schedulerEngineHelper;
 	protected SchedulerEntryImpl _schedulerEntryImpl = null;
+	protected ServletContext _servletContext;
 	protected ConstantContactService _constantContactService;
 
 	
@@ -46,12 +49,18 @@ extends BaseMessageListener {
 		_schedulerEngineHelper = schedulerEngineHelper;
 	}
 
+	@Reference(target = "(osgi.web.symbolicname=com.liferay.filesystemaccess.web)", unbind = "-")
+	public void setServletContext(ServletContext servletContext) {
+		_servletContext = servletContext;
+	}
+
 	public ConstantContactService getConstantContactService() {
 		if (_constantContactService == null) {
 			_constantContactService = new ConstantContactServiceImpl();
 		}
 		return _constantContactService;
 	}
+	
 
 	/**
 	 * target = ModuleServiceLifecycle.PORTAL_INITIALIZED indicates the component should be initialized only after the portal has completed its startup.
