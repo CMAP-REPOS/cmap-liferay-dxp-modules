@@ -33,7 +33,6 @@ public class GroupUtil {
 		String userName = UserUtil.getUserName(userId);
 
 		String name = ParamUtil.getString(request, "name");
-		long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
 				
 		crmGroup.setName(name);
 		crmGroup.setUserId(userId);
@@ -48,8 +47,6 @@ public class GroupUtil {
 			crmGroup.setCompanyId(companyId);
 			crmGroup.setCreateDate(serviceContext.getCreateDate(now));
 		}
-
-		CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 
 		return crmGroup;
 	}

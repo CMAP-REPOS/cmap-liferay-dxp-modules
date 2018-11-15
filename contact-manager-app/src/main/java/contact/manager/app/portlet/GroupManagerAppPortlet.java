@@ -26,6 +26,7 @@ import contact.manager.app.util.GroupUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
 import contact.manager.service.CrmGroupLocalService;
+import contact.manager.service.CrmGroupLocalServiceUtil;
 
 /**
  * @author jon
@@ -89,10 +90,12 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 			CrmGroup crmGroup = _crmGroupLocalService.createCrmGroup(0);
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, true);
-
 			_crmGroupLocalService.addCrmGroup(crmGroup);
-			response.setRenderParameter("crmGroupId", Long.toString(crmGroup.getCrmGroupId()));
-			response.setRenderParameter("mvcPath", "/groups/details.jsp");
+
+			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
+			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+			
+			_crmGroupLocalService.updateCrmGroup(crmGroup);
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.add: " + e.getMessage());
@@ -107,6 +110,9 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
+
+			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
+			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));

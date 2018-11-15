@@ -34,6 +34,7 @@ cmap.groupManager.bindEvents = function() {
 		var $form = $('#<portlet:namespace />fm')
 		var contactsToAdd = $('#<portlet:namespace />findAddName').select2('data');
 		var contactsToRemove = $('#<portlet:namespace />findRemoveName').select2('data');
+		var formValidator = Liferay.Form.get('<portlet:namespace />fm').formValidator;
 		
 		$.each(contactsToAdd, function(i, v) {
 			var id = v.id;
@@ -47,7 +48,11 @@ cmap.groupManager.bindEvents = function() {
 			$form.find('input[value="' + id + '"]:hidden').remove();
 		});
 		
-		$form.submit();
+		formValidator.validate();
+		if (!formValidator.hasErrors()) {
+			$form.submit();
+		}
+
 	});
 }
 
@@ -81,6 +86,9 @@ cmap.groupManager.initSelect2 = function() {
 	    }
 	});
 
+	
+	<% if (crmGroup != null) { %>
+	
 	$('#<portlet:namespace />findRemoveName').val('');
 	$('#<portlet:namespace />findRemoveName').select2({
 	    minimumInputLength: 2,
@@ -110,6 +118,8 @@ cmap.groupManager.initSelect2 = function() {
 	        }
 	    }
 	});
+	
+	<% } %>
 }
 
 AUI().ready(
@@ -159,6 +169,7 @@ AUI().ready(
 					</aui:fieldset>
 				</aui:col>
 				<aui:col md="6">
+					<% if (crmGroup != null) { %>
 					<aui:fieldset>
 						<div class="form-group input-text-wrapper">
 							<label class="control-label"
@@ -168,6 +179,7 @@ AUI().ready(
 						<aui:input name="findRemoveName" label="">
 						</aui:input>
 					</aui:fieldset>
+					<% } %>
 				</aui:col>
 			</aui:row>
 		</aui:fieldset-group>
