@@ -1,4 +1,4 @@
-package contact.constantcontact.util;
+package contact.manager.service.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,7 +26,7 @@ extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(ContactManagerBaseMessageListener.class);
 
 	protected static final String _CRON_EXPRESSION_PROPERTY_KEY = "cron.expression";
-	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 0 23 * * ?";
+	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 0 2 * * ?"; // Default is to run every day at 2am
 
 	protected volatile boolean _initialized;
 	

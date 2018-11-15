@@ -1,4 +1,4 @@
-package contact.constantcontact.util;
+package contact.manager.service.util;
 
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
