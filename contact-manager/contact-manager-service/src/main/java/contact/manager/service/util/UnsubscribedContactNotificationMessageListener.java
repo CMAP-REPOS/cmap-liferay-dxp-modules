@@ -20,7 +20,8 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 23 * * ?"}, // Will run every day at 11pm
+		// property = {"cron.expression=0 0 23 * * ?"}, // Will run every day at 11pm
+		property = {"cron.expression=0 */5 * * * ?"}, // Will run every 5 minutes for testing
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener
@@ -47,6 +48,11 @@ extends ContactManagerBaseMessageListener {
 			List<CrmContact> contactList = CrmContactLocalServiceUtil.findByVipFlag(true);
 
 			if (contactList != null && !contactList.isEmpty()) {
+				
+				if (_log.isInfoEnabled()) {
+					_log.info("processing " + Integer.toString( contactList.size() ) + " VIP contacts...");
+				}
+				
 				for (CrmContact contactListItem : contactList) {
 					ContactApiModel constantContactContact = getConstantContactService().getContactByEmailAndContactStatus(contactListItem.getPrimaryEmailAddress(), ConstantContactConstants.CONTACT_STATUS_OPTOUT, 500);
 
