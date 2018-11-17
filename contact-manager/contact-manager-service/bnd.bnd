@@ -3,8 +3,33 @@ Bundle-SymbolicName: contact.manager.service
 Bundle-Version: 1.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
+Bundle-ClassPath:\
+  .,\
+  bnd-lib/commons-collections.jar,\
+  bnd-lib/commons-lang.jar,\
+  bnd-lib/werken-xpath.jar,\
+  bnd-lib/antlr.jar,\
+  bnd-lib/log4j.jar,\
+  bnd-lib/logkit.jar,\
+  bnd-lib/jmdns.jar,\
+  bnd-lib/oro.jar,\
+  bnd-lib/velocity.jar
+Import-Package: \
+  !com.sun.*,\
+  !com.ibm.*,\
+  *
 Export-Package: \
 	contact.manager.service.permission,\
 	contact.manager.serachindexer,\
 	contact.constantcontact.service.impl,\
 	contact.constantcontact.model
+-includeresource:\
+  bnd-lib/commons-collections.jar=commons-collections-3.2.1.jar,\
+  bnd-lib/commons-lang.jar=commons-lang-2.4.jar,\
+  bnd-lib/werken-xpath.jar=werken-xpath-0.9.4.jar,\
+  bnd-lib/antlr.jar=antlr-2.7.7.jar,\
+  bnd-lib/log4j.jar=log4j-1.2.17.jar,\
+  bnd-lib/logkit.jar=logkit-2.0.jar,\
+  bnd-lib/jmdns.jar=jmdns-3.4.1.jar,\
+  bnd-lib/oro.jar=oro-2.0.8.jar,\
+  bnd-lib/velocity.jar=velocity-1.7.jar
