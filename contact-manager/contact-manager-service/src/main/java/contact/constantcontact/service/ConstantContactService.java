@@ -45,9 +45,21 @@ public interface ConstantContactService {
 	 * @param campaignId
 	 * @return
 	 */
-	List<Activity> getUnsubscribedContacts(String campaignId);
+	List<Activity> getUnsubscribedContacts(String campaignId, String createdSinceDate);
 
 	String updateContact(ContactApiModel model, StringBuffer response) throws JsonProcessingException, IOException;
+
+	List<EmailCampaign> getSentEmailCampaigns(String status, String limit, String date);
+
+	List<Activity> getBouncedContacts(String campaignId, String createdSinceDate);
+
+	List<Activity> getEmailSentContacts(String campaignId, String createdSinceDate);
+
+	List<Activity> getEmailOpenContacts(String campaignId, String createdSinceDate);
+
+	List<Activity> getForwardedContacts(String campaignId, String createdSinceDate);
+
+	List<Activity> getEmailClickContacts(String campaignId, String createdSinceDate);
 
 	/**
 	 * Update an existing contact

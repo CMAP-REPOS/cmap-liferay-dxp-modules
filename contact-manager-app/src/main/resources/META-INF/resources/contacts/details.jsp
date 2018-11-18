@@ -1,6 +1,6 @@
 <%@ include file="../init.jsp"%>
 
-<liferay-ui:error key="409" message="The email address provided is already in use" />
+<liferay-ui:error key="409" message="This user&#39;s profile has already been created. Please check that the e-mail address does not already exist in the system" />
 <liferay-ui:error key="400" message="400 Server error, message was malformed or there was a data validation error" />
 <liferay-ui:error key="401" message="401 Server error, authentication failure" />
 <liferay-ui:error key="406" message="406 Server error" />

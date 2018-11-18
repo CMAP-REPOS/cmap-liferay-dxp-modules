@@ -35,7 +35,6 @@ import contact.constantcontact.model.EmailCampaignResponse;
 import contact.constantcontact.model.UnsubscribeActivitiesResponse;
 import contact.constantcontact.model.enums.EmailCampaignStatus;
 import contact.constantcontact.service.ConstantContactService;
-import contact.constantcontact.util.ConstantContactUtil;
 
 
 public class ConstantContactServiceImpl implements ConstantContactService {
@@ -197,6 +196,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		ContactApiModel contact = this.invokeApiGetContact(contactId);
 		return contact;
 	}
+	
 
 	@Override
 	public List<Activity> getContactActivities(String contactId) {
@@ -306,11 +306,25 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	@Override
 	public List<EmailCampaign> getSentEmailCampaigns() {
 		LOGGER.trace("#getEmailCampaigns - enter");
-
-		List<EmailCampaign> emailCampaigns = new ArrayList<EmailCampaign>();
+		
 		String apiUrl = String.format("%semailmarketing/campaigns?api_key=%s&status=%s",
 				apibaseurl, apikey, EmailCampaignStatus.SENT.toString());
 
+		return getEmailCampaingsWithParams(apiUrl);
+	}
+	
+	@Override
+	public List<EmailCampaign> getSentEmailCampaigns(String status, String limit, String date) {
+		LOGGER.trace("#getEmailCampaigns - enter");
+
+		String apiUrl = String.format("%semailmarketing/campaigns?api_key=%s&status=%s&limit=%s&modified_since=%s",
+				apibaseurl, apikey, status, limit, date);
+
+		return getEmailCampaingsWithParams(apiUrl);
+	}
+	
+	private List<EmailCampaign> getEmailCampaingsWithParams(String apiUrl) {
+		List<EmailCampaign> emailCampaigns = new ArrayList<EmailCampaign>();
 		HttpURLConnection connection = null;
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.GET, "0", true, false);
@@ -346,21 +360,80 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			LOGGER.debug("#getEmailCampaigns - found '" + emailCampaigns.size() + "'");
 
 		}
-
+		
 		return emailCampaigns;
 	}
-
+	
 	@Override
-	public List<Activity> getUnsubscribedContacts(String campaignId) {
+	public List<Activity> getUnsubscribedContacts(String campaignId, String createdSinceDate) {
 		LOGGER.trace("#getUnsubscribedContacts - enter");
-
-		List<Activity> unsubActivities = new ArrayList<Activity>();
-		String createdSinceDate = ConstantContactUtil.getPreviousDaysDateInIso8601();
 
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/unsubscribes?api_key=%s&created_since=%",
 				apibaseurl, apikey, campaignId, createdSinceDate);
 
+		return getContactActivity(apiUrl);
+	}
+	
+	@Override
+	public List<Activity> getBouncedContacts(String campaignId, String createdSinceDate) {
+		LOGGER.trace("#getBouncedContacts - enter");
+
+		String apiUrl = String.format(
+				"%semailmarketing/campaigns/%s/tracking/bounces?api_key=%s&created_since=%",
+				apibaseurl, apikey, campaignId, createdSinceDate);
+
+		return getContactActivity(apiUrl);
+	}
+	
+	@Override
+	public List<Activity> getEmailOpenContacts(String campaignId, String createdSinceDate) {
+		LOGGER.trace("#getBouncedContacts - enter");
+
+		String apiUrl = String.format(
+				"%semailmarketing/campaigns/%s/tracking/opens?api_key=%s&created_since=%",
+				apibaseurl, apikey, campaignId, createdSinceDate);
+
+		return getContactActivity(apiUrl);
+	}
+	
+	@Override
+	public List<Activity> getEmailSentContacts(String campaignId, String createdSinceDate) {
+		LOGGER.trace("#getBouncedContacts - enter");
+
+		String apiUrl = String.format(
+				"%semailmarketing/campaigns/%s/tracking/sends?api_key=%s&created_since=%",
+				apibaseurl, apikey, campaignId, createdSinceDate);
+
+		return getContactActivity(apiUrl);
+	}
+	
+	@Override
+	public List<Activity> getForwardedContacts(String campaignId, String createdSinceDate) {
+		LOGGER.trace("#getBouncedContacts - enter");
+
+		String apiUrl = String.format(
+				"%semailmarketing/campaigns/%s/tracking/forwards?api_key=%s&created_since=%",
+				apibaseurl, apikey, campaignId, createdSinceDate);
+
+		return getContactActivity(apiUrl);
+	}
+	
+	@Override
+	public List<Activity> getEmailClickContacts(String campaignId, String createdSinceDate) {
+		LOGGER.trace("#getBouncedContacts - enter");
+
+		String apiUrl = String.format(
+				"%semailmarketing/campaigns/%s/tracking/clicks?api_key=%s&created_since=%",
+				apibaseurl, apikey, campaignId, createdSinceDate);
+
+		return getContactActivity(apiUrl);
+	}
+	
+	
+	
+	private List<Activity> getContactActivity(String apiUrl){
+		List<Activity> unsubActivities = new ArrayList<Activity>();
 		HttpURLConnection connection = null;
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.GET, "0", true, false);
@@ -373,14 +446,19 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			}
 
 			if (status == HttpServletResponse.SC_OK) {
+				System.out.println("Request OK for: " + apiUrl);
 				String jsonResponse = readApiResponse(connection);
 				UnsubscribeActivitiesResponse response = OBJECT_MAPPER.readValue(jsonResponse,
 						UnsubscribeActivitiesResponse.class);
 				unsubActivities = response.getResults();
+			} else {
+				System.out.println("ERROR for: " + apiUrl);
 			}
 		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
 			LOGGER.error(ex.getMessage(), ex);
 		} catch (IOException ex) {
+			ex.printStackTrace();
 			LOGGER.error(ex.getMessage(), ex);
 		} finally {
 			if (connection != null) {
@@ -399,6 +477,8 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 		return unsubActivities;
 	}
+	
+	
 
 	public void setHttpUrlConnection(HttpURLConnection httpUrlConnection) {
 		this.httpUrlConnection = httpUrlConnection;
@@ -687,6 +767,9 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		}
 		return contactApiModel;
 	}
+	
+	
+	
 
 	/**
 	 * Read the API response (JSON) and return as a String
@@ -719,7 +802,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		}
 
 		connection.setRequestProperty("Content-length", contentLength);
-		connection.setRequestProperty(this.apitokenkey, apitokenvalue);
+		connection.setRequestProperty(ConstantContactServiceImpl.apitokenkey, apitokenvalue);
 		connection.setUseCaches(false);
 		connection.setAllowUserInteraction(false);
 		connection.setConnectTimeout(apitimeout);

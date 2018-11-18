@@ -41,7 +41,7 @@
 					<aui:fieldset>
 						<aui:input name="note" label="Notes" type="textarea">
 							<aui:validator name="required" />
-							<aui:validator name="maxLength">500</aui:validator>
+							<aui:validator name="maxLength">50000</aui:validator>
 						</aui:input>
 					</aui:fieldset>
 				</aui:fieldset-group>
