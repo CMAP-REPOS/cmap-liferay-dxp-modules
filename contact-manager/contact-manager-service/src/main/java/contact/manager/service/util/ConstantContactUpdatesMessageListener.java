@@ -71,9 +71,25 @@ extends ContactManagerBaseMessageListener {
 	private void addCrmOutreachLogList(List<Activity> emailSentContacts, String note, Date date) {
 		for (Activity activity : emailSentContacts) {
 			CrmOutreachLog crmOutreachLog = CrmOutreachLogLocalServiceUtil.createCrmOutreachLog(0);
-			OffsetDateTime outreachDate = OffsetDateTime.parse (activity.getSendDate());
-			crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), note, Long.parseLong(activity.getContactId()), date);
-			CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);
+			OffsetDateTime outreachDate = null;
+			if (note.equals(ORLNoteSent)) {
+				outreachDate = OffsetDateTime.parse (activity.getSendDate());				
+			} else if (note.equals(ORLNoteOpened)) {
+				outreachDate = OffsetDateTime.parse (activity.getOpenDate());				
+			} else if (note.equals(ORLNoteForwarded)) {
+				outreachDate = OffsetDateTime.parse (activity.getForwardDate());				
+			} else if (note.equals(ORLNoteBounced)) {
+				outreachDate = OffsetDateTime.parse (activity.getBounceDate());				
+			} else if (note.equals(ORLNoteClick)) {
+				outreachDate = OffsetDateTime.parse (activity.getClickDate());				
+			} else if (note.equals(ORLNoteUnsubscribed)) {
+				outreachDate = OffsetDateTime.parse (activity.getUnsubscribeDate());				
+			}
+			
+			if (outreachDate!=null) {
+				crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), note, Long.parseLong(activity.getContactId()), date);
+				CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);				
+			}
 		}
 	}
 	
