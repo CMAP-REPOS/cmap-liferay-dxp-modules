@@ -16,7 +16,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 
 import contact.constantcontact.service.ConstantContactService;
 import contact.constantcontact.service.impl.ConstantContactServiceImpl;
@@ -26,14 +25,13 @@ extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(ContactManagerBaseMessageListener.class);
 
 	protected static final String _CRON_EXPRESSION_PROPERTY_KEY = "cron.expression";
-	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 */5 * * * ?"; // "0 0 2 * * ?"; // Default is to run every day at 2am
+	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 0 8 * * ?"; // Default is to run every day at 2am Central (8am UTC)
 
 	protected volatile boolean _initialized;
 	
 	protected TriggerFactory _triggerFactory;
 	protected SchedulerEngineHelper _schedulerEngineHelper;
 	protected SchedulerEntryImpl _schedulerEntryImpl = null;
-	protected ServletContext _servletContext;
 	protected ConstantContactService _constantContactService;
 
 	public ConstantContactService getConstantContactService() {
@@ -50,11 +48,10 @@ extends BaseMessageListener {
 	 * @param properties Properties map from Config Admin.
 	 * @throws SchedulerException
 	 */
-	protected void activate(Map<String,Object> properties) throws SchedulerException {
+	protected void activate(Map<String,Object> properties) {
 		if (_log.isInfoEnabled()) {
 			_log.info(">> activate " + this.getClass().getName() );
 		}
-		System.out.println(">> activate " + this.getClass().getName()); // TODO Remove
 	
 		
 		// If initialized, deactivate first the current job
@@ -85,7 +82,6 @@ extends BaseMessageListener {
 		if (_log.isInfoEnabled()) {
 			_log.info("<< activate " + this.getClass().getName() );
 		}
-		System.out.println("<< activate " + this.getClass().getName()); // TODO Remove
 	}
 
 	/**
@@ -95,7 +91,6 @@ extends BaseMessageListener {
 		if (_log.isInfoEnabled()) {
 			_log.info(">> deactivate " + this.getClass().getName() );
 		}
-		System.out.println(">> deactivate " + this.getClass().getName()); // TODO Remove
 
 		if (_initialized) {
 			try {
@@ -106,7 +101,6 @@ extends BaseMessageListener {
 			catch (SchedulerException se) {
 				if (_log.isErrorEnabled()) {
 					_log.error("Unable to unschedule scheduler entry " + this.getClass().getName(), se);
-					System.out.println("Unable to unschedule scheduler entry "+ this.getClass().getName()); // TODO Remove
 				}
 			}
 		}
@@ -114,7 +108,6 @@ extends BaseMessageListener {
 		if (_log.isInfoEnabled()) {
 			_log.info("<< deactivate " + this.getClass().getName() );
 		}
-		System.out.println("<< deactivate " + this.getClass().getName()); // TODO Remove
 	}	
 
 	/**
