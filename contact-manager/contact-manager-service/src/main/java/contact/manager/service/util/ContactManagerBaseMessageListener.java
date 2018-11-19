@@ -7,9 +7,13 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
+import com.liferay.portal.kernel.scheduler.StorageType;
+import com.liferay.portal.kernel.scheduler.StorageTypeAware;
+import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -22,7 +26,7 @@ extends BaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(ContactManagerBaseMessageListener.class);
 
 	protected static final String _CRON_EXPRESSION_PROPERTY_KEY = "cron.expression";
-	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 0/5 * * * ?"; // "0 0 2 * * ?"; // Default is to run every day at 2am
+	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 */5 * * * ?"; // "0 0 2 * * ?"; // Default is to run every day at 2am
 
 	protected volatile boolean _initialized;
 	
@@ -51,7 +55,7 @@ extends BaseMessageListener {
 			_log.info(">> activate " + this.getClass().getName() );
 		}
 		System.out.println(">> activate " + this.getClass().getName()); // TODO Remove
-
+	
 		
 		// If initialized, deactivate first the current job
 		if (_initialized) {
@@ -61,7 +65,18 @@ extends BaseMessageListener {
 		String eventListenerClassName = getClass().getName();
 		String cronExpression = GetterUtil.getString(properties.get(_CRON_EXPRESSION_PROPERTY_KEY), _CRON_EXPRESSION_DEFAULT_VALUE);
 
-		_schedulerEntryImpl = MessageListenerUtil.provisionSchedulerEntryImpl(_triggerFactory, eventListenerClassName, cronExpression);
+		// Create a new trigger definition for the job
+		Trigger jobTrigger = _triggerFactory.createTrigger(eventListenerClassName, eventListenerClassName, new Date(), null, cronExpression);
+
+		SchedulerEntryImpl schedulerEntryImpl = new SchedulerEntryImpl();
+		schedulerEntryImpl.setEventListenerClass( eventListenerClassName );
+		schedulerEntryImpl.setTrigger( jobTrigger );
+		
+		// Wrap the current scheduler entry in a new storage type aware entry
+		schedulerEntryImpl = new StorageTypeAwareSchedulerEntryImpl(schedulerEntryImpl, StorageType.PERSISTED);
+		schedulerEntryImpl.setTrigger( jobTrigger );
+		
+		_schedulerEntryImpl = schedulerEntryImpl;
 		_schedulerEngineHelper.register(this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 
 		_initialized = true;
@@ -84,7 +99,7 @@ extends BaseMessageListener {
 
 		if (_initialized) {
 			try {
-				_schedulerEngineHelper.unschedule(_schedulerEntryImpl, MessageListenerUtil.getStorageType(_schedulerEntryImpl));
+				_schedulerEngineHelper.unschedule(_schedulerEntryImpl, getStorageType());
 				_schedulerEngineHelper.unregister(this);
 				_initialized = false;
 			}
@@ -101,4 +116,18 @@ extends BaseMessageListener {
 		}
 		System.out.println("<< deactivate " + this.getClass().getName()); // TODO Remove
 	}	
+
+	/**
+	 * getStorageType: Utility method to get the storage type from the scheduler
+	 * entry wrapper.
+	 * 
+	 * @return StorageType The storage type to use.
+	 */
+	protected StorageType getStorageType() {
+		if (_schedulerEntryImpl instanceof StorageTypeAware) {
+			return ((StorageTypeAware) _schedulerEntryImpl).getStorageType();
+		}
+
+		return StorageType.MEMORY_CLUSTERED;
+	}
 }

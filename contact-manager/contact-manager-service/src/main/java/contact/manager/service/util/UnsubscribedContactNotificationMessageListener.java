@@ -32,7 +32,7 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 @Component(
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class,
-		property = {"cron.expression=0 0/5 * * * ?"} )
+		property = {"cron.expression=0 */5 * * * ?"} )
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
@@ -52,11 +52,11 @@ extends ContactManagerBaseMessageListener {
 	@Activate
 	@Modified
 	@Override
-	public void activate(Map<String,Object> properties) throws SchedulerException { super.activate(properties); }
+	protected void activate(Map<String,Object> properties) throws SchedulerException { super.activate(properties); }
 
 	@Deactivate
 	@Override
-	public void deactivate() { super.deactivate(); }	
+	protected void deactivate() { super.deactivate(); }	
 
 	
 	
