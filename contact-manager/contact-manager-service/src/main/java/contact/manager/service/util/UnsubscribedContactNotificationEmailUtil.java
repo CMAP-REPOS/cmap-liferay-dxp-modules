@@ -24,7 +24,7 @@ extends BaseEmailUtil {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationEmailUtil.class);
 	
 
-	public static void buildAndSendEmail( List<UnsubscribedContact> unsubscribedContactList, ServletContext servletContext ) {
+	public static void buildAndSendEmail( List<UnsubscribedContact> unsubscribedContactList ) {
 		if (_log.isInfoEnabled()) {
 			_log.info(">> buildAndSendEmail");
 		}

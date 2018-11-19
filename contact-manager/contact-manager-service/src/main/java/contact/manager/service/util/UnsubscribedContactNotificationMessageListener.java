@@ -4,8 +4,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
 import java.util.ArrayList;
@@ -13,12 +13,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
-
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import contact.constantcontact.ConstantContactConstants;
@@ -30,9 +27,9 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
+		property = {"cron.expression=0 */5 * * * ?"},
 		immediate = true,
-		service = UnsubscribedContactNotificationMessageListener.class,
-		property = {"cron.expression=0 */5 * * * ?"} )
+		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
@@ -43,16 +40,12 @@ extends ContactManagerBaseMessageListener {
 	@Reference(unbind = "-")
 	public void setSchedulerEngineHelper(SchedulerEngineHelper schedulerEngineHelper) { _schedulerEngineHelper = schedulerEngineHelper; }
 
-	@Reference(target = "(osgi.web.symbolicname=com.liferay.filesystemaccess.web)", unbind = "-")
-	public void setServletContext(ServletContext servletContext) { _servletContext = servletContext; }
-
-//	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-") // target = ModuleServiceLifecycle.PORTAL_INITIALIZED indicates the component should be initialized only after the portal has completed its startup.
-//	public void setModuleServiceLifecycle(ModuleServiceLifecycle moduleServiceLifecycle) { }
+	@Reference(target = ModuleServiceLifecycle.PORTAL_INITIALIZED, unbind = "-")
+	protected void setModuleServiceLifecycle( ModuleServiceLifecycle moduleServiceLifecycle ) { }
 
 	@Activate
-	@Modified
 	@Override
-	protected void activate(Map<String,Object> properties) throws SchedulerException { super.activate(properties); }
+	protected void activate(Map<String,Object> properties) { super.activate(properties); }
 
 	@Deactivate
 	@Override
@@ -68,10 +61,8 @@ extends ContactManagerBaseMessageListener {
 	 */
 	@Override
 	public void doReceive(Message message) throws Exception {
-		if (_log.isInfoEnabled()) {
-			_log.info(">> doReceive ");
-		}
-		System.out.println(">> doReceive "); // TODO Remove
+		_log.info(">> doReceive ");
+
 		
 		List<UnsubscribedContact> unsubscribedContactList = new ArrayList<UnsubscribedContact>();
 
@@ -120,12 +111,9 @@ extends ContactManagerBaseMessageListener {
 		}
 		
 		
-		UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(unsubscribedContactList, _servletContext);	
+		UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(unsubscribedContactList);	
 		
 		
-		if (_log.isInfoEnabled()) {
-			_log.info("<< doReceive ");
-		}
-		System.out.println(">> doReceive "); // TODO Remove
+		_log.info("<< doReceive ");
 	}
 }
