@@ -25,7 +25,9 @@ Export-Package: \
 	contact.manager.service.permission,\
 	contact.manager.serachindexer,\
 	contact.constantcontact.service.impl,\
-	contact.constantcontact.model
+	contact.constantcontact.model,\
+	contact.constantcontact.model.enums
+
 -includeresource:\
   bnd-lib/commons-collections.jar=commons-collections-3.2.1.jar,\
   bnd-lib/commons-lang.jar=commons-lang-2.4.jar,\
