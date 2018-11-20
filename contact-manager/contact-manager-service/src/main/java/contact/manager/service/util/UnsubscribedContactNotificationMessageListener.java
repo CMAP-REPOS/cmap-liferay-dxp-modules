@@ -16,6 +16,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Modified;
 import org.osgi.service.component.annotations.Reference;
 
 import contact.constantcontact.ConstantContactConstants;
@@ -44,6 +45,7 @@ extends ContactManagerBaseMessageListener {
 	protected void setModuleServiceLifecycle( ModuleServiceLifecycle moduleServiceLifecycle ) { }
 
 	@Activate
+	@Modified
 	@Override
 	protected void activate(Map<String,Object> properties) { super.activate(properties); }
 
@@ -99,19 +101,15 @@ extends ContactManagerBaseMessageListener {
 			}
 
 		} catch (SystemException ex) {
-			if (_log.isErrorEnabled()) {
-				_log.error("Exception in UnsubscribedContactNotificationMessageListener - " + ex.getMessage(), ex);
-			}
+			_log.error("Exception processing unsubscribed VIP contact list - " + ex.getMessage(), ex);
 		}
 
-		if (unsubscribedContactList.isEmpty()) {
-			if (_log.isInfoEnabled()) {
-				_log.info("UnsubscribedContactNotificationMessageListener: No VIP unsubscribed.");
-			}
+		if (null != unsubscribedContactList && !unsubscribedContactList.isEmpty()) {
+			UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(unsubscribedContactList);	
 		}
-		
-		
-		UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(unsubscribedContactList);	
+		else {
+			_log.info("No VIP contacts unsubscribed");
+		}
 		
 		
 		_log.info("<< doReceive ");
