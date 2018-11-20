@@ -148,6 +148,17 @@ public class Activity {
 		return bounces;
 	}
 
+	@Override
+	public String toString() {
+		return "Activity [activityType=" + activityType + ", bounceCode=" + bounceCode + ", bounceDate=" + bounceDate
+				+ ", bounceDescription=" + bounceDescription + ", bounceMessage=" + bounceMessage + ", bounces="
+				+ bounces + ", campaignId=" + campaignId + ", clickDate=" + clickDate + ", clicks=" + clicks
+				+ ", contactId=" + contactId + ", emailAddress=" + emailAddress + ", forwardDate=" + forwardDate
+				+ ", forwards=" + forwards + ", linkId=" + linkId + ", linkUri=" + linkUri + ", openDate=" + openDate
+				+ ", opens=" + opens + ", sendDate=" + sendDate + ", unsubscribeDate=" + unsubscribeDate
+				+ ", unsubscribeReason=" + unsubscribeReason + ", unsubscribeSource=" + unsubscribeSource + "]";
+	}
+
 	public void setBounces(Integer bounces) {
 		this.bounces = bounces;
 	}

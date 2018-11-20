@@ -27,7 +27,7 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 */5 * * * ?"},
+		property = {"cron.expression=0 0 8 * * ?"},
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener

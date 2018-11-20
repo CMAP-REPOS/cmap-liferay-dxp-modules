@@ -5,15 +5,18 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
+import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
+import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 
@@ -53,7 +56,6 @@ extends BaseMessageListener {
 			_log.info(">> activate " + this.getClass().getName() );
 		}
 	
-		
 		// If initialized, deactivate first the current job
 		if (_initialized) {
 			deactivate();
@@ -74,10 +76,10 @@ extends BaseMessageListener {
 		schedulerEntryImpl.setTrigger( jobTrigger );
 		
 		_schedulerEntryImpl = schedulerEntryImpl;
+		
 		_schedulerEngineHelper.register(this, _schedulerEntryImpl, DestinationNames.SCHEDULER_DISPATCH);
 
 		_initialized = true;
-		
 		
 		if (_log.isInfoEnabled()) {
 			_log.info("<< activate " + this.getClass().getName() );
@@ -91,19 +93,22 @@ extends BaseMessageListener {
 		if (_log.isInfoEnabled()) {
 			_log.info(">> deactivate " + this.getClass().getName() );
 		}
-
+		
+		_log.info("!!!!!!deactivate " + this.getClass().getName() );
+		
 		if (_initialized) {
 			try {
 				_schedulerEngineHelper.unschedule(_schedulerEntryImpl, getStorageType());
 				_schedulerEngineHelper.unregister(this);
+				_schedulerEngineHelper.delete(_schedulerEntryImpl, getStorageType());
 				_initialized = false;
 			}
 			catch (SchedulerException se) {
-				if (_log.isErrorEnabled()) {
-					_log.error("Unable to unschedule scheduler entry " + this.getClass().getName(), se);
-				}
+				se.printStackTrace();
 			}
 		}
+		
+		_log.info(">> deactivate FINISH " + this.getClass().getName() );
 		
 		if (_log.isInfoEnabled()) {
 			_log.info("<< deactivate " + this.getClass().getName() );

@@ -28,19 +28,19 @@ import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmOutreachLogLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 8 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
+		property = {"cron.expression=0 0 2 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
 		immediate = true,
 		service = ConstantContactUpdatesMessageListener.class )
 public class ConstantContactUpdatesMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(ConstantContactUpdatesMessageListener.class);
 
-	private static final String ORLNoteSent = "Constant Contact activity batch process, Email sent.";
-	private static final String ORLNoteOpened = "Constant Contact activity batch process, Email opened.";
-	private static final String ORLNoteForwarded = "Constant Contact activity batch process, Email forwarded.";
-	private static final String ORLNoteBounced = "Constant Contact activity batch process, Email bounced.";
-	private static final String ORLNoteClick = "Constant Contact activity batch process, Email link opened (click).";
-	private static final String ORLNoteUnsubscribed = "Constant Contact activity batch process, Email Unsubscribed.";
+	private static final String ORLNoteSent = "Constant Contact activity batch process, Email sent. Campaign ";
+	private static final String ORLNoteOpened = "Constant Contact activity batch process, Email opened. Campaign ";
+	private static final String ORLNoteForwarded = "Constant Contact activity batch process, Email forwarded. Campaign ";
+	private static final String ORLNoteBounced = "Constant Contact activity batch process, Email bounced. Campaign ";
+	private static final String ORLNoteClick = "Constant Contact activity batch process, Email link opened (click). Campaign ";
+	private static final String ORLNoteUnsubscribed = "Constant Contact activity batch process, Email Unsubscribed. Campaign ";
 	
 	
 	@Reference(unbind = "-")
@@ -73,34 +73,35 @@ extends ContactManagerBaseMessageListener {
 	protected void doReceive(Message message) throws Exception {
 		_log.info(">> doReceive ");
 		
-		System.out.println("entro y procesando");
-		
 		ConstantContactServiceImpl cc = new ConstantContactServiceImpl();
 				//for each campain get Email sent
-		String from = ConstantContactUtil.getPreviousDaysDateInIso8601();
+		String from = ConstantContactUtil.getPreviousDaysDateInIso8601(1);
 		Date date = new Date();
-		List<EmailCampaign> emailCampaigns = cc.getSentEmailCampaigns(EmailCampaignStatus.SENT.toString(), "10", from);
+		List<EmailCampaign> emailCampaigns = cc.getSentEmailCampaigns(EmailCampaignStatus.SENT.toString(), "50", from);
 		
 		for (EmailCampaign emailCampaign : emailCampaigns) {
-			
-			addCrmOutreachLogList(cc.getEmailSentContacts(emailCampaign.getId(), from), ORLNoteSent, date);
-			addCrmOutreachLogList(cc.getEmailOpenContacts(emailCampaign.getId(), from), ORLNoteOpened, date);
-			addCrmOutreachLogList(cc.getForwardedContacts(emailCampaign.getId(), from), ORLNoteForwarded, date);
-			addCrmOutreachLogList(cc.getBouncedContacts(emailCampaign.getId(), from), ORLNoteBounced, date);
-			addCrmOutreachLogList(cc.getEmailClickContacts(emailCampaign.getId(), from), ORLNoteClick, date);
-			addCrmOutreachLogList(cc.getUnsubscribedContacts(emailCampaign.getId(), from), ORLNoteUnsubscribed, date);
+			String campaignName = emailCampaign.getName();
+			addCrmOutreachLogList(cc.getEmailSentContacts(emailCampaign.getId(), from), ORLNoteSent, date, campaignName);
+			addCrmOutreachLogList(cc.getEmailOpenContacts(emailCampaign.getId(), from), ORLNoteOpened, date, campaignName);
+			addCrmOutreachLogList(cc.getForwardedContacts(emailCampaign.getId(), from), ORLNoteForwarded, date, campaignName);
+			addCrmOutreachLogList(cc.getBouncedContacts(emailCampaign.getId(), from), ORLNoteBounced, date, campaignName);
+			addCrmOutreachLogList(cc.getEmailClickContacts(emailCampaign.getId(), from), ORLNoteClick, date, campaignName);
+			addCrmOutreachLogList(cc.getUnsubscribedContacts(emailCampaign.getId(), from), ORLNoteUnsubscribed, date, campaignName);
 			
 		}
 		
 		_log.info("<< doReceive ");
 	}
 	
-	private void addCrmOutreachLogList(List<Activity> emailSentContacts, String note, Date date) {
+	private void addCrmOutreachLogList(List<Activity> emailSentContacts, String note, Date date, String campaignName) {
+		
+		String insertNode = note+campaignName;
+		
 		for (Activity activity : emailSentContacts) {
 			CrmOutreachLog crmOutreachLog = CrmOutreachLogLocalServiceUtil.createCrmOutreachLog(0);
 			OffsetDateTime outreachDate = null;
 			if (note.equals(ORLNoteSent)) {
-				outreachDate = OffsetDateTime.parse (activity.getSendDate());				
+				outreachDate = OffsetDateTime.parse (activity.getSendDate());
 			} else if (note.equals(ORLNoteOpened)) {
 				outreachDate = OffsetDateTime.parse (activity.getOpenDate());				
 			} else if (note.equals(ORLNoteForwarded)) {
@@ -114,8 +115,8 @@ extends ContactManagerBaseMessageListener {
 			}
 			
 			if (outreachDate!=null) {
-				crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), note, Long.parseLong(activity.getContactId()), date);
-				CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);				
+				crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), insertNode, Long.parseLong(activity.getContactId()), date);
+				CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);	
 			}
 		}
 	}

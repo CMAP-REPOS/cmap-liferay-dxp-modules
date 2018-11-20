@@ -95,9 +95,9 @@ public class ConstantContactUtil {
 	}
 
 	@SuppressWarnings("deprecation")
-	public static String getPreviousDaysDateInIso8601() {
+	public static String getPreviousDaysDateInIso8601(int days) {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("UTC"));
-		cal.add(Calendar.DATE, -1);
+		cal.add(Calendar.DATE, days*-1);
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
