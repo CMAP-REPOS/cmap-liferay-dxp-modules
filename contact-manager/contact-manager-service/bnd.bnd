@@ -28,7 +28,7 @@ Export-Package: \
 	contact.constantcontact.model,\
 	contact.constantcontact.model.enums
 
--includeresource:\
+-includeresource: \
   bnd-lib/commons-collections.jar=commons-collections-3.2.1.jar,\
   bnd-lib/commons-lang.jar=commons-lang-2.4.jar,\
   bnd-lib/werken-xpath.jar=werken-xpath-0.9.4.jar,\
