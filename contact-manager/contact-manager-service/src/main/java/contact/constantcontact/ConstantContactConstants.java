@@ -9,5 +9,6 @@ public class ConstantContactConstants {
 	public static final String CONFIG_API_DEFAULT_CONTACT_LIST = "constant.contact.apidefaultcontactlist";
 
 	public static final String CONTACT_STATUS_OPTOUT = "OPTOUT";
+	public static final String CONTACT_STATUS_REMOVED = "REMOVED";
 
 }
