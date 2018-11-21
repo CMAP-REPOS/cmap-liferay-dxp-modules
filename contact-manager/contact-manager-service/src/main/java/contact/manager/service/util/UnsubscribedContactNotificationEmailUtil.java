@@ -56,7 +56,7 @@ extends BaseEmailUtil {
 			+ ".tg .tg-lqy6{text-align:right;vertical-align:top}\n"
 			+ ".tg .tg-yw4l{vertical-align:top}\n"
 			+ "</style>\n"
-			+ "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last week:</div><br>\n"
+			+ "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last day:</div><br>\n"
 			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n";
 	private static final String _EMAIL_BODY_FOOTER = "</table></body></html>";
 }
