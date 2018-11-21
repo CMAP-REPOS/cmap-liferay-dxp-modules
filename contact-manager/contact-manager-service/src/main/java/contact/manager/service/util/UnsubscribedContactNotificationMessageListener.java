@@ -101,9 +101,25 @@ extends ContactManagerBaseMessageListener {
 				
 				for (CrmContact contactListItem : contactList) {
 					ContactApiModel constantContactContact = getConstantContactService().getContactByEmailAndContactStatus(contactListItem.getPrimaryEmailAddress(), ConstantContactConstants.CONTACT_STATUS_OPTOUT, 500);
+					if (_log.isDebugEnabled()) {
+						if (null != constantContactContact) {
+							_log.debug("Obtained Constant Contact data with status CONTACT_STATUS_OPTOUT for " + contactListItem.getPrimaryEmailAddress() + " who unsubscribed on " + ( null !=  constantContactContact.getEmailAddresses().get(0).getOptOutDate() ? constantContactContact.getEmailAddresses().get(0).getOptOutDate() : "null" ) );
+						}
+						else {
+							_log.debug("Could not obtain Constant Contact data with status CONTACT_STATUS_OPTOUT for " + contactListItem.getPrimaryEmailAddress() );
+						}
+					}
 					
 					if ( _QUERY_REMOVED_CONTACTS && null == constantContactContact ) {
 						constantContactContact = getConstantContactService().getContactByEmailAndContactStatus(contactListItem.getPrimaryEmailAddress(), ConstantContactConstants.CONTACT_STATUS_REMOVED, 500);
+						if (_log.isDebugEnabled()) {
+							if (null != constantContactContact) {
+								_log.debug("Obtained Constant Contact data with status CONTACT_STATUS_REMOVED for " + contactListItem.getPrimaryEmailAddress() );
+							}
+							else {
+								_log.debug("Could not obtain Constant Contact data with status CONTACT_STATUS_REMOVED for " + contactListItem.getPrimaryEmailAddress() );
+							}
+						}
 					}
 
 					if (constantContactContact != null) {
