@@ -118,7 +118,7 @@ extends ContactManagerBaseMessageListener {
 							}
 						}
 						
-						if ( (null != unsubscribeDate && unsubscribeDate.before( yesterdayDate )) || (_QUERY_REMOVED_CONTACTS && null == unsubscribeDate) ) {
+						if ( (null != unsubscribeDate && unsubscribeDate.after( yesterdayDate )) || (_QUERY_REMOVED_CONTACTS && null == unsubscribeDate) ) {
 							
 							UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
 
