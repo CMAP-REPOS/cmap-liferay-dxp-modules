@@ -7,14 +7,12 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 
-import java.util.Map;
-
-import org.osgi.service.component.annotations.Activate;
-
 import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
@@ -28,10 +26,9 @@ import contact.manager.model.CrmContact;
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmOutreachLogLocalServiceUtil;
-import contact.manager.service.impl.CrmContactLocalServiceImpl;
 
 @Component(
-		property = {"cron.expression=0 0/5 0 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
+		property = {"cron.expression=0 0 2 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
 		immediate = true,
 		service = ConstantContactUpdatesMessageListener.class )
 public class ConstantContactUpdatesMessageListener
@@ -123,7 +120,7 @@ extends ContactManagerBaseMessageListener {
 					crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), insertNode, crmContact.getCrmContactId(), date);
 					CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);	
 				} catch(Exception e) {
-					e.printStackTrace();
+					_log.error(e.getMessage());
 				}
 			}
 		}
