@@ -2,6 +2,9 @@
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
     <category name="contact.manager.service">
-        <priority value="INFO" />
+        <priority value="DEBUG" />
+    </category>
+    <category name="contact.manager.service.*">
+        <priority value="DEBUG" />
     </category>
 </log4j:configuration>
