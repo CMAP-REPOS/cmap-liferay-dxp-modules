@@ -5,18 +5,16 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
-import com.liferay.portal.kernel.scheduler.SchedulerEngineHelperUtil;
 import com.liferay.portal.kernel.scheduler.SchedulerEntryImpl;
 import com.liferay.portal.kernel.scheduler.SchedulerException;
 import com.liferay.portal.kernel.scheduler.StorageType;
 import com.liferay.portal.kernel.scheduler.StorageTypeAware;
 import com.liferay.portal.kernel.scheduler.Trigger;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
-import com.liferay.portal.kernel.scheduler.messaging.SchedulerResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 
@@ -29,6 +27,21 @@ extends BaseMessageListener {
 
 	protected static final String _CRON_EXPRESSION_PROPERTY_KEY = "cron.expression";
 	protected static final String _CRON_EXPRESSION_DEFAULT_VALUE = "0 0 8 * * ?"; // Default is to run every day at 2am Central (8am UTC)
+
+	private SimpleDateFormat _simpleDateFormatter = null;
+	private SimpleDateFormat getSimpleDateFormatter() {
+		if ( null == _simpleDateFormatter ) {
+			_simpleDateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+		}
+		return _simpleDateFormatter;
+	}
+	
+	protected String formatDate(Date date) {
+		if ( null == date ) {
+			return "(null date)";
+		}
+		return getSimpleDateFormatter().format(date);
+	}
 
 	protected volatile boolean _initialized;
 	
@@ -52,8 +65,8 @@ extends BaseMessageListener {
 	 * @throws SchedulerException
 	 */
 	protected void activate(Map<String,Object> properties) {
-		if (_log.isInfoEnabled()) {
-			_log.info(">> activate " + this.getClass().getName() );
+		if (_log.isTraceEnabled()) {
+			_log.trace(">> activate " + this.getClass().getName() );
 		}
 	
 		// If initialized, deactivate first the current job
@@ -82,7 +95,11 @@ extends BaseMessageListener {
 		_initialized = true;
 		
 		if (_log.isInfoEnabled()) {
-			_log.info("<< activate " + this.getClass().getName() );
+			_log.info("Message listener " + this.getClass().getSimpleName() + " has been activated - cron expression is: " + cronExpression);
+		}
+
+		if (_log.isTraceEnabled()) {
+			_log.trace("<< activate " + this.getClass().getName() );
 		}
 	}
 
@@ -90,11 +107,9 @@ extends BaseMessageListener {
 	 * deactivate: Called when OSGi is deactivating the component.
 	 */
 	protected void deactivate() {
-		if (_log.isInfoEnabled()) {
-			_log.info(">> deactivate " + this.getClass().getName() );
+		if (_log.isTraceEnabled()) {
+			_log.trace(">> deactivate " + this.getClass().getName() );
 		}
-		
-		_log.info("!!!!!!deactivate " + this.getClass().getName() );
 		
 		if (_initialized) {
 			try {
@@ -102,16 +117,20 @@ extends BaseMessageListener {
 				_schedulerEngineHelper.unregister(this);
 				_schedulerEngineHelper.delete(_schedulerEntryImpl, getStorageType());
 				_initialized = false;
+				
+				if (_log.isInfoEnabled()) {
+					_log.info("Message listener " + this.getClass().getSimpleName() + " has been deactivated.");
+				}
 			}
 			catch (SchedulerException se) {
-				se.printStackTrace();
+				if (_log.isErrorEnabled()) {
+					_log.error("Scheduler entry for message listener " + this.getClass().getSimpleName() + " could not be unscheduled, unregistered or deleted - ", se);
+				}
 			}
 		}
 		
-		_log.info(">> deactivate FINISH " + this.getClass().getName() );
-		
-		if (_log.isInfoEnabled()) {
-			_log.info("<< deactivate " + this.getClass().getName() );
+		if (_log.isTraceEnabled()) {
+			_log.trace("<< deactivate " + this.getClass().getName() );
 		}
 	}	
 

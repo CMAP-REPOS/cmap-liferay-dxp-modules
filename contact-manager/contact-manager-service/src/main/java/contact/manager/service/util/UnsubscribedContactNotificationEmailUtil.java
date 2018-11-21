@@ -3,19 +3,9 @@ package contact.manager.service.util;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
-import java.io.StringReader;
-import java.io.StringWriter;
 import java.util.List;
 
 import javax.mail.internet.AddressException;
-import javax.servlet.ServletContext;
-
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.RuntimeSingleton;
-import org.apache.velocity.runtime.parser.ParseException;
 
 import contact.constantcontact.util.UnsubscribedContact;
 
@@ -25,56 +15,40 @@ extends BaseEmailUtil {
 	
 
 	public static void buildAndSendEmail( List<UnsubscribedContact> unsubscribedContactList ) {
-		if (_log.isInfoEnabled()) {
-			_log.info(">> buildAndSendEmail");
+		if (_log.isTraceEnabled()) {
+			_log.trace(">> buildAndSendEmail");
 		}
 		
-		VelocityEngine velocityEngine = new VelocityEngine();
-		velocityEngine.init();
+		StringBuilder sb = new StringBuilder(_EMAIL_BODY_HEADER);
+		for( UnsubscribedContact unsubscribedContact : unsubscribedContactList ) {
+			sb.append("<tr><td class=\"tg-yw4l\">").append( unsubscribedContact.getConstantContactActivityEmailAddress() ).append("</td>");
+			sb.append("<td class=\"tg-yw4l\">").append( null != unsubscribedContact.getConstantContactActivityUnsubscribeDate() ? _simpleDateFormatter.format( unsubscribedContact.getConstantContactActivityUnsubscribeDate() ) : " " ).append("</td>");
+			sb.append("<td class=\"tg-yw4l\">").append( unsubscribedContact.getConstantContactId() ).append("</td></tr>\n");
+		}
+		sb.append(_EMAIL_BODY_FOOTER);
 		
-		RuntimeServices runtimeServices = RuntimeSingleton.getRuntimeServices();
-		StringReader reader = new StringReader(_TEMPLATE);
-		Template velocityTemplate = new Template();
-		velocityTemplate.setRuntimeServices(runtimeServices);
+		if (_log.isDebugEnabled()) {
+			_log.debug("Email message body:\n" + sb.toString() + "\n\n");
+		}
+
 		try {
-			velocityTemplate.setData(runtimeServices.parse(reader, "unsub-email.vm"));
-		} 
-		catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		velocityTemplate.initDocument();
-
-		VelocityContext velocityContext = new VelocityContext();
-		
-		velocityContext.put("unsubRows", unsubscribedContactList);
-		
-		if ( null == unsubscribedContactList || unsubscribedContactList.isEmpty() ) {
-			velocityContext.put("noVipsUnsub", true);
-		} else {
-			velocityContext.put("noVipsUnsub", false);
-		}
-
-		StringWriter stringWriter = new StringWriter();
-		velocityTemplate.merge(velocityContext, stringWriter);
-	
-		try {
-//			sendEmail("cmap@cmap1pas2.illinois.gov", "contactmanagers@cmap.illinois.gov", null, "CMAP - Contact Activity Alert VIP unsubscribe", stringWriter.toString(), true);
-			sendEmail("cmap@cmap1pas2.illinois.gov", "cmap.contactmanagers@base22.com", null, "CMAP - Contact Activity Alert VIP unsubscribe", stringWriter.toString(), true);
+			// TODO: Change email addresses for production
+			//sendEmail("cmap@cmap1pas2.illinois.gov", "contactmanagers@cmap.illinois.gov", null, "CMAP - Contact Activity Alert VIP unsubscribe", sb.toString(), true);
+			sendEmail("cmap@cmap1pas2.illinois.gov", "cmap.contactmanagers@base22.com", null, "CMAP - Contact Activity Alert VIP unsubscribe", sb.toString(), true);
 		}
 		catch (AddressException ex) {
 			if (_log.isErrorEnabled()) {
-				_log.error("Could not send email notification" + ex.getMessage(), ex);
+				_log.error("Could not send email notification - " + ex.getMessage(), ex);
 			}
 		}
 
 		
-		if (_log.isInfoEnabled()) {
-			_log.info("<< buildAndSendEmail");
+		if (_log.isTraceEnabled()) {
+			_log.trace("<< buildAndSendEmail");
 		}
 	}
 	
-	private static final String _TEMPLATE = "<html><body><style type=\"text/css\">\n"
+	private static final String _EMAIL_BODY_HEADER = "<html><body><style type=\"text/css\">\n"
 			+ ".info-text {font-family:Arial, sans-serif;font-size:14px;}\n"
 			+ ".tg  {border-collapse:collapse;border-spacing:0;}\n"
 			+ ".tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\n"
@@ -82,19 +56,7 @@ extends BaseEmailUtil {
 			+ ".tg .tg-lqy6{text-align:right;vertical-align:top}\n"
 			+ ".tg .tg-yw4l{vertical-align:top}\n"
 			+ "</style>\n"
-			+ "<div class=\"info-text\">\n"
-			+ "  #if ( $noVipsUnsub )\n"
-			+ "    No contacts marked as VIP have unsubscribed.\n"
-			+ "  #else\n"
-			+ "    The following contacts marked as VIP have unsubscribed:\n"
-			+ "  #end\n"
-			+ "</div><br>\n"
-			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n"
-			+ "  #if ( $noVipsUnsub )\n"
-			+ "  	<tr><td align=\"center\" colspan=\"3\" class=\"tg-yw4l\">No VIPs unsubscribed</td></tr>\n"
-			+ "  #end\n"
-			+ "  #foreach( $row in $unsubRows )\n"
-			+ "    <tr><td class=\"tg-yw4l\">$row.email</td><td class=\"tg-yw4l\">$row.unsubDate</td><td class=\"tg-yw4l\">$row.constantContactId</td></tr>\n"
-			+ "  #end\n"
-			+ "</table></body></html>";
+			+ "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last week:</div><br>\n"
+			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n";
+	private static final String _EMAIL_BODY_FOOTER = "</table></body></html>";
 }

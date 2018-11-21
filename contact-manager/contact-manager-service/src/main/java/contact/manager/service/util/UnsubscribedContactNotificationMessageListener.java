@@ -28,12 +28,14 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 8 * * ?"},
+		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central)
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
+	
+	private static final Boolean _QUERY_REMOVED_CONTACTS = true;
 
 	@Reference(unbind = "-")
 	public void setTriggerFactory(TriggerFactory triggerFactory) { _triggerFactory = triggerFactory; }
@@ -63,7 +65,9 @@ extends ContactManagerBaseMessageListener {
 	 */
 	@Override
 	public void doReceive(Message message) throws Exception {
-		_log.info(">> doReceive ");
+		if (_log.isTraceEnabled()) {
+			_log.trace(">> doReceive ");
+		}
 
 		
 		List<UnsubscribedContact> unsubscribedContactList = new ArrayList<UnsubscribedContact>();
@@ -74,12 +78,33 @@ extends ContactManagerBaseMessageListener {
 
 			if (contactList != null && !contactList.isEmpty()) {
 				
-				if (_log.isInfoEnabled()) {
-					_log.info("processing " + Integer.toString( contactList.size() ) + " VIP contacts...");
+				if (_log.isDebugEnabled()) {
+					StringBuilder sb = new StringBuilder("");
+					for ( CrmContact contactItem : contactList )  {
+						if (sb.length() > 0) {
+							sb.append(", ");
+						}
+						sb.append( contactItem.getPrimaryEmailAddress() );
+					}
+					_log.debug("Processing " + Integer.toString( contactList.size() ) + " VIP contacts: " + sb.toString() );
 				}
+				else if (_log.isInfoEnabled()) {
+					_log.info("Processing " + Integer.toString( contactList.size() ) + " VIP contacts...");
+				}
+				
+
+		        Date yesterdayDate = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+				if (_log.isDebugEnabled()) {
+					_log.debug("Yesterday date: " + formatDate(yesterdayDate) );
+				}
+
 				
 				for (CrmContact contactListItem : contactList) {
 					ContactApiModel constantContactContact = getConstantContactService().getContactByEmailAndContactStatus(contactListItem.getPrimaryEmailAddress(), ConstantContactConstants.CONTACT_STATUS_OPTOUT, 500);
+					
+					if ( _QUERY_REMOVED_CONTACTS && null == constantContactContact ) {
+						constantContactContact = getConstantContactService().getContactByEmailAndContactStatus(contactListItem.getPrimaryEmailAddress(), ConstantContactConstants.CONTACT_STATUS_REMOVED, 500);
+					}
 
 					if (constantContactContact != null) {
 						
@@ -92,26 +117,49 @@ extends ContactManagerBaseMessageListener {
 								unsubscribeDate = ConstantContactUtil.parseIsoDate( emailAddress.getOptOutDate() );
 							}
 						}
+						
+						if ( (null != unsubscribeDate && unsubscribeDate.before( yesterdayDate )) || (_QUERY_REMOVED_CONTACTS && null == unsubscribeDate) ) {
+							
+							UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
 
-						UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
-
-						unsubscribedContactList.add(unsubscribedContact);
+							if (_log.isDebugEnabled()) {
+								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) );
+							}
+							
+							unsubscribedContactList.add(unsubscribedContact);
+						}
+						else {
+							if (_log.isDebugEnabled()) {
+								UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
+								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) + " - Ignored" );
+							}
+						}
 					}
 				}
 			}
 
 		} catch (SystemException ex) {
-			_log.error("Exception processing unsubscribed VIP contact list - " + ex.getMessage(), ex);
+			if(_log.isErrorEnabled()) {
+				_log.error("Exception processing unsubscribed VIP contact list - " + ex.getMessage(), ex);
+			}
 		}
 
 		if (null != unsubscribedContactList && !unsubscribedContactList.isEmpty()) {
+
+			if (_log.isInfoEnabled()) {
+				_log.info("Calling email utility with list of " + Integer.toString( unsubscribedContactList.size() ) + " VIP contacts...");
+			}
+
 			UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(unsubscribedContactList);	
 		}
 		else {
-			_log.info("No VIP contacts unsubscribed");
+			if (_log.isInfoEnabled()) {
+				_log.info("No VIP contacts unsubscribed");
+			}
 		}
 		
-		
-		_log.info("<< doReceive ");
+		if (_log.isTraceEnabled()) {
+			_log.trace("<< doReceive ");
+		}
 	}
 }
