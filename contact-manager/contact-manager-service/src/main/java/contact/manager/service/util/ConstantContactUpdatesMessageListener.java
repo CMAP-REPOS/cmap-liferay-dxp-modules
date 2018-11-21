@@ -24,11 +24,14 @@ import contact.constantcontact.model.EmailCampaign;
 import contact.constantcontact.model.enums.EmailCampaignStatus;
 import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.constantcontact.util.ConstantContactUtil;
+import contact.manager.model.CrmContact;
 import contact.manager.model.CrmOutreachLog;
+import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmOutreachLogLocalServiceUtil;
+import contact.manager.service.impl.CrmContactLocalServiceImpl;
 
 @Component(
-		property = {"cron.expression=0 0 2 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
+		property = {"cron.expression=0 0/5 0 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
 		immediate = true,
 		service = ConstantContactUpdatesMessageListener.class )
 public class ConstantContactUpdatesMessageListener
@@ -115,8 +118,13 @@ extends ContactManagerBaseMessageListener {
 			}
 			
 			if (outreachDate!=null) {
-				crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), insertNode, Long.parseLong(activity.getContactId()), date);
-				CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);	
+				try {
+					CrmContact crmContact = CrmContactLocalServiceUtil.findByConstantContactId(Long.parseLong(activity.getContactId()));
+					crmOutreachLog = updateCrmOutreachLogPropertiesBatch(crmOutreachLog, new Date(outreachDate.toInstant().toEpochMilli()), insertNode, crmContact.getCrmContactId(), date);
+					CrmOutreachLogLocalServiceUtil.addCrmOutreachLog(crmOutreachLog);	
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
