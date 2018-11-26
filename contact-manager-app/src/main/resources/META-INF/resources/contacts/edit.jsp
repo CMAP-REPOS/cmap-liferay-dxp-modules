@@ -112,7 +112,9 @@ AUI().ready(
 						</aui:input>
 					</aui:fieldset>
 					<aui:fieldset>
-						<aui:input name="isVip" label="Subscriber Alert" type="checkbox"></aui:input>
+						<aui:input name="isVip" label="Subscriber Alert" type="checkbox" 
+						checked="<%=crmContact == null ? false : crmContact.isIsVip()%>" >
+						</aui:input>
 					</aui:fieldset>
 				</aui:fieldset-group>
 				<aui:fieldset-group markupView="lexicon">

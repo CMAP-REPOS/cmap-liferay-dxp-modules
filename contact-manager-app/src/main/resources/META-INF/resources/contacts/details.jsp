@@ -55,7 +55,7 @@
 					<p>
 						<strong><liferay-ui:message key="crm.label.isVip" /></strong>
 					</p>
-					<p></p>
+					<p><%=viewModel.isVip()%></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.groupsList" /></strong>
 					</p>
