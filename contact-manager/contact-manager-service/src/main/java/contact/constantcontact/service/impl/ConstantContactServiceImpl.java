@@ -15,9 +15,11 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -249,9 +251,16 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	public ContactApiModel getContactByEmailAndContactStatus(String email, String contactStatus,
 			int limit) {
 		LOGGER.trace("#getContactByEmailAndContactStatus - enter");
-
+		
+		String urlEncodedEmail = null;
+		try {
+			urlEncodedEmail = URLEncoder.encode(email, "US-ASCII");
+		} catch (UnsupportedEncodingException e) {
+			urlEncodedEmail = email;
+		}
+		
 		String apiUrl = String.format("%scontacts?email=%s&status=%s&limit=%d&api_key=%s",
-				apibaseurl, email, contactStatus, limit, apikey);
+				apibaseurl, urlEncodedEmail, contactStatus, limit, apikey);
 
 		ContactApiModel contact = null;
 		HttpURLConnection connection = null;
