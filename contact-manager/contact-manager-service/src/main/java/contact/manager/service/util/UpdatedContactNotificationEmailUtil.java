@@ -39,9 +39,9 @@ extends BaseEmailUtil {
 		}
 
 		try {
-			// TODO: Change email addresses for production
-			//sendEmail("cmap@cmap1pas2.illinois.gov", "contactmanagers@cmap.illinois.gov", null, "CMAP - Contact Changes and Additions Alert", sb.toString(), true);
-			sendEmail("cmap@cmap1pas2.illinois.gov", "cmap.contactmanagers@base22.com", null, "CMAP - Contact Changes and Additions Alert", sb.toString(), true);
+			sendEmail("cmap@cmap1pas2.illinois.gov", "contactmanagers@cmap.illinois.gov", "kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov", "CMAP - ontact Changes and Additions Alert", sb.toString(), true);
+
+			// sendEmail("cmap@cmap1pas2.illinois.gov", "cmap.contactmanagers@base22.com", null, null, "CMAP - Contact Changes and Additions Alert", sb.toString(), true);
 		}
 		catch (AddressException ex) {
 			if (_log.isErrorEnabled()) {

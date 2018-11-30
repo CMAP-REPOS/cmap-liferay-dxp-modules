@@ -15,7 +15,7 @@ public abstract class BaseEmailUtil {
 	protected static final SimpleDateFormat _simpleDateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
 	
-	protected static void sendEmail(String from, String to, String cc, String subject, String body, Boolean isHTMLFormat) throws AddressException {
+	protected static void sendEmail(String from, String to, String cc, String cc2, String subject, String body, Boolean isHTMLFormat) throws AddressException {
 		if (_log.isTraceEnabled()) {
 			_log.trace(">> sendEmail");
 		}
@@ -23,13 +23,20 @@ public abstract class BaseEmailUtil {
 		InternetAddress fromAddress = new InternetAddress(from);
 		InternetAddress toAddress = new InternetAddress(to);
 		InternetAddress ccAddress = null != cc ? new InternetAddress(cc) : null;
+		InternetAddress cc2Address = null != cc2 ? new InternetAddress(cc2) : null;
 
 		MailMessage mailMessage = new MailMessage();
 		
 		mailMessage.setTo(toAddress);
 		
 		if (null != ccAddress) {
-			mailMessage.setCC(ccAddress);
+			if (null != cc2Address) {
+				InternetAddress[] ccAddressArray = { ccAddress, cc2Address };
+				mailMessage.setCC(ccAddressArray);
+			}
+			else {
+				mailMessage.setCC(ccAddress);
+			}
 		}
 		
 		mailMessage.setFrom(fromAddress);
