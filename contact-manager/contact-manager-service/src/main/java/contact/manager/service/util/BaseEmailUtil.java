@@ -6,6 +6,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -15,28 +17,31 @@ public abstract class BaseEmailUtil {
 	protected static final SimpleDateFormat _simpleDateFormatter = new SimpleDateFormat("MM/dd/yyyy");
 
 	
-	protected static void sendEmail(String from, String to, String cc, String cc2, String subject, String body, Boolean isHTMLFormat) throws AddressException {
+	protected static void sendEmail(String from, String to, String[] ccArray, String subject, String body, Boolean isHTMLFormat) throws AddressException {
 		if (_log.isTraceEnabled()) {
 			_log.trace(">> sendEmail");
 		}
 		
 		InternetAddress fromAddress = new InternetAddress(from);
 		InternetAddress toAddress = new InternetAddress(to);
-		InternetAddress ccAddress = null != cc ? new InternetAddress(cc) : null;
-		InternetAddress cc2Address = null != cc2 ? new InternetAddress(cc2) : null;
+		
+		InternetAddress ccAddressArray[] = null;
+		
+		if (null != ccArray) {
+			List<InternetAddress> ccList = new ArrayList<InternetAddress>();
+			for( String ccItem : ccArray ) {
+				ccList.add( new InternetAddress( ccItem ) );
+			}
+			ccAddressArray = new InternetAddress[ ccList.size() ];
+			ccAddressArray = ccList.toArray( ccAddressArray );
+		}
 
 		MailMessage mailMessage = new MailMessage();
 		
 		mailMessage.setTo(toAddress);
 		
-		if (null != ccAddress) {
-			if (null != cc2Address) {
-				InternetAddress[] ccAddressArray = { ccAddress, cc2Address };
-				mailMessage.setCC(ccAddressArray);
-			}
-			else {
-				mailMessage.setCC(ccAddress);
-			}
+		if (null != ccAddressArray) {
+			mailMessage.setCC(ccAddressArray);
 		}
 		
 		mailMessage.setFrom(fromAddress);

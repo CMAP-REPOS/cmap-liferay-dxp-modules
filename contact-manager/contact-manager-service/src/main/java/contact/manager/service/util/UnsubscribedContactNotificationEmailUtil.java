@@ -14,7 +14,7 @@ extends BaseEmailUtil {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationEmailUtil.class);
 	
 
-	public static void buildAndSendEmail( List<UnsubscribedContact> unsubscribedContactList ) {
+	public static void buildAndSendEmail( String from, String to, String cc[], String subject, List<UnsubscribedContact> unsubscribedContactList ) {
 		if (_log.isTraceEnabled()) {
 			_log.trace(">> buildAndSendEmail");
 		}
@@ -32,9 +32,7 @@ extends BaseEmailUtil {
 		}
 
 		try {
-			sendEmail("cmap@cmap1pas2.illinois.gov", "contactmanagers@cmap.illinois.gov", "kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov", "CMAP - Contact Activity Alert VIP unsubscribe", sb.toString(), true);
-
-			//sendEmail("cmap@cmap1pas2.illinois.gov", "cmap.contactmanagers@base22.com", null, null, "CMAP - Contact Activity Alert VIP unsubscribe", sb.toString(), true);
+			sendEmail(from, to, cc, subject, sb.toString(), true);
 		}
 		catch (AddressException ex) {
 			if (_log.isErrorEnabled()) {

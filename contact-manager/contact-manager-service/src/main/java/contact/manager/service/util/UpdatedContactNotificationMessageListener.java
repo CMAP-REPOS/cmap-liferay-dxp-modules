@@ -12,6 +12,7 @@ import com.liferay.portal.kernel.module.framework.ModuleServiceLifecycle;
 import com.liferay.portal.kernel.scheduler.SchedulerEngineHelper;
 import com.liferay.portal.kernel.scheduler.TriggerFactory;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -115,7 +116,21 @@ extends ContactManagerBaseMessageListener {
 				}
 			}
 			
-			UpdatedContactNotificationEmailUtil.buildAndSendEmail(updatedContactList);
+			final String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); // "cmap@cmap1pas2.illinois.gov";
+			final String to = PropsUtil.get(ContactNotificationConstants.EMAIL_TO_ADDRESS); // "contactmanagers@cmap.illinois.gov"; // "cmap.contactmanagers@base22.com";
+			final String cc[] = PropsUtil.getArray(ContactNotificationConstants.EMAIL_CC_ADDRESS); // {"kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov"};
+			final String subject ="CMAP - Contact Changes and Additions Alert";
+			
+			if (_log.isDebugEnabled()) {
+				_log.debug("Email properties:\nFrom: " + (null != from ? from : "null") + "; to: " + ( null != to ? to : "null") + "; CC: " + ( null != cc ? String.join(", ", cc) : "null") );
+			}
+			
+			if ( null != to && !to.trim().isEmpty() ) {
+				UpdatedContactNotificationEmailUtil.buildAndSendEmail(from, to, cc, subject, updatedContactList);
+			}
+			else if (_log.isWarnEnabled()) {
+					_log.warn("Email will not be sent because there's no email address configured for the property " + ContactNotificationConstants.EMAIL_TO_ADDRESS);
+			}
 		}
 		else {
 			if (_log.isInfoEnabled()) {
