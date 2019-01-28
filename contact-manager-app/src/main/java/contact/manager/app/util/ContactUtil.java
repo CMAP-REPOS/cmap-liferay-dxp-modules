@@ -56,7 +56,7 @@ public class ContactUtil {
 		String secondaryAddressCounty = ParamUtil.getString(request, "secondaryAddressCounty");
 		String secondaryAddressState = ParamUtil.getString(request, "secondaryAddressState");
 		String secondaryAddressZip = ParamUtil.getString(request, "secondaryAddressZip");
-		String tagsList = ParamUtil.getString(request, "tagsList");
+		String tagsList = ParamUtil.getString(request, "crmTags");
 		String twitterHandle = ParamUtil.getString(request, "twitterHandle");
 
 		crmContact.setAlternateContact(alternateContact);
