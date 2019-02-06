@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmGroup;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -116,7 +117,7 @@ public class CrmGroupUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid(java.lang.String uuid) {
+	public static List<CrmGroup> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -132,8 +133,7 @@ public class CrmGroupUtil {
 	* @param end the upper bound of the range of CRM Groups (not inclusive)
 	* @return the range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmGroup> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -150,8 +150,8 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator) {
+	public static List<CrmGroup> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -169,9 +169,8 @@ public class CrmGroupUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<CrmGroup> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -185,7 +184,7 @@ public class CrmGroupUtil {
 	* @return the first matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByUuid_First(java.lang.String uuid,
+	public static CrmGroup findByUuid_First(String uuid,
 		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -198,7 +197,7 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUuid_First(java.lang.String uuid,
+	public static CrmGroup fetchByUuid_First(String uuid,
 		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -211,7 +210,7 @@ public class CrmGroupUtil {
 	* @return the last matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByUuid_Last(java.lang.String uuid,
+	public static CrmGroup findByUuid_Last(String uuid,
 		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -224,7 +223,7 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUuid_Last(java.lang.String uuid,
+	public static CrmGroup fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -239,7 +238,7 @@ public class CrmGroupUtil {
 	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	*/
 	public static CrmGroup[] findByUuid_PrevAndNext(long crmGroupId,
-		java.lang.String uuid, OrderByComparator<CrmGroup> orderByComparator)
+		String uuid, OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmGroupId, uuid, orderByComparator);
@@ -250,7 +249,7 @@ public class CrmGroupUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -260,7 +259,7 @@ public class CrmGroupUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Groups
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -272,7 +271,7 @@ public class CrmGroupUtil {
 	* @return the matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmGroup findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -284,7 +283,7 @@ public class CrmGroupUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmGroup fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -296,7 +295,7 @@ public class CrmGroupUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmGroup fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -308,7 +307,7 @@ public class CrmGroupUtil {
 	* @param groupId the group ID
 	* @return the CRM Group that was removed
 	*/
-	public static CrmGroup removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmGroup removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -320,7 +319,7 @@ public class CrmGroupUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Groups
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -331,8 +330,7 @@ public class CrmGroupUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmGroup> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -349,8 +347,8 @@ public class CrmGroupUtil {
 	* @param end the upper bound of the range of CRM Groups (not inclusive)
 	* @return the range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -368,9 +366,8 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public static List<CrmGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -390,9 +387,9 @@ public class CrmGroupUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
+	public static List<CrmGroup> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmGroup> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -407,8 +404,8 @@ public class CrmGroupUtil {
 	* @return the first matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmGroup> orderByComparator)
+	public static CrmGroup findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -422,8 +419,8 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmGroup> orderByComparator) {
+	public static CrmGroup fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -437,8 +434,8 @@ public class CrmGroupUtil {
 	* @return the last matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmGroup> orderByComparator)
+	public static CrmGroup findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -452,8 +449,8 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmGroup> orderByComparator) {
+	public static CrmGroup fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -469,7 +466,7 @@ public class CrmGroupUtil {
 	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	*/
 	public static CrmGroup[] findByUuid_C_PrevAndNext(long crmGroupId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence()
@@ -483,7 +480,7 @@ public class CrmGroupUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -494,7 +491,7 @@ public class CrmGroupUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Groups
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -504,7 +501,7 @@ public class CrmGroupUtil {
 	* @param name the name
 	* @return the matching CRM Groups
 	*/
-	public static List<CrmGroup> findByName(java.lang.String name) {
+	public static List<CrmGroup> findByName(String name) {
 		return getPersistence().findByName(name);
 	}
 
@@ -520,8 +517,7 @@ public class CrmGroupUtil {
 	* @param end the upper bound of the range of CRM Groups (not inclusive)
 	* @return the range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByName(java.lang.String name, int start,
-		int end) {
+	public static List<CrmGroup> findByName(String name, int start, int end) {
 		return getPersistence().findByName(name, start, end);
 	}
 
@@ -538,8 +534,8 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByName(java.lang.String name, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator) {
+	public static List<CrmGroup> findByName(String name, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().findByName(name, start, end, orderByComparator);
 	}
 
@@ -557,9 +553,8 @@ public class CrmGroupUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Groups
 	*/
-	public static List<CrmGroup> findByName(java.lang.String name, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<CrmGroup> findByName(String name, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByName(name, start, end, orderByComparator,
 			retrieveFromCache);
@@ -573,7 +568,7 @@ public class CrmGroupUtil {
 	* @return the first matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByName_First(java.lang.String name,
+	public static CrmGroup findByName_First(String name,
 		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().findByName_First(name, orderByComparator);
@@ -586,7 +581,7 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByName_First(java.lang.String name,
+	public static CrmGroup fetchByName_First(String name,
 		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().fetchByName_First(name, orderByComparator);
 	}
@@ -599,7 +594,7 @@ public class CrmGroupUtil {
 	* @return the last matching CRM Group
 	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	*/
-	public static CrmGroup findByName_Last(java.lang.String name,
+	public static CrmGroup findByName_Last(String name,
 		OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence().findByName_Last(name, orderByComparator);
@@ -612,7 +607,7 @@ public class CrmGroupUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	*/
-	public static CrmGroup fetchByName_Last(java.lang.String name,
+	public static CrmGroup fetchByName_Last(String name,
 		OrderByComparator<CrmGroup> orderByComparator) {
 		return getPersistence().fetchByName_Last(name, orderByComparator);
 	}
@@ -627,7 +622,7 @@ public class CrmGroupUtil {
 	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	*/
 	public static CrmGroup[] findByName_PrevAndNext(long crmGroupId,
-		java.lang.String name, OrderByComparator<CrmGroup> orderByComparator)
+		String name, OrderByComparator<CrmGroup> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmGroupException {
 		return getPersistence()
 				   .findByName_PrevAndNext(crmGroupId, name, orderByComparator);
@@ -638,7 +633,7 @@ public class CrmGroupUtil {
 	*
 	* @param name the name
 	*/
-	public static void removeByName(java.lang.String name) {
+	public static void removeByName(String name) {
 		getPersistence().removeByName(name);
 	}
 
@@ -648,8 +643,163 @@ public class CrmGroupUtil {
 	* @param name the name
 	* @return the number of matching CRM Groups
 	*/
-	public static int countByName(java.lang.String name) {
+	public static int countByName(String name) {
 		return getPersistence().countByName(name);
+	}
+
+	/**
+	* Returns all the CRM Groups where status = &#63;.
+	*
+	* @param status the status
+	* @return the matching CRM Groups
+	*/
+	public static List<CrmGroup> findByStatus(String status) {
+		return getPersistence().findByStatus(status);
+	}
+
+	/**
+	* Returns a range of all the CRM Groups where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @return the range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByStatus(String status, int start, int end) {
+		return getPersistence().findByStatus(status, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Groups where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByStatus(String status, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence()
+				   .findByStatus(status, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the CRM Groups where status = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param status the status
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching CRM Groups
+	*/
+	public static List<CrmGroup> findByStatus(String status, int start,
+		int end, OrderByComparator<CrmGroup> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByStatus(status, start, end, orderByComparator,
+			retrieveFromCache);
+	}
+
+	/**
+	* Returns the first CRM Group in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public static CrmGroup findByStatus_First(String status,
+		OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence().findByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	* Returns the first CRM Group in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public static CrmGroup fetchByStatus_First(String status,
+		OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence().fetchByStatus_First(status, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Group in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group
+	* @throws NoSuchCrmGroupException if a matching CRM Group could not be found
+	*/
+	public static CrmGroup findByStatus_Last(String status,
+		OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence().findByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	* Returns the last CRM Group in the ordered set where status = &#63;.
+	*
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	public static CrmGroup fetchByStatus_Last(String status,
+		OrderByComparator<CrmGroup> orderByComparator) {
+		return getPersistence().fetchByStatus_Last(status, orderByComparator);
+	}
+
+	/**
+	* Returns the CRM Groups before and after the current CRM Group in the ordered set where status = &#63;.
+	*
+	* @param crmGroupId the primary key of the current CRM Group
+	* @param status the status
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next CRM Group
+	* @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
+	*/
+	public static CrmGroup[] findByStatus_PrevAndNext(long crmGroupId,
+		String status, OrderByComparator<CrmGroup> orderByComparator)
+		throws contact.manager.exception.NoSuchCrmGroupException {
+		return getPersistence()
+				   .findByStatus_PrevAndNext(crmGroupId, status,
+			orderByComparator);
+	}
+
+	/**
+	* Removes all the CRM Groups where status = &#63; from the database.
+	*
+	* @param status the status
+	*/
+	public static void removeByStatus(String status) {
+		getPersistence().removeByStatus(status);
+	}
+
+	/**
+	* Returns the number of CRM Groups where status = &#63;.
+	*
+	* @param status the status
+	* @return the number of matching CRM Groups
+	*/
+	public static int countByStatus(String status) {
+		return getPersistence().countByStatus(status);
 	}
 
 	/**
@@ -1000,7 +1150,7 @@ public class CrmGroupUtil {
 		getPersistence().setCrmContacts(pk, crmContacts);
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -1008,6 +1158,16 @@ public class CrmGroupUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmGroupPersistence, CrmGroupPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmGroupPersistence.class);
+	private static ServiceTracker<CrmGroupPersistence, CrmGroupPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmGroupPersistence.class);
+
+		ServiceTracker<CrmGroupPersistence, CrmGroupPersistence> serviceTracker = new ServiceTracker<CrmGroupPersistence, CrmGroupPersistence>(bundle.getBundleContext(),
+				CrmGroupPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

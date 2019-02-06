@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmContactAuditLog;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -118,7 +119,7 @@ public class CrmContactAuditLogUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid(java.lang.String uuid) {
+	public static List<CrmContactAuditLog> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -134,8 +135,8 @@ public class CrmContactAuditLogUtil {
 	* @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
 	* @return the range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CrmContactAuditLog> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -152,9 +153,8 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+	public static List<CrmContactAuditLog> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -172,9 +172,8 @@ public class CrmContactAuditLogUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CrmContactAuditLog> orderByComparator,
+	public static List<CrmContactAuditLog> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CrmContactAuditLog> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -189,7 +188,7 @@ public class CrmContactAuditLogUtil {
 	* @return the first matching CRM Contact Audit Log
 	* @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog findByUuid_First(java.lang.String uuid,
+	public static CrmContactAuditLog findByUuid_First(String uuid,
 		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -202,7 +201,7 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUuid_First(java.lang.String uuid,
+	public static CrmContactAuditLog fetchByUuid_First(String uuid,
 		OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -215,7 +214,7 @@ public class CrmContactAuditLogUtil {
 	* @return the last matching CRM Contact Audit Log
 	* @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog findByUuid_Last(java.lang.String uuid,
+	public static CrmContactAuditLog findByUuid_Last(String uuid,
 		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -228,7 +227,7 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUuid_Last(java.lang.String uuid,
+	public static CrmContactAuditLog fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -243,7 +242,7 @@ public class CrmContactAuditLogUtil {
 	* @throws NoSuchCrmContactAuditLogException if a CRM Contact Audit Log with the primary key could not be found
 	*/
 	public static CrmContactAuditLog[] findByUuid_PrevAndNext(
-		long crmContactAuditLogId, java.lang.String uuid,
+		long crmContactAuditLogId, String uuid,
 		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence()
@@ -256,7 +255,7 @@ public class CrmContactAuditLogUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -266,7 +265,7 @@ public class CrmContactAuditLogUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Contact Audit Logs
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -278,8 +277,7 @@ public class CrmContactAuditLogUtil {
 	* @return the matching CRM Contact Audit Log
 	* @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CrmContactAuditLog findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -291,8 +289,7 @@ public class CrmContactAuditLogUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CrmContactAuditLog fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -304,8 +301,8 @@ public class CrmContactAuditLogUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CrmContactAuditLog fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -316,8 +313,7 @@ public class CrmContactAuditLogUtil {
 	* @param groupId the group ID
 	* @return the CRM Contact Audit Log that was removed
 	*/
-	public static CrmContactAuditLog removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CrmContactAuditLog removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -329,7 +325,7 @@ public class CrmContactAuditLogUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Contact Audit Logs
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -340,7 +336,7 @@ public class CrmContactAuditLogUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid_C(java.lang.String uuid,
+	public static List<CrmContactAuditLog> findByUuid_C(String uuid,
 		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
@@ -358,7 +354,7 @@ public class CrmContactAuditLogUtil {
 	* @param end the upper bound of the range of CRM Contact Audit Logs (not inclusive)
 	* @return the range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid_C(java.lang.String uuid,
+	public static List<CrmContactAuditLog> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -377,7 +373,7 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid_C(java.lang.String uuid,
+	public static List<CrmContactAuditLog> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence()
@@ -399,7 +395,7 @@ public class CrmContactAuditLogUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contact Audit Logs
 	*/
-	public static List<CrmContactAuditLog> findByUuid_C(java.lang.String uuid,
+	public static List<CrmContactAuditLog> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmContactAuditLog> orderByComparator,
 		boolean retrieveFromCache) {
@@ -417,7 +413,7 @@ public class CrmContactAuditLogUtil {
 	* @return the first matching CRM Contact Audit Log
 	* @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog findByUuid_C_First(java.lang.String uuid,
+	public static CrmContactAuditLog findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence()
@@ -432,9 +428,8 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		OrderByComparator<CrmContactAuditLog> orderByComparator) {
+	public static CrmContactAuditLog fetchByUuid_C_First(String uuid,
+		long companyId, OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -448,7 +443,7 @@ public class CrmContactAuditLogUtil {
 	* @return the last matching CRM Contact Audit Log
 	* @throws NoSuchCrmContactAuditLogException if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog findByUuid_C_Last(java.lang.String uuid,
+	public static CrmContactAuditLog findByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence()
@@ -463,7 +458,7 @@ public class CrmContactAuditLogUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
 	*/
-	public static CrmContactAuditLog fetchByUuid_C_Last(java.lang.String uuid,
+	public static CrmContactAuditLog fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CrmContactAuditLog> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -480,7 +475,7 @@ public class CrmContactAuditLogUtil {
 	* @throws NoSuchCrmContactAuditLogException if a CRM Contact Audit Log with the primary key could not be found
 	*/
 	public static CrmContactAuditLog[] findByUuid_C_PrevAndNext(
-		long crmContactAuditLogId, java.lang.String uuid, long companyId,
+		long crmContactAuditLogId, String uuid, long companyId,
 		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactAuditLogException {
 		return getPersistence()
@@ -494,7 +489,7 @@ public class CrmContactAuditLogUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -505,7 +500,7 @@ public class CrmContactAuditLogUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Contact Audit Logs
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -1001,7 +996,7 @@ public class CrmContactAuditLogUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -1009,6 +1004,17 @@ public class CrmContactAuditLogUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmContactAuditLogPersistence, CrmContactAuditLogPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmContactAuditLogPersistence.class);
+	private static ServiceTracker<CrmContactAuditLogPersistence, CrmContactAuditLogPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmContactAuditLogPersistence.class);
+
+		ServiceTracker<CrmContactAuditLogPersistence, CrmContactAuditLogPersistence> serviceTracker =
+			new ServiceTracker<CrmContactAuditLogPersistence, CrmContactAuditLogPersistence>(bundle.getBundleContext(),
+				CrmContactAuditLogPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmContactAuditLogLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmContactAuditLogLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Contact Audit Log to the database. Also notifies the appropriate model listeners.
@@ -82,6 +52,10 @@ public class CrmContactAuditLogLocalServiceUtil {
 	public static contact.manager.model.CrmContactAuditLog addCrmContactAuditLog(
 		contact.manager.model.CrmContactAuditLog crmContactAuditLog) {
 		return getService().addCrmContactAuditLog(crmContactAuditLog);
+	}
+
+	public static int countByCrmContactId(long crmContactId) {
+		return getService().countByCrmContactId(crmContactId);
 	}
 
 	/**
@@ -119,82 +93,17 @@ public class CrmContactAuditLogLocalServiceUtil {
 		return getService().deleteCrmContactAuditLog(crmContactAuditLogId);
 	}
 
-	public static contact.manager.model.CrmContactAuditLog fetchCrmContactAuditLog(
-		long crmContactAuditLogId) {
-		return getService().fetchCrmContactAuditLog(crmContactAuditLogId);
-	}
-
 	/**
-	* Returns the CRM Contact Audit Log matching the UUID and group.
-	*
-	* @param uuid the CRM Contact Audit Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmContactAuditLog fetchCrmContactAuditLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService()
-				   .fetchCrmContactAuditLogByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Contact Audit Log with the primary key.
-	*
-	* @param crmContactAuditLogId the primary key of the CRM Contact Audit Log
-	* @return the CRM Contact Audit Log
-	* @throws PortalException if a CRM Contact Audit Log with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmContactAuditLog getCrmContactAuditLog(
-		long crmContactAuditLogId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmContactAuditLog(crmContactAuditLogId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM Contact Audit Log matching the UUID and group.
-	*
-	* @param uuid the CRM Contact Audit Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact Audit Log
-	* @throws PortalException if a matching CRM Contact Audit Log could not be found
-	*/
-	public static contact.manager.model.CrmContactAuditLog getCrmContactAuditLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmContactAuditLogByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Contact Audit Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmContactAuditLog the CRM Contact Audit Log
-	* @return the CRM Contact Audit Log that was updated
-	*/
-	public static contact.manager.model.CrmContactAuditLog updateCrmContactAuditLog(
-		contact.manager.model.CrmContactAuditLog crmContactAuditLog) {
-		return getService().updateCrmContactAuditLog(crmContactAuditLog);
-	}
-
-	public static int countByCrmContactId(long crmContactId) {
-		return getService().countByCrmContactId(crmContactId);
-	}
-
-	/**
-	* Returns the number of CRM Contact Audit Logs.
-	*
-	* @return the number of CRM Contact Audit Logs
-	*/
-	public static int getCrmContactAuditLogsCount() {
-		return getService().getCrmContactAuditLogsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -247,6 +156,48 @@ public class CrmContactAuditLogLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmContactAuditLog fetchCrmContactAuditLog(
+		long crmContactAuditLogId) {
+		return getService().fetchCrmContactAuditLog(crmContactAuditLogId);
+	}
+
+	/**
+	* Returns the CRM Contact Audit Log matching the UUID and group.
+	*
+	* @param uuid the CRM Contact Audit Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	*/
+	public static contact.manager.model.CrmContactAuditLog fetchCrmContactAuditLogByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchCrmContactAuditLogByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmContactAuditLog> findByCrmContactId(
 		long crmContactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -266,6 +217,37 @@ public class CrmContactAuditLogLocalServiceUtil {
 		return getService()
 				   .findByCrmContactId(crmContactId, start, end,
 			orderByComparator);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Contact Audit Log with the primary key.
+	*
+	* @param crmContactAuditLogId the primary key of the CRM Contact Audit Log
+	* @return the CRM Contact Audit Log
+	* @throws PortalException if a CRM Contact Audit Log with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmContactAuditLog getCrmContactAuditLog(
+		long crmContactAuditLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmContactAuditLog(crmContactAuditLogId);
+	}
+
+	/**
+	* Returns the CRM Contact Audit Log matching the UUID and group.
+	*
+	* @param uuid the CRM Contact Audit Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact Audit Log
+	* @throws PortalException if a matching CRM Contact Audit Log could not be found
+	*/
+	public static contact.manager.model.CrmContactAuditLog getCrmContactAuditLogByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmContactAuditLogByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -292,7 +274,7 @@ public class CrmContactAuditLogLocalServiceUtil {
 	* @return the matching CRM Contact Audit Logs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmContactAuditLog> getCrmContactAuditLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCrmContactAuditLogsByUuidAndCompanyId(uuid, companyId);
 	}
@@ -308,7 +290,7 @@ public class CrmContactAuditLogLocalServiceUtil {
 	* @return the range of matching CRM Contact Audit Logs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmContactAuditLog> getCrmContactAuditLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContactAuditLog> orderByComparator) {
 		return getService()
 				   .getCrmContactAuditLogsByUuidAndCompanyId(uuid, companyId,
@@ -316,33 +298,64 @@ public class CrmContactAuditLogLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Contact Audit Logs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Contact Audit Logs
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmContactAuditLogsCount() {
+		return getService().getCrmContactAuditLogsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM Contact Audit Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmContactAuditLog the CRM Contact Audit Log
+	* @return the CRM Contact Audit Log that was updated
+	*/
+	public static contact.manager.model.CrmContactAuditLog updateCrmContactAuditLog(
+		contact.manager.model.CrmContactAuditLog crmContactAuditLog) {
+		return getService().updateCrmContactAuditLog(crmContactAuditLog);
 	}
 
 	public static CrmContactAuditLogLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmContactAuditLogLocalService, CrmContactAuditLogLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmContactAuditLogLocalService.class);
+	private static ServiceTracker<CrmContactAuditLogLocalService, CrmContactAuditLogLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmContactAuditLogLocalService.class);
+
+		ServiceTracker<CrmContactAuditLogLocalService, CrmContactAuditLogLocalService> serviceTracker =
+			new ServiceTracker<CrmContactAuditLogLocalService, CrmContactAuditLogLocalService>(bundle.getBundleContext(),
+				CrmContactAuditLogLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

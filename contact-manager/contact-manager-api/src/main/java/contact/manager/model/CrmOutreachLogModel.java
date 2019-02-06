@@ -320,19 +320,19 @@ public interface CrmOutreachLogModel extends BaseModel<CrmOutreachLog>,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmOutreachLog crmOutreachLog);
+	public int compareTo(CrmOutreachLog crmOutreachLog);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmOutreachLog> toCacheModel();
+	public CacheModel<CrmOutreachLog> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmOutreachLog toEscapedModel();
+	public CrmOutreachLog toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmOutreachLog toUnescapedModel();
+	public CrmOutreachLog toUnescapedModel();
 
 	@Override
 	public String toString();

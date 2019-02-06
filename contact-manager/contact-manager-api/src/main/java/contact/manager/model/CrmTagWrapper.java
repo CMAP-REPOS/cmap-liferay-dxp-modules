@@ -130,128 +130,13 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmTag.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmTag.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmTag.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmTag.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmTag> toCacheModel() {
-		return _crmTag.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmTag toEscapedModel() {
-		return new CrmTagWrapper(_crmTag.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmTag toUnescapedModel() {
-		return new CrmTagWrapper(_crmTag.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmTag crmTag) {
-		return _crmTag.compareTo(crmTag);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmTag.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmTag.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmTagWrapper((CrmTag)_crmTag.clone());
 	}
 
-	/**
-	* Returns the name of this CRM Tag.
-	*
-	* @return the name of this CRM Tag
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmTag.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM Tag.
-	*
-	* @return the user name of this CRM Tag
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmTag.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Tag.
-	*
-	* @return the user uuid of this CRM Tag
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmTag.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Tag.
-	*
-	* @return the uuid of this CRM Tag
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmTag.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmTag.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmTag.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Tag.
-	*
-	* @return the create date of this CRM Tag
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmTag.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Tag.
-	*
-	* @return the modified date of this CRM Tag
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmTag.getModifiedDate();
+	public int compareTo(CrmTag crmTag) {
+		return _crmTag.compareTo(crmTag);
 	}
 
 	/**
@@ -265,6 +150,16 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
+	* Returns the create date of this CRM Tag.
+	*
+	* @return the create date of this CRM Tag
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmTag.getCreateDate();
+	}
+
+	/**
 	* Returns the crm tag ID of this CRM Tag.
 	*
 	* @return the crm tag ID of this CRM Tag
@@ -272,6 +167,11 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public long getCrmTagId() {
 		return _crmTag.getCrmTagId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmTag.getExpandoBridge();
 	}
 
 	/**
@@ -285,6 +185,26 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
+	* Returns the modified date of this CRM Tag.
+	*
+	* @return the modified date of this CRM Tag
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmTag.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM Tag.
+	*
+	* @return the name of this CRM Tag
+	*/
+	@Override
+	public String getName() {
+		return _crmTag.getName();
+	}
+
+	/**
 	* Returns the primary key of this CRM Tag.
 	*
 	* @return the primary key of this CRM Tag
@@ -292,6 +212,11 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmTag.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmTag.getPrimaryKeyObj();
 	}
 
 	/**
@@ -302,6 +227,56 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public long getUserId() {
 		return _crmTag.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Tag.
+	*
+	* @return the user name of this CRM Tag
+	*/
+	@Override
+	public String getUserName() {
+		return _crmTag.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Tag.
+	*
+	* @return the user uuid of this CRM Tag
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmTag.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Tag.
+	*
+	* @return the uuid of this CRM Tag
+	*/
+	@Override
+	public String getUuid() {
+		return _crmTag.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmTag.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmTag.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmTag.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmTag.isNew();
 	}
 
 	@Override
@@ -345,14 +320,14 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmTag.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmTag.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmTag.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -386,7 +361,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	* @param name the name of this CRM Tag
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmTag.setName(name);
 	}
 
@@ -426,7 +401,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	* @param userName the user name of this CRM Tag
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmTag.setUserName(userName);
 	}
 
@@ -436,7 +411,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	* @param userUuid the user uuid of this CRM Tag
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmTag.setUserUuid(userUuid);
 	}
 
@@ -446,8 +421,33 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	* @param uuid the uuid of this CRM Tag
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmTag.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmTag> toCacheModel() {
+		return _crmTag.toCacheModel();
+	}
+
+	@Override
+	public CrmTag toEscapedModel() {
+		return new CrmTagWrapper(_crmTag.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmTag.toString();
+	}
+
+	@Override
+	public CrmTag toUnescapedModel() {
+		return new CrmTagWrapper(_crmTag.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmTag.toXmlString();
 	}
 
 	@Override

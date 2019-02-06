@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmLTALocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmLTALocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM LTA to the database. Also notifies the appropriate model listeners.
@@ -117,75 +87,17 @@ public class CrmLTALocalServiceUtil {
 		return getService().deleteCrmLTA(crmLTAId);
 	}
 
-	public static contact.manager.model.CrmLTA fetchCrmLTA(long crmLTAId) {
-		return getService().fetchCrmLTA(crmLTAId);
-	}
-
 	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmLTA fetchCrmLTAByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmLTAByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM LTA with the primary key.
-	*
-	* @param crmLTAId the primary key of the CRM LTA
-	* @return the CRM LTA
-	* @throws PortalException if a CRM LTA with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmLTA getCrmLTA(long crmLTAId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmLTA(crmLTAId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA
-	* @throws PortalException if a matching CRM LTA could not be found
-	*/
-	public static contact.manager.model.CrmLTA getCrmLTAByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmLTAByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTA the CRM LTA
-	* @return the CRM LTA that was updated
-	*/
-	public static contact.manager.model.CrmLTA updateCrmLTA(
-		contact.manager.model.CrmLTA crmLTA) {
-		return getService().updateCrmLTA(crmLTA);
-	}
-
-	/**
-	* Returns the number of CRM LTAs.
-	*
-	* @return the number of CRM LTAs
-	*/
-	public static int getCrmLTAsCount() {
-		return getService().getCrmLTAsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -238,9 +150,79 @@ public class CrmLTALocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmLTA fetchCrmLTA(long crmLTAId) {
+		return getService().fetchCrmLTA(crmLTAId);
+	}
+
+	/**
+	* Returns the CRM LTA matching the UUID and group.
+	*
+	* @param uuid the CRM LTA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	*/
+	public static contact.manager.model.CrmLTA fetchCrmLTAByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmLTAByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmLTA> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM LTA with the primary key.
+	*
+	* @param crmLTAId the primary key of the CRM LTA
+	* @return the CRM LTA
+	* @throws PortalException if a CRM LTA with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmLTA getCrmLTA(long crmLTAId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmLTA(crmLTAId);
+	}
+
+	/**
+	* Returns the CRM LTA matching the UUID and group.
+	*
+	* @param uuid the CRM LTA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM LTA
+	* @throws PortalException if a matching CRM LTA could not be found
+	*/
+	public static contact.manager.model.CrmLTA getCrmLTAByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmLTAByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -267,7 +249,7 @@ public class CrmLTALocalServiceUtil {
 	* @return the matching CRM LTAs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmLTA> getCrmLTAsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmLTAsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -282,7 +264,7 @@ public class CrmLTALocalServiceUtil {
 	* @return the range of matching CRM LTAs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmLTA> getCrmLTAsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmLTA> orderByComparator) {
 		return getService()
 				   .getCrmLTAsByUuidAndCompanyId(uuid, companyId, start, end,
@@ -290,33 +272,63 @@ public class CrmLTALocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM LTAs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM LTAs
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmLTAsCount() {
+		return getService().getCrmLTAsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmLTA the CRM LTA
+	* @return the CRM LTA that was updated
+	*/
+	public static contact.manager.model.CrmLTA updateCrmLTA(
+		contact.manager.model.CrmLTA crmLTA) {
+		return getService().updateCrmLTA(crmLTA);
 	}
 
 	public static CrmLTALocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmLTALocalService, CrmLTALocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmLTALocalService.class);
+	private static ServiceTracker<CrmLTALocalService, CrmLTALocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmLTALocalService.class);
+
+		ServiceTracker<CrmLTALocalService, CrmLTALocalService> serviceTracker = new ServiceTracker<CrmLTALocalService, CrmLTALocalService>(bundle.getBundleContext(),
+				CrmLTALocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmCountyCommissionerLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmCountyCommissionerLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM County Commissioner to the database. Also notifies the appropriate model listeners.
@@ -121,81 +91,17 @@ public class CrmCountyCommissionerLocalServiceUtil {
 				   .deleteCrmCountyCommissioner(crmCountyCommissionerOrBoardDistId);
 	}
 
-	public static contact.manager.model.CrmCountyCommissioner fetchCrmCountyCommissioner(
-		long crmCountyCommissionerOrBoardDistId) {
-		return getService()
-				   .fetchCrmCountyCommissioner(crmCountyCommissionerOrBoardDistId);
-	}
-
 	/**
-	* Returns the CRM County Commissioner matching the UUID and group.
-	*
-	* @param uuid the CRM County Commissioner's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmCountyCommissioner fetchCrmCountyCommissionerByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService()
-				   .fetchCrmCountyCommissionerByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM County Commissioner with the primary key.
-	*
-	* @param crmCountyCommissionerOrBoardDistId the primary key of the CRM County Commissioner
-	* @return the CRM County Commissioner
-	* @throws PortalException if a CRM County Commissioner with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmCountyCommissioner getCrmCountyCommissioner(
-		long crmCountyCommissionerOrBoardDistId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCrmCountyCommissioner(crmCountyCommissionerOrBoardDistId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM County Commissioner matching the UUID and group.
-	*
-	* @param uuid the CRM County Commissioner's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County Commissioner
-	* @throws PortalException if a matching CRM County Commissioner could not be found
-	*/
-	public static contact.manager.model.CrmCountyCommissioner getCrmCountyCommissionerByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService()
-				   .getCrmCountyCommissionerByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM County Commissioner in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCountyCommissioner the CRM County Commissioner
-	* @return the CRM County Commissioner that was updated
-	*/
-	public static contact.manager.model.CrmCountyCommissioner updateCrmCountyCommissioner(
-		contact.manager.model.CrmCountyCommissioner crmCountyCommissioner) {
-		return getService().updateCrmCountyCommissioner(crmCountyCommissioner);
-	}
-
-	/**
-	* Returns the number of CRM County Commissioners.
-	*
-	* @return the number of CRM County Commissioners
-	*/
-	public static int getCrmCountyCommissionersCount() {
-		return getService().getCrmCountyCommissionersCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -248,9 +154,85 @@ public class CrmCountyCommissionerLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmCountyCommissioner fetchCrmCountyCommissioner(
+		long crmCountyCommissionerOrBoardDistId) {
+		return getService()
+				   .fetchCrmCountyCommissioner(crmCountyCommissionerOrBoardDistId);
+	}
+
+	/**
+	* Returns the CRM County Commissioner matching the UUID and group.
+	*
+	* @param uuid the CRM County Commissioner's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	*/
+	public static contact.manager.model.CrmCountyCommissioner fetchCrmCountyCommissionerByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService()
+				   .fetchCrmCountyCommissionerByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM County Commissioner with the primary key.
+	*
+	* @param crmCountyCommissionerOrBoardDistId the primary key of the CRM County Commissioner
+	* @return the CRM County Commissioner
+	* @throws PortalException if a CRM County Commissioner with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmCountyCommissioner getCrmCountyCommissioner(
+		long crmCountyCommissionerOrBoardDistId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCrmCountyCommissioner(crmCountyCommissionerOrBoardDistId);
+	}
+
+	/**
+	* Returns the CRM County Commissioner matching the UUID and group.
+	*
+	* @param uuid the CRM County Commissioner's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County Commissioner
+	* @throws PortalException if a matching CRM County Commissioner could not be found
+	*/
+	public static contact.manager.model.CrmCountyCommissioner getCrmCountyCommissionerByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService()
+				   .getCrmCountyCommissionerByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -277,7 +259,7 @@ public class CrmCountyCommissionerLocalServiceUtil {
 	* @return the matching CRM County Commissioners, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmCountyCommissioner> getCrmCountyCommissionersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService()
 				   .getCrmCountyCommissionersByUuidAndCompanyId(uuid, companyId);
 	}
@@ -293,7 +275,7 @@ public class CrmCountyCommissionerLocalServiceUtil {
 	* @return the range of matching CRM County Commissioners, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmCountyCommissioner> getCrmCountyCommissionersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmCountyCommissioner> orderByComparator) {
 		return getService()
 				   .getCrmCountyCommissionersByUuidAndCompanyId(uuid,
@@ -301,33 +283,64 @@ public class CrmCountyCommissionerLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM County Commissioners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM County Commissioners
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmCountyCommissionersCount() {
+		return getService().getCrmCountyCommissionersCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM County Commissioner in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCountyCommissioner the CRM County Commissioner
+	* @return the CRM County Commissioner that was updated
+	*/
+	public static contact.manager.model.CrmCountyCommissioner updateCrmCountyCommissioner(
+		contact.manager.model.CrmCountyCommissioner crmCountyCommissioner) {
+		return getService().updateCrmCountyCommissioner(crmCountyCommissioner);
 	}
 
 	public static CrmCountyCommissionerLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmCountyCommissionerLocalService, CrmCountyCommissionerLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmCountyCommissionerLocalService.class);
+	private static ServiceTracker<CrmCountyCommissionerLocalService, CrmCountyCommissionerLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmCountyCommissionerLocalService.class);
+
+		ServiceTracker<CrmCountyCommissionerLocalService, CrmCountyCommissionerLocalService> serviceTracker =
+			new ServiceTracker<CrmCountyCommissionerLocalService, CrmCountyCommissionerLocalService>(bundle.getBundleContext(),
+				CrmCountyCommissionerLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

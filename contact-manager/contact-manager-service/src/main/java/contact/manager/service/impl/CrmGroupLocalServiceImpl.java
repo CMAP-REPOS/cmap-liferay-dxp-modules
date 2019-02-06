@@ -91,5 +91,17 @@ public class CrmGroupLocalServiceImpl extends CrmGroupLocalServiceBaseImpl {
 	public int countAll() {
 		return crmGroupPersistence.countAll();
 	}
+	
+	public List<CrmGroup> getCrmGroupByStatus(String crmGroupStatus)  throws SystemException {
+		return crmGroupPersistence.findByStatus(crmGroupStatus);
+	}
+	
+	public List<CrmGroup> getCrmGroupByStatus(String crmGroupStatus, int start, int end)  throws SystemException {
+		return crmGroupPersistence.findByStatus(crmGroupStatus, start, end);
+	}
+	
+	public List<CrmGroup> getCrmGroupByStatus(String crmGroupStatus, int start, int end, OrderByComparator<CrmGroup> orderByComparator)  throws SystemException {
+		return crmGroupPersistence.findByStatus(crmGroupStatus, start, end, orderByComparator);
+	}
 
 }

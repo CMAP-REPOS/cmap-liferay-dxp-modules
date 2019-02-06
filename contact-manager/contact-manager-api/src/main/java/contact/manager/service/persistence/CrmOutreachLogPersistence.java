@@ -48,7 +48,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param uuid the uuid
 	* @return the matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid(java.lang.String uuid);
+	public java.util.List<CrmOutreachLog> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM Outreach Logs where uuid = &#63;.
@@ -62,8 +62,8 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param end the upper bound of the range of CRM Outreach Logs (not inclusive)
 	* @return the range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CrmOutreachLog> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the CRM Outreach Logs where uuid = &#63;.
@@ -78,8 +78,8 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmOutreachLog> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
@@ -96,8 +96,8 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmOutreachLog> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +109,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @return the first matching CRM Outreach Log
 	* @throws NoSuchCrmOutreachLogException if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog findByUuid_First(java.lang.String uuid,
+	public CrmOutreachLog findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -120,7 +120,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUuid_First(java.lang.String uuid,
+	public CrmOutreachLog fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
@@ -131,7 +131,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @return the last matching CRM Outreach Log
 	* @throws NoSuchCrmOutreachLogException if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog findByUuid_Last(java.lang.String uuid,
+	public CrmOutreachLog findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -142,7 +142,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUuid_Last(java.lang.String uuid,
+	public CrmOutreachLog fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
@@ -155,7 +155,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @throws NoSuchCrmOutreachLogException if a CRM Outreach Log with the primary key could not be found
 	*/
 	public CrmOutreachLog[] findByUuid_PrevAndNext(long crmOutreachLogId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -164,7 +164,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM Outreach Logs where uuid = &#63;.
@@ -172,7 +172,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param uuid the uuid
 	* @return the number of matching CRM Outreach Logs
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM Outreach Log where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmOutreachLogException} if it could not be found.
@@ -182,7 +182,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @return the matching CRM Outreach Log
 	* @throws NoSuchCrmOutreachLogException if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog findByUUID_G(java.lang.String uuid, long groupId)
+	public CrmOutreachLog findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmOutreachLogException;
 
 	/**
@@ -192,7 +192,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param groupId the group ID
 	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CrmOutreachLog fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM Outreach Log where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,7 +202,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CrmOutreachLog fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -212,7 +212,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param groupId the group ID
 	* @return the CRM Outreach Log that was removed
 	*/
-	public CrmOutreachLog removeByUUID_G(java.lang.String uuid, long groupId)
+	public CrmOutreachLog removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmOutreachLogException;
 
 	/**
@@ -222,7 +222,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param groupId the group ID
 	* @return the number of matching CRM Outreach Logs
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM Outreach Logs where uuid = &#63; and companyId = &#63;.
@@ -231,7 +231,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param companyId the company ID
 	* @return the matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmOutreachLog> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -247,7 +247,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param end the upper bound of the range of CRM Outreach Logs (not inclusive)
 	* @return the range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmOutreachLog> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -264,7 +264,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmOutreachLog> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
@@ -283,7 +283,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Outreach Logs
 	*/
-	public java.util.List<CrmOutreachLog> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmOutreachLog> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator,
 		boolean retrieveFromCache);
@@ -297,8 +297,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @return the first matching CRM Outreach Log
 	* @throws NoSuchCrmOutreachLogException if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CrmOutreachLog findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -310,8 +309,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CrmOutreachLog fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
@@ -323,8 +321,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @return the last matching CRM Outreach Log
 	* @throws NoSuchCrmOutreachLogException if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CrmOutreachLog findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -336,8 +333,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
 	*/
-	public CrmOutreachLog fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CrmOutreachLog fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
@@ -351,7 +347,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @throws NoSuchCrmOutreachLogException if a CRM Outreach Log with the primary key could not be found
 	*/
 	public CrmOutreachLog[] findByUuid_C_PrevAndNext(long crmOutreachLogId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws NoSuchCrmOutreachLogException;
 
@@ -361,7 +357,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM Outreach Logs where uuid = &#63; and companyId = &#63;.
@@ -370,7 +366,7 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	* @param companyId the company ID
 	* @return the number of matching CRM Outreach Logs
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM Outreach Logs where crmContactId = &#63;.
@@ -625,5 +621,5 @@ public interface CrmOutreachLogPersistence extends BasePersistence<CrmOutreachLo
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

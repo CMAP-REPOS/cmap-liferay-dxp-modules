@@ -63,29 +63,6 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmCountyLocalServiceUtil} to access the CRM County local service. Add custom service methods to {@link contact.manager.service.impl.CrmCountyLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM County to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	* @param crmCountyId the primary key for the new CRM County
 	* @return the new CRM County
 	*/
+	@Transactional(enabled = false)
 	public CrmCounty createCrmCounty(long crmCountyId);
 
 	/**
@@ -124,65 +102,14 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	public CrmCounty deleteCrmCounty(long crmCountyId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCounty fetchCrmCounty(long crmCountyId);
-
 	/**
-	* Returns the CRM County matching the UUID and group.
-	*
-	* @param uuid the CRM County's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County, or <code>null</code> if a matching CRM County could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCounty fetchCrmCountyByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Returns the CRM County with the primary key.
-	*
-	* @param crmCountyId the primary key of the CRM County
-	* @return the CRM County
-	* @throws PortalException if a CRM County with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCounty getCrmCounty(long crmCountyId) throws PortalException;
-
-	/**
-	* Returns the CRM County matching the UUID and group.
-	*
-	* @param uuid the CRM County's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County
-	* @throws PortalException if a matching CRM County could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCounty getCrmCountyByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM County in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCounty the CRM County
-	* @return the CRM County that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmCounty updateCrmCounty(CrmCounty crmCounty);
-
-	/**
-	* Returns the number of CRM Counties.
-	*
-	* @return the number of CRM Counties
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmCountiesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -223,7 +150,41 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmCounty> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCounty fetchCrmCounty(long crmCountyId);
+
+	/**
+	* Returns the CRM County matching the UUID and group.
+	*
+	* @param uuid the CRM County's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County, or <code>null</code> if a matching CRM County could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCounty fetchCrmCountyByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmCounty> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	/**
 	* Returns a range of all the CRM Counties.
@@ -247,8 +208,8 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	* @return the matching CRM Counties, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of CRM Counties matching the UUID and company.
@@ -261,25 +222,65 @@ public interface CrmCountyLocalService extends BaseLocalService,
 	* @return the range of matching CRM Counties, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CrmCounty> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Counties.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Counties
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmCountiesCount();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the CRM County with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param crmCountyId the primary key of the CRM County
+	* @return the CRM County
+	* @throws PortalException if a CRM County with the primary key could not be found
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCounty getCrmCounty(long crmCountyId) throws PortalException;
+
+	/**
+	* Returns the CRM County matching the UUID and group.
+	*
+	* @param uuid the CRM County's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County
+	* @throws PortalException if a matching CRM County could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCounty getCrmCountyByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM County in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCounty the CRM County
+	* @return the CRM County that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmCounty updateCrmCounty(CrmCounty crmCounty);
 }

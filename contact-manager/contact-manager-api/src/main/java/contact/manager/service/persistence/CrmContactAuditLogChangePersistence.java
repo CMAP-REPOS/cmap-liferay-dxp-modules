@@ -48,8 +48,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param uuid the uuid
 	* @return the matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CrmContactAuditLogChange> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM Contact Audit Log Changes where uuid = &#63;.
@@ -63,8 +62,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	* @return the range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CrmContactAuditLogChange> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63;.
@@ -79,8 +78,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CrmContactAuditLogChange> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
 	/**
@@ -97,8 +96,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CrmContactAuditLogChange> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +109,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @return the first matching CRM Contact Audit Log Change
 	* @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange findByUuid_First(java.lang.String uuid,
+	public CrmContactAuditLogChange findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
 
@@ -121,7 +120,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUuid_First(java.lang.String uuid,
+	public CrmContactAuditLogChange fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
 	/**
@@ -132,7 +131,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @return the last matching CRM Contact Audit Log Change
 	* @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange findByUuid_Last(java.lang.String uuid,
+	public CrmContactAuditLogChange findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
 
@@ -143,7 +142,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUuid_Last(java.lang.String uuid,
+	public CrmContactAuditLogChange fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
 	/**
@@ -156,7 +155,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @throws NoSuchCrmContactAuditLogChangeException if a CRM Contact Audit Log Change with the primary key could not be found
 	*/
 	public CrmContactAuditLogChange[] findByUuid_PrevAndNext(
-		long crmContactAuditLogChangeId, java.lang.String uuid,
+		long crmContactAuditLogChangeId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
 
@@ -165,7 +164,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM Contact Audit Log Changes where uuid = &#63;.
@@ -173,7 +172,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param uuid the uuid
 	* @return the number of matching CRM Contact Audit Log Changes
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmContactAuditLogChangeException} if it could not be found.
@@ -183,8 +182,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @return the matching CRM Contact Audit Log Change
 	* @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCrmContactAuditLogChangeException;
+	public CrmContactAuditLogChange findByUUID_G(String uuid, long groupId)
+		throws NoSuchCrmContactAuditLogChangeException;
 
 	/**
 	* Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -193,8 +192,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param groupId the group ID
 	* @return the matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CrmContactAuditLogChange fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -204,8 +202,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CrmContactAuditLogChange fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; from the database.
@@ -214,8 +212,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param groupId the group ID
 	* @return the CRM Contact Audit Log Change that was removed
 	*/
-	public CrmContactAuditLogChange removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCrmContactAuditLogChangeException;
+	public CrmContactAuditLogChange removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCrmContactAuditLogChangeException;
 
 	/**
 	* Returns the number of CRM Contact Audit Log Changes where uuid = &#63; and groupId = &#63;.
@@ -224,7 +222,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param groupId the group ID
 	* @return the number of matching CRM Contact Audit Log Changes
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
@@ -233,8 +231,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param companyId the company ID
 	* @return the matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CrmContactAuditLogChange> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
@@ -249,8 +247,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	* @return the range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CrmContactAuditLogChange> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
@@ -266,8 +264,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CrmContactAuditLogChange> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
 	/**
@@ -285,8 +283,8 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contact Audit Log Changes
 	*/
-	public java.util.List<CrmContactAuditLogChange> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CrmContactAuditLogChange> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -299,7 +297,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @return the first matching CRM Contact Audit Log Change
 	* @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange findByUuid_C_First(java.lang.String uuid,
+	public CrmContactAuditLogChange findByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
@@ -312,7 +310,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUuid_C_First(java.lang.String uuid,
+	public CrmContactAuditLogChange fetchByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
@@ -325,7 +323,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @return the last matching CRM Contact Audit Log Change
 	* @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange findByUuid_C_Last(java.lang.String uuid,
+	public CrmContactAuditLogChange findByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
@@ -338,7 +336,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	*/
-	public CrmContactAuditLogChange fetchByUuid_C_Last(java.lang.String uuid,
+	public CrmContactAuditLogChange fetchByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator);
 
@@ -353,7 +351,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @throws NoSuchCrmContactAuditLogChangeException if a CRM Contact Audit Log Change with the primary key could not be found
 	*/
 	public CrmContactAuditLogChange[] findByUuid_C_PrevAndNext(
-		long crmContactAuditLogChangeId, java.lang.String uuid, long companyId,
+		long crmContactAuditLogChangeId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException;
 
@@ -363,7 +361,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
@@ -372,7 +370,7 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	* @param companyId the company ID
 	* @return the number of matching CRM Contact Audit Log Changes
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
@@ -636,5 +634,5 @@ public interface CrmContactAuditLogChangePersistence extends BasePersistence<Crm
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

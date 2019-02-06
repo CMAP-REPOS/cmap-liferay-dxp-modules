@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmOutreachLog;
 
@@ -104,7 +103,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		CrmOutreachLogImpl crmOutreachLogImpl = new CrmOutreachLogImpl();
 
 		if (uuid == null) {
-			crmOutreachLogImpl.setUuid(StringPool.BLANK);
+			crmOutreachLogImpl.setUuid("");
 		}
 		else {
 			crmOutreachLogImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		crmOutreachLogImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmOutreachLogImpl.setUserName(StringPool.BLANK);
+			crmOutreachLogImpl.setUserName("");
 		}
 		else {
 			crmOutreachLogImpl.setUserName(userName);
@@ -139,21 +138,21 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		crmOutreachLogImpl.setCrmContactId(crmContactId);
 
 		if (note == null) {
-			crmOutreachLogImpl.setNote(StringPool.BLANK);
+			crmOutreachLogImpl.setNote("");
 		}
 		else {
 			crmOutreachLogImpl.setNote(note);
 		}
 
 		if (medium == null) {
-			crmOutreachLogImpl.setMedium(StringPool.BLANK);
+			crmOutreachLogImpl.setMedium("");
 		}
 		else {
 			crmOutreachLogImpl.setMedium(medium);
 		}
 
 		if (activityType == null) {
-			crmOutreachLogImpl.setActivityType(StringPool.BLANK);
+			crmOutreachLogImpl.setActivityType("");
 		}
 		else {
 			crmOutreachLogImpl.setActivityType(activityType);
@@ -197,7 +196,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -212,7 +211,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -224,21 +223,21 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 		objectOutput.writeLong(crmContactId);
 
 		if (note == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(note);
 		}
 
 		if (medium == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(medium);
 		}
 
 		if (activityType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(activityType);

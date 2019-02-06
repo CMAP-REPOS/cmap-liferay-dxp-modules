@@ -36,10 +36,9 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
@@ -58,6 +57,7 @@ import contact.manager.service.persistence.CrmTagPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -238,7 +238,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -326,7 +326,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -375,7 +375,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -467,7 +467,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -603,7 +603,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -682,7 +682,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -745,7 +745,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -785,13 +785,6 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 					result = crmContact;
 
 					cacheResult(crmContact);
-
-					if ((crmContact.getUuid() == null) ||
-							!crmContact.getUuid().equals(uuid) ||
-							(crmContact.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmContact);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -852,7 +845,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1049,7 +1042,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1146,7 +1139,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -1202,7 +1195,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -1297,7 +1290,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1439,7 +1432,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1639,7 +1632,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (primaryEmailAddress == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_1);
 			}
-			else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+			else if (primaryEmailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_3);
 			}
 			else {
@@ -1729,7 +1722,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("primaryEmailAddress=");
 		msg.append(primaryEmailAddress);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -1782,7 +1775,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("primaryEmailAddress=");
 		msg.append(primaryEmailAddress);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -1876,7 +1869,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (primaryEmailAddress == null) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_1);
 		}
-		else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+		else if (primaryEmailAddress.equals("")) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_3);
 		}
 		else {
@@ -2012,7 +2005,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (primaryEmailAddress == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_1);
 			}
-			else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+			else if (primaryEmailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESS_PRIMARYEMAILADDRESS_3);
 			}
 			else {
@@ -2195,7 +2188,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (status == null) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
 			}
-			else if (status.equals(StringPool.BLANK)) {
+			else if (status.equals("")) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 			}
 			else {
@@ -2283,7 +2276,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -2332,7 +2325,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -2424,7 +2417,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (status == null) {
 			query.append(_FINDER_COLUMN_STATUS_STATUS_1);
 		}
-		else if (status.equals(StringPool.BLANK)) {
+		else if (status.equals("")) {
 			query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 		}
 		else {
@@ -2560,7 +2553,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (status == null) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
 			}
-			else if (status.equals(StringPool.BLANK)) {
+			else if (status.equals("")) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 			}
 			else {
@@ -2763,7 +2756,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (primaryEmailAddress == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_1);
 			}
-			else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+			else if (primaryEmailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_3);
 			}
 			else {
@@ -2777,7 +2770,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (status == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_1);
 			}
-			else if (status.equals(StringPool.BLANK)) {
+			else if (status.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_3);
 			}
 			else {
@@ -2875,7 +2868,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -2933,7 +2926,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", status=");
 		msg.append(status);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -3033,7 +3026,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (primaryEmailAddress == null) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_1);
 		}
-		else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+		else if (primaryEmailAddress.equals("")) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_3);
 		}
 		else {
@@ -3047,7 +3040,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (status == null) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_1);
 		}
-		else if (status.equals(StringPool.BLANK)) {
+		else if (status.equals("")) {
 			query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_3);
 		}
 		else {
@@ -3192,7 +3185,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (primaryEmailAddress == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_1);
 			}
-			else if (primaryEmailAddress.equals(StringPool.BLANK)) {
+			else if (primaryEmailAddress.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_PRIMARYEMAILADDRESS_3);
 			}
 			else {
@@ -3206,7 +3199,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (status == null) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_1);
 			}
-			else if (status.equals(StringPool.BLANK)) {
+			else if (status.equals("")) {
 				query.append(_FINDER_COLUMN_PRIMARYEMAILADDRESSANDSTATUS_STATUS_3);
 			}
 			else {
@@ -3427,7 +3420,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (firstName == null) {
 				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
 			}
-			else if (firstName.equals(StringPool.BLANK)) {
+			else if (firstName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
 			}
 			else {
@@ -3441,7 +3434,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (middleName == null) {
 				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
 			}
-			else if (middleName.equals(StringPool.BLANK)) {
+			else if (middleName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
 			}
 			else {
@@ -3455,7 +3448,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (lastName == null) {
 				query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
 			}
-			else if (lastName.equals(StringPool.BLANK)) {
+			else if (lastName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
 			}
 			else {
@@ -3560,7 +3553,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", lastName=");
 		msg.append(lastName);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -3621,7 +3614,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append(", lastName=");
 		msg.append(lastName);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -3719,7 +3712,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (firstName == null) {
 			query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
 		}
-		else if (firstName.equals(StringPool.BLANK)) {
+		else if (firstName.equals("")) {
 			query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
 		}
 		else {
@@ -3733,7 +3726,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (middleName == null) {
 			query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
 		}
-		else if (middleName.equals(StringPool.BLANK)) {
+		else if (middleName.equals("")) {
 			query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
 		}
 		else {
@@ -3747,7 +3740,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		if (lastName == null) {
 			query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
 		}
-		else if (lastName.equals(StringPool.BLANK)) {
+		else if (lastName.equals("")) {
 			query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
 		}
 		else {
@@ -3896,7 +3889,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (firstName == null) {
 				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_1);
 			}
-			else if (firstName.equals(StringPool.BLANK)) {
+			else if (firstName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_FIRSTNAME_3);
 			}
 			else {
@@ -3910,7 +3903,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (middleName == null) {
 				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_1);
 			}
-			else if (middleName.equals(StringPool.BLANK)) {
+			else if (middleName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_MIDDLENAME_3);
 			}
 			else {
@@ -3924,7 +3917,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			if (lastName == null) {
 				query.append(_FINDER_COLUMN_NAME_LASTNAME_1);
 			}
-			else if (lastName.equals(StringPool.BLANK)) {
+			else if (lastName.equals("")) {
 				query.append(_FINDER_COLUMN_NAME_LASTNAME_3);
 			}
 			else {
@@ -4012,7 +4005,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			msg.append("constantContactId=");
 			msg.append(constantContactId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -4105,11 +4098,6 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 					result = crmContact;
 
 					cacheResult(crmContact);
-
-					if ((crmContact.getConstantContactId() != constantContactId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_CONSTANTCONTACTID,
-							finderArgs, crmContact);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -4307,7 +4295,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 
 			if ((list != null) && !list.isEmpty()) {
 				for (CrmContact crmContact : list) {
-					if ((isVip != crmContact.getIsVip())) {
+					if ((isVip != crmContact.isIsVip())) {
 						list = null;
 
 						break;
@@ -4408,7 +4396,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("isVip=");
 		msg.append(isVip);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -4457,7 +4445,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		msg.append("isVip=");
 		msg.append(isVip);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactException(msg.toString());
 	}
@@ -4704,8 +4692,10 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		setModelClass(CrmContact.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -4949,8 +4939,6 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 
 	@Override
 	protected CrmContact removeImpl(CrmContact crmContact) {
-		crmContact = toUnwrappedModel(crmContact);
-
 		crmContactToCrmGroupTableMapper.deleteLeftPrimaryKeyTableMappings(crmContact.getPrimaryKey());
 
 		crmContactToCrmTagTableMapper.deleteLeftPrimaryKeyTableMappings(crmContact.getPrimaryKey());
@@ -4985,9 +4973,23 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 
 	@Override
 	public CrmContact updateImpl(CrmContact crmContact) {
-		crmContact = toUnwrappedModel(crmContact);
-
 		boolean isNew = crmContact.isNew();
+
+		if (!(crmContact instanceof CrmContactModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmContact.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmContact);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmContact proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmContact implementation " +
+				crmContact.getClass());
+		}
 
 		CrmContactModelImpl crmContactModelImpl = (CrmContactModelImpl)crmContact;
 
@@ -5095,7 +5097,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
 				args);
 
-			args = new Object[] { crmContactModelImpl.getIsVip() };
+			args = new Object[] { crmContactModelImpl.isIsVip() };
 
 			finderCache.removeResult(FINDER_PATH_COUNT_BY_VIPFLAG, args);
 			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VIPFLAG,
@@ -5237,7 +5239,7 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VIPFLAG,
 					args);
 
-				args = new Object[] { crmContactModelImpl.getIsVip() };
+				args = new Object[] { crmContactModelImpl.isIsVip() };
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_VIPFLAG, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_VIPFLAG,
@@ -5254,66 +5256,6 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		crmContact.resetOriginalValues();
 
 		return crmContact;
-	}
-
-	protected CrmContact toUnwrappedModel(CrmContact crmContact) {
-		if (crmContact instanceof CrmContactImpl) {
-			return crmContact;
-		}
-
-		CrmContactImpl crmContactImpl = new CrmContactImpl();
-
-		crmContactImpl.setNew(crmContact.isNew());
-		crmContactImpl.setPrimaryKey(crmContact.getPrimaryKey());
-
-		crmContactImpl.setUuid(crmContact.getUuid());
-		crmContactImpl.setCrmContactId(crmContact.getCrmContactId());
-		crmContactImpl.setConstantContactId(crmContact.getConstantContactId());
-		crmContactImpl.setGroupId(crmContact.getGroupId());
-		crmContactImpl.setCompanyId(crmContact.getCompanyId());
-		crmContactImpl.setUserId(crmContact.getUserId());
-		crmContactImpl.setUserName(crmContact.getUserName());
-		crmContactImpl.setCreateDate(crmContact.getCreateDate());
-		crmContactImpl.setModifiedDate(crmContact.getModifiedDate());
-		crmContactImpl.setPrefix(crmContact.getPrefix());
-		crmContactImpl.setSalutation(crmContact.getSalutation());
-		crmContactImpl.setFirstName(crmContact.getFirstName());
-		crmContactImpl.setMiddleName(crmContact.getMiddleName());
-		crmContactImpl.setLastName(crmContact.getLastName());
-		crmContactImpl.setOrganization(crmContact.getOrganization());
-		crmContactImpl.setJobTitle(crmContact.getJobTitle());
-		crmContactImpl.setPrimaryAddress1(crmContact.getPrimaryAddress1());
-		crmContactImpl.setPrimaryAddress2(crmContact.getPrimaryAddress2());
-		crmContactImpl.setPrimaryAddressCity(crmContact.getPrimaryAddressCity());
-		crmContactImpl.setPrimaryAddressState(crmContact.getPrimaryAddressState());
-		crmContactImpl.setPrimaryAddressZip(crmContact.getPrimaryAddressZip());
-		crmContactImpl.setPrimaryAddressCounty(crmContact.getPrimaryAddressCounty());
-		crmContactImpl.setPrimaryAddressCountry(crmContact.getPrimaryAddressCountry());
-		crmContactImpl.setSecondaryAddress1(crmContact.getSecondaryAddress1());
-		crmContactImpl.setSecondaryAddress2(crmContact.getSecondaryAddress2());
-		crmContactImpl.setSecondaryAddressCity(crmContact.getSecondaryAddressCity());
-		crmContactImpl.setSecondaryAddressState(crmContact.getSecondaryAddressState());
-		crmContactImpl.setSecondaryAddressZip(crmContact.getSecondaryAddressZip());
-		crmContactImpl.setSecondaryAddressCounty(crmContact.getSecondaryAddressCounty());
-		crmContactImpl.setSecondaryAddressCountry(crmContact.getSecondaryAddressCountry());
-		crmContactImpl.setPrimaryPhone(crmContact.getPrimaryPhone());
-		crmContactImpl.setPrimaryPhoneExtension(crmContact.getPrimaryPhoneExtension());
-		crmContactImpl.setPrimaryFax(crmContact.getPrimaryFax());
-		crmContactImpl.setPrimaryCell(crmContact.getPrimaryCell());
-		crmContactImpl.setPrimaryEmailAddress(crmContact.getPrimaryEmailAddress());
-		crmContactImpl.setAlternateContact(crmContact.getAlternateContact());
-		crmContactImpl.setAlternateEmail(crmContact.getAlternateEmail());
-		crmContactImpl.setIsVip(crmContact.isIsVip());
-		crmContactImpl.setFacebookId(crmContact.getFacebookId());
-		crmContactImpl.setTwitterHandle(crmContact.getTwitterHandle());
-		crmContactImpl.setLinkedInUrl(crmContact.getLinkedInUrl());
-		crmContactImpl.setStatus(crmContact.getStatus());
-		crmContactImpl.setKioskUuid(crmContact.getKioskUuid());
-		crmContactImpl.setImageFileEntryId(crmContact.getImageFileEntryId());
-		crmContactImpl.setTagsList(crmContact.getTagsList());
-		crmContactImpl.setGroupsList(crmContact.getGroupsList());
-
-		return crmContactImpl;
 	}
 
 	/**
@@ -5467,12 +5409,12 @@ public class CrmContactPersistenceImpl extends BasePersistenceImpl<CrmContact>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

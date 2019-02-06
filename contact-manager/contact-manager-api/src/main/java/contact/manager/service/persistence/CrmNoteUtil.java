@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmNote;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -115,7 +116,7 @@ public class CrmNoteUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid(java.lang.String uuid) {
+	public static List<CrmNote> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -131,8 +132,7 @@ public class CrmNoteUtil {
 	* @param end the upper bound of the range of CRM Notes (not inclusive)
 	* @return the range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmNote> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -149,8 +149,8 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmNote> orderByComparator) {
+	public static List<CrmNote> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,9 +168,8 @@ public class CrmNoteUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmNote> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<CrmNote> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmNote> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -184,7 +183,7 @@ public class CrmNoteUtil {
 	* @return the first matching CRM Note
 	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
 	*/
-	public static CrmNote findByUuid_First(java.lang.String uuid,
+	public static CrmNote findByUuid_First(String uuid,
 		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -197,7 +196,7 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUuid_First(java.lang.String uuid,
+	public static CrmNote fetchByUuid_First(String uuid,
 		OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -210,7 +209,7 @@ public class CrmNoteUtil {
 	* @return the last matching CRM Note
 	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
 	*/
-	public static CrmNote findByUuid_Last(java.lang.String uuid,
+	public static CrmNote findByUuid_Last(String uuid,
 		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -223,7 +222,7 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUuid_Last(java.lang.String uuid,
+	public static CrmNote fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -237,8 +236,8 @@ public class CrmNoteUtil {
 	* @return the previous, current, and next CRM Note
 	* @throws NoSuchCrmNoteException if a CRM Note with the primary key could not be found
 	*/
-	public static CrmNote[] findByUuid_PrevAndNext(long crmNoteId,
-		java.lang.String uuid, OrderByComparator<CrmNote> orderByComparator)
+	public static CrmNote[] findByUuid_PrevAndNext(long crmNoteId, String uuid,
+		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmNoteId, uuid, orderByComparator);
@@ -249,7 +248,7 @@ public class CrmNoteUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -259,7 +258,7 @@ public class CrmNoteUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Notes
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -271,7 +270,7 @@ public class CrmNoteUtil {
 	* @return the matching CRM Note
 	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
 	*/
-	public static CrmNote findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmNote findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -283,7 +282,7 @@ public class CrmNoteUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmNote fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -295,7 +294,7 @@ public class CrmNoteUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmNote fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -307,7 +306,7 @@ public class CrmNoteUtil {
 	* @param groupId the group ID
 	* @return the CRM Note that was removed
 	*/
-	public static CrmNote removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmNote removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -319,7 +318,7 @@ public class CrmNoteUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Notes
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -330,8 +329,7 @@ public class CrmNoteUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmNote> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -348,8 +346,8 @@ public class CrmNoteUtil {
 	* @param end the upper bound of the range of CRM Notes (not inclusive)
 	* @return the range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmNote> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -367,9 +365,8 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmNote> orderByComparator) {
+	public static List<CrmNote> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -389,9 +386,9 @@ public class CrmNoteUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Notes
 	*/
-	public static List<CrmNote> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmNote> orderByComparator, boolean retrieveFromCache) {
+	public static List<CrmNote> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmNote> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -406,8 +403,8 @@ public class CrmNoteUtil {
 	* @return the first matching CRM Note
 	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
 	*/
-	public static CrmNote findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmNote> orderByComparator)
+	public static CrmNote findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -421,8 +418,8 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmNote> orderByComparator) {
+	public static CrmNote fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -436,8 +433,8 @@ public class CrmNoteUtil {
 	* @return the last matching CRM Note
 	* @throws NoSuchCrmNoteException if a matching CRM Note could not be found
 	*/
-	public static CrmNote findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmNote> orderByComparator)
+	public static CrmNote findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -451,8 +448,8 @@ public class CrmNoteUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
 	*/
-	public static CrmNote fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmNote> orderByComparator) {
+	public static CrmNote fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmNote> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -468,7 +465,7 @@ public class CrmNoteUtil {
 	* @throws NoSuchCrmNoteException if a CRM Note with the primary key could not be found
 	*/
 	public static CrmNote[] findByUuid_C_PrevAndNext(long crmNoteId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmNote> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmNoteException {
 		return getPersistence()
@@ -482,7 +479,7 @@ public class CrmNoteUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -493,7 +490,7 @@ public class CrmNoteUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Notes
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -805,7 +802,7 @@ public class CrmNoteUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -813,6 +810,16 @@ public class CrmNoteUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmNotePersistence, CrmNotePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmNotePersistence.class);
+	private static ServiceTracker<CrmNotePersistence, CrmNotePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmNotePersistence.class);
+
+		ServiceTracker<CrmNotePersistence, CrmNotePersistence> serviceTracker = new ServiceTracker<CrmNotePersistence, CrmNotePersistence>(bundle.getBundleContext(),
+				CrmNotePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

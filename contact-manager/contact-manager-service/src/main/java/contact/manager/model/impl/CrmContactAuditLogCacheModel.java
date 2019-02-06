@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContactAuditLog;
 
@@ -104,7 +103,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		CrmContactAuditLogImpl crmContactAuditLogImpl = new CrmContactAuditLogImpl();
 
 		if (uuid == null) {
-			crmContactAuditLogImpl.setUuid(StringPool.BLANK);
+			crmContactAuditLogImpl.setUuid("");
 		}
 		else {
 			crmContactAuditLogImpl.setUuid(uuid);
@@ -116,7 +115,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		crmContactAuditLogImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmContactAuditLogImpl.setUserName(StringPool.BLANK);
+			crmContactAuditLogImpl.setUserName("");
 		}
 		else {
 			crmContactAuditLogImpl.setUserName(userName);
@@ -140,21 +139,21 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		crmContactAuditLogImpl.setConstantContactId(constantContactId);
 
 		if (action == null) {
-			crmContactAuditLogImpl.setAction(StringPool.BLANK);
+			crmContactAuditLogImpl.setAction("");
 		}
 		else {
 			crmContactAuditLogImpl.setAction(action);
 		}
 
 		if (oldSnapshot == null) {
-			crmContactAuditLogImpl.setOldSnapshot(StringPool.BLANK);
+			crmContactAuditLogImpl.setOldSnapshot("");
 		}
 		else {
 			crmContactAuditLogImpl.setOldSnapshot(oldSnapshot);
 		}
 
 		if (newSnapshot == null) {
-			crmContactAuditLogImpl.setNewSnapshot(StringPool.BLANK);
+			crmContactAuditLogImpl.setNewSnapshot("");
 		}
 		else {
 			crmContactAuditLogImpl.setNewSnapshot(newSnapshot);
@@ -192,7 +191,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -207,7 +206,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -221,21 +220,21 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 		objectOutput.writeLong(constantContactId);
 
 		if (action == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(action);
 		}
 
 		if (oldSnapshot == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(oldSnapshot);
 		}
 
 		if (newSnapshot == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(newSnapshot);

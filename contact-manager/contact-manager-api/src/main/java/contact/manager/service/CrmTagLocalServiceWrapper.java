@@ -33,51 +33,25 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 	}
 
 	@Override
-	public boolean hasCrmContactCrmTag(long crmContactId, long crmTagId) {
-		return _crmTagLocalService.hasCrmContactCrmTag(crmContactId, crmTagId);
+	public void addCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTag);
 	}
 
 	@Override
-	public boolean hasCrmContactCrmTags(long crmContactId) {
-		return _crmTagLocalService.hasCrmContactCrmTags(crmContactId);
+	public void addCrmContactCrmTag(long crmContactId, long crmTagId) {
+		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTagId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _crmTagLocalService.getActionableDynamicQuery();
+	public void addCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTags);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _crmTagLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _crmTagLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _crmTagLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmTagLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmTagLocalService.getPersistedModel(primaryKeyObj);
+	public void addCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTagIds);
 	}
 
 	/**
@@ -92,6 +66,11 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		return _crmTagLocalService.addCrmTag(crmTag);
 	}
 
+	@Override
+	public void clearCrmContactCrmTags(long crmContactId) {
+		_crmTagLocalService.clearCrmContactCrmTags(crmContactId);
+	}
+
 	/**
 	* Creates a new CRM Tag with the primary key. Does not add the CRM Tag to the database.
 	*
@@ -101,6 +80,28 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 	@Override
 	public contact.manager.model.CrmTag createCrmTag(long crmTagId) {
 		return _crmTagLocalService.createCrmTag(crmTagId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTag(long crmContactId,
+		contact.manager.model.CrmTag crmTag) {
+		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTag);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTag(long crmContactId, long crmTagId) {
+		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTagId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTags(long crmContactId,
+		java.util.List<contact.manager.model.CrmTag> crmTags) {
+		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTags);
+	}
+
+	@Override
+	public void deleteCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
+		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTagIds);
 	}
 
 	/**
@@ -128,87 +129,19 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		return _crmTagLocalService.deleteCrmTag(crmTagId);
 	}
 
-	@Override
-	public contact.manager.model.CrmTag fetchCrmTag(long crmTagId) {
-		return _crmTagLocalService.fetchCrmTag(crmTagId);
-	}
-
 	/**
-	* Returns the CRM Tag matching the UUID and group.
-	*
-	* @param uuid the CRM Tag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public contact.manager.model.CrmTag fetchCrmTagByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _crmTagLocalService.fetchCrmTagByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Tag with the primary key.
-	*
-	* @param crmTagId the primary key of the CRM Tag
-	* @return the CRM Tag
-	* @throws PortalException if a CRM Tag with the primary key could not be found
-	*/
-	@Override
-	public contact.manager.model.CrmTag getCrmTag(long crmTagId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmTagLocalService.getCrmTag(crmTagId);
-	}
-
-	/**
-	* Returns the CRM Tag matching the UUID and group.
-	*
-	* @param uuid the CRM Tag's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Tag
-	* @throws PortalException if a matching CRM Tag could not be found
-	*/
-	@Override
-	public contact.manager.model.CrmTag getCrmTagByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmTagLocalService.getCrmTagByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmTag the CRM Tag
-	* @return the CRM Tag that was updated
-	*/
-	@Override
-	public contact.manager.model.CrmTag updateCrmTag(
-		contact.manager.model.CrmTag crmTag) {
-		return _crmTagLocalService.updateCrmTag(crmTag);
+		return _crmTagLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public int getCrmContactCrmTagsCount(long crmContactId) {
-		return _crmTagLocalService.getCrmContactCrmTagsCount(crmContactId);
-	}
-
-	/**
-	* Returns the number of CRM Tags.
-	*
-	* @return the number of CRM Tags
-	*/
-	@Override
-	public int getCrmTagsCount() {
-		return _crmTagLocalService.getCrmTagsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _crmTagLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _crmTagLocalService.dynamicQuery();
 	}
 
 	/**
@@ -264,6 +197,55 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _crmTagLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _crmTagLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public contact.manager.model.CrmTag fetchCrmTag(long crmTagId) {
+		return _crmTagLocalService.fetchCrmTag(crmTagId);
+	}
+
+	/**
+	* Returns the CRM Tag matching the UUID and group.
+	*
+	* @param uuid the CRM Tag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmTag fetchCrmTagByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _crmTagLocalService.fetchCrmTagByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _crmTagLocalService.getActionableDynamicQuery();
+	}
+
 	@Override
 	public java.util.List<contact.manager.model.CrmTag> getCrmContactCrmTags(
 		long crmContactId) {
@@ -282,6 +264,50 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmTag> orderByComparator) {
 		return _crmTagLocalService.getCrmContactCrmTags(crmContactId, start,
 			end, orderByComparator);
+	}
+
+	@Override
+	public int getCrmContactCrmTagsCount(long crmContactId) {
+		return _crmTagLocalService.getCrmContactCrmTagsCount(crmContactId);
+	}
+
+	/**
+	* Returns the crmContactIds of the CRM Contacts associated with the CRM Tag.
+	*
+	* @param crmTagId the crmTagId of the CRM Tag
+	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Tag
+	*/
+	@Override
+	public long[] getCrmContactPrimaryKeys(long crmTagId) {
+		return _crmTagLocalService.getCrmContactPrimaryKeys(crmTagId);
+	}
+
+	/**
+	* Returns the CRM Tag with the primary key.
+	*
+	* @param crmTagId the primary key of the CRM Tag
+	* @return the CRM Tag
+	* @throws PortalException if a CRM Tag with the primary key could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmTag getCrmTag(long crmTagId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmTagLocalService.getCrmTag(crmTagId);
+	}
+
+	/**
+	* Returns the CRM Tag matching the UUID and group.
+	*
+	* @param uuid the CRM Tag's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Tag
+	* @throws PortalException if a matching CRM Tag could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmTag getCrmTagByUuidAndGroupId(String uuid,
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmTagLocalService.getCrmTagByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -310,7 +336,7 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 	*/
 	@Override
 	public java.util.List<contact.manager.model.CrmTag> getCrmTagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _crmTagLocalService.getCrmTagsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -326,101 +352,75 @@ public class CrmTagLocalServiceWrapper implements CrmTagLocalService,
 	*/
 	@Override
 	public java.util.List<contact.manager.model.CrmTag> getCrmTagsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmTag> orderByComparator) {
 		return _crmTagLocalService.getCrmTagsByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Tags.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Tags
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _crmTagLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCrmTagsCount() {
+		return _crmTagLocalService.getCrmTagsCount();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _crmTagLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _crmTagLocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _crmTagLocalService.dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	* Returns the crmContactIds of the CRM Contacts associated with the CRM Tag.
-	*
-	* @param crmTagId the crmTagId of the CRM Tag
-	* @return long[] the crmContactIds of CRM Contacts associated with the CRM Tag
-	*/
-	@Override
-	public long[] getCrmContactPrimaryKeys(long crmTagId) {
-		return _crmTagLocalService.getCrmContactPrimaryKeys(crmTagId);
+	public String getOSGiServiceIdentifier() {
+		return _crmTagLocalService.getOSGiServiceIdentifier();
 	}
 
 	@Override
-	public void addCrmContactCrmTag(long crmContactId,
-		contact.manager.model.CrmTag crmTag) {
-		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTag);
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmTagLocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	@Override
-	public void addCrmContactCrmTag(long crmContactId, long crmTagId) {
-		_crmTagLocalService.addCrmContactCrmTag(crmContactId, crmTagId);
+	public boolean hasCrmContactCrmTag(long crmContactId, long crmTagId) {
+		return _crmTagLocalService.hasCrmContactCrmTag(crmContactId, crmTagId);
 	}
 
 	@Override
-	public void addCrmContactCrmTags(long crmContactId,
-		java.util.List<contact.manager.model.CrmTag> crmTags) {
-		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTags);
-	}
-
-	@Override
-	public void addCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
-		_crmTagLocalService.addCrmContactCrmTags(crmContactId, crmTagIds);
-	}
-
-	@Override
-	public void clearCrmContactCrmTags(long crmContactId) {
-		_crmTagLocalService.clearCrmContactCrmTags(crmContactId);
-	}
-
-	@Override
-	public void deleteCrmContactCrmTag(long crmContactId,
-		contact.manager.model.CrmTag crmTag) {
-		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTag);
-	}
-
-	@Override
-	public void deleteCrmContactCrmTag(long crmContactId, long crmTagId) {
-		_crmTagLocalService.deleteCrmContactCrmTag(crmContactId, crmTagId);
-	}
-
-	@Override
-	public void deleteCrmContactCrmTags(long crmContactId,
-		java.util.List<contact.manager.model.CrmTag> crmTags) {
-		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTags);
-	}
-
-	@Override
-	public void deleteCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
-		_crmTagLocalService.deleteCrmContactCrmTags(crmContactId, crmTagIds);
+	public boolean hasCrmContactCrmTags(long crmContactId) {
+		return _crmTagLocalService.hasCrmContactCrmTags(crmContactId);
 	}
 
 	@Override
 	public void setCrmContactCrmTags(long crmContactId, long[] crmTagIds) {
 		_crmTagLocalService.setCrmContactCrmTags(crmContactId, crmTagIds);
+	}
+
+	/**
+	* Updates the CRM Tag in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmTag the CRM Tag
+	* @return the CRM Tag that was updated
+	*/
+	@Override
+	public contact.manager.model.CrmTag updateCrmTag(
+		contact.manager.model.CrmTag crmTag) {
+		return _crmTagLocalService.updateCrmTag(crmTag);
 	}
 
 	@Override

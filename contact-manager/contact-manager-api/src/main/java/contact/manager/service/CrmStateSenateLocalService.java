@@ -63,29 +63,6 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmStateSenateLocalServiceUtil} to access the CRM State Senate local service. Add custom service methods to {@link contact.manager.service.impl.CrmStateSenateLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM State Senate to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	* @param crmStateSenateId the primary key for the new CRM State Senate
 	* @return the new CRM State Senate
 	*/
+	@Transactional(enabled = false)
 	public CrmStateSenate createCrmStateSenate(long crmStateSenateId);
 
 	/**
@@ -124,66 +102,14 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	public CrmStateSenate deleteCrmStateSenate(long crmStateSenateId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateSenate fetchCrmStateSenate(long crmStateSenateId);
-
 	/**
-	* Returns the CRM State Senate matching the UUID and group.
-	*
-	* @param uuid the CRM State Senate's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateSenate fetchCrmStateSenateByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the CRM State Senate with the primary key.
-	*
-	* @param crmStateSenateId the primary key of the CRM State Senate
-	* @return the CRM State Senate
-	* @throws PortalException if a CRM State Senate with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateSenate getCrmStateSenate(long crmStateSenateId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the CRM State Senate matching the UUID and group.
-	*
-	* @param uuid the CRM State Senate's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Senate
-	* @throws PortalException if a matching CRM State Senate could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateSenate getCrmStateSenateByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM State Senate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmStateSenate the CRM State Senate
-	* @return the CRM State Senate that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmStateSenate updateCrmStateSenate(CrmStateSenate crmStateSenate);
-
-	/**
-	* Returns the number of CRM State Senates.
-	*
-	* @return the number of CRM State Senates
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmStateSenatesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -224,7 +150,65 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmStateSenate> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateSenate fetchCrmStateSenate(long crmStateSenateId);
+
+	/**
+	* Returns the CRM State Senate matching the UUID and group.
+	*
+	* @param uuid the CRM State Senate's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateSenate fetchCrmStateSenateByUuidAndGroupId(String uuid,
+		long groupId);
+
+	public List<CrmStateSenate> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM State Senate with the primary key.
+	*
+	* @param crmStateSenateId the primary key of the CRM State Senate
+	* @return the CRM State Senate
+	* @throws PortalException if a CRM State Senate with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateSenate getCrmStateSenate(long crmStateSenateId)
+		throws PortalException;
+
+	/**
+	* Returns the CRM State Senate matching the UUID and group.
+	*
+	* @param uuid the CRM State Senate's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Senate
+	* @throws PortalException if a matching CRM State Senate could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateSenate getCrmStateSenateByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the CRM State Senates.
@@ -249,7 +233,7 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmStateSenate> getCrmStateSenatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM State Senates matching the UUID and company.
@@ -263,24 +247,42 @@ public interface CrmStateSenateLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmStateSenate> getCrmStateSenatesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM State Senates.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM State Senates
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmStateSenatesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM State Senate in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmStateSenate the CRM State Senate
+	* @return the CRM State Senate that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmStateSenate updateCrmStateSenate(CrmStateSenate crmStateSenate);
 }

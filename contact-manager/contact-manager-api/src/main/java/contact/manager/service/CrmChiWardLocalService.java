@@ -63,29 +63,6 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmChiWardLocalServiceUtil} to access the CRM Chi Ward local service. Add custom service methods to {@link contact.manager.service.impl.CrmChiWardLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM Chi Ward to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	* @param crmChiWardId the primary key for the new CRM Chi Ward
 	* @return the new CRM Chi Ward
 	*/
+	@Transactional(enabled = false)
 	public CrmChiWard createCrmChiWard(long crmChiWardId);
 
 	/**
@@ -124,66 +102,14 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	public CrmChiWard deleteCrmChiWard(long crmChiWardId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmChiWard fetchCrmChiWard(long crmChiWardId);
-
 	/**
-	* Returns the CRM Chi Ward matching the UUID and group.
-	*
-	* @param uuid the CRM Chi Ward's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmChiWard fetchCrmChiWardByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the CRM Chi Ward with the primary key.
-	*
-	* @param crmChiWardId the primary key of the CRM Chi Ward
-	* @return the CRM Chi Ward
-	* @throws PortalException if a CRM Chi Ward with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmChiWard getCrmChiWard(long crmChiWardId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the CRM Chi Ward matching the UUID and group.
-	*
-	* @param uuid the CRM Chi Ward's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Chi Ward
-	* @throws PortalException if a matching CRM Chi Ward could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmChiWard getCrmChiWardByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM Chi Ward in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmChiWard the CRM Chi Ward
-	* @return the CRM Chi Ward that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmChiWard updateCrmChiWard(CrmChiWard crmChiWard);
-
-	/**
-	* Returns the number of CRM Chi Wards.
-	*
-	* @return the number of CRM Chi Wards
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmChiWardsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -224,7 +150,64 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmChiWard> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmChiWard fetchCrmChiWard(long crmChiWardId);
+
+	/**
+	* Returns the CRM Chi Ward matching the UUID and group.
+	*
+	* @param uuid the CRM Chi Ward's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmChiWard fetchCrmChiWardByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmChiWard> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM Chi Ward with the primary key.
+	*
+	* @param crmChiWardId the primary key of the CRM Chi Ward
+	* @return the CRM Chi Ward
+	* @throws PortalException if a CRM Chi Ward with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmChiWard getCrmChiWard(long crmChiWardId)
+		throws PortalException;
+
+	/**
+	* Returns the CRM Chi Ward matching the UUID and group.
+	*
+	* @param uuid the CRM Chi Ward's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Chi Ward
+	* @throws PortalException if a matching CRM Chi Ward could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmChiWard getCrmChiWardByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM Chi Wards.
@@ -248,8 +231,8 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	* @return the matching CRM Chi Wards, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmChiWard> getCrmChiWardsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CrmChiWard> getCrmChiWardsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of CRM Chi Wards matching the UUID and company.
@@ -262,25 +245,43 @@ public interface CrmChiWardLocalService extends BaseLocalService,
 	* @return the range of matching CRM Chi Wards, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmChiWard> getCrmChiWardsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CrmChiWard> getCrmChiWardsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CrmChiWard> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Chi Wards.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Chi Wards
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmChiWardsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM Chi Ward in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmChiWard the CRM Chi Ward
+	* @return the CRM Chi Ward that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmChiWard updateCrmChiWard(CrmChiWard crmChiWard);
 }

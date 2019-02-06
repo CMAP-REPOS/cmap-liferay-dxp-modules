@@ -137,138 +137,13 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmLTA.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmLTA.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmLTA.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmLTA.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmLTA> toCacheModel() {
-		return _crmLTA.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmLTA toEscapedModel() {
-		return new CrmLTAWrapper(_crmLTA.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmLTA toUnescapedModel() {
-		return new CrmLTAWrapper(_crmLTA.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmLTA crmLTA) {
-		return _crmLTA.compareTo(crmLTA);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmLTA.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmLTA.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmLTAWrapper((CrmLTA)_crmLTA.clone());
 	}
 
-	/**
-	* Returns the name of this CRM LTA.
-	*
-	* @return the name of this CRM LTA
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmLTA.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM LTA.
-	*
-	* @return the user name of this CRM LTA
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmLTA.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM LTA.
-	*
-	* @return the user uuid of this CRM LTA
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmLTA.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM LTA.
-	*
-	* @return the uuid of this CRM LTA
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmLTA.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM LTA.
-	*
-	* @return the zip code of this CRM LTA
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmLTA.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmLTA.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmLTA.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM LTA.
-	*
-	* @return the create date of this CRM LTA
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmLTA.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM LTA.
-	*
-	* @return the modified date of this CRM LTA
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmLTA.getModifiedDate();
+	public int compareTo(CrmLTA crmLTA) {
+		return _crmLTA.compareTo(crmLTA);
 	}
 
 	/**
@@ -282,6 +157,16 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	}
 
 	/**
+	* Returns the create date of this CRM LTA.
+	*
+	* @return the create date of this CRM LTA
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmLTA.getCreateDate();
+	}
+
+	/**
 	* Returns the crm lta ID of this CRM LTA.
 	*
 	* @return the crm lta ID of this CRM LTA
@@ -289,6 +174,11 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	@Override
 	public long getCrmLTAId() {
 		return _crmLTA.getCrmLTAId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmLTA.getExpandoBridge();
 	}
 
 	/**
@@ -302,6 +192,26 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	}
 
 	/**
+	* Returns the modified date of this CRM LTA.
+	*
+	* @return the modified date of this CRM LTA
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmLTA.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM LTA.
+	*
+	* @return the name of this CRM LTA
+	*/
+	@Override
+	public String getName() {
+		return _crmLTA.getName();
+	}
+
+	/**
 	* Returns the primary key of this CRM LTA.
 	*
 	* @return the primary key of this CRM LTA
@@ -309,6 +219,11 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmLTA.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmLTA.getPrimaryKeyObj();
 	}
 
 	/**
@@ -319,6 +234,66 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	@Override
 	public long getUserId() {
 		return _crmLTA.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM LTA.
+	*
+	* @return the user name of this CRM LTA
+	*/
+	@Override
+	public String getUserName() {
+		return _crmLTA.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM LTA.
+	*
+	* @return the user uuid of this CRM LTA
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmLTA.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM LTA.
+	*
+	* @return the uuid of this CRM LTA
+	*/
+	@Override
+	public String getUuid() {
+		return _crmLTA.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM LTA.
+	*
+	* @return the zip code of this CRM LTA
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmLTA.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmLTA.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmLTA.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmLTA.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmLTA.isNew();
 	}
 
 	@Override
@@ -362,14 +337,14 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmLTA.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmLTA.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmLTA.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -403,7 +378,7 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	* @param name the name of this CRM LTA
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmLTA.setName(name);
 	}
 
@@ -443,7 +418,7 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	* @param userName the user name of this CRM LTA
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmLTA.setUserName(userName);
 	}
 
@@ -453,7 +428,7 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	* @param userUuid the user uuid of this CRM LTA
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmLTA.setUserUuid(userUuid);
 	}
 
@@ -463,7 +438,7 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	* @param uuid the uuid of this CRM LTA
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmLTA.setUuid(uuid);
 	}
 
@@ -473,8 +448,33 @@ public class CrmLTAWrapper implements CrmLTA, ModelWrapper<CrmLTA> {
 	* @param zipCode the zip code of this CRM LTA
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmLTA.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmLTA> toCacheModel() {
+		return _crmLTA.toCacheModel();
+	}
+
+	@Override
+	public CrmLTA toEscapedModel() {
+		return new CrmLTAWrapper(_crmLTA.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmLTA.toString();
+	}
+
+	@Override
+	public CrmLTA toUnescapedModel() {
+		return new CrmLTAWrapper(_crmLTA.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmLTA.toXmlString();
 	}
 
 	@Override

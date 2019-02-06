@@ -63,29 +63,6 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmContactAuditLogLocalServiceUtil} to access the CRM Contact Audit Log local service. Add custom service methods to {@link contact.manager.service.impl.CrmContactAuditLogLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM Contact Audit Log to the database. Also notifies the appropriate model listeners.
@@ -97,12 +74,15 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	public CrmContactAuditLog addCrmContactAuditLog(
 		CrmContactAuditLog crmContactAuditLog);
 
+	public int countByCrmContactId(long crmContactId);
+
 	/**
 	* Creates a new CRM Contact Audit Log with the primary key. Does not add the CRM Contact Audit Log to the database.
 	*
 	* @param crmContactAuditLogId the primary key for the new CRM Contact Audit Log
 	* @return the new CRM Contact Audit Log
 	*/
+	@Transactional(enabled = false)
 	public CrmContactAuditLog createCrmContactAuditLog(
 		long crmContactAuditLogId);
 
@@ -127,69 +107,14 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	public CrmContactAuditLog deleteCrmContactAuditLog(
 		long crmContactAuditLogId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmContactAuditLog fetchCrmContactAuditLog(long crmContactAuditLogId);
-
 	/**
-	* Returns the CRM Contact Audit Log matching the UUID and group.
-	*
-	* @param uuid the CRM Contact Audit Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmContactAuditLog fetchCrmContactAuditLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the CRM Contact Audit Log with the primary key.
-	*
-	* @param crmContactAuditLogId the primary key of the CRM Contact Audit Log
-	* @return the CRM Contact Audit Log
-	* @throws PortalException if a CRM Contact Audit Log with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmContactAuditLog getCrmContactAuditLog(long crmContactAuditLogId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the CRM Contact Audit Log matching the UUID and group.
-	*
-	* @param uuid the CRM Contact Audit Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact Audit Log
-	* @throws PortalException if a matching CRM Contact Audit Log could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmContactAuditLog getCrmContactAuditLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM Contact Audit Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmContactAuditLog the CRM Contact Audit Log
-	* @return the CRM Contact Audit Log that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmContactAuditLog updateCrmContactAuditLog(
-		CrmContactAuditLog crmContactAuditLog);
-
-	public int countByCrmContactId(long crmContactId);
-
-	/**
-	* Returns the number of CRM Contact Audit Logs.
-	*
-	* @return the number of CRM Contact Audit Logs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmContactAuditLogsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -230,6 +155,38 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmContactAuditLog fetchCrmContactAuditLog(long crmContactAuditLogId);
+
+	/**
+	* Returns the CRM Contact Audit Log matching the UUID and group.
+	*
+	* @param uuid the CRM Contact Audit Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact Audit Log, or <code>null</code> if a matching CRM Contact Audit Log could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmContactAuditLog fetchCrmContactAuditLogByUuidAndGroupId(
+		String uuid, long groupId);
+
 	public List<CrmContactAuditLog> findByCrmContactId(long crmContactId)
 		throws SystemException;
 
@@ -240,6 +197,32 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 		int start, int end,
 		OrderByComparator<CrmContactAuditLog> orderByComparator)
 		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM Contact Audit Log with the primary key.
+	*
+	* @param crmContactAuditLogId the primary key of the CRM Contact Audit Log
+	* @return the CRM Contact Audit Log
+	* @throws PortalException if a CRM Contact Audit Log with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmContactAuditLog getCrmContactAuditLog(long crmContactAuditLogId)
+		throws PortalException;
+
+	/**
+	* Returns the CRM Contact Audit Log matching the UUID and group.
+	*
+	* @param uuid the CRM Contact Audit Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact Audit Log
+	* @throws PortalException if a matching CRM Contact Audit Log could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmContactAuditLog getCrmContactAuditLogByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the CRM Contact Audit Logs.
@@ -264,7 +247,7 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContactAuditLog> getCrmContactAuditLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM Contact Audit Logs matching the UUID and company.
@@ -278,24 +261,43 @@ public interface CrmContactAuditLogLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmContactAuditLog> getCrmContactAuditLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmContactAuditLog> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Contact Audit Logs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Contact Audit Logs
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmContactAuditLogsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM Contact Audit Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmContactAuditLog the CRM Contact Audit Log
+	* @return the CRM Contact Audit Log that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmContactAuditLog updateCrmContactAuditLog(
+		CrmContactAuditLog crmContactAuditLog);
 }

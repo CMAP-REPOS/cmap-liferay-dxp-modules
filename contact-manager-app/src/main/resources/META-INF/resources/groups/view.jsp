@@ -60,9 +60,9 @@
 				<liferay-ui:search-container-results>
 					<%
 						List<CrmGroupViewModel> viewModels = new ArrayList<CrmGroupViewModel>();
-						List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.findAll(
-								crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
-								orderByComparator);
+						List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmGroupByStatus(ConstantContactKeys.CC_STATUS_ACTIVE, crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd(),
+							orderByComparator);
+					
 						for (CrmGroup crmGroup : crmGroups) {
 							viewModels.add(new CrmGroupViewModel(crmGroup));
 						}

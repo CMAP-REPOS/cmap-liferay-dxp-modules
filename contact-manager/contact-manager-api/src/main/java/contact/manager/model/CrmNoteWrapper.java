@@ -137,128 +137,13 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmNote.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmNote.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmNote.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmNote.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmNote> toCacheModel() {
-		return _crmNote.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmNote toEscapedModel() {
-		return new CrmNoteWrapper(_crmNote.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmNote toUnescapedModel() {
-		return new CrmNoteWrapper(_crmNote.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmNote crmNote) {
-		return _crmNote.compareTo(crmNote);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmNote.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmNote.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmNoteWrapper((CrmNote)_crmNote.clone());
 	}
 
-	/**
-	* Returns the note of this CRM Note.
-	*
-	* @return the note of this CRM Note
-	*/
 	@Override
-	public java.lang.String getNote() {
-		return _crmNote.getNote();
-	}
-
-	/**
-	* Returns the user name of this CRM Note.
-	*
-	* @return the user name of this CRM Note
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmNote.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Note.
-	*
-	* @return the user uuid of this CRM Note
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmNote.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Note.
-	*
-	* @return the uuid of this CRM Note
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmNote.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmNote.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmNote.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Note.
-	*
-	* @return the create date of this CRM Note
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmNote.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Note.
-	*
-	* @return the modified date of this CRM Note
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmNote.getModifiedDate();
+	public int compareTo(CrmNote crmNote) {
+		return _crmNote.compareTo(crmNote);
 	}
 
 	/**
@@ -269,6 +154,16 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public long getCompanyId() {
 		return _crmNote.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this CRM Note.
+	*
+	* @return the create date of this CRM Note
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmNote.getCreateDate();
 	}
 
 	/**
@@ -291,6 +186,11 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 		return _crmNote.getCrmNoteId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmNote.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this CRM Note.
 	*
@@ -299,6 +199,26 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public long getGroupId() {
 		return _crmNote.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this CRM Note.
+	*
+	* @return the modified date of this CRM Note
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmNote.getModifiedDate();
+	}
+
+	/**
+	* Returns the note of this CRM Note.
+	*
+	* @return the note of this CRM Note
+	*/
+	@Override
+	public String getNote() {
+		return _crmNote.getNote();
 	}
 
 	/**
@@ -311,6 +231,11 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 		return _crmNote.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmNote.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this CRM Note.
 	*
@@ -319,6 +244,56 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public long getUserId() {
 		return _crmNote.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Note.
+	*
+	* @return the user name of this CRM Note
+	*/
+	@Override
+	public String getUserName() {
+		return _crmNote.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Note.
+	*
+	* @return the user uuid of this CRM Note
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmNote.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Note.
+	*
+	* @return the uuid of this CRM Note
+	*/
+	@Override
+	public String getUuid() {
+		return _crmNote.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmNote.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmNote.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmNote.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmNote.isNew();
 	}
 
 	@Override
@@ -372,14 +347,14 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmNote.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmNote.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmNote.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -418,7 +393,7 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	* @param note the note of this CRM Note
 	*/
 	@Override
-	public void setNote(java.lang.String note) {
+	public void setNote(String note) {
 		_crmNote.setNote(note);
 	}
 
@@ -453,7 +428,7 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	* @param userName the user name of this CRM Note
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmNote.setUserName(userName);
 	}
 
@@ -463,7 +438,7 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	* @param userUuid the user uuid of this CRM Note
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmNote.setUserUuid(userUuid);
 	}
 
@@ -473,8 +448,33 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	* @param uuid the uuid of this CRM Note
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmNote.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmNote> toCacheModel() {
+		return _crmNote.toCacheModel();
+	}
+
+	@Override
+	public CrmNote toEscapedModel() {
+		return new CrmNoteWrapper(_crmNote.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmNote.toString();
+	}
+
+	@Override
+	public CrmNote toUnescapedModel() {
+		return new CrmNoteWrapper(_crmNote.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmNote.toXmlString();
 	}
 
 	@Override

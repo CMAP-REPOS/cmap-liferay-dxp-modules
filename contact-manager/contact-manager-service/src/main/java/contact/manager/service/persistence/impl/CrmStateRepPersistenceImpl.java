@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmStateRepPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -231,7 +231,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -319,7 +319,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -368,7 +368,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -460,7 +460,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -596,7 +596,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -675,7 +675,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -738,7 +738,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -778,13 +778,6 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 					result = crmStateRep;
 
 					cacheResult(crmStateRep);
-
-					if ((crmStateRep.getUuid() == null) ||
-							!crmStateRep.getUuid().equals(uuid) ||
-							(crmStateRep.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmStateRep);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -845,7 +838,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1043,7 +1036,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1140,7 +1133,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -1196,7 +1189,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -1291,7 +1284,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1433,7 +1426,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1619,7 +1612,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1708,7 +1701,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -1757,7 +1750,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmStateRepException(msg.toString());
 	}
@@ -1849,7 +1842,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		if (zipCode == null) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 		}
-		else if (zipCode.equals(StringPool.BLANK)) {
+		else if (zipCode.equals("")) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1985,7 +1978,7 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2034,8 +2027,10 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		setModelClass(CrmStateRep.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2248,8 +2243,6 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 
 	@Override
 	protected CrmStateRep removeImpl(CrmStateRep crmStateRep) {
-		crmStateRep = toUnwrappedModel(crmStateRep);
-
 		Session session = null;
 
 		try {
@@ -2280,9 +2273,23 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 
 	@Override
 	public CrmStateRep updateImpl(CrmStateRep crmStateRep) {
-		crmStateRep = toUnwrappedModel(crmStateRep);
-
 		boolean isNew = crmStateRep.isNew();
+
+		if (!(crmStateRep instanceof CrmStateRepModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmStateRep.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmStateRep);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmStateRep proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmStateRep implementation " +
+				crmStateRep.getClass());
+		}
 
 		CrmStateRepModelImpl crmStateRepModelImpl = (CrmStateRepModelImpl)crmStateRep;
 
@@ -2437,31 +2444,6 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		return crmStateRep;
 	}
 
-	protected CrmStateRep toUnwrappedModel(CrmStateRep crmStateRep) {
-		if (crmStateRep instanceof CrmStateRepImpl) {
-			return crmStateRep;
-		}
-
-		CrmStateRepImpl crmStateRepImpl = new CrmStateRepImpl();
-
-		crmStateRepImpl.setNew(crmStateRep.isNew());
-		crmStateRepImpl.setPrimaryKey(crmStateRep.getPrimaryKey());
-
-		crmStateRepImpl.setUuid(crmStateRep.getUuid());
-		crmStateRepImpl.setCrmStateRepId(crmStateRep.getCrmStateRepId());
-		crmStateRepImpl.setGroupId(crmStateRep.getGroupId());
-		crmStateRepImpl.setCompanyId(crmStateRep.getCompanyId());
-		crmStateRepImpl.setUserId(crmStateRep.getUserId());
-		crmStateRepImpl.setUserName(crmStateRep.getUserName());
-		crmStateRepImpl.setCreateDate(crmStateRep.getCreateDate());
-		crmStateRepImpl.setModifiedDate(crmStateRep.getModifiedDate());
-		crmStateRepImpl.setName(crmStateRep.getName());
-		crmStateRepImpl.setNumber(crmStateRep.getNumber());
-		crmStateRepImpl.setZipCode(crmStateRep.getZipCode());
-
-		return crmStateRepImpl;
-	}
-
 	/**
 	 * Returns the CRM State Rep with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
@@ -2613,12 +2595,12 @@ public class CrmStateRepPersistenceImpl extends BasePersistenceImpl<CrmStateRep>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

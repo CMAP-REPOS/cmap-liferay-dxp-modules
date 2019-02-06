@@ -239,6 +239,21 @@ public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
 	 */
 	public void setCrmContactsCount(long crmContactsCount);
 
+	/**
+	 * Returns the status of this CRM Group.
+	 *
+	 * @return the status of this CRM Group
+	 */
+	@AutoEscape
+	public String getStatus();
+
+	/**
+	 * Sets the status of this CRM Group.
+	 *
+	 * @param status the status of this CRM Group
+	 */
+	public void setStatus(String status);
+
 	@Override
 	public boolean isNew();
 
@@ -276,19 +291,19 @@ public interface CrmGroupModel extends BaseModel<CrmGroup>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmGroup crmGroup);
+	public int compareTo(CrmGroup crmGroup);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmGroup> toCacheModel();
+	public CacheModel<CrmGroup> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmGroup toEscapedModel();
+	public CrmGroup toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmGroup toUnescapedModel();
+	public CrmGroup toUnescapedModel();
 
 	@Override
 	public String toString();

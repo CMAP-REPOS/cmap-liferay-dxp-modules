@@ -48,7 +48,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param uuid the uuid
 	* @return the matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid(java.lang.String uuid);
+	public java.util.List<CrmCCA> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM CCAs where uuid = &#63;.
@@ -62,8 +62,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param end the upper bound of the range of CRM CCAs (not inclusive)
 	* @return the range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<CrmCCA> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM CCAs where uuid = &#63;.
@@ -78,8 +77,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<CrmCCA> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -96,8 +94,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<CrmCCA> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +106,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the first matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByUuid_First(java.lang.String uuid,
+	public CrmCCA findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -120,7 +117,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUuid_First(java.lang.String uuid,
+	public CrmCCA fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -131,7 +128,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the last matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByUuid_Last(java.lang.String uuid,
+	public CrmCCA findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -142,7 +139,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUuid_Last(java.lang.String uuid,
+	public CrmCCA fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -154,8 +151,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the previous, current, and next CRM CCA
 	* @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	*/
-	public CrmCCA[] findByUuid_PrevAndNext(long crmCCAId,
-		java.lang.String uuid,
+	public CrmCCA[] findByUuid_PrevAndNext(long crmCCAId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -164,7 +160,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM CCAs where uuid = &#63;.
@@ -172,7 +168,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param uuid the uuid
 	* @return the number of matching CRM CCAs
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM CCA where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmCCAException} if it could not be found.
@@ -182,7 +178,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByUUID_G(java.lang.String uuid, long groupId)
+	public CrmCCA findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmCCAException;
 
 	/**
@@ -192,7 +188,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param groupId the group ID
 	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CrmCCA fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM CCA where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,7 +198,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CrmCCA fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -212,7 +208,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param groupId the group ID
 	* @return the CRM CCA that was removed
 	*/
-	public CrmCCA removeByUUID_G(java.lang.String uuid, long groupId)
+	public CrmCCA removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmCCAException;
 
 	/**
@@ -222,7 +218,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param groupId the group ID
 	* @return the number of matching CRM CCAs
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM CCAs where uuid = &#63; and companyId = &#63;.
@@ -231,8 +227,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param companyId the company ID
 	* @return the matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<CrmCCA> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the CRM CCAs where uuid = &#63; and companyId = &#63;.
@@ -247,8 +242,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param end the upper bound of the range of CRM CCAs (not inclusive)
 	* @return the range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<CrmCCA> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM CCAs where uuid = &#63; and companyId = &#63;.
@@ -264,8 +259,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmCCA> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -283,8 +278,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmCCA> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -297,7 +292,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the first matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmCCA findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -309,7 +304,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmCCA fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -321,7 +316,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the last matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmCCA findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -333,7 +328,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmCCA fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -346,8 +341,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the previous, current, and next CRM CCA
 	* @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	*/
-	public CrmCCA[] findByUuid_C_PrevAndNext(long crmCCAId,
-		java.lang.String uuid, long companyId,
+	public CrmCCA[] findByUuid_C_PrevAndNext(long crmCCAId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -357,7 +352,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM CCAs where uuid = &#63; and companyId = &#63;.
@@ -366,7 +361,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param companyId the company ID
 	* @return the number of matching CRM CCAs
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM CCAs where zipCode = &#63;.
@@ -374,7 +369,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param zipCode the zip code
 	* @return the matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByZipCode(java.lang.String zipCode);
+	public java.util.List<CrmCCA> findByZipCode(String zipCode);
 
 	/**
 	* Returns a range of all the CRM CCAs where zipCode = &#63;.
@@ -388,8 +383,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param end the upper bound of the range of CRM CCAs (not inclusive)
 	* @return the range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByZipCode(java.lang.String zipCode,
-		int start, int end);
+	public java.util.List<CrmCCA> findByZipCode(String zipCode, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the CRM CCAs where zipCode = &#63;.
@@ -404,8 +399,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByZipCode(java.lang.String zipCode,
-		int start, int end,
+	public java.util.List<CrmCCA> findByZipCode(String zipCode, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -422,8 +417,8 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM CCAs
 	*/
-	public java.util.List<CrmCCA> findByZipCode(java.lang.String zipCode,
-		int start, int end,
+	public java.util.List<CrmCCA> findByZipCode(String zipCode, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -435,7 +430,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the first matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByZipCode_First(java.lang.String zipCode,
+	public CrmCCA findByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -446,7 +441,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByZipCode_First(java.lang.String zipCode,
+	public CrmCCA fetchByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -457,7 +452,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the last matching CRM CCA
 	* @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	*/
-	public CrmCCA findByZipCode_Last(java.lang.String zipCode,
+	public CrmCCA findByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -468,7 +463,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	*/
-	public CrmCCA fetchByZipCode_Last(java.lang.String zipCode,
+	public CrmCCA fetchByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
@@ -480,8 +475,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @return the previous, current, and next CRM CCA
 	* @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	*/
-	public CrmCCA[] findByZipCode_PrevAndNext(long crmCCAId,
-		java.lang.String zipCode,
+	public CrmCCA[] findByZipCode_PrevAndNext(long crmCCAId, String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException;
 
@@ -490,7 +484,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	*
 	* @param zipCode the zip code
 	*/
-	public void removeByZipCode(java.lang.String zipCode);
+	public void removeByZipCode(String zipCode);
 
 	/**
 	* Returns the number of CRM CCAs where zipCode = &#63;.
@@ -498,7 +492,7 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	* @param zipCode the zip code
 	* @return the number of matching CRM CCAs
 	*/
-	public int countByZipCode(java.lang.String zipCode);
+	public int countByZipCode(String zipCode);
 
 	/**
 	* Caches the CRM CCA in the entity cache if it is enabled.
@@ -619,5 +613,5 @@ public interface CrmCCAPersistence extends BasePersistence<CrmCCA> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

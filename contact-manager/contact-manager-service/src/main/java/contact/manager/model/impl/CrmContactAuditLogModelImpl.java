@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -33,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmContactAuditLogModel;
@@ -267,7 +267,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -359,7 +359,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -370,7 +370,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -457,7 +457,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	@Override
 	public String getAction() {
 		if (_action == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _action;
@@ -472,7 +472,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	@Override
 	public String getOldSnapshot() {
 		if (_oldSnapshot == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _oldSnapshot;
@@ -487,7 +487,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 	@Override
 	public String getNewSnapshot() {
 		if (_newSnapshot == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _newSnapshot;
@@ -815,7 +815,7 @@ public class CrmContactAuditLogModelImpl extends BaseModelImpl<CrmContactAuditLo
 
 	private static final ClassLoader _classLoader = CrmContactAuditLog.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmContactAuditLog.class
+			CrmContactAuditLog.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

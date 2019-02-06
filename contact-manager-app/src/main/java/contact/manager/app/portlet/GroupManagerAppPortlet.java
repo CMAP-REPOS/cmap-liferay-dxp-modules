@@ -21,6 +21,7 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.GroupUtil;
 import contact.manager.model.CrmContact;
@@ -120,6 +121,18 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in GroupManagerAppPortlet.update: " + e.getMessage());
+		}
+	}
+	
+	public void deleteGroup(ActionRequest request, ActionResponse response) throws PortalException {
+		try {
+			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
+			crmGroup.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
+			_crmGroupLocalService.updateCrmGroup(crmGroup);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in GroupManagerAppPortlet.delete: " + e.getMessage());
 		}
 	}
 

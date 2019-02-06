@@ -63,29 +63,6 @@ public interface CrmCCALocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmCCALocalServiceUtil} to access the CRM CCA local service. Add custom service methods to {@link contact.manager.service.impl.CrmCCALocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM CCA to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmCCALocalService extends BaseLocalService,
 	* @param crmCCAId the primary key for the new CRM CCA
 	* @return the new CRM CCA
 	*/
+	@Transactional(enabled = false)
 	public CrmCCA createCrmCCA(long crmCCAId);
 
 	/**
@@ -123,65 +101,14 @@ public interface CrmCCALocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmCCA deleteCrmCCA(long crmCCAId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCCA fetchCrmCCA(long crmCCAId);
-
 	/**
-	* Returns the CRM CCA matching the UUID and group.
-	*
-	* @param uuid the CRM CCA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCCA fetchCrmCCAByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the CRM CCA with the primary key.
-	*
-	* @param crmCCAId the primary key of the CRM CCA
-	* @return the CRM CCA
-	* @throws PortalException if a CRM CCA with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCCA getCrmCCA(long crmCCAId) throws PortalException;
-
-	/**
-	* Returns the CRM CCA matching the UUID and group.
-	*
-	* @param uuid the CRM CCA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM CCA
-	* @throws PortalException if a matching CRM CCA could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCCA getCrmCCAByUuidAndGroupId(java.lang.String uuid, long groupId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Updates the CRM CCA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCCA the CRM CCA
-	* @return the CRM CCA that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmCCA updateCrmCCA(CrmCCA crmCCA);
-
-	/**
-	* Returns the number of CRM CCAs.
-	*
-	* @return the number of CRM CCAs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmCCAsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -222,7 +149,63 @@ public interface CrmCCALocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmCCA> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCCA fetchCrmCCA(long crmCCAId);
+
+	/**
+	* Returns the CRM CCA matching the UUID and group.
+	*
+	* @param uuid the CRM CCA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCCA fetchCrmCCAByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmCCA> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM CCA with the primary key.
+	*
+	* @param crmCCAId the primary key of the CRM CCA
+	* @return the CRM CCA
+	* @throws PortalException if a CRM CCA with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCCA getCrmCCA(long crmCCAId) throws PortalException;
+
+	/**
+	* Returns the CRM CCA matching the UUID and group.
+	*
+	* @param uuid the CRM CCA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM CCA
+	* @throws PortalException if a matching CRM CCA could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCCA getCrmCCAByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM CCAs.
@@ -246,8 +229,7 @@ public interface CrmCCALocalService extends BaseLocalService,
 	* @return the matching CRM CCAs, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmCCA> getCrmCCAsByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public List<CrmCCA> getCrmCCAsByUuidAndCompanyId(String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM CCAs matching the UUID and company.
@@ -260,25 +242,43 @@ public interface CrmCCALocalService extends BaseLocalService,
 	* @return the range of matching CRM CCAs, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmCCA> getCrmCCAsByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmCCA> getCrmCCAsByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmCCA> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM CCAs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM CCAs
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmCCAsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM CCA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCCA the CRM CCA
+	* @return the CRM CCA that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmCCA updateCrmCCA(CrmCCA crmCCA);
 }

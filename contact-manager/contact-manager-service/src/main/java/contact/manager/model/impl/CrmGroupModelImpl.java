@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmGroupModel;
@@ -77,7 +77,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "name", Types.VARCHAR },
-			{ "crmContactsCount", Types.BIGINT }
+			{ "crmContactsCount", Types.BIGINT },
+			{ "status", Types.VARCHAR }
 		};
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP = new HashMap<String, Integer>();
 
@@ -92,9 +93,10 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("crmContactsCount", Types.BIGINT);
+		TABLE_COLUMNS_MAP.put("status", Types.VARCHAR);
 	}
 
-	public static final String TABLE_SQL_CREATE = "create table crm_group (uuid_ VARCHAR(75) null,crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,crmContactsCount LONG)";
+	public static final String TABLE_SQL_CREATE = "create table crm_group (uuid_ VARCHAR(75) null,crmGroupId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name VARCHAR(500) null,crmContactsCount LONG,status VARCHAR(75) null)";
 	public static final String TABLE_SQL_DROP = "drop table crm_group";
 	public static final String ORDER_BY_JPQL = " ORDER BY crmGroup.name ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY crm_group.name ASC";
@@ -113,7 +115,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 	public static final long GROUPID_COLUMN_BITMASK = 2L;
 	public static final long NAME_COLUMN_BITMASK = 4L;
-	public static final long UUID_COLUMN_BITMASK = 8L;
+	public static final long STATUS_COLUMN_BITMASK = 8L;
+	public static final long UUID_COLUMN_BITMASK = 16L;
 	public static final String MAPPING_TABLE_CRM_CONTACTS_GROUPS_NAME = "crm_contacts_groups";
 	public static final Object[][] MAPPING_TABLE_CRM_CONTACTS_GROUPS_COLUMNS = {
 			{ "companyId", Types.BIGINT },
@@ -173,6 +176,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("crmContactsCount", getCrmContactsCount());
+		attributes.put("status", getStatus());
 
 		attributes.put("entityCacheEnabled", isEntityCacheEnabled());
 		attributes.put("finderCacheEnabled", isFinderCacheEnabled());
@@ -241,12 +245,18 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		if (crmContactsCount != null) {
 			setCrmContactsCount(crmContactsCount);
 		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -338,7 +348,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -349,7 +359,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -390,7 +400,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -420,6 +430,31 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	@Override
 	public void setCrmContactsCount(long crmContactsCount) {
 		_crmContactsCount = crmContactsCount;
+	}
+
+	@Override
+	public String getStatus() {
+		if (_status == null) {
+			return "";
+		}
+		else {
+			return _status;
+		}
+	}
+
+	@Override
+	public void setStatus(String status) {
+		_columnBitmask |= STATUS_COLUMN_BITMASK;
+
+		if (_originalStatus == null) {
+			_originalStatus = _status;
+		}
+
+		_status = status;
+	}
+
+	public String getOriginalStatus() {
+		return GetterUtil.getString(_originalStatus);
 	}
 
 	@Override
@@ -469,6 +504,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		crmGroupImpl.setModifiedDate(getModifiedDate());
 		crmGroupImpl.setName(getName());
 		crmGroupImpl.setCrmContactsCount(getCrmContactsCount());
+		crmGroupImpl.setStatus(getStatus());
 
 		crmGroupImpl.resetOriginalValues();
 
@@ -543,6 +579,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 		crmGroupModelImpl._originalName = crmGroupModelImpl._name;
 
+		crmGroupModelImpl._originalStatus = crmGroupModelImpl._status;
+
 		crmGroupModelImpl._columnBitmask = 0;
 	}
 
@@ -602,12 +640,20 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 		crmGroupCacheModel.crmContactsCount = getCrmContactsCount();
 
+		crmGroupCacheModel.status = getStatus();
+
+		String status = crmGroupCacheModel.status;
+
+		if ((status != null) && (status.length() == 0)) {
+			crmGroupCacheModel.status = null;
+		}
+
 		return crmGroupCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -629,6 +675,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 		sb.append(getName());
 		sb.append(", crmContactsCount=");
 		sb.append(getCrmContactsCount());
+		sb.append(", status=");
+		sb.append(getStatus());
 		sb.append("}");
 
 		return sb.toString();
@@ -636,7 +684,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("contact.manager.model.CrmGroup");
@@ -682,6 +730,10 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 			"<column><column-name>crmContactsCount</column-name><column-value><![CDATA[");
 		sb.append(getCrmContactsCount());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>status</column-name><column-value><![CDATA[");
+		sb.append(getStatus());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -690,7 +742,7 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 
 	private static final ClassLoader _classLoader = CrmGroup.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmGroup.class
+			CrmGroup.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;
@@ -709,6 +761,8 @@ public class CrmGroupModelImpl extends BaseModelImpl<CrmGroup>
 	private String _name;
 	private String _originalName;
 	private long _crmContactsCount;
+	private String _status;
+	private String _originalStatus;
 	private long _columnBitmask;
 	private CrmGroup _escapedModel;
 }

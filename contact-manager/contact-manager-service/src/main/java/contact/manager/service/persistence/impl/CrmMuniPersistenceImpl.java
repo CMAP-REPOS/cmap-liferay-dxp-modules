@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmMuniPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -229,7 +229,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -317,7 +317,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -366,7 +366,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -458,7 +458,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -594,7 +594,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -673,7 +673,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -736,7 +736,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -776,13 +776,6 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 					result = crmMuni;
 
 					cacheResult(crmMuni);
-
-					if ((crmMuni.getUuid() == null) ||
-							!crmMuni.getUuid().equals(uuid) ||
-							(crmMuni.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmMuni);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -843,7 +836,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1040,7 +1033,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1136,7 +1129,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -1191,7 +1184,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -1285,7 +1278,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1427,7 +1420,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1611,7 +1604,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1699,7 +1692,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -1748,7 +1741,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmMuniException(msg.toString());
 	}
@@ -1840,7 +1833,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		if (zipCode == null) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 		}
-		else if (zipCode.equals(StringPool.BLANK)) {
+		else if (zipCode.equals("")) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1976,7 +1969,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2025,8 +2018,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		setModelClass(CrmMuni.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2231,8 +2226,6 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 	@Override
 	protected CrmMuni removeImpl(CrmMuni crmMuni) {
-		crmMuni = toUnwrappedModel(crmMuni);
-
 		Session session = null;
 
 		try {
@@ -2263,9 +2256,23 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 	@Override
 	public CrmMuni updateImpl(CrmMuni crmMuni) {
-		crmMuni = toUnwrappedModel(crmMuni);
-
 		boolean isNew = crmMuni.isNew();
+
+		if (!(crmMuni instanceof CrmMuniModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmMuni.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmMuni);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmMuni proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmMuni implementation " +
+				crmMuni.getClass());
+		}
 
 		CrmMuniModelImpl crmMuniModelImpl = (CrmMuniModelImpl)crmMuni;
 
@@ -2414,30 +2421,6 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		crmMuni.resetOriginalValues();
 
 		return crmMuni;
-	}
-
-	protected CrmMuni toUnwrappedModel(CrmMuni crmMuni) {
-		if (crmMuni instanceof CrmMuniImpl) {
-			return crmMuni;
-		}
-
-		CrmMuniImpl crmMuniImpl = new CrmMuniImpl();
-
-		crmMuniImpl.setNew(crmMuni.isNew());
-		crmMuniImpl.setPrimaryKey(crmMuni.getPrimaryKey());
-
-		crmMuniImpl.setUuid(crmMuni.getUuid());
-		crmMuniImpl.setCrmMuniId(crmMuni.getCrmMuniId());
-		crmMuniImpl.setGroupId(crmMuni.getGroupId());
-		crmMuniImpl.setCompanyId(crmMuni.getCompanyId());
-		crmMuniImpl.setUserId(crmMuni.getUserId());
-		crmMuniImpl.setUserName(crmMuni.getUserName());
-		crmMuniImpl.setCreateDate(crmMuni.getCreateDate());
-		crmMuniImpl.setModifiedDate(crmMuni.getModifiedDate());
-		crmMuniImpl.setName(crmMuni.getName());
-		crmMuniImpl.setZipCode(crmMuni.getZipCode());
-
-		return crmMuniImpl;
 	}
 
 	/**
@@ -2590,12 +2573,12 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

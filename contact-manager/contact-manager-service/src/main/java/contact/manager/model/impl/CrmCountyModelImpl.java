@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmCounty;
 import contact.manager.model.CrmCountyModel;
@@ -238,7 +238,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -330,7 +330,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -341,7 +341,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -382,7 +382,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -399,7 +399,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 	@Override
 	public String getZipCode() {
 		if (_zipCode == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _zipCode;
@@ -695,7 +695,7 @@ public class CrmCountyModelImpl extends BaseModelImpl<CrmCounty>
 
 	private static final ClassLoader _classLoader = CrmCounty.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmCounty.class
+			CrmCounty.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

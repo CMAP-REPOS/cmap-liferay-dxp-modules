@@ -63,29 +63,6 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmUsRepLocalServiceUtil} to access the CRM US Rep local service. Add custom service methods to {@link contact.manager.service.impl.CrmUsRepLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM US Rep to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	* @param crmUsRepId the primary key for the new CRM US Rep
 	* @return the new CRM US Rep
 	*/
+	@Transactional(enabled = false)
 	public CrmUsRep createCrmUsRep(long crmUsRepId);
 
 	/**
@@ -123,65 +101,14 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmUsRep deleteCrmUsRep(long crmUsRepId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmUsRep fetchCrmUsRep(long crmUsRepId);
-
 	/**
-	* Returns the CRM US Rep matching the UUID and group.
-	*
-	* @param uuid the CRM US Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmUsRep fetchCrmUsRepByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Returns the CRM US Rep with the primary key.
-	*
-	* @param crmUsRepId the primary key of the CRM US Rep
-	* @return the CRM US Rep
-	* @throws PortalException if a CRM US Rep with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmUsRep getCrmUsRep(long crmUsRepId) throws PortalException;
-
-	/**
-	* Returns the CRM US Rep matching the UUID and group.
-	*
-	* @param uuid the CRM US Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM US Rep
-	* @throws PortalException if a matching CRM US Rep could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmUsRep getCrmUsRepByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM US Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmUsRep the CRM US Rep
-	* @return the CRM US Rep that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmUsRep updateCrmUsRep(CrmUsRep crmUsRep);
-
-	/**
-	* Returns the number of CRM US Reps.
-	*
-	* @return the number of CRM US Reps
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmUsRepsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -222,7 +149,63 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmUsRep> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmUsRep fetchCrmUsRep(long crmUsRepId);
+
+	/**
+	* Returns the CRM US Rep matching the UUID and group.
+	*
+	* @param uuid the CRM US Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmUsRep fetchCrmUsRepByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmUsRep> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM US Rep with the primary key.
+	*
+	* @param crmUsRepId the primary key of the CRM US Rep
+	* @return the CRM US Rep
+	* @throws PortalException if a CRM US Rep with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmUsRep getCrmUsRep(long crmUsRepId) throws PortalException;
+
+	/**
+	* Returns the CRM US Rep matching the UUID and group.
+	*
+	* @param uuid the CRM US Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM US Rep
+	* @throws PortalException if a matching CRM US Rep could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmUsRep getCrmUsRepByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM US Reps.
@@ -246,8 +229,8 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	* @return the matching CRM US Reps, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmUsRep> getCrmUsRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CrmUsRep> getCrmUsRepsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of CRM US Reps matching the UUID and company.
@@ -260,25 +243,43 @@ public interface CrmUsRepLocalService extends BaseLocalService,
 	* @return the range of matching CRM US Reps, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmUsRep> getCrmUsRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CrmUsRep> getCrmUsRepsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM US Reps.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM US Reps
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmUsRepsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM US Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmUsRep the CRM US Rep
+	* @return the CRM US Rep that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmUsRep updateCrmUsRep(CrmUsRep crmUsRep);
 }

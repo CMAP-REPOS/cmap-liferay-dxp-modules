@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmContactAuditLogChangePersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -234,7 +234,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -323,7 +323,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -374,7 +374,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -468,7 +468,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -604,7 +604,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -685,7 +685,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -748,7 +748,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -788,13 +788,6 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 					result = crmContactAuditLogChange;
 
 					cacheResult(crmContactAuditLogChange);
-
-					if ((crmContactAuditLogChange.getUuid() == null) ||
-							!crmContactAuditLogChange.getUuid().equals(uuid) ||
-							(crmContactAuditLogChange.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmContactAuditLogChange);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -856,7 +849,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1057,7 +1050,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1155,7 +1148,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -1213,7 +1206,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -1313,7 +1306,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1455,7 +1448,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1730,7 +1723,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append("crmContactAuditLogId=");
 		msg.append(crmContactAuditLogId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -1783,7 +1776,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		msg.append("crmContactAuditLogId=");
 		msg.append(crmContactAuditLogId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmContactAuditLogChangeException(msg.toString());
 	}
@@ -2037,8 +2030,10 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		setModelClass(CrmContactAuditLogChange.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2262,8 +2257,6 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected CrmContactAuditLogChange removeImpl(
 		CrmContactAuditLogChange crmContactAuditLogChange) {
-		crmContactAuditLogChange = toUnwrappedModel(crmContactAuditLogChange);
-
 		Session session = null;
 
 		try {
@@ -2295,9 +2288,23 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange updateImpl(
 		CrmContactAuditLogChange crmContactAuditLogChange) {
-		crmContactAuditLogChange = toUnwrappedModel(crmContactAuditLogChange);
-
 		boolean isNew = crmContactAuditLogChange.isNew();
+
+		if (!(crmContactAuditLogChange instanceof CrmContactAuditLogChangeModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmContactAuditLogChange.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmContactAuditLogChange);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmContactAuditLogChange proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmContactAuditLogChange implementation " +
+				crmContactAuditLogChange.getClass());
+		}
 
 		CrmContactAuditLogChangeModelImpl crmContactAuditLogChangeModelImpl = (CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange;
 
@@ -2464,33 +2471,6 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		return crmContactAuditLogChange;
 	}
 
-	protected CrmContactAuditLogChange toUnwrappedModel(
-		CrmContactAuditLogChange crmContactAuditLogChange) {
-		if (crmContactAuditLogChange instanceof CrmContactAuditLogChangeImpl) {
-			return crmContactAuditLogChange;
-		}
-
-		CrmContactAuditLogChangeImpl crmContactAuditLogChangeImpl = new CrmContactAuditLogChangeImpl();
-
-		crmContactAuditLogChangeImpl.setNew(crmContactAuditLogChange.isNew());
-		crmContactAuditLogChangeImpl.setPrimaryKey(crmContactAuditLogChange.getPrimaryKey());
-
-		crmContactAuditLogChangeImpl.setUuid(crmContactAuditLogChange.getUuid());
-		crmContactAuditLogChangeImpl.setCrmContactAuditLogChangeId(crmContactAuditLogChange.getCrmContactAuditLogChangeId());
-		crmContactAuditLogChangeImpl.setGroupId(crmContactAuditLogChange.getGroupId());
-		crmContactAuditLogChangeImpl.setCompanyId(crmContactAuditLogChange.getCompanyId());
-		crmContactAuditLogChangeImpl.setUserId(crmContactAuditLogChange.getUserId());
-		crmContactAuditLogChangeImpl.setUserName(crmContactAuditLogChange.getUserName());
-		crmContactAuditLogChangeImpl.setCreateDate(crmContactAuditLogChange.getCreateDate());
-		crmContactAuditLogChangeImpl.setModifiedDate(crmContactAuditLogChange.getModifiedDate());
-		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(crmContactAuditLogChange.getCrmContactAuditLogId());
-		crmContactAuditLogChangeImpl.setFieldName(crmContactAuditLogChange.getFieldName());
-		crmContactAuditLogChangeImpl.setOldValue(crmContactAuditLogChange.getOldValue());
-		crmContactAuditLogChangeImpl.setNewValue(crmContactAuditLogChange.getNewValue());
-
-		return crmContactAuditLogChangeImpl;
-	}
-
 	/**
 	 * Returns the CRM Contact Audit Log Change with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
@@ -2645,12 +2625,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

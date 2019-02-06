@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmNote;
 import contact.manager.model.CrmNoteModel;
@@ -238,7 +238,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -330,7 +330,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -341,7 +341,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -404,7 +404,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 	@Override
 	public String getNote() {
 		if (_note == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _note;
@@ -688,7 +688,7 @@ public class CrmNoteModelImpl extends BaseModelImpl<CrmNote>
 
 	private static final ClassLoader _classLoader = CrmNote.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmNote.class
+			CrmNote.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

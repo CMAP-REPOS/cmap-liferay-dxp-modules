@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContactAuditLogChange;
 
@@ -102,7 +101,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		CrmContactAuditLogChangeImpl crmContactAuditLogChangeImpl = new CrmContactAuditLogChangeImpl();
 
 		if (uuid == null) {
-			crmContactAuditLogChangeImpl.setUuid(StringPool.BLANK);
+			crmContactAuditLogChangeImpl.setUuid("");
 		}
 		else {
 			crmContactAuditLogChangeImpl.setUuid(uuid);
@@ -114,7 +113,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		crmContactAuditLogChangeImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmContactAuditLogChangeImpl.setUserName(StringPool.BLANK);
+			crmContactAuditLogChangeImpl.setUserName("");
 		}
 		else {
 			crmContactAuditLogChangeImpl.setUserName(userName);
@@ -137,21 +136,21 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(crmContactAuditLogId);
 
 		if (fieldName == null) {
-			crmContactAuditLogChangeImpl.setFieldName(StringPool.BLANK);
+			crmContactAuditLogChangeImpl.setFieldName("");
 		}
 		else {
 			crmContactAuditLogChangeImpl.setFieldName(fieldName);
 		}
 
 		if (oldValue == null) {
-			crmContactAuditLogChangeImpl.setOldValue(StringPool.BLANK);
+			crmContactAuditLogChangeImpl.setOldValue("");
 		}
 		else {
 			crmContactAuditLogChangeImpl.setOldValue(oldValue);
 		}
 
 		if (newValue == null) {
-			crmContactAuditLogChangeImpl.setNewValue(StringPool.BLANK);
+			crmContactAuditLogChangeImpl.setNewValue("");
 		}
 		else {
 			crmContactAuditLogChangeImpl.setNewValue(newValue);
@@ -187,7 +186,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -202,7 +201,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -214,21 +213,21 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 		objectOutput.writeLong(crmContactAuditLogId);
 
 		if (fieldName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(fieldName);
 		}
 
 		if (oldValue == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(oldValue);
 		}
 
 		if (newValue == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(newValue);

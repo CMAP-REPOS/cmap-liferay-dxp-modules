@@ -38,6 +38,7 @@ public class GroupUtil {
 		crmGroup.setUserId(userId);
 		crmGroup.setUserName(userName);
 		crmGroup.setModifiedDate(serviceContext.getModifiedDate(now));
+		crmGroup.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 
 		if (isNew) {
 			long companyId = serviceContext.getCompanyId();

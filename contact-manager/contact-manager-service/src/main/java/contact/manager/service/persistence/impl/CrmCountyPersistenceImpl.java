@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmCountyPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -230,7 +230,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -318,7 +318,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -367,7 +367,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -459,7 +459,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -595,7 +595,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -674,7 +674,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -737,7 +737,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -777,13 +777,6 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 					result = crmCounty;
 
 					cacheResult(crmCounty);
-
-					if ((crmCounty.getUuid() == null) ||
-							!crmCounty.getUuid().equals(uuid) ||
-							(crmCounty.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmCounty);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -844,7 +837,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1041,7 +1034,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1138,7 +1131,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -1194,7 +1187,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -1288,7 +1281,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1430,7 +1423,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1615,7 +1608,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1703,7 +1696,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -1752,7 +1745,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmCountyException(msg.toString());
 	}
@@ -1844,7 +1837,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		if (zipCode == null) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 		}
-		else if (zipCode.equals(StringPool.BLANK)) {
+		else if (zipCode.equals("")) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1980,7 +1973,7 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2029,8 +2022,10 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		setModelClass(CrmCounty.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2239,8 +2234,6 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 
 	@Override
 	protected CrmCounty removeImpl(CrmCounty crmCounty) {
-		crmCounty = toUnwrappedModel(crmCounty);
-
 		Session session = null;
 
 		try {
@@ -2271,9 +2264,23 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 
 	@Override
 	public CrmCounty updateImpl(CrmCounty crmCounty) {
-		crmCounty = toUnwrappedModel(crmCounty);
-
 		boolean isNew = crmCounty.isNew();
+
+		if (!(crmCounty instanceof CrmCountyModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmCounty.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmCounty);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmCounty proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmCounty implementation " +
+				crmCounty.getClass());
+		}
 
 		CrmCountyModelImpl crmCountyModelImpl = (CrmCountyModelImpl)crmCounty;
 
@@ -2427,30 +2434,6 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		return crmCounty;
 	}
 
-	protected CrmCounty toUnwrappedModel(CrmCounty crmCounty) {
-		if (crmCounty instanceof CrmCountyImpl) {
-			return crmCounty;
-		}
-
-		CrmCountyImpl crmCountyImpl = new CrmCountyImpl();
-
-		crmCountyImpl.setNew(crmCounty.isNew());
-		crmCountyImpl.setPrimaryKey(crmCounty.getPrimaryKey());
-
-		crmCountyImpl.setUuid(crmCounty.getUuid());
-		crmCountyImpl.setCrmCountyId(crmCounty.getCrmCountyId());
-		crmCountyImpl.setGroupId(crmCounty.getGroupId());
-		crmCountyImpl.setCompanyId(crmCounty.getCompanyId());
-		crmCountyImpl.setUserId(crmCounty.getUserId());
-		crmCountyImpl.setUserName(crmCounty.getUserName());
-		crmCountyImpl.setCreateDate(crmCounty.getCreateDate());
-		crmCountyImpl.setModifiedDate(crmCounty.getModifiedDate());
-		crmCountyImpl.setName(crmCounty.getName());
-		crmCountyImpl.setZipCode(crmCounty.getZipCode());
-
-		return crmCountyImpl;
-	}
-
 	/**
 	 * Returns the CRM County with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
@@ -2602,12 +2585,12 @@ public class CrmCountyPersistenceImpl extends BasePersistenceImpl<CrmCounty>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

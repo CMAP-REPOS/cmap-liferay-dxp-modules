@@ -277,19 +277,19 @@ public interface CrmMuniModel extends BaseModel<CrmMuni>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmMuni crmMuni);
+	public int compareTo(CrmMuni crmMuni);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmMuni> toCacheModel();
+	public CacheModel<CrmMuni> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmMuni toEscapedModel();
+	public CrmMuni toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmMuni toUnescapedModel();
+	public CrmMuni toUnescapedModel();
 
 	@Override
 	public String toString();

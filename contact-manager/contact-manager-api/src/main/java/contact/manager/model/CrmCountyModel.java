@@ -277,19 +277,19 @@ public interface CrmCountyModel extends BaseModel<CrmCounty>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmCounty crmCounty);
+	public int compareTo(CrmCounty crmCounty);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmCounty> toCacheModel();
+	public CacheModel<CrmCounty> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmCounty toEscapedModel();
+	public CrmCounty toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmCounty toUnescapedModel();
+	public CrmCounty toUnescapedModel();
 
 	@Override
 	public String toString();

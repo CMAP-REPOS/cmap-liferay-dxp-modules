@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmNoteLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmNoteLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Note to the database. Also notifies the appropriate model listeners.
@@ -82,6 +52,10 @@ public class CrmNoteLocalServiceUtil {
 	public static contact.manager.model.CrmNote addCrmNote(
 		contact.manager.model.CrmNote crmNote) {
 		return getService().addCrmNote(crmNote);
+	}
+
+	public static int countByCrmContactId(long crmContactId) {
+		return getService().countByCrmContactId(crmContactId);
 	}
 
 	/**
@@ -117,79 +91,17 @@ public class CrmNoteLocalServiceUtil {
 		return getService().deleteCrmNote(crmNoteId);
 	}
 
-	public static contact.manager.model.CrmNote fetchCrmNote(long crmNoteId) {
-		return getService().fetchCrmNote(crmNoteId);
-	}
-
 	/**
-	* Returns the CRM Note matching the UUID and group.
-	*
-	* @param uuid the CRM Note's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmNote fetchCrmNoteByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmNoteByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Note with the primary key.
-	*
-	* @param crmNoteId the primary key of the CRM Note
-	* @return the CRM Note
-	* @throws PortalException if a CRM Note with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmNote getCrmNote(long crmNoteId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmNote(crmNoteId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM Note matching the UUID and group.
-	*
-	* @param uuid the CRM Note's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Note
-	* @throws PortalException if a matching CRM Note could not be found
-	*/
-	public static contact.manager.model.CrmNote getCrmNoteByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmNoteByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Note in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmNote the CRM Note
-	* @return the CRM Note that was updated
-	*/
-	public static contact.manager.model.CrmNote updateCrmNote(
-		contact.manager.model.CrmNote crmNote) {
-		return getService().updateCrmNote(crmNote);
-	}
-
-	public static int countByCrmContactId(long crmContactId) {
-		return getService().countByCrmContactId(crmContactId);
-	}
-
-	/**
-	* Returns the number of CRM Notes.
-	*
-	* @return the number of CRM Notes
-	*/
-	public static int getCrmNotesCount() {
-		return getService().getCrmNotesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -242,6 +154,46 @@ public class CrmNoteLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmNote fetchCrmNote(long crmNoteId) {
+		return getService().fetchCrmNote(crmNoteId);
+	}
+
+	/**
+	* Returns the CRM Note matching the UUID and group.
+	*
+	* @param uuid the CRM Note's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	*/
+	public static contact.manager.model.CrmNote fetchCrmNoteByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmNoteByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmNote> findByCrmContactId(
 		long crmContactId) {
 		return getService().findByCrmContactId(crmContactId);
@@ -258,6 +210,36 @@ public class CrmNoteLocalServiceUtil {
 		return getService()
 				   .findByCrmContactId(crmContactId, start, end,
 			orderByComparator);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Note with the primary key.
+	*
+	* @param crmNoteId the primary key of the CRM Note
+	* @return the CRM Note
+	* @throws PortalException if a CRM Note with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmNote getCrmNote(long crmNoteId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmNote(crmNoteId);
+	}
+
+	/**
+	* Returns the CRM Note matching the UUID and group.
+	*
+	* @param uuid the CRM Note's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Note
+	* @throws PortalException if a matching CRM Note could not be found
+	*/
+	public static contact.manager.model.CrmNote getCrmNoteByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmNoteByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -284,7 +266,7 @@ public class CrmNoteLocalServiceUtil {
 	* @return the matching CRM Notes, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmNote> getCrmNotesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmNotesByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -299,7 +281,7 @@ public class CrmNoteLocalServiceUtil {
 	* @return the range of matching CRM Notes, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmNote> getCrmNotesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmNote> orderByComparator) {
 		return getService()
 				   .getCrmNotesByUuidAndCompanyId(uuid, companyId, start, end,
@@ -307,33 +289,63 @@ public class CrmNoteLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Notes.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Notes
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmNotesCount() {
+		return getService().getCrmNotesCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM Note in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmNote the CRM Note
+	* @return the CRM Note that was updated
+	*/
+	public static contact.manager.model.CrmNote updateCrmNote(
+		contact.manager.model.CrmNote crmNote) {
+		return getService().updateCrmNote(crmNote);
 	}
 
 	public static CrmNoteLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmNoteLocalService, CrmNoteLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmNoteLocalService.class);
+	private static ServiceTracker<CrmNoteLocalService, CrmNoteLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmNoteLocalService.class);
+
+		ServiceTracker<CrmNoteLocalService, CrmNoteLocalService> serviceTracker = new ServiceTracker<CrmNoteLocalService, CrmNoteLocalService>(bundle.getBundleContext(),
+				CrmNoteLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

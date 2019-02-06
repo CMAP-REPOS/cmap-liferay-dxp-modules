@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmStateRep;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -117,7 +118,7 @@ public class CrmStateRepUtil {
 	* @param uuid the uuid
 	* @return the matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid(java.lang.String uuid) {
+	public static List<CrmStateRep> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +134,7 @@ public class CrmStateRepUtil {
 	* @param end the upper bound of the range of CRM State Reps (not inclusive)
 	* @return the range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CrmStateRep> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +151,8 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CrmStateRep> orderByComparator) {
+	public static List<CrmStateRep> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,8 +170,8 @@ public class CrmStateRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CrmStateRep> orderByComparator,
+	public static List<CrmStateRep> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmStateRep> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -186,7 +186,7 @@ public class CrmStateRepUtil {
 	* @return the first matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByUuid_First(java.lang.String uuid,
+	public static CrmStateRep findByUuid_First(String uuid,
 		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -199,7 +199,7 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUuid_First(java.lang.String uuid,
+	public static CrmStateRep fetchByUuid_First(String uuid,
 		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class CrmStateRepUtil {
 	* @return the last matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByUuid_Last(java.lang.String uuid,
+	public static CrmStateRep findByUuid_Last(String uuid,
 		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -225,7 +225,7 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUuid_Last(java.lang.String uuid,
+	public static CrmStateRep fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -240,7 +240,7 @@ public class CrmStateRepUtil {
 	* @throws NoSuchCrmStateRepException if a CRM State Rep with the primary key could not be found
 	*/
 	public static CrmStateRep[] findByUuid_PrevAndNext(long crmStateRepId,
-		java.lang.String uuid, OrderByComparator<CrmStateRep> orderByComparator)
+		String uuid, OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmStateRepId, uuid,
@@ -252,7 +252,7 @@ public class CrmStateRepUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -262,7 +262,7 @@ public class CrmStateRepUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM State Reps
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,7 +274,7 @@ public class CrmStateRepUtil {
 	* @return the matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmStateRep findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -286,7 +286,7 @@ public class CrmStateRepUtil {
 	* @param groupId the group ID
 	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmStateRep fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -298,8 +298,8 @@ public class CrmStateRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CrmStateRep fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -310,7 +310,7 @@ public class CrmStateRepUtil {
 	* @param groupId the group ID
 	* @return the CRM State Rep that was removed
 	*/
-	public static CrmStateRep removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmStateRep removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -322,7 +322,7 @@ public class CrmStateRepUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM State Reps
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -333,8 +333,7 @@ public class CrmStateRepUtil {
 	* @param companyId the company ID
 	* @return the matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmStateRep> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -351,8 +350,8 @@ public class CrmStateRepUtil {
 	* @param end the upper bound of the range of CRM State Reps (not inclusive)
 	* @return the range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmStateRep> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -370,9 +369,8 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmStateRep> orderByComparator) {
+	public static List<CrmStateRep> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -392,9 +390,8 @@ public class CrmStateRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmStateRep> orderByComparator,
+	public static List<CrmStateRep> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmStateRep> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -410,8 +407,8 @@ public class CrmStateRepUtil {
 	* @return the first matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmStateRep> orderByComparator)
+	public static CrmStateRep findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -425,8 +422,8 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmStateRep> orderByComparator) {
+	public static CrmStateRep fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -440,8 +437,8 @@ public class CrmStateRepUtil {
 	* @return the last matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmStateRep> orderByComparator)
+	public static CrmStateRep findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -455,8 +452,8 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmStateRep> orderByComparator) {
+	public static CrmStateRep fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -472,7 +469,7 @@ public class CrmStateRepUtil {
 	* @throws NoSuchCrmStateRepException if a CRM State Rep with the primary key could not be found
 	*/
 	public static CrmStateRep[] findByUuid_C_PrevAndNext(long crmStateRepId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence()
@@ -486,7 +483,7 @@ public class CrmStateRepUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -497,7 +494,7 @@ public class CrmStateRepUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM State Reps
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -507,7 +504,7 @@ public class CrmStateRepUtil {
 	* @param zipCode the zip code
 	* @return the matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByZipCode(java.lang.String zipCode) {
+	public static List<CrmStateRep> findByZipCode(String zipCode) {
 		return getPersistence().findByZipCode(zipCode);
 	}
 
@@ -523,8 +520,8 @@ public class CrmStateRepUtil {
 	* @param end the upper bound of the range of CRM State Reps (not inclusive)
 	* @return the range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByZipCode(java.lang.String zipCode,
-		int start, int end) {
+	public static List<CrmStateRep> findByZipCode(String zipCode, int start,
+		int end) {
 		return getPersistence().findByZipCode(zipCode, start, end);
 	}
 
@@ -541,8 +538,8 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmStateRep> orderByComparator) {
+	public static List<CrmStateRep> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator);
 	}
@@ -561,8 +558,8 @@ public class CrmStateRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Reps
 	*/
-	public static List<CrmStateRep> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmStateRep> orderByComparator,
+	public static List<CrmStateRep> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmStateRep> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator,
@@ -577,7 +574,7 @@ public class CrmStateRepUtil {
 	* @return the first matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByZipCode_First(java.lang.String zipCode,
+	public static CrmStateRep findByZipCode_First(String zipCode,
 		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
@@ -590,7 +587,7 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByZipCode_First(java.lang.String zipCode,
+	public static CrmStateRep fetchByZipCode_First(String zipCode,
 		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
 	}
@@ -603,7 +600,7 @@ public class CrmStateRepUtil {
 	* @return the last matching CRM State Rep
 	* @throws NoSuchCrmStateRepException if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep findByZipCode_Last(java.lang.String zipCode,
+	public static CrmStateRep findByZipCode_Last(String zipCode,
 		OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
@@ -616,7 +613,7 @@ public class CrmStateRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
 	*/
-	public static CrmStateRep fetchByZipCode_Last(java.lang.String zipCode,
+	public static CrmStateRep fetchByZipCode_Last(String zipCode,
 		OrderByComparator<CrmStateRep> orderByComparator) {
 		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
 	}
@@ -631,8 +628,7 @@ public class CrmStateRepUtil {
 	* @throws NoSuchCrmStateRepException if a CRM State Rep with the primary key could not be found
 	*/
 	public static CrmStateRep[] findByZipCode_PrevAndNext(long crmStateRepId,
-		java.lang.String zipCode,
-		OrderByComparator<CrmStateRep> orderByComparator)
+		String zipCode, OrderByComparator<CrmStateRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateRepException {
 		return getPersistence()
 				   .findByZipCode_PrevAndNext(crmStateRepId, zipCode,
@@ -644,7 +640,7 @@ public class CrmStateRepUtil {
 	*
 	* @param zipCode the zip code
 	*/
-	public static void removeByZipCode(java.lang.String zipCode) {
+	public static void removeByZipCode(String zipCode) {
 		getPersistence().removeByZipCode(zipCode);
 	}
 
@@ -654,7 +650,7 @@ public class CrmStateRepUtil {
 	* @param zipCode the zip code
 	* @return the number of matching CRM State Reps
 	*/
-	public static int countByZipCode(java.lang.String zipCode) {
+	public static int countByZipCode(String zipCode) {
 		return getPersistence().countByZipCode(zipCode);
 	}
 
@@ -806,7 +802,7 @@ public class CrmStateRepUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -814,6 +810,17 @@ public class CrmStateRepUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmStateRepPersistence, CrmStateRepPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmStateRepPersistence.class);
+	private static ServiceTracker<CrmStateRepPersistence, CrmStateRepPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmStateRepPersistence.class);
+
+		ServiceTracker<CrmStateRepPersistence, CrmStateRepPersistence> serviceTracker =
+			new ServiceTracker<CrmStateRepPersistence, CrmStateRepPersistence>(bundle.getBundleContext(),
+				CrmStateRepPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

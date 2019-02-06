@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmUsRep;
 
@@ -99,7 +98,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		CrmUsRepImpl crmUsRepImpl = new CrmUsRepImpl();
 
 		if (uuid == null) {
-			crmUsRepImpl.setUuid(StringPool.BLANK);
+			crmUsRepImpl.setUuid("");
 		}
 		else {
 			crmUsRepImpl.setUuid(uuid);
@@ -111,7 +110,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		crmUsRepImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmUsRepImpl.setUserName(StringPool.BLANK);
+			crmUsRepImpl.setUserName("");
 		}
 		else {
 			crmUsRepImpl.setUserName(userName);
@@ -132,21 +131,21 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		}
 
 		if (name == null) {
-			crmUsRepImpl.setName(StringPool.BLANK);
+			crmUsRepImpl.setName("");
 		}
 		else {
 			crmUsRepImpl.setName(name);
 		}
 
 		if (number == null) {
-			crmUsRepImpl.setNumber(StringPool.BLANK);
+			crmUsRepImpl.setNumber("");
 		}
 		else {
 			crmUsRepImpl.setNumber(number);
 		}
 
 		if (zipCode == null) {
-			crmUsRepImpl.setZipCode(StringPool.BLANK);
+			crmUsRepImpl.setZipCode("");
 		}
 		else {
 			crmUsRepImpl.setZipCode(zipCode);
@@ -180,7 +179,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -195,7 +194,7 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -205,21 +204,21 @@ public class CrmUsRepCacheModel implements CacheModel<CrmUsRep>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (number == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(number);
 		}
 
 		if (zipCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zipCode);

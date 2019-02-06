@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmCountyCommissioner;
 
@@ -100,7 +99,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		CrmCountyCommissionerImpl crmCountyCommissionerImpl = new CrmCountyCommissionerImpl();
 
 		if (uuid == null) {
-			crmCountyCommissionerImpl.setUuid(StringPool.BLANK);
+			crmCountyCommissionerImpl.setUuid("");
 		}
 		else {
 			crmCountyCommissionerImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		crmCountyCommissionerImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmCountyCommissionerImpl.setUserName(StringPool.BLANK);
+			crmCountyCommissionerImpl.setUserName("");
 		}
 		else {
 			crmCountyCommissionerImpl.setUserName(userName);
@@ -133,21 +132,21 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		}
 
 		if (name == null) {
-			crmCountyCommissionerImpl.setName(StringPool.BLANK);
+			crmCountyCommissionerImpl.setName("");
 		}
 		else {
 			crmCountyCommissionerImpl.setName(name);
 		}
 
 		if (number == null) {
-			crmCountyCommissionerImpl.setNumber(StringPool.BLANK);
+			crmCountyCommissionerImpl.setNumber("");
 		}
 		else {
 			crmCountyCommissionerImpl.setNumber(number);
 		}
 
 		if (zipCode == null) {
-			crmCountyCommissionerImpl.setZipCode(StringPool.BLANK);
+			crmCountyCommissionerImpl.setZipCode("");
 		}
 		else {
 			crmCountyCommissionerImpl.setZipCode(zipCode);
@@ -181,7 +180,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -196,7 +195,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,21 +205,21 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (number == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(number);
 		}
 
 		if (zipCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zipCode);

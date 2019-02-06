@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmMuni;
 
@@ -97,7 +96,7 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 		CrmMuniImpl crmMuniImpl = new CrmMuniImpl();
 
 		if (uuid == null) {
-			crmMuniImpl.setUuid(StringPool.BLANK);
+			crmMuniImpl.setUuid("");
 		}
 		else {
 			crmMuniImpl.setUuid(uuid);
@@ -109,7 +108,7 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 		crmMuniImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmMuniImpl.setUserName(StringPool.BLANK);
+			crmMuniImpl.setUserName("");
 		}
 		else {
 			crmMuniImpl.setUserName(userName);
@@ -130,14 +129,14 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 		}
 
 		if (name == null) {
-			crmMuniImpl.setName(StringPool.BLANK);
+			crmMuniImpl.setName("");
 		}
 		else {
 			crmMuniImpl.setName(name);
 		}
 
 		if (zipCode == null) {
-			crmMuniImpl.setZipCode(StringPool.BLANK);
+			crmMuniImpl.setZipCode("");
 		}
 		else {
 			crmMuniImpl.setZipCode(zipCode);
@@ -170,7 +169,7 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -185,7 +184,7 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -195,14 +194,14 @@ public class CrmMuniCacheModel implements CacheModel<CrmMuni>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (zipCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zipCode);

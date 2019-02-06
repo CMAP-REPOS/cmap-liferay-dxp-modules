@@ -145,148 +145,13 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmStateSenate.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmStateSenate.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmStateSenate.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmStateSenate.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmStateSenate> toCacheModel() {
-		return _crmStateSenate.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmStateSenate toEscapedModel() {
-		return new CrmStateSenateWrapper(_crmStateSenate.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmStateSenate toUnescapedModel() {
-		return new CrmStateSenateWrapper(_crmStateSenate.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmStateSenate crmStateSenate) {
-		return _crmStateSenate.compareTo(crmStateSenate);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmStateSenate.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmStateSenate.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmStateSenateWrapper((CrmStateSenate)_crmStateSenate.clone());
 	}
 
-	/**
-	* Returns the name of this CRM State Senate.
-	*
-	* @return the name of this CRM State Senate
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmStateSenate.getName();
-	}
-
-	/**
-	* Returns the number of this CRM State Senate.
-	*
-	* @return the number of this CRM State Senate
-	*/
-	@Override
-	public java.lang.String getNumber() {
-		return _crmStateSenate.getNumber();
-	}
-
-	/**
-	* Returns the user name of this CRM State Senate.
-	*
-	* @return the user name of this CRM State Senate
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmStateSenate.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM State Senate.
-	*
-	* @return the user uuid of this CRM State Senate
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmStateSenate.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM State Senate.
-	*
-	* @return the uuid of this CRM State Senate
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmStateSenate.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM State Senate.
-	*
-	* @return the zip code of this CRM State Senate
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmStateSenate.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmStateSenate.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmStateSenate.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM State Senate.
-	*
-	* @return the create date of this CRM State Senate
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmStateSenate.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM State Senate.
-	*
-	* @return the modified date of this CRM State Senate
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmStateSenate.getModifiedDate();
+	public int compareTo(CrmStateSenate crmStateSenate) {
+		return _crmStateSenate.compareTo(crmStateSenate);
 	}
 
 	/**
@@ -300,6 +165,16 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	}
 
 	/**
+	* Returns the create date of this CRM State Senate.
+	*
+	* @return the create date of this CRM State Senate
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmStateSenate.getCreateDate();
+	}
+
+	/**
 	* Returns the crm state senate ID of this CRM State Senate.
 	*
 	* @return the crm state senate ID of this CRM State Senate
@@ -307,6 +182,11 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	@Override
 	public long getCrmStateSenateId() {
 		return _crmStateSenate.getCrmStateSenateId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmStateSenate.getExpandoBridge();
 	}
 
 	/**
@@ -320,6 +200,36 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	}
 
 	/**
+	* Returns the modified date of this CRM State Senate.
+	*
+	* @return the modified date of this CRM State Senate
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmStateSenate.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM State Senate.
+	*
+	* @return the name of this CRM State Senate
+	*/
+	@Override
+	public String getName() {
+		return _crmStateSenate.getName();
+	}
+
+	/**
+	* Returns the number of this CRM State Senate.
+	*
+	* @return the number of this CRM State Senate
+	*/
+	@Override
+	public String getNumber() {
+		return _crmStateSenate.getNumber();
+	}
+
+	/**
 	* Returns the primary key of this CRM State Senate.
 	*
 	* @return the primary key of this CRM State Senate
@@ -327,6 +237,11 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	@Override
 	public long getPrimaryKey() {
 		return _crmStateSenate.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmStateSenate.getPrimaryKeyObj();
 	}
 
 	/**
@@ -337,6 +252,66 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	@Override
 	public long getUserId() {
 		return _crmStateSenate.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM State Senate.
+	*
+	* @return the user name of this CRM State Senate
+	*/
+	@Override
+	public String getUserName() {
+		return _crmStateSenate.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM State Senate.
+	*
+	* @return the user uuid of this CRM State Senate
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmStateSenate.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM State Senate.
+	*
+	* @return the uuid of this CRM State Senate
+	*/
+	@Override
+	public String getUuid() {
+		return _crmStateSenate.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM State Senate.
+	*
+	* @return the zip code of this CRM State Senate
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmStateSenate.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmStateSenate.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmStateSenate.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmStateSenate.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmStateSenate.isNew();
 	}
 
 	@Override
@@ -380,14 +355,14 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmStateSenate.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmStateSenate.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmStateSenate.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -421,7 +396,7 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param name the name of this CRM State Senate
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmStateSenate.setName(name);
 	}
 
@@ -436,7 +411,7 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param number the number of this CRM State Senate
 	*/
 	@Override
-	public void setNumber(java.lang.String number) {
+	public void setNumber(String number) {
 		_crmStateSenate.setNumber(number);
 	}
 
@@ -471,7 +446,7 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param userName the user name of this CRM State Senate
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmStateSenate.setUserName(userName);
 	}
 
@@ -481,7 +456,7 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param userUuid the user uuid of this CRM State Senate
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmStateSenate.setUserUuid(userUuid);
 	}
 
@@ -491,7 +466,7 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param uuid the uuid of this CRM State Senate
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmStateSenate.setUuid(uuid);
 	}
 
@@ -501,8 +476,33 @@ public class CrmStateSenateWrapper implements CrmStateSenate,
 	* @param zipCode the zip code of this CRM State Senate
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmStateSenate.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmStateSenate> toCacheModel() {
+		return _crmStateSenate.toCacheModel();
+	}
+
+	@Override
+	public CrmStateSenate toEscapedModel() {
+		return new CrmStateSenateWrapper(_crmStateSenate.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmStateSenate.toString();
+	}
+
+	@Override
+	public CrmStateSenate toUnescapedModel() {
+		return new CrmStateSenateWrapper(_crmStateSenate.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmStateSenate.toXmlString();
 	}
 
 	@Override

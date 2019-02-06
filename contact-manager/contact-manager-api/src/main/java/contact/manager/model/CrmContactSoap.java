@@ -70,7 +70,7 @@ public class CrmContactSoap implements Serializable {
 		soapModel.setPrimaryEmailAddress(model.getPrimaryEmailAddress());
 		soapModel.setAlternateContact(model.getAlternateContact());
 		soapModel.setAlternateEmail(model.getAlternateEmail());
-		soapModel.setIsVip(model.getIsVip());
+		soapModel.setIsVip(model.isIsVip());
 		soapModel.setFacebookId(model.getFacebookId());
 		soapModel.setTwitterHandle(model.getTwitterHandle());
 		soapModel.setLinkedInUrl(model.getLinkedInUrl());

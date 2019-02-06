@@ -96,7 +96,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 		attributes.put("primaryEmailAddress", getPrimaryEmailAddress());
 		attributes.put("alternateContact", getAlternateContact());
 		attributes.put("alternateEmail", getAlternateEmail());
-		attributes.put("isVip", getIsVip());
+		attributes.put("isVip", isIsVip());
 		attributes.put("facebookId", getFacebookId());
 		attributes.put("twitterHandle", getTwitterHandle());
 		attributes.put("linkedInUrl", getLinkedInUrl());
@@ -398,6 +398,131 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 		}
 	}
 
+	@Override
+	public Object clone() {
+		return new CrmContactWrapper((CrmContact)_crmContact.clone());
+	}
+
+	@Override
+	public int compareTo(CrmContact crmContact) {
+		return _crmContact.compareTo(crmContact);
+	}
+
+	/**
+	* Returns the alternate contact of this CRM Contact.
+	*
+	* @return the alternate contact of this CRM Contact
+	*/
+	@Override
+	public String getAlternateContact() {
+		return _crmContact.getAlternateContact();
+	}
+
+	/**
+	* Returns the alternate email of this CRM Contact.
+	*
+	* @return the alternate email of this CRM Contact
+	*/
+	@Override
+	public String getAlternateEmail() {
+		return _crmContact.getAlternateEmail();
+	}
+
+	/**
+	* Returns the company ID of this CRM Contact.
+	*
+	* @return the company ID of this CRM Contact
+	*/
+	@Override
+	public long getCompanyId() {
+		return _crmContact.getCompanyId();
+	}
+
+	/**
+	* Returns the constant contact ID of this CRM Contact.
+	*
+	* @return the constant contact ID of this CRM Contact
+	*/
+	@Override
+	public long getConstantContactId() {
+		return _crmContact.getConstantContactId();
+	}
+
+	/**
+	* Returns the create date of this CRM Contact.
+	*
+	* @return the create date of this CRM Contact
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmContact.getCreateDate();
+	}
+
+	/**
+	* Returns the crm contact ID of this CRM Contact.
+	*
+	* @return the crm contact ID of this CRM Contact
+	*/
+	@Override
+	public long getCrmContactId() {
+		return _crmContact.getCrmContactId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmContact.getExpandoBridge();
+	}
+
+	/**
+	* Returns the facebook ID of this CRM Contact.
+	*
+	* @return the facebook ID of this CRM Contact
+	*/
+	@Override
+	public String getFacebookId() {
+		return _crmContact.getFacebookId();
+	}
+
+	/**
+	* Returns the first name of this CRM Contact.
+	*
+	* @return the first name of this CRM Contact
+	*/
+	@Override
+	public String getFirstName() {
+		return _crmContact.getFirstName();
+	}
+
+	/**
+	* Returns the group ID of this CRM Contact.
+	*
+	* @return the group ID of this CRM Contact
+	*/
+	@Override
+	public long getGroupId() {
+		return _crmContact.getGroupId();
+	}
+
+	/**
+	* Returns the groups list of this CRM Contact.
+	*
+	* @return the groups list of this CRM Contact
+	*/
+	@Override
+	public String getGroupsList() {
+		return _crmContact.getGroupsList();
+	}
+
+	/**
+	* Returns the image file entry ID of this CRM Contact.
+	*
+	* @return the image file entry ID of this CRM Contact
+	*/
+	@Override
+	public long getImageFileEntryId() {
+		return _crmContact.getImageFileEntryId();
+	}
+
 	/**
 	* Returns the is vip of this CRM Contact.
 	*
@@ -406,6 +531,376 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	@Override
 	public boolean getIsVip() {
 		return _crmContact.getIsVip();
+	}
+
+	/**
+	* Returns the job title of this CRM Contact.
+	*
+	* @return the job title of this CRM Contact
+	*/
+	@Override
+	public String getJobTitle() {
+		return _crmContact.getJobTitle();
+	}
+
+	/**
+	* Returns the kiosk uuid of this CRM Contact.
+	*
+	* @return the kiosk uuid of this CRM Contact
+	*/
+	@Override
+	public String getKioskUuid() {
+		return _crmContact.getKioskUuid();
+	}
+
+	/**
+	* Returns the last name of this CRM Contact.
+	*
+	* @return the last name of this CRM Contact
+	*/
+	@Override
+	public String getLastName() {
+		return _crmContact.getLastName();
+	}
+
+	/**
+	* Returns the linked in url of this CRM Contact.
+	*
+	* @return the linked in url of this CRM Contact
+	*/
+	@Override
+	public String getLinkedInUrl() {
+		return _crmContact.getLinkedInUrl();
+	}
+
+	/**
+	* Returns the middle name of this CRM Contact.
+	*
+	* @return the middle name of this CRM Contact
+	*/
+	@Override
+	public String getMiddleName() {
+		return _crmContact.getMiddleName();
+	}
+
+	/**
+	* Returns the modified date of this CRM Contact.
+	*
+	* @return the modified date of this CRM Contact
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmContact.getModifiedDate();
+	}
+
+	/**
+	* Returns the organization of this CRM Contact.
+	*
+	* @return the organization of this CRM Contact
+	*/
+	@Override
+	public String getOrganization() {
+		return _crmContact.getOrganization();
+	}
+
+	/**
+	* Returns the prefix of this CRM Contact.
+	*
+	* @return the prefix of this CRM Contact
+	*/
+	@Override
+	public String getPrefix() {
+		return _crmContact.getPrefix();
+	}
+
+	/**
+	* Returns the primary address1 of this CRM Contact.
+	*
+	* @return the primary address1 of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddress1() {
+		return _crmContact.getPrimaryAddress1();
+	}
+
+	/**
+	* Returns the primary address2 of this CRM Contact.
+	*
+	* @return the primary address2 of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddress2() {
+		return _crmContact.getPrimaryAddress2();
+	}
+
+	/**
+	* Returns the primary address city of this CRM Contact.
+	*
+	* @return the primary address city of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddressCity() {
+		return _crmContact.getPrimaryAddressCity();
+	}
+
+	/**
+	* Returns the primary address country of this CRM Contact.
+	*
+	* @return the primary address country of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddressCountry() {
+		return _crmContact.getPrimaryAddressCountry();
+	}
+
+	/**
+	* Returns the primary address county of this CRM Contact.
+	*
+	* @return the primary address county of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddressCounty() {
+		return _crmContact.getPrimaryAddressCounty();
+	}
+
+	/**
+	* Returns the primary address state of this CRM Contact.
+	*
+	* @return the primary address state of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddressState() {
+		return _crmContact.getPrimaryAddressState();
+	}
+
+	/**
+	* Returns the primary address zip of this CRM Contact.
+	*
+	* @return the primary address zip of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryAddressZip() {
+		return _crmContact.getPrimaryAddressZip();
+	}
+
+	/**
+	* Returns the primary cell of this CRM Contact.
+	*
+	* @return the primary cell of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryCell() {
+		return _crmContact.getPrimaryCell();
+	}
+
+	/**
+	* Returns the primary email address of this CRM Contact.
+	*
+	* @return the primary email address of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryEmailAddress() {
+		return _crmContact.getPrimaryEmailAddress();
+	}
+
+	/**
+	* Returns the primary fax of this CRM Contact.
+	*
+	* @return the primary fax of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryFax() {
+		return _crmContact.getPrimaryFax();
+	}
+
+	/**
+	* Returns the primary key of this CRM Contact.
+	*
+	* @return the primary key of this CRM Contact
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _crmContact.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmContact.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the primary phone of this CRM Contact.
+	*
+	* @return the primary phone of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryPhone() {
+		return _crmContact.getPrimaryPhone();
+	}
+
+	/**
+	* Returns the primary phone extension of this CRM Contact.
+	*
+	* @return the primary phone extension of this CRM Contact
+	*/
+	@Override
+	public String getPrimaryPhoneExtension() {
+		return _crmContact.getPrimaryPhoneExtension();
+	}
+
+	/**
+	* Returns the salutation of this CRM Contact.
+	*
+	* @return the salutation of this CRM Contact
+	*/
+	@Override
+	public String getSalutation() {
+		return _crmContact.getSalutation();
+	}
+
+	/**
+	* Returns the secondary address1 of this CRM Contact.
+	*
+	* @return the secondary address1 of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddress1() {
+		return _crmContact.getSecondaryAddress1();
+	}
+
+	/**
+	* Returns the secondary address2 of this CRM Contact.
+	*
+	* @return the secondary address2 of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddress2() {
+		return _crmContact.getSecondaryAddress2();
+	}
+
+	/**
+	* Returns the secondary address city of this CRM Contact.
+	*
+	* @return the secondary address city of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddressCity() {
+		return _crmContact.getSecondaryAddressCity();
+	}
+
+	/**
+	* Returns the secondary address country of this CRM Contact.
+	*
+	* @return the secondary address country of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddressCountry() {
+		return _crmContact.getSecondaryAddressCountry();
+	}
+
+	/**
+	* Returns the secondary address county of this CRM Contact.
+	*
+	* @return the secondary address county of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddressCounty() {
+		return _crmContact.getSecondaryAddressCounty();
+	}
+
+	/**
+	* Returns the secondary address state of this CRM Contact.
+	*
+	* @return the secondary address state of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddressState() {
+		return _crmContact.getSecondaryAddressState();
+	}
+
+	/**
+	* Returns the secondary address zip of this CRM Contact.
+	*
+	* @return the secondary address zip of this CRM Contact
+	*/
+	@Override
+	public String getSecondaryAddressZip() {
+		return _crmContact.getSecondaryAddressZip();
+	}
+
+	/**
+	* Returns the status of this CRM Contact.
+	*
+	* @return the status of this CRM Contact
+	*/
+	@Override
+	public String getStatus() {
+		return _crmContact.getStatus();
+	}
+
+	/**
+	* Returns the tags list of this CRM Contact.
+	*
+	* @return the tags list of this CRM Contact
+	*/
+	@Override
+	public String getTagsList() {
+		return _crmContact.getTagsList();
+	}
+
+	/**
+	* Returns the twitter handle of this CRM Contact.
+	*
+	* @return the twitter handle of this CRM Contact
+	*/
+	@Override
+	public String getTwitterHandle() {
+		return _crmContact.getTwitterHandle();
+	}
+
+	/**
+	* Returns the user ID of this CRM Contact.
+	*
+	* @return the user ID of this CRM Contact
+	*/
+	@Override
+	public long getUserId() {
+		return _crmContact.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Contact.
+	*
+	* @return the user name of this CRM Contact
+	*/
+	@Override
+	public String getUserName() {
+		return _crmContact.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Contact.
+	*
+	* @return the user uuid of this CRM Contact
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmContact.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Contact.
+	*
+	* @return the uuid of this CRM Contact
+	*/
+	@Override
+	public String getUuid() {
+		return _crmContact.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmContact.hashCode();
 	}
 
 	@Override
@@ -434,526 +929,6 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	}
 
 	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmContact.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmContact> toCacheModel() {
-		return _crmContact.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmContact toEscapedModel() {
-		return new CrmContactWrapper(_crmContact.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmContact toUnescapedModel() {
-		return new CrmContactWrapper(_crmContact.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmContact crmContact) {
-		return _crmContact.compareTo(crmContact);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmContact.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmContact.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
-		return new CrmContactWrapper((CrmContact)_crmContact.clone());
-	}
-
-	/**
-	* Returns the alternate contact of this CRM Contact.
-	*
-	* @return the alternate contact of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getAlternateContact() {
-		return _crmContact.getAlternateContact();
-	}
-
-	/**
-	* Returns the alternate email of this CRM Contact.
-	*
-	* @return the alternate email of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getAlternateEmail() {
-		return _crmContact.getAlternateEmail();
-	}
-
-	/**
-	* Returns the facebook ID of this CRM Contact.
-	*
-	* @return the facebook ID of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getFacebookId() {
-		return _crmContact.getFacebookId();
-	}
-
-	/**
-	* Returns the first name of this CRM Contact.
-	*
-	* @return the first name of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getFirstName() {
-		return _crmContact.getFirstName();
-	}
-
-	/**
-	* Returns the groups list of this CRM Contact.
-	*
-	* @return the groups list of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getGroupsList() {
-		return _crmContact.getGroupsList();
-	}
-
-	/**
-	* Returns the job title of this CRM Contact.
-	*
-	* @return the job title of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getJobTitle() {
-		return _crmContact.getJobTitle();
-	}
-
-	/**
-	* Returns the kiosk uuid of this CRM Contact.
-	*
-	* @return the kiosk uuid of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getKioskUuid() {
-		return _crmContact.getKioskUuid();
-	}
-
-	/**
-	* Returns the last name of this CRM Contact.
-	*
-	* @return the last name of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getLastName() {
-		return _crmContact.getLastName();
-	}
-
-	/**
-	* Returns the linked in url of this CRM Contact.
-	*
-	* @return the linked in url of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getLinkedInUrl() {
-		return _crmContact.getLinkedInUrl();
-	}
-
-	/**
-	* Returns the middle name of this CRM Contact.
-	*
-	* @return the middle name of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getMiddleName() {
-		return _crmContact.getMiddleName();
-	}
-
-	/**
-	* Returns the organization of this CRM Contact.
-	*
-	* @return the organization of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getOrganization() {
-		return _crmContact.getOrganization();
-	}
-
-	/**
-	* Returns the prefix of this CRM Contact.
-	*
-	* @return the prefix of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrefix() {
-		return _crmContact.getPrefix();
-	}
-
-	/**
-	* Returns the primary address1 of this CRM Contact.
-	*
-	* @return the primary address1 of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddress1() {
-		return _crmContact.getPrimaryAddress1();
-	}
-
-	/**
-	* Returns the primary address2 of this CRM Contact.
-	*
-	* @return the primary address2 of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddress2() {
-		return _crmContact.getPrimaryAddress2();
-	}
-
-	/**
-	* Returns the primary address city of this CRM Contact.
-	*
-	* @return the primary address city of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddressCity() {
-		return _crmContact.getPrimaryAddressCity();
-	}
-
-	/**
-	* Returns the primary address country of this CRM Contact.
-	*
-	* @return the primary address country of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddressCountry() {
-		return _crmContact.getPrimaryAddressCountry();
-	}
-
-	/**
-	* Returns the primary address county of this CRM Contact.
-	*
-	* @return the primary address county of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddressCounty() {
-		return _crmContact.getPrimaryAddressCounty();
-	}
-
-	/**
-	* Returns the primary address state of this CRM Contact.
-	*
-	* @return the primary address state of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddressState() {
-		return _crmContact.getPrimaryAddressState();
-	}
-
-	/**
-	* Returns the primary address zip of this CRM Contact.
-	*
-	* @return the primary address zip of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryAddressZip() {
-		return _crmContact.getPrimaryAddressZip();
-	}
-
-	/**
-	* Returns the primary cell of this CRM Contact.
-	*
-	* @return the primary cell of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryCell() {
-		return _crmContact.getPrimaryCell();
-	}
-
-	/**
-	* Returns the primary email address of this CRM Contact.
-	*
-	* @return the primary email address of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryEmailAddress() {
-		return _crmContact.getPrimaryEmailAddress();
-	}
-
-	/**
-	* Returns the primary fax of this CRM Contact.
-	*
-	* @return the primary fax of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryFax() {
-		return _crmContact.getPrimaryFax();
-	}
-
-	/**
-	* Returns the primary phone of this CRM Contact.
-	*
-	* @return the primary phone of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryPhone() {
-		return _crmContact.getPrimaryPhone();
-	}
-
-	/**
-	* Returns the primary phone extension of this CRM Contact.
-	*
-	* @return the primary phone extension of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getPrimaryPhoneExtension() {
-		return _crmContact.getPrimaryPhoneExtension();
-	}
-
-	/**
-	* Returns the salutation of this CRM Contact.
-	*
-	* @return the salutation of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSalutation() {
-		return _crmContact.getSalutation();
-	}
-
-	/**
-	* Returns the secondary address1 of this CRM Contact.
-	*
-	* @return the secondary address1 of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddress1() {
-		return _crmContact.getSecondaryAddress1();
-	}
-
-	/**
-	* Returns the secondary address2 of this CRM Contact.
-	*
-	* @return the secondary address2 of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddress2() {
-		return _crmContact.getSecondaryAddress2();
-	}
-
-	/**
-	* Returns the secondary address city of this CRM Contact.
-	*
-	* @return the secondary address city of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddressCity() {
-		return _crmContact.getSecondaryAddressCity();
-	}
-
-	/**
-	* Returns the secondary address country of this CRM Contact.
-	*
-	* @return the secondary address country of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddressCountry() {
-		return _crmContact.getSecondaryAddressCountry();
-	}
-
-	/**
-	* Returns the secondary address county of this CRM Contact.
-	*
-	* @return the secondary address county of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddressCounty() {
-		return _crmContact.getSecondaryAddressCounty();
-	}
-
-	/**
-	* Returns the secondary address state of this CRM Contact.
-	*
-	* @return the secondary address state of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddressState() {
-		return _crmContact.getSecondaryAddressState();
-	}
-
-	/**
-	* Returns the secondary address zip of this CRM Contact.
-	*
-	* @return the secondary address zip of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getSecondaryAddressZip() {
-		return _crmContact.getSecondaryAddressZip();
-	}
-
-	/**
-	* Returns the status of this CRM Contact.
-	*
-	* @return the status of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getStatus() {
-		return _crmContact.getStatus();
-	}
-
-	/**
-	* Returns the tags list of this CRM Contact.
-	*
-	* @return the tags list of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getTagsList() {
-		return _crmContact.getTagsList();
-	}
-
-	/**
-	* Returns the twitter handle of this CRM Contact.
-	*
-	* @return the twitter handle of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getTwitterHandle() {
-		return _crmContact.getTwitterHandle();
-	}
-
-	/**
-	* Returns the user name of this CRM Contact.
-	*
-	* @return the user name of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmContact.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Contact.
-	*
-	* @return the user uuid of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmContact.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Contact.
-	*
-	* @return the uuid of this CRM Contact
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmContact.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmContact.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmContact.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Contact.
-	*
-	* @return the create date of this CRM Contact
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmContact.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Contact.
-	*
-	* @return the modified date of this CRM Contact
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmContact.getModifiedDate();
-	}
-
-	/**
-	* Returns the company ID of this CRM Contact.
-	*
-	* @return the company ID of this CRM Contact
-	*/
-	@Override
-	public long getCompanyId() {
-		return _crmContact.getCompanyId();
-	}
-
-	/**
-	* Returns the constant contact ID of this CRM Contact.
-	*
-	* @return the constant contact ID of this CRM Contact
-	*/
-	@Override
-	public long getConstantContactId() {
-		return _crmContact.getConstantContactId();
-	}
-
-	/**
-	* Returns the crm contact ID of this CRM Contact.
-	*
-	* @return the crm contact ID of this CRM Contact
-	*/
-	@Override
-	public long getCrmContactId() {
-		return _crmContact.getCrmContactId();
-	}
-
-	/**
-	* Returns the group ID of this CRM Contact.
-	*
-	* @return the group ID of this CRM Contact
-	*/
-	@Override
-	public long getGroupId() {
-		return _crmContact.getGroupId();
-	}
-
-	/**
-	* Returns the image file entry ID of this CRM Contact.
-	*
-	* @return the image file entry ID of this CRM Contact
-	*/
-	@Override
-	public long getImageFileEntryId() {
-		return _crmContact.getImageFileEntryId();
-	}
-
-	/**
-	* Returns the primary key of this CRM Contact.
-	*
-	* @return the primary key of this CRM Contact
-	*/
-	@Override
-	public long getPrimaryKey() {
-		return _crmContact.getPrimaryKey();
-	}
-
-	/**
-	* Returns the user ID of this CRM Contact.
-	*
-	* @return the user ID of this CRM Contact
-	*/
-	@Override
-	public long getUserId() {
-		return _crmContact.getUserId();
-	}
-
-	@Override
 	public void persist() {
 		_crmContact.persist();
 	}
@@ -964,7 +939,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param alternateContact the alternate contact of this CRM Contact
 	*/
 	@Override
-	public void setAlternateContact(java.lang.String alternateContact) {
+	public void setAlternateContact(String alternateContact) {
 		_crmContact.setAlternateContact(alternateContact);
 	}
 
@@ -974,7 +949,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param alternateEmail the alternate email of this CRM Contact
 	*/
 	@Override
-	public void setAlternateEmail(java.lang.String alternateEmail) {
+	public void setAlternateEmail(String alternateEmail) {
 		_crmContact.setAlternateEmail(alternateEmail);
 	}
 
@@ -1024,14 +999,14 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmContact.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmContact.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmContact.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -1045,7 +1020,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param facebookId the facebook ID of this CRM Contact
 	*/
 	@Override
-	public void setFacebookId(java.lang.String facebookId) {
+	public void setFacebookId(String facebookId) {
 		_crmContact.setFacebookId(facebookId);
 	}
 
@@ -1055,7 +1030,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param firstName the first name of this CRM Contact
 	*/
 	@Override
-	public void setFirstName(java.lang.String firstName) {
+	public void setFirstName(String firstName) {
 		_crmContact.setFirstName(firstName);
 	}
 
@@ -1075,7 +1050,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param groupsList the groups list of this CRM Contact
 	*/
 	@Override
-	public void setGroupsList(java.lang.String groupsList) {
+	public void setGroupsList(String groupsList) {
 		_crmContact.setGroupsList(groupsList);
 	}
 
@@ -1105,7 +1080,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param jobTitle the job title of this CRM Contact
 	*/
 	@Override
-	public void setJobTitle(java.lang.String jobTitle) {
+	public void setJobTitle(String jobTitle) {
 		_crmContact.setJobTitle(jobTitle);
 	}
 
@@ -1115,7 +1090,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param kioskUuid the kiosk uuid of this CRM Contact
 	*/
 	@Override
-	public void setKioskUuid(java.lang.String kioskUuid) {
+	public void setKioskUuid(String kioskUuid) {
 		_crmContact.setKioskUuid(kioskUuid);
 	}
 
@@ -1125,7 +1100,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param lastName the last name of this CRM Contact
 	*/
 	@Override
-	public void setLastName(java.lang.String lastName) {
+	public void setLastName(String lastName) {
 		_crmContact.setLastName(lastName);
 	}
 
@@ -1135,7 +1110,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param linkedInUrl the linked in url of this CRM Contact
 	*/
 	@Override
-	public void setLinkedInUrl(java.lang.String linkedInUrl) {
+	public void setLinkedInUrl(String linkedInUrl) {
 		_crmContact.setLinkedInUrl(linkedInUrl);
 	}
 
@@ -1145,7 +1120,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param middleName the middle name of this CRM Contact
 	*/
 	@Override
-	public void setMiddleName(java.lang.String middleName) {
+	public void setMiddleName(String middleName) {
 		_crmContact.setMiddleName(middleName);
 	}
 
@@ -1170,7 +1145,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param organization the organization of this CRM Contact
 	*/
 	@Override
-	public void setOrganization(java.lang.String organization) {
+	public void setOrganization(String organization) {
 		_crmContact.setOrganization(organization);
 	}
 
@@ -1180,7 +1155,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param prefix the prefix of this CRM Contact
 	*/
 	@Override
-	public void setPrefix(java.lang.String prefix) {
+	public void setPrefix(String prefix) {
 		_crmContact.setPrefix(prefix);
 	}
 
@@ -1190,7 +1165,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddress1 the primary address1 of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddress1(java.lang.String primaryAddress1) {
+	public void setPrimaryAddress1(String primaryAddress1) {
 		_crmContact.setPrimaryAddress1(primaryAddress1);
 	}
 
@@ -1200,7 +1175,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddress2 the primary address2 of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddress2(java.lang.String primaryAddress2) {
+	public void setPrimaryAddress2(String primaryAddress2) {
 		_crmContact.setPrimaryAddress2(primaryAddress2);
 	}
 
@@ -1210,7 +1185,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddressCity the primary address city of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddressCity(java.lang.String primaryAddressCity) {
+	public void setPrimaryAddressCity(String primaryAddressCity) {
 		_crmContact.setPrimaryAddressCity(primaryAddressCity);
 	}
 
@@ -1220,7 +1195,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddressCountry the primary address country of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddressCountry(java.lang.String primaryAddressCountry) {
+	public void setPrimaryAddressCountry(String primaryAddressCountry) {
 		_crmContact.setPrimaryAddressCountry(primaryAddressCountry);
 	}
 
@@ -1230,7 +1205,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddressCounty the primary address county of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddressCounty(java.lang.String primaryAddressCounty) {
+	public void setPrimaryAddressCounty(String primaryAddressCounty) {
 		_crmContact.setPrimaryAddressCounty(primaryAddressCounty);
 	}
 
@@ -1240,7 +1215,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddressState the primary address state of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddressState(java.lang.String primaryAddressState) {
+	public void setPrimaryAddressState(String primaryAddressState) {
 		_crmContact.setPrimaryAddressState(primaryAddressState);
 	}
 
@@ -1250,7 +1225,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryAddressZip the primary address zip of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryAddressZip(java.lang.String primaryAddressZip) {
+	public void setPrimaryAddressZip(String primaryAddressZip) {
 		_crmContact.setPrimaryAddressZip(primaryAddressZip);
 	}
 
@@ -1260,7 +1235,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryCell the primary cell of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryCell(java.lang.String primaryCell) {
+	public void setPrimaryCell(String primaryCell) {
 		_crmContact.setPrimaryCell(primaryCell);
 	}
 
@@ -1270,7 +1245,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryEmailAddress the primary email address of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryEmailAddress(java.lang.String primaryEmailAddress) {
+	public void setPrimaryEmailAddress(String primaryEmailAddress) {
 		_crmContact.setPrimaryEmailAddress(primaryEmailAddress);
 	}
 
@@ -1280,7 +1255,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryFax the primary fax of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryFax(java.lang.String primaryFax) {
+	public void setPrimaryFax(String primaryFax) {
 		_crmContact.setPrimaryFax(primaryFax);
 	}
 
@@ -1305,7 +1280,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryPhone the primary phone of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryPhone(java.lang.String primaryPhone) {
+	public void setPrimaryPhone(String primaryPhone) {
 		_crmContact.setPrimaryPhone(primaryPhone);
 	}
 
@@ -1315,7 +1290,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param primaryPhoneExtension the primary phone extension of this CRM Contact
 	*/
 	@Override
-	public void setPrimaryPhoneExtension(java.lang.String primaryPhoneExtension) {
+	public void setPrimaryPhoneExtension(String primaryPhoneExtension) {
 		_crmContact.setPrimaryPhoneExtension(primaryPhoneExtension);
 	}
 
@@ -1325,7 +1300,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param salutation the salutation of this CRM Contact
 	*/
 	@Override
-	public void setSalutation(java.lang.String salutation) {
+	public void setSalutation(String salutation) {
 		_crmContact.setSalutation(salutation);
 	}
 
@@ -1335,7 +1310,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddress1 the secondary address1 of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddress1(java.lang.String secondaryAddress1) {
+	public void setSecondaryAddress1(String secondaryAddress1) {
 		_crmContact.setSecondaryAddress1(secondaryAddress1);
 	}
 
@@ -1345,7 +1320,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddress2 the secondary address2 of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddress2(java.lang.String secondaryAddress2) {
+	public void setSecondaryAddress2(String secondaryAddress2) {
 		_crmContact.setSecondaryAddress2(secondaryAddress2);
 	}
 
@@ -1355,7 +1330,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddressCity the secondary address city of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddressCity(java.lang.String secondaryAddressCity) {
+	public void setSecondaryAddressCity(String secondaryAddressCity) {
 		_crmContact.setSecondaryAddressCity(secondaryAddressCity);
 	}
 
@@ -1365,8 +1340,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddressCountry the secondary address country of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddressCountry(
-		java.lang.String secondaryAddressCountry) {
+	public void setSecondaryAddressCountry(String secondaryAddressCountry) {
 		_crmContact.setSecondaryAddressCountry(secondaryAddressCountry);
 	}
 
@@ -1376,8 +1350,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddressCounty the secondary address county of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddressCounty(
-		java.lang.String secondaryAddressCounty) {
+	public void setSecondaryAddressCounty(String secondaryAddressCounty) {
 		_crmContact.setSecondaryAddressCounty(secondaryAddressCounty);
 	}
 
@@ -1387,7 +1360,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddressState the secondary address state of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddressState(java.lang.String secondaryAddressState) {
+	public void setSecondaryAddressState(String secondaryAddressState) {
 		_crmContact.setSecondaryAddressState(secondaryAddressState);
 	}
 
@@ -1397,7 +1370,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param secondaryAddressZip the secondary address zip of this CRM Contact
 	*/
 	@Override
-	public void setSecondaryAddressZip(java.lang.String secondaryAddressZip) {
+	public void setSecondaryAddressZip(String secondaryAddressZip) {
 		_crmContact.setSecondaryAddressZip(secondaryAddressZip);
 	}
 
@@ -1407,7 +1380,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param status the status of this CRM Contact
 	*/
 	@Override
-	public void setStatus(java.lang.String status) {
+	public void setStatus(String status) {
 		_crmContact.setStatus(status);
 	}
 
@@ -1417,7 +1390,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param tagsList the tags list of this CRM Contact
 	*/
 	@Override
-	public void setTagsList(java.lang.String tagsList) {
+	public void setTagsList(String tagsList) {
 		_crmContact.setTagsList(tagsList);
 	}
 
@@ -1427,7 +1400,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param twitterHandle the twitter handle of this CRM Contact
 	*/
 	@Override
-	public void setTwitterHandle(java.lang.String twitterHandle) {
+	public void setTwitterHandle(String twitterHandle) {
 		_crmContact.setTwitterHandle(twitterHandle);
 	}
 
@@ -1447,7 +1420,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param userName the user name of this CRM Contact
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmContact.setUserName(userName);
 	}
 
@@ -1457,7 +1430,7 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param userUuid the user uuid of this CRM Contact
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmContact.setUserUuid(userUuid);
 	}
 
@@ -1467,8 +1440,33 @@ public class CrmContactWrapper implements CrmContact, ModelWrapper<CrmContact> {
 	* @param uuid the uuid of this CRM Contact
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmContact.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmContact> toCacheModel() {
+		return _crmContact.toCacheModel();
+	}
+
+	@Override
+	public CrmContact toEscapedModel() {
+		return new CrmContactWrapper(_crmContact.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmContact.toString();
+	}
+
+	@Override
+	public CrmContact toUnescapedModel() {
+		return new CrmContactWrapper(_crmContact.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmContact.toXmlString();
 	}
 
 	@Override

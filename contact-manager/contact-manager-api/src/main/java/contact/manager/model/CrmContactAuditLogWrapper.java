@@ -159,59 +159,13 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmContactAuditLog.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmContactAuditLog.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmContactAuditLog.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmContactAuditLog.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmContactAuditLog> toCacheModel() {
-		return _crmContactAuditLog.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmContactAuditLog toEscapedModel() {
-		return new CrmContactAuditLogWrapper(_crmContactAuditLog.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmContactAuditLog toUnescapedModel() {
-		return new CrmContactAuditLogWrapper(_crmContactAuditLog.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(
-		contact.manager.model.CrmContactAuditLog crmContactAuditLog) {
-		return _crmContactAuditLog.compareTo(crmContactAuditLog);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmContactAuditLog.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmContactAuditLog.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmContactAuditLogWrapper((CrmContactAuditLog)_crmContactAuditLog.clone());
+	}
+
+	@Override
+	public int compareTo(CrmContactAuditLog crmContactAuditLog) {
+		return _crmContactAuditLog.compareTo(crmContactAuditLog);
 	}
 
 	/**
@@ -220,88 +174,8 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @return the action of this CRM Contact Audit Log
 	*/
 	@Override
-	public java.lang.String getAction() {
+	public String getAction() {
 		return _crmContactAuditLog.getAction();
-	}
-
-	/**
-	* Returns the new snapshot of this CRM Contact Audit Log.
-	*
-	* @return the new snapshot of this CRM Contact Audit Log
-	*/
-	@Override
-	public java.lang.String getNewSnapshot() {
-		return _crmContactAuditLog.getNewSnapshot();
-	}
-
-	/**
-	* Returns the old snapshot of this CRM Contact Audit Log.
-	*
-	* @return the old snapshot of this CRM Contact Audit Log
-	*/
-	@Override
-	public java.lang.String getOldSnapshot() {
-		return _crmContactAuditLog.getOldSnapshot();
-	}
-
-	/**
-	* Returns the user name of this CRM Contact Audit Log.
-	*
-	* @return the user name of this CRM Contact Audit Log
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmContactAuditLog.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Contact Audit Log.
-	*
-	* @return the user uuid of this CRM Contact Audit Log
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmContactAuditLog.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Contact Audit Log.
-	*
-	* @return the uuid of this CRM Contact Audit Log
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmContactAuditLog.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmContactAuditLog.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmContactAuditLog.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Contact Audit Log.
-	*
-	* @return the create date of this CRM Contact Audit Log
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmContactAuditLog.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Contact Audit Log.
-	*
-	* @return the modified date of this CRM Contact Audit Log
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmContactAuditLog.getModifiedDate();
 	}
 
 	/**
@@ -325,6 +199,16 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	}
 
 	/**
+	* Returns the create date of this CRM Contact Audit Log.
+	*
+	* @return the create date of this CRM Contact Audit Log
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmContactAuditLog.getCreateDate();
+	}
+
+	/**
 	* Returns the crm contact audit log ID of this CRM Contact Audit Log.
 	*
 	* @return the crm contact audit log ID of this CRM Contact Audit Log
@@ -344,6 +228,11 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 		return _crmContactAuditLog.getCrmContactId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmContactAuditLog.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this CRM Contact Audit Log.
 	*
@@ -352,6 +241,36 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public long getGroupId() {
 		return _crmContactAuditLog.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this CRM Contact Audit Log.
+	*
+	* @return the modified date of this CRM Contact Audit Log
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmContactAuditLog.getModifiedDate();
+	}
+
+	/**
+	* Returns the new snapshot of this CRM Contact Audit Log.
+	*
+	* @return the new snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public String getNewSnapshot() {
+		return _crmContactAuditLog.getNewSnapshot();
+	}
+
+	/**
+	* Returns the old snapshot of this CRM Contact Audit Log.
+	*
+	* @return the old snapshot of this CRM Contact Audit Log
+	*/
+	@Override
+	public String getOldSnapshot() {
+		return _crmContactAuditLog.getOldSnapshot();
 	}
 
 	/**
@@ -364,6 +283,11 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 		return _crmContactAuditLog.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmContactAuditLog.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this CRM Contact Audit Log.
 	*
@@ -372,6 +296,56 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	@Override
 	public long getUserId() {
 		return _crmContactAuditLog.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Contact Audit Log.
+	*
+	* @return the user name of this CRM Contact Audit Log
+	*/
+	@Override
+	public String getUserName() {
+		return _crmContactAuditLog.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Contact Audit Log.
+	*
+	* @return the user uuid of this CRM Contact Audit Log
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmContactAuditLog.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Contact Audit Log.
+	*
+	* @return the uuid of this CRM Contact Audit Log
+	*/
+	@Override
+	public String getUuid() {
+		return _crmContactAuditLog.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmContactAuditLog.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmContactAuditLog.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmContactAuditLog.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmContactAuditLog.isNew();
 	}
 
 	@Override
@@ -385,7 +359,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param action the action of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setAction(java.lang.String action) {
+	public void setAction(String action) {
 		_crmContactAuditLog.setAction(action);
 	}
 
@@ -445,14 +419,14 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmContactAuditLog.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmContactAuditLog.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmContactAuditLog.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -491,7 +465,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param newSnapshot the new snapshot of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setNewSnapshot(java.lang.String newSnapshot) {
+	public void setNewSnapshot(String newSnapshot) {
 		_crmContactAuditLog.setNewSnapshot(newSnapshot);
 	}
 
@@ -501,7 +475,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param oldSnapshot the old snapshot of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setOldSnapshot(java.lang.String oldSnapshot) {
+	public void setOldSnapshot(String oldSnapshot) {
 		_crmContactAuditLog.setOldSnapshot(oldSnapshot);
 	}
 
@@ -536,7 +510,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param userName the user name of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmContactAuditLog.setUserName(userName);
 	}
 
@@ -546,7 +520,7 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param userUuid the user uuid of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmContactAuditLog.setUserUuid(userUuid);
 	}
 
@@ -556,8 +530,33 @@ public class CrmContactAuditLogWrapper implements CrmContactAuditLog,
 	* @param uuid the uuid of this CRM Contact Audit Log
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmContactAuditLog.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmContactAuditLog> toCacheModel() {
+		return _crmContactAuditLog.toCacheModel();
+	}
+
+	@Override
+	public CrmContactAuditLog toEscapedModel() {
+		return new CrmContactAuditLogWrapper(_crmContactAuditLog.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmContactAuditLog.toString();
+	}
+
+	@Override
+	public CrmContactAuditLog toUnescapedModel() {
+		return new CrmContactAuditLogWrapper(_crmContactAuditLog.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmContactAuditLog.toXmlString();
 	}
 
 	@Override

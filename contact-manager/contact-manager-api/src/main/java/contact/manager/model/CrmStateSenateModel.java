@@ -292,19 +292,19 @@ public interface CrmStateSenateModel extends BaseModel<CrmStateSenate>,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmStateSenate crmStateSenate);
+	public int compareTo(CrmStateSenate crmStateSenate);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmStateSenate> toCacheModel();
+	public CacheModel<CrmStateSenate> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmStateSenate toEscapedModel();
+	public CrmStateSenate toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmStateSenate toUnescapedModel();
+	public CrmStateSenate toUnescapedModel();
 
 	@Override
 	public String toString();

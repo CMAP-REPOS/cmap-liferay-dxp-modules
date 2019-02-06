@@ -293,20 +293,19 @@ public interface CrmCountyCommissionerModel extends BaseModel<CrmCountyCommissio
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		contact.manager.model.CrmCountyCommissioner crmCountyCommissioner);
+	public int compareTo(CrmCountyCommissioner crmCountyCommissioner);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmCountyCommissioner> toCacheModel();
+	public CacheModel<CrmCountyCommissioner> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmCountyCommissioner toEscapedModel();
+	public CrmCountyCommissioner toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmCountyCommissioner toUnescapedModel();
+	public CrmCountyCommissioner toUnescapedModel();
 
 	@Override
 	public String toString();

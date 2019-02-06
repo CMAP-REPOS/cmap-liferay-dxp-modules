@@ -63,29 +63,6 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmOutreachLogLocalServiceUtil} to access the CRM Outreach Log local service. Add custom service methods to {@link contact.manager.service.impl.CrmOutreachLogLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM Outreach Log to the database. Also notifies the appropriate model listeners.
@@ -96,12 +73,15 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmOutreachLog addCrmOutreachLog(CrmOutreachLog crmOutreachLog);
 
+	public int countByCrmContactIdId(long crmContactId);
+
 	/**
 	* Creates a new CRM Outreach Log with the primary key. Does not add the CRM Outreach Log to the database.
 	*
 	* @param crmOutreachLogId the primary key for the new CRM Outreach Log
 	* @return the new CRM Outreach Log
 	*/
+	@Transactional(enabled = false)
 	public CrmOutreachLog createCrmOutreachLog(long crmOutreachLogId);
 
 	/**
@@ -124,68 +104,14 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	public CrmOutreachLog deleteCrmOutreachLog(long crmOutreachLogId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmOutreachLog fetchCrmOutreachLog(long crmOutreachLogId);
-
 	/**
-	* Returns the CRM Outreach Log matching the UUID and group.
-	*
-	* @param uuid the CRM Outreach Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmOutreachLog fetchCrmOutreachLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
-
-	/**
-	* Returns the CRM Outreach Log with the primary key.
-	*
-	* @param crmOutreachLogId the primary key of the CRM Outreach Log
-	* @return the CRM Outreach Log
-	* @throws PortalException if a CRM Outreach Log with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmOutreachLog getCrmOutreachLog(long crmOutreachLogId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the CRM Outreach Log matching the UUID and group.
-	*
-	* @param uuid the CRM Outreach Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Outreach Log
-	* @throws PortalException if a matching CRM Outreach Log could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmOutreachLog getCrmOutreachLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM Outreach Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmOutreachLog the CRM Outreach Log
-	* @return the CRM Outreach Log that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmOutreachLog updateCrmOutreachLog(CrmOutreachLog crmOutreachLog);
-
-	public int countByCrmContactIdId(long crmContactId);
-
-	/**
-	* Returns the number of CRM Outreach Logs.
-	*
-	* @return the number of CRM Outreach Logs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmOutreachLogsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -226,6 +152,38 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmOutreachLog fetchCrmOutreachLog(long crmOutreachLogId);
+
+	/**
+	* Returns the CRM Outreach Log matching the UUID and group.
+	*
+	* @param uuid the CRM Outreach Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmOutreachLog fetchCrmOutreachLogByUuidAndGroupId(String uuid,
+		long groupId);
+
 	public List<CrmOutreachLog> findByCrmContactId(long crmContactId)
 		throws SystemException;
 
@@ -235,6 +193,32 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	public List<CrmOutreachLog> findByCrmContactId(long crmContactId,
 		int start, int end, OrderByComparator<CrmOutreachLog> orderByComparator)
 		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM Outreach Log with the primary key.
+	*
+	* @param crmOutreachLogId the primary key of the CRM Outreach Log
+	* @return the CRM Outreach Log
+	* @throws PortalException if a CRM Outreach Log with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmOutreachLog getCrmOutreachLog(long crmOutreachLogId)
+		throws PortalException;
+
+	/**
+	* Returns the CRM Outreach Log matching the UUID and group.
+	*
+	* @param uuid the CRM Outreach Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Outreach Log
+	* @throws PortalException if a matching CRM Outreach Log could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmOutreachLog getCrmOutreachLogByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the CRM Outreach Logs.
@@ -259,7 +243,7 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmOutreachLog> getCrmOutreachLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM Outreach Logs matching the UUID and company.
@@ -273,24 +257,42 @@ public interface CrmOutreachLogLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmOutreachLog> getCrmOutreachLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmOutreachLog> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Outreach Logs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Outreach Logs
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmOutreachLogsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM Outreach Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmOutreachLog the CRM Outreach Log
+	* @return the CRM Outreach Log that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmOutreachLog updateCrmOutreachLog(CrmOutreachLog crmOutreachLog);
 }

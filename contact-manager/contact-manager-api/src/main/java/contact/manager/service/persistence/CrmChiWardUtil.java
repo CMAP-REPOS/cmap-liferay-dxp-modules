@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmChiWard;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -117,7 +118,7 @@ public class CrmChiWardUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid(java.lang.String uuid) {
+	public static List<CrmChiWard> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +134,7 @@ public class CrmChiWardUtil {
 	* @param end the upper bound of the range of CRM Chi Wards (not inclusive)
 	* @return the range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmChiWard> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +151,8 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmChiWard> orderByComparator) {
+	public static List<CrmChiWard> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,8 +170,8 @@ public class CrmChiWardUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmChiWard> orderByComparator,
+	public static List<CrmChiWard> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmChiWard> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -186,7 +186,7 @@ public class CrmChiWardUtil {
 	* @return the first matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByUuid_First(java.lang.String uuid,
+	public static CrmChiWard findByUuid_First(String uuid,
 		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -199,7 +199,7 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUuid_First(java.lang.String uuid,
+	public static CrmChiWard fetchByUuid_First(String uuid,
 		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class CrmChiWardUtil {
 	* @return the last matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByUuid_Last(java.lang.String uuid,
+	public static CrmChiWard findByUuid_Last(String uuid,
 		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -225,7 +225,7 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUuid_Last(java.lang.String uuid,
+	public static CrmChiWard fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -240,7 +240,7 @@ public class CrmChiWardUtil {
 	* @throws NoSuchCrmChiWardException if a CRM Chi Ward with the primary key could not be found
 	*/
 	public static CrmChiWard[] findByUuid_PrevAndNext(long crmChiWardId,
-		java.lang.String uuid, OrderByComparator<CrmChiWard> orderByComparator)
+		String uuid, OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmChiWardId, uuid, orderByComparator);
@@ -251,7 +251,7 @@ public class CrmChiWardUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +261,7 @@ public class CrmChiWardUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Chi Wards
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,7 +273,7 @@ public class CrmChiWardUtil {
 	* @return the matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmChiWard findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -285,7 +285,7 @@ public class CrmChiWardUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmChiWard fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -297,7 +297,7 @@ public class CrmChiWardUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmChiWard fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -309,7 +309,7 @@ public class CrmChiWardUtil {
 	* @param groupId the group ID
 	* @return the CRM Chi Ward that was removed
 	*/
-	public static CrmChiWard removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmChiWard removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -321,7 +321,7 @@ public class CrmChiWardUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Chi Wards
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -332,8 +332,7 @@ public class CrmChiWardUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmChiWard> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -350,8 +349,8 @@ public class CrmChiWardUtil {
 	* @param end the upper bound of the range of CRM Chi Wards (not inclusive)
 	* @return the range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmChiWard> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -369,9 +368,8 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmChiWard> orderByComparator) {
+	public static List<CrmChiWard> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -391,9 +389,8 @@ public class CrmChiWardUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmChiWard> orderByComparator,
+	public static List<CrmChiWard> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmChiWard> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -409,8 +406,8 @@ public class CrmChiWardUtil {
 	* @return the first matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmChiWard> orderByComparator)
+	public static CrmChiWard findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -424,8 +421,8 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmChiWard> orderByComparator) {
+	public static CrmChiWard fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,8 +436,8 @@ public class CrmChiWardUtil {
 	* @return the last matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmChiWard> orderByComparator)
+	public static CrmChiWard findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -454,8 +451,8 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmChiWard> orderByComparator) {
+	public static CrmChiWard fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +468,7 @@ public class CrmChiWardUtil {
 	* @throws NoSuchCrmChiWardException if a CRM Chi Ward with the primary key could not be found
 	*/
 	public static CrmChiWard[] findByUuid_C_PrevAndNext(long crmChiWardId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence()
@@ -485,7 +482,7 @@ public class CrmChiWardUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -496,7 +493,7 @@ public class CrmChiWardUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Chi Wards
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -506,7 +503,7 @@ public class CrmChiWardUtil {
 	* @param zipCode the zip code
 	* @return the matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByZipCode(java.lang.String zipCode) {
+	public static List<CrmChiWard> findByZipCode(String zipCode) {
 		return getPersistence().findByZipCode(zipCode);
 	}
 
@@ -522,8 +519,8 @@ public class CrmChiWardUtil {
 	* @param end the upper bound of the range of CRM Chi Wards (not inclusive)
 	* @return the range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByZipCode(java.lang.String zipCode,
-		int start, int end) {
+	public static List<CrmChiWard> findByZipCode(String zipCode, int start,
+		int end) {
 		return getPersistence().findByZipCode(zipCode, start, end);
 	}
 
@@ -540,8 +537,8 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmChiWard> orderByComparator) {
+	public static List<CrmChiWard> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator);
 	}
@@ -560,8 +557,8 @@ public class CrmChiWardUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Chi Wards
 	*/
-	public static List<CrmChiWard> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmChiWard> orderByComparator,
+	public static List<CrmChiWard> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmChiWard> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator,
@@ -576,7 +573,7 @@ public class CrmChiWardUtil {
 	* @return the first matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByZipCode_First(java.lang.String zipCode,
+	public static CrmChiWard findByZipCode_First(String zipCode,
 		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
@@ -589,7 +586,7 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByZipCode_First(java.lang.String zipCode,
+	public static CrmChiWard fetchByZipCode_First(String zipCode,
 		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
 	}
@@ -602,7 +599,7 @@ public class CrmChiWardUtil {
 	* @return the last matching CRM Chi Ward
 	* @throws NoSuchCrmChiWardException if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard findByZipCode_Last(java.lang.String zipCode,
+	public static CrmChiWard findByZipCode_Last(String zipCode,
 		OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
@@ -615,7 +612,7 @@ public class CrmChiWardUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
 	*/
-	public static CrmChiWard fetchByZipCode_Last(java.lang.String zipCode,
+	public static CrmChiWard fetchByZipCode_Last(String zipCode,
 		OrderByComparator<CrmChiWard> orderByComparator) {
 		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
 	}
@@ -630,8 +627,7 @@ public class CrmChiWardUtil {
 	* @throws NoSuchCrmChiWardException if a CRM Chi Ward with the primary key could not be found
 	*/
 	public static CrmChiWard[] findByZipCode_PrevAndNext(long crmChiWardId,
-		java.lang.String zipCode,
-		OrderByComparator<CrmChiWard> orderByComparator)
+		String zipCode, OrderByComparator<CrmChiWard> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmChiWardException {
 		return getPersistence()
 				   .findByZipCode_PrevAndNext(crmChiWardId, zipCode,
@@ -643,7 +639,7 @@ public class CrmChiWardUtil {
 	*
 	* @param zipCode the zip code
 	*/
-	public static void removeByZipCode(java.lang.String zipCode) {
+	public static void removeByZipCode(String zipCode) {
 		getPersistence().removeByZipCode(zipCode);
 	}
 
@@ -653,7 +649,7 @@ public class CrmChiWardUtil {
 	* @param zipCode the zip code
 	* @return the number of matching CRM Chi Wards
 	*/
-	public static int countByZipCode(java.lang.String zipCode) {
+	public static int countByZipCode(String zipCode) {
 		return getPersistence().countByZipCode(zipCode);
 	}
 
@@ -805,7 +801,7 @@ public class CrmChiWardUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -813,6 +809,17 @@ public class CrmChiWardUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmChiWardPersistence, CrmChiWardPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmChiWardPersistence.class);
+	private static ServiceTracker<CrmChiWardPersistence, CrmChiWardPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmChiWardPersistence.class);
+
+		ServiceTracker<CrmChiWardPersistence, CrmChiWardPersistence> serviceTracker =
+			new ServiceTracker<CrmChiWardPersistence, CrmChiWardPersistence>(bundle.getBundleContext(),
+				CrmChiWardPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

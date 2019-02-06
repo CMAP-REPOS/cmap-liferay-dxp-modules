@@ -48,7 +48,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param uuid the uuid
 	* @return the matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid(java.lang.String uuid);
+	public java.util.List<CrmUsRep> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM US Reps where uuid = &#63;.
@@ -62,8 +62,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CrmUsRep> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM US Reps where uuid = &#63;.
@@ -78,8 +77,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmUsRep> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -96,8 +94,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmUsRep> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +106,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByUuid_First(java.lang.String uuid,
+	public CrmUsRep findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -120,7 +117,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUuid_First(java.lang.String uuid,
+	public CrmUsRep fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -131,7 +128,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByUuid_Last(java.lang.String uuid,
+	public CrmUsRep findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -142,7 +139,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUuid_Last(java.lang.String uuid,
+	public CrmUsRep fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -154,8 +151,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the previous, current, and next CRM US Rep
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
-	public CrmUsRep[] findByUuid_PrevAndNext(long crmUsRepId,
-		java.lang.String uuid,
+	public CrmUsRep[] findByUuid_PrevAndNext(long crmUsRepId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -164,7 +160,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM US Reps where uuid = &#63;.
@@ -172,7 +168,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param uuid the uuid
 	* @return the number of matching CRM US Reps
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmUsRepException} if it could not be found.
@@ -182,7 +178,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByUUID_G(java.lang.String uuid, long groupId)
+	public CrmUsRep findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmUsRepException;
 
 	/**
@@ -192,7 +188,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param groupId the group ID
 	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CrmUsRep fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,7 +198,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CrmUsRep fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -212,7 +208,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param groupId the group ID
 	* @return the CRM US Rep that was removed
 	*/
-	public CrmUsRep removeByUUID_G(java.lang.String uuid, long groupId)
+	public CrmUsRep removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmUsRepException;
 
 	/**
@@ -222,7 +218,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param groupId the group ID
 	* @return the number of matching CRM US Reps
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM US Reps where uuid = &#63; and companyId = &#63;.
@@ -231,8 +227,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param companyId the company ID
 	* @return the matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<CrmUsRep> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the CRM US Reps where uuid = &#63; and companyId = &#63;.
@@ -247,8 +242,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM US Reps where uuid = &#63; and companyId = &#63;.
@@ -264,8 +259,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -283,8 +278,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -297,7 +292,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmUsRep findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -309,7 +304,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmUsRep fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -321,7 +316,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmUsRep findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -333,7 +328,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmUsRep fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -346,8 +341,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the previous, current, and next CRM US Rep
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
-	public CrmUsRep[] findByUuid_C_PrevAndNext(long crmUsRepId,
-		java.lang.String uuid, long companyId,
+	public CrmUsRep[] findByUuid_C_PrevAndNext(long crmUsRepId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -357,7 +352,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM US Reps where uuid = &#63; and companyId = &#63;.
@@ -366,7 +361,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param companyId the company ID
 	* @return the number of matching CRM US Reps
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM US Reps where zipCode = &#63;.
@@ -374,7 +369,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param zipCode the zip code
 	* @return the matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByZipCode(java.lang.String zipCode);
+	public java.util.List<CrmUsRep> findByZipCode(String zipCode);
 
 	/**
 	* Returns a range of all the CRM US Reps where zipCode = &#63;.
@@ -388,8 +383,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end);
+	public java.util.List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the CRM US Reps where zipCode = &#63;.
@@ -404,8 +399,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end,
+	public java.util.List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -422,8 +417,8 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public java.util.List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end,
+	public java.util.List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -435,7 +430,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByZipCode_First(java.lang.String zipCode,
+	public CrmUsRep findByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -446,7 +441,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByZipCode_First(java.lang.String zipCode,
+	public CrmUsRep fetchByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -457,7 +452,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep findByZipCode_Last(java.lang.String zipCode,
+	public CrmUsRep findByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -468,7 +463,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public CrmUsRep fetchByZipCode_Last(java.lang.String zipCode,
+	public CrmUsRep fetchByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator);
 
 	/**
@@ -481,7 +476,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
 	public CrmUsRep[] findByZipCode_PrevAndNext(long crmUsRepId,
-		java.lang.String zipCode,
+		String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException;
 
@@ -490,7 +485,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	*
 	* @param zipCode the zip code
 	*/
-	public void removeByZipCode(java.lang.String zipCode);
+	public void removeByZipCode(String zipCode);
 
 	/**
 	* Returns the number of CRM US Reps where zipCode = &#63;.
@@ -498,7 +493,7 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	* @param zipCode the zip code
 	* @return the number of matching CRM US Reps
 	*/
-	public int countByZipCode(java.lang.String zipCode);
+	public int countByZipCode(String zipCode);
 
 	/**
 	* Caches the CRM US Rep in the entity cache if it is enabled.
@@ -620,5 +615,5 @@ public interface CrmUsRepPersistence extends BasePersistence<CrmUsRep> {
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

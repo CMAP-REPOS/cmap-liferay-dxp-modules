@@ -63,29 +63,6 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmStateRepLocalServiceUtil} to access the CRM State Rep local service. Add custom service methods to {@link contact.manager.service.impl.CrmStateRepLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM State Rep to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	* @param crmStateRepId the primary key for the new CRM State Rep
 	* @return the new CRM State Rep
 	*/
+	@Transactional(enabled = false)
 	public CrmStateRep createCrmStateRep(long crmStateRepId);
 
 	/**
@@ -124,66 +102,14 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	public CrmStateRep deleteCrmStateRep(long crmStateRepId)
 		throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateRep fetchCrmStateRep(long crmStateRepId);
-
 	/**
-	* Returns the CRM State Rep matching the UUID and group.
-	*
-	* @param uuid the CRM State Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateRep fetchCrmStateRepByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the CRM State Rep with the primary key.
-	*
-	* @param crmStateRepId the primary key of the CRM State Rep
-	* @return the CRM State Rep
-	* @throws PortalException if a CRM State Rep with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateRep getCrmStateRep(long crmStateRepId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Returns the CRM State Rep matching the UUID and group.
-	*
-	* @param uuid the CRM State Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Rep
-	* @throws PortalException if a matching CRM State Rep could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmStateRep getCrmStateRepByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM State Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmStateRep the CRM State Rep
-	* @return the CRM State Rep that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmStateRep updateCrmStateRep(CrmStateRep crmStateRep);
-
-	/**
-	* Returns the number of CRM State Reps.
-	*
-	* @return the number of CRM State Reps
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmStateRepsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -224,7 +150,65 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmStateRep> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateRep fetchCrmStateRep(long crmStateRepId);
+
+	/**
+	* Returns the CRM State Rep matching the UUID and group.
+	*
+	* @param uuid the CRM State Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateRep fetchCrmStateRepByUuidAndGroupId(String uuid,
+		long groupId);
+
+	public List<CrmStateRep> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM State Rep with the primary key.
+	*
+	* @param crmStateRepId the primary key of the CRM State Rep
+	* @return the CRM State Rep
+	* @throws PortalException if a CRM State Rep with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateRep getCrmStateRep(long crmStateRepId)
+		throws PortalException;
+
+	/**
+	* Returns the CRM State Rep matching the UUID and group.
+	*
+	* @param uuid the CRM State Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Rep
+	* @throws PortalException if a matching CRM State Rep could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmStateRep getCrmStateRepByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM State Reps.
@@ -248,8 +232,8 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	* @return the matching CRM State Reps, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmStateRep> getCrmStateRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+	public List<CrmStateRep> getCrmStateRepsByUuidAndCompanyId(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of CRM State Reps matching the UUID and company.
@@ -262,25 +246,43 @@ public interface CrmStateRepLocalService extends BaseLocalService,
 	* @return the range of matching CRM State Reps, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmStateRep> getCrmStateRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+	public List<CrmStateRep> getCrmStateRepsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
 		OrderByComparator<CrmStateRep> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM State Reps.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM State Reps
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmStateRepsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM State Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmStateRep the CRM State Rep
+	* @return the CRM State Rep that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmStateRep updateCrmStateRep(CrmStateRep crmStateRep);
 }

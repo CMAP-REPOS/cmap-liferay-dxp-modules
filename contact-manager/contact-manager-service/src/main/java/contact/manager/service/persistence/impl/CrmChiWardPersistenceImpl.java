@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmChiWardPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -230,7 +230,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -318,7 +318,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -367,7 +367,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -459,7 +459,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -595,7 +595,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -674,7 +674,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -737,7 +737,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -777,13 +777,6 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 					result = crmChiWard;
 
 					cacheResult(crmChiWard);
-
-					if ((crmChiWard.getUuid() == null) ||
-							!crmChiWard.getUuid().equals(uuid) ||
-							(crmChiWard.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmChiWard);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -844,7 +837,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1041,7 +1034,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1138,7 +1131,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -1194,7 +1187,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -1289,7 +1282,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1431,7 +1424,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1616,7 +1609,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1704,7 +1697,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -1753,7 +1746,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmChiWardException(msg.toString());
 	}
@@ -1845,7 +1838,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		if (zipCode == null) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 		}
-		else if (zipCode.equals(StringPool.BLANK)) {
+		else if (zipCode.equals("")) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1981,7 +1974,7 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2030,8 +2023,10 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		setModelClass(CrmChiWard.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2242,8 +2237,6 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 
 	@Override
 	protected CrmChiWard removeImpl(CrmChiWard crmChiWard) {
-		crmChiWard = toUnwrappedModel(crmChiWard);
-
 		Session session = null;
 
 		try {
@@ -2274,9 +2267,23 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 
 	@Override
 	public CrmChiWard updateImpl(CrmChiWard crmChiWard) {
-		crmChiWard = toUnwrappedModel(crmChiWard);
-
 		boolean isNew = crmChiWard.isNew();
+
+		if (!(crmChiWard instanceof CrmChiWardModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmChiWard.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmChiWard);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmChiWard proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmChiWard implementation " +
+				crmChiWard.getClass());
+		}
 
 		CrmChiWardModelImpl crmChiWardModelImpl = (CrmChiWardModelImpl)crmChiWard;
 
@@ -2430,30 +2437,6 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		return crmChiWard;
 	}
 
-	protected CrmChiWard toUnwrappedModel(CrmChiWard crmChiWard) {
-		if (crmChiWard instanceof CrmChiWardImpl) {
-			return crmChiWard;
-		}
-
-		CrmChiWardImpl crmChiWardImpl = new CrmChiWardImpl();
-
-		crmChiWardImpl.setNew(crmChiWard.isNew());
-		crmChiWardImpl.setPrimaryKey(crmChiWard.getPrimaryKey());
-
-		crmChiWardImpl.setUuid(crmChiWard.getUuid());
-		crmChiWardImpl.setCrmChiWardId(crmChiWard.getCrmChiWardId());
-		crmChiWardImpl.setGroupId(crmChiWard.getGroupId());
-		crmChiWardImpl.setCompanyId(crmChiWard.getCompanyId());
-		crmChiWardImpl.setUserId(crmChiWard.getUserId());
-		crmChiWardImpl.setUserName(crmChiWard.getUserName());
-		crmChiWardImpl.setCreateDate(crmChiWard.getCreateDate());
-		crmChiWardImpl.setModifiedDate(crmChiWard.getModifiedDate());
-		crmChiWardImpl.setName(crmChiWard.getName());
-		crmChiWardImpl.setZipCode(crmChiWard.getZipCode());
-
-		return crmChiWardImpl;
-	}
-
 	/**
 	 * Returns the CRM Chi Ward with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
 	 *
@@ -2605,12 +2588,12 @@ public class CrmChiWardPersistenceImpl extends BasePersistenceImpl<CrmChiWard>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

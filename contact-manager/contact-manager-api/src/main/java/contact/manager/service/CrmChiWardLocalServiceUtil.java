@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmChiWardLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmChiWardLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Chi Ward to the database. Also notifies the appropriate model listeners.
@@ -119,77 +89,17 @@ public class CrmChiWardLocalServiceUtil {
 		return getService().deleteCrmChiWard(crmChiWardId);
 	}
 
-	public static contact.manager.model.CrmChiWard fetchCrmChiWard(
-		long crmChiWardId) {
-		return getService().fetchCrmChiWard(crmChiWardId);
-	}
-
 	/**
-	* Returns the CRM Chi Ward matching the UUID and group.
-	*
-	* @param uuid the CRM Chi Ward's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmChiWard fetchCrmChiWardByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmChiWardByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Chi Ward with the primary key.
-	*
-	* @param crmChiWardId the primary key of the CRM Chi Ward
-	* @return the CRM Chi Ward
-	* @throws PortalException if a CRM Chi Ward with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmChiWard getCrmChiWard(
-		long crmChiWardId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmChiWard(crmChiWardId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM Chi Ward matching the UUID and group.
-	*
-	* @param uuid the CRM Chi Ward's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Chi Ward
-	* @throws PortalException if a matching CRM Chi Ward could not be found
-	*/
-	public static contact.manager.model.CrmChiWard getCrmChiWardByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmChiWardByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Chi Ward in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmChiWard the CRM Chi Ward
-	* @return the CRM Chi Ward that was updated
-	*/
-	public static contact.manager.model.CrmChiWard updateCrmChiWard(
-		contact.manager.model.CrmChiWard crmChiWard) {
-		return getService().updateCrmChiWard(crmChiWard);
-	}
-
-	/**
-	* Returns the number of CRM Chi Wards.
-	*
-	* @return the number of CRM Chi Wards
-	*/
-	public static int getCrmChiWardsCount() {
-		return getService().getCrmChiWardsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -242,9 +152,81 @@ public class CrmChiWardLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmChiWard fetchCrmChiWard(
+		long crmChiWardId) {
+		return getService().fetchCrmChiWard(crmChiWardId);
+	}
+
+	/**
+	* Returns the CRM Chi Ward matching the UUID and group.
+	*
+	* @param uuid the CRM Chi Ward's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Chi Ward, or <code>null</code> if a matching CRM Chi Ward could not be found
+	*/
+	public static contact.manager.model.CrmChiWard fetchCrmChiWardByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmChiWardByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmChiWard> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Chi Ward with the primary key.
+	*
+	* @param crmChiWardId the primary key of the CRM Chi Ward
+	* @return the CRM Chi Ward
+	* @throws PortalException if a CRM Chi Ward with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmChiWard getCrmChiWard(
+		long crmChiWardId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmChiWard(crmChiWardId);
+	}
+
+	/**
+	* Returns the CRM Chi Ward matching the UUID and group.
+	*
+	* @param uuid the CRM Chi Ward's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Chi Ward
+	* @throws PortalException if a matching CRM Chi Ward could not be found
+	*/
+	public static contact.manager.model.CrmChiWard getCrmChiWardByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmChiWardByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -271,7 +253,7 @@ public class CrmChiWardLocalServiceUtil {
 	* @return the matching CRM Chi Wards, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmChiWard> getCrmChiWardsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmChiWardsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -286,7 +268,7 @@ public class CrmChiWardLocalServiceUtil {
 	* @return the range of matching CRM Chi Wards, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmChiWard> getCrmChiWardsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmChiWard> orderByComparator) {
 		return getService()
 				   .getCrmChiWardsByUuidAndCompanyId(uuid, companyId, start,
@@ -294,33 +276,64 @@ public class CrmChiWardLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Chi Wards.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Chi Wards
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmChiWardsCount() {
+		return getService().getCrmChiWardsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM Chi Ward in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmChiWard the CRM Chi Ward
+	* @return the CRM Chi Ward that was updated
+	*/
+	public static contact.manager.model.CrmChiWard updateCrmChiWard(
+		contact.manager.model.CrmChiWard crmChiWard) {
+		return getService().updateCrmChiWard(crmChiWard);
 	}
 
 	public static CrmChiWardLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmChiWardLocalService, CrmChiWardLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmChiWardLocalService.class);
+	private static ServiceTracker<CrmChiWardLocalService, CrmChiWardLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmChiWardLocalService.class);
+
+		ServiceTracker<CrmChiWardLocalService, CrmChiWardLocalService> serviceTracker =
+			new ServiceTracker<CrmChiWardLocalService, CrmChiWardLocalService>(bundle.getBundleContext(),
+				CrmChiWardLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

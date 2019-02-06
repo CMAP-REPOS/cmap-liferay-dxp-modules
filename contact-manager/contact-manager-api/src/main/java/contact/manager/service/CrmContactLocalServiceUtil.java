@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,54 +42,6 @@ public class CrmContactLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmContactLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static boolean hasCrmGroupCrmContact(long crmGroupId,
-		long crmContactId) {
-		return getService().hasCrmGroupCrmContact(crmGroupId, crmContactId);
-	}
-
-	public static boolean hasCrmGroupCrmContacts(long crmGroupId) {
-		return getService().hasCrmGroupCrmContacts(crmGroupId);
-	}
-
-	public static boolean hasCrmTagCrmContact(long crmTagId, long crmContactId) {
-		return getService().hasCrmTagCrmContact(crmTagId, crmContactId);
-	}
-
-	public static boolean hasCrmTagCrmContacts(long crmTagId) {
-		return getService().hasCrmTagCrmContacts(crmTagId);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
@@ -99,6 +52,51 @@ public class CrmContactLocalServiceUtil {
 	public static contact.manager.model.CrmContact addCrmContact(
 		contact.manager.model.CrmContact crmContact) {
 		return getService().addCrmContact(crmContact);
+	}
+
+	public static void addCrmGroupCrmContact(long crmGroupId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().addCrmGroupCrmContact(crmGroupId, crmContact);
+	}
+
+	public static void addCrmGroupCrmContact(long crmGroupId, long crmContactId) {
+		getService().addCrmGroupCrmContact(crmGroupId, crmContactId);
+	}
+
+	public static void addCrmGroupCrmContacts(long crmGroupId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().addCrmGroupCrmContacts(crmGroupId, crmContacts);
+	}
+
+	public static void addCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().addCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public static void addCrmTagCrmContact(long crmTagId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().addCrmTagCrmContact(crmTagId, crmContact);
+	}
+
+	public static void addCrmTagCrmContact(long crmTagId, long crmContactId) {
+		getService().addCrmTagCrmContact(crmTagId, crmContactId);
+	}
+
+	public static void addCrmTagCrmContacts(long crmTagId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().addCrmTagCrmContacts(crmTagId, crmContacts);
+	}
+
+	public static void addCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
+		getService().addCrmTagCrmContacts(crmTagId, crmContactIds);
+	}
+
+	public static void clearCrmGroupCrmContacts(long crmGroupId) {
+		getService().clearCrmGroupCrmContacts(crmGroupId);
+	}
+
+	public static void clearCrmTagCrmContacts(long crmTagId) {
+		getService().clearCrmTagCrmContacts(crmTagId);
 	}
 
 	/**
@@ -136,93 +134,56 @@ public class CrmContactLocalServiceUtil {
 		return getService().deleteCrmContact(crmContactId);
 	}
 
-	public static contact.manager.model.CrmContact fetchCrmContact(
-		long crmContactId) {
-		return getService().fetchCrmContact(crmContactId);
-	}
-
-	/**
-	* Returns the CRM Contact matching the UUID and group.
-	*
-	* @param uuid the CRM Contact's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
-	*/
-	public static contact.manager.model.CrmContact fetchCrmContactByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmContactByUuidAndGroupId(uuid, groupId);
-	}
-
-	public static contact.manager.model.CrmContact findByConstantContactId(
-		long constantContactId)
-		throws com.liferay.portal.kernel.exception.NoSuchContactException,
-			com.liferay.portal.kernel.exception.SystemException,
-			contact.manager.exception.NoSuchCrmContactException {
-		return getService().findByConstantContactId(constantContactId);
-	}
-
-	/**
-	* Returns the CRM Contact with the primary key.
-	*
-	* @param crmContactId the primary key of the CRM Contact
-	* @return the CRM Contact
-	* @throws PortalException if a CRM Contact with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmContact getCrmContact(
-		long crmContactId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmContact(crmContactId);
-	}
-
-	/**
-	* Returns the CRM Contact matching the UUID and group.
-	*
-	* @param uuid the CRM Contact's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Contact
-	* @throws PortalException if a matching CRM Contact could not be found
-	*/
-	public static contact.manager.model.CrmContact getCrmContactByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmContactByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmContact the CRM Contact
-	* @return the CRM Contact that was updated
-	*/
-	public static contact.manager.model.CrmContact updateCrmContact(
+	public static void deleteCrmGroupCrmContact(long crmGroupId,
 		contact.manager.model.CrmContact crmContact) {
-		return getService().updateCrmContact(crmContact);
+		getService().deleteCrmGroupCrmContact(crmGroupId, crmContact);
+	}
+
+	public static void deleteCrmGroupCrmContact(long crmGroupId,
+		long crmContactId) {
+		getService().deleteCrmGroupCrmContact(crmGroupId, crmContactId);
+	}
+
+	public static void deleteCrmGroupCrmContacts(long crmGroupId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContacts);
+	}
+
+	public static void deleteCrmGroupCrmContacts(long crmGroupId,
+		long[] crmContactIds) {
+		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	}
+
+	public static void deleteCrmTagCrmContact(long crmTagId,
+		contact.manager.model.CrmContact crmContact) {
+		getService().deleteCrmTagCrmContact(crmTagId, crmContact);
+	}
+
+	public static void deleteCrmTagCrmContact(long crmTagId, long crmContactId) {
+		getService().deleteCrmTagCrmContact(crmTagId, crmContactId);
+	}
+
+	public static void deleteCrmTagCrmContacts(long crmTagId,
+		java.util.List<contact.manager.model.CrmContact> crmContacts) {
+		getService().deleteCrmTagCrmContacts(crmTagId, crmContacts);
+	}
+
+	public static void deleteCrmTagCrmContacts(long crmTagId,
+		long[] crmContactIds) {
+		getService().deleteCrmTagCrmContacts(crmTagId, crmContactIds);
 	}
 
 	/**
-	* Returns the number of CRM Contacts.
-	*
-	* @return the number of CRM Contacts
+	* @throws PortalException
 	*/
-	public static int getCrmContactsCount() {
-		return getService().getCrmContactsCount();
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static int getCrmGroupCrmContactsCount(long crmGroupId) {
-		return getService().getCrmGroupCrmContactsCount(crmGroupId);
-	}
-
-	public static int getCrmTagCrmContactsCount(long crmTagId) {
-		return getService().getCrmTagCrmContactsCount(crmTagId);
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -275,14 +236,63 @@ public class CrmContactLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmContact fetchCrmContact(
+		long crmContactId) {
+		return getService().fetchCrmContact(crmContactId);
+	}
+
+	/**
+	* Returns the CRM Contact matching the UUID and group.
+	*
+	* @param uuid the CRM Contact's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
+	*/
+	public static contact.manager.model.CrmContact fetchCrmContactByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmContactByUuidAndGroupId(uuid, groupId);
+	}
+
+	public static contact.manager.model.CrmContact findByConstantContactId(
+		long constantContactId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			com.liferay.portal.kernel.exception.NoSuchContactException,
+			contact.manager.exception.NoSuchCrmContactException {
+		return getService().findByConstantContactId(constantContactId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress)
+		String primaryEmailAddress)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
 	public static java.util.List<contact.manager.model.CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status)
+		String primaryEmailAddress, String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
@@ -290,7 +300,7 @@ public class CrmContactLocalServiceUtil {
 	}
 
 	public static java.util.List<contact.manager.model.CrmContact> findByStatus(
-		java.lang.String status)
+		String status)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByStatus(status);
 	}
@@ -299,6 +309,37 @@ public class CrmContactLocalServiceUtil {
 		boolean isVip)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findByVipFlag(isVip);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Contact with the primary key.
+	*
+	* @param crmContactId the primary key of the CRM Contact
+	* @return the CRM Contact
+	* @throws PortalException if a CRM Contact with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmContact getCrmContact(
+		long crmContactId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmContact(crmContactId);
+	}
+
+	/**
+	* Returns the CRM Contact matching the UUID and group.
+	*
+	* @param uuid the CRM Contact's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Contact
+	* @throws PortalException if a matching CRM Contact could not be found
+	*/
+	public static contact.manager.model.CrmContact getCrmContactByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmContactByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -318,7 +359,7 @@ public class CrmContactLocalServiceUtil {
 	}
 
 	public static java.util.List<contact.manager.model.CrmContact> getCrmContactsByStatus(
-		java.lang.String status, int start, int end,
+		String status, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCrmContactsByStatus(status, start, end, obc);
@@ -332,7 +373,7 @@ public class CrmContactLocalServiceUtil {
 	* @return the matching CRM Contacts, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmContact> getCrmContactsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmContactsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -347,11 +388,20 @@ public class CrmContactLocalServiceUtil {
 	* @return the range of matching CRM Contacts, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmContact> getCrmContactsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
 		return getService()
 				   .getCrmContactsByUuidAndCompanyId(uuid, companyId, start,
 			end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of CRM Contacts.
+	*
+	* @return the number of CRM Contacts
+	*/
+	public static int getCrmContactsCount() {
+		return getService().getCrmContactsCount();
 	}
 
 	public static java.util.List<contact.manager.model.CrmContact> getCrmGroupCrmContacts(
@@ -370,6 +420,20 @@ public class CrmContactLocalServiceUtil {
 		return getService()
 				   .getCrmGroupCrmContacts(crmGroupId, start, end,
 			orderByComparator);
+	}
+
+	public static int getCrmGroupCrmContactsCount(long crmGroupId) {
+		return getService().getCrmGroupCrmContactsCount(crmGroupId);
+	}
+
+	/**
+	* Returns the crmGroupIds of the CRM Groups associated with the CRM Contact.
+	*
+	* @param crmContactId the crmContactId of the CRM Contact
+	* @return long[] the crmGroupIds of CRM Groups associated with the CRM Contact
+	*/
+	public static long[] getCrmGroupPrimaryKeys(long crmContactId) {
+		return getService().getCrmGroupPrimaryKeys(crmContactId);
 	}
 
 	public static java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
@@ -395,44 +459,8 @@ public class CrmContactLocalServiceUtil {
 				   .getCrmTagCrmContacts(crmTagId, start, end, orderByComparator);
 	}
 
-	public static java.util.List<contact.manager.model.CrmTag> getCrmTags(
-		long contactId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCrmTags(contactId);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	/**
-	* Returns the crmGroupIds of the CRM Groups associated with the CRM Contact.
-	*
-	* @param crmContactId the crmContactId of the CRM Contact
-	* @return long[] the crmGroupIds of CRM Groups associated with the CRM Contact
-	*/
-	public static long[] getCrmGroupPrimaryKeys(long crmContactId) {
-		return getService().getCrmGroupPrimaryKeys(crmContactId);
+	public static int getCrmTagCrmContactsCount(long crmTagId) {
+		return getService().getCrmTagCrmContactsCount(crmTagId);
 	}
 
 	/**
@@ -445,88 +473,51 @@ public class CrmContactLocalServiceUtil {
 		return getService().getCrmTagPrimaryKeys(crmContactId);
 	}
 
-	public static void addCrmGroupCrmContact(long crmGroupId,
-		contact.manager.model.CrmContact crmContact) {
-		getService().addCrmGroupCrmContact(crmGroupId, crmContact);
+	public static java.util.List<contact.manager.model.CrmTag> getCrmTags(
+		long contactId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCrmTags(contactId);
 	}
 
-	public static void addCrmGroupCrmContact(long crmGroupId, long crmContactId) {
-		getService().addCrmGroupCrmContact(crmGroupId, crmContactId);
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
 	}
 
-	public static void addCrmGroupCrmContacts(long crmGroupId,
-		java.util.List<contact.manager.model.CrmContact> crmContacts) {
-		getService().addCrmGroupCrmContacts(crmGroupId, crmContacts);
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static void addCrmGroupCrmContacts(long crmGroupId,
-		long[] crmContactIds) {
-		getService().addCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static void addCrmTagCrmContact(long crmTagId,
-		contact.manager.model.CrmContact crmContact) {
-		getService().addCrmTagCrmContact(crmTagId, crmContact);
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static void addCrmTagCrmContact(long crmTagId, long crmContactId) {
-		getService().addCrmTagCrmContact(crmTagId, crmContactId);
-	}
-
-	public static void addCrmTagCrmContacts(long crmTagId,
-		java.util.List<contact.manager.model.CrmContact> crmContacts) {
-		getService().addCrmTagCrmContacts(crmTagId, crmContacts);
-	}
-
-	public static void addCrmTagCrmContacts(long crmTagId, long[] crmContactIds) {
-		getService().addCrmTagCrmContacts(crmTagId, crmContactIds);
-	}
-
-	public static void clearCrmGroupCrmContacts(long crmGroupId) {
-		getService().clearCrmGroupCrmContacts(crmGroupId);
-	}
-
-	public static void clearCrmTagCrmContacts(long crmTagId) {
-		getService().clearCrmTagCrmContacts(crmTagId);
-	}
-
-	public static void deleteCrmGroupCrmContact(long crmGroupId,
-		contact.manager.model.CrmContact crmContact) {
-		getService().deleteCrmGroupCrmContact(crmGroupId, crmContact);
-	}
-
-	public static void deleteCrmGroupCrmContact(long crmGroupId,
+	public static boolean hasCrmGroupCrmContact(long crmGroupId,
 		long crmContactId) {
-		getService().deleteCrmGroupCrmContact(crmGroupId, crmContactId);
+		return getService().hasCrmGroupCrmContact(crmGroupId, crmContactId);
 	}
 
-	public static void deleteCrmGroupCrmContacts(long crmGroupId,
-		java.util.List<contact.manager.model.CrmContact> crmContacts) {
-		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContacts);
+	public static boolean hasCrmGroupCrmContacts(long crmGroupId) {
+		return getService().hasCrmGroupCrmContacts(crmGroupId);
 	}
 
-	public static void deleteCrmGroupCrmContacts(long crmGroupId,
-		long[] crmContactIds) {
-		getService().deleteCrmGroupCrmContacts(crmGroupId, crmContactIds);
+	public static boolean hasCrmTagCrmContact(long crmTagId, long crmContactId) {
+		return getService().hasCrmTagCrmContact(crmTagId, crmContactId);
 	}
 
-	public static void deleteCrmTagCrmContact(long crmTagId,
-		contact.manager.model.CrmContact crmContact) {
-		getService().deleteCrmTagCrmContact(crmTagId, crmContact);
-	}
-
-	public static void deleteCrmTagCrmContact(long crmTagId, long crmContactId) {
-		getService().deleteCrmTagCrmContact(crmTagId, crmContactId);
-	}
-
-	public static void deleteCrmTagCrmContacts(long crmTagId,
-		java.util.List<contact.manager.model.CrmContact> crmContacts) {
-		getService().deleteCrmTagCrmContacts(crmTagId, crmContacts);
-	}
-
-	public static void deleteCrmTagCrmContacts(long crmTagId,
-		long[] crmContactIds) {
-		getService().deleteCrmTagCrmContacts(crmTagId, crmContactIds);
+	public static boolean hasCrmTagCrmContacts(long crmTagId) {
+		return getService().hasCrmTagCrmContacts(crmTagId);
 	}
 
 	public static void setCrmGroupCrmContacts(long crmGroupId,
@@ -548,10 +539,32 @@ public class CrmContactLocalServiceUtil {
 		getService().setCrmTags(contactId, tagIds);
 	}
 
+	/**
+	* Updates the CRM Contact in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmContact the CRM Contact
+	* @return the CRM Contact that was updated
+	*/
+	public static contact.manager.model.CrmContact updateCrmContact(
+		contact.manager.model.CrmContact crmContact) {
+		return getService().updateCrmContact(crmContact);
+	}
+
 	public static CrmContactLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmContactLocalService, CrmContactLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmContactLocalService.class);
+	private static ServiceTracker<CrmContactLocalService, CrmContactLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmContactLocalService.class);
+
+		ServiceTracker<CrmContactLocalService, CrmContactLocalService> serviceTracker =
+			new ServiceTracker<CrmContactLocalService, CrmContactLocalService>(bundle.getBundleContext(),
+				CrmContactLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

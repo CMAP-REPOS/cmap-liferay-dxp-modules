@@ -34,52 +34,25 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	}
 
 	@Override
-	public boolean hasCrmContactCrmGroup(long crmContactId, long crmGroupId) {
-		return _crmGroupLocalService.hasCrmContactCrmGroup(crmContactId,
-			crmGroupId);
+	public void addCrmContactCrmGroup(long crmContactId,
+		contact.manager.model.CrmGroup crmGroup) {
+		_crmGroupLocalService.addCrmContactCrmGroup(crmContactId, crmGroup);
 	}
 
 	@Override
-	public boolean hasCrmContactCrmGroups(long crmContactId) {
-		return _crmGroupLocalService.hasCrmContactCrmGroups(crmContactId);
+	public void addCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		_crmGroupLocalService.addCrmContactCrmGroup(crmContactId, crmGroupId);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _crmGroupLocalService.getActionableDynamicQuery();
+	public void addCrmContactCrmGroups(long crmContactId,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
+		_crmGroupLocalService.addCrmContactCrmGroups(crmContactId, crmGroups);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _crmGroupLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _crmGroupLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _crmGroupLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmGroupLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmGroupLocalService.getPersistedModel(primaryKeyObj);
+	public void addCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
+		_crmGroupLocalService.addCrmContactCrmGroups(crmContactId, crmGroupIds);
 	}
 
 	/**
@@ -94,6 +67,16 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 		return _crmGroupLocalService.addCrmGroup(crmGroup);
 	}
 
+	@Override
+	public void clearCrmContactCrmGroups(long crmContactId) {
+		_crmGroupLocalService.clearCrmContactCrmGroups(crmContactId);
+	}
+
+	@Override
+	public int countAll() {
+		return _crmGroupLocalService.countAll();
+	}
+
 	/**
 	* Creates a new CRM Group with the primary key. Does not add the CRM Group to the database.
 	*
@@ -103,6 +86,29 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	@Override
 	public contact.manager.model.CrmGroup createCrmGroup(long crmGroupId) {
 		return _crmGroupLocalService.createCrmGroup(crmGroupId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmGroup(long crmContactId,
+		contact.manager.model.CrmGroup crmGroup) {
+		_crmGroupLocalService.deleteCrmContactCrmGroup(crmContactId, crmGroup);
+	}
+
+	@Override
+	public void deleteCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		_crmGroupLocalService.deleteCrmContactCrmGroup(crmContactId, crmGroupId);
+	}
+
+	@Override
+	public void deleteCrmContactCrmGroups(long crmContactId,
+		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
+		_crmGroupLocalService.deleteCrmContactCrmGroups(crmContactId, crmGroups);
+	}
+
+	@Override
+	public void deleteCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
+		_crmGroupLocalService.deleteCrmContactCrmGroups(crmContactId,
+			crmGroupIds);
 	}
 
 	/**
@@ -130,98 +136,19 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 		return _crmGroupLocalService.deleteCrmGroup(crmGroupId);
 	}
 
-	@Override
-	public contact.manager.model.CrmGroup fetchCrmGroup(long crmGroupId) {
-		return _crmGroupLocalService.fetchCrmGroup(crmGroupId);
-	}
-
 	/**
-	* Returns the CRM Group matching the UUID and group.
-	*
-	* @param uuid the CRM Group's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public contact.manager.model.CrmGroup fetchCrmGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _crmGroupLocalService.fetchCrmGroupByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Group with the primary key.
-	*
-	* @param crmGroupId the primary key of the CRM Group
-	* @return the CRM Group
-	* @throws PortalException if a CRM Group with the primary key could not be found
-	*/
-	@Override
-	public contact.manager.model.CrmGroup getCrmGroup(long crmGroupId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmGroupLocalService.getCrmGroup(crmGroupId);
-	}
-
-	/**
-	* Returns the CRM Group matching the UUID and group.
-	*
-	* @param uuid the CRM Group's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Group
-	* @throws PortalException if a matching CRM Group could not be found
-	*/
-	@Override
-	public contact.manager.model.CrmGroup getCrmGroupByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmGroupLocalService.getCrmGroupByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmGroup the CRM Group
-	* @return the CRM Group that was updated
-	*/
-	@Override
-	public contact.manager.model.CrmGroup updateCrmGroup(
-		contact.manager.model.CrmGroup crmGroup) {
-		return _crmGroupLocalService.updateCrmGroup(crmGroup);
+		return _crmGroupLocalService.deletePersistedModel(persistedModel);
 	}
 
 	@Override
-	public int countAll() {
-		return _crmGroupLocalService.countAll();
-	}
-
-	@Override
-	public int getCrmContactCrmGroupsCount(long crmContactId) {
-		return _crmGroupLocalService.getCrmContactCrmGroupsCount(crmContactId);
-	}
-
-	@Override
-	public int getCrmContactsCount(long crmGroupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupLocalService.getCrmContactsCount(crmGroupId);
-	}
-
-	/**
-	* Returns the number of CRM Groups.
-	*
-	* @return the number of CRM Groups
-	*/
-	@Override
-	public int getCrmGroupsCount() {
-		return _crmGroupLocalService.getCrmGroupsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _crmGroupLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _crmGroupLocalService.dynamicQuery();
 	}
 
 	/**
@@ -277,123 +204,6 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 			orderByComparator);
 	}
 
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupLocalService.findAll();
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupLocalService.findAll(start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupLocalService.findAll(start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
-		long crmContactId) {
-		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
-		long crmContactId, int start, int end) {
-		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId,
-			start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
-		long crmContactId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
-		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId,
-			start, end, orderByComparator);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId) {
-		return _crmGroupLocalService.getCrmContacts(crmGroupId);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end) {
-		return _crmGroupLocalService.getCrmContacts(crmGroupId, start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
-		long crmGroupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		return _crmGroupLocalService.getCrmContacts(crmGroupId, start, end,
-			orderByComparator);
-	}
-
-	/**
-	* Returns a range of all the CRM Groups.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of CRM Groups
-	* @param end the upper bound of the range of CRM Groups (not inclusive)
-	* @return the range of CRM Groups
-	*/
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
-		int start, int end) {
-		return _crmGroupLocalService.getCrmGroups(start, end);
-	}
-
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
-		java.lang.String crmGroupName)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _crmGroupLocalService.getCrmGroupsByName(crmGroupName);
-	}
-
-	/**
-	* Returns all the CRM Groups matching the UUID and company.
-	*
-	* @param uuid the UUID of the CRM Groups
-	* @param companyId the primary key of the company
-	* @return the matching CRM Groups, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
-		return _crmGroupLocalService.getCrmGroupsByUuidAndCompanyId(uuid,
-			companyId);
-	}
-
-	/**
-	* Returns a range of CRM Groups matching the UUID and company.
-	*
-	* @param uuid the UUID of the CRM Groups
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of CRM Groups
-	* @param end the upper bound of the range of CRM Groups (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching CRM Groups, or an empty list if no matches were found
-	*/
-	@Override
-	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
-		return _crmGroupLocalService.getCrmGroupsByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
-	}
-
 	/**
 	* Returns the number of rows matching the dynamic query.
 	*
@@ -420,6 +230,75 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 		return _crmGroupLocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
+	@Override
+	public contact.manager.model.CrmGroup fetchCrmGroup(long crmGroupId) {
+		return _crmGroupLocalService.fetchCrmGroup(crmGroupId);
+	}
+
+	/**
+	* Returns the CRM Group matching the UUID and group.
+	*
+	* @param uuid the CRM Group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmGroup fetchCrmGroupByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _crmGroupLocalService.fetchCrmGroupByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll();
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll(start, end);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> findAll(int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.findAll(start, end, orderByComparator);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _crmGroupLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId) {
+		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId, int start, int end) {
+		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId,
+			start, end);
+	}
+
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmContactCrmGroups(
+		long crmContactId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
+		return _crmGroupLocalService.getCrmContactCrmGroups(crmContactId,
+			start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCrmContactCrmGroupsCount(long crmContactId) {
+		return _crmGroupLocalService.getCrmContactCrmGroupsCount(crmContactId);
+	}
+
 	/**
 	* Returns the crmContactIds of the CRM Contacts associated with the CRM Group.
 	*
@@ -432,53 +311,186 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	}
 
 	@Override
-	public void addCrmContactCrmGroup(long crmContactId,
-		contact.manager.model.CrmGroup crmGroup) {
-		_crmGroupLocalService.addCrmContactCrmGroup(crmContactId, crmGroup);
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupId) {
+		return _crmGroupLocalService.getCrmContacts(crmGroupId);
 	}
 
 	@Override
-	public void addCrmContactCrmGroup(long crmContactId, long crmGroupId) {
-		_crmGroupLocalService.addCrmContactCrmGroup(crmContactId, crmGroupId);
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupId, int start, int end) {
+		return _crmGroupLocalService.getCrmContacts(crmGroupId, start, end);
 	}
 
 	@Override
-	public void addCrmContactCrmGroups(long crmContactId,
-		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
-		_crmGroupLocalService.addCrmContactCrmGroups(crmContactId, crmGroups);
+	public java.util.List<contact.manager.model.CrmContact> getCrmContacts(
+		long crmGroupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
+		return _crmGroupLocalService.getCrmContacts(crmGroupId, start, end,
+			orderByComparator);
 	}
 
 	@Override
-	public void addCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
-		_crmGroupLocalService.addCrmContactCrmGroups(crmContactId, crmGroupIds);
+	public int getCrmContactsCount(long crmGroupId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.getCrmContactsCount(crmGroupId);
+	}
+
+	/**
+	* Returns the CRM Group with the primary key.
+	*
+	* @param crmGroupId the primary key of the CRM Group
+	* @return the CRM Group
+	* @throws PortalException if a CRM Group with the primary key could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmGroup getCrmGroup(long crmGroupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupLocalService.getCrmGroup(crmGroupId);
 	}
 
 	@Override
-	public void clearCrmContactCrmGroups(long crmContactId) {
-		_crmGroupLocalService.clearCrmContactCrmGroups(crmContactId);
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupByStatus(
+		String crmGroupStatus)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.getCrmGroupByStatus(crmGroupStatus);
 	}
 
 	@Override
-	public void deleteCrmContactCrmGroup(long crmContactId,
-		contact.manager.model.CrmGroup crmGroup) {
-		_crmGroupLocalService.deleteCrmContactCrmGroup(crmContactId, crmGroup);
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupByStatus(
+		String crmGroupStatus, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.getCrmGroupByStatus(crmGroupStatus, start,
+			end);
 	}
 
 	@Override
-	public void deleteCrmContactCrmGroup(long crmContactId, long crmGroupId) {
-		_crmGroupLocalService.deleteCrmContactCrmGroup(crmContactId, crmGroupId);
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupByStatus(
+		String crmGroupStatus, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.getCrmGroupByStatus(crmGroupStatus, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* Returns the CRM Group matching the UUID and group.
+	*
+	* @param uuid the CRM Group's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Group
+	* @throws PortalException if a matching CRM Group could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmGroup getCrmGroupByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupLocalService.getCrmGroupByUuidAndGroupId(uuid, groupId);
+	}
+
+	/**
+	* Returns a range of all the CRM Groups.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @return the range of CRM Groups
+	*/
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroups(
+		int start, int end) {
+		return _crmGroupLocalService.getCrmGroups(start, end);
 	}
 
 	@Override
-	public void deleteCrmContactCrmGroups(long crmContactId,
-		java.util.List<contact.manager.model.CrmGroup> crmGroups) {
-		_crmGroupLocalService.deleteCrmContactCrmGroups(crmContactId, crmGroups);
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByName(
+		String crmGroupName)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _crmGroupLocalService.getCrmGroupsByName(crmGroupName);
+	}
+
+	/**
+	* Returns all the CRM Groups matching the UUID and company.
+	*
+	* @param uuid the UUID of the CRM Groups
+	* @param companyId the primary key of the company
+	* @return the matching CRM Groups, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return _crmGroupLocalService.getCrmGroupsByUuidAndCompanyId(uuid,
+			companyId);
+	}
+
+	/**
+	* Returns a range of CRM Groups matching the UUID and company.
+	*
+	* @param uuid the UUID of the CRM Groups
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of CRM Groups
+	* @param end the upper bound of the range of CRM Groups (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching CRM Groups, or an empty list if no matches were found
+	*/
+	@Override
+	public java.util.List<contact.manager.model.CrmGroup> getCrmGroupsByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmGroup> orderByComparator) {
+		return _crmGroupLocalService.getCrmGroupsByUuidAndCompanyId(uuid,
+			companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of CRM Groups.
+	*
+	* @return the number of CRM Groups
+	*/
+	@Override
+	public int getCrmGroupsCount() {
+		return _crmGroupLocalService.getCrmGroupsCount();
 	}
 
 	@Override
-	public void deleteCrmContactCrmGroups(long crmContactId, long[] crmGroupIds) {
-		_crmGroupLocalService.deleteCrmContactCrmGroups(crmContactId,
-			crmGroupIds);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _crmGroupLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _crmGroupLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return _crmGroupLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmGroupLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	@Override
+	public boolean hasCrmContactCrmGroup(long crmContactId, long crmGroupId) {
+		return _crmGroupLocalService.hasCrmContactCrmGroup(crmContactId,
+			crmGroupId);
+	}
+
+	@Override
+	public boolean hasCrmContactCrmGroups(long crmContactId) {
+		return _crmGroupLocalService.hasCrmContactCrmGroups(crmContactId);
 	}
 
 	@Override
@@ -490,6 +502,18 @@ public class CrmGroupLocalServiceWrapper implements CrmGroupLocalService,
 	public void setCrmContacts(long crmGroupPk, long[] crmContactPks)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_crmGroupLocalService.setCrmContacts(crmGroupPk, crmContactPks);
+	}
+
+	/**
+	* Updates the CRM Group in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmGroup the CRM Group
+	* @return the CRM Group that was updated
+	*/
+	@Override
+	public contact.manager.model.CrmGroup updateCrmGroup(
+		contact.manager.model.CrmGroup crmGroup) {
+		return _crmGroupLocalService.updateCrmGroup(crmGroup);
 	}
 
 	@Override

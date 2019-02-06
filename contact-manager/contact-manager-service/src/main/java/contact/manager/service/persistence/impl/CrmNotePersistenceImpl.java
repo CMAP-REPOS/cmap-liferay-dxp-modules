@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmNotePersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -228,7 +228,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -316,7 +316,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -365,7 +365,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -457,7 +457,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -593,7 +593,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -672,7 +672,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -735,7 +735,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -775,13 +775,6 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 					result = crmNote;
 
 					cacheResult(crmNote);
-
-					if ((crmNote.getUuid() == null) ||
-							!crmNote.getUuid().equals(uuid) ||
-							(crmNote.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmNote);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -842,7 +835,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1038,7 +1031,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1134,7 +1127,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -1189,7 +1182,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -1283,7 +1276,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1425,7 +1418,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1692,7 +1685,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append("crmContactId=");
 		msg.append(crmContactId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -1743,7 +1736,7 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		msg.append("crmContactId=");
 		msg.append(crmContactId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmNoteException(msg.toString());
 	}
@@ -1990,8 +1983,10 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		setModelClass(CrmNote.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2196,8 +2191,6 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 
 	@Override
 	protected CrmNote removeImpl(CrmNote crmNote) {
-		crmNote = toUnwrappedModel(crmNote);
-
 		Session session = null;
 
 		try {
@@ -2228,9 +2221,23 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 
 	@Override
 	public CrmNote updateImpl(CrmNote crmNote) {
-		crmNote = toUnwrappedModel(crmNote);
-
 		boolean isNew = crmNote.isNew();
+
+		if (!(crmNote instanceof CrmNoteModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmNote.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmNote);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmNote proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmNote implementation " +
+				crmNote.getClass());
+		}
 
 		CrmNoteModelImpl crmNoteModelImpl = (CrmNoteModelImpl)crmNote;
 
@@ -2379,30 +2386,6 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		crmNote.resetOriginalValues();
 
 		return crmNote;
-	}
-
-	protected CrmNote toUnwrappedModel(CrmNote crmNote) {
-		if (crmNote instanceof CrmNoteImpl) {
-			return crmNote;
-		}
-
-		CrmNoteImpl crmNoteImpl = new CrmNoteImpl();
-
-		crmNoteImpl.setNew(crmNote.isNew());
-		crmNoteImpl.setPrimaryKey(crmNote.getPrimaryKey());
-
-		crmNoteImpl.setUuid(crmNote.getUuid());
-		crmNoteImpl.setCrmNoteId(crmNote.getCrmNoteId());
-		crmNoteImpl.setGroupId(crmNote.getGroupId());
-		crmNoteImpl.setCompanyId(crmNote.getCompanyId());
-		crmNoteImpl.setUserId(crmNote.getUserId());
-		crmNoteImpl.setUserName(crmNote.getUserName());
-		crmNoteImpl.setCreateDate(crmNote.getCreateDate());
-		crmNoteImpl.setModifiedDate(crmNote.getModifiedDate());
-		crmNoteImpl.setCrmContactId(crmNote.getCrmContactId());
-		crmNoteImpl.setNote(crmNote.getNote());
-
-		return crmNoteImpl;
 	}
 
 	/**
@@ -2555,12 +2538,12 @@ public class CrmNotePersistenceImpl extends BasePersistenceImpl<CrmNote>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 
