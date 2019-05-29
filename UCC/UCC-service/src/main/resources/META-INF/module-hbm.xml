@@ -1,0 +1,535 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="false" default-lazy="false">
+	<import class="ucc.portal.model.CExtChurchFinancesIncomeOther" />
+	<import class="ucc.portal.model.CExtHistoricalInformationStaffing" />
+	<import class="ucc.portal.model.CExtOrganization" />
+	<import class="ucc.portal.model.CExtParticipation" />
+	<import class="ucc.portal.model.CExtParticipationOther" />
+	<import class="ucc.portal.model.CExtRealEstateCampaign" />
+	<import class="ucc.portal.model.CExtStaffingChurch" />
+	<import class="ucc.portal.model.CExtStaffingCongregation" />
+	<import class="ucc.portal.model.ExtContinuingEducation" />
+	<import class="ucc.portal.model.ExtDownloadLog" />
+	<import class="ucc.portal.model.ExtFormalEducation" />
+	<import class="ucc.portal.model.ExtKeyAccomplishment" />
+	<import class="ucc.portal.model.ExtReference" />
+	<import class="ucc.portal.model.ExtRegionalEducation" />
+	<import class="ucc.portal.model.ExtValidation" />
+	<import class="ucc.portal.model.ExtVocationalHistory" />
+	<import class="ucc.portal.model.UccAssociation" />
+	<import class="ucc.portal.model.UccConference" />
+	<import class="ucc.portal.model.UccPeople" />
+	<import class="ucc.portal.model.UccPeopleAddress" />
+	<import class="ucc.portal.model.UccPeopleChurchStanding" />
+	<class name="ucc.portal.model.impl.CExtChurchFinancesIncomeOtherImpl" table="UCC_CExtChurchFinancesIncomeOther">
+		<composite-id class="ucc.portal.service.persistence.CExtChurchFinancesIncomeOtherPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextChurchFinancesIncomeOtherId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="fnIncomeOther" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeOtherDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtHistoricalInformationStaffingImpl" table="UCC_CExtHistoricalInformationStaffing">
+		<composite-id class="ucc.portal.service.persistence.CExtHistoricalInformationStaffingPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextHistoricalInformationStaffingId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="hiMinisterName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiMinisterUCCStanding" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="hiMinisterStartYearOfService" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hiMinisterEndYearOfService" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="hiPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtOrganizationImpl" table="UCC_CExtOrganization">
+		<id name="organizationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="diTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="diDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="diComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="rfLifeOfFaith" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfStrengthsQualities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfWorship" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfEducationFaithVision" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfMinistryMission" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfMeetingHoursPerMonth" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfCrisisDisasterAction" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rfMinisterGovernanceCopy" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="rfComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="yrFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="yrChurchResponse" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="yrComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgActiveMembers" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgActiveMembersEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgActiveNonMembers" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgActiveNonMembersEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentMoreThan10" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentMoreThan10Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercent5To10" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercent5To10Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentLessThan5" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentLessThan5Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgAge11AndUnder" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge12To17" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge18To24" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge25To34" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge35To44" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge45To54" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge55To64" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge65To74" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAge75AndOver" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgAllAgesEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentSingleUnder35" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentSingleUnder35Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentWithMinors" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentWithMinorsEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentSingle35To65" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentSingle35To65Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentJointNoMinors" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentJointNoMinorsEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentSingleOver65" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentSingleOver65Estimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentHighSchool" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentHighSchoolEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentCollege" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentCollegeEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentGraduateSchool" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentGraduateSchoolEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentSpecialtyTraining" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentSpecialtyTrainingEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentOtherEducation" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentOtherEducationEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentOtherEducationDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dgPercentEmployed" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentEmployedEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentNotFullyEmployed" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentNotFullyEmployedEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgPercentRetired" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="dgPercentRetiredEstimate" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dgRangeOfOccupations" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dgComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="dvEthnicRacialMix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dvWelcomingConversation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dvWelcomingComments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="dvComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppComments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sfPreviousRoles" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="rvOverallMinistry" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="rvComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnYear" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnIncomeOfferingsPledgedGivings" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeEndowmentProceeds" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeEndowmentDraw" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeFundraising" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeDesignatedGifts" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeGrants" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeRentalChurchBuilding" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeRentalChurchParsonage" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeRelatedOrganizations" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnIncomeSpecialAccounts" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnExpense" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="fnExpenseMinisterialSupportPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnFailToPayMinister" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnOurChurchWiderMission" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnOneGreatHourOfSharing" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnStrenghtenTheChurch" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnNeighborsInNeed" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnChristmasFund" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnOurChurchWiderMissionHow" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnDebtCurrent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnDebtCurrentLoan" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnDebtReasonFor" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnDebtPaymentsCurrent" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnEndowment" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="fnEndowmentMarketValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnEndowmentDrawWhen" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnEndowmentDraw5YearPercent" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnEndowmentDraw5YearToExpense" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnEndowmentDrawCurrentRateLast" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnEndowmentComment" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="fnReserves" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnInvestments" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="fnComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reBuildingProgram" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reCampaignMissionComponents" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonage" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reParsonageMarketValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reParsonageAssessedValue" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reParsonageUsage" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageStreetAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageState" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageFootage" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reParsonageBedrooms" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reParsonageBathrooms" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reParsonageAvailableMinister" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reParsonageExpectedMinister" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reParsonageCondition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reParsonageResponsibleEntity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reOwnedBuildings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reNonOwnedBuildings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reWheelchairAccessible" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reFinancesAssetsReview" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="hiSignificantHappenings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiManagedChange" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiConflictResolution" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiMinisterialLeadershipLearning" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiPressureInvoluntaryTermination" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiSituationalSupportConsultation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiFitnessReview" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="hiComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmServiceAdvocacy" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmMeetingsRelationshipsActivities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmAccessibleToAll" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmCreationJustice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmEconomicJustice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmFaithfulAndWelcoming" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmGodIsStillSpeaking" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmBorderAndImmigrantJustice" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmInterCulturalMultiRacial" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmJustPeace" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmGlobalMissionChurch" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmOpenAndAffirming" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmWISECongregationForMentalHealth" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmOtherUCCDesignations" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmDesignationsOtherDenominations" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="cmStatementsReflection" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmWorkTowardWitnessFuture" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmEcumenicalInterfaithParticipation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmMissionStatementComparison" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmPastorTimeExpectations" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="cmComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="miMissionInSiteTrendsOpportunities" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="miCongregationDemographicsComparison" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="miCommunityDemographicsImpact" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="miKnownForInCommunity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="miWhyNewPeopleInvolved" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="miComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="vsGodsCallToBecome" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="vsGodsCallToReachOut" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="vsComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="pvFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="pvGeneratedDate" type="org.hibernate.type.TimestampType" />
+		<property name="pvComplete" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="pbFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="pbPublishedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtParticipationImpl" table="UCC_CExtParticipation">
+		<composite-id class="ucc.portal.service.persistence.CExtParticipationPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextParticipationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="ppGatheringId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppGatheringKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ppLay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppPastor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppStaff" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppOther" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppGatheringAdditionalKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppGatheringAdditionalType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppAdditionalInformation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtParticipationOtherImpl" table="UCC_CExtParticipationOther">
+		<composite-id class="ucc.portal.service.persistence.CExtParticipationOtherPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextParticipationOtherId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="ppGathering" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppCount" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="ppLay" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppPastor" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppStaff" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppOther" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="ppAdditionalInformation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="ppPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtRealEstateCampaignImpl" table="UCC_CExtRealEstateCampaign">
+		<composite-id class="ucc.portal.service.persistence.CExtRealEstateCampaignPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextRealEstateCampaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="reYear" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reUnderwayAnticipated" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="reGoal" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="reResult" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="rePurpose" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="reImpact" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtStaffingChurchImpl" table="UCC_CExtStaffingChurch">
+		<composite-id class="ucc.portal.service.persistence.CExtStaffingChurchPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextStaffingChurchId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="sfPosition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfHeadOfStaff" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sfCompensation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfSupervisedBy" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfCurrentTenure" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.CExtStaffingCongregationImpl" table="UCC_CExtStaffingCongregation">
+		<composite-id class="ucc.portal.service.persistence.CExtStaffingCongregationPK" name="primaryKey">
+			<key-property name="organizationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+			<key-property name="cextStaffingCongregationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		</composite-id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="sfMinisterName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfMinisterRetired" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="sfMinisterCovenant" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfMinistrySetting" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfMinistryRole" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="sfPriority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtContinuingEducationImpl" table="UCC_ExtContinuingEducation">
+		<id name="extContinuingEducationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="institutionOrProgram" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="regionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDateOfAttendance" type="org.hibernate.type.TimestampType" />
+		<property name="endDateOfAttendance" type="org.hibernate.type.TimestampType" />
+		<property name="degreeOrCertification" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtDownloadLogImpl" table="UCC_ExtDownloadLog">
+		<id name="extDownloadLogId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="profileFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="profileFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="searchAndCallUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="conferenceIds" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="downloadDate" type="org.hibernate.type.TimestampType" />
+		<property name="withdrawalDate" type="org.hibernate.type.TimestampType" />
+		<property name="fitnessReview" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtFormalEducationImpl" table="UCC_ExtFormalEducation">
+		<id name="extFormalEducationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="institutionOrProgram" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="regionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDateOfAttendance" type="org.hibernate.type.TimestampType" />
+		<property name="endDateOfAttendance" type="org.hibernate.type.TimestampType" />
+		<property name="degreeOrCertification" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtKeyAccomplishmentImpl" table="UCC_ExtKeyAccomplishment">
+		<id name="extKeyAccomplishmentId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="locationOrSetting" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.DoubleType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtReferenceImpl" table="UCC_ExtReference">
+		<id name="extReferenceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="referenceUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userCreated" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="emailDate" type="org.hibernate.type.TimestampType" />
+		<property name="resendEmail" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="roleAndRelationship" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="areasOfStrength" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="areasOfGrowth" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="significantExperience" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="additionalComments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="submitDate" type="org.hibernate.type.TimestampType" />
+		<property name="userFirstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userMiddleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userLastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userEmailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressStreet1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressStreet2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressStreet3" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressCity" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressZip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="addressRegionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="addressCountryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="addressTypeId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="phoneNumber" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phoneExtension" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="phoneTypeId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtRegionalEducationImpl" table="UCC_ExtRegionalEducation">
+		<id name="extRegionalEducationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="programOrExperience" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="regionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDateOfAttendance" type="org.hibernate.type.TimestampType" />
+		<property name="endDateOfAttendance" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtValidationImpl" table="UCC_ExtValidation">
+		<id name="extValidationId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="profileFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="profileFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="validatorUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="emailDate" type="org.hibernate.type.TimestampType" />
+		<property name="currentStandingAndFitness" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="currentCriminalBackgroundCheck" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="accurateCurrentEmployment" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="accurateSelfDisclosure" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="signatureJson" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="signatureFileEntryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="signatureFileVersionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="signatureName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="signatureTimestamp" type="org.hibernate.type.TimestampType" />
+		<property name="signatureTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="conferenceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="associationId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="withholdValidation" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property name="additionalComments" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="submitDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="ucc.portal.model.impl.ExtVocationalHistoryImpl" table="UCC_ExtVocationalHistory">
+		<id name="extVocationalHistoryId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="locationOrSetting" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="regionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="countryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="startDateOfService" type="org.hibernate.type.TimestampType" />
+		<property name="endDateOfService" type="org.hibernate.type.TimestampType" />
+		<property name="titleOrPosition" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="jobTypeId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+	<class name="ucc.portal.model.impl.UccAssociationImpl" table="UCC_Data_Warehouse.dbo.Association">
+		<id column="associationId" name="uccAssociationId" type="int">
+			<generator class="assigned" />
+		</id>
+		<property column="conferenceId" name="uccConferenceId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="association_name" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="assocabb" name="abbreviation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="active" name="myActive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="ucc.portal.model.impl.UccConferenceImpl" table="UCC_Data_Warehouse.dbo.Conference">
+		<id column="conferenceId" name="uccConferenceId" type="int">
+			<generator class="assigned" />
+		</id>
+		<property column="conference_name" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="confabbr" name="abbreviation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="ucc.portal.model.impl.UccPeopleImpl" table="UCC_Data_Warehouse.dbo.People">
+		<id column="peopleId" name="uccPeopleId" type="int">
+			<generator class="assigned" />
+		</id>
+		<property column="first" name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="middle" name="middleName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="last" name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="suffix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="dateOfBirth" name="birthday" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="active" name="myActive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="old_peopleId" name="oldUccPeopleId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="phone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="email" name="emailAddress" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="cell_phone" name="cellPhone" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="ucc.portal.model.impl.UccPeopleAddressImpl" table="UCC_Data_Warehouse.dbo.People_Address">
+		<id column="addressEntryId" name="uccPeopleAddressId" type="int">
+			<generator class="identity" />
+		</id>
+		<property column="peopleId" name="uccPeopleId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="address1" name="street1" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="address2" name="street2" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="city" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="state" name="region" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="zipCode" name="zip" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="zip4" name="zipPlus" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="addressType" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="country" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="active" name="myActive" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+		<property column="inactive_date" name="inactiveDate" type="org.hibernate.type.TimestampType" />
+		<property column="modified_by" name="modifiedBy" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property column="modified_date" name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="ucc.portal.model.impl.UccPeopleChurchStandingImpl" table="UCC_Data_Warehouse.dbo.People_Church_Standing">
+		<id column="peopleChurchStandingId" name="uccPeopleChurchStandingId" type="int">
+			<generator class="assigned" />
+		</id>
+		<property column="peopleId" name="uccPeopleId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="conferenceId" name="uccConferenceId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property column="associationId" name="uccAssociationId" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+	</class>
+</hibernate-mapping>

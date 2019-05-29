@@ -141,11 +141,15 @@
 
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
+System.out.println("indexer: "+indexer);
+System.out.println("param: "+ParamUtil.getString(request, "indexer"));
 if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	IndexerRegistryUtil.unregister(indexer);
+	System.out.println("go in one: ");
 } else if (indexer == null && "reg".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	IndexerRegistryUtil.register(contactIndexer);
+	System.out.println("go in tow: ");
 }
 
 

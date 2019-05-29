@@ -112,17 +112,52 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		}
 
 		try {
+			
+			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
-			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
-			StringBuffer messageResponse = new StringBuffer();
-			String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
-			if (id==null || id.trim().isEmpty()) {
-				SessionErrors.add(request, messageResponse.toString());
+			
+			//START CMAP-252 if contacts exist in CRM active, return the error
+			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
+				LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
+				SessionErrors.add(request, "409");
 				response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 				return;
 			}
+			//END CMAP-252
+			
+			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			
+			//START CMAP-253 //if the contact exist in CC get the id
+			String id = null;
+			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
+			if (ccContact!= null) {
+				if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) { // if contact is not active, activated first
+					ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+					StringBuffer bufferResponse = new StringBuffer();
+					constantContactServiceImpl.updateContact(ccContact, bufferResponse, "ACTION_BY_VISITOR");
+					String responseCode = bufferResponse.toString();
+					if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
+						SessionErrors.add(request, responseCode);
+						response.setRenderParameter("mvcPath", "/contacts/view.jsp");
+						return;
+					}
+				}
+				id = ccContact.getId();
+			}
+			//END CMAP-253
+			else { // the cotact was not found in CC, create it
+				StringBuffer messageResponse = new StringBuffer();
+				id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
+				if (id==null || id.trim().isEmpty()) {
+					SessionErrors.add(request, messageResponse.toString());
+					response.setRenderParameter("mvcPath", "/contacts/view.jsp");
+					return;
+				}
+			}
+			
+			//Create contact in CRM
 			crmContact.setConstantContactId(new Long(id));
 			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact);
 			if (addedContact != null) {

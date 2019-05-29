@@ -32,7 +32,7 @@ import contact.manager.service.CrmContactAuditLogLocalServiceUtil;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 14 * * MON"}, // Every Monday at 2pm UTC (8am Central)
+		property = {"cron.expression=0 0 14 ? * MON"}, // Every Monday at 2pm UTC (8am Central)
 		immediate = true,
 		service = UpdatedContactNotificationMessageListener.class )
 public class UpdatedContactNotificationMessageListener

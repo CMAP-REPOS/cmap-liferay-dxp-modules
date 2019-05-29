@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
+	<bean class="ucc.portal.service.impl.CExtChurchFinancesIncomeOtherLocalServiceImpl" id="ucc.portal.service.CExtChurchFinancesIncomeOtherLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtChurchFinancesIncomeOtherPersistenceImpl" id="ucc.portal.service.persistence.CExtChurchFinancesIncomeOtherPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtHistoricalInformationStaffingLocalServiceImpl" id="ucc.portal.service.CExtHistoricalInformationStaffingLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtHistoricalInformationStaffingPersistenceImpl" id="ucc.portal.service.persistence.CExtHistoricalInformationStaffingPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtOrganizationLocalServiceImpl" id="ucc.portal.service.CExtOrganizationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtOrganizationPersistenceImpl" id="ucc.portal.service.persistence.CExtOrganizationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtParticipationLocalServiceImpl" id="ucc.portal.service.CExtParticipationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtParticipationPersistenceImpl" id="ucc.portal.service.persistence.CExtParticipationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtParticipationOtherLocalServiceImpl" id="ucc.portal.service.CExtParticipationOtherLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtParticipationOtherPersistenceImpl" id="ucc.portal.service.persistence.CExtParticipationOtherPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtRealEstateCampaignLocalServiceImpl" id="ucc.portal.service.CExtRealEstateCampaignLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtRealEstateCampaignPersistenceImpl" id="ucc.portal.service.persistence.CExtRealEstateCampaignPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtStaffingChurchLocalServiceImpl" id="ucc.portal.service.CExtStaffingChurchLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtStaffingChurchPersistenceImpl" id="ucc.portal.service.persistence.CExtStaffingChurchPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.CExtStaffingCongregationLocalServiceImpl" id="ucc.portal.service.CExtStaffingCongregationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.CExtStaffingCongregationPersistenceImpl" id="ucc.portal.service.persistence.CExtStaffingCongregationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtContinuingEducationLocalServiceImpl" id="ucc.portal.service.ExtContinuingEducationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtContinuingEducationPersistenceImpl" id="ucc.portal.service.persistence.ExtContinuingEducationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtDownloadLogLocalServiceImpl" id="ucc.portal.service.ExtDownloadLogLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtDownloadLogPersistenceImpl" id="ucc.portal.service.persistence.ExtDownloadLogPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtFormalEducationLocalServiceImpl" id="ucc.portal.service.ExtFormalEducationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtFormalEducationPersistenceImpl" id="ucc.portal.service.persistence.ExtFormalEducationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtKeyAccomplishmentLocalServiceImpl" id="ucc.portal.service.ExtKeyAccomplishmentLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtKeyAccomplishmentPersistenceImpl" id="ucc.portal.service.persistence.ExtKeyAccomplishmentPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtReferenceLocalServiceImpl" id="ucc.portal.service.ExtReferenceLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtReferencePersistenceImpl" id="ucc.portal.service.persistence.ExtReferencePersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtRegionalEducationLocalServiceImpl" id="ucc.portal.service.ExtRegionalEducationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtRegionalEducationPersistenceImpl" id="ucc.portal.service.persistence.ExtRegionalEducationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtValidationLocalServiceImpl" id="ucc.portal.service.ExtValidationLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtValidationPersistenceImpl" id="ucc.portal.service.persistence.ExtValidationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.ExtVocationalHistoryLocalServiceImpl" id="ucc.portal.service.ExtVocationalHistoryLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.ExtVocationalHistoryPersistenceImpl" id="ucc.portal.service.persistence.ExtVocationalHistoryPersistence" parent="basePersistence">
+		<property name="dataSource" ref="extDataSource" />
+		<property name="sessionFactory" ref="extSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.UccAssociationLocalServiceImpl" id="ucc.portal.service.UccAssociationLocalService" />
+	<bean class="ucc.portal.service.impl.UccAssociationServiceImpl" id="ucc.portal.service.UccAssociationService" />
+	<bean class="ucc.portal.service.persistence.impl.UccAssociationPersistenceImpl" id="ucc.portal.service.persistence.UccAssociationPersistence" parent="basePersistence">
+		<property name="dataSource" ref="uccDataSource" />
+		<property name="sessionFactory" ref="uccSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.UccConferenceLocalServiceImpl" id="ucc.portal.service.UccConferenceLocalService" />
+	<bean class="ucc.portal.service.impl.UccConferenceServiceImpl" id="ucc.portal.service.UccConferenceService" />
+	<bean class="ucc.portal.service.persistence.impl.UccConferencePersistenceImpl" id="ucc.portal.service.persistence.UccConferencePersistence" parent="basePersistence">
+		<property name="dataSource" ref="uccDataSource" />
+		<property name="sessionFactory" ref="uccSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.UccPeopleLocalServiceImpl" id="ucc.portal.service.UccPeopleLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.UccPeoplePersistenceImpl" id="ucc.portal.service.persistence.UccPeoplePersistence" parent="basePersistence">
+		<property name="dataSource" ref="uccDataSource" />
+		<property name="sessionFactory" ref="uccSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.UccPeopleAddressLocalServiceImpl" id="ucc.portal.service.UccPeopleAddressLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.UccPeopleAddressPersistenceImpl" id="ucc.portal.service.persistence.UccPeopleAddressPersistence" parent="basePersistence">
+		<property name="dataSource" ref="uccDataSource" />
+		<property name="sessionFactory" ref="uccSessionFactory" />
+	</bean>
+	<bean class="ucc.portal.service.impl.UccPeopleChurchStandingLocalServiceImpl" id="ucc.portal.service.UccPeopleChurchStandingLocalService" />
+	<bean class="ucc.portal.service.persistence.impl.UccPeopleChurchStandingPersistenceImpl" id="ucc.portal.service.persistence.UccPeopleChurchStandingPersistence" parent="basePersistence">
+		<property name="dataSource" ref="uccDataSource" />
+		<property name="sessionFactory" ref="uccSessionFactory" />
+	</bean>
+</beans>

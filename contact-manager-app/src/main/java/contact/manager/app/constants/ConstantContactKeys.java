@@ -46,6 +46,9 @@ public class ConstantContactKeys {
 	public static final String CC_EMAIL_CAMPAIGN_STATUS_SENT = "SENT";
 	public static final String CC_EMAIL_CAMPAIGN_STATUS_SCHEDULED = "SCHEDULED";
 	
+	public static final String CC_ACTION_BY_OWNER = "ACTION_BY_OWNER";
+	public static final String CC_ACTION_BY_VISITOR = "ACTION_BY_VISITOR";
+	
 	
 	//Added to remove users from the recycling bin
 	public static final String CC_STATUS_DELETED = "DELETED";

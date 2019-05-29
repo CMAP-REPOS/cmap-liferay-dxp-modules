@@ -1,0 +1,9 @@
+Bundle-Name: UCC-api
+Bundle-SymbolicName: ucc.portal.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	ucc.portal.exception,\
+	ucc.portal.model,\
+	ucc.portal.service,\
+	ucc.portal.service.persistence
+-includeresource: META-INF/service.xml=../UCC-service/service.xml

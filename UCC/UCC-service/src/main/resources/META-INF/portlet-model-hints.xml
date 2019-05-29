@@ -1,0 +1,471 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="ucc.portal.model.CExtChurchFinancesIncomeOther">
+		<field name="organizationId" type="long" />
+		<field name="cextChurchFinancesIncomeOtherId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="fnIncomeOther" type="int" />
+		<field name="fnIncomeOtherDescription" type="String" />
+		<field name="fnPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.CExtHistoricalInformationStaffing">
+		<field name="organizationId" type="long" />
+		<field name="cextHistoricalInformationStaffingId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="hiMinisterName" type="String" />
+		<field name="hiMinisterUCCStanding" type="boolean" />
+		<field name="hiMinisterStartYearOfService" type="int" />
+		<field name="hiMinisterEndYearOfService" type="int" />
+		<field name="hiPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.CExtOrganization">
+		<field name="organizationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="diTitle" type="String" />
+		<field name="diDescription" type="String" />
+		<field name="diComplete" type="boolean" />
+		<field name="rfLifeOfFaith" type="String" />
+		<field name="rfStrengthsQualities" type="String" />
+		<field name="rfWorship" type="String" />
+		<field name="rfEducationFaithVision" type="String" />
+		<field name="rfMinistryMission" type="String" />
+		<field name="rfMeetingHoursPerMonth" type="String" />
+		<field name="rfCrisisDisasterAction" type="String" />
+		<field name="rfMinisterGovernanceCopy" type="boolean" />
+		<field name="rfComplete" type="boolean" />
+		<field name="yrFileEntryId" type="long" />
+		<field name="yrChurchResponse" type="String" />
+		<field name="yrComplete" type="boolean" />
+		<field name="dgActiveMembers" type="int" />
+		<field name="dgActiveMembersEstimate" type="boolean" />
+		<field name="dgActiveNonMembers" type="int" />
+		<field name="dgActiveNonMembersEstimate" type="boolean" />
+		<field name="dgPercentMoreThan10" type="int" />
+		<field name="dgPercentMoreThan10Estimate" type="boolean" />
+		<field name="dgPercent5To10" type="int" />
+		<field name="dgPercent5To10Estimate" type="boolean" />
+		<field name="dgPercentLessThan5" type="int" />
+		<field name="dgPercentLessThan5Estimate" type="boolean" />
+		<field name="dgAge11AndUnder" type="int" />
+		<field name="dgAge12To17" type="int" />
+		<field name="dgAge18To24" type="int" />
+		<field name="dgAge25To34" type="int" />
+		<field name="dgAge35To44" type="int" />
+		<field name="dgAge45To54" type="int" />
+		<field name="dgAge55To64" type="int" />
+		<field name="dgAge65To74" type="int" />
+		<field name="dgAge75AndOver" type="int" />
+		<field name="dgAllAgesEstimate" type="boolean" />
+		<field name="dgPercentSingleUnder35" type="int" />
+		<field name="dgPercentSingleUnder35Estimate" type="boolean" />
+		<field name="dgPercentWithMinors" type="int" />
+		<field name="dgPercentWithMinorsEstimate" type="boolean" />
+		<field name="dgPercentSingle35To65" type="int" />
+		<field name="dgPercentSingle35To65Estimate" type="boolean" />
+		<field name="dgPercentJointNoMinors" type="int" />
+		<field name="dgPercentJointNoMinorsEstimate" type="boolean" />
+		<field name="dgPercentSingleOver65" type="int" />
+		<field name="dgPercentSingleOver65Estimate" type="boolean" />
+		<field name="dgPercentHighSchool" type="int" />
+		<field name="dgPercentHighSchoolEstimate" type="boolean" />
+		<field name="dgPercentCollege" type="int" />
+		<field name="dgPercentCollegeEstimate" type="boolean" />
+		<field name="dgPercentGraduateSchool" type="int" />
+		<field name="dgPercentGraduateSchoolEstimate" type="boolean" />
+		<field name="dgPercentSpecialtyTraining" type="int" />
+		<field name="dgPercentSpecialtyTrainingEstimate" type="boolean" />
+		<field name="dgPercentOtherEducation" type="int" />
+		<field name="dgPercentOtherEducationEstimate" type="boolean" />
+		<field name="dgPercentOtherEducationDescription" type="String" />
+		<field name="dgPercentEmployed" type="int" />
+		<field name="dgPercentEmployedEstimate" type="boolean" />
+		<field name="dgPercentNotFullyEmployed" type="int" />
+		<field name="dgPercentNotFullyEmployedEstimate" type="boolean" />
+		<field name="dgPercentRetired" type="int" />
+		<field name="dgPercentRetiredEstimate" type="boolean" />
+		<field name="dgRangeOfOccupations" type="String" />
+		<field name="dgComplete" type="boolean" />
+		<field name="dvEthnicRacialMix" type="String" />
+		<field name="dvWelcomingConversation" type="String" />
+		<field name="dvWelcomingComments" type="String" />
+		<field name="dvComplete" type="boolean" />
+		<field name="ppComments" type="String" />
+		<field name="ppComplete" type="boolean" />
+		<field name="sfPreviousRoles" type="String" />
+		<field name="sfComplete" type="boolean" />
+		<field name="rvOverallMinistry" type="String" />
+		<field name="rvComplete" type="boolean" />
+		<field name="fnYear" type="String" />
+		<field name="fnIncomeOfferingsPledgedGivings" type="int" />
+		<field name="fnIncomeEndowmentProceeds" type="int" />
+		<field name="fnIncomeEndowmentDraw" type="int" />
+		<field name="fnIncomeFundraising" type="int" />
+		<field name="fnIncomeDesignatedGifts" type="int" />
+		<field name="fnIncomeGrants" type="int" />
+		<field name="fnIncomeRentalChurchBuilding" type="int" />
+		<field name="fnIncomeRentalChurchParsonage" type="int" />
+		<field name="fnIncomeRelatedOrganizations" type="int" />
+		<field name="fnIncomeSpecialAccounts" type="int" />
+		<field name="fnExpense" type="int" />
+		<field name="fnFileEntryId" type="long" />
+		<field name="fnExpenseMinisterialSupportPercent" type="int" />
+		<field name="fnFailToPayMinister" type="boolean" />
+		<field name="fnOurChurchWiderMission" type="boolean" />
+		<field name="fnOneGreatHourOfSharing" type="boolean" />
+		<field name="fnStrenghtenTheChurch" type="boolean" />
+		<field name="fnNeighborsInNeed" type="boolean" />
+		<field name="fnChristmasFund" type="boolean" />
+		<field name="fnOurChurchWiderMissionHow" type="String" />
+		<field name="fnDebtCurrent" type="int" />
+		<field name="fnDebtCurrentLoan" type="int" />
+		<field name="fnDebtReasonFor" type="String" />
+		<field name="fnDebtPaymentsCurrent" type="boolean" />
+		<field name="fnEndowment" type="boolean" />
+		<field name="fnEndowmentMarketValue" type="int" />
+		<field name="fnEndowmentDrawWhen" type="String" />
+		<field name="fnEndowmentDraw5YearPercent" type="int" />
+		<field name="fnEndowmentDraw5YearToExpense" type="String" />
+		<field name="fnEndowmentDrawCurrentRateLast" type="String" />
+		<field name="fnEndowmentComment" type="String" />
+		<field name="fnReserves" type="int" />
+		<field name="fnInvestments" type="int" />
+		<field name="fnComplete" type="boolean" />
+		<field name="reBuildingProgram" type="String" />
+		<field name="reCampaignMissionComponents" type="String" />
+		<field name="reParsonage" type="boolean" />
+		<field name="reParsonageMarketValue" type="int" />
+		<field name="reParsonageAssessedValue" type="int" />
+		<field name="reParsonageUsage" type="String" />
+		<field name="reParsonageStreetAddress" type="String" />
+		<field name="reParsonageCity" type="String" />
+		<field name="reParsonageState" type="String" />
+		<field name="reParsonageZip" type="String" />
+		<field name="reParsonageFootage" type="int" />
+		<field name="reParsonageBedrooms" type="int" />
+		<field name="reParsonageBathrooms" type="int" />
+		<field name="reParsonageAvailableMinister" type="boolean" />
+		<field name="reParsonageExpectedMinister" type="boolean" />
+		<field name="reParsonageCondition" type="String" />
+		<field name="reParsonageResponsibleEntity" type="String" />
+		<field name="reOwnedBuildings" type="String" />
+		<field name="reNonOwnedBuildings" type="String" />
+		<field name="reWheelchairAccessible" type="String" />
+		<field name="reFinancesAssetsReview" type="String" />
+		<field name="reComplete" type="boolean" />
+		<field name="hiSignificantHappenings" type="String" />
+		<field name="hiManagedChange" type="String" />
+		<field name="hiConflictResolution" type="String" />
+		<field name="hiMinisterialLeadershipLearning" type="String" />
+		<field name="hiPressureInvoluntaryTermination" type="String" />
+		<field name="hiSituationalSupportConsultation" type="String" />
+		<field name="hiFitnessReview" type="String" />
+		<field name="hiComplete" type="boolean" />
+		<field name="cmServiceAdvocacy" type="String" />
+		<field name="cmMeetingsRelationshipsActivities" type="String" />
+		<field name="cmAccessibleToAll" type="boolean" />
+		<field name="cmCreationJustice" type="boolean" />
+		<field name="cmEconomicJustice" type="boolean" />
+		<field name="cmFaithfulAndWelcoming" type="boolean" />
+		<field name="cmGodIsStillSpeaking" type="boolean" />
+		<field name="cmBorderAndImmigrantJustice" type="boolean" />
+		<field name="cmInterCulturalMultiRacial" type="boolean" />
+		<field name="cmJustPeace" type="boolean" />
+		<field name="cmGlobalMissionChurch" type="boolean" />
+		<field name="cmOpenAndAffirming" type="boolean" />
+		<field name="cmWISECongregationForMentalHealth" type="boolean" />
+		<field name="cmOtherUCCDesignations" type="boolean" />
+		<field name="cmDesignationsOtherDenominations" type="boolean" />
+		<field name="cmStatementsReflection" type="String" />
+		<field name="cmWorkTowardWitnessFuture" type="String" />
+		<field name="cmEcumenicalInterfaithParticipation" type="String" />
+		<field name="cmMissionStatementComparison" type="String" />
+		<field name="cmPastorTimeExpectations" type="String" />
+		<field name="cmComplete" type="boolean" />
+		<field name="miMissionInSiteTrendsOpportunities" type="String" />
+		<field name="miCongregationDemographicsComparison" type="String" />
+		<field name="miCommunityDemographicsImpact" type="String" />
+		<field name="miKnownForInCommunity" type="String" />
+		<field name="miWhyNewPeopleInvolved" type="String" />
+		<field name="miComplete" type="boolean" />
+		<field name="vsGodsCallToBecome" type="String" />
+		<field name="vsGodsCallToReachOut" type="String" />
+		<field name="vsComplete" type="boolean" />
+		<field name="pvFileEntryId" type="long" />
+		<field name="pvGeneratedDate" type="Date" />
+		<field name="pvComplete" type="boolean" />
+		<field name="pbFileEntryId" type="long" />
+		<field name="pbPublishedDate" type="Date" />
+	</model>
+	<model name="ucc.portal.model.CExtParticipation">
+		<field name="organizationId" type="long" />
+		<field name="cextParticipationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ppGatheringId" type="String" />
+		<field name="ppGatheringKey" type="String" />
+		<field name="ppCount" type="int" />
+		<field name="ppLay" type="boolean" />
+		<field name="ppPastor" type="boolean" />
+		<field name="ppStaff" type="boolean" />
+		<field name="ppOther" type="boolean" />
+		<field name="ppGatheringAdditionalKey" type="String" />
+		<field name="ppGatheringAdditionalType" type="String" />
+		<field name="ppAdditionalInformation" type="String" />
+		<field name="ppPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.CExtParticipationOther">
+		<field name="organizationId" type="long" />
+		<field name="cextParticipationOtherId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="ppGathering" type="String" />
+		<field name="ppCount" type="int" />
+		<field name="ppLay" type="boolean" />
+		<field name="ppPastor" type="boolean" />
+		<field name="ppStaff" type="boolean" />
+		<field name="ppOther" type="boolean" />
+		<field name="ppAdditionalInformation" type="String" />
+		<field name="ppPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.CExtRealEstateCampaign">
+		<field name="organizationId" type="long" />
+		<field name="cextRealEstateCampaignId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="reYear" type="int" />
+		<field name="reUnderwayAnticipated" type="boolean" />
+		<field name="reGoal" type="int" />
+		<field name="reResult" type="int" />
+		<field name="rePurpose" type="String" />
+		<field name="reImpact" type="String" />
+	</model>
+	<model name="ucc.portal.model.CExtStaffingChurch">
+		<field name="organizationId" type="long" />
+		<field name="cextStaffingChurchId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sfPosition" type="String" />
+		<field name="sfHeadOfStaff" type="boolean" />
+		<field name="sfCompensation" type="String" />
+		<field name="sfSupervisedBy" type="String" />
+		<field name="sfCurrentTenure" type="String" />
+		<field name="sfPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.CExtStaffingCongregation">
+		<field name="organizationId" type="long" />
+		<field name="cextStaffingCongregationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="sfMinisterName" type="String" />
+		<field name="sfMinisterRetired" type="boolean" />
+		<field name="sfMinisterCovenant" type="String" />
+		<field name="sfMinistrySetting" type="String" />
+		<field name="sfMinistryRole" type="String" />
+		<field name="sfPriority" type="double" />
+	</model>
+	<model name="ucc.portal.model.ExtContinuingEducation">
+		<field name="extContinuingEducationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="institutionOrProgram" type="String" />
+		<field name="city" type="String" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="startDateOfAttendance" type="Date" />
+		<field name="endDateOfAttendance" type="Date" />
+		<field name="degreeOrCertification" type="String" />
+	</model>
+	<model name="ucc.portal.model.ExtDownloadLog">
+		<field name="extDownloadLogId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="profileFileEntryId" type="long" />
+		<field name="profileFileVersionId" type="long" />
+		<field name="searchAndCallUserId" type="long" />
+		<field name="conferenceIds" type="String" />
+		<field name="downloadDate" type="Date" />
+		<field name="withdrawalDate" type="Date" />
+		<field name="fitnessReview" type="boolean" />
+	</model>
+	<model name="ucc.portal.model.ExtFormalEducation">
+		<field name="extFormalEducationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="institutionOrProgram" type="String" />
+		<field name="city" type="String" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="startDateOfAttendance" type="Date" />
+		<field name="endDateOfAttendance" type="Date" />
+		<field name="degreeOrCertification" type="String" />
+	</model>
+	<model name="ucc.portal.model.ExtKeyAccomplishment">
+		<field name="extKeyAccomplishmentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="locationOrSetting" type="String" />
+		<field name="description" type="String" />
+		<field name="priority" type="double" />
+	</model>
+	<model name="ucc.portal.model.ExtReference">
+		<field name="extReferenceId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="referenceUserId" type="long" />
+		<field name="userCreated" type="boolean" />
+		<field name="emailDate" type="Date" />
+		<field name="resendEmail" type="boolean" />
+		<field name="roleAndRelationship" type="String" />
+		<field name="areasOfStrength" type="String" />
+		<field name="areasOfGrowth" type="String" />
+		<field name="significantExperience" type="String" />
+		<field name="additionalComments" type="String" />
+		<field name="submitDate" type="Date" />
+		<field name="userFirstName" type="String" />
+		<field name="userMiddleName" type="String" />
+		<field name="userLastName" type="String" />
+		<field name="userEmailAddress" type="String" />
+		<field name="addressStreet1" type="String" />
+		<field name="addressStreet2" type="String" />
+		<field name="addressStreet3" type="String" />
+		<field name="addressCity" type="String" />
+		<field name="addressZip" type="String" />
+		<field name="addressRegionId" type="long" />
+		<field name="addressCountryId" type="long" />
+		<field name="addressTypeId" type="int" />
+		<field name="phoneNumber" type="String" />
+		<field name="phoneExtension" type="String" />
+		<field name="phoneTypeId" type="int" />
+	</model>
+	<model name="ucc.portal.model.ExtRegionalEducation">
+		<field name="extRegionalEducationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="programOrExperience" type="String" />
+		<field name="city" type="String" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="startDateOfAttendance" type="Date" />
+		<field name="endDateOfAttendance" type="Date" />
+	</model>
+	<model name="ucc.portal.model.ExtValidation">
+		<field name="extValidationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="profileFileEntryId" type="long" />
+		<field name="profileFileVersionId" type="long" />
+		<field name="validatorUserId" type="long" />
+		<field name="emailDate" type="Date" />
+		<field name="currentStandingAndFitness" type="boolean" />
+		<field name="currentCriminalBackgroundCheck" type="boolean" />
+		<field name="accurateCurrentEmployment" type="boolean" />
+		<field name="accurateSelfDisclosure" type="boolean" />
+		<field name="signatureJson" type="String" />
+		<field name="signatureFileEntryId" type="long" />
+		<field name="signatureFileVersionId" type="long" />
+		<field name="signatureName" type="String" />
+		<field name="signatureTimestamp" type="Date" />
+		<field name="signatureTitle" type="String" />
+		<field name="conferenceId" type="long" />
+		<field name="associationId" type="long" />
+		<field name="withholdValidation" type="boolean" />
+		<field name="additionalComments" type="String" />
+		<field name="submitDate" type="Date" />
+	</model>
+	<model name="ucc.portal.model.ExtVocationalHistory">
+		<field name="extVocationalHistoryId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="locationOrSetting" type="String" />
+		<field name="city" type="String" />
+		<field name="regionId" type="long" />
+		<field name="countryId" type="long" />
+		<field name="startDateOfService" type="Date" />
+		<field name="endDateOfService" type="Date" />
+		<field name="titleOrPosition" type="String" />
+		<field name="jobTypeId" type="int" />
+	</model>
+	<model name="ucc.portal.model.UccAssociation">
+		<field name="uccAssociationId" type="int" />
+		<field name="uccConferenceId" type="int" />
+		<field name="name" type="String" />
+		<field name="abbreviation" type="String" />
+		<field name="myActive" type="boolean" />
+	</model>
+	<model name="ucc.portal.model.UccConference">
+		<field name="uccConferenceId" type="int" />
+		<field name="name" type="String" />
+		<field name="abbreviation" type="String" />
+	</model>
+	<model name="ucc.portal.model.UccPeople">
+		<field name="uccPeopleId" type="int" />
+		<field name="firstName" type="String" />
+		<field name="middleName" type="String" />
+		<field name="lastName" type="String" />
+		<field name="suffix" type="String" />
+		<field name="birthday" type="String" />
+		<field name="myActive" type="boolean" />
+		<field name="oldUccPeopleId" type="int" />
+		<field name="phone" type="String" />
+		<field name="emailAddress" type="String" />
+		<field name="cellPhone" type="String" />
+	</model>
+	<model name="ucc.portal.model.UccPeopleAddress">
+		<field name="uccPeopleAddressId" type="int" />
+		<field name="uccPeopleId" type="int" />
+		<field name="street1" type="String" />
+		<field name="street2" type="String" />
+		<field name="city" type="String" />
+		<field name="region" type="String" />
+		<field name="zip" type="String" />
+		<field name="zipPlus" type="String" />
+		<field name="type" type="String" />
+		<field name="country" type="String" />
+		<field name="myActive" type="boolean" />
+		<field name="inactiveDate" type="Date" />
+		<field name="modifiedBy" type="String" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="ucc.portal.model.UccPeopleChurchStanding">
+		<field name="uccPeopleChurchStandingId" type="int" />
+		<field name="uccPeopleId" type="int" />
+		<field name="uccConferenceId" type="int" />
+		<field name="uccAssociationId" type="int" />
+	</model>
+</model-hints>
