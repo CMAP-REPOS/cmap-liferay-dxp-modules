@@ -45,6 +45,21 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 		return _crmContactLocalService.addCrmContact(crmContact);
 	}
 
+	/**
+	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
+	*
+	* @param crmContact the CRM Contact
+	* @return the CRM Contact that was added
+	* @throws PortalException
+	*/
+	@Override
+	public contact.manager.model.CrmContact addCrmContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmContactLocalService.addCrmContact(crmContact, serviceContext);
+	}
+
 	@Override
 	public void addCrmGroupCrmContact(long crmGroupId,
 		contact.manager.model.CrmContact crmContact) {
@@ -133,6 +148,15 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	public contact.manager.model.CrmContact deleteCrmContact(long crmContactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return _crmContactLocalService.deleteCrmContact(crmContactId);
+	}
+
+	@Override
+	public contact.manager.model.CrmContact deleteCrmContact(
+		long crmContactId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmContactLocalService.deleteCrmContact(crmContactId,
+			serviceContext);
 	}
 
 	@Override
@@ -574,6 +598,19 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	}
 
 	@Override
+	public void initCrmContactResourcePermissions(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_crmContactLocalService.initCrmContactResourcePermissions(companyId);
+	}
+
+	@Override
+	public void initCrmContactResourcePermissions(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		_crmContactLocalService.initCrmContactResourcePermissions(serviceContext);
+	}
+
+	@Override
 	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds) {
 		_crmContactLocalService.setCrmGroupCrmContacts(crmGroupId, crmContactIds);
 	}
@@ -605,6 +642,15 @@ public class CrmContactLocalServiceWrapper implements CrmContactLocalService,
 	public contact.manager.model.CrmContact updateCrmContact(
 		contact.manager.model.CrmContact crmContact) {
 		return _crmContactLocalService.updateCrmContact(crmContact);
+	}
+
+	@Override
+	public contact.manager.model.CrmContact updateCrmContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmContactLocalService.updateCrmContact(crmContact,
+			serviceContext);
 	}
 
 	@Override

@@ -15,13 +15,16 @@
 package contact.manager.service.impl;
 
 import com.liferay.portal.kernel.exception.NoSuchContactException;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
@@ -105,6 +108,23 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 		crmContactPersistence.setCrmGroups(contactId, groupIds);
 	}
 	
+	/**
+	 * Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param crmContact the CRM Contact
+	 * @return the CRM Contact that was added
+	 * @throws PortalException 
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CrmContact addCrmContact(CrmContact crmContact, ServiceContext serviceContext) throws PortalException {
+		crmContact.setNew(true);
+		long groupId = serviceContext.getScopeGroupId();
+		crmContactPersistence.update(crmContact);
+		resourceLocalService.addResources(crmContact.getCompanyId(), groupId, crmContact.getUserId(), CrmContact.class.getName(), crmContact.getCrmContactId(), false, true, true);
+		return crmContact;
+	}
+	
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CrmContact updateCrmContact(CrmContact crmContact) {
@@ -117,5 +137,59 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 		
 		return crmContactPersistence.update(crmContact);
 	}
+	
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public CrmContact updateCrmContact(CrmContact crmContact, ServiceContext serviceContext) throws PortalException {
+		//adding this in case the indexer is not auto registred.
+		Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
+		if (indexer == null){
+	    	CrmContactIndexer contactIndexer = new CrmContactIndexer();
+	    	IndexerRegistryUtil.register(contactIndexer);
+		}
+		
+		
+		resourceLocalService.updateResources(serviceContext.getCompanyId(),
+                serviceContext.getScopeGroupId(), 
+                CrmContact.class.getName(), crmContact.getCrmContactId(),
+                serviceContext.getGroupPermissions(),
+                serviceContext.getGuestPermissions());
+		
+		
+		return crmContactPersistence.update(crmContact);
+	}
+	
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public CrmContact deleteCrmContact(long crmContactId, ServiceContext serviceContext) throws PortalException {
+		
+		resourceLocalService.deleteResource(serviceContext.getCompanyId(),
+				CrmContact.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL,
+				crmContactId);
+		
+		return crmContactPersistence.remove(crmContactId);
+	}
+	
+	@Override
+	public void initCrmContactResourcePermissions(ServiceContext serviceContext) throws PortalException {
+		System.out.println("papasss");
+		long groupId = serviceContext.getScopeGroupId();
+		System.out.println("spasss");
+		List<CrmContact> crmContacts = crmContactLocalService.getCrmContacts(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+		System.out.println("mocosss");
+		for(CrmContact crmContact : crmContacts) {
+			System.out.println("mocosdsd  1");
+			resourceLocalService.addResources(crmContact.getCompanyId(), groupId, crmContact.getUserId(), CrmContact.class.getName(), crmContact.getCrmContactId(), false, true, true);
+			System.out.println("mocosss  2");
+		}
+		System.out.println("mocosss   3");
+	}
+
+	@Override
+	public void initCrmContactResourcePermissions(long companyId) throws PortalException {
+		// TODO Auto-generated method stub
+		
+	}
+	
 	
 }

@@ -54,6 +54,20 @@ public class CrmContactLocalServiceUtil {
 		return getService().addCrmContact(crmContact);
 	}
 
+	/**
+	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
+	*
+	* @param crmContact the CRM Contact
+	* @return the CRM Contact that was added
+	* @throws PortalException
+	*/
+	public static contact.manager.model.CrmContact addCrmContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().addCrmContact(crmContact, serviceContext);
+	}
+
 	public static void addCrmGroupCrmContact(long crmGroupId,
 		contact.manager.model.CrmContact crmContact) {
 		getService().addCrmGroupCrmContact(crmGroupId, crmContact);
@@ -132,6 +146,13 @@ public class CrmContactLocalServiceUtil {
 		long crmContactId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteCrmContact(crmContactId);
+	}
+
+	public static contact.manager.model.CrmContact deleteCrmContact(
+		long crmContactId,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteCrmContact(crmContactId, serviceContext);
 	}
 
 	public static void deleteCrmGroupCrmContact(long crmGroupId,
@@ -520,6 +541,17 @@ public class CrmContactLocalServiceUtil {
 		return getService().hasCrmTagCrmContacts(crmTagId);
 	}
 
+	public static void initCrmContactResourcePermissions(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().initCrmContactResourcePermissions(companyId);
+	}
+
+	public static void initCrmContactResourcePermissions(
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		getService().initCrmContactResourcePermissions(serviceContext);
+	}
+
 	public static void setCrmGroupCrmContacts(long crmGroupId,
 		long[] crmContactIds) {
 		getService().setCrmGroupCrmContacts(crmGroupId, crmContactIds);
@@ -548,6 +580,13 @@ public class CrmContactLocalServiceUtil {
 	public static contact.manager.model.CrmContact updateCrmContact(
 		contact.manager.model.CrmContact crmContact) {
 		return getService().updateCrmContact(crmContact);
+	}
+
+	public static contact.manager.model.CrmContact updateCrmContact(
+		contact.manager.model.CrmContact crmContact,
+		com.liferay.portal.kernel.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().updateCrmContact(crmContact, serviceContext);
 	}
 
 	public static CrmContactLocalService getService() {

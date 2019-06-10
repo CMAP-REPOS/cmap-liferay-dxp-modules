@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.service.ServiceContextFactory"%>
 <%@ include file="../init.jsp"%>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ page import="com.liferay.portal.kernel.exception.PortalException" %>
@@ -150,6 +151,11 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	IndexerRegistryUtil.register(contactIndexer);
 	System.out.println("go in tow: ");
+}
+
+if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "indexer"))){
+	CrmContactLocalServiceUtil.initCrmContactResourcePermissions(ServiceContextFactory.getInstance(CrmContact.class.getName(), request));
+	System.out.println("go in tree: ");
 }
 
 

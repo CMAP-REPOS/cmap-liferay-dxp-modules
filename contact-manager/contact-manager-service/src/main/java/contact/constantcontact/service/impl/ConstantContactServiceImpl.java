@@ -531,6 +531,8 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		
 		String apiUrl = apibaseurl + "contacts/" + model.getId()
 				+ "?action_by="+actionBy+"&api_key=" + apikey;
+		
+		System.out.println(apiUrl);
 
 		HttpURLConnection connection = null;
 		try {
@@ -539,11 +541,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
+			System.out.println(contactModelJson);
 			out.write(contactModelJson);
 			out.close();
 
 			int status = connection.getResponseCode();
-			
+			System.out.println("de regreso" + connection.getResponseMessage());
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("#updateContact - HTTP response code: " + status);
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);

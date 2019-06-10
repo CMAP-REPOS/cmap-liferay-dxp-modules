@@ -3,14 +3,10 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
-import contact.manager.app.util.UserUtil;
-import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.WebKeys;
 
 import java.io.IOException;
 import java.util.Date;
@@ -28,7 +24,7 @@ import org.osgi.service.component.annotations.Reference;
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.AuditLogUtil;
-import contact.manager.app.util.PermissionUtil;
+import contact.manager.app.util.UserUtil;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.service.CrmContactAuditLogLocalService;
@@ -67,14 +63,6 @@ public class RecyclingBinPortlet  extends MVCPortlet {
 	
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserDeleteContact(user)) {
-			// TODO: set session message
-			return;
-		}		
-
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
@@ -86,7 +74,7 @@ public class RecyclingBinPortlet  extends MVCPortlet {
 			crmContact.setUserId(userId);
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
-			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact);
+			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_REMOVED);
 			}

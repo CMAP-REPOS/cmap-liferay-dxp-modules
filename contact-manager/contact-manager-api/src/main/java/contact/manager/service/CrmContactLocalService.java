@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalService;
 import com.liferay.portal.kernel.service.PersistedModelLocalService;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -77,6 +78,17 @@ public interface CrmContactLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmContact addCrmContact(CrmContact crmContact);
+
+	/**
+	* Adds the CRM Contact to the database. Also notifies the appropriate model listeners.
+	*
+	* @param crmContact the CRM Contact
+	* @return the CRM Contact that was added
+	* @throws PortalException
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmContact addCrmContact(CrmContact crmContact,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void addCrmGroupCrmContact(long crmGroupId, CrmContact crmContact);
 
@@ -127,6 +139,10 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmContact deleteCrmContact(long crmContactId)
 		throws PortalException;
+
+	@Indexable(type = IndexableType.DELETE)
+	public CrmContact deleteCrmContact(long crmContactId,
+		ServiceContext serviceContext) throws PortalException;
 
 	public void deleteCrmGroupCrmContact(long crmGroupId, CrmContact crmContact);
 
@@ -403,6 +419,12 @@ public interface CrmContactLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCrmTagCrmContacts(long crmTagId);
 
+	public void initCrmContactResourcePermissions(long companyId)
+		throws PortalException;
+
+	public void initCrmContactResourcePermissions(ServiceContext serviceContext)
+		throws PortalException;
+
 	public void setCrmGroupCrmContacts(long crmGroupId, long[] crmContactIds);
 
 	public void setCrmGroups(long contactId, long[] groupIds)
@@ -421,4 +443,8 @@ public interface CrmContactLocalService extends BaseLocalService,
 	*/
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmContact updateCrmContact(CrmContact crmContact);
+
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmContact updateCrmContact(CrmContact crmContact,
+		ServiceContext serviceContext) throws PortalException;
 }

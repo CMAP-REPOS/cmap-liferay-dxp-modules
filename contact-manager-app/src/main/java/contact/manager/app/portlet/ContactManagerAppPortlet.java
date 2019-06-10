@@ -40,7 +40,6 @@ import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.GroupUtil;
 import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
-import contact.manager.app.util.PermissionUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
 import contact.manager.model.CrmContact;
@@ -104,13 +103,13 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		User user = themeDisplay.getUser();
 		
-		if (!PermissionUtil.canUserAddContact(user)) {
-			// TODO: set session message
-			return;
-		}
-
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserAddContact(user)) {
+//			// TODO: set session message
+//			return;
+//		}
+//
 		try {
 			
 			
@@ -133,24 +132,36 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			String id = null;
 			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
 			if (ccContact!= null) {
+				System.out.println("TACHAGORDA 0");
 				if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) { // if contact is not active, activated first
+					System.out.println("TACHAGORDA 0.1");
 					ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 					StringBuffer bufferResponse = new StringBuffer();
+					//not sure if visitor or woner works everitime when updating general contact data or changing status
+					//adding bouth to matain existing use cases
 					constantContactServiceImpl.updateContact(ccContact, bufferResponse, "ACTION_BY_VISITOR");
 					String responseCode = bufferResponse.toString();
 					if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
-						SessionErrors.add(request, responseCode);
-						response.setRenderParameter("mvcPath", "/contacts/view.jsp");
-						return;
+						System.out.println("TACHAGORDA 0.15");
+						bufferResponse = new StringBuffer();
+						constantContactServiceImpl.updateContact(ccContact, bufferResponse);
+						if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
+							System.out.println("TACHAGORDA 0.2");
+							SessionErrors.add(request, responseCode);
+							response.setRenderParameter("mvcPath", "/contacts/view.jsp");
+							return;
+						}
 					}
 				}
 				id = ccContact.getId();
 			}
 			//END CMAP-253
 			else { // the cotact was not found in CC, create it
+				System.out.println("TACHAGORDA 1");
 				StringBuffer messageResponse = new StringBuffer();
 				id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
 				if (id==null || id.trim().isEmpty()) {
+					System.out.println("TACHAGORDA 1.1");
 					SessionErrors.add(request, messageResponse.toString());
 					response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 					return;
@@ -159,7 +170,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			//Create contact in CRM
 			crmContact.setConstantContactId(new Long(id));
-			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact);
+			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);
 			if (addedContact != null) {
 				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
 			}
@@ -174,13 +185,16 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void updateContact(ActionRequest request, ActionResponse response) throws PortalException {
 		
+		System.out.println("Chucha la viejita: 1");
+		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
 		
-		if (!PermissionUtil.canUserUpdateContact(user)) {
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+		//if (!PermissionUtil.canUserUpdateContact(user)) {
 			// TODO: set session message
-			return;
-		}
+		//	return;
+		//}
 		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
@@ -250,19 +264,25 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			CrmContact updatedContact = null;
 			if (!errorOnConstactContact) {
-				updatedContact = _crmContactLocalService.updateCrmContact(crmContact);
+				updatedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			}
-				
+			
+			System.out.println("A ver a ver: "+crmContact);
+			
 			if (updatedContact != null) {
+				System.out.println("A ver a ver: 1");
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
 						updatedContact);
 				// TODO: pass to Constant Contact API
+			} else {
+				System.out.println("A ver a ver: 2");
 			}
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 
 		} catch (Exception e) {
+			e.printStackTrace();
 			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
 		}
 	}
@@ -272,10 +292,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
 		
-		if (!PermissionUtil.canUserDeleteContact(user)) {
-			// TODO: set session message
-			return;
-		}		
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserDeleteContact(user)) {
+//			// TODO: set session message
+//			return;
+//		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
@@ -289,7 +310,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			long constantContactID =  crmContact.getConstantContactId();
-			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact);
+			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
@@ -314,10 +335,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
 		
-		if (!PermissionUtil.canUserAddNote(user)) {
-			// TODO: set session message
-			return;
-		}		
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserAddNote(user)) {
+//			// TODO: set session message
+//			return;
+//		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -339,11 +361,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserUpdateNote(user)) {
-			// TODO: set session message
-			return;
-		}		
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserUpdateNote(user)) {
+//			// TODO: set session message
+//			return;
+//		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -365,11 +387,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserDeleteNote(user)) {
-			// TODO: set session message
-			return;
-		}		
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserDeleteNote(user)) {
+//			// TODO: set session message
+//			return;
+//		}		
 
 		try {
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
@@ -383,11 +405,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserAddOutreach(user)) {
-			// TODO: set session message
-			return;
-		}		
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserAddOutreach(user)) {
+//			// TODO: set session message
+//			return;
+//		}		
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -410,11 +432,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserUpdateOutreach(user)) {
-			// TODO: set session message
-			return;
-		}
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserUpdateOutreach(user)) {
+//			// TODO: set session message
+//			return;
+//		}
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
@@ -437,11 +459,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
-		
-		if (!PermissionUtil.canUserDeleteOutreach(user)) {
-			// TODO: set session message
-			return;
-		}
+		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		if (!PermissionUtil.canUserDeleteOutreach(user)) {
+//			// TODO: set session message
+//			return;
+//		}
 		
 		try {
 			long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");

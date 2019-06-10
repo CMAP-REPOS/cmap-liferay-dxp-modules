@@ -104,7 +104,7 @@
 
 <div class="container-fluid">
 
-	<% if (PermissionUtil.canUserAddContact(currentUser)) { %>
+<!-- This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view if (PermissionUtil.canUserAddContact(currentUser)) {  -->
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>
@@ -112,7 +112,7 @@
 				value="Add Contact"></aui:button>
 		</aui:col>
 	</aui:row>
-	<% } %>
+<%-- 	}  --%>
 	
 	<aui:row>
 		<aui:col md="12">
