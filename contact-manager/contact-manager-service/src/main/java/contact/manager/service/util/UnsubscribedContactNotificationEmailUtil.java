@@ -14,16 +14,22 @@ extends BaseEmailUtil {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationEmailUtil.class);
 	
 
-	public static void buildAndSendEmail( String from, String to, String cc[], String subject, List<UnsubscribedContact> unsubscribedContactList ) {
+	public static void buildAndSendEmail( String from, String to, String cc[], String subject, List<UnsubscribedContact> unsubscribedContactList, String emailFooter ) {
 		if (_log.isTraceEnabled()) {
 			_log.trace(">> buildAndSendEmail");
 		}
 		
 		StringBuilder sb = new StringBuilder(_EMAIL_BODY_HEADER);
+		sb.append(_EMAIL_CONTENT_HEADER);
 		for( UnsubscribedContact unsubscribedContact : unsubscribedContactList ) {
 			sb.append("<tr><td class=\"tg-yw4l\">").append( unsubscribedContact.getConstantContactActivityEmailAddress() ).append("</td>");
+			sb.append("<td class=\"tg-yw4l\">").append( unsubscribedContact.isRemoved() ? "Removed by an administrator" : "Unsubscribed" ).append("</td>");
 			sb.append("<td class=\"tg-yw4l\">").append( null != unsubscribedContact.getConstantContactActivityUnsubscribeDate() ? _simpleDateFormatter.format( unsubscribedContact.getConstantContactActivityUnsubscribeDate() ) : " " ).append("</td>");
 			sb.append("<td class=\"tg-yw4l\">").append( unsubscribedContact.getConstantContactId() ).append("</td></tr>\n");
+		}
+		sb.append(_EMAIL_CONTENT_FOOTER);
+		if (null != emailFooter) {
+			sb.append("<div class=\"foo\">").append(emailFooter).append("</div>");
 		}
 		sb.append(_EMAIL_BODY_FOOTER);
 		
@@ -32,7 +38,7 @@ extends BaseEmailUtil {
 		}
 
 		try {
-			sendEmail(from, to, cc, subject, sb.toString(), true);
+			sendEmail(from, to, null != cc ? cc : null, subject, sb.toString(), true);
 		}
 		catch (AddressException ex) {
 			if (_log.isErrorEnabled()) {
@@ -53,8 +59,10 @@ extends BaseEmailUtil {
 			+ ".tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\n"
 			+ ".tg .tg-lqy6{text-align:right;vertical-align:top}\n"
 			+ ".tg .tg-yw4l{vertical-align:top}\n"
-			+ "</style>\n"
-			+ "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last day:</div><br>\n"
-			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n";
-	private static final String _EMAIL_BODY_FOOTER = "</table></body></html>";
+			+ ".foo{font-family:Arial, sans-serif;font-size:8px;font-weight:normal;}\n"
+			+ "</style>\n";
+	private static final String _EMAIL_CONTENT_HEADER = "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last day:</div><br>\n"
+			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Event</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n";
+	private static final String _EMAIL_CONTENT_FOOTER = "</table><br><br>\n";
+	private static final String _EMAIL_BODY_FOOTER = "\n</body></html>";
 }
