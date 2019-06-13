@@ -132,9 +132,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			String id = null;
 			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
 			if (ccContact!= null) {
-				System.out.println("TACHAGORDA 0");
 				if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) { // if contact is not active, activated first
-					System.out.println("TACHAGORDA 0.1");
 					ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 					StringBuffer bufferResponse = new StringBuffer();
 					//not sure if visitor or woner works everitime when updating general contact data or changing status
@@ -142,11 +140,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					constantContactServiceImpl.updateContact(ccContact, bufferResponse, "ACTION_BY_VISITOR");
 					String responseCode = bufferResponse.toString();
 					if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
-						System.out.println("TACHAGORDA 0.15");
 						bufferResponse = new StringBuffer();
 						constantContactServiceImpl.updateContact(ccContact, bufferResponse);
 						if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
-							System.out.println("TACHAGORDA 0.2");
 							SessionErrors.add(request, responseCode);
 							response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 							return;
@@ -157,11 +153,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			}
 			//END CMAP-253
 			else { // the cotact was not found in CC, create it
-				System.out.println("TACHAGORDA 1");
 				StringBuffer messageResponse = new StringBuffer();
 				id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
 				if (id==null || id.trim().isEmpty()) {
-					System.out.println("TACHAGORDA 1.1");
 					SessionErrors.add(request, messageResponse.toString());
 					response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 					return;
@@ -184,8 +178,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void updateContact(ActionRequest request, ActionResponse response) throws PortalException {
-		
-		System.out.println("Chucha la viejita: 1");
 		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
@@ -267,17 +259,12 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				updatedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			}
 			
-			System.out.println("A ver a ver: "+crmContact);
-			
 			if (updatedContact != null) {
-				System.out.println("A ver a ver: 1");
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
 						updatedContact);
 				// TODO: pass to Constant Contact API
-			} else {
-				System.out.println("A ver a ver: 2");
 			}
-
+			
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
 

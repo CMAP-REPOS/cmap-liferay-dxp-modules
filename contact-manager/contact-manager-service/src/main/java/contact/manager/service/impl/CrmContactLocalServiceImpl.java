@@ -172,17 +172,11 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	
 	@Override
 	public void initCrmContactResourcePermissions(ServiceContext serviceContext) throws PortalException {
-		System.out.println("papasss");
 		long groupId = serviceContext.getScopeGroupId();
-		System.out.println("spasss");
 		List<CrmContact> crmContacts = crmContactLocalService.getCrmContacts(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
-		System.out.println("mocosss");
 		for(CrmContact crmContact : crmContacts) {
-			System.out.println("mocosdsd  1");
 			resourceLocalService.addResources(crmContact.getCompanyId(), groupId, crmContact.getUserId(), CrmContact.class.getName(), crmContact.getCrmContactId(), false, true, true);
-			System.out.println("mocosss  2");
 		}
-		System.out.println("mocosss   3");
 	}
 
 	@Override
