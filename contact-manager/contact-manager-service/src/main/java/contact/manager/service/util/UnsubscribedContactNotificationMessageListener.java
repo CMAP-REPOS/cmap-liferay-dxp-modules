@@ -35,7 +35,7 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
-	private static final String _ARTIFACT_BUILD_VERSION = "UnsubscribedContactNotificationMessageListener build 20190612";
+	private static final String _ARTIFACT_BUILD_VERSION = "UnsubscribedContactNotificationMessageListener build 20190614";
 	private static final Boolean _QUERY_REMOVED_CONTACTS = true;
 
 	@Reference(unbind = "-")
