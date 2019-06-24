@@ -21,8 +21,8 @@
 	
 	
     <liferay-ui:icon image="view_articles" message="View" url="<%=viewGroupURL.toString()%>" />
-    
-    <liferay-ui:icon-delete  message="Delete" url="<%=deleteGroupURL.toString()%>" />
-    
+<%--     <c:if test='<%= CrmGroupPermission.contains(permissionChecker, viewModel.getCrmContactId(), "DELETE") %>'> --%>
+    	<liferay-ui:icon-delete  message="Delete" url="<%=deleteGroupURL.toString()%>" />
+<%--     </c:if> --%>
     
 </liferay-ui:icon-menu>
