@@ -37,7 +37,7 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 public class UpdatedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UpdatedContactNotificationMessageListener.class);
-	private static final String _ARTIFACT_BUILD_VERSION = "UpdatedContactNotificationMessageListener build 20190612";
+	private static final String _ARTIFACT_BUILD_VERSION = "UpdatedContactNotificationMessageListener build 20190614";
 
 	@Reference(unbind = "-")
 	public void setTriggerFactory(TriggerFactory triggerFactory) { _triggerFactory = triggerFactory; }
