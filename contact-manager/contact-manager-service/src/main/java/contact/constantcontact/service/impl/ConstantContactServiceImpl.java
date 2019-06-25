@@ -519,7 +519,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		 */
 		ContactApiModel existingContact = getContact(model.getId());
 		if (existingContact != null) {
-			model.setLists(existingContact.getLists());
+			//START CMAP-198
+			// We are binding action_by_visitor because when visitor (actual contact request)  is sent de default list 1 need to be added and not overwiten
+			if ("ACTION_BY_OWNER".equals(actionBy)) {
+				model.setLists(existingContact.getLists());	
+			}
+			//END CMAP-198
 			model.setNotes(existingContact.getNotes());
 		}
 		

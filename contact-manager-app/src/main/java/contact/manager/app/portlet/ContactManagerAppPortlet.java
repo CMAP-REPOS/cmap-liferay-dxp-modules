@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import contact.constantcontact.model.ContactApiModel;
+import contact.constantcontact.model.ContactList;
 import contact.constantcontact.model.EmailAddress;
 import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.manager.app.constants.ConstantContactKeys;
@@ -137,7 +138,23 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					StringBuffer bufferResponse = new StringBuffer();
 					//not sure if visitor or woner works everitime when updating general contact data or changing status
 					//adding bouth to matain existing use cases
-					constantContactServiceImpl.updateContact(ccContact, bufferResponse, "ACTION_BY_VISITOR");
+					//START CMAP-198
+					System.out.println("=========== 0");
+					ContactList contactList = new ContactList();
+					System.out.println("=========== 1");
+					contactList.id = "1"; //default weekly email list
+					System.out.println("=========== 2");
+					contactList.status = ConstantContactKeys.CC_STATUS_ACTIVE;
+					System.out.println("=========== 3");
+					List<ContactList> contactLists = new ArrayList<ContactList>();
+					System.out.println("=========== 4");
+					contactLists.add(contactList);
+					System.out.println("=========== 5");
+					ccContact.setLists(contactLists);
+					System.out.println("=========== 6");
+					System.out.println("=========== "+ccContact);
+					//END CMAP-198
+					constantContactServiceImpl.updateContact(ccContact, bufferResponse, ConstantContactKeys.CC_ACTION_BY_VISITOR);
 					String responseCode = bufferResponse.toString();
 					if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
 						bufferResponse = new StringBuffer();
