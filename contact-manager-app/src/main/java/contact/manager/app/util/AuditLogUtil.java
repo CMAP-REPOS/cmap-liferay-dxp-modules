@@ -9,6 +9,7 @@ import java.util.List;
 
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmNote;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmContactAuditLogChange;
 import contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil;
@@ -257,6 +258,20 @@ public class AuditLogUtil {
 		return crmContactAuditLogChanges;
 	}
 
+	public static List<CrmContactAuditLogChangeViewModel> collectCrmContactAuditLogChanges(CrmNote crmNoteOld,
+			CrmNote crmNoteNew) {
+
+		List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChanges = new ArrayList<CrmContactAuditLogChangeViewModel>();
+
+		if (!StringUtil.matches(crmNoteOld.getNote(), crmNoteNew.getNote())) {
+			CrmContactAuditLogChangeViewModel viewModel = new CrmContactAuditLogChangeViewModel("Note Text",
+					crmNoteOld.getNote(), crmNoteNew.getNote());
+			crmContactAuditLogChanges.add(viewModel);
+		}
+
+		return crmContactAuditLogChanges;
+	}
+	
 	public static void setCrmContactAuditLogChanges(
 			List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChangeViewModels, ServiceContext serviceContext,
 			long crmContactAuditLogId) {

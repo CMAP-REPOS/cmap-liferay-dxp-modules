@@ -260,8 +260,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			}
 			
 			if (updatedContact != null) {
-				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact,
-						updatedContact);
+				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_UPDATE, originalContact, updatedContact);
 				// TODO: pass to Constant Contact API
 			}
 			
@@ -318,11 +317,10 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	}
 
 	public void addNote(ActionRequest request, ActionResponse response) throws PortalException {
-
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		User user = themeDisplay.getUser();
 		
 		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+//		User user = themeDisplay.getUser();
 //		if (!PermissionUtil.canUserAddNote(user)) {
 //			// TODO: set session message
 //			return;
@@ -336,6 +334,10 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, true);
 			_crmNoteLocalService.addCrmNote(crmNote);
 
+			if (crmNote != null) {
+				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_ADD);
+			}
+
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/notes/view.jsp");
 
@@ -346,9 +348,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void updateNote(ActionRequest request, ActionResponse response) throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		User user = themeDisplay.getUser();
 		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+//		User user = themeDisplay.getUser();
 //		if (!PermissionUtil.canUserUpdateNote(user)) {
 //			// TODO: set session message
 //			return;
@@ -359,8 +361,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
 
 			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
+			CrmNote originalCrmNote = (CrmNote)crmNote.clone();
+			
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, false);
 			_crmNoteLocalService.updateCrmNote(crmNote);
+			
+			if (crmNote != null) {
+				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_UPDATE, originalCrmNote, crmNote);
+			}
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmNote.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/notes/view.jsp");
@@ -372,17 +380,27 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteNote(ActionRequest request, ActionResponse response) throws PortalException {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
-		User user = themeDisplay.getUser();
 		//This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view
+//		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
+//		User user = themeDisplay.getUser();
 //		if (!PermissionUtil.canUserDeleteNote(user)) {
 //			// TODO: set session message
 //			return;
 //		}		
 
 		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmNote.class.getName(), request);
+
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
+			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
+			long crmContactId = crmNote.getCrmContactId();
+
 			_crmNoteLocalService.deleteCrmNote(crmNoteId);
+
+			if (crmNote != null) {
+				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_NOTE_DELETE);
+			}
+
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteNote: " + e.getMessage());
 		}
@@ -469,20 +487,32 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
 	}
 
-	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action,
-			CrmContact oldContact, CrmContact newContact) {
+	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action, CrmContact oldContact, CrmContact newContact) {
 
-		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
-				.createCrmContactAuditLog(0);
-		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext,
-				crmContactId, action);
+		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService.createCrmContactAuditLog(0);
+		
+		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext, crmContactId, action);
+		
 		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
 
 		if (crmContactAuditLog != null) {
-			List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChangeViewModels = AuditLogUtil
-					.collectCrmContactAuditLogChanges(oldContact, newContact);
-			AuditLogUtil.setCrmContactAuditLogChanges(crmContactAuditLogChangeViewModels, serviceContext,
-					crmContactAuditLog.getCrmContactAuditLogId());
+			List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChangeViewModels = AuditLogUtil.collectCrmContactAuditLogChanges(oldContact, newContact);
+			AuditLogUtil.setCrmContactAuditLogChanges(crmContactAuditLogChangeViewModels, serviceContext, crmContactAuditLog.getCrmContactAuditLogId());
+		}
+	}
+
+	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action,
+			CrmNote oldNote, CrmNote newNote) {
+
+		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService.createCrmContactAuditLog(0);
+		
+		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext, crmContactId, action);
+		
+		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
+
+		if (crmContactAuditLog != null) {
+			List<CrmContactAuditLogChangeViewModel> crmContactAuditLogChangeViewModels = AuditLogUtil.collectCrmContactAuditLogChanges(oldNote, newNote);
+			AuditLogUtil.setCrmContactAuditLogChanges(crmContactAuditLogChangeViewModels, serviceContext, crmContactAuditLog.getCrmContactAuditLogId());
 		}
 	}
 

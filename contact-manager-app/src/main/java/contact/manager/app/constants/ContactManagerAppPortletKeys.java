@@ -81,6 +81,9 @@ public class ContactManagerAppPortletKeys {
 	public static final String ACTION_UPDATE = "update";
 	public static final String ACTION_DELETE = "delete";
 	public static final String ACTION_REMOVED = "removed permanently";
+	public static final String ACTION_NOTE_ADD = "add note";
+	public static final String ACTION_NOTE_UPDATE = "update note";
+	public static final String ACTION_NOTE_DELETE = "delete note";
 
 	public static final Map<String, String> LOCALITIES_MAP;
 	static {
