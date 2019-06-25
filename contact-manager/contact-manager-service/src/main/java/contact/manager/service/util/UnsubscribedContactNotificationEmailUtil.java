@@ -61,7 +61,7 @@ extends BaseEmailUtil {
 			+ ".tg .tg-yw4l{vertical-align:top}\n"
 			+ ".foo{font-family:Arial, sans-serif;font-size:8px;font-weight:normal;}\n"
 			+ "</style>\n";
-	private static final String _EMAIL_CONTENT_HEADER = "<div class=\"info-text\">The following contacts marked as VIP have unsubscribed during the last day:</div><br>\n"
+	private static final String _EMAIL_CONTENT_HEADER = "<div class=\"info-text\">The following contacts marked as Important Subscribers have unsubscribed during the last day:</div><br>\n"
 			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Email</th><th class=\"tg-yw4l\">Event</th><th class=\"tg-yw4l\">Unsubscription Date</th><th class=\"tg-yw4l\">ConstantContact ID</th></tr>\n";
 	private static final String _EMAIL_CONTENT_FOOTER = "</table><br><br>\n";
 	private static final String _EMAIL_BODY_FOOTER = "\n</body></html>";

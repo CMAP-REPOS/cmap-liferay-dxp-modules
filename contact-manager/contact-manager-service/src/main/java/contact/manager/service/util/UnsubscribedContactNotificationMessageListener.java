@@ -206,7 +206,7 @@ extends ContactManagerBaseMessageListener {
 		final String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); // "cmap@cmap1pas2.illinois.gov";
 		final String to = PropsUtil.get(ContactNotificationConstants.EMAIL_TO_ADDRESS); // "contactmanagers@cmap.illinois.gov";
 		final String cc[] = PropsUtil.getArray(ContactNotificationConstants.EMAIL_CC_ADDRESS); // {"kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov"};
-		final String subject = "CMAP - VIP Contact Unsubscribe Alert";
+		final String subject = "CMAP - Important Subscribers Unsubscribed Alert";
 		final String footer = _ARTIFACT_BUILD_VERSION + " " + PropsUtil.get(ContactNotificationConstants.ENVIRONMENT_NAME);
 		
 		if (_log.isDebugEnabled()) {
