@@ -31,13 +31,14 @@ import contact.manager.service.CrmContactAuditLogLocalServiceUtil;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 14 ? * MON"}, // Every Monday at 2pm UTC (8am Central)
+		property = {"cron.expression=0 0 14 ? * MON"}, // Every Monday at 2pm UTC (8am Central Standard)
+//		property = {"cron.expression=0 0 20 * * ?"}, // Every day at 8pm UTC (3pm Central Daylight)
 		immediate = true,
 		service = UpdatedContactNotificationMessageListener.class )
 public class UpdatedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UpdatedContactNotificationMessageListener.class);
-	private static final String _ARTIFACT_BUILD_VERSION = "UpdatedContactNotificationMessageListener build 20190614";
+	private static final String _ARTIFACT_BUILD_VERSION = "UpdatedContactNotificationMessageListener build 20190625";
 
 	@Reference(unbind = "-")
 	public void setTriggerFactory(TriggerFactory triggerFactory) { _triggerFactory = triggerFactory; }

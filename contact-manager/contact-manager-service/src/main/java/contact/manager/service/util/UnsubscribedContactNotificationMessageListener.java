@@ -29,13 +29,14 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central)
+		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central Standard)
+//		property = {"cron.expression=0 0 20 * * ?"}, // Every day at 8pm UTC (3pm Central Daylight)
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
-	private static final String _ARTIFACT_BUILD_VERSION = "UnsubscribedContactNotificationMessageListener build 20190614";
+	private static final String _ARTIFACT_BUILD_VERSION = "UnsubscribedContactNotificationMessageListener build 20190625";
 	private static final Boolean _QUERY_REMOVED_CONTACTS = true;
 
 	@Reference(unbind = "-")
