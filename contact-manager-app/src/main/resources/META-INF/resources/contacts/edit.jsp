@@ -91,7 +91,6 @@ AUI().ready(
 			<aui:col md="4">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input label="Photo" name="photo" type="file" />
 						<aui:input name="firstName"
 							value='<%=crmContact == null ? "" : crmContact.getFirstName()%>'>
 							<aui:validator name="required" />

@@ -115,7 +115,7 @@ public class CalEventImporter {
 	@Activate
 	protected void activate() throws Exception {
 		initJSONSerializer();
-
+		
 		long start = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
@@ -135,6 +135,7 @@ public class CalEventImporter {
 				_log.info("Completed CalEvent import process in " + (System.currentTimeMillis() - start) + "ms");
 			}
 		}
+		System.out.println("=======We are in=======");
 	}
 
 	protected void addAssetEntry(long entryId, long groupId, long companyId, long userId, String userName,

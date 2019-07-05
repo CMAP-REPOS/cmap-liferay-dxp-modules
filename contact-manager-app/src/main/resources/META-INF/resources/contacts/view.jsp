@@ -1,6 +1,6 @@
 <%@ include file="../init.jsp"%>
 
-<liferay-ui:error key="409" message="This user&#39;s profile has already been created. Please check that the e-mail address does not already exist in the system" />
+<liferay-ui:error key="409" message="This user exists in Constant Contact and will have to be removed before the contact can be saved. Please contact an Administrator" />
 <liferay-ui:error key="400" message="400 Server error, message was malformed or there was a data validation error" />
 <liferay-ui:error key="401" message="401 Server error, authentication failure" />
 <liferay-ui:error key="406" message="406 Server error" />
@@ -26,7 +26,10 @@
 	String primaryCell = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_CELL);
 	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol",
 			CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS);
+	
+	
 	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
+	String createDate = ParamUtil.getString(request, "orderByCol",CrmContactFieldKeys.CREATE_DATE);
 
 	boolean orderByAsc = false;
 
@@ -89,6 +92,12 @@
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 		orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
 	}
+	
+	if (createDate.equals(CrmContactFieldKeys.CREATE_DATE)) {
+		orderByComparator = new CrmContactCreateDateComparator(false);
+	}
+	
+	
 %>
 
 <portlet:renderURL var="addContactURL">
@@ -144,6 +153,8 @@
 						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
 								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
 								crmContactsSearchContainer.getEnd(), orderByComparator);
+						
+						//System.out.println("orderByComparator ->" + orderByComparator);
 
 						for (CrmContact crmContact : crmContacts) {
 							viewModels.add(new CrmContactViewModel(crmContact));
@@ -156,6 +167,9 @@
 				<liferay-ui:search-container-row
 					className="contact.manager.app.viewmodel.CrmContactViewModel"
 					modelVar="viewModel">
+					<%
+						String mailtoPrimaryEmail = "mailto:" + viewModel.getPrimaryEmailAddress();
+					%>
 					<liferay-ui:search-container-column-jsp
 						path="/contacts/view_actions.jsp" name="Actions" />
 					<liferay-ui:search-container-column-text property="firstName"
@@ -187,7 +201,7 @@
 					<liferay-ui:search-container-column-text property="primaryCell"
 						name="Cell" orderable="true" orderableProperty="primaryCell" />
 					<liferay-ui:search-container-column-text
-						property="primaryEmailAddress" name="Email Address"
+						property="primaryEmailAddress" href="<%=mailtoPrimaryEmail%>" name="Email Address"
 						orderable="true" orderableProperty="primaryEmailAddress" />
 					<liferay-ui:search-container-column-text property="groupsList"
 						name="Groups" />

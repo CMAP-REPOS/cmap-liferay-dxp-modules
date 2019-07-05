@@ -91,6 +91,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		String command = ParamUtil.getString(resourceRequest, "cmd");
 
+
 		if (command.equals("getPotentialGroups")) {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String potentialContactsSerialized = GroupUtil.getCrmGroupsByName(nameParam);
@@ -121,6 +122,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//START CMAP-252 if contacts exist in CRM active, return the error
 			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
 				LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
+				System.out.println("=======Contact Exists=======");
+				System.out.println(crmContact.getPrimaryEmailAddress());
+				System.out.println(_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() );
 				SessionErrors.add(request, "409");
 				response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 				return;
@@ -261,11 +265,14 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 							}
 						}
 				} else { 
+					//START CMAP-232 if ConstantContactID = 0 returns error, caused by databse
+					System.out.println("==========ConstantContactID = 0 ==========");
 					String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
 					if (id==null || id.trim().isEmpty()) {
 						SessionErrors.add(request, messageResponse.toString());
 						errorOnConstactContact = true;
 					}
+					//END CMAP-232
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -346,6 +353,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
+			
+			System.out.println("=======Inside addNote=======");
 
 			CrmNote crmNote = _crmNoteLocalService.createCrmNote(0);
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, true);
@@ -354,6 +363,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_ADD);
 			}
+			
+			
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/notes/view.jsp");
@@ -374,14 +385,21 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 //		}		
 
 		try {
+			
+			System.out.println("=======Inside updateNote=======");
+			
+			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
+			System.out.println("=======crmNoteID -> " + crmNoteId + "=======");
 
 			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
 			CrmNote originalCrmNote = (CrmNote)crmNote.clone();
 			
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, false);
 			_crmNoteLocalService.updateCrmNote(crmNote);
+			
+			System.out.println("=======crmNote.getCrmContactId -> " + String.valueOf(crmNote.getCrmContactId()) + "=======");
 			
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_UPDATE, originalCrmNote, crmNote);
@@ -406,6 +424,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 //		}		
 
 		try {
+			
+			System.out.println("=======Inside deleteNote=======");
+			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmNote.class.getName(), request);
 
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");

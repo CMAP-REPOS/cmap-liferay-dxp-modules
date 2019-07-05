@@ -74,11 +74,15 @@
 						List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContactId,
 												crmNoteSearchContainer.getStart(), crmNoteSearchContainer.getEnd(),
 												orderByComparator);
-										pageContext.setAttribute("results", crmNotes);
+						
+						pageContext.setAttribute("results", crmNotes);
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmNote" modelVar="crmNote">
+					
+					<liferay-ui:search-container-column-jsp
+						path="/notes/view_actions.jsp" name="Actions" />
 					<liferay-ui:search-container-column-text property="userName"
 						name="User" orderable="true" orderableProperty="userName" />
 					<liferay-ui:search-container-column-text property="modifiedDate"

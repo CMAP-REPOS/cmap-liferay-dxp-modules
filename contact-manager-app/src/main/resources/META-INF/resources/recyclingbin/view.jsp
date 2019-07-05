@@ -146,7 +146,9 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 				<liferay-ui:search-container-row
 					className="contact.manager.app.viewmodel.CrmContactViewModel"
 					modelVar="viewModel">
-					 
+					<%
+						String mailtoPrimaryEmailBin = "mailto:" + viewModel.getPrimaryEmailAddress();
+					%>
 					<liferay-ui:search-container-column-button name="Delete" href="<%="window.location.href='"+deleteContactURL.toString().replaceAll("XXXXX", Long.toString(viewModel.getCrmContactId()))+"'"%>"/> 
 					
 					<liferay-ui:search-container-column-text property="firstName"
@@ -178,7 +180,7 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 					<liferay-ui:search-container-column-text property="primaryCell"
 						name="Cell" orderable="true" orderableProperty="primaryCell" />
 					<liferay-ui:search-container-column-text
-						property="primaryEmailAddress" name="Email Address"
+						property="primaryEmailAddress" href="<%=mailtoPrimaryEmailBin%>" name="Email Address"
 						orderable="true" orderableProperty="primaryEmailAddress" />
 					<liferay-ui:search-container-column-text property="groupsList"
 						name="Groups" />

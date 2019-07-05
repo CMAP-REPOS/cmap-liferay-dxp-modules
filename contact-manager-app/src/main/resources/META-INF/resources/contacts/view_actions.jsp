@@ -3,6 +3,7 @@
 <%
 	ResultRow searchContainerRow = (ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 	CrmContactViewModel viewModel = (CrmContactViewModel) searchContainerRow.getObject();
+
 %>
 
 <liferay-ui:icon-menu>
