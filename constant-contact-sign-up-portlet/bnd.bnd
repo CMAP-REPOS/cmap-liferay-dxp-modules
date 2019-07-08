@@ -1,0 +1,4 @@
+Bundle-Name: constant-contact-sign-up-portlet
+Bundle-SymbolicName: constant.contact.sign.up.portlet
+Bundle-Version: 1.0.0
+Export-Package: constant.contact.sign.up.portlet.constants
