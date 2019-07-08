@@ -25,14 +25,13 @@
 		url="<%= updateNoteURL.toString() %>" />
 		
 		
-	<c:if test='<%= CrmContactPermission.contains(permissionChecker, crmContactId, "DELETE") %>'>
-		<portlet:actionURL name="deleteNote" var="deleteNoteURL">
-			<portlet:param name="crmNoteId"
-			value="<%=String.valueOf(crmNoteId)%>" />
-		</portlet:actionURL>
-		<liferay-ui:icon image="delete" message="Delete"
-			url="<%=deleteNoteURL.toString()%>" />
-	</c:if>
+	
+	<portlet:actionURL name="deleteNote" var="deleteNoteURL">
+		<portlet:param name="crmNoteId"
+		value="<%=String.valueOf(crmNoteId)%>" />
+	</portlet:actionURL>
+	<liferay-ui:icon image="delete" message="Delete"
+		url="<%=deleteNoteURL.toString()%>" />
 
 		
 </liferay-ui:icon-menu>

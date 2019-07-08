@@ -81,8 +81,22 @@
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmNote" modelVar="crmNote">
 					
-					<liferay-ui:search-container-column-jsp
-						path="/notes/view_actions.jsp" name="Actions" />
+					<%
+					System.out.println("=======currentUser ->" + currentUser.getUserId() + "========");
+					System.out.println("=======userName ->" + crmNote.getUserId() + "========");
+					
+					%>
+										
+					<c:if test='<%= PermissionUtil.canUserDeleteNote(currentUser) || (currentUser.getUserId() == crmNote.getUserId()) %>'>
+						<liferay-ui:search-container-column-jsp
+							path="/notes/view_actions.jsp" name="Actions" />
+					</c:if>
+					
+					<c:if test='<%= PermissionUtil.canUserDeleteNote(currentUser) || (currentUser.getUserId() == crmNote.getUserId()) %>'>
+						<liferay-ui:search-container-column-jsp
+							path="/notes/empty.jsp" name="Actions" />
+					</c:if>
+						
 					<liferay-ui:search-container-column-text property="userName"
 						name="User" orderable="true" orderableProperty="userName" />
 					<liferay-ui:search-container-column-text property="modifiedDate"

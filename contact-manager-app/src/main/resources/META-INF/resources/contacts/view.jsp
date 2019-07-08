@@ -149,12 +149,29 @@
 				var="crmContactsSearchContainer">
 
 				<liferay-ui:search-container-results>
+				
+				
 					<%
+								
 						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
 								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
 								crmContactsSearchContainer.getEnd(), orderByComparator);
 						
-						//System.out.println("orderByComparator ->" + orderByComparator);
+						
+						//for(int count = 0; count <= crmContacts.size(); count++)
+						//{
+						//	List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContacts.get(count).getCrmContactId());	
+						//}
+						
+						
+					//List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContacts.get(0).getCrmContactId());
+						//System.out.println("======First ContactID -> " + crmContacts.get(0).getCrmContactId() + " ========");
+						//System.out.println("======First NoteAdded -> " + crmNotes.get(0).getCreateDate() + " ========");
+						
+						//for (CrmNote crmNote : crmNotes) {
+						//	System.out.println("=======crmNoteAdded ->" + crmNote.getCreateDate());
+						//}
+						
 
 						for (CrmContact crmContact : crmContacts) {
 							viewModels.add(new CrmContactViewModel(crmContact));

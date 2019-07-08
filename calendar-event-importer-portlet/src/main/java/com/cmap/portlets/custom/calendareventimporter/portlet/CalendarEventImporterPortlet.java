@@ -1,6 +1,7 @@
 package com.cmap.portlets.custom.calendareventimporter.portlet;
 
 import com.cmap.portlets.custom.calendareventimporter.constants.CalendarEventImporterPortletKeys;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,6 +34,9 @@ public class CalendarEventImporterPortlet extends GenericPortlet {
 	protected void doView(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws IOException, PortletException {
+		
+		DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
+		
 
 		PrintWriter printWriter = renderResponse.getWriter();
 
