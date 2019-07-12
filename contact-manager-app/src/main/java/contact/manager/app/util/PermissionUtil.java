@@ -65,7 +65,7 @@ public class PermissionUtil {
 		return userHasRole(user, ContactManagerAppPortletKeys.ROLE_MEDIA_CONTACTS_MANAGER);
 	}
 
-	private static boolean userHasRole(User user, String roleName) {
+	public static boolean userHasRole(User user, String roleName) {
 		boolean userHasRole = false;
 		List<Role> roles = user.getRoles();
 		for (Role role : roles) {

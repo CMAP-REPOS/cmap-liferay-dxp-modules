@@ -1,0 +1,4 @@
+Bundle-Name: calendar-web-events-block-portlet
+Bundle-SymbolicName: calendar.web.events.block.portlet
+Bundle-Version: 1.0.0
+Export-Package: calendar.web.events.block.portlet.constants

@@ -55,7 +55,8 @@
 
 <div class="container-fluid">
 	<%@ include file="nav.jsp"%>
-	<% if (PermissionUtil.canUserAddNote(currentUser)) { %>
+	<% if (PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) || 
+			PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)) { %>
 	<aui:row>
 		<aui:col md="12">
 			<aui:button onClick="<%= addNoteURL.toString() %>"
@@ -81,21 +82,20 @@
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmNote" modelVar="crmNote">
 					
-					<%
-					System.out.println("=======currentUser ->" + currentUser.getUserId() + "========");
-					System.out.println("=======userName ->" + crmNote.getUserId() + "========");
-					
-					%>
-										
-					<c:if test='<%= PermissionUtil.canUserDeleteNote(currentUser) || (currentUser.getUserId() == crmNote.getUserId()) %>'>
-						<liferay-ui:search-container-column-jsp
+					<c:choose>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) && (currentUser.getUserId() == crmNote.getUserId()) %>'>
+					    <liferay-ui:search-container-column-jsp
 							path="/notes/view_actions.jsp" name="Actions" />
-					</c:if>
-					
-					<c:if test='<%= PermissionUtil.canUserDeleteNote(currentUser) || (currentUser.getUserId() == crmNote.getUserId()) %>'>
-						<liferay-ui:search-container-column-jsp
+					  </c:when>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)%>'>
+					    <liferay-ui:search-container-column-jsp
+							path="/notes/view_actions.jsp" name="Actions" />
+					  </c:when>
+					  <c:otherwise>
+					    <liferay-ui:search-container-column-jsp
 							path="/notes/empty.jsp" name="Actions" />
-					</c:if>
+					  </c:otherwise>
+					</c:choose>
 						
 					<liferay-ui:search-container-column-text property="userName"
 						name="User" orderable="true" orderableProperty="userName" />

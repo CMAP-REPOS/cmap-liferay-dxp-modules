@@ -8,7 +8,6 @@
 	
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	long crmNoteId = crmNote.getCrmNoteId();
-	
 %>
 	
 	<portlet:renderURL var="updateNoteURL">

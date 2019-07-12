@@ -9,5 +9,5 @@ dependencies {
 	compileInclude group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.6'
 	
 	compileOnly project(":modules:contact-manager:contact-manager-api")
-	compileOnly project(":modules:contact-manager:contact-manager-service")	
+	compileOnly project(":modules:contact-manager:contact-manager-service")		
 }

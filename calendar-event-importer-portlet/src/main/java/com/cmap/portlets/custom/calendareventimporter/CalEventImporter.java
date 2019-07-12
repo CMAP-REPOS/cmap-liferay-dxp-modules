@@ -136,7 +136,7 @@ public class CalEventImporter {
 				_log.info("Completed CalEvent import process in " + (System.currentTimeMillis() - start) + "ms");
 			}
 		}
-		System.out.println("=======We are in=======");
+		/*System.out.println("=======We are in=======");
 		int test = _calendarResourceLocalService.getCalendarResourcesCount();
 		int tes2 = _calendarBookingLocalService.getCalendarBookingsCount();
 		
@@ -148,7 +148,7 @@ public class CalEventImporter {
 		
 		for(CalendarBooking event:calendarBookings){
             System.out.println("=====Event Title " + event.getTitleCurrentValue() + "=========");
-        }
+        }*/
 		
 	}
 

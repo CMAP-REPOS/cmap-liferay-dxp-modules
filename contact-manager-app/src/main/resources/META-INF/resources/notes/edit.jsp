@@ -3,19 +3,16 @@
 <%
 	long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
-	
 
 	CrmNote crmNote = null;
 	CrmContact crmContact = null;
 
 	if (crmContactId > 0) {
 		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
-		System.out.println("======CrmContact exists  ======");
 	}
 
 	if (crmNoteId > 0) {
 		crmNote = CrmNoteLocalServiceUtil.getCrmNote(crmNoteId);
-		System.out.println("======CrmNote exists  ======");
 	}
 
 	Calendar today = Calendar.getInstance();

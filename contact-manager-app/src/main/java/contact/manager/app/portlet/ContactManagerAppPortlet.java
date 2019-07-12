@@ -386,9 +386,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			
-			System.out.println("=======Inside updateNote=======");
-			
-			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
 			System.out.println("=======crmNoteID -> " + crmNoteId + "=======");

@@ -37,6 +37,7 @@ public class ContactManagerAppPortletKeys {
 	public static final String ROLE_LR_ADMINISTRATOR = "Administrator";
 	public static final String ROLE_ADMINISTRATOR = "Contact Administrator";
 	public static final String ROLE_MANAGER = "Contact Manager";
+	public static final String ROLE_EDITOR = "Contact Editor";
 	public static final String ROLE_USER = "Contact User";
 	public static final String ROLE_NOTES_CONTRIBUTOR = "Contact Notes Contributor";
 	public static final String ROLE_OUTREACH_CONTRIBUTOR = "Contact Outreach Contributor";

@@ -22,6 +22,11 @@
 	renderResponse.setTitle((crmContact != null)
 			? ("New Outreach Log for " + crmContact.getFirstName() + " " + crmContact.getLastName())
 			: "New Outreach Log");
+	
+	if(crmOutreachLog != null)
+	{
+		renderResponse.setTitle("Edit Outreach Log for " + crmContact.getFirstName() + " " + crmContact.getLastName() );
+	}
 %>
 
 <portlet:actionURL
@@ -34,6 +39,9 @@
 		name="<portlet:namespace />fm">
 		<aui:input type="hidden" name="crmContactId"
 			value='<%=String.valueOf(crmContactId)%>'>
+		</aui:input>
+		<aui:input type="hidden" name="crmOutreachLogId"
+			value='<%=String.valueOf(crmOutreachLogId)%>'>
 		</aui:input>
 		<aui:row>
 			<aui:col md="12">
@@ -52,7 +60,8 @@
 								<aui:validator name="required" />
 							</liferay-ui:input-date>
 						</div>
-						<aui:select name="medium" label="Medium">
+						<aui:select name="medium" label="Medium"
+							value='<%=crmOutreachLog == null ? "" : crmOutreachLog.getMedium()%>'>
 							<aui:option value=""></aui:option>
 							<aui:option value="email">Email</aui:option>
 							<aui:option value="person">In person</aui:option>
@@ -60,7 +69,8 @@
 							<aui:option value="other">Other</aui:option>
 							<aui:validator name="required" />
 						</aui:select>
-						<aui:input name="note" label="Notes" type="textarea">
+						<aui:input name="note" label="Notes" type="textarea"
+							value='<%=crmOutreachLog == null ? "" : crmOutreachLog.getNote()%>'>
 							<aui:validator name="required" />
 							<aui:validator name="maxLength">500</aui:validator>
 						</aui:input>
