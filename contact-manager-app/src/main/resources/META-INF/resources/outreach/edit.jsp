@@ -14,6 +14,8 @@
 	if (crmContactId > 0) {
 		crmContact = CrmContactLocalServiceUtil.getCrmContact(crmContactId);
 	}
+	
+	System.out.println("=======Edit.jsp crmContactId -> " + crmContactId + "=======");
 
 	Calendar today = Calendar.getInstance();
 

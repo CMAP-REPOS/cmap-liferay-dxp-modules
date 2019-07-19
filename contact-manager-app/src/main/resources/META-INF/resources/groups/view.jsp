@@ -41,7 +41,7 @@
 
 <div class="container-fluid">
 	<%
-		if (PermissionUtil.canUserAddGroup(currentUser)) {
+		if (PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)) {
 	%>
 	<aui:row>
 		<aui:col md="12">
@@ -67,6 +67,7 @@
 							viewModels.add(new CrmGroupViewModel(crmGroup));
 						}
 						pageContext.setAttribute("results", viewModels);
+					
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row

@@ -28,6 +28,9 @@
 
 
 <%
+	
+  List<Integer> crmContactsId = new ArrayList<Integer>();
+
   String keywords = "";
   String[] columns =  new String[1];
 
@@ -161,8 +164,8 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 
 
 
-    SearchContext searchContext = SearchContextFactory.getInstance(request);
-	
+    SearchContext searchContext = SearchContextFactory.getInstance(request);    
+    
 	String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
 
     searchContext.setAttribute("paginationType", "more");
@@ -196,6 +199,8 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	
+	
+	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 
 %>
@@ -221,11 +226,28 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 					    	se.printStackTrace();
 					    }
 						if (entry != null){
-							 viewModels.add(new CrmContactViewModel(entry));
+							viewModels.add(new CrmContactViewModel(entry));
+						}
+					}
+					
+					for (int i = crmContactsSearchContainer.getStart(); i<hits.getDocs().length; i++) {
+						Document doc = hits.doc(i);
+						
+					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+					    CrmContact entry = null;
+					    try {
+					    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
+					    } catch (PortalException pe) {
+					    	pe.printStackTrace();
+					    } catch (SystemException se) {
+					    	se.printStackTrace();
+					    }
+						if (entry != null){
+							crmContactsId.add((int)entry.getCrmContactId());
 						}
 					}
 
-						pageContext.setAttribute("results", viewModels);
+					pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
         
@@ -281,7 +303,36 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 		<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
+<%
+	StringBuilder strbul  = new StringBuilder();
+	Iterator<Integer> iter = crmContactsId.iterator();
+	while(iter.hasNext())
+	{
+	    strbul.append(iter.next());
+	   if(iter.hasNext()){
+	    strbul.append(",");
+	   }
+	}
+
+	//System.out.println("=======Id string -> " + strbul.toString() + "=======");
+%>
+
+<portlet:resourceURL  var="exportCSVURL">
+	<portlet:param name="cmd" value="exportSearchCSV"/>
+	<portlet:param name="idString" value="<%= strbul.toString() %>"/>
+</portlet:resourceURL>
+
+<aui:row>
+		<aui:col md="12">
+			<%-- TODO: check role --%>
+			<aui:button onClick="<%= exportCSVURL.toString() %>"
+				value="Export to CSV"></aui:button>
+		</aui:col>
+</aui:row>
+
+
 <script type="text/javascript">
+
 AUI().ready(function(){
 	if (<%=!"".equals(parameterAdd)%>){
 		document.querySelectorAll(".lfr-pagination a").forEach(function(element){

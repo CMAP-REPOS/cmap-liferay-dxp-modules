@@ -1,20 +1,44 @@
 package contact.manager.app.portlet;
 
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.BooleanClauseOccur;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
+import com.liferay.portal.kernel.search.Query;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchContextFactory;
+import com.liferay.portal.kernel.search.Sort;
+import com.liferay.portal.kernel.search.SortFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.search.generic.MultiMatchQuery;
+import com.liferay.portal.kernel.search.generic.StringQuery;
+import com.liferay.portal.kernel.search.generic.TermQueryImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.ContentTypes;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -26,6 +50,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -43,12 +68,14 @@ import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
+import contact.manager.comparator.CrmContactCreateDateComparator;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmNote;
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmContactAuditLogLocalService;
 import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmNoteLocalService;
 import contact.manager.service.CrmOutreachLogLocalService;
 
@@ -99,6 +126,24 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
 			writer.close();
+		}
+		
+		if(command.equals("exportCSV")) {
+			try {
+				exportCSVData(resourceRequest, resourceResponse);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(command.equals("exportSearchCSV")) {
+			try {
+				exportSearchCSVData(resourceRequest, resourceResponse);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -266,7 +311,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 						}
 				} else { 
 					//START CMAP-232 if ConstantContactID = 0 returns error, caused by databse
-					System.out.println("==========ConstantContactID = 0 ==========");
 					String id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
 					if (id==null || id.trim().isEmpty()) {
 						SessionErrors.add(request, messageResponse.toString());
@@ -309,6 +353,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 //		}		
 
 		try {
+			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
 			long userId = serviceContext.getUserId();
@@ -320,12 +365,18 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			long constantContactID =  crmContact.getConstantContactId();
+			System.out.println("==========STOP==========");
+			//System.out.println("=======Contact Class test 1-> " + crmContactNew.getClass());
+			//System.out.println("=======Utility Contact Class-> " + _crmContactLocalService.updateCrmContact(crmContactNew, serviceContext).getClass());
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			System.out.println("==========STOP 4==========");
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
 				StringBuffer statusCode = new StringBuffer();
 				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode); 
+				System.out.println("==========STOP 5==========");
+				
 				if (!statusCode.toString().equals("204") && !statusCode.toString().equals("200")) {
 					SessionErrors.add(request, statusCode.toString()); 
 					response.setRenderParameter("jspPage", "/contacts/view.jsp");
@@ -422,19 +473,21 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			
-			System.out.println("=======Inside deleteNote=======");
-			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmNote.class.getName(), request);
-
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
 			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
 			long crmContactId = crmNote.getCrmContactId();
+			
 
 			_crmNoteLocalService.deleteCrmNote(crmNoteId);
 
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_NOTE_DELETE);
 			}
+			
+			System.out.println("=======Delet l crmContactId -> " + crmContactId + "=======");
+			response.setRenderParameter("crmContactId", String.valueOf(crmNote.getCrmContactId()));
+			response.setRenderParameter("mvcPath", "/notes/view.jsp");
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteNote: " + e.getMessage());
@@ -486,7 +539,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);			
 			OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext, true);
 			_crmOutreachLogLocalService.updateCrmOutreachLog(crmOutreachLog);
-
+			
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
 
@@ -507,11 +560,304 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		
 		try {
 			long crmOutreachLogId = ParamUtil.getLong(request, "crmOutreachLogId");
+			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);
+			
+			long crmContactId = crmOutreachLog.getCrmContactId();
+			
+			
 			_crmOutreachLogLocalService.deleteCrmOutreachLog(crmOutreachLogId);
+			
+			System.out.println("=======Delet log crmContactId -> " + crmContactId + "=======");
+			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
+			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
+			
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteOutreachLog: " + e.getMessage());
 		}
-	}	
+	}
+	
+	public void exportCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
+		
+		try {
+			StringBundler sb = new StringBundler();
+			int getStart = 0; //ParamUtil.getInteger(request, "getStart");
+			int getEnd = CrmContactLocalServiceUtil.getCrmContactsCount(); //ParamUtil.getInteger(request, "getEnd");
+			OrderByComparator orderByComparator = new CrmContactCreateDateComparator(false);
+			
+			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+				sb.append(getCSVFormattedValue(columnName));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				}
+			
+			List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(ConstantContactKeys.CC_STATUS_ACTIVE, getStart,getEnd, orderByComparator);
+			
+			sb.setIndex(sb.index() - 1);
+			sb.append(CharPool.NEW_LINE);
+			
+			for (CrmContact crmContact : crmContacts) {
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.setIndex(sb.index() - 1);
+				sb.append(CharPool.NEW_LINE);
+			}
+			
+			String fileName = "portalContacts.csv";
+			byte[] bytes = sb.toString().getBytes();
+			String contentType = ContentTypes.APPLICATION_TEXT;
+			PortletResponseUtil.sendFile(request, response, fileName, bytes, contentType);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.exportCSVData: " + e.getMessage());
+		}
+	}
+	
+	public void exportSearchCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
+		
+		try {
+			StringBundler sb = new StringBundler();
+			
+			String idString = ParamUtil.getString(request, "idString");
+			/*HttpServletRequest searchRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request)); 
+			
+			String keywords = "";
+			String[] columns =  new String[1];
+			String parameterAdd ="";  
+			  
+			  if (!"".equals(ParamUtil.getString(request, "keywords"))){
+				  keywords = ParamUtil.getString(request, "keywords");
+				  columns =  new String[]{"firstName", "lastName", 
+			          "organization", "jobTitle", "primaryAddress1", "primaryAddress2", "primaryAddressCity", "primaryAddressZip", 
+			          "primaryAddressCounty", "primaryPhone", "primaryCell", 
+			          "primaryEmailAddress", "groupsList", "tagsList", "modifiedDate"};
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "first-name"))){
+				  keywords = ParamUtil.getString(searchRequest, "first-name");
+				  columns = new String[]{"firstName"};
+				  parameterAdd = "first-name";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "last-name"))){
+				  keywords = ParamUtil.getString(searchRequest, "last-name");
+				  columns = new String[]{"lastName"};
+				  parameterAdd = "last-name";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "organization"))){
+				  keywords = ParamUtil.getString(searchRequest, "organization");
+				  columns = new String[]{"organization"};
+				  parameterAdd = "organization";
+			  } else if (!"".equals( ParamUtil.getString(searchRequest, "job-title") )){
+				  keywords = ParamUtil.getString(searchRequest, "job-title");
+				  columns = new String[]{"jobTitle"};
+				  parameterAdd = "job-title";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "address-1") )){
+				  keywords = ParamUtil.getString(searchRequest, "address-1");
+				  columns = new String[]{"primaryAddress1"};
+				  parameterAdd = "address-1";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "address-2"))){
+				  keywords = ParamUtil.getString(searchRequest, "address-2");
+				  columns = new String[]{"primaryAddress2"};
+				  parameterAdd = "address-2";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "city") )){
+				  keywords = ParamUtil.getString(searchRequest, "city");
+				  columns = new String[]{"primaryAddressCity"};
+				  parameterAdd = "city";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "zip"))){
+				  keywords = ParamUtil.getString(searchRequest, "zip");
+				  columns = new String[]{"primaryAddressZip"};
+				  parameterAdd = "zip";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "county") )){
+				  keywords = ParamUtil.getString(searchRequest, "county");
+				  columns = new String[]{"primaryAddressCounty"};
+				  parameterAdd = "county";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "phone") )){
+				  keywords = ParamUtil.getString(searchRequest, "phone");
+				  columns = new String[]{"primaryPhone"};
+				  parameterAdd = "phone";
+			  } else if (!"".equals( ParamUtil.getString(searchRequest, "cell") )){
+				  keywords = ParamUtil.getString(searchRequest, "cell");
+				  columns = new String[]{"primaryCell"};
+				  parameterAdd = "cell";
+			  } else if (!"".equals(ParamUtil.getString(searchRequest, "email-address"))){
+				  keywords = ParamUtil.getString(searchRequest, "email-address");
+				  columns = new String[]{"primaryEmailAddress"};
+				  parameterAdd = "email-address";
+			  } else if (!"".equals( ParamUtil.getString(searchRequest, "groups") )){
+				  keywords = ParamUtil.getString(searchRequest, "groups");
+				  columns = new String[]{"groupsList"};
+				  parameterAdd = "groups";
+			  }  else if ( !"".equals(ParamUtil.getString(searchRequest, "tags") )){
+				  keywords = ParamUtil.getString(searchRequest, "tags");
+				  columns = new String[]{"tagsList"};
+				  parameterAdd = "tags";
+			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "modified"))){
+				  keywords = ParamUtil.getString(searchRequest, "modified");
+				  columns = new String[]{"modifiedDate"};
+				  parameterAdd = "modified";
+			  }
+			  
+			SearchContext searchContext = SearchContextFactory.getInstance(searchRequest);
+			String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
+			
+			searchContext.setAttribute("paginationType", "more");
+		    String orderByCol = ParamUtil.getString(searchRequest, "orderByCol");
+		    String orderByType = ParamUtil.getString(searchRequest, "orderByType");
+		    if (!"".equals(orderByCol) && !"".equals(orderByType)){
+		    	try{
+		    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
+		    		 searchContext.setSorts(sorts);
+		    	 } catch(Exception e){
+		    		 e.printStackTrace();
+		    	 }
+		    }
+			
+		    Query q = null;
+		    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
+		    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
+		    	q = qq;
+		    } else {
+		    	MultiMatchQuery qq = new MultiMatchQuery(s);
+		    	qq.addFields(columns);
+		    	qq.setAnalyzer("whitespace");
+		    	q = qq;
+		    }
+		    
+		    BooleanQuery query = new BooleanQueryImpl();
+			query.add(q, BooleanClauseOccur.MUST);
+			TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
+			query.add(termQuery, BooleanClauseOccur.MUST);
+			termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
+			query.add(termQuery, BooleanClauseOccur.MUST);
+			
+			
+			Hits hits = IndexSearcherHelperUtil.search(searchContext, query);*/
+			
+			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+				sb.append(getCSVFormattedValue(columnName));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				}
+			
+			List<CrmContact> crmContacts = new ArrayList<CrmContact>();
+			List<String> crmContactIds = new ArrayList<String>(Arrays.asList(idString.split(",")));
+			
+			for (String crmContactId : crmContactIds) {
+				CrmContact crmContact = _crmContactLocalService.getCrmContact(Long.parseLong(crmContactId));
+				crmContacts.add(crmContact);
+			}
+			
+			
+			sb.setIndex(sb.index() - 1);
+			sb.append(CharPool.NEW_LINE);
+			
+			for (CrmContact crmContact : crmContacts) {
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.setIndex(sb.index() - 1);
+				sb.append(CharPool.NEW_LINE);
+			}
+			
+			String fileName = "searchContacts.csv";
+			byte[] bytes = sb.toString().getBytes();
+			String contentType = ContentTypes.APPLICATION_TEXT;
+			PortletResponseUtil.sendFile(request, response, fileName, bytes, contentType);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in ContactManagerAppPortlet.exportSearchCSVData: " + e.getMessage());
+		}
+	}
+	
+	protected String getCSVFormattedValue(String value) {
+		
+		StringBundler sb = new StringBundler(3);
+		sb.append(CharPool.QUOTE);
+		sb.append(StringUtil.replace(value, CharPool.QUOTE,
+		StringPool.DOUBLE_QUOTE));
+		sb.append(CharPool.QUOTE);
+		return sb.toString();
+	}
 	
 	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action) {
 

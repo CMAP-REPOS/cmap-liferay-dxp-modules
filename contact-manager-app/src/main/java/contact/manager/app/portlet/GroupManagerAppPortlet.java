@@ -3,13 +3,21 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -24,8 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
 import contact.manager.app.util.GroupUtil;
+import contact.manager.comparator.CrmContactCreateDateComparator;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
+import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmGroupLocalService;
 import contact.manager.service.CrmGroupLocalServiceUtil;
 
@@ -82,6 +93,15 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			writer.write(potentialContactsSerialized);
 			writer.close();
 		}
+		
+		if(command.equals("exportCSV")) {
+			try {
+				exportCSVData(resourceRequest, resourceResponse);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void add(ActionRequest request, ActionResponse response) throws PortalException {
@@ -135,6 +155,101 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			LOGGER.error("Exception in GroupManagerAppPortlet.delete: " + e.getMessage());
 		}
 	}
+	
+public void exportCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
+		
+		try {
+			StringBundler sb = new StringBundler();
+			int getStart = 0; //ParamUtil.getInteger(request, "getStart");
+			int getEnd = CrmContactLocalServiceUtil.getCrmContactsCount(); //ParamUtil.getInteger(request, "getEnd");
+			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+			
+			OrderByComparator orderByComparator = new CrmContactCreateDateComparator(false);
+			
+			
+			System.out.println("=======Start -> " + getStart + "=======");
+			System.out.println("=======End -> " + getEnd + "=======");
+			
+			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+				sb.append(getCSVFormattedValue(columnName));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				}
+			
+			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId, getStart,getEnd, orderByComparator);
+			
+			sb.setIndex(sb.index() - 1);
+			sb.append(CharPool.NEW_LINE);
+			
+			for (CrmContact crmContact : crmContacts) {
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
+				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				
+				sb.setIndex(sb.index() - 1);
+				sb.append(CharPool.NEW_LINE);
+			}
+			
+			String fileName = "groupContacts.csv";
+			byte[] bytes = sb.toString().getBytes();
+			String contentType = ContentTypes.APPLICATION_TEXT;
+			PortletResponseUtil.sendFile(request, response, fileName, bytes, contentType);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in GroupManagerAppPortlet.exportCSVData: " + e.getMessage());
+		}
+	}
+	
+	protected String getCSVFormattedValue(String value) {
+		
+		StringBundler sb = new StringBundler(3);
+		sb.append(CharPool.QUOTE);
+		sb.append(StringUtil.replace(value, CharPool.QUOTE,
+		StringPool.DOUBLE_QUOTE));
+		sb.append(CharPool.QUOTE);
+		return sb.toString();
+	}
 
 	@Reference(unbind = "-")
 	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
@@ -142,4 +257,5 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 	}
 
 	private CrmGroupLocalService _crmGroupLocalService;
+	private CrmContactLocalService _crmContactLocalService;
 }

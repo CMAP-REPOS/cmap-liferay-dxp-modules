@@ -8,6 +8,7 @@
 <liferay-ui:error key="500" message="500 Server error" />
 
 <%
+	
 	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 
 	String firstName = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.FIRST_NAME);
@@ -33,7 +34,7 @@
 
 	boolean orderByAsc = false;
 
-	String orderByType = ParamUtil.getString(request, "orderByType", "asc");
+	String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 
 	if (orderByType.equals("asc")) {
 		orderByAsc = true;
@@ -92,24 +93,22 @@
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 		orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
 	}
-	
-	if (createDate.equals(CrmContactFieldKeys.CREATE_DATE)) {
-		orderByComparator = new CrmContactCreateDateComparator(false);
-	}
-	
+		
 	
 %>
 
 <portlet:renderURL var="addContactURL">
-	<portlet:param name="mvcPath" value="/contacts/edit.jsp"></portlet:param>
+	<portlet:param name="mvcPath" value="/contacts/edit.jsp"/>
 	<portlet:param name="redirect" value="<%=currentURL%>" />
 </portlet:renderURL>
 
-
 <liferay-portlet:renderURL varImpl="searchURL">
-    <portlet:param name="mvcPath" 
-    value="/contacts/view_search.jsp" />
+    <portlet:param name="mvcPath" value="/contacts/view_search.jsp" />
 </liferay-portlet:renderURL>
+
+<portlet:resourceURL  var="exportCSVURL">
+	<portlet:param name="cmd" value="exportCSV"/>
+</portlet:resourceURL>
 
 <div class="container-fluid">
 
@@ -122,6 +121,14 @@
 		</aui:col>
 	</aui:row>
 <%-- 	}  --%>
+
+	<aui:row>
+		<aui:col md="12">
+			<%-- TODO: check role --%>
+			<aui:button onClick="<%= exportCSVURL.toString() %>"
+				value="Export all to CSV"></aui:button>
+		</aui:col>
+	</aui:row>
 	
 	<aui:row>
 		<aui:col md="12">
@@ -158,6 +165,9 @@
 								crmContactsSearchContainer.getEnd(), orderByComparator);
 						
 						
+						//String comparator = orderByComparator.toString();
+						
+						
 						//for(int count = 0; count <= crmContacts.size(); count++)
 						//{
 						//	List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContacts.get(count).getCrmContactId());	
@@ -179,6 +189,8 @@
 
 						pageContext.setAttribute("results", viewModels);
 					%>
+					
+				
 				</liferay-ui:search-container-results>
 				
 				<liferay-ui:search-container-row

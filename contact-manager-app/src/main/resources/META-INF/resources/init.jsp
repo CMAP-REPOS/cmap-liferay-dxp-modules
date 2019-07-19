@@ -22,6 +22,7 @@
 <%@ page import="com.liferay.portal.kernel.util.PortalUtil"%>
 <%@ page import="com.liferay.portal.kernel.util.StringPool"%>
 <%@ page import="com.liferay.portal.kernel.util.WebKeys" %>
+<%@ page import="com.liferay.portal.kernel.util.StringUtil" %>
 
 <%@ page import="contact.manager.app.constants.ConstantContactKeys"%>
 <%@ page import="contact.manager.app.constants.ContactManagerAppPortletKeys"%>
@@ -59,6 +60,8 @@
 <%@ page import="java.util.ArrayList "%>
 <%@ page import="java.util.List "%>
 <%@ page import="java.util.Calendar "%>
+<%@ page import="java.util.Iterator "%>
+
 
 <%@ page import="contact.manager.service.permission.CrmContactPermission "%>
 <%@ page import="contact.manager.service.permission.CrmContactAuditLogPermission "%>

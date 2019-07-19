@@ -8,8 +8,7 @@
 	
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	long crmOutreachLogId = crmOutreachLog.getCrmOutreachLogId();
-	
-	
+		
 %>
 	
 	<portlet:renderURL var="updateOutreachLogURL">
@@ -28,9 +27,9 @@
 		
 	
 	<portlet:actionURL name="deleteOutreachLog" var="deleteOutreachLogURL">
-		<portlet:param name="crmOutreachLogId"
-		value="<%=String.valueOf(crmOutreachLogId)%>" />
+		<portlet:param name="crmOutreachLogId" value="<%=String.valueOf(crmOutreachLogId)%>" />
 	</portlet:actionURL>
+	
 	<liferay-ui:icon image="delete" message="Delete"
 		url="<%=deleteOutreachLogURL.toString()%>" />
 

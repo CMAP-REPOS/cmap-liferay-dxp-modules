@@ -8,6 +8,7 @@
 	
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	long crmNoteId = crmNote.getCrmNoteId();
+	
 %>
 	
 	<portlet:renderURL var="updateNoteURL">
@@ -26,9 +27,9 @@
 		
 	
 	<portlet:actionURL name="deleteNote" var="deleteNoteURL">
-		<portlet:param name="crmNoteId"
-		value="<%=String.valueOf(crmNoteId)%>" />
+		<portlet:param name="crmNoteId" value="<%=String.valueOf(crmNoteId)%>" />
 	</portlet:actionURL>
+	
 	<liferay-ui:icon image="delete" message="Delete"
 		url="<%=deleteNoteURL.toString()%>" />
 
