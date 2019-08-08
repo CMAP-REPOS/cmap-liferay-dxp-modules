@@ -85,10 +85,6 @@ public class ContactManagerAppPortletKeys {
 	public static final String ACTION_NOTE_ADD = "add note";
 	public static final String ACTION_NOTE_UPDATE = "update note";
 	public static final String ACTION_NOTE_DELETE = "delete note";
-	
-	public static final String[] CSV_COLUMMN_NAMES = { "First Name", "Last Name", "Prefix", "Organization", "Job Title", "Address 1",
-			"Address 2","City", "ZIP", "County", "Phone","Cell","EmailAddress", "Groups", "Tags", "Modified" };
-	public static final String CSV_SEPARATOR = ",";
 
 	public static final Map<String, String> LOCALITIES_MAP;
 	static {

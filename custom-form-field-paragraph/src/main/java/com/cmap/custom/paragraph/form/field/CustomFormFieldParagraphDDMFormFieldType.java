@@ -27,4 +27,3 @@ public class CustomFormFieldParagraphDDMFormFieldType extends BaseDDMFormFieldTy
 		return "CustomFormFieldParagraph";
 	}
 }
-

@@ -9,13 +9,11 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="calendar.web.events.block.portlet.util.BaseDateUtil"%>
 <%@ page import="calendar.web.events.block.portlet.util.EventBlock"%>
-<%@ page import="calendar.web.events.block.portlet.util.CalendarBookingsEventStartTimeComparator"%>
 
 <%@ page import="com.liferay.calendar.model.CalendarBooking"%>
 <%@ page import="com.liferay.calendar.service.CalendarBookingLocalServiceUtil"%>
 <%@ page import="com.liferay.portal.kernel.dao.orm.DynamicQuery"%>
 <%@ page import="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet"%>
-<%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
 
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.PrintWriter"%>
@@ -35,15 +33,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <portlet:defineObjects />
 
 <%
-	int count = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
 	DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
-	
-	
-	OrderByComparator orderByComparator = new CalendarBookingsEventStartTimeComparator(true);
-	
-	List<CalendarBooking> calendarBookings = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq, 0, count, orderByComparator);
-
-	//List<CalendarBooking> calendarBookings = (List) com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq);
+	List<CalendarBooking> calendarBookings = (List) com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq);
 	//List<CalendarBooking> calendarBookings = calendarBookingsAll.subList(calendarBookingsAll.size()-5, calendarBookingsAll.size());
 	
 	List<EventBlock> eventBlocks = new ArrayList<>();
@@ -51,9 +42,13 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	long timeMilli = date.getTime();
 	int eventLimit = 0;
 	
-	for(CalendarBooking event:calendarBookings)
-	{	
-		if(timeMilli <= event.getStartTime() && eventLimit <= 5 && !event.isInTrash())
+	System.out.println("=====Today Date " + date + "=========");
+	System.out.println("=====Today Date long " + timeMilli + "=========");
+	
+	
+	for(CalendarBooking event:calendarBookings){
+		
+		if(timeMilli < event.getStartTime() && eventLimit <= 5)
 		{
 			EventBlock eventBlock = new EventBlock(event);
 		    eventBlocks.add(eventBlock);

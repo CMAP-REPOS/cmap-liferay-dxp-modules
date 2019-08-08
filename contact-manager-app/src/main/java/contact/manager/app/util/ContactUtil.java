@@ -3,8 +3,8 @@ package contact.manager.app.util;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+//import com.liferay.portal.kernel.json.JSONFactoryUtil;
+//import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -24,7 +24,7 @@ import contact.manager.service.CrmGroupLocalServiceUtil;
 
 public class ContactUtil {
 	
-	private static CrmContactLocalServiceUtil _crmContactLocalServiceUtil;
+//	private static CrmContactLocalServiceUtil _crmContactLocalServiceUtil;
 
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
@@ -129,11 +129,6 @@ public class ContactUtil {
 //			CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
 		}
 		
-		for(long crmGroupId:crmGroupIds) {
-			System.out.println("=======UPDATED CONTACT GROUP ID -> " + crmGroupId);
-		}
-		
-		
 		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
 //		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
 		
@@ -144,7 +139,6 @@ public class ContactUtil {
 		
 		String groupsList = String.join(" | ", crmGroupNames);
 		crmContact.setGroupsList(groupsList);
-		System.out.println("=======UPDATED CONTACT GROUP LIST -> " + groupsList);
 
 		return crmContact;
 	}

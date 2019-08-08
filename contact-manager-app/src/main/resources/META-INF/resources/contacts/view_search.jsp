@@ -26,13 +26,16 @@
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
 
+
 <%
+	
   List<Integer> crmContactsId = new ArrayList<Integer>();
 
   String keywords = "";
   String[] columns =  new String[1];
 
   String parameterAdd ="";
+  
   
   if (!"".equals(ParamUtil.getString(request, "keywords"))){
 	  keywords = ParamUtil.getString(request, "keywords");
@@ -158,12 +161,14 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	System.out.println("go in tree: ");
 }
 
+
+
+
     SearchContext searchContext = SearchContextFactory.getInstance(request);    
     
-	String s = keywords.replaceAll("[^a-zA-Z0-9.]", " ");
-	System.out.println("=======String s --->" + s);
-	
-	searchContext.setAttribute("paginationType", "more");
+	String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
+
+    searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
@@ -174,31 +179,27 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
     		 e.printStackTrace();
     	 }
     }
+    
+    Query q = null;
+    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
+    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
+    	q = qq;
+    } else {
+    	MultiMatchQuery qq = new MultiMatchQuery(s);
+    	qq.addFields(columns);
+    	qq.setAnalyzer("whitespace");
+    	q = qq;
+    }
+    
 	
-	List<String> valueList = new ArrayList<String>(Arrays.asList(s.split(" ")));
 	BooleanQuery query = new BooleanQueryImpl();
-	
-	for(String value:valueList)
-	{
-		Query q = null;
-	    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
-	    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
-	    	q = qq;
-	    } else {
-	    	MultiMatchQuery qq = new MultiMatchQuery(value);
-	    	qq.addFields(columns);
-	    	qq.setAnalyzer("whitespace");
-	    	q = qq;	
-	    }
-	    query.add(q, BooleanClauseOccur.MUST);
-	}
-	
+	query.add(q, BooleanClauseOccur.MUST);
 	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
-	query.add(termQuery, BooleanClauseOccur.MUST);	
+	query.add(termQuery, BooleanClauseOccur.MUST);
 	
-	System.out.println("=======Query --->" + query);
+	
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 

@@ -110,9 +110,6 @@
 	<portlet:param name="cmd" value="exportCSV"/>
 </portlet:resourceURL>
 
-<liferay-portlet:actionURL name="uploadCSV" var="actionUrl">
-</liferay-portlet:actionURL>
-
 <div class="container-fluid">
 
 <!-- This is not the liferay way, permission checker should be preformed here, at the time this was commented is checked by liferay on save/create/update/view if (PermissionUtil.canUserAddContact(currentUser)) {  -->
@@ -130,17 +127,6 @@
 			<%-- TODO: check role --%>
 			<aui:button onClick="<%= exportCSVURL.toString() %>"
 				value="Export all to CSV"></aui:button>
-		</aui:col>
-	</aui:row>
-	
-	<aui:row>
-		<aui:col md="12">
-			Please select the input .CSV file
-			
-			<aui:form name="contentUploadForm" action="<%=actionUrl%>" enctype="multipart/form-data" method="post">
-				<aui:input type="file" name="fileName">Upload a CSV</aui:input>
-				<aui:button name="Save" value="Process" type="submit" />
-			</aui:form>
 		</aui:col>
 	</aui:row>
 	

@@ -30,7 +30,7 @@
 	}
 
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
-		orderByComparator = new CrmGroupModifiedDateComparator(false);
+		orderByComparator = new CrmGroupModifiedDateComparator(orderByAsc);
 	}
 %>
 
@@ -66,7 +66,6 @@
 						for (CrmGroup crmGroup : crmGroups) {
 							viewModels.add(new CrmGroupViewModel(crmGroup));
 						}
-						
 						pageContext.setAttribute("results", viewModels);
 					
 					%>

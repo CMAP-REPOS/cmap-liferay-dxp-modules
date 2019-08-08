@@ -554,7 +554,6 @@ public class CrmContactLocalServiceUtil {
 
 	public static void setCrmGroupCrmContacts(long crmGroupId,
 		long[] crmContactIds) {
-		System.out.println("======= IS HERE ");
 		getService().setCrmGroupCrmContacts(crmGroupId, crmContactIds);
 	}
 

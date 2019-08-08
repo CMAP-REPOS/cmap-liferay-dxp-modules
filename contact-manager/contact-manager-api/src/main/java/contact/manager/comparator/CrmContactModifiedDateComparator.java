@@ -26,10 +26,10 @@ public class CrmContactModifiedDateComparator extends OrderByComparator<CrmConta
 
 	@Override
 	public int compare(CrmContact entry1, CrmContact entry2) {
-	  Date date1 = entry1.getModifiedDate();
-	  Date date2 = entry2.getModifiedDate();
+	  Date name1 = entry1.getModifiedDate();
+	  Date name2 = entry2.getModifiedDate();
 
-	  int value = date1.compareTo(date2);
+	  int value = name1.compareTo(name2);
 
 	  if (_ascending) {
 	    return value;

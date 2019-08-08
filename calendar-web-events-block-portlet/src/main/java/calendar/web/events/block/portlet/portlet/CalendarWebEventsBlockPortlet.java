@@ -1,7 +1,6 @@
 package calendar.web.events.block.portlet.portlet;
 
 import calendar.web.events.block.portlet.constants.CalendarWebEventsBlockPortletKeys;
-import calendar.web.events.block.portlet.util.CalendarBookingsEventStartTimeComparator;
 
 import com.liferay.calendar.model.CalendarBooking;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
@@ -42,6 +41,7 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class CalendarWebEventsBlockPortlet extends MVCPortlet {
+	
 	
 	
 	/*@Override
