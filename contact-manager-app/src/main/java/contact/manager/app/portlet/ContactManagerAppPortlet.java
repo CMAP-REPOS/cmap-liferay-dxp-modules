@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.theme.ThemeDisplay;
+import com.liferay.portal.kernel.upload.UploadPortletRequest;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -34,13 +35,20 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.FileUtil;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -68,14 +76,20 @@ import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
-//import contact.manager.comparator.CrmContactCreateDateComparator;
+import contact.manager.app.viewmodel.CrmContactViewModelModifiedDateComparator;
+import contact.manager.comparator.CrmContactCreateDateComparator;
+import contact.manager.comparator.CrmContactModifiedDateComparator;
+import contact.manager.comparator.CrmGroupModifiedDateComparator;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
+import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmNote;
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.service.CrmContactAuditLogLocalService;
 import contact.manager.service.CrmContactLocalService;
 import contact.manager.service.CrmContactLocalServiceUtil;
+import contact.manager.service.CrmGroupLocalService;
+import contact.manager.service.CrmGroupLocalServiceUtil;
 import contact.manager.service.CrmNoteLocalService;
 import contact.manager.service.CrmOutreachLogLocalService;
 
@@ -110,14 +124,25 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	@Override
 	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
+		/*System.out.println("=======UPDATED CONTACT GROUP LIST -> ");
+		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			CrmContact crmContact = _crmContactLocalService.getCrmContact(8436); //HectorTets
+			crmContact = ContactUtil.updateCrmContactGroups(crmContact);
+			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
+		
 		super.render(request, response);
 	}
 
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
-
+		
 		String command = ParamUtil.getString(resourceRequest, "cmd");
-
 
 		if (command.equals("getPotentialGroups")) {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
@@ -146,6 +171,142 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			}
 		}
 	}
+	
+	public void uploadCSV(ActionRequest request, ActionResponse response) throws PortalException, IOException {
+		UploadPortletRequest uploadPortletRequest = PortalUtil.getUploadPortletRequest((ActionRequest) request);
+		// Getting the file name of the uploaded one
+		String fileName = uploadPortletRequest.getFileName("fileName");
+		
+		// Getting the file handler
+		File userFile = uploadPortletRequest.getFile("fileName", true);
+
+		// checks the handler
+		if (userFile != null) {
+			try {
+				
+				FileInputStream inputStream = new FileInputStream(userFile);
+				
+				String csvString = FileUtil.read(userFile);
+				
+				List<String> listContacts = new ArrayList<String>(Arrays.asList(csvString.split("\\r?\\n")));
+				List<String> listColumns = new ArrayList<String>(Arrays.asList(listContacts.get(0).split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")));
+				
+				listContacts.remove(0);
+				
+				System.out.println("######  Number of Contacts -> " + listContacts.size() + "######");
+				
+				for (String contact : listContacts) 
+				{
+					int index = 0;
+					
+					System.out.println("######  CONTACT ADDED ######");
+					
+					List<String> listFields = new ArrayList<String>(Arrays.asList(contact.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")));
+					
+					Map<String, String> mapContact = new HashMap<String, String>();
+					
+					for (String field : listFields) 
+					{
+						mapContact.put(listColumns.get(index),field.replace("\"", ""));
+						index++;
+					}
+					
+					ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+					
+					CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
+					crmContact = ContactUtil.updateCrmContactPropertiesCSV(crmContact, mapContact, serviceContext, true);
+					
+					
+					//START CMAP-252 if contacts exist in CRM active, return the error
+					if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
+						LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
+						System.out.println("=======Contact Already Exists=======");
+					}
+					else 
+					{
+						ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+						
+						//START CMAP-253 //if the contact exist in CC get the id
+						String id = null;
+						ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
+						
+						if (ccContact!= null) 
+						{
+							if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) 
+							{ // if contact is not active, activated first
+								ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
+								StringBuffer bufferResponse = new StringBuffer();
+								//not sure if visitor or woner works everitime when updating general contact data or changing status
+								//adding bouth to matain existing use cases
+								//START CMAP-198
+								System.out.println("=========== 0");
+								ContactList contactList = new ContactList();
+								System.out.println("=========== 1");
+								contactList.id = "1"; //default weekly email list
+								System.out.println("=========== 2");
+								contactList.status = ConstantContactKeys.CC_STATUS_ACTIVE;
+								System.out.println("=========== 3");
+								List<ContactList> contactLists = new ArrayList<ContactList>();
+								System.out.println("=========== 4");
+								contactLists.add(contactList);
+								System.out.println("=========== 5");
+								ccContact.setLists(contactLists);
+								System.out.println("=========== 6");
+								System.out.println("=========== "+ccContact);
+								//END CMAP-198
+								constantContactServiceImpl.updateContact(ccContact, bufferResponse, ConstantContactKeys.CC_ACTION_BY_VISITOR);
+								String responseCode = bufferResponse.toString();
+								if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
+									bufferResponse = new StringBuffer();
+									constantContactServiceImpl.updateContact(ccContact, bufferResponse);
+									if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
+										SessionErrors.add(request, responseCode);
+										response.setRenderParameter("mvcPath", "/contacts/view.jsp");
+										return;
+									}
+								}
+							}
+							id = ccContact.getId();
+						}
+						//END CMAP-253
+						else 
+						{ 	
+							// the cotact was not found in CC, create it
+							StringBuffer messageResponse = new StringBuffer();
+							id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
+							
+							ContactApiModel ccAddedContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
+							id = ccAddedContact.getId();
+							System.out.println("=====ID is: =====");
+							System.out.println("=====" + id  + "======");
+							
+							if (id==null || id.trim().isEmpty()) {
+								System.out.println("=====Error was here======");
+								System.out.println(crmContact.getPrimaryEmailAddress());
+								System.out.println(messageResponse);
+								//return;
+							}
+						}
+						
+						//Create contact in CRM					
+						//System.out.println("=======Pre Contact->" + crmContact + "=======");
+						crmContact.setConstantContactId(new Long(id));
+						
+						CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);					
+						//System.out.println("=======Post Contact->" + addedContact + "=======");
+						if (addedContact != null) {
+							auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
+						}
+					}
+					//END CMAP-252
+				}
+				
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 	public void addContact(ActionRequest request, ActionResponse response) throws PortalException {
 
@@ -158,10 +319,10 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 //		}
 //
 		try {
-			
-			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
+			
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true, false);
 			
 			//START CMAP-252 if contacts exist in CRM active, return the error
@@ -244,6 +405,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
 				}
 			}
+			
 			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 
@@ -380,6 +542,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//System.out.println("=======Utility Contact Class-> " + _crmContactLocalService.updateCrmContact(crmContactNew, serviceContext).getClass());
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			
 			System.out.println("==========STOP 4==========");
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
@@ -398,6 +561,23 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
+		}
+	}
+	
+	public void updateContactModifiedDate(ActionRequest request, long crmContactId) throws PortalException {
+		
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+
+			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
+
+			crmContact = ContactUtil.updateCrmContactModifiedDate(crmContact, serviceContext);
+			
+			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOGGER.error("Exception in ContactManagerAppPortlet.updateContact: " + e.getMessage());
 		}
 	}
 
@@ -423,9 +603,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_ADD);
+				updateContactModifiedDate(request,crmNote.getCrmContactId());
 			}
-			
-			
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/notes/view.jsp");
@@ -447,6 +626,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		try {
 			
+			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
 			System.out.println("=======crmNoteID -> " + crmNoteId + "=======");
@@ -461,6 +641,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_UPDATE, originalCrmNote, crmNote);
+				updateContactModifiedDate(request,crmNote.getCrmContactId());
 			}
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmNote.getCrmContactId()));
@@ -493,6 +674,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_NOTE_DELETE);
+				updateContactModifiedDate(request,crmNote.getCrmContactId());
 			}
 			
 			System.out.println("=======Delet l crmContactId -> " + crmContactId + "=======");
@@ -522,6 +704,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmOutreachLog = OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext,
 					true);
 			_crmOutreachLogLocalService.addCrmOutreachLog(crmOutreachLog);
+			updateContactModifiedDate(request,crmContactId);
 
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
@@ -549,6 +732,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			CrmOutreachLog crmOutreachLog = _crmOutreachLogLocalService.getCrmOutreachLog(crmOutreachLogId);			
 			OutreachLogUtil.updateCrmOutreachLogProperties(crmOutreachLog, request, serviceContext, true);
 			_crmOutreachLogLocalService.updateCrmOutreachLog(crmOutreachLog);
+			updateContactModifiedDate(request,crmContactId);
 			
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
@@ -576,8 +760,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			
 			_crmOutreachLogLocalService.deleteCrmOutreachLog(crmOutreachLogId);
+			updateContactModifiedDate(request,crmContactId);
 			
-			System.out.println("=======Delet log crmContactId -> " + crmContactId + "=======");
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/outreach/view.jsp");
 			
@@ -592,11 +776,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			StringBundler sb = new StringBundler();
 			int getStart = 0; //ParamUtil.getInteger(request, "getStart");
 			int getEnd = CrmContactLocalServiceUtil.getCrmContactsCount(); //ParamUtil.getInteger(request, "getEnd");
-			OrderByComparator orderByComparator = new CrmContactCreateDateComparator(false);
+			OrderByComparator orderByComparator = new CrmContactModifiedDateComparator(false);
 			
-			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+			for (String columnName : ContactManagerAppPortletKeys.CSV_COLUMMN_NAMES) {
 				sb.append(getCSVFormattedValue(columnName));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				}
 			
 			List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(ConstantContactKeys.CC_STATUS_ACTIVE, getStart,getEnd, orderByComparator);
@@ -607,49 +791,52 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			for (CrmContact crmContact : crmContacts) {
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrefix())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.setIndex(sb.index() - 1);
 				sb.append(CharPool.NEW_LINE);
@@ -671,119 +858,10 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			StringBundler sb = new StringBundler();
 			
 			String idString = ParamUtil.getString(request, "idString");
-			/*HttpServletRequest searchRequest = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(request)); 
 			
-			String keywords = "";
-			String[] columns =  new String[1];
-			String parameterAdd ="";  
-			  
-			  if (!"".equals(ParamUtil.getString(request, "keywords"))){
-				  keywords = ParamUtil.getString(request, "keywords");
-				  columns =  new String[]{"firstName", "lastName", 
-			          "organization", "jobTitle", "primaryAddress1", "primaryAddress2", "primaryAddressCity", "primaryAddressZip", 
-			          "primaryAddressCounty", "primaryPhone", "primaryCell", 
-			          "primaryEmailAddress", "groupsList", "tagsList", "modifiedDate"};
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "first-name"))){
-				  keywords = ParamUtil.getString(searchRequest, "first-name");
-				  columns = new String[]{"firstName"};
-				  parameterAdd = "first-name";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "last-name"))){
-				  keywords = ParamUtil.getString(searchRequest, "last-name");
-				  columns = new String[]{"lastName"};
-				  parameterAdd = "last-name";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "organization"))){
-				  keywords = ParamUtil.getString(searchRequest, "organization");
-				  columns = new String[]{"organization"};
-				  parameterAdd = "organization";
-			  } else if (!"".equals( ParamUtil.getString(searchRequest, "job-title") )){
-				  keywords = ParamUtil.getString(searchRequest, "job-title");
-				  columns = new String[]{"jobTitle"};
-				  parameterAdd = "job-title";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "address-1") )){
-				  keywords = ParamUtil.getString(searchRequest, "address-1");
-				  columns = new String[]{"primaryAddress1"};
-				  parameterAdd = "address-1";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "address-2"))){
-				  keywords = ParamUtil.getString(searchRequest, "address-2");
-				  columns = new String[]{"primaryAddress2"};
-				  parameterAdd = "address-2";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "city") )){
-				  keywords = ParamUtil.getString(searchRequest, "city");
-				  columns = new String[]{"primaryAddressCity"};
-				  parameterAdd = "city";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "zip"))){
-				  keywords = ParamUtil.getString(searchRequest, "zip");
-				  columns = new String[]{"primaryAddressZip"};
-				  parameterAdd = "zip";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "county") )){
-				  keywords = ParamUtil.getString(searchRequest, "county");
-				  columns = new String[]{"primaryAddressCounty"};
-				  parameterAdd = "county";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "phone") )){
-				  keywords = ParamUtil.getString(searchRequest, "phone");
-				  columns = new String[]{"primaryPhone"};
-				  parameterAdd = "phone";
-			  } else if (!"".equals( ParamUtil.getString(searchRequest, "cell") )){
-				  keywords = ParamUtil.getString(searchRequest, "cell");
-				  columns = new String[]{"primaryCell"};
-				  parameterAdd = "cell";
-			  } else if (!"".equals(ParamUtil.getString(searchRequest, "email-address"))){
-				  keywords = ParamUtil.getString(searchRequest, "email-address");
-				  columns = new String[]{"primaryEmailAddress"};
-				  parameterAdd = "email-address";
-			  } else if (!"".equals( ParamUtil.getString(searchRequest, "groups") )){
-				  keywords = ParamUtil.getString(searchRequest, "groups");
-				  columns = new String[]{"groupsList"};
-				  parameterAdd = "groups";
-			  }  else if ( !"".equals(ParamUtil.getString(searchRequest, "tags") )){
-				  keywords = ParamUtil.getString(searchRequest, "tags");
-				  columns = new String[]{"tagsList"};
-				  parameterAdd = "tags";
-			  } else if ( !"".equals(ParamUtil.getString(searchRequest, "modified"))){
-				  keywords = ParamUtil.getString(searchRequest, "modified");
-				  columns = new String[]{"modifiedDate"};
-				  parameterAdd = "modified";
-			  }
-			  
-			SearchContext searchContext = SearchContextFactory.getInstance(searchRequest);
-			String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
-			
-			searchContext.setAttribute("paginationType", "more");
-		    String orderByCol = ParamUtil.getString(searchRequest, "orderByCol");
-		    String orderByType = ParamUtil.getString(searchRequest, "orderByType");
-		    if (!"".equals(orderByCol) && !"".equals(orderByType)){
-		    	try{
-		    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
-		    		 searchContext.setSorts(sorts);
-		    	 } catch(Exception e){
-		    		 e.printStackTrace();
-		    	 }
-		    }
-			
-		    Query q = null;
-		    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
-		    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
-		    	q = qq;
-		    } else {
-		    	MultiMatchQuery qq = new MultiMatchQuery(s);
-		    	qq.addFields(columns);
-		    	qq.setAnalyzer("whitespace");
-		    	q = qq;
-		    }
-		    
-		    BooleanQuery query = new BooleanQueryImpl();
-			query.add(q, BooleanClauseOccur.MUST);
-			TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
-			query.add(termQuery, BooleanClauseOccur.MUST);
-			termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
-			query.add(termQuery, BooleanClauseOccur.MUST);
-			
-			
-			Hits hits = IndexSearcherHelperUtil.search(searchContext, query);*/
-			
-			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+			for (String columnName : ContactManagerAppPortletKeys.CSV_COLUMMN_NAMES) {
 				sb.append(getCSVFormattedValue(columnName));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				}
 			
 			List<CrmContact> crmContacts = new ArrayList<CrmContact>();
@@ -801,49 +879,52 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			for (CrmContact crmContact : crmContacts) {
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrefix())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.setIndex(sb.index() - 1);
 				sb.append(CharPool.NEW_LINE);
@@ -869,12 +950,13 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		return sb.toString();
 	}
 	
+	
 	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action) {
 
-		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService
-				.createCrmContactAuditLog(0);
-		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext,
-				crmContactId, action);
+		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService.createCrmContactAuditLog(0);
+		
+		crmContactAuditLog = AuditLogUtil.updateCrmContactAuditLogProperties(crmContactAuditLog, serviceContext, crmContactId, action);
+		
 		_crmContactAuditLogLocalService.addCrmContactAuditLog(crmContactAuditLog);
 	}
 
@@ -892,8 +974,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		}
 	}
 
-	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action,
-			CrmNote oldNote, CrmNote newNote) {
+	private void auditContactAction(ServiceContext serviceContext, long crmContactId, String action, CrmNote oldNote, CrmNote newNote) {
 
 		CrmContactAuditLog crmContactAuditLog = _crmContactAuditLogLocalService.createCrmContactAuditLog(0);
 		
@@ -945,9 +1026,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		email.setEmailAddress(emailAdrress);
 		model.getEmailAddresses().add(email);
 	}
-
+	
+	private FileUtil _fileUtil;
 	private CrmContactLocalService _crmContactLocalService;
 	private CrmContactAuditLogLocalService _crmContactAuditLogLocalService;
 	private CrmOutreachLogLocalService _crmOutreachLogLocalService;
 	private CrmNoteLocalService _crmNoteLocalService;
+	private CrmGroupLocalService _crmGroupLocalService;
 }
