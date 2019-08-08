@@ -75,14 +75,11 @@
 					<liferay-ui:search-container-column-text name="" value="Details"
 						href="<%=detailsURL.toString()%>" />
 					<liferay-ui:search-container-column-text property="createDate"
-						name="Date" orderable="true" orderableProperty="createDate"
-						href="<%=currentURL%>" />
+						name="Date" orderable="true" orderableProperty="createDate"/>
 					<liferay-ui:search-container-column-text property="userName"
-						name="User" orderable="true" orderableProperty="userName"
-						href="<%=currentURL%>" />
+						name="User" orderable="true" orderableProperty="userName" />
 					<liferay-ui:search-container-column-text property="action"
-						name="Action" orderable="true" orderableProperty="action"
-						href="<%=currentURL%>" />
+						name="Action" orderable="true" orderableProperty="action" />
 				</liferay-ui:search-container-row>
 				<liferay-ui:search-iterator />
 			</liferay-ui:search-container>

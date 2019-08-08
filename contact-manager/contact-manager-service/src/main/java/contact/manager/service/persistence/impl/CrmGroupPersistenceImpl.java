@@ -3398,6 +3398,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public List<contact.manager.model.CrmContact> getCrmContacts(long pk) {
+		System.out.println("######  Primary Key ->" + pk + "######");
 		return getCrmContacts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

@@ -1,0 +1,5 @@
+Bundle-Name: form-field-file
+Bundle-SymbolicName: form.field.file
+Bundle-Version: 1.0.0
+Liferay-JS-Config: /META-INF/resources/config.js
+Web-ContextPath: /dynamic-data-form-field-file-form-field

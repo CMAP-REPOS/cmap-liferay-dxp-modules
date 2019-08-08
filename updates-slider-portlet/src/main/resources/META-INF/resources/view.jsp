@@ -41,6 +41,10 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 	</c:otherwise>
 </c:choose>
 
+<div class="hidden-md hidden-lg hidden-xl view-all">
+	<a href="/updates/all/-/categories/<%=assetCategoryId %>">View all</a>
+</div>
+
 <script>
 Liferay.on('allPortletsReady', function () {
   var $this = $('#<%=themeDisplay.getPortletDisplay().getId() %>');
@@ -48,7 +52,8 @@ Liferay.on('allPortletsReady', function () {
   var $spacer = $('<div class="col-xl-4"></div>');
   var $row = $('<div class="row"></div>');
 	var rows = [], active_index = 0;
-  var $nav = $('<nav class="slider-nav"></nav>');
+  var $nav = $('<nav class="hidden-xs hidden-sm slider-nav"></nav>');
+  var $viewall = $('');
 
   var items = $container.find('.item');
 
@@ -68,7 +73,7 @@ Liferay.on('allPortletsReady', function () {
 	}
 	$(window).resize(_.throttle(setHeight, 100));
 
-  for (let i = 0; i < Math.ceil(items.length / 4); i++) {
+  for (var i = 0; i < Math.ceil(items.length / 4); i++) {
 		$row = $('<div class="row"></div>');
 
     // create row
@@ -104,6 +109,8 @@ Liferay.on('allPortletsReady', function () {
 	if($nav.find('.nav-item').length > 1){
 		$this.append($nav);
 	}
+	
+	
 });
 
 </script>
