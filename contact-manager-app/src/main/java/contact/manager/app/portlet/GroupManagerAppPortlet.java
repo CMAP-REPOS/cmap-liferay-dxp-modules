@@ -31,6 +31,7 @@ import org.osgi.service.component.annotations.Reference;
 
 import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
+import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.GroupUtil;
 import contact.manager.comparator.CrmContactCreateDateComparator;
 import contact.manager.model.CrmContact;
@@ -74,12 +75,14 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
+		
 
 		String command = ParamUtil.getString(resourceRequest, "cmd");
 
 		if (command.equals("getPotentialContacts")) {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String potentialContactsSerialized = GroupUtil.getCrmContactsByName(nameParam);
+			
 
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
@@ -88,7 +91,8 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String groupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
 			String potentialContactsSerialized = GroupUtil.getCrmContactsByNameAndCrmGroupId(nameParam, Long.parseLong(groupIdParam));
-
+			
+			
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
 			writer.close();
@@ -127,13 +131,23 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			
 			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
 
 			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
+			
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
 
 			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
 			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+			
+			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId);
+			
+			for(CrmContact crmContact:crmContacts) {
+				System.out.println("=====crmContactIds -> " + crmContact.getFirstName());
+				crmContact = ContactUtil.updateCrmContactGroups(crmContact);
+				//CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+			}
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
@@ -166,13 +180,9 @@ public void exportCSVData(ResourceRequest request, ResourceResponse response) th
 			
 			OrderByComparator orderByComparator = new CrmContactCreateDateComparator(false);
 			
-			
-			System.out.println("=======Start -> " + getStart + "=======");
-			System.out.println("=======End -> " + getEnd + "=======");
-			
-			for (String columnName : ConstantContactKeys.CSV_COLUMMN_NAMES) {
+			for (String columnName : ContactManagerAppPortletKeys.CSV_COLUMMN_NAMES) {
 				sb.append(getCSVFormattedValue(columnName));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				}
 			
 			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId, getStart,getEnd, orderByComparator);
@@ -183,49 +193,52 @@ public void exportCSVData(ResourceRequest request, ResourceResponse response) th
 			for (CrmContact crmContact : crmContacts) {
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrefix())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
-				sb.append(ConstantContactKeys.CSV_SEPARATOR);
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
 				
 				sb.setIndex(sb.index() - 1);
 				sb.append(CharPool.NEW_LINE);
@@ -255,7 +268,7 @@ public void exportCSVData(ResourceRequest request, ResourceResponse response) th
 	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
 		_crmGroupLocalService = crmGroupLocalService;
 	}
-
-	private CrmGroupLocalService _crmGroupLocalService;
+	
 	private CrmContactLocalService _crmContactLocalService;
+	private CrmGroupLocalService _crmGroupLocalService;
 }

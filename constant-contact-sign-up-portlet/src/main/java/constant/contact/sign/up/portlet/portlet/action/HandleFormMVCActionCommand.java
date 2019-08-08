@@ -57,71 +57,51 @@ public class HandleFormMVCActionCommand extends BaseMVCActionCommand{
 			if (ccContact!= null) {
 				id = ccContact.getId();
 				
-				if (!ConstantContactSignUpPortletKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) 
-				{ 
-					/*/ if contact is not active, activated first
-					ccContact.setStatus(ConstantContactSignUpPortletKeys.CC_STATUS_ACTIVE);
-					StringBuffer bufferResponse = new StringBuffer();
-					//not sure if visitor or woner works everitime when updating general contact data or changing status
-					//adding bouth to matain existing use cases
-					
-					//START CMAP-198
-					ContactList contactList = new ContactList();
-					contactList.id = "1"; //default weekly email list
-					contactList.status = ConstantContactSignUpPortletKeys.CC_STATUS_ACTIVE;
-					List<ContactList> contactLists = new ArrayList<ContactList>();
-					contactLists.add(contactList);
-					ccContact.setLists(contactLists);
-					//END CMAP-198
-					constantContactServiceImpl.updateContact(ccContact, bufferResponse, ConstantContactSignUpPortletKeys.CC_ACTION_BY_VISITOR);
-					
-					String responseCode = bufferResponse.toString();
-					if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
-						bufferResponse = new StringBuffer();
-						constantContactServiceImpl.updateContact(ccContact, bufferResponse);
-						if (!responseCode.trim().isEmpty() && !responseCode.equals("200") ) {
-							SessionErrors.add(request, responseCode);
-							return;
-						}
-					}*/
-					SessionMessages.add(request, "410");
+				if (ConstantContactSignUpPortletKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) 
+				{
+					// The contact was found in CC and it's active, send notification
+					SessionMessages.add(request, "409");
 					String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); 
 					String to = contactEmail;
 					String cc[] = null;
-					String subject = "CMAP Weekly Updates Resubscribe ";
-				    String footer = ConstantContactSignUpPortletKeys.SIGNUP_RESUBSCRIBE_EMAIL;
+					String subject = "CMAP Weekly Updates Already Subscribed";
+				    String footer = ConstantContactSignUpPortletKeys.SIGNUP_EXISTING_EMAIL;
+				    
+				    if ( null != to && !to.trim().isEmpty() ) {
+				    	SubscribeEmailUtil.buildAndSendEmail(from, to, cc, subject, footer);
+					}
+				}
+				else if (ConstantContactSignUpPortletKeys.CC_STATUS_UNCONFIRMED.equals(ccContact.getStatus())) {
+					// The contact was found in CC and it's unconfirmed, send confirmation
+					SessionMessages.add(request, "411");
+					String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); 
+					String to = contactEmail;
+					String cc[] = null;
+					String subject = "CMAP Weekly Updates Unconfirmed";
+				    String footer = ConstantContactSignUpPortletKeys.SIGNUP_UNCONFIRMED_EMAIL;
 				    
 				    if ( null != to && !to.trim().isEmpty() ) {
 				    	SubscribeEmailUtil.buildAndSendEmail(from, to, cc, subject, footer);
 					}
 					
-					
+				}	
+				else {
+					// The contact was found in CC and it's not active or unconfirmed, send resubscribe
+					SessionMessages.add(request, "410");
+					String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); 
+					String to = contactEmail;
+					String cc[] = null;
+					String subject = "CMAP Weekly Updates Resubscribe";
+				    String footer = ConstantContactSignUpPortletKeys.SIGNUP_RESUBSCRIBE_EMAIL;
+				    
+				    if ( null != to && !to.trim().isEmpty() ) {
+				    	SubscribeEmailUtil.buildAndSendEmail(from, to, cc, subject, footer);
+					}
 				}
-			
-				//System.out.println("=====Contact exists, the ID is -> " + id + "=======");
-				//System.out.println("=====The email is -> " + contactEmail + "=======");
-				SessionMessages.add(request, "409");
-				
-				//System.out.println("=====ENVIRONMENT_NAME -> " + PropsUtil.get(ContactNotificationConstants.ENVIRONMENT_NAME) + "=======");
-				String from = "cmap@cmap2das1.illinois.gov";// PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); 
-				String to = contactEmail;
-				String cc[] = null;
-				String subject = "CMAP Weekly Updates Already Subscribed";
-			    String footer = ConstantContactSignUpPortletKeys.SIGNUP_EXISTING_EMAIL;
-				
-			    //System.out.println("Email properties:\nFrom: " + (null != from ? from : "null") + "; to: " + ( null != to ? to : "null") + "; CC: " + ( null != cc ? String.join(", ", cc) : "null") );
-			    //System.out.println("Footer: " + footer );
-			    
-			    if ( null != to && !to.trim().isEmpty() ) {
-			    	SubscribeEmailUtil.buildAndSendEmail(from, to, cc, subject, footer);
-				}
-				
-				
 			}
-			else { // the cotact was not found in CC, create it
+			else { 
+				// The cotact was not found in CC, create it
 				StringBuffer messageResponse = new StringBuffer();
-				System.out.println("=====String buffer -> " + messageResponse + "=======");
-				
 				id = constantContactServiceImpl.addContact("", "", "", "", contactEmail, messageResponse);
 				SessionMessages.add(request, "408");
 				
@@ -130,9 +110,6 @@ public class HandleFormMVCActionCommand extends BaseMVCActionCommand{
 					return;
 				}
 			}
-			
-			System.out.println("Email is: " + contactEmail);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 			LOGGER.error("Exception in ConstantContactSignupPortlet.addContact: " + e.getMessage());

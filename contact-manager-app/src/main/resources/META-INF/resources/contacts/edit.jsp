@@ -4,6 +4,19 @@
 <%
 	long crmContactId = ParamUtil.getLong(request, "crmContactId");
 	List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContactId);
+	List<CrmGroup> crmGroups2 = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContactId);
+	
+	String groupsString = GroupUtil.getCrmGroupsByContactId(crmContactId);
+	
+	for (CrmGroup crmGroup : crmGroups) {
+		System.out.println("######   Group Contact -> " + crmGroup  + "######");
+	}
+	
+	for (CrmGroup crmGroup : crmGroups2) {
+		System.out.println("######  Group Local -> " + crmGroup  + "######");
+	}
+	
+	System.out.println("######  Group String -> " + groupsString + "######");
 
 	CrmContact crmContact = null;
 

@@ -24,7 +24,7 @@
 
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
-
+<%@ page import="contact.manager.app.viewmodel.CrmContactViewModelModifiedDateComparator" %>
 
 <%
 
@@ -100,12 +100,38 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
+	List<Document> docList = hits.toList();
+	
+	//OrderByComparator orderByComparator = new CrmContactViewModelModifiedDateComparator(false);
+	Collections.reverse(docList);
+	
+	List<CrmContactViewModel> viewModelsOrdered = new ArrayList<CrmContactViewModel>();
+
+	for (int i = 0; i<docList.size(); i++) {
+		Document doc = docList.get(i);
+		
+	    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+	    CrmContact entry = null;
+	    try {
+	    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
+	    } catch (PortalException pe) {
+	    	pe.printStackTrace();
+	    } catch (SystemException se) {
+	    	se.printStackTrace();
+	    }
+		if (entry != null){
+			 viewModelsOrdered.add(new CrmContactViewModel(entry));
+		}
+	}
+	
+	OrderByComparator orderByComparator = new CrmContactViewModelModifiedDateComparator(false);
+	
+	Collections.sort(viewModelsOrdered, orderByComparator);
 %>
 
 <portlet:actionURL name="deleteContact" var="deleteContactURL">
-						<portlet:param name="crmContactId"
-							value="XXXXX" />
-					</portlet:actionURL>
+	<portlet:param name="crmContactId" value="XXXXX" />
+</portlet:actionURL>
 
 <div class="container-fluid">
 
@@ -119,28 +145,21 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 				var="crmContactsSearchContainer">
 
 				<liferay-ui:search-container-results>
-					<%
+				<%
 					List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
+					
 
-					for (int i = crmContactsSearchContainer.getStart(); i<hits.getDocs().length && i<crmContactsSearchContainer.getEnd(); i++) {
-						Document doc = hits.doc(i);
-						
-					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-					    CrmContact entry = null;
-					    try {
-					    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
-					    } catch (PortalException pe) {
-					    	pe.printStackTrace();
-					    } catch (SystemException se) {
-					    	se.printStackTrace();
-					    }
-						if (entry != null){
-							 viewModels.add(new CrmContactViewModel(entry));
-						}
+					for (int i = crmContactsSearchContainer.getStart(); i<viewModelsOrdered.size() && i<crmContactsSearchContainer.getEnd(); i++) {
+						viewModels.add(viewModelsOrdered.get(i));
 					}
+					
+					
+					//OrderByComparator orderByComparator = new CrmContactViewModelModifiedDateComparator(false);
+					
+					//Collections.sort(viewModels, orderByComparator);
 
-						pageContext.setAttribute("results", viewModels);
-					%>
+					pageContext.setAttribute("results", viewModels);
+				%>
 				</liferay-ui:search-container-results>
 				
 				<liferay-ui:search-container-row

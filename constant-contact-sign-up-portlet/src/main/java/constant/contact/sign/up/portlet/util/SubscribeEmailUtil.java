@@ -5,7 +5,7 @@ import javax.mail.internet.AddressException;
 public class SubscribeEmailUtil extends BaseEmailUtil {
 		public static void buildAndSendEmail( String from, String to, String cc[], String subject, String footer ) {
 			StringBuilder sb = new StringBuilder(_EMAIL_BODY_HEADER);
-			sb.append(_EMAIL_CONTENT_HEADER);
+			//sb.append(_EMAIL_CONTENT_HEADER);
 			
 			sb.append(_EMAIL_CONTENT_FOOTER);
 			if (null != footer) {

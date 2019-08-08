@@ -52,9 +52,5 @@ public class ConstantContactKeys {
 	
 	//Added to remove users from the recycling bin
 	public static final String CC_STATUS_DELETED = "DELETED";
-	
-	public static final String[] CSV_COLUMMN_NAMES = { "First Name", "Last Name", "Organization", "Job Title", "Address 1",
-			"Address 2","City", "ZIP", "County", "Phone","Cell","EmailAddress", "Groups", "Tags", "Modified" };
-	public static final String CSV_SEPARATOR = ",";
 
 }

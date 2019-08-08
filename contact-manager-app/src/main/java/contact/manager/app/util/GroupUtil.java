@@ -169,11 +169,12 @@ public class GroupUtil {
 		List<CrmGroup> matchingGroups = CrmGroupLocalServiceUtil.dynamicQuery(crmGroupQuery , QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		
 		for (CrmGroup crmGroup : matchingGroups) {
-
-			JSONObject obj = JSONFactoryUtil.createJSONObject();
-			obj.put("crmGroupId", crmGroup.getCrmGroupId());
-			obj.put("crmGroupName", crmGroup.getName());
-			jsonArray.put(obj);
+			if(!crmGroup.getStatus().equals(ConstantContactKeys.CC_STATUS_REMOVED)){
+				JSONObject obj = JSONFactoryUtil.createJSONObject();
+				obj.put("crmGroupId", crmGroup.getCrmGroupId());
+				obj.put("crmGroupName", crmGroup.getName());
+				jsonArray.put(obj);
+			}
 		}
 
 		result = jsonArray.toString();
