@@ -28,6 +28,13 @@ public class ContactUtil {
 
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
+		
+		boolean addCrmGroups = true;
+		return updateCrmContactProperties(crmContact, request, serviceContext, isNew, addCrmGroups);
+	}
+
+	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
+			ServiceContext serviceContext, boolean isNew, boolean addCrmGroups) {
 
 		// TODO: handle file uploads for photo
 		Date now = new Date();
@@ -117,18 +124,18 @@ public class ContactUtil {
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 		}
 		
-		//Error prob aqui
-		
-		
-		CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		if (addCrmGroups) {
+			CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+//			CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		}
 		
 		for(long crmGroupId:crmGroupIds) {
 			System.out.println("=======UPDATED CONTACT GROUP ID -> " + crmGroupId);
 		}
 		
 		
-		//List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
-		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
+		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
+//		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
 		
 		List<String> crmGroupNames = new ArrayList<String>();
 		for (CrmGroup crmGroup : crmGroups) {
