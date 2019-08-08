@@ -68,7 +68,7 @@ import contact.manager.app.util.NoteUtil;
 import contact.manager.app.util.OutreachLogUtil;
 import contact.manager.app.util.UserUtil;
 import contact.manager.app.viewmodel.CrmContactAuditLogChangeViewModel;
-import contact.manager.comparator.CrmContactCreateDateComparator;
+//import contact.manager.comparator.CrmContactCreateDateComparator;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactAuditLog;
 import contact.manager.model.CrmNote;
@@ -162,7 +162,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
-			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
+			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true, false);
 			
 			//START CMAP-252 if contacts exist in CRM active, return the error
 			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
@@ -231,8 +231,18 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//Create contact in CRM
 			crmContact.setConstantContactId(new Long(id));
 			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);
+			
 			if (addedContact != null) {
+
 				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
+
+				addedContact = ContactUtil.updateCrmContactProperties(addedContact, request, serviceContext, false, true);
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(addedContact, serviceContext);
+				
+				if (updatedContact != null) {
+					
+					auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
+				}
 			}
 			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/contacts/view.jsp");

@@ -18,6 +18,13 @@ public class ContactUtil {
 
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
+		
+		boolean addCrmGroups = true;
+		return updateCrmContactProperties(crmContact, request, serviceContext, isNew, addCrmGroups);
+	}
+	
+	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
+			ServiceContext serviceContext, boolean isNew, boolean addCrmGroups) {
 
 		// TODO: handle file uploads for photo
 		Date now = new Date();
@@ -107,7 +114,9 @@ public class ContactUtil {
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 		}
 		
-		CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		if (addCrmGroups) {
+			CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		}
 		
 		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
 		List<String> crmGroupNames = new ArrayList<String>();
