@@ -323,7 +323,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
 			
-			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true);
+			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, true, false);
 			
 			//START CMAP-252 if contacts exist in CRM active, return the error
 			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
@@ -392,11 +392,20 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//Create contact in CRM
 			crmContact.setConstantContactId(new Long(id));
 			CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);
-
+			
 			if (addedContact != null) {
-				System.out.println("=====New Contact ->" + addedContact);
+
 				auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
+
+				addedContact = ContactUtil.updateCrmContactProperties(addedContact, request, serviceContext, false, true); // Second pass, to add groups
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(addedContact, serviceContext);
+				
+				if (updatedContact != null) {
+					
+					auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
+				}
 			}
+
 			response.setRenderParameter("crmContactId", String.valueOf(crmContact.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 

@@ -3,8 +3,8 @@ package contact.manager.app.util;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
+//import com.liferay.portal.kernel.json.JSONFactoryUtil;
+//import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -24,10 +24,17 @@ import contact.manager.service.CrmGroupLocalServiceUtil;
 
 public class ContactUtil {
 	
-	private static CrmContactLocalServiceUtil _crmContactLocalServiceUtil;
+//	private static CrmContactLocalServiceUtil _crmContactLocalServiceUtil;
 
 	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
 			ServiceContext serviceContext, boolean isNew) {
+		
+		boolean addCrmGroups = true;
+		return updateCrmContactProperties(crmContact, request, serviceContext, isNew, addCrmGroups);
+	}
+
+	public static CrmContact updateCrmContactProperties(CrmContact crmContact, ActionRequest request,
+			ServiceContext serviceContext, boolean isNew, boolean addCrmGroups) {
 
 		// TODO: handle file uploads for photo
 		Date now = new Date();
@@ -117,18 +124,13 @@ public class ContactUtil {
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 		}
 		
-		//Error prob aqui
-		
-		
-		CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
-		
-		for(long crmGroupId:crmGroupIds) {
-			System.out.println("=======UPDATED CONTACT GROUP ID -> " + crmGroupId);
+		if (addCrmGroups) {
+			CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+//			CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
 		}
 		
-		
-		//List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
-		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
+		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
+//		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
 		
 		List<String> crmGroupNames = new ArrayList<String>();
 		for (CrmGroup crmGroup : crmGroups) {
@@ -137,7 +139,6 @@ public class ContactUtil {
 		
 		String groupsList = String.join(" | ", crmGroupNames);
 		crmContact.setGroupsList(groupsList);
-		System.out.println("=======UPDATED CONTACT GROUP LIST -> " + groupsList);
 
 		return crmContact;
 	}
