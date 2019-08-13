@@ -14,9 +14,9 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 	<c:otherwise>
 	<section class="update-slider slider" id="<%=themeDisplay.getPortletDisplay().getId() %>">
 		<header class="row">
-			<div class="col-xl-10 col-xl-offset-3 col-sm-16"col-sm-16 >
+			<div class="col-sm-16 col-sm-offset-0"col-sm-16 >
 				<div class="buttons">
-					<h3>Updates</h3>
+					<h3>UPDATES</h3>
 					<div class="view-all">
 						<a href="/updates/all/-/categories/<%=assetCategoryId %>">View all</a>
 					</div>
@@ -31,19 +31,20 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 					<a href="${assetModel.getLink()}">${assetModel.getTitle()}</a>
 				</h3>
 				<p class="item-description">${assetModel.getSummary()}</p>
-				<a class="read-more-link"
+				<!--a class="read-more-link"
 					href="${assetModel.getLink()}">
-					Read more <span class="sr-only">about ${assetModel.getTitle()}</span></a>
+					Read more <span class="sr-only">about ${assetModel.getTitle()}</span></a-->
 			</div>
 			</c:forEach>
 		</div>
+		
+		<div class="hidden-md hidden-lg hidden-xl view-all-mobile">
+			<a href="/updates/all/-/categories/<%=assetCategoryId %>">View All Updates</a>
+		</div>
+		
 	</section>
 	</c:otherwise>
 </c:choose>
-
-<div class="hidden-md hidden-lg hidden-xl view-all">
-	<a href="/updates/all/-/categories/<%=assetCategoryId %>">View all</a>
-</div>
 
 <script>
 Liferay.on('allPortletsReady', function () {

@@ -214,7 +214,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 					
 					CrmContact crmContact = _crmContactLocalService.createCrmContact(0);
-					crmContact = ContactUtil.updateCrmContactPropertiesCSV(crmContact, mapContact, serviceContext, true);
+					crmContact = ContactUtil.updateCrmContactPropertiesCSV(crmContact, mapContact, serviceContext, true, false);
 					
 					
 					//START CMAP-252 if contacts exist in CRM active, return the error
@@ -284,18 +284,29 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 								System.out.println("=====Error was here======");
 								System.out.println(crmContact.getPrimaryEmailAddress());
 								System.out.println(messageResponse);
-								//return;
 							}
 						}
 						
-						//Create contact in CRM					
-						//System.out.println("=======Pre Contact->" + crmContact + "=======");
+						//Create contact in CRM
 						crmContact.setConstantContactId(new Long(id));
+						CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);
 						
-						CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);					
-						//System.out.println("=======Post Contact->" + addedContact + "=======");
 						if (addedContact != null) {
+							
+							System.out.println(addedContact);
+
 							auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
+
+							addedContact = ContactUtil.updateCrmContactPropertiesCSV(addedContact, mapContact, serviceContext, false, true); // Second pass, to add groups
+							System.out.println(addedContact);
+							
+							CrmContact updatedContact = _crmContactLocalService.updateCrmContact(addedContact, serviceContext);
+							
+							if (updatedContact != null) {
+								
+								System.out.println(updatedContact);
+								auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
+							}
 						}
 					}
 					//END CMAP-252
@@ -379,7 +390,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				id = ccContact.getId();
 			}
 			//END CMAP-253
-			else { // the cotact was not found in CC, create it
+			else { // the contact was not found in CC, create it
 				StringBuffer messageResponse = new StringBuffer();
 				id = constantContactServiceImpl.addContact("", crmContact.getFirstName(), crmContact.getLastName(), crmContact.getOrganization(), crmContact.getPrimaryEmailAddress(), messageResponse);
 				if (id==null || id.trim().isEmpty()) {

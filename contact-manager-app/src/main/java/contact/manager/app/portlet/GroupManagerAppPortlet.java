@@ -17,6 +17,8 @@ import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.portlet.ActionRequest;
@@ -26,6 +28,7 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -132,21 +135,37 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			
+			ArrayList<Long> crmOriginalIds = new ArrayList<Long>();
+			ArrayList<Long> crmModifiedIds = new ArrayList<Long>();
+			
 			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
-
 			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
+			
+			List<CrmContact> crmContactsOriginal = _crmGroupLocalService.getCrmContacts(crmGroupId);
+
+			for(CrmContact crmContact:crmContactsOriginal) {
+				crmOriginalIds.add(crmContact.getCrmContactId());
+			}
 			
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
 
 			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
+			
+			for(long crmContactId:crmContactIds) {
+				crmModifiedIds.add(crmContactId);
+			}
+			
+			List<Long> crmUpdatedIds = new ArrayList<>(CollectionUtils.disjunction(crmModifiedIds, crmOriginalIds));
+			
 			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 			
 			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId);
 			
-			for(CrmContact crmContact:crmContacts) {
-				System.out.println("=====crmContactIds -> " + crmContact.getFirstName());
+			for(long crmContactId:crmUpdatedIds) 
+			{	
+				CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);	
 				crmContact = ContactUtil.updateCrmContactGroups(crmContact);
-				//CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
 			}
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
@@ -267,6 +286,11 @@ public void exportCSVData(ResourceRequest request, ResourceResponse response) th
 	@Reference(unbind = "-")
 	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
 		_crmGroupLocalService = crmGroupLocalService;
+	}
+	
+	@Reference(unbind = "-")
+	protected void setContactLocalService(CrmContactLocalService crmContactLocalService) {
+		_crmContactLocalService = crmContactLocalService;
 	}
 	
 	private CrmContactLocalService _crmContactLocalService;

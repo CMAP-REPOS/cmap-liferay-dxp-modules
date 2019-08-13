@@ -56,16 +56,6 @@
 		<aui:input type="text" name="summaryLength" label="Summary Length"
 			value="<%= summaryLength %>">
 		</aui:input>
-		
-		<aui:select name="entries" label=""
-			value="${assetModels.size()}">
-			<%//System.out.println("######  Number of Contacts -> " + assetModels.size() + "######"); %>
-			<aui:option value="0">Select an Entry</aui:option>
-			<c:forEach var="assetModel" items="${assetModels}">
-				<aui:option value="${assetModel.getTitle()}">${assetModel.getTitle()}</aui:option>
-			</c:forEach>
-		</aui:select>
-		
 
 	</aui:fieldset>
 

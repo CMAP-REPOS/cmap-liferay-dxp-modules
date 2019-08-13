@@ -126,8 +126,6 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			assetEntryQuery.setOrderByType1("DESC");
 			assetEntryQuery.setOrderByCol2("title");
 			assetEntryQuery.setOrderByType2("ASC");
-			
-			System.out.println("######  AssetEntryQuery -> " + assetEntryQuery + "  ######"); 
 
 			List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
@@ -140,8 +138,7 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			}
 			
 			for (UpdatesSliderAssetModel assetModel : assetModels) {
-				System.out.println("######  Asset Model Title -> " + assetModel.getTitle() + "  ######"); 
-				System.out.println("######  Asset Model Summary -> " + assetModel.getTitle() + "  ######"); 
+				System.out.println("######  Asset Model Title -> " + assetModel.getTitle() + "  ######");
 			}
 
 			renderRequest.setAttribute("assetModels", assetModels);

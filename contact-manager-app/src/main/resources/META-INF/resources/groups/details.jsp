@@ -17,10 +17,10 @@
 		
 		List<CrmContact> contactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
 		
-		for(CrmContact crmContact:contactList){
+		/*for(CrmContact crmContact:contactList){
 			System.out.println("=======Group Contact Info ->" + crmContact);
 			System.out.println("=======Group Contact Group ->" + CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId()));
-		}
+		}*/
 		
 	}
 

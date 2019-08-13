@@ -146,6 +146,13 @@ public class ContactUtil {
 	public static CrmContact updateCrmContactPropertiesCSV(CrmContact crmContact, Map<String, String> mapContact,
 			ServiceContext serviceContext, boolean isNew) {
 		
+		boolean addCrmGroups = true;
+		return updateCrmContactPropertiesCSV(crmContact, mapContact, serviceContext, isNew, addCrmGroups);
+	}
+	
+	public static CrmContact updateCrmContactPropertiesCSV(CrmContact crmContact, Map<String, String> mapContact,
+			ServiceContext serviceContext, boolean isNew, boolean addCrmGroups) {
+		
 		Date now = new Date();
 		long userId = serviceContext.getUserId();
 		String userName = UserUtil.getUserName(userId);
@@ -264,7 +271,10 @@ public class ContactUtil {
 		
 		long[] crmGroupIds = crmGroupIdsList.stream().mapToLong(l -> l).toArray();
 		
-		CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		if (addCrmGroups) {
+			CrmContactLocalServiceUtil.setCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+//			CrmGroupLocalServiceUtil.setCrmContactCrmGroups(crmContact.getCrmContactId(), crmGroupIds);
+		}
 		
 		List<CrmGroup> crmGroups = CrmContactLocalServiceUtil.getCrmGroups(crmContact.getCrmContactId());
 		List<String> crmGroupNames = new ArrayList<String>();
@@ -280,7 +290,6 @@ public class ContactUtil {
 	public static CrmContact updateCrmContactModifiedDate(CrmContact crmContact, ServiceContext serviceContext) {
 		
 		Date now = new Date();
-		// TODO: handle file uploads for photo
 		crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 
 		return crmContact;
@@ -289,7 +298,6 @@ public class ContactUtil {
 	public static CrmContact updateCrmContactGroups(CrmContact crmContact) {
 		
 		List<CrmGroup> crmGroups = CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId());
-		
 		List<String> crmGroupNames = new ArrayList<String>();
 		
 		for (CrmGroup crmGroup : crmGroups) {
@@ -297,10 +305,7 @@ public class ContactUtil {
 		}
 		
 		String groupsList = String.join(" | ", crmGroupNames);
-		
-		crmContact.setGroupsList(groupsList);
-		
-		System.out.println("=======UPDATED CONTACT GROUP LIST -> " + groupsList);		
+		crmContact.setGroupsList(groupsList);		
 		
 		return crmContact;
 	}
