@@ -53,10 +53,6 @@
 			value="<%= assetCount %>">
 		</aui:input>
 
-		<aui:input type="text" name="summaryLength" label="Summary Length"
-			value="<%= summaryLength %>">
-		</aui:input>
-
 	</aui:fieldset>
 
 	<aui:button-row>

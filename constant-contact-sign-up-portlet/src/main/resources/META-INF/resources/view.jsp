@@ -11,23 +11,26 @@
   <portlet:actionURL name = "signupEmail" var="signupURL"/>
     
       
- <div class="b-signup-form">
- 
-  	<%//AQUI SE MANDA LLAMAR EL NOMBRE DEL METODO EN EL PORTLET.JAVA!!!!!!! %>
- 	<portlet:actionURL  name = "signupEmail" var="signupURL"/>
-        
-    <aui:form cssClass="b-signup-form__form" action="<%= signupURL %>" style="margin-top: 2rem;">
+ <div class="row page-layout b-signup-form">
+ 	
+ 	<div class="col-md-8">
+    	<p class="sign-up-text">Sign up for our mailing list to stay updated on what's happening around our region each week</p>
+    </div>
     
-        <aui:input cssClass="b-signup-form__input" name="contactEmail" type="textarea" label="Sign up for our mailing list to stay updated on what's happening around our region each week"
-            placeholder="Email">
-            <aui:validator name="required" errorMessage="*Field cannot be empty"/>
-            <aui:validator name="email" errorMessage="*Enter a valid email address"/>
-            <aui:validator name="maxLength">500</aui:validator>
-        </aui:input>
+    <div class="col-md-8">
+   		<aui:form cssClass="b-signup-form__form" action="<%= signupURL %>">
+    
+	        <aui:input cssClass="b-signup-form__input" name="contactEmail" type="textarea" resizable="false" autoSize="false" placeholder="Email" label="">
+	            <aui:validator name="required" errorMessage="*Field cannot be empty"/>
+	            <aui:validator name="email" errorMessage="*Enter a valid email address"/>
+	            <aui:validator name="maxLength">500</aui:validator>
+	        </aui:input>
         
-        <aui:button-row>
-            <aui:button cssClass="b-signup-form__button" type="submit" value="Submit"/>
-        </aui:button-row>
-    </aui:form>
+	        <aui:button-row>
+	            <aui:button cssClass="b-signup-form__button" type="submit" value="Submit"/>
+	        </aui:button-row>
+	        
+    	</aui:form>
+    </div>
+   
  </div>
-    

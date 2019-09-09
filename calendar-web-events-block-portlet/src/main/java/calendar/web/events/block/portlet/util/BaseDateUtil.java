@@ -43,7 +43,7 @@ public class BaseDateUtil {
 		Date dateEnd = new Date(dateEventEnd);
 		
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("h:mm a");
-		
+	
 		String eventDuration = simpleDateformat.format(dateStart) + "-" + simpleDateformat.format(dateEnd);
 		
 		return eventDuration;

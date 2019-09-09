@@ -42,9 +42,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	OrderByComparator orderByComparator = new CalendarBookingsEventStartTimeComparator(true);
 	
 	List<CalendarBooking> calendarBookings = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq, 0, count, orderByComparator);
-
-	//List<CalendarBooking> calendarBookings = (List) com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq);
-	//List<CalendarBooking> calendarBookings = calendarBookingsAll.subList(calendarBookingsAll.size()-5, calendarBookingsAll.size());
 	
 	List<EventBlock> eventBlocks = new ArrayList<>();
 	Date date = new Date();

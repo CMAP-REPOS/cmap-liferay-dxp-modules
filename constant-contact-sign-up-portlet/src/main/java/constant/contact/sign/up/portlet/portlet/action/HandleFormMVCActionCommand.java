@@ -18,7 +18,6 @@ import org.osgi.service.component.annotations.Component;
 
 import constant.contact.sign.up.portlet.constants.ConstantContactSignUpPortletKeys;
 import contact.constantcontact.model.ContactApiModel;
-import contact.constantcontact.model.ContactList;
 import contact.constantcontact.service.impl.ConstantContactServiceImpl;
 import contact.manager.service.util.ContactNotificationConstants;
 import constant.contact.sign.up.portlet.util.SubscribeEmailUtil;
@@ -108,6 +107,16 @@ public class HandleFormMVCActionCommand extends BaseMVCActionCommand{
 				if (id==null || id.trim().isEmpty()) {
 					SessionErrors.add(request, messageResponse.toString());
 					return;
+				}
+				
+				String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); 
+				String to = contactEmail;
+				String cc[] = null;
+				String subject = "Thank you for subscribing to the CMAP's Weekly Update";
+			    String footer = ConstantContactSignUpPortletKeys.SIGNUP_SUBSCRIBED_EMAIL;
+			    
+			    if ( null != to && !to.trim().isEmpty() ) {
+			    	SubscribeEmailUtil.buildAndSendEmail(from, to, cc, subject, footer);
 				}
 			}
 		} catch (Exception e) {

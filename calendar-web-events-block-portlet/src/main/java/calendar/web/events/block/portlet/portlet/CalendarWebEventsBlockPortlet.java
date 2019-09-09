@@ -13,6 +13,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ArrayList;
 
 
@@ -29,10 +30,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.display-category=CMAP",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=Calendar Web Events Block",
+		"javax.portlet.display-name=Calendar Events Block",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + CalendarWebEventsBlockPortletKeys.CALENDARWEBEVENTSBLOCK,
@@ -42,40 +43,6 @@ import org.osgi.service.component.annotations.Component;
 	service = Portlet.class
 )
 public class CalendarWebEventsBlockPortlet extends MVCPortlet {
-	
-	
-	/*@Override
-	public void doView(
-			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws IOException, PortletException {
-				
 
-		PrintWriter printWriter = renderResponse.getWriter();
-		
-		int tes2 = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
-		DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
-		
-		printWriter.print("=======# of Calendar Bookings -> " + tes2 + "=======");
-		
-
-		
-		List<CalendarBooking> calendarBookingsAll = (List) com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq);
-		
-		List<CalendarBooking> calendarBookings = calendarBookingsAll.subList(calendarBookingsAll.size()-5, calendarBookingsAll.size());
-		
-		//printWriter.print("=====Event Title " + calendarBookings.get(0).getTitleCurrentValue() + "=========");
-		
-		for(CalendarBooking event:calendarBookings){
-          System.out.println("=====Event Title " + event.getTitleCurrentValue() + "=========");
-          
-          long dateEvent = event.getStartTime();
-          DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-          Date date = new Date(dateEvent);
-          
-          System.out.println("=====Event Date " + date + "=========");
-          System.out.println("=====Event Day " + date.getDay() + "=========");            
-                    
-          
-        }
-	}*/
+	private static final Locale _locale = new Locale.Builder().setLanguage("en").setRegion("US").build();
 }

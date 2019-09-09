@@ -1,6 +1,6 @@
 <%@ include file="../init.jsp"%>
 
-<liferay-ui:error key="409" message="This user exists in Constant Contact and will have to be removed before the contact can be saved. Please contact an Administrator" />
+<liferay-ui:error key="409" message="This user already exists in the CRM. Duplicates are not allowed" />
 <liferay-ui:error key="400" message="400 Server error, message was malformed or there was a data validation error" />
 <liferay-ui:error key="401" message="401 Server error, authentication failure" />
 <liferay-ui:error key="406" message="406 Server error" />
@@ -27,8 +27,6 @@
 	String primaryCell = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_CELL);
 	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol",
 			CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS);
-	
-	
 	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
 	String createDate = ParamUtil.getString(request, "orderByCol",CrmContactFieldKeys.CREATE_DATE);
 
@@ -93,6 +91,12 @@
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 		orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
 	}
+	
+	List<CrmContact> crmContactsTemp = CrmContactLocalServiceUtil.getCrmContactsByStatus(
+			ConstantContactKeys.CC_STATUS_ACTIVE, 0,
+			CrmContactLocalServiceUtil.getCrmContactsCount(), orderByComparator);
+	
+	int crmContactActiveCount = crmContactsTemp.size();
 		
 	
 %>
@@ -110,7 +114,7 @@
 	<portlet:param name="cmd" value="exportCSV"/>
 </portlet:resourceURL>
 
-<liferay-portlet:actionURL name="uploadCSV" var="actionUrl">
+<liferay-portlet:actionURL name="uploadCSV" var="uploadCSVURL">
 </liferay-portlet:actionURL>
 
 <div class="container-fluid">
@@ -130,17 +134,6 @@
 			<%-- TODO: check role --%>
 			<aui:button onClick="<%= exportCSVURL.toString() %>"
 				value="Export all to CSV"></aui:button>
-		</aui:col>
-	</aui:row>
-	
-	<aui:row>
-		<aui:col md="12">
-			Please select the input .CSV file
-			
-			<aui:form name="contentUploadForm" action="<%=actionUrl%>" enctype="multipart/form-data" method="post">
-				<aui:input type="file" name="fileName">Upload a CSV</aui:input>
-				<aui:button name="Save" value="Process" type="submit" />
-			</aui:form>
 		</aui:col>
 	</aui:row>
 	
@@ -166,36 +159,16 @@
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No contacts found"
-				total="<%=CrmContactLocalServiceUtil.getCrmContactsCount()%>"
+				total="<%=crmContactActiveCount%>"
 				var="crmContactsSearchContainer">
 
 				<liferay-ui:search-container-results>
 				
 				
-					<%
-								
+					<%	
 						List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
 								ConstantContactKeys.CC_STATUS_ACTIVE, crmContactsSearchContainer.getStart(),
 								crmContactsSearchContainer.getEnd(), orderByComparator);
-						
-						
-						//String comparator = orderByComparator.toString();
-						
-						
-						//for(int count = 0; count <= crmContacts.size(); count++)
-						//{
-						//	List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContacts.get(count).getCrmContactId());	
-						//}
-						
-						
-					//List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContacts.get(0).getCrmContactId());
-						//System.out.println("======First ContactID -> " + crmContacts.get(0).getCrmContactId() + " ========");
-						//System.out.println("======First NoteAdded -> " + crmNotes.get(0).getCreateDate() + " ========");
-						
-						//for (CrmNote crmNote : crmNotes) {
-						//	System.out.println("=======crmNoteAdded ->" + crmNote.getCreateDate());
-						//}
-						
 
 						for (CrmContact crmContact : crmContacts) {
 							viewModels.add(new CrmContactViewModel(crmContact));
@@ -253,10 +226,23 @@
 					<liferay-ui:search-container-column-text property="modifiedDate"
 						name="Modified" orderable="true" orderableProperty="modifiedDate" />
 				</liferay-ui:search-container-row>
-				<liferay-ui:search-iterator />
+				<liferay-ui:search-iterator paginate="true"/>
 			</liferay-ui:search-container>
 		</aui:col>
 	</aui:row>
+	
+	<br>
+	
+	
+		<aui:row>
+			<aui:col md="12">
+				<aui:form name="contentUploadForm" action="<%=uploadCSVURL%>" enctype="multipart/form-data" method="post">
+					<aui:input type="file" name="fileName">Upload CSV file</aui:input>
+					<aui:button name="Save" value="Import" type="submit" />
+				</aui:form>
+			</aui:col>
+		</aui:row>				
+	
 
 </div>
 <script type="text/javascript">

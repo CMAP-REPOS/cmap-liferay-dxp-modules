@@ -14,10 +14,10 @@ import org.osgi.service.component.annotations.Component;
 @Component(
 	immediate = true,
 	property = {
-		"com.liferay.portlet.display-category=category.sample",
+		"com.liferay.portlet.display-category=CMAP",
 		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=true",
-		"javax.portlet.display-name=Weekly Email List Subscriber",
+		"javax.portlet.display-name=Weekly Email List Sign Up Form",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/view.jsp",
 		"javax.portlet.name=" + ConstantContactSignUpPortletKeys.CONSTANTCONTACTSIGNUP,

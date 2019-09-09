@@ -20,7 +20,12 @@ public interface UpdatesSliderConfiguration {
 			required = false)
 	public String assetCount();
 
-	@Meta.AD(deflt = "200",
+	/*@Meta.AD(deflt = "200",
 			required = false)
-	public String summaryLength();
+	public String summaryLength();*/
+	
+	//@Meta.AD(deflt = "Default Summary",
+	//		required = false)
+	//public String summaryDefault();
+	
 }

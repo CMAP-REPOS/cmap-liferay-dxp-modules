@@ -66,13 +66,15 @@ public class UpdatesSliderConfigurationAction
 		String assetCategoryId2 = ParamUtil.getString(actionRequest, "assetCategoryId2");
 		String assetCategoryId3 = ParamUtil.getString(actionRequest, "assetCategoryId3");
 		String assetCount = ParamUtil.getString(actionRequest, "assetCount");
-		String summaryLength = ParamUtil.getString(actionRequest, "summaryLength");
+		//String summaryLength = ParamUtil.getString(actionRequest, "summaryLength");
+		String summaryDefault = ParamUtil.getString(actionRequest, "summaryDefault");
 
 		setPreference(actionRequest, "assetCategoryId", assetCategoryId);
 		setPreference(actionRequest, "assetCategoryId2", assetCategoryId2);
 		setPreference(actionRequest, "assetCategoryId3", assetCategoryId3);
 		setPreference(actionRequest, "assetCount", assetCount);
-		setPreference(actionRequest, "summaryLength", summaryLength);
+		//setPreference(actionRequest, "summaryLength", summaryLength);
+		setPreference(actionRequest, "summaryDefault", summaryDefault);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

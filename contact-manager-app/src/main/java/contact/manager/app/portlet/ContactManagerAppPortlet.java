@@ -123,19 +123,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 	private static final Log LOGGER = LogFactoryUtil.getLog(ContactManagerAppPortlet.class);
 
 	@Override
-	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {
-		/*System.out.println("=======UPDATED CONTACT GROUP LIST -> ");
-		
-		try {
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
-			CrmContact crmContact = _crmContactLocalService.getCrmContact(8436); //HectorTets
-			crmContact = ContactUtil.updateCrmContactGroups(crmContact);
-			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
+	public void render(RenderRequest request, RenderResponse response) throws IOException, PortletException {		
 		super.render(request, response);
 	}
 
@@ -199,7 +187,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				{
 					int index = 0;
 					
-					System.out.println("######  CONTACT ADDED ######");
+					System.out.println("######  CONTACT ADDED Test ######");
 					
 					List<String> listFields = new ArrayList<String>(Arrays.asList(contact.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")));
 					
@@ -292,18 +280,12 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 						CrmContact addedContact = _crmContactLocalService.addCrmContact(crmContact, serviceContext);
 						
 						if (addedContact != null) {
-							
-							System.out.println(addedContact);
 
 							auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_ADD);
-
 							addedContact = ContactUtil.updateCrmContactPropertiesCSV(addedContact, mapContact, serviceContext, false, true); // Second pass, to add groups
-							System.out.println(addedContact);
-							
 							CrmContact updatedContact = _crmContactLocalService.updateCrmContact(addedContact, serviceContext);
 							
 							if (updatedContact != null) {
-								
 								System.out.println(updatedContact);
 								auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
 							}

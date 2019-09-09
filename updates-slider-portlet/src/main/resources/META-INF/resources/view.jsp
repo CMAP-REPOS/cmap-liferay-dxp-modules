@@ -13,8 +13,8 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 	</c:when>
 	<c:otherwise>
 	<section class="update-slider slider" id="<%=themeDisplay.getPortletDisplay().getId() %>">
-		<header class="row">
-			<div class="col-sm-16 col-sm-offset-0"col-sm-16 >
+		<header class="row row-header">
+			<div class="col-sm-16 no-padding">
 				<div class="buttons">
 					<h3>UPDATES</h3>
 					<div class="view-all">
@@ -23,9 +23,9 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 				</div>
 			</div>
 		</header>
-		<div class="slider-container">
+		<div class="slider-container slider-container-updates">
 	 		<c:forEach var="assetModel" items="${assetModels}">
-			<div class="item col-xl-4 col-md-8 col-xs-16">
+			<div class="item col-lg-4 col-md-8 col-xs-16">
 				<h4 class="item-date">${assetModel.getDate()}</h4>
 				<h3 class="item-title">
 					<a href="${assetModel.getLink()}">${assetModel.getTitle()}</a>
@@ -49,11 +49,11 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 <script>
 Liferay.on('allPortletsReady', function () {
   var $this = $('#<%=themeDisplay.getPortletDisplay().getId() %>');
-  var $container = $this.find('.slider-container');
-  var $spacer = $('<div class="col-xl-4"></div>');
+  var $container = $this.find('.slider-container-updates');
+  var $spacer = $('<div class="col-lg-4"></div>');
   var $row = $('<div class="row"></div>');
 	var rows = [], active_index = 0;
-  var $nav = $('<nav class="hidden-xs hidden-sm slider-nav"></nav>');
+  var $nav = $('<nav class="hidden-xs hidden-sm slider-nav updates-slider-nav"></nav>');
   var $viewall = $('');
 
   var items = $container.find('.item');
@@ -84,7 +84,7 @@ Liferay.on('allPortletsReady', function () {
     addItem(items[(i * 4) + 3]);
 
     var $slide = $('<div class="slider-slide"></div>');
-    var $navItem = $('<div class="nav-item" data-index="'+i+'"></div>');
+    var $navItem = $('<div class="nav-item updates-nav-item" data-index="'+i+'"></div>');
 
 		$navItem.on('click', function () {
 			var index = $(this).data('index');
@@ -107,7 +107,7 @@ Liferay.on('allPortletsReady', function () {
 		setHeight();
   }
 
-	if($nav.find('.nav-item').length > 1){
+	if($nav.find('.updates-nav-item').length > 1){
 		$this.append($nav);
 	}
 	
