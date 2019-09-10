@@ -2,3 +2,4 @@ custom-portlets/bin
 .settings/
 /.settings
 .DS_Store
+calendar-web-events-block-portlet/bin
