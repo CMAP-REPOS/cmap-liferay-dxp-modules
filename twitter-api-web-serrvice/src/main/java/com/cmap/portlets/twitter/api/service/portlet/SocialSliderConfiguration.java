@@ -9,11 +9,11 @@ import aQute.bnd.annotation.metatype.Meta;
 public interface SocialSliderConfiguration {
 	
 	@Meta.AD(required = false)
-	public String screenName();
+	public String twitterScreenName();
 	
 	@Meta.AD(deflt = "10",
 			required = false)
-	public String tweetCount();
+	public String postCount();
 
 	@Meta.AD(required = false)
 	public String oAuthConsumerKey();
@@ -26,5 +26,14 @@ public interface SocialSliderConfiguration {
 
 	@Meta.AD(required = false)
 	public String oAuthAccessTokenSecret();
+
+	@Meta.AD(required = false)
+	public String fbScreenName();
+
+	@Meta.AD(required = false)
+	public String fbPageID();
+
+	@Meta.AD(required = false)
+	public String fbAccessToken();
 
 }

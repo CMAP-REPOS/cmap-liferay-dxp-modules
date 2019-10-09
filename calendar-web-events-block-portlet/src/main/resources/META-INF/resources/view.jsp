@@ -6,16 +6,17 @@
 	
 %>
 
-<div class="row">
+<div class="row-no-margin">
     <!-- ========= START: Event List DESKTOP version ======== -->
-    <div class="col-md-16 hidden-xs hidden-sm">
+    <div class="col-md-16 no-padding hidden-xs hidden-sm">
         <div class="b-event-list b-event-list--desktop">
             <div class="b-event-list__header">
                 <h2>EVENTS
                     <!-- Link to Events Page ======== -->
-                    <a class="b-event-list__view-all" href="/events">View All</a>
+                    <a class="b-event-list__view-all" href="/events" target="_blank">View All</a>
                 </h2>
             </div>
+            <hr class="header-hr">
             <div class="b-event-list__list">
                 <!-- ========= START: Event ITEM ======== -->
                 <c:forEach var="event" items="${events}">
@@ -43,7 +44,7 @@
     </div>
     <!-- ========= END: Event List DESKTOP version ======== -->
     <!-- ========= START: Event List MOBILE version ======== -->
-    <div class="col-xs-16 hidden-md hidden-lg">
+    <div class="col-xs-16 no-padding hidden-md hidden-lg">
         <div class="slider slider-calendar">
             <div class="b-event-list b-event-list--mobile">
                 <div class="row">
@@ -51,7 +52,7 @@
                         <div class="b-event-list__header">
                             <h2>EVENTS
                                 <!-- Link to Events page -->
-                                <a class="b-event-list__view-all" href="/events">View All</a>
+                                <a class="b-event-list__view-all" href="/events" target="_blank">View All</a>
                             </h2>
                         </div>
                         <svg class="svg-calendar" xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 36 36">
@@ -112,7 +113,7 @@ Liferay.on('allPortletsReady', function() {
 
     function setHeight() {
         console.log($(rows[active_index]), $(rows[active_index]).innerHeight());
-        $container.css('height', $(rows[active_index]).innerHeight() + 20);
+        $container.css('height', 'fit-content'); //$(rows[active_index]).innerHeight() + 20);
     }
     
     $(window).resize(_.throttle(setHeight, 100));

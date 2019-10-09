@@ -34,7 +34,7 @@
 		<portlet:param name="crmContactId"
 			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
 	</portlet:actionURL>
-	<liferay-ui:icon-delete  message="Move to Recycling bin" url="<%=deleteContactURL.toString()%>" />
+	<liferay-ui:icon-delete  message="Move to Recycling bin" confirmation="Are you sure you want to move the contact to the recycling bin?" url="<%=deleteContactURL.toString()%>" />
 </c:if>
 
 </liferay-ui:icon-menu>

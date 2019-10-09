@@ -63,19 +63,25 @@ public class SocialSliderConfigurationAction
 			_log.debug("Blade Message Portlet configuration action");
 		}
 		
-		String screenName = ParamUtil.getString(actionRequest, "screenName");
-		String tweetCount = ParamUtil.getString(actionRequest, "tweetCount");
+		String twitterScreenName = ParamUtil.getString(actionRequest, "twitterScreenName");
+		String postCount = ParamUtil.getString(actionRequest, "postCount");
 		String oAuthConsumerKey = ParamUtil.getString(actionRequest, "oAuthConsumerKey");
 		String oAuthConsumerSecret = ParamUtil.getString(actionRequest, "oAuthConsumerSecret");
 		String oAuthAccessToken = ParamUtil.getString(actionRequest, "oAuthAccessToken");
 		String oAuthAccessTokenSecret = ParamUtil.getString(actionRequest, "oAuthAccessTokenSecret");
+		String fbScreenName = ParamUtil.getString(actionRequest, "fbScreenName");
+		String fbPageID = ParamUtil.getString(actionRequest, "fbPageID");
+		String fbAccessToken = ParamUtil.getString(actionRequest, "fbAccessToken");
 
-		setPreference(actionRequest, "screenName", screenName);
-		setPreference(actionRequest, "tweetCount", tweetCount);
+		setPreference(actionRequest, "twitterScreenName", twitterScreenName);
+		setPreference(actionRequest, "postCount", postCount);
 		setPreference(actionRequest, "oAuthConsumerKey", oAuthConsumerKey);
 		setPreference(actionRequest, "oAuthConsumerSecret", oAuthConsumerSecret);
 		setPreference(actionRequest, "oAuthAccessToken", oAuthAccessToken);
 		setPreference(actionRequest, "oAuthAccessTokenSecret", oAuthAccessTokenSecret);
+		setPreference(actionRequest, "fbScreenName", fbScreenName);
+		setPreference(actionRequest, "fbPageID", fbPageID);
+		setPreference(actionRequest, "fbAccessToken", fbAccessToken);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

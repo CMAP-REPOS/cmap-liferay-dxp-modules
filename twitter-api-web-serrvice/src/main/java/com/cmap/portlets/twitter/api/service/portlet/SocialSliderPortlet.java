@@ -1,10 +1,8 @@
 package com.cmap.portlets.twitter.api.service.portlet;
 
-import com.cmap.portlets.twitter.api.service.portlet.SocialSliderConfiguration;
 import com.cmap.portlets.twitter.api.service.util.NvpComparator;
 import com.cmap.portlets.twitter.api.service.constants.SocialSliderPortletKeys;
-import com.liferay.asset.kernel.model.AssetEntry;
-import com.liferay.asset.kernel.model.AssetRenderer;
+import com.cmap.portlets.twitter.api.service.util.SocialMediaPostDateComparator;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -12,6 +10,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,7 +30,6 @@ import javax.portlet.Portlet;
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import javax.portlet.ActionRequest;
 import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.RenderRequest;
@@ -72,29 +69,35 @@ public class SocialSliderPortlet extends MVCPortlet {
 		
 		try {
 			PortletPreferences portletPreferences = renderRequest.getPreferences();
-			String screenName = "";
-			//int tweetCount = 0;
-			String tweetCount = "";
+			String twitterScreenName = "";
+			int postCountNum = 0;
+			String postCount = "";
 			String oAuthConsumerKey = "";
 			String oAuthConsumerSecret = "";
 			String oAuthAccessToken = "";
 			String oAuthAccessTokenSecret = "";
+			String fbScreenName = "";
+			String fbPageID =  "";
+			String fbAccessToken = "";
 			
-			String screenNamePref = null;
+			String twitterScreenNamePref = null;
 			String tweetCountPref = null;
 			String oAuthConsumerKeyPref = null;
 			String oAuthConsumerSecretPref = null;
 			String oAuthAccessTokenPref = null;
 			String oAuthAccessTokenSecretPref = null;
+			String fbScreenNamePref = null;
+			String fbPageIDPref =  null;
+			String fbAccessTokenPref = null;
 			
-			int postLenght = 150;
+			int postLength = 150;
 			
 			if (Validator.isNotNull(_socialSliderConfiguration)) {
-				screenNamePref = portletPreferences.getValue("screenName",
-						_socialSliderConfiguration.screenName());
+				twitterScreenNamePref = portletPreferences.getValue("twitterScreenName",
+						_socialSliderConfiguration.twitterScreenName());
 
-				tweetCountPref = portletPreferences.getValue("tweetCount",
-						_socialSliderConfiguration.tweetCount());
+				tweetCountPref = portletPreferences.getValue("postCount",
+						_socialSliderConfiguration.postCount());
 			
 				oAuthConsumerKeyPref = portletPreferences.getValue("oAuthConsumerKey",
 						_socialSliderConfiguration.oAuthConsumerKey());
@@ -107,34 +110,63 @@ public class SocialSliderPortlet extends MVCPortlet {
 			
 				oAuthAccessTokenSecretPref = portletPreferences.getValue("oAuthAccessTokenSecret",
 						_socialSliderConfiguration.oAuthAccessTokenSecret());
+
+				fbScreenNamePref = portletPreferences.getValue("fbScreenName",
+						_socialSliderConfiguration.fbScreenName());
+
+				fbPageIDPref = portletPreferences.getValue("fbPageID",
+						_socialSliderConfiguration.fbPageID());
+
+				fbAccessTokenPref = portletPreferences.getValue("fbAccessToken",
+						_socialSliderConfiguration.fbAccessToken());
 			
-				/*if (Validator.isDigit(tweetCountPref)) {
-					tweetCount = Integer.parseInt(tweetCountPref);
-				}*/
+				if (Validator.isDigit(tweetCountPref)) {
+					postCountNum = Integer.parseInt(tweetCountPref);
+				}
 				
-				screenName = screenNamePref;
-				tweetCount = tweetCountPref;
+				twitterScreenName = twitterScreenNamePref;
+				postCount = tweetCountPref;
 				oAuthConsumerKey = oAuthConsumerKeyPref;
 				oAuthConsumerSecret = oAuthConsumerSecretPref;
 				oAuthAccessToken = oAuthAccessTokenPref;
 				oAuthAccessTokenSecret = oAuthAccessTokenSecretPref;
-				
+				fbScreenName = fbScreenNamePref;
+				fbPageID =  fbPageIDPref;
+				fbAccessToken =fbAccessTokenPref;
 			}
 			
-			JSONArray jsonResponseArray = getTwitterRequest(screenName, tweetCount, oAuthConsumerKey, oAuthConsumerSecret, oAuthAccessToken, oAuthAccessTokenSecret);
-			
+			JSONArray jsonResponseArrayTwitter = getTwitterRequest(twitterScreenName, postCount, oAuthConsumerKey, oAuthConsumerSecret, oAuthAccessToken, oAuthAccessTokenSecret);
+			JSONArray jsonResponseArrayFB = getFacebookRequest(fbPageID, fbAccessToken );
+
+			List<SocialSliderSocialMediaPost> socialMediaPostsUnordered = new ArrayList<SocialSliderSocialMediaPost>();
 			List<SocialSliderSocialMediaPost> socialMediaPosts = new ArrayList<SocialSliderSocialMediaPost>();
 			
-			for (int i=0; i < jsonResponseArray.length(); i++) {
-				//System.out.println("=========Post # " + i + " =========");
-				SocialSliderSocialMediaPost socialMediaPost = getMediaPost(jsonResponseArray.getJSONObject(i), postLenght);
+			for (int i=0; i < jsonResponseArrayTwitter.length(); i++) {
+				SocialSliderSocialMediaPost socialMediaPost = getMediaPostTwitter(jsonResponseArrayTwitter.getJSONObject(i), postLength);
 				
 				if (socialMediaPost != null) {
-					socialMediaPosts.add(socialMediaPost);
+					socialMediaPostsUnordered.add(socialMediaPost);
 				}
 			}
+
+			for (int i=0; i < jsonResponseArrayFB.length(); i++) {
+				SocialSliderSocialMediaPost socialMediaPost = getMediaPostFB(jsonResponseArrayFB.getJSONObject(i), fbScreenName, postLength);
+
+				if (socialMediaPost != null) {
+					socialMediaPostsUnordered.add(socialMediaPost);
+				}
+			}
+
+			OrderByComparator orderByComparator = new SocialMediaPostDateComparator(false);
+
+			Collections.sort(socialMediaPostsUnordered,orderByComparator);
+
+			for (int i=0; i < postCountNum; i++) {
+				socialMediaPosts.add(socialMediaPostsUnordered.get(i));
+			}
 			
-			renderRequest.setAttribute("screenName", screenName);
+			renderRequest.setAttribute("twitterScreenName", twitterScreenName);
+			renderRequest.setAttribute("fbScreenName", fbScreenName);
 			renderRequest.setAttribute("socialMediaPosts", socialMediaPosts);
 			renderRequest.setAttribute(SocialSliderConfiguration.class.getName(), _socialSliderConfiguration);
 
@@ -145,7 +177,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 		super.doView(renderRequest, renderResponse);
 	}
 	
-	public JSONArray getTwitterRequest(String screenName, String tweetCount, String oAuthConsumerKey, 
+	public JSONArray getTwitterRequest(String twitterScreenName, String tweetCount, String oAuthConsumerKey,
 			String oAuthConsumerSecret, String oAuthAccessToken, String oAuthAccessTokenSecret) throws Exception{
 		
 		StringBuffer urlWithParams;
@@ -154,7 +186,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 		String tweetMode = "extended";
 		
 		List<NameValuePair> urlParams = new ArrayList<NameValuePair>();
-	    urlParams.add( new NameValuePair("screen_name", screenName));	//usename
+	    urlParams.add( new NameValuePair("screen_name", twitterScreenName));	//usename
 	    urlParams.add( new NameValuePair("count", tweetCount));	//count
 	    urlParams.add( new NameValuePair("exclude_replies", excludeReplies));
 	    urlParams.add( new NameValuePair("tweet_mode", tweetMode));
@@ -224,9 +256,10 @@ public class SocialSliderPortlet extends MVCPortlet {
 	        urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
 	    }
 	    
-	    //System.out.println(urlWithParams.toString());
+	    System.out.println("Authorization Request header -> " + authorizationHeaderValue);
 	    
 	    GetMethod getMethod = new GetMethod(urlWithParams.toString());
+
 	    getMethod.addRequestHeader("Authorization", authorizationHeaderValue);
 	    
 	    HttpClient cli = new HttpClient();
@@ -240,30 +273,63 @@ public class SocialSliderPortlet extends MVCPortlet {
 		
 		return jsonResponseArray;
 	}
-	
-	private static String computeSignature(String baseString, String keyString) throws GeneralSecurityException, UnsupportedEncodingException, Exception 
-	{
-	    SecretKey secretKey = null;
 
-	    byte[] keyBytes = keyString.getBytes();
-	    secretKey = new SecretKeySpec(keyBytes, "HmacSHA1");
+	public JSONArray getFacebookRequest(String fbPageID, String fbAccessToken) throws Exception{
 
-	    Mac mac = Mac.getInstance("HmacSHA1");
+		StringBuffer urlWithParams;
 
-	    mac.init(secretKey);
+		//String oAuthAccess = "EAAK1ZAB1fVjcBAF8ZBniXpVOmQZAz5SKgtP1SJgpkHW1nLqMaOrgYZAqaWCq04G1RvZAsu70kP8Ts2F3o0ZAEAuACrfOtW4BQku3ZCNZCPPl3o908DV5IKMHVxlgIHWBKTMdZCUTJt9XZB0ZCJeRKFcCERIZBAoF8FBrSOTpNlYUjbuMmQZDZD";
+		String fields = "id,likes.limit(0).summary(true),message,permalink_url,created_time";
+		String dateFormatFB = "r";
 
-	    byte[] text = baseString.getBytes();
-	    return new String(Base64.encodeBase64(mac.doFinal(text))).trim();
+		List<NameValuePair> urlParams = new ArrayList<NameValuePair>();
+		urlParams.add( new NameValuePair("fields", fields));	//fields
+		urlParams.add( new NameValuePair("date_format", dateFormatFB));	//same format definitions as the PHP date() function
+		urlParams.add( new NameValuePair("access_token", fbAccessToken ));  //access token
+
+		StringBuffer signatureBaseString3 = new StringBuffer();
+
+		for(int i=0;i<urlParams.size();i++)
+		{
+			NameValuePair nvp = urlParams.get(i);
+			if (i>0) {
+				signatureBaseString3.append("&");
+			}
+			signatureBaseString3.append(nvp.getName() + "=" + nvp.getValue());
+		}
+
+		urlWithParams = new StringBuffer(SocialSliderPortletKeys.FACEBOOK_URL);
+		urlWithParams.append(fbPageID + "/posts");
+
+		for(int i=0;i<urlParams.size();i++) {
+			if(i==0) {
+				urlWithParams.append("?");
+			}
+			else {
+				urlWithParams.append("&");
+			}
+			NameValuePair urlParam = urlParams.get(i);
+			urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
+		}
+
+		System.out.println(urlWithParams.toString());
+
+		GetMethod getMethod = new GetMethod(urlWithParams.toString());
+
+		HttpClient cli = new HttpClient();
+		cli.executeMethod(getMethod);
+
+		String response1 = null;
+
+		response1 = getMethod.getResponseBodyAsString();
+
+		JSONObject jsonResponseObject = JSONFactoryUtil.createJSONObject(response1);
+		JSONArray jsonResponseArray = jsonResponseObject.getJSONArray("data");
+
+		return jsonResponseArray;
 	}
 	
-	
-	protected String time() {
-	    long millis = System.currentTimeMillis();
-	    long secs = millis / 1000;
-	    return String.valueOf( secs );
-	}
-	
-	protected SocialSliderSocialMediaPost getMediaPost(JSONObject jsonPost, int postLenght) {
+	protected SocialSliderSocialMediaPost getMediaPostTwitter(JSONObject jsonPost, int postLenght) {
 
 		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);
@@ -278,6 +344,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 		String oldDate = null;
 		String date = null;
 		String postAuthor = null;
+		String link = null;
+		String postId = null;
 		JSONArray userMentionsArray = null;
 		
 		try {
@@ -286,14 +354,14 @@ public class SocialSliderPortlet extends MVCPortlet {
 				isRetweet = false;
 				post = jsonPost.getString("full_text");
 				postAuthor = jsonPost.getJSONObject("user").getString("screen_name"); 
+				postId = jsonPost.getString("id_str");
 				
 			} else {
 				isRetweet = true;
 				post = jsonPost.getJSONObject("retweeted_status").getString("full_text"); 
-				
 				userMentionsArray = jsonPost.getJSONObject("entities").getJSONArray("user_mentions");
-						
 				postAuthor = userMentionsArray.getJSONObject(0).getString("screen_name");
+				postId = jsonPost.getJSONObject("retweeted_status").getString("id_str"); 
 		 
 			}
 			
@@ -302,7 +370,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 			}
 			
 			likes = jsonPost.getInt("favorite_count");
-			
+			link = "https://twitter.com/"+ postAuthor + "/status/" + postId;
 			oldDate = jsonPost.getString("created_at");
 			dateTwitter = twitterFormat.parse(oldDate); 
 			date = new SimpleDateFormat("MMMM d, yyyy").format(dateTwitter);
@@ -316,6 +384,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 				socialMediaPost.setIsRetweet(isRetweet);
 				socialMediaPost.setDate(date);
 				socialMediaPost.setLikes(likes);
+				socialMediaPost.setLink(link);
 				socialMediaPost.setSocialSite("twitter");
 			}
 		} catch (Exception ex) {
@@ -332,6 +401,82 @@ public class SocialSliderPortlet extends MVCPortlet {
 		return socialMediaPost;
 	}
 
+	protected SocialSliderSocialMediaPost getMediaPostFB(JSONObject jsonPost, String fbScreenName, int postLenght) {
+
+		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
+				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);
+
+		SimpleDateFormat fbFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
+		fbFormat.setLenient(true);
+
+		String post = null;
+		int likes = 0;
+		Date dateFB;
+		String oldDate;
+		String date = null;
+		String postAuthor = null;
+		String link;
+
+		try {
+			post = jsonPost.getString("message");
+			postAuthor = fbScreenName;
+
+			if (post.length() > postLenght) {
+				post = post.substring(0, postLenght) + "...";
+			}
+
+			likes = jsonPost.getJSONObject("likes").getJSONObject("summary").getInt("total_count");
+			link = jsonPost.getString("permalink_url");
+			oldDate = jsonPost.getString("created_time");
+			dateFB = fbFormat.parse(oldDate);
+			date = new SimpleDateFormat("MMMM d, yyyy").format(dateFB);
+
+			/*System.out.println("=========Post Author -> " + postAuthor);
+			System.out.println("=========Post Text -> " + post);
+			System.out.println("=========Post Retweet -> " + false);
+			System.out.println("=========Post Date -> " + date);
+			System.out.println("=========Post Likes -> " + likes);*/
+
+			if (postAuthor.isEmpty() || post.isEmpty() || date.isEmpty()) {
+				socialMediaPost = null;
+				_log.warn("Warning in SocialSliderPortlet.getAssetModel(): returning null SocialMediaPost");
+			} else {
+				socialMediaPost.setPost(post);
+				socialMediaPost.setPostAuthor(postAuthor);
+				socialMediaPost.setIsRetweet(false);
+				socialMediaPost.setDate(date);
+				socialMediaPost.setLikes(likes);
+				socialMediaPost.setLink(link);
+				socialMediaPost.setSocialSite("facebook");
+			}
+		} catch (Exception ex) {
+			_log.error("Exception in UpdatesSliderPortlet.getAssetModel(): " + ex.getMessage());
+			socialMediaPost = null;
+		}
+
+		return socialMediaPost;
+	}
+
+	private static String computeSignature(String baseString, String keyString) throws GeneralSecurityException, UnsupportedEncodingException, Exception
+	{
+		SecretKey secretKey = null;
+
+		byte[] keyBytes = keyString.getBytes();
+		secretKey = new SecretKeySpec(keyBytes, "HmacSHA1");
+
+		Mac mac = Mac.getInstance("HmacSHA1");
+
+		mac.init(secretKey);
+
+		byte[] text = baseString.getBytes();
+		return new String(Base64.encodeBase64(mac.doFinal(text))).trim();
+	}
+
+	protected String time() {
+		long millis = System.currentTimeMillis();
+		long secs = millis / 1000;
+		return String.valueOf( secs );
+	}
 	
 	@Activate
 	@Modified

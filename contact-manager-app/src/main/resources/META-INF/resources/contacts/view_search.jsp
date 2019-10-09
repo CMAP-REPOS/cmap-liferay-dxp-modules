@@ -196,7 +196,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
-	query.add(termQuery, BooleanClauseOccur.MUST);	
+	query.add(termQuery, BooleanClauseOccur.MUST);
 	
 	System.out.println("=======Query --->" + query);
 	
@@ -216,14 +216,8 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 						Document doc = hits.doc(i);
 						
 					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-					    CrmContact entry = null;
-					    try {
-					    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
-					    } catch (PortalException pe) {
-					    	pe.printStackTrace();
-					    } catch (SystemException se) {
-					    	se.printStackTrace();
-					    }
+					    CrmContact entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
+
 						if (entry != null){
 							viewModels.add(new CrmContactViewModel(entry));
 						}

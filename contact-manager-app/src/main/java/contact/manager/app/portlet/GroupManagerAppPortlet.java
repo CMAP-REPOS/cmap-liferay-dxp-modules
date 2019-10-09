@@ -123,6 +123,13 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
 			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 			
+			for(long crmContactId:crmContactIds) 
+			{	
+				CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);	
+				crmContact = ContactUtil.updateCrmContactGroups(crmContact);
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+			}
+			
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 
 		} catch (Exception e) {
@@ -189,7 +196,7 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 		}
 	}
 	
-public void exportCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
+	public void exportCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
 		
 		try {
 			StringBundler sb = new StringBundler();

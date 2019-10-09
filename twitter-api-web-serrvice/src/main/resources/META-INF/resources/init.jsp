@@ -36,19 +36,22 @@
 	SocialSliderConfiguration socialSliderConfiguration = (SocialSliderConfiguration) 
 		renderRequest.getAttribute(SocialSliderConfiguration.class.getName());
 
-	String screenName = null;
-	int tweetCount = 0;
+	String twitterScreenName = null;
+	int postCount = 0;
 	String oAuthConsumerKey = null;
 	String oAuthConsumerSecret = null;
 	String oAuthAccessToken = null;
 	String oAuthAccessTokenSecret = null;
+	String fbScreenName = null;
+	String fbPageID =  null;
+	String fbAccessToken = null;
 	
 	if (Validator.isNotNull(socialSliderConfiguration)) {
 		
-		screenName = portletPreferences.getValue("screenName", socialSliderConfiguration.screenName());
+		twitterScreenName = portletPreferences.getValue("twitterScreenName", socialSliderConfiguration.twitterScreenName());
 	
-		String tweetCountPref = 
-		portletPreferences.getValue("tweetCount", socialSliderConfiguration.tweetCount());
+		String postCountPref =
+		portletPreferences.getValue("postCount", socialSliderConfiguration.postCount());
 	
 		oAuthConsumerKey = 
 		portletPreferences.getValue("oAuthConsumerKey", socialSliderConfiguration.oAuthConsumerKey());
@@ -61,9 +64,18 @@
 	
 		oAuthAccessTokenSecret = 
 		portletPreferences.getValue("oAuthAccessTokenSecret", socialSliderConfiguration.oAuthAccessTokenSecret());
+
+		fbScreenName =
+				portletPreferences.getValue("fbScreenName", socialSliderConfiguration.fbScreenName());
+
+		fbPageID =
+				portletPreferences.getValue("fbPageID", socialSliderConfiguration.fbPageID());
+
+		fbAccessToken =
+				portletPreferences.getValue("fbAccessToken", socialSliderConfiguration.fbAccessToken());
 	
-		if (Validator.isDigit(tweetCountPref)) {
-	tweetCount = Integer.parseInt(tweetCountPref);
+		if (Validator.isDigit(postCountPref)) {
+			postCount = Integer.parseInt(postCountPref);
 		}
 	}
 %>

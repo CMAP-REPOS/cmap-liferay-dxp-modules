@@ -38,7 +38,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	int count = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
 	DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
 	
-	
 	OrderByComparator orderByComparator = new CalendarBookingsEventStartTimeComparator(true);
 	
 	List<CalendarBooking> calendarBookings = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq, 0, count, orderByComparator);
@@ -50,7 +49,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	
 	for(CalendarBooking event:calendarBookings)
 	{	
-		if(timeMilli <= event.getStartTime() && eventLimit <= 5 && !event.isInTrash())
+		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())
 		{
 			EventBlock eventBlock = new EventBlock(event);
 		    eventBlocks.add(eventBlock);

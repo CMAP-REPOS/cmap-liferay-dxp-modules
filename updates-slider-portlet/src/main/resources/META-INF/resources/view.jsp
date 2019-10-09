@@ -14,21 +14,21 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 	<c:otherwise>
 	<section class="update-slider slider" id="<%=themeDisplay.getPortletDisplay().getId() %>">
 		<header class="row row-header">
-			<div class="col-sm-16 no-padding">
+			<div class="col-sm-16 divider-padding">
 				<div class="buttons">
 					<h3>UPDATES</h3>
 					<div class="view-all">
-						<a href="/updates/all/-/categories/<%=assetCategoryId %>">View all</a>
+						<a href="/updates/all/-/categories/<%=assetCategoryId %>" target="_blank">View all</a>
 					</div>
 				</div>
 			</div>
 		</header>
 		<div class="slider-container slider-container-updates">
 	 		<c:forEach var="assetModel" items="${assetModels}">
-			<div class="item col-lg-4 col-md-8 col-xs-16">
+			<div class="item col-md-4 col-xs-16">
 				<h4 class="item-date">${assetModel.getDate()}</h4>
 				<h3 class="item-title">
-					<a href="${assetModel.getLink()}">${assetModel.getTitle()}</a>
+					<a href="${assetModel.getLink()}" target="_blank">${assetModel.getTitle()}</a>
 				</h3>
 				<p class="item-description">${assetModel.getSummary()}</p>
 				<!--a class="read-more-link"
@@ -39,7 +39,7 @@ boolean notConfigured = Validator.isNull(assetCategoryId) ||
 		</div>
 		
 		<div class="hidden-md hidden-lg hidden-xl view-all-mobile">
-			<a href="/updates/all/-/categories/<%=assetCategoryId %>">View All Updates</a>
+			<a href="/updates/all/-/categories/<%=assetCategoryId %>" target="_blank">View All Updates</a>
 		</div>
 		
 	</section>

@@ -181,14 +181,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				
 				listContacts.remove(0);
 				
-				System.out.println("######  Number of Contacts -> " + listContacts.size() + "######");
+				//System.out.println("######  Number of Contacts -> " + listContacts.size() + "######");
 				
 				for (String contact : listContacts) 
 				{
 					int index = 0;
-					
-					System.out.println("######  CONTACT ADDED Test ######");
-					
 					List<String> listFields = new ArrayList<String>(Arrays.asList(contact.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")));
 					
 					Map<String, String> mapContact = new HashMap<String, String>();
@@ -227,20 +224,12 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 								//not sure if visitor or woner works everitime when updating general contact data or changing status
 								//adding bouth to matain existing use cases
 								//START CMAP-198
-								System.out.println("=========== 0");
 								ContactList contactList = new ContactList();
-								System.out.println("=========== 1");
 								contactList.id = "1"; //default weekly email list
-								System.out.println("=========== 2");
 								contactList.status = ConstantContactKeys.CC_STATUS_ACTIVE;
-								System.out.println("=========== 3");
 								List<ContactList> contactLists = new ArrayList<ContactList>();
-								System.out.println("=========== 4");
 								contactLists.add(contactList);
-								System.out.println("=========== 5");
 								ccContact.setLists(contactLists);
-								System.out.println("=========== 6");
-								System.out.println("=========== "+ccContact);
 								//END CMAP-198
 								constantContactServiceImpl.updateContact(ccContact, bufferResponse, ConstantContactKeys.CC_ACTION_BY_VISITOR);
 								String responseCode = bufferResponse.toString();
@@ -265,11 +254,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 							
 							ContactApiModel ccAddedContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
 							id = ccAddedContact.getId();
-							System.out.println("=====ID is: =====");
-							System.out.println("=====" + id  + "======");
 							
 							if (id==null || id.trim().isEmpty()) {
-								System.out.println("=====Error was here======");
 								System.out.println(crmContact.getPrimaryEmailAddress());
 								System.out.println(messageResponse);
 							}
@@ -321,7 +307,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//START CMAP-252 if contacts exist in CRM active, return the error
 			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
 				LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
-				System.out.println("=======Contact Exists=======");
 				System.out.println(crmContact.getPrimaryEmailAddress());
 				System.out.println(_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() );
 				SessionErrors.add(request, "409");
@@ -342,20 +327,12 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					//not sure if visitor or woner works everitime when updating general contact data or changing status
 					//adding bouth to matain existing use cases
 					//START CMAP-198
-					System.out.println("=========== 0");
 					ContactList contactList = new ContactList();
-					System.out.println("=========== 1");
 					contactList.id = "1"; //default weekly email list
-					System.out.println("=========== 2");
 					contactList.status = ConstantContactKeys.CC_STATUS_ACTIVE;
-					System.out.println("=========== 3");
 					List<ContactList> contactLists = new ArrayList<ContactList>();
-					System.out.println("=========== 4");
 					contactLists.add(contactList);
-					System.out.println("=========== 5");
 					ccContact.setLists(contactLists);
-					System.out.println("=========== 6");
-					System.out.println("=========== "+ccContact);
 					//END CMAP-198
 					constantContactServiceImpl.updateContact(ccContact, bufferResponse, ConstantContactKeys.CC_ACTION_BY_VISITOR);
 					String responseCode = bufferResponse.toString();
@@ -530,18 +507,13 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			long constantContactID =  crmContact.getConstantContactId();
-			System.out.println("==========STOP==========");
-			//System.out.println("=======Contact Class test 1-> " + crmContactNew.getClass());
-			//System.out.println("=======Utility Contact Class-> " + _crmContactLocalService.updateCrmContact(crmContactNew, serviceContext).getClass());
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
-			
-			System.out.println("==========STOP 4==========");
+
 			if (deletedContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
 				StringBuffer statusCode = new StringBuffer();
-				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode); 
-				System.out.println("==========STOP 5==========");
+				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
 				
 				if (!statusCode.toString().equals("204") && !statusCode.toString().equals("200")) {
 					SessionErrors.add(request, statusCode.toString()); 
@@ -587,8 +559,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
-			
-			System.out.println("=======Inside addNote=======");
 
 			CrmNote crmNote = _crmNoteLocalService.createCrmNote(0);
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, true);

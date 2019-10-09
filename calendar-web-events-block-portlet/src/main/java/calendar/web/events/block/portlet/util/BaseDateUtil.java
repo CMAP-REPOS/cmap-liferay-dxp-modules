@@ -3,7 +3,9 @@ package calendar.web.events.block.portlet.util;
 import com.liferay.calendar.model.CalendarBooking;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class BaseDateUtil {
 	
@@ -20,7 +22,7 @@ public class BaseDateUtil {
 		
 		long dateEvent = event.getStartTime();
 		Date date = new Date(dateEvent);
-		SimpleDateFormat simpleDateformat = new SimpleDateFormat("MMM");
+		SimpleDateFormat simpleDateformat = new SimpleDateFormat("MMMM");
 		
 		return simpleDateformat.format(date).toUpperCase();
 	}
@@ -43,6 +45,8 @@ public class BaseDateUtil {
 		Date dateEnd = new Date(dateEventEnd);
 		
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("h:mm a");
+		TimeZone etTimeZone = TimeZone.getTimeZone("America/Chicago"); //Target timezone
+		simpleDateformat.setTimeZone(etTimeZone);
 	
 		String eventDuration = simpleDateformat.format(dateStart) + "-" + simpleDateformat.format(dateEnd);
 		

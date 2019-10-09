@@ -17,6 +17,7 @@ public class SocialSliderSocialMediaPost {
     private String socialSite;
     private String post;
     private String postAuthor;
+    private String link;
     private int likes;
     private boolean isRetweet;
     
@@ -28,6 +29,7 @@ public class SocialSliderSocialMediaPost {
 		this.setPostAuthor(postAuthor);
 		this.setLikes(likes);
 		this.setIsRetweet(isRetweet);
+		this.setLink(link);
 	}
     
     public String getDate(){
@@ -44,6 +46,10 @@ public class SocialSliderSocialMediaPost {
     
     public String getPostAuthor(){
     	return postAuthor;
+    }
+    
+    public String getLink(){
+    	return link;
     }
 
     public int getLikes(){
@@ -77,6 +83,10 @@ public class SocialSliderSocialMediaPost {
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public void setLink(String link) {
+		this.link = link;
 	}
     
     
