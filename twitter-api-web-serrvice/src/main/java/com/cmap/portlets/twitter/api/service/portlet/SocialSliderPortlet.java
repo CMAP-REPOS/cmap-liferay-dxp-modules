@@ -81,7 +81,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 			String fbAccessToken = "";
 			
 			String twitterScreenNamePref = null;
-			String tweetCountPref = null;
+			String postCountPref = null;
 			String oAuthConsumerKeyPref = null;
 			String oAuthConsumerSecretPref = null;
 			String oAuthAccessTokenPref = null;
@@ -96,7 +96,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 				twitterScreenNamePref = portletPreferences.getValue("twitterScreenName",
 						_socialSliderConfiguration.twitterScreenName());
 
-				tweetCountPref = portletPreferences.getValue("postCount",
+				postCountPref = portletPreferences.getValue("postCount",
 						_socialSliderConfiguration.postCount());
 			
 				oAuthConsumerKeyPref = portletPreferences.getValue("oAuthConsumerKey",
@@ -120,12 +120,12 @@ public class SocialSliderPortlet extends MVCPortlet {
 				fbAccessTokenPref = portletPreferences.getValue("fbAccessToken",
 						_socialSliderConfiguration.fbAccessToken());
 			
-				if (Validator.isDigit(tweetCountPref)) {
-					postCountNum = Integer.parseInt(tweetCountPref);
+				if (Validator.isDigit(postCountPref)) {
+					postCountNum = Integer.parseInt(postCountPref);
 				}
 				
 				twitterScreenName = twitterScreenNamePref;
-				postCount = tweetCountPref;
+				postCount = postCountPref;
 				oAuthConsumerKey = oAuthConsumerKeyPref;
 				oAuthConsumerSecret = oAuthConsumerSecretPref;
 				oAuthAccessToken = oAuthAccessTokenPref;
@@ -136,7 +136,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 			}
 			
 			JSONArray jsonResponseArrayTwitter = getTwitterRequest(twitterScreenName, postCount, oAuthConsumerKey, oAuthConsumerSecret, oAuthAccessToken, oAuthAccessTokenSecret);
-			JSONArray jsonResponseArrayFB = getFacebookRequest(fbPageID, fbAccessToken );
+			JSONArray jsonResponseArrayFB = getFacebookRequest(fbPageID, fbAccessToken, postCount);
 
 			List<SocialSliderSocialMediaPost> socialMediaPostsUnordered = new ArrayList<SocialSliderSocialMediaPost>();
 			List<SocialSliderSocialMediaPost> socialMediaPosts = new ArrayList<SocialSliderSocialMediaPost>();
@@ -274,18 +274,18 @@ public class SocialSliderPortlet extends MVCPortlet {
 		return jsonResponseArray;
 	}
 
-	public JSONArray getFacebookRequest(String fbPageID, String fbAccessToken) throws Exception{
+	public JSONArray getFacebookRequest(String fbPageID, String fbAccessToken, String postCount) throws Exception{
 
 		StringBuffer urlWithParams;
-
-		//String oAuthAccess = "EAAK1ZAB1fVjcBAF8ZBniXpVOmQZAz5SKgtP1SJgpkHW1nLqMaOrgYZAqaWCq04G1RvZAsu70kP8Ts2F3o0ZAEAuACrfOtW4BQku3ZCNZCPPl3o908DV5IKMHVxlgIHWBKTMdZCUTJt9XZB0ZCJeRKFcCERIZBAoF8FBrSOTpNlYUjbuMmQZDZD";
-		String fields = "id,likes.limit(0).summary(true),message,permalink_url,created_time";
+		String fields = "likes.limit(0).summary(true),message,permalink_url,created_time";
 		String dateFormatFB = "r";
 
 		List<NameValuePair> urlParams = new ArrayList<NameValuePair>();
 		urlParams.add( new NameValuePair("fields", fields));	//fields
+        urlParams.add( new NameValuePair("limit", postCount));	//number of posts
 		urlParams.add( new NameValuePair("date_format", dateFormatFB));	//same format definitions as the PHP date() function
 		urlParams.add( new NameValuePair("access_token", fbAccessToken ));  //access token
+
 
 		StringBuffer signatureBaseString3 = new StringBuffer();
 
@@ -312,8 +312,6 @@ public class SocialSliderPortlet extends MVCPortlet {
 			urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
 		}
 
-		System.out.println(urlWithParams.toString());
-
 		GetMethod getMethod = new GetMethod(urlWithParams.toString());
 
 		HttpClient cli = new HttpClient();
@@ -329,7 +327,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 		return jsonResponseArray;
 	}
 	
-	protected SocialSliderSocialMediaPost getMediaPostTwitter(JSONObject jsonPost, int postLenght) {
+	protected SocialSliderSocialMediaPost getMediaPostTwitter(JSONObject jsonPost, int postLength) {
 
 		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);
@@ -365,8 +363,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 		 
 			}
 			
-			if (post.length() > postLenght) {
-				post = post.substring(0, postLenght) + "...";
+			if (post.length() > postLength) {
+				post = post.substring(0, postLength) + "...";
 			}
 			
 			likes = jsonPost.getInt("favorite_count");
@@ -391,17 +389,11 @@ public class SocialSliderPortlet extends MVCPortlet {
 			_log.error("Exception in UpdatesSliderPortlet.getAssetModel(): " + ex.getMessage());
 			socialMediaPost = null;
 		}
-		
-		/*System.out.println("=========Post Author -> " + postAuthor);
-		System.out.println("=========Post Text -> " + post);
-		System.out.println("=========Post Retweet -> " + isRetweet);
-		System.out.println("=========Post Date -> " + date);
-		System.out.println("=========Post Likes -> " + likes);*/
-		
+
 		return socialMediaPost;
 	}
 
-	protected SocialSliderSocialMediaPost getMediaPostFB(JSONObject jsonPost, String fbScreenName, int postLenght) {
+	protected SocialSliderSocialMediaPost getMediaPostFB(JSONObject jsonPost, String fbScreenName, int postLength) {
 
 		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);
@@ -421,8 +413,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 			post = jsonPost.getString("message");
 			postAuthor = fbScreenName;
 
-			if (post.length() > postLenght) {
-				post = post.substring(0, postLenght) + "...";
+			if (post.length() > postLength) {
+				post = post.substring(0, postLength) + "...";
 			}
 
 			likes = jsonPost.getJSONObject("likes").getJSONObject("summary").getInt("total_count");
@@ -430,12 +422,6 @@ public class SocialSliderPortlet extends MVCPortlet {
 			oldDate = jsonPost.getString("created_time");
 			dateFB = fbFormat.parse(oldDate);
 			date = new SimpleDateFormat("MMMM d, yyyy").format(dateFB);
-
-			/*System.out.println("=========Post Author -> " + postAuthor);
-			System.out.println("=========Post Text -> " + post);
-			System.out.println("=========Post Retweet -> " + false);
-			System.out.println("=========Post Date -> " + date);
-			System.out.println("=========Post Likes -> " + likes);*/
 
 			if (postAuthor.isEmpty() || post.isEmpty() || date.isEmpty()) {
 				socialMediaPost = null;

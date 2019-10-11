@@ -9,7 +9,6 @@
 <c:choose>
 	<c:when test="<%= notConfigured %>">
 		This Twitter Slider is not configured yet. Please select "Configuration" from the widget menu.
-		<#assign =
 	</c:when>
 	<c:otherwise>
 		<section class="social-slider slider" id="<%=themeDisplay.getPortletDisplay().getId() %>">
