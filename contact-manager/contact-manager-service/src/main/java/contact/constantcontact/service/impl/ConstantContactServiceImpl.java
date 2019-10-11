@@ -507,6 +507,11 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	 */
 	@Override
 	public String updateContact(ContactApiModel model, StringBuffer response) throws IOException {
+		return updateContact(model, response, "ACTION_BY_OWNER");
+	}
+	
+	@Override
+	public String updateContact(ContactApiModel model, StringBuffer response, String actionBy) throws JsonProcessingException, IOException{
 		LOGGER.trace("#updateContact - enter");
 		/*
 		 * Lists and Notes aren't modified here, but are removed if they aren't passed back to the
@@ -514,7 +519,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		 */
 		ContactApiModel existingContact = getContact(model.getId());
 		if (existingContact != null) {
-			model.setLists(existingContact.getLists());
+			//START CMAP-198
+			// We are binding action_by_visitor because when visitor (actual contact request)  is sent de default list 1 need to be added and not overwiten
+			if ("ACTION_BY_OWNER".equals(actionBy)) {
+				model.setLists(existingContact.getLists());	
+			}
+			//END CMAP-198
 			model.setNotes(existingContact.getNotes());
 		}
 		
@@ -522,9 +532,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String contactModelJson = OBJECT_MAPPER.writeValueAsString(model);
 		String result = null;
 		
+		actionBy = actionBy==null?"ACTION_BY_OWNER":actionBy;
 		
 		String apiUrl = apibaseurl + "contacts/" + model.getId()
-				+ "?action_by=ACTION_BY_OWNER&api_key=" + apikey;
+				+ "?action_by="+actionBy+"&api_key=" + apikey;
+		
+		System.out.println(apiUrl);
 
 		HttpURLConnection connection = null;
 		try {
@@ -533,11 +546,12 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
+			System.out.println(contactModelJson);
 			out.write(contactModelJson);
 			out.close();
 
 			int status = connection.getResponseCode();
-			
+			System.out.println("de regreso" + connection.getResponseMessage());
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("#updateContact - HTTP response code: " + status);
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);
@@ -594,6 +608,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 		return result;
 	}
+	
 
 //	@Override
 //	public String updateContact(ContactViewModel contactViewModel) throws IOException {

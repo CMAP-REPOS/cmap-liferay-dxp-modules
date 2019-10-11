@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmMuniLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmMuniLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Muni to the database. Also notifies the appropriate model listeners.
@@ -117,75 +87,17 @@ public class CrmMuniLocalServiceUtil {
 		return getService().deleteCrmMuni(crmMuniId);
 	}
 
-	public static contact.manager.model.CrmMuni fetchCrmMuni(long crmMuniId) {
-		return getService().fetchCrmMuni(crmMuniId);
-	}
-
 	/**
-	* Returns the CRM Muni matching the UUID and group.
-	*
-	* @param uuid the CRM Muni's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmMuni fetchCrmMuniByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmMuniByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Muni with the primary key.
-	*
-	* @param crmMuniId the primary key of the CRM Muni
-	* @return the CRM Muni
-	* @throws PortalException if a CRM Muni with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmMuni getCrmMuni(long crmMuniId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmMuni(crmMuniId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM Muni matching the UUID and group.
-	*
-	* @param uuid the CRM Muni's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Muni
-	* @throws PortalException if a matching CRM Muni could not be found
-	*/
-	public static contact.manager.model.CrmMuni getCrmMuniByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmMuniByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Muni in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmMuni the CRM Muni
-	* @return the CRM Muni that was updated
-	*/
-	public static contact.manager.model.CrmMuni updateCrmMuni(
-		contact.manager.model.CrmMuni crmMuni) {
-		return getService().updateCrmMuni(crmMuni);
-	}
-
-	/**
-	* Returns the number of CRM Munis.
-	*
-	* @return the number of CRM Munis
-	*/
-	public static int getCrmMunisCount() {
-		return getService().getCrmMunisCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -238,9 +150,79 @@ public class CrmMuniLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmMuni fetchCrmMuni(long crmMuniId) {
+		return getService().fetchCrmMuni(crmMuniId);
+	}
+
+	/**
+	* Returns the CRM Muni matching the UUID and group.
+	*
+	* @param uuid the CRM Muni's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	*/
+	public static contact.manager.model.CrmMuni fetchCrmMuniByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmMuniByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmMuni> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Muni with the primary key.
+	*
+	* @param crmMuniId the primary key of the CRM Muni
+	* @return the CRM Muni
+	* @throws PortalException if a CRM Muni with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmMuni getCrmMuni(long crmMuniId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmMuni(crmMuniId);
+	}
+
+	/**
+	* Returns the CRM Muni matching the UUID and group.
+	*
+	* @param uuid the CRM Muni's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Muni
+	* @throws PortalException if a matching CRM Muni could not be found
+	*/
+	public static contact.manager.model.CrmMuni getCrmMuniByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmMuniByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -267,7 +249,7 @@ public class CrmMuniLocalServiceUtil {
 	* @return the matching CRM Munis, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmMuni> getCrmMunisByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmMunisByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -282,7 +264,7 @@ public class CrmMuniLocalServiceUtil {
 	* @return the range of matching CRM Munis, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmMuni> getCrmMunisByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmMuni> orderByComparator) {
 		return getService()
 				   .getCrmMunisByUuidAndCompanyId(uuid, companyId, start, end,
@@ -290,33 +272,63 @@ public class CrmMuniLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Munis.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Munis
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmMunisCount() {
+		return getService().getCrmMunisCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM Muni in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmMuni the CRM Muni
+	* @return the CRM Muni that was updated
+	*/
+	public static contact.manager.model.CrmMuni updateCrmMuni(
+		contact.manager.model.CrmMuni crmMuni) {
+		return getService().updateCrmMuni(crmMuni);
 	}
 
 	public static CrmMuniLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmMuniLocalService, CrmMuniLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmMuniLocalService.class);
+	private static ServiceTracker<CrmMuniLocalService, CrmMuniLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmMuniLocalService.class);
+
+		ServiceTracker<CrmMuniLocalService, CrmMuniLocalService> serviceTracker = new ServiceTracker<CrmMuniLocalService, CrmMuniLocalService>(bundle.getBundleContext(),
+				CrmMuniLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

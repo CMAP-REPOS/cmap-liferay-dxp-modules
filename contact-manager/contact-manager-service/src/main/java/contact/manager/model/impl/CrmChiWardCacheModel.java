@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmChiWard;
 
@@ -98,7 +97,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		CrmChiWardImpl crmChiWardImpl = new CrmChiWardImpl();
 
 		if (uuid == null) {
-			crmChiWardImpl.setUuid(StringPool.BLANK);
+			crmChiWardImpl.setUuid("");
 		}
 		else {
 			crmChiWardImpl.setUuid(uuid);
@@ -110,7 +109,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		crmChiWardImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmChiWardImpl.setUserName(StringPool.BLANK);
+			crmChiWardImpl.setUserName("");
 		}
 		else {
 			crmChiWardImpl.setUserName(userName);
@@ -131,14 +130,14 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		}
 
 		if (name == null) {
-			crmChiWardImpl.setName(StringPool.BLANK);
+			crmChiWardImpl.setName("");
 		}
 		else {
 			crmChiWardImpl.setName(name);
 		}
 
 		if (zipCode == null) {
-			crmChiWardImpl.setZipCode(StringPool.BLANK);
+			crmChiWardImpl.setZipCode("");
 		}
 		else {
 			crmChiWardImpl.setZipCode(zipCode);
@@ -171,7 +170,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -186,7 +185,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -196,14 +195,14 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (zipCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zipCode);

@@ -13,11 +13,12 @@ public class UpdatedContactNotificationEmailUtil
 extends BaseEmailUtil {
 	private static final Log _log = LogFactoryUtil.getLog(UpdatedContactNotificationEmailUtil.class);
 
-	public static void buildAndSendEmail( String from, String to, String cc[], String subject, List<UpdatedContact> updatedContactList ) {
+	public static void buildAndSendEmail( String from, String to, String cc[], String subject, List<UpdatedContact> updatedContactList, String emailFooter ) {
 		if (_log.isTraceEnabled()) {
 			_log.trace(">> buildAndSendEmail");
 		}
 		StringBuilder sb = new StringBuilder(_EMAIL_BODY_HEADER);
+		sb.append(_EMAIL_CONTENT_HEADER);
 		for (UpdatedContact updatedContact : updatedContactList) {
 			sb.append("<tr><td class=\"tg-yw4l\">").append( null != updatedContact.getCreateDate() ? _simpleDateFormatter.format( updatedContact.getCreateDate() ) : " " ).append("</td>\n");
 			sb.append("<td class=\"tg-yw4l\">").append( null != updatedContact.getModifiedDate() ? _simpleDateFormatter.format( updatedContact.getModifiedDate() ) : " " ).append("</td>\n");
@@ -32,6 +33,10 @@ extends BaseEmailUtil {
 			sb.append("<td class=\"tg-yw4l\">").append( updatedContact.getPrimaryPhone() ).append("</td>\n");
 			sb.append("<td class=\"tg-yw4l\">").append( updatedContact.getPrimaryEmailAddress() ).append("</td></tr>\n");
 		}
+		sb.append(_EMAIL_CONTENT_FOOTER);
+		if (null != emailFooter) {
+			sb.append("<div class=\"foo\">").append(emailFooter).append("</div>");
+		}
 		sb.append(_EMAIL_BODY_FOOTER);
 		
 		if (_log.isDebugEnabled()) {
@@ -39,7 +44,7 @@ extends BaseEmailUtil {
 		}
 
 		try {
-			sendEmail(from, to, cc, subject, sb.toString(), true);
+			sendEmail(from, to, null != cc ? cc : null, subject, sb.toString(), true);
 		}
 		catch (AddressException ex) {
 			if (_log.isErrorEnabled()) {
@@ -60,8 +65,10 @@ extends BaseEmailUtil {
 			+ ".tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;}\n"
 			+ ".tg .tg-lqy6{text-align:right;vertical-align:top}\n"
 			+ ".tg .tg-yw4l{vertical-align:top}\n"
-			+ "</style>\n"
-			+ "<div class=\"info-text\">The following contacts have been changed or added during the last week:</div><br>\n"
+			+ ".foo{font-family:Arial, sans-serif;font-size:8px;font-weight:normal;}\n"
+			+ "</style>\n";
+	private static final String _EMAIL_CONTENT_HEADER = "<div class=\"info-text\">The following contacts have been changed or added during the last week:</div><br>\n"
 			+ "<table class=\"tg\"><tr><th class=\"tg-yw4l\">Created</th><th class=\"tg-yw4l\">Modified</th><th class=\"tg-yw4l\">Action</th><th class=\"tg-yw4l\">Contact ID</th><th class=\"tg-yw4l\">User Name</th><th class=\"tg-yw4l\">Contact Name</th><th class=\"tg-yw4l\">Primary Address</th><th class=\"tg-yw4l\">Primary Address City</th><th class=\"tg-yw4l\">Primary Address State</th><th class=\"tg-yw4l\">Primary Address Zip</th><th class=\"tg-yw4l\">Primary Phone</th><th class=\"tg-yw4l\">Primary Email Address</th></tr>\n";
-	private static final String _EMAIL_BODY_FOOTER = "</table></body></html>";
+	private static final String _EMAIL_CONTENT_FOOTER = "</table><br><br>\n";
+	private static final String _EMAIL_BODY_FOOTER = "\n</body></html>";
 }

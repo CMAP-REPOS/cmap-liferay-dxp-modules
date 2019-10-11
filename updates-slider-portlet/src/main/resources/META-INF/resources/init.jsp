@@ -39,7 +39,8 @@
 	long assetCategoryId2 = 0;
 	long assetCategoryId3 = 0;
 	int assetCount = 0;
-	int summaryLength = 0;
+	int summaryLength = 150;
+	//String summaryDefault = "";
 
 	if (Validator.isNotNull(updatesSliderConfiguration)) {
 		String assetCategoryIdPref = 
@@ -54,8 +55,11 @@
 		String assetCountPref = 
 				portletPreferences.getValue("assetCount", updatesSliderConfiguration.assetCount());
 
-		String summaryLengthPref = 
-				portletPreferences.getValue("summaryLength", updatesSliderConfiguration.summaryLength());
+		//String summaryLengthPref = 
+		//		portletPreferences.getValue("summaryLength", updatesSliderConfiguration.summaryLength());
+		
+		//String summaryDefaultPref = 
+		//		portletPreferences.getValue("summaryDefault", updatesSliderConfiguration.summaryDefault());
 
 		if (Validator.isDigit(assetCategoryIdPref)) {
 			assetCategoryId = Long.parseLong(assetCategoryIdPref);
@@ -73,9 +77,11 @@
 			assetCount = Integer.parseInt(assetCountPref);
 		}
 
-		if (Validator.isDigit(summaryLengthPref)) {
-			summaryLength = Integer.parseInt(summaryLengthPref);
-		}
+		//if (Validator.isDigit(summaryLengthPref)) {
+		//	summaryLength = Integer.parseInt(summaryLengthPref);
+		//}
+		
+		//summaryDefault = summaryDefaultPref;
 	}
 
 	Order assetCategoryOrder = OrderFactoryUtil.asc("name");

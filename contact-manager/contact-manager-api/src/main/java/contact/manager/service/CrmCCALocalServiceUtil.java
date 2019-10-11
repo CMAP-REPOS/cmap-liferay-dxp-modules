@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmCCALocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmCCALocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM CCA to the database. Also notifies the appropriate model listeners.
@@ -117,75 +87,17 @@ public class CrmCCALocalServiceUtil {
 		return getService().deleteCrmCCA(crmCCAId);
 	}
 
-	public static contact.manager.model.CrmCCA fetchCrmCCA(long crmCCAId) {
-		return getService().fetchCrmCCA(crmCCAId);
-	}
-
 	/**
-	* Returns the CRM CCA matching the UUID and group.
-	*
-	* @param uuid the CRM CCA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmCCA fetchCrmCCAByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmCCAByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM CCA with the primary key.
-	*
-	* @param crmCCAId the primary key of the CRM CCA
-	* @return the CRM CCA
-	* @throws PortalException if a CRM CCA with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmCCA getCrmCCA(long crmCCAId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmCCA(crmCCAId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM CCA matching the UUID and group.
-	*
-	* @param uuid the CRM CCA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM CCA
-	* @throws PortalException if a matching CRM CCA could not be found
-	*/
-	public static contact.manager.model.CrmCCA getCrmCCAByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmCCAByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM CCA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCCA the CRM CCA
-	* @return the CRM CCA that was updated
-	*/
-	public static contact.manager.model.CrmCCA updateCrmCCA(
-		contact.manager.model.CrmCCA crmCCA) {
-		return getService().updateCrmCCA(crmCCA);
-	}
-
-	/**
-	* Returns the number of CRM CCAs.
-	*
-	* @return the number of CRM CCAs
-	*/
-	public static int getCrmCCAsCount() {
-		return getService().getCrmCCAsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -238,9 +150,79 @@ public class CrmCCALocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmCCA fetchCrmCCA(long crmCCAId) {
+		return getService().fetchCrmCCA(crmCCAId);
+	}
+
+	/**
+	* Returns the CRM CCA matching the UUID and group.
+	*
+	* @param uuid the CRM CCA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
+	*/
+	public static contact.manager.model.CrmCCA fetchCrmCCAByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmCCAByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmCCA> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM CCA with the primary key.
+	*
+	* @param crmCCAId the primary key of the CRM CCA
+	* @return the CRM CCA
+	* @throws PortalException if a CRM CCA with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmCCA getCrmCCA(long crmCCAId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmCCA(crmCCAId);
+	}
+
+	/**
+	* Returns the CRM CCA matching the UUID and group.
+	*
+	* @param uuid the CRM CCA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM CCA
+	* @throws PortalException if a matching CRM CCA could not be found
+	*/
+	public static contact.manager.model.CrmCCA getCrmCCAByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmCCAByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -267,7 +249,7 @@ public class CrmCCALocalServiceUtil {
 	* @return the matching CRM CCAs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmCCA> getCrmCCAsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmCCAsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -282,7 +264,7 @@ public class CrmCCALocalServiceUtil {
 	* @return the range of matching CRM CCAs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmCCA> getCrmCCAsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmCCA> orderByComparator) {
 		return getService()
 				   .getCrmCCAsByUuidAndCompanyId(uuid, companyId, start, end,
@@ -290,33 +272,63 @@ public class CrmCCALocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM CCAs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM CCAs
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmCCAsCount() {
+		return getService().getCrmCCAsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM CCA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCCA the CRM CCA
+	* @return the CRM CCA that was updated
+	*/
+	public static contact.manager.model.CrmCCA updateCrmCCA(
+		contact.manager.model.CrmCCA crmCCA) {
+		return getService().updateCrmCCA(crmCCA);
 	}
 
 	public static CrmCCALocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmCCALocalService, CrmCCALocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmCCALocalService.class);
+	private static ServiceTracker<CrmCCALocalService, CrmCCALocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmCCALocalService.class);
+
+		ServiceTracker<CrmCCALocalService, CrmCCALocalService> serviceTracker = new ServiceTracker<CrmCCALocalService, CrmCCALocalService>(bundle.getBundleContext(),
+				CrmCCALocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

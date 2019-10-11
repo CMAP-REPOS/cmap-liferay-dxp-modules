@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmStateSenate;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -117,7 +118,7 @@ public class CrmStateSenateUtil {
 	* @param uuid the uuid
 	* @return the matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid(java.lang.String uuid) {
+	public static List<CrmStateSenate> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +134,8 @@ public class CrmStateSenateUtil {
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end) {
+	public static List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +152,8 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end, OrderByComparator<CrmStateSenate> orderByComparator) {
+	public static List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,9 +171,8 @@ public class CrmStateSenateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end,
-		OrderByComparator<CrmStateSenate> orderByComparator,
+	public static List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end, OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -187,7 +187,7 @@ public class CrmStateSenateUtil {
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByUuid_First(java.lang.String uuid,
+	public static CrmStateSenate findByUuid_First(String uuid,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -200,7 +200,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUuid_First(java.lang.String uuid,
+	public static CrmStateSenate fetchByUuid_First(String uuid,
 		OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -213,7 +213,7 @@ public class CrmStateSenateUtil {
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByUuid_Last(java.lang.String uuid,
+	public static CrmStateSenate findByUuid_Last(String uuid,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -226,7 +226,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUuid_Last(java.lang.String uuid,
+	public static CrmStateSenate fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -241,7 +241,7 @@ public class CrmStateSenateUtil {
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public static CrmStateSenate[] findByUuid_PrevAndNext(
-		long crmStateSenateId, java.lang.String uuid,
+		long crmStateSenateId, String uuid,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence()
@@ -254,7 +254,7 @@ public class CrmStateSenateUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -264,7 +264,7 @@ public class CrmStateSenateUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM State Senates
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -276,8 +276,7 @@ public class CrmStateSenateUtil {
 	* @return the matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CrmStateSenate findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -289,8 +288,7 @@ public class CrmStateSenateUtil {
 	* @param groupId the group ID
 	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUUID_G(java.lang.String uuid,
-		long groupId) {
+	public static CrmStateSenate fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -302,8 +300,8 @@ public class CrmStateSenateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache) {
+	public static CrmStateSenate fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -314,8 +312,7 @@ public class CrmStateSenateUtil {
 	* @param groupId the group ID
 	* @return the CRM State Senate that was removed
 	*/
-	public static CrmStateSenate removeByUUID_G(java.lang.String uuid,
-		long groupId)
+	public static CrmStateSenate removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -327,7 +324,7 @@ public class CrmStateSenateUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM State Senates
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -338,8 +335,7 @@ public class CrmStateSenateUtil {
 	* @param companyId the company ID
 	* @return the matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmStateSenate> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -356,7 +352,7 @@ public class CrmStateSenateUtil {
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public static List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
@@ -375,7 +371,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public static List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence()
@@ -397,7 +393,7 @@ public class CrmStateSenateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public static List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache) {
@@ -415,7 +411,7 @@ public class CrmStateSenateUtil {
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByUuid_C_First(java.lang.String uuid,
+	public static CrmStateSenate findByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence()
@@ -430,7 +426,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUuid_C_First(java.lang.String uuid,
+	public static CrmStateSenate fetchByUuid_C_First(String uuid,
 		long companyId, OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
@@ -445,8 +441,8 @@ public class CrmStateSenateUtil {
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmStateSenate> orderByComparator)
+	public static CrmStateSenate findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -460,7 +456,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByUuid_C_Last(java.lang.String uuid,
+	public static CrmStateSenate fetchByUuid_C_Last(String uuid,
 		long companyId, OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -477,7 +473,7 @@ public class CrmStateSenateUtil {
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public static CrmStateSenate[] findByUuid_C_PrevAndNext(
-		long crmStateSenateId, java.lang.String uuid, long companyId,
+		long crmStateSenateId, String uuid, long companyId,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence()
@@ -491,7 +487,7 @@ public class CrmStateSenateUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -502,7 +498,7 @@ public class CrmStateSenateUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM State Senates
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -512,7 +508,7 @@ public class CrmStateSenateUtil {
 	* @param zipCode the zip code
 	* @return the matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByZipCode(java.lang.String zipCode) {
+	public static List<CrmStateSenate> findByZipCode(String zipCode) {
 		return getPersistence().findByZipCode(zipCode);
 	}
 
@@ -528,8 +524,8 @@ public class CrmStateSenateUtil {
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByZipCode(java.lang.String zipCode,
-		int start, int end) {
+	public static List<CrmStateSenate> findByZipCode(String zipCode, int start,
+		int end) {
 		return getPersistence().findByZipCode(zipCode, start, end);
 	}
 
@@ -546,8 +542,8 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmStateSenate> orderByComparator) {
+	public static List<CrmStateSenate> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator);
 	}
@@ -566,9 +562,8 @@ public class CrmStateSenateUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public static List<CrmStateSenate> findByZipCode(java.lang.String zipCode,
-		int start, int end,
-		OrderByComparator<CrmStateSenate> orderByComparator,
+	public static List<CrmStateSenate> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator,
@@ -583,7 +578,7 @@ public class CrmStateSenateUtil {
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByZipCode_First(java.lang.String zipCode,
+	public static CrmStateSenate findByZipCode_First(String zipCode,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
@@ -596,8 +591,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByZipCode_First(
-		java.lang.String zipCode,
+	public static CrmStateSenate fetchByZipCode_First(String zipCode,
 		OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
 	}
@@ -610,7 +604,7 @@ public class CrmStateSenateUtil {
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate findByZipCode_Last(java.lang.String zipCode,
+	public static CrmStateSenate findByZipCode_Last(String zipCode,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
@@ -623,7 +617,7 @@ public class CrmStateSenateUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public static CrmStateSenate fetchByZipCode_Last(java.lang.String zipCode,
+	public static CrmStateSenate fetchByZipCode_Last(String zipCode,
 		OrderByComparator<CrmStateSenate> orderByComparator) {
 		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
 	}
@@ -638,7 +632,7 @@ public class CrmStateSenateUtil {
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public static CrmStateSenate[] findByZipCode_PrevAndNext(
-		long crmStateSenateId, java.lang.String zipCode,
+		long crmStateSenateId, String zipCode,
 		OrderByComparator<CrmStateSenate> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmStateSenateException {
 		return getPersistence()
@@ -651,7 +645,7 @@ public class CrmStateSenateUtil {
 	*
 	* @param zipCode the zip code
 	*/
-	public static void removeByZipCode(java.lang.String zipCode) {
+	public static void removeByZipCode(String zipCode) {
 		getPersistence().removeByZipCode(zipCode);
 	}
 
@@ -661,7 +655,7 @@ public class CrmStateSenateUtil {
 	* @param zipCode the zip code
 	* @return the number of matching CRM State Senates
 	*/
-	public static int countByZipCode(java.lang.String zipCode) {
+	public static int countByZipCode(String zipCode) {
 		return getPersistence().countByZipCode(zipCode);
 	}
 
@@ -813,7 +807,7 @@ public class CrmStateSenateUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -821,6 +815,17 @@ public class CrmStateSenateUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmStateSenatePersistence, CrmStateSenatePersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmStateSenatePersistence.class);
+	private static ServiceTracker<CrmStateSenatePersistence, CrmStateSenatePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmStateSenatePersistence.class);
+
+		ServiceTracker<CrmStateSenatePersistence, CrmStateSenatePersistence> serviceTracker =
+			new ServiceTracker<CrmStateSenatePersistence, CrmStateSenatePersistence>(bundle.getBundleContext(),
+				CrmStateSenatePersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

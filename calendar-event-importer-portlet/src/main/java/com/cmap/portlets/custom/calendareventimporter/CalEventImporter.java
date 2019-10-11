@@ -47,6 +47,7 @@ import com.liferay.message.boards.kernel.service.MBThreadLocalService;
 import com.liferay.portal.kernel.cal.DayAndPosition;
 import com.liferay.portal.kernel.cal.TZSRecurrence;
 import com.liferay.portal.kernel.dao.jdbc.DataAccess;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchUserException;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -115,7 +116,7 @@ public class CalEventImporter {
 	@Activate
 	protected void activate() throws Exception {
 		initJSONSerializer();
-
+		
 		long start = System.currentTimeMillis();
 
 		if (_log.isInfoEnabled()) {
@@ -135,6 +136,20 @@ public class CalEventImporter {
 				_log.info("Completed CalEvent import process in " + (System.currentTimeMillis() - start) + "ms");
 			}
 		}
+		/*System.out.println("=======We are in=======");
+		int test = _calendarResourceLocalService.getCalendarResourcesCount();
+		int tes2 = _calendarBookingLocalService.getCalendarBookingsCount();
+		
+		System.out.println("=======# of Calendar Resources -> " + test + "=======");
+		System.out.println("=======# of Calendar Bookings -> " + tes2 + "=======");
+		
+		DynamicQuery dq = _calendarBookingLocalService.dynamicQuery();
+		List<CalendarBooking> calendarBookings = (List) _calendarBookingLocalService.dynamicQuery(dq);
+		
+		for(CalendarBooking event:calendarBookings){
+            System.out.println("=====Event Title " + event.getTitleCurrentValue() + "=========");
+        }*/
+		
 	}
 
 	protected void addAssetEntry(long entryId, long groupId, long companyId, long userId, String userName,

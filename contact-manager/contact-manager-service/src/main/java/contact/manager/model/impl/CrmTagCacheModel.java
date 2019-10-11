@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmTag;
 
@@ -95,7 +94,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		CrmTagImpl crmTagImpl = new CrmTagImpl();
 
 		if (uuid == null) {
-			crmTagImpl.setUuid(StringPool.BLANK);
+			crmTagImpl.setUuid("");
 		}
 		else {
 			crmTagImpl.setUuid(uuid);
@@ -107,7 +106,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		crmTagImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmTagImpl.setUserName(StringPool.BLANK);
+			crmTagImpl.setUserName("");
 		}
 		else {
 			crmTagImpl.setUserName(userName);
@@ -128,7 +127,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		}
 
 		if (name == null) {
-			crmTagImpl.setName(StringPool.BLANK);
+			crmTagImpl.setName("");
 		}
 		else {
 			crmTagImpl.setName(name);
@@ -160,7 +159,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -175,7 +174,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -185,7 +184,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);

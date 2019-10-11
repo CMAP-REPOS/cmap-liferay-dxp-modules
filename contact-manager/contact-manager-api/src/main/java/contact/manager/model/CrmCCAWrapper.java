@@ -137,138 +137,13 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmCCA.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmCCA.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmCCA.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmCCA.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmCCA> toCacheModel() {
-		return _crmCCA.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmCCA toEscapedModel() {
-		return new CrmCCAWrapper(_crmCCA.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmCCA toUnescapedModel() {
-		return new CrmCCAWrapper(_crmCCA.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmCCA crmCCA) {
-		return _crmCCA.compareTo(crmCCA);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmCCA.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmCCA.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmCCAWrapper((CrmCCA)_crmCCA.clone());
 	}
 
-	/**
-	* Returns the name of this CRM CCA.
-	*
-	* @return the name of this CRM CCA
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmCCA.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM CCA.
-	*
-	* @return the user name of this CRM CCA
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmCCA.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM CCA.
-	*
-	* @return the user uuid of this CRM CCA
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmCCA.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM CCA.
-	*
-	* @return the uuid of this CRM CCA
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmCCA.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM CCA.
-	*
-	* @return the zip code of this CRM CCA
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmCCA.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmCCA.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmCCA.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM CCA.
-	*
-	* @return the create date of this CRM CCA
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmCCA.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM CCA.
-	*
-	* @return the modified date of this CRM CCA
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmCCA.getModifiedDate();
+	public int compareTo(CrmCCA crmCCA) {
+		return _crmCCA.compareTo(crmCCA);
 	}
 
 	/**
@@ -282,6 +157,16 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	}
 
 	/**
+	* Returns the create date of this CRM CCA.
+	*
+	* @return the create date of this CRM CCA
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmCCA.getCreateDate();
+	}
+
+	/**
 	* Returns the crm cca ID of this CRM CCA.
 	*
 	* @return the crm cca ID of this CRM CCA
@@ -289,6 +174,11 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	@Override
 	public long getCrmCCAId() {
 		return _crmCCA.getCrmCCAId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmCCA.getExpandoBridge();
 	}
 
 	/**
@@ -302,6 +192,26 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	}
 
 	/**
+	* Returns the modified date of this CRM CCA.
+	*
+	* @return the modified date of this CRM CCA
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmCCA.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM CCA.
+	*
+	* @return the name of this CRM CCA
+	*/
+	@Override
+	public String getName() {
+		return _crmCCA.getName();
+	}
+
+	/**
 	* Returns the primary key of this CRM CCA.
 	*
 	* @return the primary key of this CRM CCA
@@ -309,6 +219,11 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmCCA.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmCCA.getPrimaryKeyObj();
 	}
 
 	/**
@@ -319,6 +234,66 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	@Override
 	public long getUserId() {
 		return _crmCCA.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM CCA.
+	*
+	* @return the user name of this CRM CCA
+	*/
+	@Override
+	public String getUserName() {
+		return _crmCCA.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM CCA.
+	*
+	* @return the user uuid of this CRM CCA
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmCCA.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM CCA.
+	*
+	* @return the uuid of this CRM CCA
+	*/
+	@Override
+	public String getUuid() {
+		return _crmCCA.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM CCA.
+	*
+	* @return the zip code of this CRM CCA
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmCCA.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmCCA.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmCCA.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmCCA.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmCCA.isNew();
 	}
 
 	@Override
@@ -362,14 +337,14 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmCCA.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmCCA.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmCCA.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -403,7 +378,7 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	* @param name the name of this CRM CCA
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmCCA.setName(name);
 	}
 
@@ -443,7 +418,7 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	* @param userName the user name of this CRM CCA
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmCCA.setUserName(userName);
 	}
 
@@ -453,7 +428,7 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	* @param userUuid the user uuid of this CRM CCA
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmCCA.setUserUuid(userUuid);
 	}
 
@@ -463,7 +438,7 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	* @param uuid the uuid of this CRM CCA
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmCCA.setUuid(uuid);
 	}
 
@@ -473,8 +448,33 @@ public class CrmCCAWrapper implements CrmCCA, ModelWrapper<CrmCCA> {
 	* @param zipCode the zip code of this CRM CCA
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmCCA.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmCCA> toCacheModel() {
+		return _crmCCA.toCacheModel();
+	}
+
+	@Override
+	public CrmCCA toEscapedModel() {
+		return new CrmCCAWrapper(_crmCCA.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmCCA.toString();
+	}
+
+	@Override
+	public CrmCCA toUnescapedModel() {
+		return new CrmCCAWrapper(_crmCCA.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmCCA.toXmlString();
 	}
 
 	@Override

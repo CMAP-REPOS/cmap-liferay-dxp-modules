@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmNote;
 
@@ -97,7 +96,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		CrmNoteImpl crmNoteImpl = new CrmNoteImpl();
 
 		if (uuid == null) {
-			crmNoteImpl.setUuid(StringPool.BLANK);
+			crmNoteImpl.setUuid("");
 		}
 		else {
 			crmNoteImpl.setUuid(uuid);
@@ -109,7 +108,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		crmNoteImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmNoteImpl.setUserName(StringPool.BLANK);
+			crmNoteImpl.setUserName("");
 		}
 		else {
 			crmNoteImpl.setUserName(userName);
@@ -132,7 +131,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		crmNoteImpl.setCrmContactId(crmContactId);
 
 		if (note == null) {
-			crmNoteImpl.setNote(StringPool.BLANK);
+			crmNoteImpl.setNote("");
 		}
 		else {
 			crmNoteImpl.setNote(note);
@@ -166,7 +165,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -181,7 +180,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -193,7 +192,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 		objectOutput.writeLong(crmContactId);
 
 		if (note == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(note);

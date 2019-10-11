@@ -276,19 +276,19 @@ public interface CrmNoteModel extends BaseModel<CrmNote>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmNote crmNote);
+	public int compareTo(CrmNote crmNote);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmNote> toCacheModel();
+	public CacheModel<CrmNote> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmNote toEscapedModel();
+	public CrmNote toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmNote toUnescapedModel();
+	public CrmNote toUnescapedModel();
 
 	@Override
 	public String toString();

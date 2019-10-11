@@ -61,7 +61,8 @@
 
 <div class="container-fluid">
 	<%@ include file="nav.jsp"%>
-	<% if (PermissionUtil.canUserAddOutreach(currentUser)) { %>
+	<% if (PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) || 
+			PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)) { %>
 	<aui:row>
 		<aui:col md="12">
 			<%-- TODO: check role --%>
@@ -87,17 +88,29 @@
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row
-					className="contact.manager.model.CrmOutreachLog"
-					modelVar="outreachLog">
+					className="contact.manager.model.CrmOutreachLog" modelVar="outreachLog">
+					
+					<c:choose>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) && (currentUser.getUserId()== outreachLog.getUserId()) %>'>
+					    <liferay-ui:search-container-column-jsp
+							path="/outreach/view_actions.jsp" name="Actions" />
+					  </c:when>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER) %>'>
+					    <liferay-ui:search-container-column-jsp
+							path="/outreach/view_actions.jsp" name="Actions" />
+					  </c:when>
+					  <c:otherwise>
+					    <liferay-ui:search-container-column-jsp
+							path="/outreach/empty.jsp" name="Actions" />
+					  </c:otherwise>
+					</c:choose>
+					
 					<liferay-ui:search-container-column-text property="outreachDate"
 						name="Date" orderable="true" orderableProperty="outreachDate" />
 					<liferay-ui:search-container-column-text property="userName"
 						name="User Name" orderable="true" orderableProperty="userName" />
 					<liferay-ui:search-container-column-text property="medium"
 						name="Medium" orderable="true" orderableProperty="medium" />
-					<liferay-ui:search-container-column-text property="activityType"
-						name="Activity Type" orderable="true"
-						orderableProperty="activityType" />
 					<liferay-ui:search-container-column-text property="note"
 						name="Note" orderableProperty="note" />
 				</liferay-ui:search-container-row>

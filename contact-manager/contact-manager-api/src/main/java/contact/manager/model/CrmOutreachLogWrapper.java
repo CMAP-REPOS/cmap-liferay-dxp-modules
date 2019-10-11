@@ -159,58 +159,13 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmOutreachLog.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmOutreachLog.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmOutreachLog.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmOutreachLog.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmOutreachLog> toCacheModel() {
-		return _crmOutreachLog.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmOutreachLog toEscapedModel() {
-		return new CrmOutreachLogWrapper(_crmOutreachLog.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmOutreachLog toUnescapedModel() {
-		return new CrmOutreachLogWrapper(_crmOutreachLog.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmOutreachLog crmOutreachLog) {
-		return _crmOutreachLog.compareTo(crmOutreachLog);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmOutreachLog.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmOutreachLog.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmOutreachLogWrapper((CrmOutreachLog)_crmOutreachLog.clone());
+	}
+
+	@Override
+	public int compareTo(CrmOutreachLog crmOutreachLog) {
+		return _crmOutreachLog.compareTo(crmOutreachLog);
 	}
 
 	/**
@@ -219,98 +174,8 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @return the activity type of this CRM Outreach Log
 	*/
 	@Override
-	public java.lang.String getActivityType() {
+	public String getActivityType() {
 		return _crmOutreachLog.getActivityType();
-	}
-
-	/**
-	* Returns the medium of this CRM Outreach Log.
-	*
-	* @return the medium of this CRM Outreach Log
-	*/
-	@Override
-	public java.lang.String getMedium() {
-		return _crmOutreachLog.getMedium();
-	}
-
-	/**
-	* Returns the note of this CRM Outreach Log.
-	*
-	* @return the note of this CRM Outreach Log
-	*/
-	@Override
-	public java.lang.String getNote() {
-		return _crmOutreachLog.getNote();
-	}
-
-	/**
-	* Returns the user name of this CRM Outreach Log.
-	*
-	* @return the user name of this CRM Outreach Log
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmOutreachLog.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Outreach Log.
-	*
-	* @return the user uuid of this CRM Outreach Log
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmOutreachLog.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Outreach Log.
-	*
-	* @return the uuid of this CRM Outreach Log
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmOutreachLog.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmOutreachLog.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmOutreachLog.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Outreach Log.
-	*
-	* @return the create date of this CRM Outreach Log
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmOutreachLog.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Outreach Log.
-	*
-	* @return the modified date of this CRM Outreach Log
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmOutreachLog.getModifiedDate();
-	}
-
-	/**
-	* Returns the outreach date of this CRM Outreach Log.
-	*
-	* @return the outreach date of this CRM Outreach Log
-	*/
-	@Override
-	public Date getOutreachDate() {
-		return _crmOutreachLog.getOutreachDate();
 	}
 
 	/**
@@ -321,6 +186,16 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public long getCompanyId() {
 		return _crmOutreachLog.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this CRM Outreach Log.
+	*
+	* @return the create date of this CRM Outreach Log
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmOutreachLog.getCreateDate();
 	}
 
 	/**
@@ -343,6 +218,11 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 		return _crmOutreachLog.getCrmOutreachLogId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmOutreachLog.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this CRM Outreach Log.
 	*
@@ -351,6 +231,46 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public long getGroupId() {
 		return _crmOutreachLog.getGroupId();
+	}
+
+	/**
+	* Returns the medium of this CRM Outreach Log.
+	*
+	* @return the medium of this CRM Outreach Log
+	*/
+	@Override
+	public String getMedium() {
+		return _crmOutreachLog.getMedium();
+	}
+
+	/**
+	* Returns the modified date of this CRM Outreach Log.
+	*
+	* @return the modified date of this CRM Outreach Log
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmOutreachLog.getModifiedDate();
+	}
+
+	/**
+	* Returns the note of this CRM Outreach Log.
+	*
+	* @return the note of this CRM Outreach Log
+	*/
+	@Override
+	public String getNote() {
+		return _crmOutreachLog.getNote();
+	}
+
+	/**
+	* Returns the outreach date of this CRM Outreach Log.
+	*
+	* @return the outreach date of this CRM Outreach Log
+	*/
+	@Override
+	public Date getOutreachDate() {
+		return _crmOutreachLog.getOutreachDate();
 	}
 
 	/**
@@ -363,6 +283,11 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 		return _crmOutreachLog.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmOutreachLog.getPrimaryKeyObj();
+	}
+
 	/**
 	* Returns the user ID of this CRM Outreach Log.
 	*
@@ -371,6 +296,56 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	@Override
 	public long getUserId() {
 		return _crmOutreachLog.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Outreach Log.
+	*
+	* @return the user name of this CRM Outreach Log
+	*/
+	@Override
+	public String getUserName() {
+		return _crmOutreachLog.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Outreach Log.
+	*
+	* @return the user uuid of this CRM Outreach Log
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmOutreachLog.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Outreach Log.
+	*
+	* @return the uuid of this CRM Outreach Log
+	*/
+	@Override
+	public String getUuid() {
+		return _crmOutreachLog.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmOutreachLog.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmOutreachLog.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmOutreachLog.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmOutreachLog.isNew();
 	}
 
 	@Override
@@ -384,7 +359,7 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param activityType the activity type of this CRM Outreach Log
 	*/
 	@Override
-	public void setActivityType(java.lang.String activityType) {
+	public void setActivityType(String activityType) {
 		_crmOutreachLog.setActivityType(activityType);
 	}
 
@@ -434,14 +409,14 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmOutreachLog.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmOutreachLog.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmOutreachLog.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -465,7 +440,7 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param medium the medium of this CRM Outreach Log
 	*/
 	@Override
-	public void setMedium(java.lang.String medium) {
+	public void setMedium(String medium) {
 		_crmOutreachLog.setMedium(medium);
 	}
 
@@ -490,7 +465,7 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param note the note of this CRM Outreach Log
 	*/
 	@Override
-	public void setNote(java.lang.String note) {
+	public void setNote(String note) {
 		_crmOutreachLog.setNote(note);
 	}
 
@@ -535,7 +510,7 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param userName the user name of this CRM Outreach Log
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmOutreachLog.setUserName(userName);
 	}
 
@@ -545,7 +520,7 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param userUuid the user uuid of this CRM Outreach Log
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmOutreachLog.setUserUuid(userUuid);
 	}
 
@@ -555,8 +530,33 @@ public class CrmOutreachLogWrapper implements CrmOutreachLog,
 	* @param uuid the uuid of this CRM Outreach Log
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmOutreachLog.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmOutreachLog> toCacheModel() {
+		return _crmOutreachLog.toCacheModel();
+	}
+
+	@Override
+	public CrmOutreachLog toEscapedModel() {
+		return new CrmOutreachLogWrapper(_crmOutreachLog.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmOutreachLog.toString();
+	}
+
+	@Override
+	public CrmOutreachLog toUnescapedModel() {
+		return new CrmOutreachLogWrapper(_crmOutreachLog.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmOutreachLog.toXmlString();
 	}
 
 	@Override

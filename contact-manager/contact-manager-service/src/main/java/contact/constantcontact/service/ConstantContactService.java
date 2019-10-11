@@ -48,6 +48,8 @@ public interface ConstantContactService {
 	List<Activity> getUnsubscribedContacts(String campaignId, String createdSinceDate);
 
 	String updateContact(ContactApiModel model, StringBuffer response) throws JsonProcessingException, IOException;
+	
+	String updateContact(ContactApiModel model, StringBuffer response, String actionBy) throws JsonProcessingException, IOException;
 
 	List<EmailCampaign> getSentEmailCampaigns(String status, String limit, String date);
 

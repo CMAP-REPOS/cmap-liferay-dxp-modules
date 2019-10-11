@@ -3,6 +3,7 @@
 <%
 	ResultRow searchContainerRow = (ResultRow) request.getAttribute(WebKeys.SEARCH_CONTAINER_RESULT_ROW);
 	CrmContactViewModel viewModel = (CrmContactViewModel) searchContainerRow.getObject();
+
 %>
 
 <liferay-ui:icon-menu>
@@ -21,17 +22,19 @@
 		<portlet:param name="redirect" value="<%=currentURL%>" />
 	</portlet:renderURL>
 
-	<portlet:actionURL name="deleteContact" var="deleteContactURL">
-		<portlet:param name="crmContactId"
-			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
-	</portlet:actionURL>
-
+	
 	<liferay-ui:icon image="view_articles" message="View"
 		url="<%=viewContactURL.toString()%>" />
 
 	<liferay-ui:icon image="edit" message="Edit"
 		url="<%=editContactURL.toString()%>" />
 
-	<liferay-ui:icon-delete  message="Move to Recycling bin" url="<%=deleteContactURL.toString()%>" />
+<c:if test='<%= CrmContactPermission.contains(permissionChecker, viewModel.getCrmContactId(), "DELETE") %>'>
+	<portlet:actionURL name="deleteContact" var="deleteContactURL">
+		<portlet:param name="crmContactId"
+			value="<%=String.valueOf(viewModel.getCrmContactId())%>" />
+	</portlet:actionURL>
+	<liferay-ui:icon-delete  message="Move to Recycling bin" confirmation="Are you sure you want to move the contact to the recycling bin?" url="<%=deleteContactURL.toString()%>" />
+</c:if>
 
 </liferay-ui:icon-menu>

@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmStateRepLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmStateRepLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM State Rep to the database. Also notifies the appropriate model listeners.
@@ -119,77 +89,17 @@ public class CrmStateRepLocalServiceUtil {
 		return getService().deleteCrmStateRep(crmStateRepId);
 	}
 
-	public static contact.manager.model.CrmStateRep fetchCrmStateRep(
-		long crmStateRepId) {
-		return getService().fetchCrmStateRep(crmStateRepId);
-	}
-
 	/**
-	* Returns the CRM State Rep matching the UUID and group.
-	*
-	* @param uuid the CRM State Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmStateRep fetchCrmStateRepByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmStateRepByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM State Rep with the primary key.
-	*
-	* @param crmStateRepId the primary key of the CRM State Rep
-	* @return the CRM State Rep
-	* @throws PortalException if a CRM State Rep with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmStateRep getCrmStateRep(
-		long crmStateRepId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmStateRep(crmStateRepId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM State Rep matching the UUID and group.
-	*
-	* @param uuid the CRM State Rep's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM State Rep
-	* @throws PortalException if a matching CRM State Rep could not be found
-	*/
-	public static contact.manager.model.CrmStateRep getCrmStateRepByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmStateRepByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM State Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmStateRep the CRM State Rep
-	* @return the CRM State Rep that was updated
-	*/
-	public static contact.manager.model.CrmStateRep updateCrmStateRep(
-		contact.manager.model.CrmStateRep crmStateRep) {
-		return getService().updateCrmStateRep(crmStateRep);
-	}
-
-	/**
-	* Returns the number of CRM State Reps.
-	*
-	* @return the number of CRM State Reps
-	*/
-	public static int getCrmStateRepsCount() {
-		return getService().getCrmStateRepsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -242,9 +152,81 @@ public class CrmStateRepLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmStateRep fetchCrmStateRep(
+		long crmStateRepId) {
+		return getService().fetchCrmStateRep(crmStateRepId);
+	}
+
+	/**
+	* Returns the CRM State Rep matching the UUID and group.
+	*
+	* @param uuid the CRM State Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Rep, or <code>null</code> if a matching CRM State Rep could not be found
+	*/
+	public static contact.manager.model.CrmStateRep fetchCrmStateRepByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmStateRepByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmStateRep> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return getService().findByZipCode(zipCode);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM State Rep with the primary key.
+	*
+	* @param crmStateRepId the primary key of the CRM State Rep
+	* @return the CRM State Rep
+	* @throws PortalException if a CRM State Rep with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmStateRep getCrmStateRep(
+		long crmStateRepId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmStateRep(crmStateRepId);
+	}
+
+	/**
+	* Returns the CRM State Rep matching the UUID and group.
+	*
+	* @param uuid the CRM State Rep's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM State Rep
+	* @throws PortalException if a matching CRM State Rep could not be found
+	*/
+	public static contact.manager.model.CrmStateRep getCrmStateRepByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmStateRepByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -271,7 +253,7 @@ public class CrmStateRepLocalServiceUtil {
 	* @return the matching CRM State Reps, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmStateRep> getCrmStateRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmStateRepsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -286,7 +268,7 @@ public class CrmStateRepLocalServiceUtil {
 	* @return the range of matching CRM State Reps, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmStateRep> getCrmStateRepsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmStateRep> orderByComparator) {
 		return getService()
 				   .getCrmStateRepsByUuidAndCompanyId(uuid, companyId, start,
@@ -294,33 +276,64 @@ public class CrmStateRepLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM State Reps.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM State Reps
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmStateRepsCount() {
+		return getService().getCrmStateRepsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM State Rep in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmStateRep the CRM State Rep
+	* @return the CRM State Rep that was updated
+	*/
+	public static contact.manager.model.CrmStateRep updateCrmStateRep(
+		contact.manager.model.CrmStateRep crmStateRep) {
+		return getService().updateCrmStateRep(crmStateRep);
 	}
 
 	public static CrmStateRepLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmStateRepLocalService, CrmStateRepLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmStateRepLocalService.class);
+	private static ServiceTracker<CrmStateRepLocalService, CrmStateRepLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmStateRepLocalService.class);
+
+		ServiceTracker<CrmStateRepLocalService, CrmStateRepLocalService> serviceTracker =
+			new ServiceTracker<CrmStateRepLocalService, CrmStateRepLocalService>(bundle.getBundleContext(),
+				CrmStateRepLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

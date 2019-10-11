@@ -55,7 +55,8 @@
 
 <div class="container-fluid">
 	<%@ include file="nav.jsp"%>
-	<% if (PermissionUtil.canUserAddNote(currentUser)) { %>
+	<% if (PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) || 
+			PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)) { %>
 	<aui:row>
 		<aui:col md="12">
 			<aui:button onClick="<%= addNoteURL.toString() %>"
@@ -74,11 +75,28 @@
 						List<CrmNote> crmNotes = CrmNoteLocalServiceUtil.findByCrmContactId(crmContactId,
 												crmNoteSearchContainer.getStart(), crmNoteSearchContainer.getEnd(),
 												orderByComparator);
-										pageContext.setAttribute("results", crmNotes);
+						
+						pageContext.setAttribute("results", crmNotes);
 					%>
 				</liferay-ui:search-container-results>
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmNote" modelVar="crmNote">
+					
+					<c:choose>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_EDITOR) && (currentUser.getUserId() == crmNote.getUserId()) %>'>
+					    <liferay-ui:search-container-column-jsp
+							path="/notes/view_actions.jsp" name="Actions" />
+					  </c:when>
+					  <c:when test='<%= PermissionUtil.userHasRole(currentUser, ContactManagerAppPortletKeys.ROLE_MANAGER)%>'>
+					    <liferay-ui:search-container-column-jsp
+							path="/notes/view_actions.jsp" name="Actions" />
+					  </c:when>
+					  <c:otherwise>
+					    <liferay-ui:search-container-column-jsp
+							path="/notes/empty.jsp" name="Actions" />
+					  </c:otherwise>
+					</c:choose>
+						
 					<liferay-ui:search-container-column-text property="userName"
 						name="User" orderable="true" orderableProperty="userName" />
 					<liferay-ui:search-container-column-text property="modifiedDate"

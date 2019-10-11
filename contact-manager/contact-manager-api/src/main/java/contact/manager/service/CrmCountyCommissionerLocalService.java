@@ -63,29 +63,6 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmCountyCommissionerLocalServiceUtil} to access the CRM County Commissioner local service. Add custom service methods to {@link contact.manager.service.impl.CrmCountyCommissionerLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM County Commissioner to the database. Also notifies the appropriate model listeners.
@@ -103,6 +80,7 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	* @param crmCountyCommissionerOrBoardDistId the primary key for the new CRM County Commissioner
 	* @return the new CRM County Commissioner
 	*/
+	@Transactional(enabled = false)
 	public CrmCountyCommissioner createCrmCountyCommissioner(
 		long crmCountyCommissionerOrBoardDistId);
 
@@ -127,68 +105,14 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	public CrmCountyCommissioner deleteCrmCountyCommissioner(
 		long crmCountyCommissionerOrBoardDistId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCountyCommissioner fetchCrmCountyCommissioner(
-		long crmCountyCommissionerOrBoardDistId);
-
 	/**
-	* Returns the CRM County Commissioner matching the UUID and group.
-	*
-	* @param uuid the CRM County Commissioner's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCountyCommissioner fetchCrmCountyCommissionerByUuidAndGroupId(
-		java.lang.String uuid, long groupId);
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Returns the CRM County Commissioner with the primary key.
-	*
-	* @param crmCountyCommissionerOrBoardDistId the primary key of the CRM County Commissioner
-	* @return the CRM County Commissioner
-	* @throws PortalException if a CRM County Commissioner with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCountyCommissioner getCrmCountyCommissioner(
-		long crmCountyCommissionerOrBoardDistId) throws PortalException;
-
-	/**
-	* Returns the CRM County Commissioner matching the UUID and group.
-	*
-	* @param uuid the CRM County Commissioner's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County Commissioner
-	* @throws PortalException if a matching CRM County Commissioner could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmCountyCommissioner getCrmCountyCommissionerByUuidAndGroupId(
-		java.lang.String uuid, long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM County Commissioner in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCountyCommissioner the CRM County Commissioner
-	* @return the CRM County Commissioner that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmCountyCommissioner updateCrmCountyCommissioner(
-		CrmCountyCommissioner crmCountyCommissioner);
-
-	/**
-	* Returns the number of CRM County Commissioners.
-	*
-	* @return the number of CRM County Commissioners
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmCountyCommissionersCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -229,7 +153,66 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmCountyCommissioner> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCountyCommissioner fetchCrmCountyCommissioner(
+		long crmCountyCommissionerOrBoardDistId);
+
+	/**
+	* Returns the CRM County Commissioner matching the UUID and group.
+	*
+	* @param uuid the CRM County Commissioner's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCountyCommissioner fetchCrmCountyCommissionerByUuidAndGroupId(
+		String uuid, long groupId);
+
+	public List<CrmCountyCommissioner> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM County Commissioner with the primary key.
+	*
+	* @param crmCountyCommissionerOrBoardDistId the primary key of the CRM County Commissioner
+	* @return the CRM County Commissioner
+	* @throws PortalException if a CRM County Commissioner with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCountyCommissioner getCrmCountyCommissioner(
+		long crmCountyCommissionerOrBoardDistId) throws PortalException;
+
+	/**
+	* Returns the CRM County Commissioner matching the UUID and group.
+	*
+	* @param uuid the CRM County Commissioner's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County Commissioner
+	* @throws PortalException if a matching CRM County Commissioner could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmCountyCommissioner getCrmCountyCommissionerByUuidAndGroupId(
+		String uuid, long groupId) throws PortalException;
 
 	/**
 	* Returns a range of all the CRM County Commissioners.
@@ -255,7 +238,7 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmCountyCommissioner> getCrmCountyCommissionersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId);
+		String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM County Commissioners matching the UUID and company.
@@ -269,24 +252,43 @@ public interface CrmCountyCommissionerLocalService extends BaseLocalService,
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<CrmCountyCommissioner> getCrmCountyCommissionersByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM County Commissioners.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM County Commissioners
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmCountyCommissionersCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM County Commissioner in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCountyCommissioner the CRM County Commissioner
+	* @return the CRM County Commissioner that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmCountyCommissioner updateCrmCountyCommissioner(
+		CrmCountyCommissioner crmCountyCommissioner);
 }

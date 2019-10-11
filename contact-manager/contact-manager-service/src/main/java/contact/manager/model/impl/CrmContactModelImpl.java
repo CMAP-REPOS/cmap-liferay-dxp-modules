@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmContactModel;
@@ -287,7 +287,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		attributes.put("primaryEmailAddress", getPrimaryEmailAddress());
 		attributes.put("alternateContact", getAlternateContact());
 		attributes.put("alternateEmail", getAlternateEmail());
-		attributes.put("isVip", getIsVip());
+		attributes.put("isVip", isIsVip());
 		attributes.put("facebookId", getFacebookId());
 		attributes.put("twitterHandle", getTwitterHandle());
 		attributes.put("linkedInUrl", getLinkedInUrl());
@@ -595,7 +595,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -709,7 +709,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -720,7 +720,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -761,7 +761,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrefix() {
 		if (_prefix == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _prefix;
@@ -776,7 +776,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSalutation() {
 		if (_salutation == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _salutation;
@@ -791,7 +791,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getFirstName() {
 		if (_firstName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _firstName;
@@ -816,7 +816,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getMiddleName() {
 		if (_middleName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _middleName;
@@ -841,7 +841,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getLastName() {
 		if (_lastName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _lastName;
@@ -866,7 +866,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getOrganization() {
 		if (_organization == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _organization;
@@ -881,7 +881,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getJobTitle() {
 		if (_jobTitle == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _jobTitle;
@@ -896,7 +896,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddress1() {
 		if (_primaryAddress1 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddress1;
@@ -911,7 +911,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddress2() {
 		if (_primaryAddress2 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddress2;
@@ -926,7 +926,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddressCity() {
 		if (_primaryAddressCity == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddressCity;
@@ -941,7 +941,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddressState() {
 		if (_primaryAddressState == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddressState;
@@ -956,7 +956,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddressZip() {
 		if (_primaryAddressZip == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddressZip;
@@ -971,7 +971,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddressCounty() {
 		if (_primaryAddressCounty == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddressCounty;
@@ -986,7 +986,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryAddressCountry() {
 		if (_primaryAddressCountry == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryAddressCountry;
@@ -1001,7 +1001,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddress1() {
 		if (_secondaryAddress1 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddress1;
@@ -1016,7 +1016,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddress2() {
 		if (_secondaryAddress2 == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddress2;
@@ -1031,7 +1031,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddressCity() {
 		if (_secondaryAddressCity == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddressCity;
@@ -1046,7 +1046,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddressState() {
 		if (_secondaryAddressState == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddressState;
@@ -1061,7 +1061,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddressZip() {
 		if (_secondaryAddressZip == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddressZip;
@@ -1076,7 +1076,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddressCounty() {
 		if (_secondaryAddressCounty == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddressCounty;
@@ -1091,7 +1091,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getSecondaryAddressCountry() {
 		if (_secondaryAddressCountry == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _secondaryAddressCountry;
@@ -1106,7 +1106,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryPhone() {
 		if (_primaryPhone == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryPhone;
@@ -1121,7 +1121,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryPhoneExtension() {
 		if (_primaryPhoneExtension == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryPhoneExtension;
@@ -1136,7 +1136,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryFax() {
 		if (_primaryFax == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryFax;
@@ -1151,7 +1151,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryCell() {
 		if (_primaryCell == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryCell;
@@ -1166,7 +1166,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getPrimaryEmailAddress() {
 		if (_primaryEmailAddress == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _primaryEmailAddress;
@@ -1191,7 +1191,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getAlternateContact() {
 		if (_alternateContact == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _alternateContact;
@@ -1206,7 +1206,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getAlternateEmail() {
 		if (_alternateEmail == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _alternateEmail;
@@ -1248,7 +1248,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getFacebookId() {
 		if (_facebookId == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _facebookId;
@@ -1263,7 +1263,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getTwitterHandle() {
 		if (_twitterHandle == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _twitterHandle;
@@ -1278,7 +1278,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getLinkedInUrl() {
 		if (_linkedInUrl == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _linkedInUrl;
@@ -1293,7 +1293,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getStatus() {
 		if (_status == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _status;
@@ -1318,7 +1318,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getKioskUuid() {
 		if (_kioskUuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _kioskUuid;
@@ -1343,7 +1343,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getTagsList() {
 		if (_tagsList == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _tagsList;
@@ -1358,7 +1358,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 	@Override
 	public String getGroupsList() {
 		if (_groupsList == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _groupsList;
@@ -1444,7 +1444,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		crmContactImpl.setPrimaryEmailAddress(getPrimaryEmailAddress());
 		crmContactImpl.setAlternateContact(getAlternateContact());
 		crmContactImpl.setAlternateEmail(getAlternateEmail());
-		crmContactImpl.setIsVip(getIsVip());
+		crmContactImpl.setIsVip(isIsVip());
 		crmContactImpl.setFacebookId(getFacebookId());
 		crmContactImpl.setTwitterHandle(getTwitterHandle());
 		crmContactImpl.setLinkedInUrl(getLinkedInUrl());
@@ -1828,7 +1828,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 			crmContactCacheModel.alternateEmail = null;
 		}
 
-		crmContactCacheModel.isVip = getIsVip();
+		crmContactCacheModel.isVip = isIsVip();
 
 		crmContactCacheModel.facebookId = getFacebookId();
 
@@ -1970,7 +1970,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		sb.append(", alternateEmail=");
 		sb.append(getAlternateEmail());
 		sb.append(", isVip=");
-		sb.append(getIsVip());
+		sb.append(isIsVip());
 		sb.append(", facebookId=");
 		sb.append(getFacebookId());
 		sb.append(", twitterHandle=");
@@ -2150,7 +2150,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>isVip</column-name><column-value><![CDATA[");
-		sb.append(getIsVip());
+		sb.append(isIsVip());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>facebookId</column-name><column-value><![CDATA[");
@@ -2192,7 +2192,7 @@ public class CrmContactModelImpl extends BaseModelImpl<CrmContact>
 
 	private static final ClassLoader _classLoader = CrmContact.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmContact.class
+			CrmContact.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

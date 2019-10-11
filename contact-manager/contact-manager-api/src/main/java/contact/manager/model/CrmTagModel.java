@@ -262,19 +262,19 @@ public interface CrmTagModel extends BaseModel<CrmTag>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmTag crmTag);
+	public int compareTo(CrmTag crmTag);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmTag> toCacheModel();
+	public CacheModel<CrmTag> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmTag toEscapedModel();
+	public CrmTag toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmTag toUnescapedModel();
+	public CrmTag toUnescapedModel();
 
 	@Override
 	public String toString();

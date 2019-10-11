@@ -37,6 +37,7 @@ public class ContactManagerAppPortletKeys {
 	public static final String ROLE_LR_ADMINISTRATOR = "Administrator";
 	public static final String ROLE_ADMINISTRATOR = "Contact Administrator";
 	public static final String ROLE_MANAGER = "Contact Manager";
+	public static final String ROLE_EDITOR = "Contact Editor";
 	public static final String ROLE_USER = "Contact User";
 	public static final String ROLE_NOTES_CONTRIBUTOR = "Contact Notes Contributor";
 	public static final String ROLE_OUTREACH_CONTRIBUTOR = "Contact Outreach Contributor";
@@ -81,6 +82,13 @@ public class ContactManagerAppPortletKeys {
 	public static final String ACTION_UPDATE = "update";
 	public static final String ACTION_DELETE = "delete";
 	public static final String ACTION_REMOVED = "removed permanently";
+	public static final String ACTION_NOTE_ADD = "add note";
+	public static final String ACTION_NOTE_UPDATE = "update note";
+	public static final String ACTION_NOTE_DELETE = "delete note";
+	
+	public static final String[] CSV_COLUMMN_NAMES = { "First Name", "Last Name", "Prefix", "Organization", "Job Title", "Address 1",
+			"Address 2","City", "ZIP", "County", "Phone","Cell","EmailAddress", "Groups", "Tags", "Modified" };
+	public static final String CSV_SEPARATOR = ",";
 
 	public static final Map<String, String> LOCALITIES_MAP;
 	static {

@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmMuni;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -115,7 +116,7 @@ public class CrmMuniUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid(java.lang.String uuid) {
+	public static List<CrmMuni> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -131,8 +132,7 @@ public class CrmMuniUtil {
 	* @param end the upper bound of the range of CRM Munis (not inclusive)
 	* @return the range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmMuni> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -149,8 +149,8 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmMuni> orderByComparator) {
+	public static List<CrmMuni> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -168,9 +168,8 @@ public class CrmMuniUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmMuni> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<CrmMuni> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -184,7 +183,7 @@ public class CrmMuniUtil {
 	* @return the first matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByUuid_First(java.lang.String uuid,
+	public static CrmMuni findByUuid_First(String uuid,
 		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -197,7 +196,7 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUuid_First(java.lang.String uuid,
+	public static CrmMuni fetchByUuid_First(String uuid,
 		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -210,7 +209,7 @@ public class CrmMuniUtil {
 	* @return the last matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByUuid_Last(java.lang.String uuid,
+	public static CrmMuni findByUuid_Last(String uuid,
 		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -223,7 +222,7 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUuid_Last(java.lang.String uuid,
+	public static CrmMuni fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -237,8 +236,8 @@ public class CrmMuniUtil {
 	* @return the previous, current, and next CRM Muni
 	* @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	*/
-	public static CrmMuni[] findByUuid_PrevAndNext(long crmMuniId,
-		java.lang.String uuid, OrderByComparator<CrmMuni> orderByComparator)
+	public static CrmMuni[] findByUuid_PrevAndNext(long crmMuniId, String uuid,
+		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmMuniId, uuid, orderByComparator);
@@ -249,7 +248,7 @@ public class CrmMuniUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -259,7 +258,7 @@ public class CrmMuniUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Munis
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -271,7 +270,7 @@ public class CrmMuniUtil {
 	* @return the matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmMuni findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -283,7 +282,7 @@ public class CrmMuniUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmMuni fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -295,7 +294,7 @@ public class CrmMuniUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmMuni fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -307,7 +306,7 @@ public class CrmMuniUtil {
 	* @param groupId the group ID
 	* @return the CRM Muni that was removed
 	*/
-	public static CrmMuni removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmMuni removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -319,7 +318,7 @@ public class CrmMuniUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Munis
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -330,8 +329,7 @@ public class CrmMuniUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmMuni> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -348,8 +346,8 @@ public class CrmMuniUtil {
 	* @param end the upper bound of the range of CRM Munis (not inclusive)
 	* @return the range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmMuni> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -367,9 +365,8 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator) {
+	public static List<CrmMuni> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -389,9 +386,9 @@ public class CrmMuniUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator, boolean retrieveFromCache) {
+	public static List<CrmMuni> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -406,8 +403,8 @@ public class CrmMuniUtil {
 	* @return the first matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmMuni> orderByComparator)
+	public static CrmMuni findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -421,8 +418,8 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmMuni> orderByComparator) {
+	public static CrmMuni fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -436,8 +433,8 @@ public class CrmMuniUtil {
 	* @return the last matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmMuni> orderByComparator)
+	public static CrmMuni findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -451,8 +448,8 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmMuni> orderByComparator) {
+	public static CrmMuni fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -468,7 +465,7 @@ public class CrmMuniUtil {
 	* @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	*/
 	public static CrmMuni[] findByUuid_C_PrevAndNext(long crmMuniId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence()
@@ -482,7 +479,7 @@ public class CrmMuniUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -493,7 +490,7 @@ public class CrmMuniUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Munis
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -503,7 +500,7 @@ public class CrmMuniUtil {
 	* @param zipCode the zip code
 	* @return the matching CRM Munis
 	*/
-	public static List<CrmMuni> findByZipCode(java.lang.String zipCode) {
+	public static List<CrmMuni> findByZipCode(String zipCode) {
 		return getPersistence().findByZipCode(zipCode);
 	}
 
@@ -519,8 +516,7 @@ public class CrmMuniUtil {
 	* @param end the upper bound of the range of CRM Munis (not inclusive)
 	* @return the range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
-		int start, int end) {
+	public static List<CrmMuni> findByZipCode(String zipCode, int start, int end) {
 		return getPersistence().findByZipCode(zipCode, start, end);
 	}
 
@@ -537,8 +533,8 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmMuni> orderByComparator) {
+	public static List<CrmMuni> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator);
 	}
@@ -557,8 +553,8 @@ public class CrmMuniUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Munis
 	*/
-	public static List<CrmMuni> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmMuni> orderByComparator,
+	public static List<CrmMuni> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmMuni> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator,
@@ -573,7 +569,7 @@ public class CrmMuniUtil {
 	* @return the first matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByZipCode_First(java.lang.String zipCode,
+	public static CrmMuni findByZipCode_First(String zipCode,
 		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
@@ -586,7 +582,7 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByZipCode_First(java.lang.String zipCode,
+	public static CrmMuni fetchByZipCode_First(String zipCode,
 		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
 	}
@@ -599,7 +595,7 @@ public class CrmMuniUtil {
 	* @return the last matching CRM Muni
 	* @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni findByZipCode_Last(java.lang.String zipCode,
+	public static CrmMuni findByZipCode_Last(String zipCode,
 		OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
@@ -612,7 +608,7 @@ public class CrmMuniUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	*/
-	public static CrmMuni fetchByZipCode_Last(java.lang.String zipCode,
+	public static CrmMuni fetchByZipCode_Last(String zipCode,
 		OrderByComparator<CrmMuni> orderByComparator) {
 		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
 	}
@@ -627,7 +623,7 @@ public class CrmMuniUtil {
 	* @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	*/
 	public static CrmMuni[] findByZipCode_PrevAndNext(long crmMuniId,
-		java.lang.String zipCode, OrderByComparator<CrmMuni> orderByComparator)
+		String zipCode, OrderByComparator<CrmMuni> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmMuniException {
 		return getPersistence()
 				   .findByZipCode_PrevAndNext(crmMuniId, zipCode,
@@ -639,7 +635,7 @@ public class CrmMuniUtil {
 	*
 	* @param zipCode the zip code
 	*/
-	public static void removeByZipCode(java.lang.String zipCode) {
+	public static void removeByZipCode(String zipCode) {
 		getPersistence().removeByZipCode(zipCode);
 	}
 
@@ -649,7 +645,7 @@ public class CrmMuniUtil {
 	* @param zipCode the zip code
 	* @return the number of matching CRM Munis
 	*/
-	public static int countByZipCode(java.lang.String zipCode) {
+	public static int countByZipCode(String zipCode) {
 		return getPersistence().countByZipCode(zipCode);
 	}
 
@@ -800,7 +796,7 @@ public class CrmMuniUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -808,6 +804,16 @@ public class CrmMuniUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmMuniPersistence, CrmMuniPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmMuniPersistence.class);
+	private static ServiceTracker<CrmMuniPersistence, CrmMuniPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmMuniPersistence.class);
+
+		ServiceTracker<CrmMuniPersistence, CrmMuniPersistence> serviceTracker = new ServiceTracker<CrmMuniPersistence, CrmMuniPersistence>(bundle.getBundleContext(),
+				CrmMuniPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

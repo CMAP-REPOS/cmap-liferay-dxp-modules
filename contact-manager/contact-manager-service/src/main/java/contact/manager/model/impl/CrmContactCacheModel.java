@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmContact;
 
@@ -170,7 +169,7 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		CrmContactImpl crmContactImpl = new CrmContactImpl();
 
 		if (uuid == null) {
-			crmContactImpl.setUuid(StringPool.BLANK);
+			crmContactImpl.setUuid("");
 		}
 		else {
 			crmContactImpl.setUuid(uuid);
@@ -183,7 +182,7 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		crmContactImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmContactImpl.setUserName(StringPool.BLANK);
+			crmContactImpl.setUserName("");
 		}
 		else {
 			crmContactImpl.setUserName(userName);
@@ -204,196 +203,196 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		}
 
 		if (prefix == null) {
-			crmContactImpl.setPrefix(StringPool.BLANK);
+			crmContactImpl.setPrefix("");
 		}
 		else {
 			crmContactImpl.setPrefix(prefix);
 		}
 
 		if (salutation == null) {
-			crmContactImpl.setSalutation(StringPool.BLANK);
+			crmContactImpl.setSalutation("");
 		}
 		else {
 			crmContactImpl.setSalutation(salutation);
 		}
 
 		if (firstName == null) {
-			crmContactImpl.setFirstName(StringPool.BLANK);
+			crmContactImpl.setFirstName("");
 		}
 		else {
 			crmContactImpl.setFirstName(firstName);
 		}
 
 		if (middleName == null) {
-			crmContactImpl.setMiddleName(StringPool.BLANK);
+			crmContactImpl.setMiddleName("");
 		}
 		else {
 			crmContactImpl.setMiddleName(middleName);
 		}
 
 		if (lastName == null) {
-			crmContactImpl.setLastName(StringPool.BLANK);
+			crmContactImpl.setLastName("");
 		}
 		else {
 			crmContactImpl.setLastName(lastName);
 		}
 
 		if (organization == null) {
-			crmContactImpl.setOrganization(StringPool.BLANK);
+			crmContactImpl.setOrganization("");
 		}
 		else {
 			crmContactImpl.setOrganization(organization);
 		}
 
 		if (jobTitle == null) {
-			crmContactImpl.setJobTitle(StringPool.BLANK);
+			crmContactImpl.setJobTitle("");
 		}
 		else {
 			crmContactImpl.setJobTitle(jobTitle);
 		}
 
 		if (primaryAddress1 == null) {
-			crmContactImpl.setPrimaryAddress1(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddress1("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddress1(primaryAddress1);
 		}
 
 		if (primaryAddress2 == null) {
-			crmContactImpl.setPrimaryAddress2(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddress2("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddress2(primaryAddress2);
 		}
 
 		if (primaryAddressCity == null) {
-			crmContactImpl.setPrimaryAddressCity(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddressCity("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddressCity(primaryAddressCity);
 		}
 
 		if (primaryAddressState == null) {
-			crmContactImpl.setPrimaryAddressState(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddressState("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddressState(primaryAddressState);
 		}
 
 		if (primaryAddressZip == null) {
-			crmContactImpl.setPrimaryAddressZip(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddressZip("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddressZip(primaryAddressZip);
 		}
 
 		if (primaryAddressCounty == null) {
-			crmContactImpl.setPrimaryAddressCounty(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddressCounty("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddressCounty(primaryAddressCounty);
 		}
 
 		if (primaryAddressCountry == null) {
-			crmContactImpl.setPrimaryAddressCountry(StringPool.BLANK);
+			crmContactImpl.setPrimaryAddressCountry("");
 		}
 		else {
 			crmContactImpl.setPrimaryAddressCountry(primaryAddressCountry);
 		}
 
 		if (secondaryAddress1 == null) {
-			crmContactImpl.setSecondaryAddress1(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddress1("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddress1(secondaryAddress1);
 		}
 
 		if (secondaryAddress2 == null) {
-			crmContactImpl.setSecondaryAddress2(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddress2("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddress2(secondaryAddress2);
 		}
 
 		if (secondaryAddressCity == null) {
-			crmContactImpl.setSecondaryAddressCity(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddressCity("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddressCity(secondaryAddressCity);
 		}
 
 		if (secondaryAddressState == null) {
-			crmContactImpl.setSecondaryAddressState(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddressState("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddressState(secondaryAddressState);
 		}
 
 		if (secondaryAddressZip == null) {
-			crmContactImpl.setSecondaryAddressZip(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddressZip("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddressZip(secondaryAddressZip);
 		}
 
 		if (secondaryAddressCounty == null) {
-			crmContactImpl.setSecondaryAddressCounty(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddressCounty("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddressCounty(secondaryAddressCounty);
 		}
 
 		if (secondaryAddressCountry == null) {
-			crmContactImpl.setSecondaryAddressCountry(StringPool.BLANK);
+			crmContactImpl.setSecondaryAddressCountry("");
 		}
 		else {
 			crmContactImpl.setSecondaryAddressCountry(secondaryAddressCountry);
 		}
 
 		if (primaryPhone == null) {
-			crmContactImpl.setPrimaryPhone(StringPool.BLANK);
+			crmContactImpl.setPrimaryPhone("");
 		}
 		else {
 			crmContactImpl.setPrimaryPhone(primaryPhone);
 		}
 
 		if (primaryPhoneExtension == null) {
-			crmContactImpl.setPrimaryPhoneExtension(StringPool.BLANK);
+			crmContactImpl.setPrimaryPhoneExtension("");
 		}
 		else {
 			crmContactImpl.setPrimaryPhoneExtension(primaryPhoneExtension);
 		}
 
 		if (primaryFax == null) {
-			crmContactImpl.setPrimaryFax(StringPool.BLANK);
+			crmContactImpl.setPrimaryFax("");
 		}
 		else {
 			crmContactImpl.setPrimaryFax(primaryFax);
 		}
 
 		if (primaryCell == null) {
-			crmContactImpl.setPrimaryCell(StringPool.BLANK);
+			crmContactImpl.setPrimaryCell("");
 		}
 		else {
 			crmContactImpl.setPrimaryCell(primaryCell);
 		}
 
 		if (primaryEmailAddress == null) {
-			crmContactImpl.setPrimaryEmailAddress(StringPool.BLANK);
+			crmContactImpl.setPrimaryEmailAddress("");
 		}
 		else {
 			crmContactImpl.setPrimaryEmailAddress(primaryEmailAddress);
 		}
 
 		if (alternateContact == null) {
-			crmContactImpl.setAlternateContact(StringPool.BLANK);
+			crmContactImpl.setAlternateContact("");
 		}
 		else {
 			crmContactImpl.setAlternateContact(alternateContact);
 		}
 
 		if (alternateEmail == null) {
-			crmContactImpl.setAlternateEmail(StringPool.BLANK);
+			crmContactImpl.setAlternateEmail("");
 		}
 		else {
 			crmContactImpl.setAlternateEmail(alternateEmail);
@@ -402,35 +401,35 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		crmContactImpl.setIsVip(isVip);
 
 		if (facebookId == null) {
-			crmContactImpl.setFacebookId(StringPool.BLANK);
+			crmContactImpl.setFacebookId("");
 		}
 		else {
 			crmContactImpl.setFacebookId(facebookId);
 		}
 
 		if (twitterHandle == null) {
-			crmContactImpl.setTwitterHandle(StringPool.BLANK);
+			crmContactImpl.setTwitterHandle("");
 		}
 		else {
 			crmContactImpl.setTwitterHandle(twitterHandle);
 		}
 
 		if (linkedInUrl == null) {
-			crmContactImpl.setLinkedInUrl(StringPool.BLANK);
+			crmContactImpl.setLinkedInUrl("");
 		}
 		else {
 			crmContactImpl.setLinkedInUrl(linkedInUrl);
 		}
 
 		if (status == null) {
-			crmContactImpl.setStatus(StringPool.BLANK);
+			crmContactImpl.setStatus("");
 		}
 		else {
 			crmContactImpl.setStatus(status);
 		}
 
 		if (kioskUuid == null) {
-			crmContactImpl.setKioskUuid(StringPool.BLANK);
+			crmContactImpl.setKioskUuid("");
 		}
 		else {
 			crmContactImpl.setKioskUuid(kioskUuid);
@@ -439,14 +438,14 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		crmContactImpl.setImageFileEntryId(imageFileEntryId);
 
 		if (tagsList == null) {
-			crmContactImpl.setTagsList(StringPool.BLANK);
+			crmContactImpl.setTagsList("");
 		}
 		else {
 			crmContactImpl.setTagsList(tagsList);
 		}
 
 		if (groupsList == null) {
-			crmContactImpl.setGroupsList(StringPool.BLANK);
+			crmContactImpl.setGroupsList("");
 		}
 		else {
 			crmContactImpl.setGroupsList(groupsList);
@@ -518,7 +517,7 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -535,7 +534,7 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -545,196 +544,196 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (prefix == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(prefix);
 		}
 
 		if (salutation == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(salutation);
 		}
 
 		if (firstName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(firstName);
 		}
 
 		if (middleName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(middleName);
 		}
 
 		if (lastName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(lastName);
 		}
 
 		if (organization == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(organization);
 		}
 
 		if (jobTitle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(jobTitle);
 		}
 
 		if (primaryAddress1 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddress1);
 		}
 
 		if (primaryAddress2 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddress2);
 		}
 
 		if (primaryAddressCity == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddressCity);
 		}
 
 		if (primaryAddressState == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddressState);
 		}
 
 		if (primaryAddressZip == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddressZip);
 		}
 
 		if (primaryAddressCounty == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddressCounty);
 		}
 
 		if (primaryAddressCountry == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryAddressCountry);
 		}
 
 		if (secondaryAddress1 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddress1);
 		}
 
 		if (secondaryAddress2 == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddress2);
 		}
 
 		if (secondaryAddressCity == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddressCity);
 		}
 
 		if (secondaryAddressState == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddressState);
 		}
 
 		if (secondaryAddressZip == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddressZip);
 		}
 
 		if (secondaryAddressCounty == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddressCounty);
 		}
 
 		if (secondaryAddressCountry == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(secondaryAddressCountry);
 		}
 
 		if (primaryPhone == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryPhone);
 		}
 
 		if (primaryPhoneExtension == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryPhoneExtension);
 		}
 
 		if (primaryFax == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryFax);
 		}
 
 		if (primaryCell == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryCell);
 		}
 
 		if (primaryEmailAddress == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(primaryEmailAddress);
 		}
 
 		if (alternateContact == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(alternateContact);
 		}
 
 		if (alternateEmail == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(alternateEmail);
@@ -743,35 +742,35 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		objectOutput.writeBoolean(isVip);
 
 		if (facebookId == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(facebookId);
 		}
 
 		if (twitterHandle == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(twitterHandle);
 		}
 
 		if (linkedInUrl == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(linkedInUrl);
 		}
 
 		if (status == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(status);
 		}
 
 		if (kioskUuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(kioskUuid);
@@ -780,14 +779,14 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 		objectOutput.writeLong(imageFileEntryId);
 
 		if (tagsList == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(tagsList);
 		}
 
 		if (groupsList == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(groupsList);

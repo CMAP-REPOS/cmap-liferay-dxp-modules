@@ -63,29 +63,6 @@ public interface CrmLTALocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmLTALocalServiceUtil} to access the CRM LTA local service. Add custom service methods to {@link contact.manager.service.impl.CrmLTALocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM LTA to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmLTALocalService extends BaseLocalService,
 	* @param crmLTAId the primary key for the new CRM LTA
 	* @return the new CRM LTA
 	*/
+	@Transactional(enabled = false)
 	public CrmLTA createCrmLTA(long crmLTAId);
 
 	/**
@@ -123,65 +101,14 @@ public interface CrmLTALocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmLTA deleteCrmLTA(long crmLTAId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmLTA fetchCrmLTA(long crmLTAId);
-
 	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmLTA fetchCrmLTAByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
-
-	/**
-	* Returns the CRM LTA with the primary key.
-	*
-	* @param crmLTAId the primary key of the CRM LTA
-	* @return the CRM LTA
-	* @throws PortalException if a CRM LTA with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmLTA getCrmLTA(long crmLTAId) throws PortalException;
-
-	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA
-	* @throws PortalException if a matching CRM LTA could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmLTA getCrmLTAByUuidAndGroupId(java.lang.String uuid, long groupId)
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException;
 
-	/**
-	* Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTA the CRM LTA
-	* @return the CRM LTA that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmLTA updateCrmLTA(CrmLTA crmLTA);
-
-	/**
-	* Returns the number of CRM LTAs.
-	*
-	* @return the number of CRM LTAs
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmLTAsCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -222,7 +149,63 @@ public interface CrmLTALocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmLTA> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmLTA fetchCrmLTA(long crmLTAId);
+
+	/**
+	* Returns the CRM LTA matching the UUID and group.
+	*
+	* @param uuid the CRM LTA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmLTA fetchCrmLTAByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmLTA> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM LTA with the primary key.
+	*
+	* @param crmLTAId the primary key of the CRM LTA
+	* @return the CRM LTA
+	* @throws PortalException if a CRM LTA with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmLTA getCrmLTA(long crmLTAId) throws PortalException;
+
+	/**
+	* Returns the CRM LTA matching the UUID and group.
+	*
+	* @param uuid the CRM LTA's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM LTA
+	* @throws PortalException if a matching CRM LTA could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmLTA getCrmLTAByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM LTAs.
@@ -246,8 +229,7 @@ public interface CrmLTALocalService extends BaseLocalService,
 	* @return the matching CRM LTAs, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmLTA> getCrmLTAsByUuidAndCompanyId(java.lang.String uuid,
-		long companyId);
+	public List<CrmLTA> getCrmLTAsByUuidAndCompanyId(String uuid, long companyId);
 
 	/**
 	* Returns a range of CRM LTAs matching the UUID and company.
@@ -260,25 +242,43 @@ public interface CrmLTALocalService extends BaseLocalService,
 	* @return the range of matching CRM LTAs, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmLTA> getCrmLTAsByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmLTA> getCrmLTAsByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmLTA> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM LTAs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM LTAs
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmLTAsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmLTA the CRM LTA
+	* @return the CRM LTA that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmLTA updateCrmLTA(CrmLTA crmLTA);
 }

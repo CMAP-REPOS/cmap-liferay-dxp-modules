@@ -137,138 +137,13 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmMuni.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmMuni.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmMuni.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmMuni.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmMuni> toCacheModel() {
-		return _crmMuni.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmMuni toEscapedModel() {
-		return new CrmMuniWrapper(_crmMuni.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmMuni toUnescapedModel() {
-		return new CrmMuniWrapper(_crmMuni.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmMuni crmMuni) {
-		return _crmMuni.compareTo(crmMuni);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmMuni.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmMuni.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmMuniWrapper((CrmMuni)_crmMuni.clone());
 	}
 
-	/**
-	* Returns the name of this CRM Muni.
-	*
-	* @return the name of this CRM Muni
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmMuni.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM Muni.
-	*
-	* @return the user name of this CRM Muni
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmMuni.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Muni.
-	*
-	* @return the user uuid of this CRM Muni
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmMuni.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Muni.
-	*
-	* @return the uuid of this CRM Muni
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmMuni.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM Muni.
-	*
-	* @return the zip code of this CRM Muni
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmMuni.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmMuni.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmMuni.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Muni.
-	*
-	* @return the create date of this CRM Muni
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmMuni.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Muni.
-	*
-	* @return the modified date of this CRM Muni
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmMuni.getModifiedDate();
+	public int compareTo(CrmMuni crmMuni) {
+		return _crmMuni.compareTo(crmMuni);
 	}
 
 	/**
@@ -282,6 +157,16 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
+	* Returns the create date of this CRM Muni.
+	*
+	* @return the create date of this CRM Muni
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmMuni.getCreateDate();
+	}
+
+	/**
 	* Returns the crm muni ID of this CRM Muni.
 	*
 	* @return the crm muni ID of this CRM Muni
@@ -289,6 +174,11 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public long getCrmMuniId() {
 		return _crmMuni.getCrmMuniId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmMuni.getExpandoBridge();
 	}
 
 	/**
@@ -302,6 +192,26 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
+	* Returns the modified date of this CRM Muni.
+	*
+	* @return the modified date of this CRM Muni
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmMuni.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM Muni.
+	*
+	* @return the name of this CRM Muni
+	*/
+	@Override
+	public String getName() {
+		return _crmMuni.getName();
+	}
+
+	/**
 	* Returns the primary key of this CRM Muni.
 	*
 	* @return the primary key of this CRM Muni
@@ -309,6 +219,11 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmMuni.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmMuni.getPrimaryKeyObj();
 	}
 
 	/**
@@ -319,6 +234,66 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public long getUserId() {
 		return _crmMuni.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Muni.
+	*
+	* @return the user name of this CRM Muni
+	*/
+	@Override
+	public String getUserName() {
+		return _crmMuni.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Muni.
+	*
+	* @return the user uuid of this CRM Muni
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmMuni.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Muni.
+	*
+	* @return the uuid of this CRM Muni
+	*/
+	@Override
+	public String getUuid() {
+		return _crmMuni.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM Muni.
+	*
+	* @return the zip code of this CRM Muni
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmMuni.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmMuni.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmMuni.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmMuni.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmMuni.isNew();
 	}
 
 	@Override
@@ -362,14 +337,14 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmMuni.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmMuni.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmMuni.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -403,7 +378,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	* @param name the name of this CRM Muni
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmMuni.setName(name);
 	}
 
@@ -443,7 +418,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	* @param userName the user name of this CRM Muni
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmMuni.setUserName(userName);
 	}
 
@@ -453,7 +428,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	* @param userUuid the user uuid of this CRM Muni
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmMuni.setUserUuid(userUuid);
 	}
 
@@ -463,7 +438,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	* @param uuid the uuid of this CRM Muni
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmMuni.setUuid(uuid);
 	}
 
@@ -473,8 +448,33 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	* @param zipCode the zip code of this CRM Muni
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmMuni.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmMuni> toCacheModel() {
+		return _crmMuni.toCacheModel();
+	}
+
+	@Override
+	public CrmMuni toEscapedModel() {
+		return new CrmMuniWrapper(_crmMuni.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmMuni.toString();
+	}
+
+	@Override
+	public CrmMuni toUnescapedModel() {
+		return new CrmMuniWrapper(_crmMuni.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmMuni.toXmlString();
 	}
 
 	@Override

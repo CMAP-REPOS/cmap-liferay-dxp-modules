@@ -9,6 +9,19 @@
 
 	if (crmGroupId > 0) {
 		crmGroup = CrmGroupLocalServiceUtil.getCrmGroup(crmGroupId);
+		/*System.out.println("=======We in details=======");
+		
+		System.out.println("######  Group (HOW) ->" + crmGroup  + "######");
+		System.out.println("=======Group Info ->" + crmGroup);
+		System.out.println("=======Group Count ->" + CrmGroupLocalServiceUtil.getCrmContactsCount(crmGroupId));*/
+		
+		List<CrmContact> contactList = CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId);
+		
+		/*for(CrmContact crmContact:contactList){
+			System.out.println("=======Group Contact Info ->" + crmContact);
+			System.out.println("=======Group Contact Group ->" + CrmGroupLocalServiceUtil.getCrmContactCrmGroups(crmContact.getCrmContactId()));
+		}*/
+		
 	}
 
 	String redirect = ParamUtil.getString(request, "redirect");
@@ -20,7 +33,6 @@
 	iteratorURL.setParameter("crmGroupId", String.valueOf(crmGroupId));
 
 	renderResponse.setTitle((crmGroup != null) ? ("Details for " + crmGroup.getName()) : "New Group");
-
 	
 %>
 
@@ -46,10 +58,18 @@
 				iteratorURL="<%=iteratorURL%>"
 				emptyResultsMessage="No contacts found"
 				total="<%=Math.toIntExact(crmGroup.getCrmContactsCount())%>" var="crmGroupsSearchContainer">
+				<% 
+				
+					
+				
+				%>
 				<liferay-ui:search-container-results results="<%=CrmGroupLocalServiceUtil.getCrmContacts(crmGroupId, crmGroupsSearchContainer.getStart(), crmGroupsSearchContainer.getEnd())%>" />
 				
 				<liferay-ui:search-container-row
 					className="contact.manager.model.CrmContact" modelVar="crmContact">
+					<%
+					
+					%>
 					<liferay-ui:search-container-column-jsp
 						path="/groups/view_contact_actions.jsp" name="Actions" />
 					<liferay-ui:search-container-column-text property="firstName"

@@ -69,6 +69,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("name", getName());
 		attributes.put("crmContactsCount", getCrmContactsCount());
+		attributes.put("status", getStatus());
 
 		return attributes;
 	}
@@ -134,131 +135,22 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		if (crmContactsCount != null) {
 			setCrmContactsCount(crmContactsCount);
 		}
+
+		String status = (String)attributes.get("status");
+
+		if (status != null) {
+			setStatus(status);
+		}
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmGroup.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmGroup.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmGroup.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmGroup.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmGroup> toCacheModel() {
-		return _crmGroup.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmGroup toEscapedModel() {
-		return new CrmGroupWrapper(_crmGroup.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmGroup toUnescapedModel() {
-		return new CrmGroupWrapper(_crmGroup.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmGroup crmGroup) {
-		return _crmGroup.compareTo(crmGroup);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmGroup.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmGroup.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmGroupWrapper((CrmGroup)_crmGroup.clone());
 	}
 
-	/**
-	* Returns the name of this CRM Group.
-	*
-	* @return the name of this CRM Group
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmGroup.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM Group.
-	*
-	* @return the user name of this CRM Group
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmGroup.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM Group.
-	*
-	* @return the user uuid of this CRM Group
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmGroup.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM Group.
-	*
-	* @return the uuid of this CRM Group
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmGroup.getUuid();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmGroup.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmGroup.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM Group.
-	*
-	* @return the create date of this CRM Group
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmGroup.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM Group.
-	*
-	* @return the modified date of this CRM Group
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmGroup.getModifiedDate();
+	public int compareTo(CrmGroup crmGroup) {
+		return _crmGroup.compareTo(crmGroup);
 	}
 
 	/**
@@ -269,6 +161,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public long getCompanyId() {
 		return _crmGroup.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this CRM Group.
+	*
+	* @return the create date of this CRM Group
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmGroup.getCreateDate();
 	}
 
 	/**
@@ -291,6 +193,11 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		return _crmGroup.getCrmGroupId();
 	}
 
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmGroup.getExpandoBridge();
+	}
+
 	/**
 	* Returns the group ID of this CRM Group.
 	*
@@ -299,6 +206,26 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public long getGroupId() {
 		return _crmGroup.getGroupId();
+	}
+
+	/**
+	* Returns the modified date of this CRM Group.
+	*
+	* @return the modified date of this CRM Group
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmGroup.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM Group.
+	*
+	* @return the name of this CRM Group
+	*/
+	@Override
+	public String getName() {
+		return _crmGroup.getName();
 	}
 
 	/**
@@ -311,6 +238,21 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 		return _crmGroup.getPrimaryKey();
 	}
 
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmGroup.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the status of this CRM Group.
+	*
+	* @return the status of this CRM Group
+	*/
+	@Override
+	public String getStatus() {
+		return _crmGroup.getStatus();
+	}
+
 	/**
 	* Returns the user ID of this CRM Group.
 	*
@@ -319,6 +261,56 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	@Override
 	public long getUserId() {
 		return _crmGroup.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM Group.
+	*
+	* @return the user name of this CRM Group
+	*/
+	@Override
+	public String getUserName() {
+		return _crmGroup.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM Group.
+	*
+	* @return the user uuid of this CRM Group
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmGroup.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM Group.
+	*
+	* @return the uuid of this CRM Group
+	*/
+	@Override
+	public String getUuid() {
+		return _crmGroup.getUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmGroup.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmGroup.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmGroup.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmGroup.isNew();
 	}
 
 	@Override
@@ -372,14 +364,14 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmGroup.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmGroup.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmGroup.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -413,7 +405,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	* @param name the name of this CRM Group
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmGroup.setName(name);
 	}
 
@@ -438,6 +430,16 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	}
 
 	/**
+	* Sets the status of this CRM Group.
+	*
+	* @param status the status of this CRM Group
+	*/
+	@Override
+	public void setStatus(String status) {
+		_crmGroup.setStatus(status);
+	}
+
+	/**
 	* Sets the user ID of this CRM Group.
 	*
 	* @param userId the user ID of this CRM Group
@@ -453,7 +455,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	* @param userName the user name of this CRM Group
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmGroup.setUserName(userName);
 	}
 
@@ -463,7 +465,7 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	* @param userUuid the user uuid of this CRM Group
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmGroup.setUserUuid(userUuid);
 	}
 
@@ -473,8 +475,33 @@ public class CrmGroupWrapper implements CrmGroup, ModelWrapper<CrmGroup> {
 	* @param uuid the uuid of this CRM Group
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmGroup.setUuid(uuid);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmGroup> toCacheModel() {
+		return _crmGroup.toCacheModel();
+	}
+
+	@Override
+	public CrmGroup toEscapedModel() {
+		return new CrmGroupWrapper(_crmGroup.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmGroup.toString();
+	}
+
+	@Override
+	public CrmGroup toUnescapedModel() {
+		return new CrmGroupWrapper(_crmGroup.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmGroup.toXmlString();
 	}
 
 	@Override

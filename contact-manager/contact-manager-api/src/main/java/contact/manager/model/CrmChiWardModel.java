@@ -277,19 +277,19 @@ public interface CrmChiWardModel extends BaseModel<CrmChiWard>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmChiWard crmChiWard);
+	public int compareTo(CrmChiWard crmChiWard);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmChiWard> toCacheModel();
+	public CacheModel<CrmChiWard> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmChiWard toEscapedModel();
+	public CrmChiWard toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmChiWard toUnescapedModel();
+	public CrmChiWard toUnescapedModel();
 
 	@Override
 	public String toString();

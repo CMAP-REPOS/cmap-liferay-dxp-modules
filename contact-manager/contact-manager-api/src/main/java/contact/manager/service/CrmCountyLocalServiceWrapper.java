@@ -33,44 +33,6 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 		_crmCountyLocalService = crmCountyLocalService;
 	}
 
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return _crmCountyLocalService.getActionableDynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return _crmCountyLocalService.dynamicQuery();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _crmCountyLocalService.getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return _crmCountyLocalService.getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmCountyLocalService.deletePersistedModel(persistedModel);
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmCountyLocalService.getPersistedModel(primaryKeyObj);
-	}
-
 	/**
 	* Adds the CRM County to the database. Also notifies the appropriate model listeners.
 	*
@@ -119,83 +81,19 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 		return _crmCountyLocalService.deleteCrmCounty(crmCountyId);
 	}
 
-	@Override
-	public contact.manager.model.CrmCounty fetchCrmCounty(long crmCountyId) {
-		return _crmCountyLocalService.fetchCrmCounty(crmCountyId);
-	}
-
 	/**
-	* Returns the CRM County matching the UUID and group.
-	*
-	* @param uuid the CRM County's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County, or <code>null</code> if a matching CRM County could not be found
+	* @throws PortalException
 	*/
 	@Override
-	public contact.manager.model.CrmCounty fetchCrmCountyByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return _crmCountyLocalService.fetchCrmCountyByUuidAndGroupId(uuid,
-			groupId);
-	}
-
-	/**
-	* Returns the CRM County with the primary key.
-	*
-	* @param crmCountyId the primary key of the CRM County
-	* @return the CRM County
-	* @throws PortalException if a CRM County with the primary key could not be found
-	*/
-	@Override
-	public contact.manager.model.CrmCounty getCrmCounty(long crmCountyId)
+	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmCountyLocalService.getCrmCounty(crmCountyId);
+		return _crmCountyLocalService.deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM County matching the UUID and group.
-	*
-	* @param uuid the CRM County's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM County
-	* @throws PortalException if a matching CRM County could not be found
-	*/
 	@Override
-	public contact.manager.model.CrmCounty getCrmCountyByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return _crmCountyLocalService.getCrmCountyByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM County in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmCounty the CRM County
-	* @return the CRM County that was updated
-	*/
-	@Override
-	public contact.manager.model.CrmCounty updateCrmCounty(
-		contact.manager.model.CrmCounty crmCounty) {
-		return _crmCountyLocalService.updateCrmCounty(crmCounty);
-	}
-
-	/**
-	* Returns the number of CRM Counties.
-	*
-	* @return the number of CRM Counties
-	*/
-	@Override
-	public int getCrmCountiesCount() {
-		return _crmCountyLocalService.getCrmCountiesCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	@Override
-	public java.lang.String getOSGiServiceIdentifier() {
-		return _crmCountyLocalService.getOSGiServiceIdentifier();
+	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return _crmCountyLocalService.dynamicQuery();
 	}
 
 	/**
@@ -251,10 +149,60 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 			orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return _crmCountyLocalService.dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	@Override
+	public long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return _crmCountyLocalService.dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	@Override
+	public contact.manager.model.CrmCounty fetchCrmCounty(long crmCountyId) {
+		return _crmCountyLocalService.fetchCrmCounty(crmCountyId);
+	}
+
+	/**
+	* Returns the CRM County matching the UUID and group.
+	*
+	* @param uuid the CRM County's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County, or <code>null</code> if a matching CRM County could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmCounty fetchCrmCountyByUuidAndGroupId(
+		String uuid, long groupId) {
+		return _crmCountyLocalService.fetchCrmCountyByUuidAndGroupId(uuid,
+			groupId);
+	}
+
 	@Override
 	public java.util.List<contact.manager.model.CrmCounty> findByZipCode(
-		java.lang.String zipCode) {
+		String zipCode) {
 		return _crmCountyLocalService.findByZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return _crmCountyLocalService.getActionableDynamicQuery();
 	}
 
 	/**
@@ -283,7 +231,7 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 	*/
 	@Override
 	public java.util.List<contact.manager.model.CrmCounty> getCrmCountiesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return _crmCountyLocalService.getCrmCountiesByUuidAndCompanyId(uuid,
 			companyId);
 	}
@@ -300,36 +248,88 @@ public class CrmCountyLocalServiceWrapper implements CrmCountyLocalService,
 	*/
 	@Override
 	public java.util.List<contact.manager.model.CrmCounty> getCrmCountiesByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmCounty> orderByComparator) {
 		return _crmCountyLocalService.getCrmCountiesByUuidAndCompanyId(uuid,
 			companyId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Counties.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Counties
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return _crmCountyLocalService.dynamicQueryCount(dynamicQuery);
+	public int getCrmCountiesCount() {
+		return _crmCountyLocalService.getCrmCountiesCount();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the CRM County with the primary key.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @param crmCountyId the primary key of the CRM County
+	* @return the CRM County
+	* @throws PortalException if a CRM County with the primary key could not be found
 	*/
 	@Override
-	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return _crmCountyLocalService.dynamicQueryCount(dynamicQuery, projection);
+	public contact.manager.model.CrmCounty getCrmCounty(long crmCountyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmCountyLocalService.getCrmCounty(crmCountyId);
+	}
+
+	/**
+	* Returns the CRM County matching the UUID and group.
+	*
+	* @param uuid the CRM County's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM County
+	* @throws PortalException if a matching CRM County could not be found
+	*/
+	@Override
+	public contact.manager.model.CrmCounty getCrmCountyByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmCountyLocalService.getCrmCountyByUuidAndGroupId(uuid, groupId);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return _crmCountyLocalService.getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return _crmCountyLocalService.getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public String getOSGiServiceIdentifier() {
+		return _crmCountyLocalService.getOSGiServiceIdentifier();
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return _crmCountyLocalService.getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM County in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmCounty the CRM County
+	* @return the CRM County that was updated
+	*/
+	@Override
+	public contact.manager.model.CrmCounty updateCrmCounty(
+		contact.manager.model.CrmCounty crmCounty) {
+		return _crmCountyLocalService.updateCrmCounty(crmCounty);
 	}
 
 	@Override

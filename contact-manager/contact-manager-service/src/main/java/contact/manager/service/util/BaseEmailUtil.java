@@ -22,8 +22,8 @@ public abstract class BaseEmailUtil {
 			_log.trace(">> sendEmail");
 		}
 		
-		InternetAddress fromAddress = new InternetAddress(from);
-		InternetAddress toAddress = new InternetAddress(to);
+		InternetAddress fromAddress = null != from ? new InternetAddress(from) : null;
+		InternetAddress toAddress = null != to ? new InternetAddress(to) : null;
 		
 		InternetAddress ccAddressArray[] = null;
 		

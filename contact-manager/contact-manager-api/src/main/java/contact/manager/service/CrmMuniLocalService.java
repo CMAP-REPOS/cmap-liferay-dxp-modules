@@ -63,29 +63,6 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmMuniLocalServiceUtil} to access the CRM Muni local service. Add custom service methods to {@link contact.manager.service.impl.CrmMuniLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM Muni to the database. Also notifies the appropriate model listeners.
@@ -102,6 +79,7 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	* @param crmMuniId the primary key for the new CRM Muni
 	* @return the new CRM Muni
 	*/
+	@Transactional(enabled = false)
 	public CrmMuni createCrmMuni(long crmMuniId);
 
 	/**
@@ -123,65 +101,14 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmMuni deleteCrmMuni(long crmMuniId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmMuni fetchCrmMuni(long crmMuniId);
-
 	/**
-	* Returns the CRM Muni matching the UUID and group.
-	*
-	* @param uuid the CRM Muni's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmMuni fetchCrmMuniByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Returns the CRM Muni with the primary key.
-	*
-	* @param crmMuniId the primary key of the CRM Muni
-	* @return the CRM Muni
-	* @throws PortalException if a CRM Muni with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmMuni getCrmMuni(long crmMuniId) throws PortalException;
-
-	/**
-	* Returns the CRM Muni matching the UUID and group.
-	*
-	* @param uuid the CRM Muni's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Muni
-	* @throws PortalException if a matching CRM Muni could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmMuni getCrmMuniByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM Muni in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmMuni the CRM Muni
-	* @return the CRM Muni that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmMuni updateCrmMuni(CrmMuni crmMuni);
-
-	/**
-	* Returns the number of CRM Munis.
-	*
-	* @return the number of CRM Munis
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmMunisCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -222,7 +149,63 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
-	public List<CrmMuni> findByZipCode(java.lang.String zipCode);
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmMuni fetchCrmMuni(long crmMuniId);
+
+	/**
+	* Returns the CRM Muni matching the UUID and group.
+	*
+	* @param uuid the CRM Muni's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmMuni fetchCrmMuniByUuidAndGroupId(String uuid, long groupId);
+
+	public List<CrmMuni> findByZipCode(String zipCode);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM Muni with the primary key.
+	*
+	* @param crmMuniId the primary key of the CRM Muni
+	* @return the CRM Muni
+	* @throws PortalException if a CRM Muni with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmMuni getCrmMuni(long crmMuniId) throws PortalException;
+
+	/**
+	* Returns the CRM Muni matching the UUID and group.
+	*
+	* @param uuid the CRM Muni's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Muni
+	* @throws PortalException if a matching CRM Muni could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmMuni getCrmMuniByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM Munis.
@@ -246,7 +229,7 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	* @return the matching CRM Munis, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmMuni> getCrmMunisByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmMuni> getCrmMunisByUuidAndCompanyId(String uuid,
 		long companyId);
 
 	/**
@@ -260,25 +243,43 @@ public interface CrmMuniLocalService extends BaseLocalService,
 	* @return the range of matching CRM Munis, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmMuni> getCrmMunisByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmMuni> getCrmMunisByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmMuni> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Munis.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Munis
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmMunisCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM Muni in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmMuni the CRM Muni
+	* @return the CRM Muni that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmMuni updateCrmMuni(CrmMuni crmMuni);
 }

@@ -292,19 +292,19 @@ public interface CrmUsRepModel extends BaseModel<CrmUsRep>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmUsRep crmUsRep);
+	public int compareTo(CrmUsRep crmUsRep);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmUsRep> toCacheModel();
+	public CacheModel<CrmUsRep> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmUsRep toEscapedModel();
+	public CrmUsRep toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmUsRep toUnescapedModel();
+	public CrmUsRep toUnescapedModel();
 
 	@Override
 	public String toString();

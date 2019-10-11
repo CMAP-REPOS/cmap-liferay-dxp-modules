@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmContact;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -117,7 +118,7 @@ public class CrmContactUtil {
 	* @param uuid the uuid
 	* @return the matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid(java.lang.String uuid) {
+	public static List<CrmContact> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -133,8 +134,7 @@ public class CrmContactUtil {
 	* @param end the upper bound of the range of CRM Contacts (not inclusive)
 	* @return the range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmContact> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -151,8 +151,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmContact> orderByComparator) {
+	public static List<CrmContact> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -170,8 +170,8 @@ public class CrmContactUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmContact> orderByComparator,
+	public static List<CrmContact> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
@@ -186,7 +186,7 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByUuid_First(java.lang.String uuid,
+	public static CrmContact findByUuid_First(String uuid,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -199,7 +199,7 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUuid_First(java.lang.String uuid,
+	public static CrmContact fetchByUuid_First(String uuid,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -212,7 +212,7 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByUuid_Last(java.lang.String uuid,
+	public static CrmContact findByUuid_Last(String uuid,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -225,7 +225,7 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUuid_Last(java.lang.String uuid,
+	public static CrmContact fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -240,7 +240,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByUuid_PrevAndNext(long crmContactId,
-		java.lang.String uuid, OrderByComparator<CrmContact> orderByComparator)
+		String uuid, OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmContactId, uuid, orderByComparator);
@@ -251,7 +251,7 @@ public class CrmContactUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -261,7 +261,7 @@ public class CrmContactUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -273,7 +273,7 @@ public class CrmContactUtil {
 	* @return the matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmContact findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -285,7 +285,7 @@ public class CrmContactUtil {
 	* @param groupId the group ID
 	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmContact fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -297,7 +297,7 @@ public class CrmContactUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmContact fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -309,7 +309,7 @@ public class CrmContactUtil {
 	* @param groupId the group ID
 	* @return the CRM Contact that was removed
 	*/
-	public static CrmContact removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmContact removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -321,7 +321,7 @@ public class CrmContactUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -332,8 +332,7 @@ public class CrmContactUtil {
 	* @param companyId the company ID
 	* @return the matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmContact> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -350,8 +349,8 @@ public class CrmContactUtil {
 	* @param end the upper bound of the range of CRM Contacts (not inclusive)
 	* @return the range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmContact> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -369,9 +368,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmContact> orderByComparator) {
+	public static List<CrmContact> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -391,9 +389,8 @@ public class CrmContactUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmContact> orderByComparator,
+	public static List<CrmContact> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
@@ -409,8 +406,8 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmContact> orderByComparator)
+	public static CrmContact findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -424,8 +421,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmContact> orderByComparator) {
+	public static CrmContact fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -439,8 +436,8 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmContact> orderByComparator)
+	public static CrmContact findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -454,8 +451,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmContact> orderByComparator) {
+	public static CrmContact fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -471,7 +468,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByUuid_C_PrevAndNext(long crmContactId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -485,7 +482,7 @@ public class CrmContactUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -496,7 +493,7 @@ public class CrmContactUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -507,7 +504,7 @@ public class CrmContactUtil {
 	* @return the matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress) {
+		String primaryEmailAddress) {
 		return getPersistence().findByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
@@ -524,7 +521,7 @@ public class CrmContactUtil {
 	* @return the range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress, int start, int end) {
+		String primaryEmailAddress, int start, int end) {
 		return getPersistence()
 				   .findByPrimaryEmailAddress(primaryEmailAddress, start, end);
 	}
@@ -543,7 +540,7 @@ public class CrmContactUtil {
 	* @return the ordered range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress, int start, int end,
+		String primaryEmailAddress, int start, int end,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .findByPrimaryEmailAddress(primaryEmailAddress, start, end,
@@ -565,7 +562,7 @@ public class CrmContactUtil {
 	* @return the ordered range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress, int start, int end,
+		String primaryEmailAddress, int start, int end,
 		OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
@@ -582,7 +579,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
 	public static CrmContact findByPrimaryEmailAddress_First(
-		java.lang.String primaryEmailAddress,
+		String primaryEmailAddress,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -598,7 +595,7 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
 	public static CrmContact fetchByPrimaryEmailAddress_First(
-		java.lang.String primaryEmailAddress,
+		String primaryEmailAddress,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByPrimaryEmailAddress_First(primaryEmailAddress,
@@ -614,7 +611,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
 	public static CrmContact findByPrimaryEmailAddress_Last(
-		java.lang.String primaryEmailAddress,
+		String primaryEmailAddress,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -630,7 +627,7 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
 	public static CrmContact fetchByPrimaryEmailAddress_Last(
-		java.lang.String primaryEmailAddress,
+		String primaryEmailAddress,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByPrimaryEmailAddress_Last(primaryEmailAddress,
@@ -647,7 +644,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByPrimaryEmailAddress_PrevAndNext(
-		long crmContactId, java.lang.String primaryEmailAddress,
+		long crmContactId, String primaryEmailAddress,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -660,8 +657,7 @@ public class CrmContactUtil {
 	*
 	* @param primaryEmailAddress the primary email address
 	*/
-	public static void removeByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress) {
+	public static void removeByPrimaryEmailAddress(String primaryEmailAddress) {
 		getPersistence().removeByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
@@ -671,8 +667,7 @@ public class CrmContactUtil {
 	* @param primaryEmailAddress the primary email address
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByPrimaryEmailAddress(
-		java.lang.String primaryEmailAddress) {
+	public static int countByPrimaryEmailAddress(String primaryEmailAddress) {
 		return getPersistence().countByPrimaryEmailAddress(primaryEmailAddress);
 	}
 
@@ -682,7 +677,7 @@ public class CrmContactUtil {
 	* @param status the status
 	* @return the matching CRM Contacts
 	*/
-	public static List<CrmContact> findByStatus(java.lang.String status) {
+	public static List<CrmContact> findByStatus(String status) {
 		return getPersistence().findByStatus(status);
 	}
 
@@ -698,8 +693,8 @@ public class CrmContactUtil {
 	* @param end the upper bound of the range of CRM Contacts (not inclusive)
 	* @return the range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByStatus(java.lang.String status,
-		int start, int end) {
+	public static List<CrmContact> findByStatus(String status, int start,
+		int end) {
 		return getPersistence().findByStatus(status, start, end);
 	}
 
@@ -716,8 +711,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByStatus(java.lang.String status,
-		int start, int end, OrderByComparator<CrmContact> orderByComparator) {
+	public static List<CrmContact> findByStatus(String status, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .findByStatus(status, start, end, orderByComparator);
 	}
@@ -736,8 +731,8 @@ public class CrmContactUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByStatus(java.lang.String status,
-		int start, int end, OrderByComparator<CrmContact> orderByComparator,
+	public static List<CrmContact> findByStatus(String status, int start,
+		int end, OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByStatus(status, start, end, orderByComparator,
@@ -752,7 +747,7 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByStatus_First(java.lang.String status,
+	public static CrmContact findByStatus_First(String status,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().findByStatus_First(status, orderByComparator);
@@ -765,7 +760,7 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByStatus_First(java.lang.String status,
+	public static CrmContact fetchByStatus_First(String status,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence().fetchByStatus_First(status, orderByComparator);
 	}
@@ -778,7 +773,7 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByStatus_Last(java.lang.String status,
+	public static CrmContact findByStatus_Last(String status,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence().findByStatus_Last(status, orderByComparator);
@@ -791,7 +786,7 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByStatus_Last(java.lang.String status,
+	public static CrmContact fetchByStatus_Last(String status,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence().fetchByStatus_Last(status, orderByComparator);
 	}
@@ -806,7 +801,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByStatus_PrevAndNext(long crmContactId,
-		java.lang.String status, OrderByComparator<CrmContact> orderByComparator)
+		String status, OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
 				   .findByStatus_PrevAndNext(crmContactId, status,
@@ -818,7 +813,7 @@ public class CrmContactUtil {
 	*
 	* @param status the status
 	*/
-	public static void removeByStatus(java.lang.String status) {
+	public static void removeByStatus(String status) {
 		getPersistence().removeByStatus(status);
 	}
 
@@ -828,7 +823,7 @@ public class CrmContactUtil {
 	* @param status the status
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByStatus(java.lang.String status) {
+	public static int countByStatus(String status) {
 		return getPersistence().countByStatus(status);
 	}
 
@@ -840,7 +835,7 @@ public class CrmContactUtil {
 	* @return the matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status) {
+		String primaryEmailAddress, String status) {
 		return getPersistence()
 				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status);
@@ -860,8 +855,7 @@ public class CrmContactUtil {
 	* @return the range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status,
-		int start, int end) {
+		String primaryEmailAddress, String status, int start, int end) {
 		return getPersistence()
 				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status, start, end);
@@ -882,8 +876,8 @@ public class CrmContactUtil {
 	* @return the ordered range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status,
-		int start, int end, OrderByComparator<CrmContact> orderByComparator) {
+		String primaryEmailAddress, String status, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status, start, end, orderByComparator);
@@ -905,8 +899,8 @@ public class CrmContactUtil {
 	* @return the ordered range of matching CRM Contacts
 	*/
 	public static List<CrmContact> findByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status,
-		int start, int end, OrderByComparator<CrmContact> orderByComparator,
+		String primaryEmailAddress, String status, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByPrimaryEmailAddressAndStatus(primaryEmailAddress,
@@ -923,7 +917,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
 	public static CrmContact findByPrimaryEmailAddressAndStatus_First(
-		java.lang.String primaryEmailAddress, java.lang.String status,
+		String primaryEmailAddress, String status,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -940,7 +934,7 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
 	public static CrmContact fetchByPrimaryEmailAddressAndStatus_First(
-		java.lang.String primaryEmailAddress, java.lang.String status,
+		String primaryEmailAddress, String status,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByPrimaryEmailAddressAndStatus_First(primaryEmailAddress,
@@ -957,7 +951,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
 	public static CrmContact findByPrimaryEmailAddressAndStatus_Last(
-		java.lang.String primaryEmailAddress, java.lang.String status,
+		String primaryEmailAddress, String status,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -974,7 +968,7 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
 	public static CrmContact fetchByPrimaryEmailAddressAndStatus_Last(
-		java.lang.String primaryEmailAddress, java.lang.String status,
+		String primaryEmailAddress, String status,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByPrimaryEmailAddressAndStatus_Last(primaryEmailAddress,
@@ -992,8 +986,8 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByPrimaryEmailAddressAndStatus_PrevAndNext(
-		long crmContactId, java.lang.String primaryEmailAddress,
-		java.lang.String status, OrderByComparator<CrmContact> orderByComparator)
+		long crmContactId, String primaryEmailAddress, String status,
+		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
 				   .findByPrimaryEmailAddressAndStatus_PrevAndNext(crmContactId,
@@ -1007,7 +1001,7 @@ public class CrmContactUtil {
 	* @param status the status
 	*/
 	public static void removeByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status) {
+		String primaryEmailAddress, String status) {
 		getPersistence()
 			.removeByPrimaryEmailAddressAndStatus(primaryEmailAddress, status);
 	}
@@ -1020,7 +1014,7 @@ public class CrmContactUtil {
 	* @return the number of matching CRM Contacts
 	*/
 	public static int countByPrimaryEmailAddressAndStatus(
-		java.lang.String primaryEmailAddress, java.lang.String status) {
+		String primaryEmailAddress, String status) {
 		return getPersistence()
 				   .countByPrimaryEmailAddressAndStatus(primaryEmailAddress,
 			status);
@@ -1034,8 +1028,8 @@ public class CrmContactUtil {
 	* @param lastName the last name
 	* @return the matching CRM Contacts
 	*/
-	public static List<CrmContact> findByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName) {
+	public static List<CrmContact> findByName(String firstName,
+		String middleName, String lastName) {
 		return getPersistence().findByName(firstName, middleName, lastName);
 	}
 
@@ -1053,9 +1047,8 @@ public class CrmContactUtil {
 	* @param end the upper bound of the range of CRM Contacts (not inclusive)
 	* @return the range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int start,
-		int end) {
+	public static List<CrmContact> findByName(String firstName,
+		String middleName, String lastName, int start, int end) {
 		return getPersistence()
 				   .findByName(firstName, middleName, lastName, start, end);
 	}
@@ -1075,9 +1068,9 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int start,
-		int end, OrderByComparator<CrmContact> orderByComparator) {
+	public static List<CrmContact> findByName(String firstName,
+		String middleName, String lastName, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .findByName(firstName, middleName, lastName, start, end,
 			orderByComparator);
@@ -1099,9 +1092,9 @@ public class CrmContactUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Contacts
 	*/
-	public static List<CrmContact> findByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName, int start,
-		int end, OrderByComparator<CrmContact> orderByComparator,
+	public static List<CrmContact> findByName(String firstName,
+		String middleName, String lastName, int start, int end,
+		OrderByComparator<CrmContact> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByName(firstName, middleName, lastName, start, end,
@@ -1118,8 +1111,8 @@ public class CrmContactUtil {
 	* @return the first matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByName_First(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
+	public static CrmContact findByName_First(String firstName,
+		String middleName, String lastName,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -1136,8 +1129,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByName_First(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
+	public static CrmContact fetchByName_First(String firstName,
+		String middleName, String lastName,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByName_First(firstName, middleName, lastName,
@@ -1154,8 +1147,8 @@ public class CrmContactUtil {
 	* @return the last matching CRM Contact
 	* @throws NoSuchCrmContactException if a matching CRM Contact could not be found
 	*/
-	public static CrmContact findByName_Last(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
+	public static CrmContact findByName_Last(String firstName,
+		String middleName, String lastName,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -1172,8 +1165,8 @@ public class CrmContactUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Contact, or <code>null</code> if a matching CRM Contact could not be found
 	*/
-	public static CrmContact fetchByName_Last(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName,
+	public static CrmContact fetchByName_Last(String firstName,
+		String middleName, String lastName,
 		OrderByComparator<CrmContact> orderByComparator) {
 		return getPersistence()
 				   .fetchByName_Last(firstName, middleName, lastName,
@@ -1192,8 +1185,7 @@ public class CrmContactUtil {
 	* @throws NoSuchCrmContactException if a CRM Contact with the primary key could not be found
 	*/
 	public static CrmContact[] findByName_PrevAndNext(long crmContactId,
-		java.lang.String firstName, java.lang.String middleName,
-		java.lang.String lastName,
+		String firstName, String middleName, String lastName,
 		OrderByComparator<CrmContact> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmContactException {
 		return getPersistence()
@@ -1208,8 +1200,8 @@ public class CrmContactUtil {
 	* @param middleName the middle name
 	* @param lastName the last name
 	*/
-	public static void removeByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName) {
+	public static void removeByName(String firstName, String middleName,
+		String lastName) {
 		getPersistence().removeByName(firstName, middleName, lastName);
 	}
 
@@ -1221,8 +1213,8 @@ public class CrmContactUtil {
 	* @param lastName the last name
 	* @return the number of matching CRM Contacts
 	*/
-	public static int countByName(java.lang.String firstName,
-		java.lang.String middleName, java.lang.String lastName) {
+	public static int countByName(String firstName, String middleName,
+		String lastName) {
 		return getPersistence().countByName(firstName, middleName, lastName);
 	}
 
@@ -1987,7 +1979,7 @@ public class CrmContactUtil {
 		getPersistence().setCrmTags(pk, crmTags);
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -1995,6 +1987,17 @@ public class CrmContactUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmContactPersistence, CrmContactPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmContactPersistence.class);
+	private static ServiceTracker<CrmContactPersistence, CrmContactPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmContactPersistence.class);
+
+		ServiceTracker<CrmContactPersistence, CrmContactPersistence> serviceTracker =
+			new ServiceTracker<CrmContactPersistence, CrmContactPersistence>(bundle.getBundleContext(),
+				CrmContactPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

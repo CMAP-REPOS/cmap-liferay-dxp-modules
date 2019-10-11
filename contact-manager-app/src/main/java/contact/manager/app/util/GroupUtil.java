@@ -1,9 +1,6 @@
 package contact.manager.app.util;
 
-import com.liferay.portal.kernel.dao.orm.Disjunction;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.*;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -38,6 +35,7 @@ public class GroupUtil {
 		crmGroup.setUserId(userId);
 		crmGroup.setUserName(userName);
 		crmGroup.setModifiedDate(serviceContext.getModifiedDate(now));
+		crmGroup.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 
 		if (isNew) {
 			long companyId = serviceContext.getCompanyId();
@@ -97,11 +95,21 @@ public class GroupUtil {
 		
 		DynamicQuery crmContactQuery = CrmContactLocalServiceUtil.dynamicQuery();
 
-		Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-		disjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + name + "%"));
-		disjunction.add(RestrictionsFactoryUtil.like("middleName", "%" + name + "%"));
-		disjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + name + "%"));
-		crmContactQuery.add(disjunction);
+		String[] searchArr = name.split(" ");
+
+		if(searchArr.length == 2)
+		{
+			Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+			conjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + searchArr[0] + "%"));
+			conjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + searchArr[1] + "%"));
+			crmContactQuery.add(conjunction);
+		}else {
+			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+			disjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + name + "%"));
+			disjunction.add(RestrictionsFactoryUtil.like("middleName", "%" + name + "%"));
+			disjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + name + "%"));
+			crmContactQuery.add(disjunction);
+		}
 
 		List<CrmContact> matchingContacts = CrmContactLocalServiceUtil.dynamicQuery(crmContactQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -134,11 +142,20 @@ public class GroupUtil {
 		if (crmGroup != null) {
 			DynamicQuery crmContactQuery = CrmContactLocalServiceUtil.dynamicQuery();
 
-			Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
-			disjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + name + "%"));
-			disjunction.add(RestrictionsFactoryUtil.like("middleName", "%" + name + "%"));
-			disjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + name + "%"));
-			crmContactQuery.add(disjunction);
+			String[] searchArr = name.split(" ");
+
+			if(searchArr.length == 2){
+				Conjunction conjunction = RestrictionsFactoryUtil.conjunction();
+				conjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + searchArr[0] + "%"));
+				conjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + searchArr[1] + "%"));
+				crmContactQuery.add(conjunction);
+			} else {
+				Disjunction disjunction = RestrictionsFactoryUtil.disjunction();
+				disjunction.add(RestrictionsFactoryUtil.like("firstName", "%" + name + "%"));
+				disjunction.add(RestrictionsFactoryUtil.like("middleName", "%" + name + "%"));
+				disjunction.add(RestrictionsFactoryUtil.like("lastName", "%" + name + "%"));
+				crmContactQuery.add(disjunction);
+			}
 
 			List<CrmContact> matchingContacts = CrmContactLocalServiceUtil.dynamicQuery(crmContactQuery, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
@@ -168,11 +185,12 @@ public class GroupUtil {
 		List<CrmGroup> matchingGroups = CrmGroupLocalServiceUtil.dynamicQuery(crmGroupQuery , QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 		
 		for (CrmGroup crmGroup : matchingGroups) {
-
-			JSONObject obj = JSONFactoryUtil.createJSONObject();
-			obj.put("crmGroupId", crmGroup.getCrmGroupId());
-			obj.put("crmGroupName", crmGroup.getName());
-			jsonArray.put(obj);
+			if(!crmGroup.getStatus().equals(ConstantContactKeys.CC_STATUS_REMOVED)){
+				JSONObject obj = JSONFactoryUtil.createJSONObject();
+				obj.put("crmGroupId", crmGroup.getCrmGroupId());
+				obj.put("crmGroupName", crmGroup.getName());
+				jsonArray.put(obj);
+			}
 		}
 
 		result = jsonArray.toString();

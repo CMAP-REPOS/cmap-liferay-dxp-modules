@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation=" http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<beans
+	default-destroy-method="destroy"
+	default-init-method="afterPropertiesSet"
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+>
 	<bean class="contact.manager.service.impl.CrmCCALocalServiceImpl" id="contact.manager.service.CrmCCALocalService" />
 	<bean class="contact.manager.service.persistence.impl.CrmCCAPersistenceImpl" id="contact.manager.service.persistence.CrmCCAPersistence" parent="basePersistence" />
 	<bean class="contact.manager.service.impl.CrmChiWardLocalServiceImpl" id="contact.manager.service.CrmChiWardLocalService" />

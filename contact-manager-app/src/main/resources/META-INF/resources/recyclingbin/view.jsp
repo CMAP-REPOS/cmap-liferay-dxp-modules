@@ -24,7 +24,7 @@
 
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
-
+<%@ page import="contact.manager.app.viewmodel.CrmContactViewModelModifiedDateComparator" %>
 
 <%
 
@@ -80,32 +80,103 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 	  parameterAdd = "modified";
 }
 
+	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
+	
+	String firstName = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.FIRST_NAME);
+	String lastName = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.LAST_NAME);
+	String organization = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.ORGANIZATION);
+	String jobTitle = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.JOB_TITLE);
+	String primaryAddress1 = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_1);
+	String primaryAddress2 = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_ADDRESS_2);
+	String primaryAddressCity = ParamUtil.getString(request, "orderByCol",
+			CrmContactFieldKeys.PRIMARY_ADDRESS_CITY);
+	String primaryAddressZip = ParamUtil.getString(request, "orderByCol",
+			CrmContactFieldKeys.PRIMARY_ADDRESS_ZIP);
+	String primaryAddressCounty = ParamUtil.getString(request, "orderByCol",
+			CrmContactFieldKeys.PRIMARY_ADDRESS_COUNTY);
+	String primaryPhone = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_PHONE);
+	String primaryCell = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.PRIMARY_CELL);
+	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol",
+			CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS);
+	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
+	String createDate = ParamUtil.getString(request, "orderByCol",CrmContactFieldKeys.CREATE_DATE);
+
 	SearchContext searchContext = SearchContextFactory.getInstance(request);
 	
 	String orderByCol = ParamUtil.getString(request, "orderByCol");
-    String orderByType = ParamUtil.getString(request, "orderByType");
-    if (!"".equals(orderByCol) && !"".equals(orderByType)){
-    	try{
-    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
-    		 searchContext.setSorts(sorts);
-    	 } catch(Exception e){
-    		 e.printStackTrace();
-    	 }
-    }
+	String orderByType = ParamUtil.getString(request, "orderByType", "desc");
 	
-	BooleanQuery query = new BooleanQueryImpl();
-	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
-	query.add(termQuery, BooleanClauseOccur.MUST);
-	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_REMOVED);
-	query.add(termQuery, BooleanClauseOccur.MUST);
+	boolean orderByAsc = false;
+
+	if (orderByType.equals("asc")) {
+		orderByAsc = true;
+	}
+
+	OrderByComparator orderByComparator = null;
+
+	if (firstName.equals(CrmContactFieldKeys.FIRST_NAME)) {
+		orderByComparator = new CrmContactFirstNameComparator(orderByAsc);
+	}
+
+	if (lastName.equals(CrmContactFieldKeys.LAST_NAME)) {
+		orderByComparator = new CrmContactLastNameComparator(orderByAsc);
+	}
+
+	if (organization.equals(CrmContactFieldKeys.ORGANIZATION)) {
+		orderByComparator = new CrmContactOrganizationComparator(orderByAsc);
+	}
+
+	if (jobTitle.equals(CrmContactFieldKeys.JOB_TITLE)) {
+		orderByComparator = new CrmContactJobTitleComparator(orderByAsc);
+	}
+
+	if (primaryAddress1.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_1)) {
+		orderByComparator = new CrmContactPrimaryAddress1Comparator(orderByAsc);
+	}
+
+	if (primaryAddress2.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_2)) {
+		orderByComparator = new CrmContactPrimaryAddress2Comparator(orderByAsc);
+	}
+
+	if (primaryAddressCity.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_CITY)) {
+		orderByComparator = new CrmContactPrimaryAddressCityComparator(orderByAsc);
+	}
+
+	if (primaryAddressZip.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_ZIP)) {
+		orderByComparator = new CrmContactPrimaryAddressZipComparator(orderByAsc);
+	}
+
+	if (primaryAddressCounty.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_COUNTY)) {
+		orderByComparator = new CrmContactPrimaryAddressCountyComparator(orderByAsc);
+	}
+
+	if (primaryPhone.equals(CrmContactFieldKeys.PRIMARY_PHONE)) {
+		orderByComparator = new CrmContactPrimaryPhoneComparator(orderByAsc);
+	}
+
+	if (primaryCell.equals(CrmContactFieldKeys.PRIMARY_CELL)) {
+		orderByComparator = new CrmContactPrimaryCellComparator(orderByAsc);
+	}
+
+	if (primaryEmailAddress.equals(CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS)) {
+		orderByComparator = new CrmContactPrimaryEmailAddressComparator(orderByAsc);
+	}
+
+	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
+		orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
+	}
 	
-	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
+	List<CrmContact> crmContactsTemp = CrmContactLocalServiceUtil.getCrmContactsByStatus(
+			ConstantContactKeys.CC_STATUS_REMOVED, 0,
+			CrmContactLocalServiceUtil.getCrmContactsCount(), orderByComparator);
+	
+	int crmContactRemovedCount = crmContactsTemp.size();
+	
 %>
 
 <portlet:actionURL name="deleteContact" var="deleteContactURL">
-						<portlet:param name="crmContactId"
-							value="XXXXX" />
-					</portlet:actionURL>
+	<portlet:param name="crmContactId" value="XXXXX" />
+</portlet:actionURL>
 
 <div class="container-fluid">
 
@@ -115,38 +186,29 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 		<aui:col md="12">
 			<liferay-ui:search-container delta="20" deltaConfigurable="true"
 				emptyResultsMessage="No contacts found"
-				total="<%=hits.getLength()%>"
+				total="<%=crmContactRemovedCount%>"
 				var="crmContactsSearchContainer">
 
 				<liferay-ui:search-container-results>
-					<%
-					List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
-
-					for (int i = crmContactsSearchContainer.getStart(); i<hits.getDocs().length && i<crmContactsSearchContainer.getEnd(); i++) {
-						Document doc = hits.doc(i);
-						
-					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
-					    CrmContact entry = null;
-					    try {
-					    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
-					    } catch (PortalException pe) {
-					    	pe.printStackTrace();
-					    } catch (SystemException se) {
-					    	se.printStackTrace();
-					    }
-						if (entry != null){
-							 viewModels.add(new CrmContactViewModel(entry));
-						}
+				<%
+					List<CrmContact> crmContacts = CrmContactLocalServiceUtil.getCrmContactsByStatus(
+							ConstantContactKeys.CC_STATUS_REMOVED, crmContactsSearchContainer.getStart(),
+							crmContactsSearchContainer.getEnd(), orderByComparator);
+	
+					for (CrmContact crmContact : crmContacts) {
+						viewModels.add(new CrmContactViewModel(crmContact));
 					}
-
-						pageContext.setAttribute("results", viewModels);
-					%>
+					
+					pageContext.setAttribute("results", viewModels);
+				%>
 				</liferay-ui:search-container-results>
 				
 				<liferay-ui:search-container-row
 					className="contact.manager.app.viewmodel.CrmContactViewModel"
 					modelVar="viewModel">
-					 
+					<%
+						String mailtoPrimaryEmailBin = "mailto:" + viewModel.getPrimaryEmailAddress();
+					%>
 					<liferay-ui:search-container-column-button name="Delete" href="<%="window.location.href='"+deleteContactURL.toString().replaceAll("XXXXX", Long.toString(viewModel.getCrmContactId()))+"'"%>"/> 
 					
 					<liferay-ui:search-container-column-text property="firstName"
@@ -178,7 +240,7 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 					<liferay-ui:search-container-column-text property="primaryCell"
 						name="Cell" orderable="true" orderableProperty="primaryCell" />
 					<liferay-ui:search-container-column-text
-						property="primaryEmailAddress" name="Email Address"
+						property="primaryEmailAddress" href="<%=mailtoPrimaryEmailBin%>" name="Email Address"
 						orderable="true" orderableProperty="primaryEmailAddress" />
 					<liferay-ui:search-container-column-text property="groupsList"
 						name="Groups" />

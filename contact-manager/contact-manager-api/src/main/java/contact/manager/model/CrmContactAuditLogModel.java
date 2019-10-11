@@ -320,20 +320,19 @@ public interface CrmContactAuditLogModel extends BaseModel<CrmContactAuditLog>,
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		contact.manager.model.CrmContactAuditLog crmContactAuditLog);
+	public int compareTo(CrmContactAuditLog crmContactAuditLog);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmContactAuditLog> toCacheModel();
+	public CacheModel<CrmContactAuditLog> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmContactAuditLog toEscapedModel();
+	public CrmContactAuditLog toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmContactAuditLog toUnescapedModel();
+	public CrmContactAuditLog toUnescapedModel();
 
 	@Override
 	public String toString();

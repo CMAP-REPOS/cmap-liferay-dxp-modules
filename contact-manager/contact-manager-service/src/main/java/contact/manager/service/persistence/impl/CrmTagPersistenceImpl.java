@@ -36,10 +36,9 @@ import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -56,6 +55,7 @@ import contact.manager.service.persistence.CrmTagPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -234,7 +234,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -322,7 +322,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmTagException(msg.toString());
 	}
@@ -371,7 +371,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmTagException(msg.toString());
 	}
@@ -462,7 +462,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -598,7 +598,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -677,7 +677,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -740,7 +740,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -780,13 +780,6 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 					result = crmTag;
 
 					cacheResult(crmTag);
-
-					if ((crmTag.getUuid() == null) ||
-							!crmTag.getUuid().equals(uuid) ||
-							(crmTag.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmTag);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -847,7 +840,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1043,7 +1036,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1139,7 +1132,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmTagException(msg.toString());
 	}
@@ -1194,7 +1187,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmTagException(msg.toString());
 	}
@@ -1288,7 +1281,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1430,7 +1423,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1484,8 +1477,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		setModelClass(CrmTag.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -1689,8 +1684,6 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 	@Override
 	protected CrmTag removeImpl(CrmTag crmTag) {
-		crmTag = toUnwrappedModel(crmTag);
-
 		crmTagToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(crmTag.getPrimaryKey());
 
 		Session session = null;
@@ -1723,9 +1716,23 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 	@Override
 	public CrmTag updateImpl(CrmTag crmTag) {
-		crmTag = toUnwrappedModel(crmTag);
-
 		boolean isNew = crmTag.isNew();
+
+		if (!(crmTag instanceof CrmTagModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmTag.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmTag);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmTag proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmTag implementation " +
+				crmTag.getClass());
+		}
 
 		CrmTagModelImpl crmTagModelImpl = (CrmTagModelImpl)crmTag;
 
@@ -1851,29 +1858,6 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		crmTag.resetOriginalValues();
 
 		return crmTag;
-	}
-
-	protected CrmTag toUnwrappedModel(CrmTag crmTag) {
-		if (crmTag instanceof CrmTagImpl) {
-			return crmTag;
-		}
-
-		CrmTagImpl crmTagImpl = new CrmTagImpl();
-
-		crmTagImpl.setNew(crmTag.isNew());
-		crmTagImpl.setPrimaryKey(crmTag.getPrimaryKey());
-
-		crmTagImpl.setUuid(crmTag.getUuid());
-		crmTagImpl.setCrmTagId(crmTag.getCrmTagId());
-		crmTagImpl.setGroupId(crmTag.getGroupId());
-		crmTagImpl.setCompanyId(crmTag.getCompanyId());
-		crmTagImpl.setUserId(crmTag.getUserId());
-		crmTagImpl.setUserName(crmTag.getUserName());
-		crmTagImpl.setCreateDate(crmTag.getCreateDate());
-		crmTagImpl.setModifiedDate(crmTag.getModifiedDate());
-		crmTagImpl.setName(crmTag.getName());
-
-		return crmTagImpl;
 	}
 
 	/**
@@ -2025,12 +2009,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

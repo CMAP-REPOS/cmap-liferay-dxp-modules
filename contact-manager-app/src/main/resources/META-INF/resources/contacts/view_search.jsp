@@ -1,3 +1,4 @@
+<%@page import="com.liferay.portal.kernel.service.ServiceContextFactory"%>
 <%@ include file="../init.jsp"%>
 <%@ page import="com.liferay.portal.kernel.dao.search.SearchContainer" %>
 <%@ page import="com.liferay.portal.kernel.exception.PortalException" %>
@@ -25,13 +26,13 @@
 <%@ page import="javax.portlet.PortletURL" %>
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
 
-
 <%
+  List<Integer> crmContactsId = new ArrayList<Integer>();
+
   String keywords = "";
   String[] columns =  new String[1];
 
   String parameterAdd ="";
-  
   
   if (!"".equals(ParamUtil.getString(request, "keywords"))){
 	  keywords = ParamUtil.getString(request, "keywords");
@@ -141,21 +142,28 @@
 
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
+System.out.println("indexer: "+indexer);
+System.out.println("param: "+ParamUtil.getString(request, "indexer"));
 if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	IndexerRegistryUtil.unregister(indexer);
+	System.out.println("go in one: ");
 } else if (indexer == null && "reg".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	IndexerRegistryUtil.register(contactIndexer);
+	System.out.println("go in tow: ");
 }
 
+if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "indexer"))){
+	CrmContactLocalServiceUtil.initCrmContactResourcePermissions(ServiceContextFactory.getInstance(CrmContact.class.getName(), request));
+	System.out.println("go in tree: ");
+}
 
-
-
-    SearchContext searchContext = SearchContextFactory.getInstance(request);
+    SearchContext searchContext = SearchContextFactory.getInstance(request);    
+    
+	String s = keywords.replaceAll("[^a-zA-Z0-9.]", " ");
+	System.out.println("=======String s --->" + s);
 	
-	String s = keywords.replaceAll("[^a-zA-Z0-9]", " ");
-
-    searchContext.setAttribute("paginationType", "more");
+	searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
@@ -166,25 +174,31 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
     		 e.printStackTrace();
     	 }
     }
-    
-    Query q = null;
-    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
-    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
-    	q = qq;
-    } else {
-    	MultiMatchQuery qq = new MultiMatchQuery(s);
-    	qq.addFields(columns);
-    	qq.setAnalyzer("whitespace");
-    	q = qq;
-    }
-    
 	
+	List<String> valueList = new ArrayList<String>(Arrays.asList(s.split(" ")));
 	BooleanQuery query = new BooleanQueryImpl();
-	query.add(q, BooleanClauseOccur.MUST);
+	
+	for(String value:valueList)
+	{
+		Query q = null;
+	    if (columns.length == 1 && "primaryEmailAddress".equals(columns[0])){
+	    	StringQuery qq = new StringQuery("default_field=primaryEmailAddress, query="+keywords);
+	    	q = qq;
+	    } else {
+	    	MultiMatchQuery qq = new MultiMatchQuery(value);
+	    	qq.addFields(columns);
+	    	qq.setAnalyzer("whitespace");
+	    	q = qq;	
+	    }
+	    query.add(q, BooleanClauseOccur.MUST);
+	}
+	
 	TermQueryImpl termQuery = new TermQueryImpl("entryClassName", CrmContact.class.getName());
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
 	query.add(termQuery, BooleanClauseOccur.MUST);
+	
+	System.out.println("=======Query --->" + query);
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 
@@ -202,6 +216,17 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 						Document doc = hits.doc(i);
 						
 					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
+					    CrmContact entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
+
+						if (entry != null){
+							viewModels.add(new CrmContactViewModel(entry));
+						}
+					}
+					
+					for (int i = crmContactsSearchContainer.getStart(); i<hits.getDocs().length; i++) {
+						Document doc = hits.doc(i);
+						
+					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 					    CrmContact entry = null;
 					    try {
 					    	entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
@@ -211,11 +236,11 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 					    	se.printStackTrace();
 					    }
 						if (entry != null){
-							 viewModels.add(new CrmContactViewModel(entry));
+							crmContactsId.add((int)entry.getCrmContactId());
 						}
 					}
 
-						pageContext.setAttribute("results", viewModels);
+					pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>
         
@@ -271,7 +296,36 @@ if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 		<liferay-ui:search-iterator />
 </liferay-ui:search-container>
 
+<%
+	StringBuilder strbul  = new StringBuilder();
+	Iterator<Integer> iter = crmContactsId.iterator();
+	while(iter.hasNext())
+	{
+	    strbul.append(iter.next());
+	   if(iter.hasNext()){
+	    strbul.append(",");
+	   }
+	}
+
+	//System.out.println("=======Id string -> " + strbul.toString() + "=======");
+%>
+
+<portlet:resourceURL  var="exportCSVURL">
+	<portlet:param name="cmd" value="exportSearchCSV"/>
+	<portlet:param name="idString" value="<%= strbul.toString() %>"/>
+</portlet:resourceURL>
+
+<aui:row>
+		<aui:col md="12">
+			<%-- TODO: check role --%>
+			<aui:button onClick="<%= exportCSVURL.toString() %>"
+				value="Export to CSV"></aui:button>
+		</aui:col>
+</aui:row>
+
+
 <script type="text/javascript">
+
 AUI().ready(function(){
 	if (<%=!"".equals(parameterAdd)%>){
 		document.querySelectorAll(".lfr-pagination a").forEach(function(element){

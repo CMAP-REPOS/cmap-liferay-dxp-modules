@@ -16,13 +16,14 @@ package contact.manager.service.persistence;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
-
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import contact.manager.model.CrmUsRep;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -116,7 +117,7 @@ public class CrmUsRepUtil {
 	* @param uuid the uuid
 	* @return the matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid(java.lang.String uuid) {
+	public static List<CrmUsRep> findByUuid(String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -132,8 +133,7 @@ public class CrmUsRepUtil {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid(java.lang.String uuid, int start,
-		int end) {
+	public static List<CrmUsRep> findByUuid(String uuid, int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -150,8 +150,8 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmUsRep> orderByComparator) {
+	public static List<CrmUsRep> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
 	}
 
@@ -169,9 +169,8 @@ public class CrmUsRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid(java.lang.String uuid, int start,
-		int end, OrderByComparator<CrmUsRep> orderByComparator,
-		boolean retrieveFromCache) {
+	public static List<CrmUsRep> findByUuid(String uuid, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator, boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid(uuid, start, end, orderByComparator,
 			retrieveFromCache);
@@ -185,7 +184,7 @@ public class CrmUsRepUtil {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByUuid_First(java.lang.String uuid,
+	public static CrmUsRep findByUuid_First(String uuid,
 		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
@@ -198,7 +197,7 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUuid_First(java.lang.String uuid,
+	public static CrmUsRep fetchByUuid_First(String uuid,
 		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
@@ -211,7 +210,7 @@ public class CrmUsRepUtil {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByUuid_Last(java.lang.String uuid,
+	public static CrmUsRep findByUuid_Last(String uuid,
 		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
@@ -224,7 +223,7 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUuid_Last(java.lang.String uuid,
+	public static CrmUsRep fetchByUuid_Last(String uuid,
 		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
@@ -239,7 +238,7 @@ public class CrmUsRepUtil {
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
 	public static CrmUsRep[] findByUuid_PrevAndNext(long crmUsRepId,
-		java.lang.String uuid, OrderByComparator<CrmUsRep> orderByComparator)
+		String uuid, OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(crmUsRepId, uuid, orderByComparator);
@@ -250,7 +249,7 @@ public class CrmUsRepUtil {
 	*
 	* @param uuid the uuid
 	*/
-	public static void removeByUuid(java.lang.String uuid) {
+	public static void removeByUuid(String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -260,7 +259,7 @@ public class CrmUsRepUtil {
 	* @param uuid the uuid
 	* @return the number of matching CRM US Reps
 	*/
-	public static int countByUuid(java.lang.String uuid) {
+	public static int countByUuid(String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -272,7 +271,7 @@ public class CrmUsRepUtil {
 	* @return the matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmUsRep findByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
@@ -284,7 +283,7 @@ public class CrmUsRepUtil {
 	* @param groupId the group ID
 	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUUID_G(java.lang.String uuid, long groupId) {
+	public static CrmUsRep fetchByUUID_G(String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -296,7 +295,7 @@ public class CrmUsRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUUID_G(java.lang.String uuid, long groupId,
+	public static CrmUsRep fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
@@ -308,7 +307,7 @@ public class CrmUsRepUtil {
 	* @param groupId the group ID
 	* @return the CRM US Rep that was removed
 	*/
-	public static CrmUsRep removeByUUID_G(java.lang.String uuid, long groupId)
+	public static CrmUsRep removeByUUID_G(String uuid, long groupId)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
@@ -320,7 +319,7 @@ public class CrmUsRepUtil {
 	* @param groupId the group ID
 	* @return the number of matching CRM US Reps
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId) {
+	public static int countByUUID_G(String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -331,8 +330,7 @@ public class CrmUsRepUtil {
 	* @param companyId the company ID
 	* @return the matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId) {
+	public static List<CrmUsRep> findByUuid_C(String uuid, long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -349,8 +347,8 @@ public class CrmUsRepUtil {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end) {
+	public static List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -368,9 +366,8 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator) {
+	public static List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
@@ -390,9 +387,9 @@ public class CrmUsRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator, boolean retrieveFromCache) {
+	public static List<CrmUsRep> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<CrmUsRep> orderByComparator,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end,
 			orderByComparator, retrieveFromCache);
@@ -407,8 +404,8 @@ public class CrmUsRepUtil {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmUsRep> orderByComparator)
+	public static CrmUsRep findByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
@@ -422,8 +419,8 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUuid_C_First(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmUsRep> orderByComparator) {
+	public static CrmUsRep fetchByUuid_C_First(String uuid, long companyId,
+		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -437,8 +434,8 @@ public class CrmUsRepUtil {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmUsRep> orderByComparator)
+	public static CrmUsRep findByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
@@ -452,8 +449,8 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId, OrderByComparator<CrmUsRep> orderByComparator) {
+	public static CrmUsRep fetchByUuid_C_Last(String uuid, long companyId,
+		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -469,7 +466,7 @@ public class CrmUsRepUtil {
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
 	public static CrmUsRep[] findByUuid_C_PrevAndNext(long crmUsRepId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence()
@@ -483,7 +480,7 @@ public class CrmUsRepUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
+	public static void removeByUuid_C(String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -494,7 +491,7 @@ public class CrmUsRepUtil {
 	* @param companyId the company ID
 	* @return the number of matching CRM US Reps
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId) {
+	public static int countByUuid_C(String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -504,7 +501,7 @@ public class CrmUsRepUtil {
 	* @param zipCode the zip code
 	* @return the matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByZipCode(java.lang.String zipCode) {
+	public static List<CrmUsRep> findByZipCode(String zipCode) {
 		return getPersistence().findByZipCode(zipCode);
 	}
 
@@ -520,8 +517,8 @@ public class CrmUsRepUtil {
 	* @param end the upper bound of the range of CRM US Reps (not inclusive)
 	* @return the range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end) {
+	public static List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end) {
 		return getPersistence().findByZipCode(zipCode, start, end);
 	}
 
@@ -538,8 +535,8 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmUsRep> orderByComparator) {
+	public static List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator);
 	}
@@ -558,8 +555,8 @@ public class CrmUsRepUtil {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM US Reps
 	*/
-	public static List<CrmUsRep> findByZipCode(java.lang.String zipCode,
-		int start, int end, OrderByComparator<CrmUsRep> orderByComparator,
+	public static List<CrmUsRep> findByZipCode(String zipCode, int start,
+		int end, OrderByComparator<CrmUsRep> orderByComparator,
 		boolean retrieveFromCache) {
 		return getPersistence()
 				   .findByZipCode(zipCode, start, end, orderByComparator,
@@ -574,7 +571,7 @@ public class CrmUsRepUtil {
 	* @return the first matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByZipCode_First(java.lang.String zipCode,
+	public static CrmUsRep findByZipCode_First(String zipCode,
 		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().findByZipCode_First(zipCode, orderByComparator);
@@ -587,7 +584,7 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByZipCode_First(java.lang.String zipCode,
+	public static CrmUsRep fetchByZipCode_First(String zipCode,
 		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence().fetchByZipCode_First(zipCode, orderByComparator);
 	}
@@ -600,7 +597,7 @@ public class CrmUsRepUtil {
 	* @return the last matching CRM US Rep
 	* @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep findByZipCode_Last(java.lang.String zipCode,
+	public static CrmUsRep findByZipCode_Last(String zipCode,
 		OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence().findByZipCode_Last(zipCode, orderByComparator);
@@ -613,7 +610,7 @@ public class CrmUsRepUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	*/
-	public static CrmUsRep fetchByZipCode_Last(java.lang.String zipCode,
+	public static CrmUsRep fetchByZipCode_Last(String zipCode,
 		OrderByComparator<CrmUsRep> orderByComparator) {
 		return getPersistence().fetchByZipCode_Last(zipCode, orderByComparator);
 	}
@@ -628,7 +625,7 @@ public class CrmUsRepUtil {
 	* @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	*/
 	public static CrmUsRep[] findByZipCode_PrevAndNext(long crmUsRepId,
-		java.lang.String zipCode, OrderByComparator<CrmUsRep> orderByComparator)
+		String zipCode, OrderByComparator<CrmUsRep> orderByComparator)
 		throws contact.manager.exception.NoSuchCrmUsRepException {
 		return getPersistence()
 				   .findByZipCode_PrevAndNext(crmUsRepId, zipCode,
@@ -640,7 +637,7 @@ public class CrmUsRepUtil {
 	*
 	* @param zipCode the zip code
 	*/
-	public static void removeByZipCode(java.lang.String zipCode) {
+	public static void removeByZipCode(String zipCode) {
 		getPersistence().removeByZipCode(zipCode);
 	}
 
@@ -650,7 +647,7 @@ public class CrmUsRepUtil {
 	* @param zipCode the zip code
 	* @return the number of matching CRM US Reps
 	*/
-	public static int countByZipCode(java.lang.String zipCode) {
+	public static int countByZipCode(String zipCode) {
 		return getPersistence().countByZipCode(zipCode);
 	}
 
@@ -801,7 +798,7 @@ public class CrmUsRepUtil {
 		return getPersistence().countAll();
 	}
 
-	public static java.util.Set<java.lang.String> getBadColumnNames() {
+	public static java.util.Set<String> getBadColumnNames() {
 		return getPersistence().getBadColumnNames();
 	}
 
@@ -809,6 +806,16 @@ public class CrmUsRepUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmUsRepPersistence, CrmUsRepPersistence> _serviceTracker =
-		ServiceTrackerFactory.open(CrmUsRepPersistence.class);
+	private static ServiceTracker<CrmUsRepPersistence, CrmUsRepPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmUsRepPersistence.class);
+
+		ServiceTracker<CrmUsRepPersistence, CrmUsRepPersistence> serviceTracker = new ServiceTracker<CrmUsRepPersistence, CrmUsRepPersistence>(bundle.getBundleContext(),
+				CrmUsRepPersistence.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

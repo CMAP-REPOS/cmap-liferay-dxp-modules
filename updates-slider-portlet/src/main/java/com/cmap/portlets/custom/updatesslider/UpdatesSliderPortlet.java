@@ -56,7 +56,7 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			long assetCategoryId2 = 0;
 			long assetCategoryId3 = 0;
 			int assetCount = 0;
-			int summaryLength = 0;
+			int summaryLength = 150;
 			
 			List<String> assetCategoryParams = new ArrayList<String>();
 			List<Long> assetCategoryIds = new ArrayList<Long>();
@@ -74,8 +74,8 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 				String assetCountPref = portletPreferences.getValue("assetCount",
 						_updatesSliderConfiguration.assetCount());
 
-				String summaryLengthPref = portletPreferences.getValue("summaryLength",
-						_updatesSliderConfiguration.summaryLength());
+				//String summaryLengthPref = portletPreferences.getValue("summaryLength",
+				//		_updatesSliderConfiguration.summaryLength());
 
 				if (Validator.isDigit(assetCategoryIdPref)) {
 					assetCategoryId = Long.parseLong(assetCategoryIdPref);
@@ -105,9 +105,9 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 					assetCount = Integer.parseInt(assetCountPref);
 				}
 
-				if (Validator.isDigit(summaryLengthPref)) {
-					summaryLength = Integer.parseInt(summaryLengthPref);
-				}
+				//if (Validator.isDigit(summaryLengthPref)) {
+				//	summaryLength = Integer.parseInt(summaryLengthPref);
+				//}
 			}
 
 			long[] anyCategoryIds = new long[assetCategoryIds.size()];
@@ -168,6 +168,7 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			}
 
 			if (summary.length() > summaryLength) {
+				summary.replaceAll("\\s{2,}", " ").trim();
 				summary = summary.substring(0, summaryLength - 3) + "...";
 			}
 

@@ -48,7 +48,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param uuid the uuid
 	* @return the matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid(java.lang.String uuid);
+	public java.util.List<CrmTag> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM Tags where uuid = &#63;.
@@ -62,8 +62,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param end the upper bound of the range of CRM Tags (not inclusive)
 	* @return the range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid(java.lang.String uuid, int start,
-		int end);
+	public java.util.List<CrmTag> findByUuid(String uuid, int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM Tags where uuid = &#63;.
@@ -78,8 +77,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<CrmTag> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -96,8 +94,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid(java.lang.String uuid, int start,
-		int end,
+	public java.util.List<CrmTag> findByUuid(String uuid, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +106,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the first matching CRM Tag
 	* @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	*/
-	public CrmTag findByUuid_First(java.lang.String uuid,
+	public CrmTag findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -120,7 +117,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUuid_First(java.lang.String uuid,
+	public CrmTag fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -131,7 +128,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the last matching CRM Tag
 	* @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	*/
-	public CrmTag findByUuid_Last(java.lang.String uuid,
+	public CrmTag findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -142,7 +139,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUuid_Last(java.lang.String uuid,
+	public CrmTag fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -154,8 +151,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the previous, current, and next CRM Tag
 	* @throws NoSuchCrmTagException if a CRM Tag with the primary key could not be found
 	*/
-	public CrmTag[] findByUuid_PrevAndNext(long crmTagId,
-		java.lang.String uuid,
+	public CrmTag[] findByUuid_PrevAndNext(long crmTagId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -164,7 +160,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM Tags where uuid = &#63;.
@@ -172,7 +168,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param uuid the uuid
 	* @return the number of matching CRM Tags
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM Tag where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmTagException} if it could not be found.
@@ -182,7 +178,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the matching CRM Tag
 	* @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	*/
-	public CrmTag findByUUID_G(java.lang.String uuid, long groupId)
+	public CrmTag findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmTagException;
 
 	/**
@@ -192,7 +188,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param groupId the group ID
 	* @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CrmTag fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM Tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,7 +198,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CrmTag fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -212,7 +208,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param groupId the group ID
 	* @return the CRM Tag that was removed
 	*/
-	public CrmTag removeByUUID_G(java.lang.String uuid, long groupId)
+	public CrmTag removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmTagException;
 
 	/**
@@ -222,7 +218,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param groupId the group ID
 	* @return the number of matching CRM Tags
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM Tags where uuid = &#63; and companyId = &#63;.
@@ -231,8 +227,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param companyId the company ID
 	* @return the matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid_C(java.lang.String uuid,
-		long companyId);
+	public java.util.List<CrmTag> findByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns a range of all the CRM Tags where uuid = &#63; and companyId = &#63;.
@@ -247,8 +242,8 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param end the upper bound of the range of CRM Tags (not inclusive)
 	* @return the range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end);
+	public java.util.List<CrmTag> findByUuid_C(String uuid, long companyId,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM Tags where uuid = &#63; and companyId = &#63;.
@@ -264,8 +259,8 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmTag> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -283,8 +278,8 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM Tags
 	*/
-	public java.util.List<CrmTag> findByUuid_C(java.lang.String uuid,
-		long companyId, int start, int end,
+	public java.util.List<CrmTag> findByUuid_C(String uuid, long companyId,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -297,7 +292,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the first matching CRM Tag
 	* @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	*/
-	public CrmTag findByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmTag findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -309,7 +304,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUuid_C_First(java.lang.String uuid, long companyId,
+	public CrmTag fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -321,7 +316,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the last matching CRM Tag
 	* @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	*/
-	public CrmTag findByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmTag findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -333,7 +328,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	*/
-	public CrmTag fetchByUuid_C_Last(java.lang.String uuid, long companyId,
+	public CrmTag fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator);
 
 	/**
@@ -346,8 +341,8 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @return the previous, current, and next CRM Tag
 	* @throws NoSuchCrmTagException if a CRM Tag with the primary key could not be found
 	*/
-	public CrmTag[] findByUuid_C_PrevAndNext(long crmTagId,
-		java.lang.String uuid, long companyId,
+	public CrmTag[] findByUuid_C_PrevAndNext(long crmTagId, String uuid,
+		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException;
 
@@ -357,7 +352,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM Tags where uuid = &#63; and companyId = &#63;.
@@ -366,7 +361,7 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 	* @param companyId the company ID
 	* @return the number of matching CRM Tags
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Caches the CRM Tag in the entity cache if it is enabled.
@@ -653,5 +648,5 @@ public interface CrmTagPersistence extends BasePersistence<CrmTag> {
 		java.util.List<contact.manager.model.CrmContact> crmContacts);
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

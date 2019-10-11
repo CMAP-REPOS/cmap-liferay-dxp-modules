@@ -144,148 +144,13 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmUsRep.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmUsRep.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmUsRep.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmUsRep.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmUsRep> toCacheModel() {
-		return _crmUsRep.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmUsRep toEscapedModel() {
-		return new CrmUsRepWrapper(_crmUsRep.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmUsRep toUnescapedModel() {
-		return new CrmUsRepWrapper(_crmUsRep.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmUsRep crmUsRep) {
-		return _crmUsRep.compareTo(crmUsRep);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmUsRep.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmUsRep.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmUsRepWrapper((CrmUsRep)_crmUsRep.clone());
 	}
 
-	/**
-	* Returns the name of this CRM US Rep.
-	*
-	* @return the name of this CRM US Rep
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmUsRep.getName();
-	}
-
-	/**
-	* Returns the number of this CRM US Rep.
-	*
-	* @return the number of this CRM US Rep
-	*/
-	@Override
-	public java.lang.String getNumber() {
-		return _crmUsRep.getNumber();
-	}
-
-	/**
-	* Returns the user name of this CRM US Rep.
-	*
-	* @return the user name of this CRM US Rep
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmUsRep.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM US Rep.
-	*
-	* @return the user uuid of this CRM US Rep
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmUsRep.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM US Rep.
-	*
-	* @return the uuid of this CRM US Rep
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmUsRep.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM US Rep.
-	*
-	* @return the zip code of this CRM US Rep
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmUsRep.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmUsRep.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmUsRep.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM US Rep.
-	*
-	* @return the create date of this CRM US Rep
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmUsRep.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM US Rep.
-	*
-	* @return the modified date of this CRM US Rep
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmUsRep.getModifiedDate();
+	public int compareTo(CrmUsRep crmUsRep) {
+		return _crmUsRep.compareTo(crmUsRep);
 	}
 
 	/**
@@ -299,6 +164,16 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	}
 
 	/**
+	* Returns the create date of this CRM US Rep.
+	*
+	* @return the create date of this CRM US Rep
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmUsRep.getCreateDate();
+	}
+
+	/**
 	* Returns the crm us rep ID of this CRM US Rep.
 	*
 	* @return the crm us rep ID of this CRM US Rep
@@ -306,6 +181,11 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	@Override
 	public long getCrmUsRepId() {
 		return _crmUsRep.getCrmUsRepId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmUsRep.getExpandoBridge();
 	}
 
 	/**
@@ -319,6 +199,36 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	}
 
 	/**
+	* Returns the modified date of this CRM US Rep.
+	*
+	* @return the modified date of this CRM US Rep
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmUsRep.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM US Rep.
+	*
+	* @return the name of this CRM US Rep
+	*/
+	@Override
+	public String getName() {
+		return _crmUsRep.getName();
+	}
+
+	/**
+	* Returns the number of this CRM US Rep.
+	*
+	* @return the number of this CRM US Rep
+	*/
+	@Override
+	public String getNumber() {
+		return _crmUsRep.getNumber();
+	}
+
+	/**
 	* Returns the primary key of this CRM US Rep.
 	*
 	* @return the primary key of this CRM US Rep
@@ -326,6 +236,11 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmUsRep.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmUsRep.getPrimaryKeyObj();
 	}
 
 	/**
@@ -336,6 +251,66 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	@Override
 	public long getUserId() {
 		return _crmUsRep.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM US Rep.
+	*
+	* @return the user name of this CRM US Rep
+	*/
+	@Override
+	public String getUserName() {
+		return _crmUsRep.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM US Rep.
+	*
+	* @return the user uuid of this CRM US Rep
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmUsRep.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM US Rep.
+	*
+	* @return the uuid of this CRM US Rep
+	*/
+	@Override
+	public String getUuid() {
+		return _crmUsRep.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM US Rep.
+	*
+	* @return the zip code of this CRM US Rep
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmUsRep.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmUsRep.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmUsRep.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmUsRep.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmUsRep.isNew();
 	}
 
 	@Override
@@ -379,14 +354,14 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmUsRep.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmUsRep.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmUsRep.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -420,7 +395,7 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param name the name of this CRM US Rep
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmUsRep.setName(name);
 	}
 
@@ -435,7 +410,7 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param number the number of this CRM US Rep
 	*/
 	@Override
-	public void setNumber(java.lang.String number) {
+	public void setNumber(String number) {
 		_crmUsRep.setNumber(number);
 	}
 
@@ -470,7 +445,7 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param userName the user name of this CRM US Rep
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmUsRep.setUserName(userName);
 	}
 
@@ -480,7 +455,7 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param userUuid the user uuid of this CRM US Rep
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmUsRep.setUserUuid(userUuid);
 	}
 
@@ -490,7 +465,7 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param uuid the uuid of this CRM US Rep
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmUsRep.setUuid(uuid);
 	}
 
@@ -500,8 +475,33 @@ public class CrmUsRepWrapper implements CrmUsRep, ModelWrapper<CrmUsRep> {
 	* @param zipCode the zip code of this CRM US Rep
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmUsRep.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmUsRep> toCacheModel() {
+		return _crmUsRep.toCacheModel();
+	}
+
+	@Override
+	public CrmUsRep toEscapedModel() {
+		return new CrmUsRepWrapper(_crmUsRep.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmUsRep.toString();
+	}
+
+	@Override
+	public CrmUsRep toUnescapedModel() {
+		return new CrmUsRepWrapper(_crmUsRep.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmUsRep.toXmlString();
 	}
 
 	@Override

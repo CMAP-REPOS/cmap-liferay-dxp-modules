@@ -3,13 +3,23 @@ package contact.manager.app.portlet;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.PortletResponseUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextFactory;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -18,13 +28,19 @@ import javax.portlet.PortletException;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
+import contact.manager.app.constants.ConstantContactKeys;
 import contact.manager.app.constants.ContactManagerAppPortletKeys;
+import contact.manager.app.util.ContactUtil;
 import contact.manager.app.util.GroupUtil;
+import contact.manager.comparator.CrmContactCreateDateComparator;
 import contact.manager.model.CrmContact;
 import contact.manager.model.CrmGroup;
+import contact.manager.service.CrmContactLocalService;
+import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmGroupLocalService;
 import contact.manager.service.CrmGroupLocalServiceUtil;
 
@@ -62,12 +78,14 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)
 			throws IOException, PortletException {
+		
 
 		String command = ParamUtil.getString(resourceRequest, "cmd");
 
 		if (command.equals("getPotentialContacts")) {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String potentialContactsSerialized = GroupUtil.getCrmContactsByName(nameParam);
+			
 
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
@@ -76,10 +94,20 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			String nameParam = ParamUtil.getString(resourceRequest, "name");
 			String groupIdParam = ParamUtil.getString(resourceRequest, "crmGroupId");
 			String potentialContactsSerialized = GroupUtil.getCrmContactsByNameAndCrmGroupId(nameParam, Long.parseLong(groupIdParam));
-
+			
+			
 			PrintWriter writer = resourceResponse.getWriter();
 			writer.write(potentialContactsSerialized);
 			writer.close();
+		}
+		
+		if(command.equals("exportCSV")) {
+			try {
+				exportCSVData(resourceRequest, resourceResponse);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -95,6 +123,13 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
 			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
 			
+			for(long crmContactId:crmContactIds) 
+			{	
+				CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);	
+				crmContact = ContactUtil.updateCrmContactGroups(crmContact);
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+			}
+			
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 
 		} catch (Exception e) {
@@ -106,13 +141,39 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
+			
+			ArrayList<Long> crmOriginalIds = new ArrayList<Long>();
+			ArrayList<Long> crmModifiedIds = new ArrayList<Long>();
+			
 			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
-
 			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
+			
+			List<CrmContact> crmContactsOriginal = _crmGroupLocalService.getCrmContacts(crmGroupId);
+
+			for(CrmContact crmContact:crmContactsOriginal) {
+				crmOriginalIds.add(crmContact.getCrmContactId());
+			}
+			
 			crmGroup = GroupUtil.updateCrmGroupProperties(crmGroup, request, serviceContext, false);
 
 			long[] crmContactIds = ParamUtil.getLongValues(request, "crmContactIds");
+			
+			for(long crmContactId:crmContactIds) {
+				crmModifiedIds.add(crmContactId);
+			}
+			
+			List<Long> crmUpdatedIds = new ArrayList<>(CollectionUtils.disjunction(crmModifiedIds, crmOriginalIds));
+			
 			CrmGroupLocalServiceUtil.setCrmContacts(crmGroup.getCrmGroupId(), crmContactIds);
+			
+			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId);
+			
+			for(long crmContactId:crmUpdatedIds) 
+			{	
+				CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);	
+				crmContact = ContactUtil.updateCrmContactGroups(crmContact);
+				CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+			}
 
 			_crmGroupLocalService.updateCrmGroup(crmGroup);
 			response.setRenderParameter("crmGroupId", Long.toString(crmGroupId));
@@ -122,11 +183,123 @@ public class GroupManagerAppPortlet extends MVCPortlet {
 			LOGGER.error("Exception in GroupManagerAppPortlet.update: " + e.getMessage());
 		}
 	}
+	
+	public void deleteGroup(ActionRequest request, ActionResponse response) throws PortalException {
+		try {
+			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+			CrmGroup crmGroup = _crmGroupLocalService.getCrmGroup(crmGroupId);
+			crmGroup.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
+			_crmGroupLocalService.updateCrmGroup(crmGroup);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in GroupManagerAppPortlet.delete: " + e.getMessage());
+		}
+	}
+	
+	public void exportCSVData(ResourceRequest request, ResourceResponse response) throws PortalException {
+		
+		try {
+			StringBundler sb = new StringBundler();
+			int getStart = 0; //ParamUtil.getInteger(request, "getStart");
+			int getEnd = CrmContactLocalServiceUtil.getCrmContactsCount(); //ParamUtil.getInteger(request, "getEnd");
+			long crmGroupId = ParamUtil.getLong(request, "crmGroupId");
+			
+			OrderByComparator orderByComparator = new CrmContactCreateDateComparator(false);
+			
+			for (String columnName : ContactManagerAppPortletKeys.CSV_COLUMMN_NAMES) {
+				sb.append(getCSVFormattedValue(columnName));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				}
+			
+			List<CrmContact> crmContacts = _crmGroupLocalService.getCrmContacts(crmGroupId, getStart,getEnd, orderByComparator);
+			
+			sb.setIndex(sb.index() - 1);
+			sb.append(CharPool.NEW_LINE);
+			
+			for (CrmContact crmContact : crmContacts) {
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getFirstName())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getLastName())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrefix())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getOrganization())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getJobTitle())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress1())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddress2())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCity())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressZip())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryAddressCounty())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryPhone())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryCell())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getPrimaryEmailAddress())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getGroupsList())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getTagsList())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.append(getCSVFormattedValue(String.valueOf(crmContact.getModifiedDate())));
+				sb.append(ContactManagerAppPortletKeys.CSV_SEPARATOR);
+				
+				sb.setIndex(sb.index() - 1);
+				sb.append(CharPool.NEW_LINE);
+			}
+			
+			String fileName = "groupContacts.csv";
+			byte[] bytes = sb.toString().getBytes();
+			String contentType = ContentTypes.APPLICATION_TEXT;
+			PortletResponseUtil.sendFile(request, response, fileName, bytes, contentType);
+			
+		} catch (Exception e) {
+			LOGGER.error("Exception in GroupManagerAppPortlet.exportCSVData: " + e.getMessage());
+		}
+	}
+	
+	protected String getCSVFormattedValue(String value) {
+		
+		StringBundler sb = new StringBundler(3);
+		sb.append(CharPool.QUOTE);
+		sb.append(StringUtil.replace(value, CharPool.QUOTE,
+		StringPool.DOUBLE_QUOTE));
+		sb.append(CharPool.QUOTE);
+		return sb.toString();
+	}
 
 	@Reference(unbind = "-")
 	protected void setEntryService(CrmGroupLocalService crmGroupLocalService) {
 		_crmGroupLocalService = crmGroupLocalService;
 	}
-
+	
+	@Reference(unbind = "-")
+	protected void setContactLocalService(CrmContactLocalService crmContactLocalService) {
+		_crmContactLocalService = crmContactLocalService;
+	}
+	
+	private CrmContactLocalService _crmContactLocalService;
 	private CrmGroupLocalService _crmGroupLocalService;
 }

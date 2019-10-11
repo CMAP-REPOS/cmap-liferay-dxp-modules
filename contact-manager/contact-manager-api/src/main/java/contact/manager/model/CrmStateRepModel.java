@@ -292,19 +292,19 @@ public interface CrmStateRepModel extends BaseModel<CrmStateRep>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmStateRep crmStateRep);
+	public int compareTo(CrmStateRep crmStateRep);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmStateRep> toCacheModel();
+	public CacheModel<CrmStateRep> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmStateRep toEscapedModel();
+	public CrmStateRep toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmStateRep toUnescapedModel();
+	public CrmStateRep toUnescapedModel();
 
 	@Override
 	public String toString();

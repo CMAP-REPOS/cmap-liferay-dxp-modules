@@ -48,7 +48,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param uuid the uuid
 	* @return the matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid(java.lang.String uuid);
+	public java.util.List<CrmStateSenate> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM State Senates where uuid = &#63;.
@@ -62,8 +62,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end);
+	public java.util.List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the CRM State Senates where uuid = &#63;.
@@ -78,8 +78,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -96,8 +96,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid(java.lang.String uuid,
-		int start, int end,
+	public java.util.List<CrmStateSenate> findByUuid(String uuid, int start,
+		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -109,7 +109,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByUuid_First(java.lang.String uuid,
+	public CrmStateSenate findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -120,7 +120,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUuid_First(java.lang.String uuid,
+	public CrmStateSenate fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -131,7 +131,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByUuid_Last(java.lang.String uuid,
+	public CrmStateSenate findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -142,7 +142,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUuid_Last(java.lang.String uuid,
+	public CrmStateSenate fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -155,7 +155,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public CrmStateSenate[] findByUuid_PrevAndNext(long crmStateSenateId,
-		java.lang.String uuid,
+		String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -164,7 +164,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM State Senates where uuid = &#63;.
@@ -172,7 +172,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param uuid the uuid
 	* @return the number of matching CRM State Senates
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM State Senate where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmStateSenateException} if it could not be found.
@@ -182,7 +182,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByUUID_G(java.lang.String uuid, long groupId)
+	public CrmStateSenate findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmStateSenateException;
 
 	/**
@@ -192,7 +192,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param groupId the group ID
 	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUUID_G(java.lang.String uuid, long groupId);
+	public CrmStateSenate fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM State Senate where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -202,7 +202,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUUID_G(java.lang.String uuid, long groupId,
+	public CrmStateSenate fetchByUUID_G(String uuid, long groupId,
 		boolean retrieveFromCache);
 
 	/**
@@ -212,7 +212,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param groupId the group ID
 	* @return the CRM State Senate that was removed
 	*/
-	public CrmStateSenate removeByUUID_G(java.lang.String uuid, long groupId)
+	public CrmStateSenate removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmStateSenateException;
 
 	/**
@@ -222,7 +222,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param groupId the group ID
 	* @return the number of matching CRM State Senates
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM State Senates where uuid = &#63; and companyId = &#63;.
@@ -231,7 +231,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param companyId the company ID
 	* @return the matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId);
 
 	/**
@@ -247,7 +247,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end);
 
 	/**
@@ -264,7 +264,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
@@ -283,7 +283,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByUuid_C(java.lang.String uuid,
+	public java.util.List<CrmStateSenate> findByUuid_C(String uuid,
 		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache);
@@ -297,8 +297,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CrmStateSenate findByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -310,8 +309,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUuid_C_First(java.lang.String uuid,
-		long companyId,
+	public CrmStateSenate fetchByUuid_C_First(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -323,8 +321,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CrmStateSenate findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -336,8 +333,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CrmStateSenate fetchByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -351,7 +347,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public CrmStateSenate[] findByUuid_C_PrevAndNext(long crmStateSenateId,
-		java.lang.String uuid, long companyId,
+		String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -361,7 +357,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM State Senates where uuid = &#63; and companyId = &#63;.
@@ -370,7 +366,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param companyId the company ID
 	* @return the number of matching CRM State Senates
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM State Senates where zipCode = &#63;.
@@ -378,8 +374,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param zipCode the zip code
 	* @return the matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByZipCode(
-		java.lang.String zipCode);
+	public java.util.List<CrmStateSenate> findByZipCode(String zipCode);
 
 	/**
 	* Returns a range of all the CRM State Senates where zipCode = &#63;.
@@ -393,8 +388,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param end the upper bound of the range of CRM State Senates (not inclusive)
 	* @return the range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByZipCode(
-		java.lang.String zipCode, int start, int end);
+	public java.util.List<CrmStateSenate> findByZipCode(String zipCode,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM State Senates where zipCode = &#63;.
@@ -409,8 +404,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByZipCode(
-		java.lang.String zipCode, int start, int end,
+	public java.util.List<CrmStateSenate> findByZipCode(String zipCode,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -427,8 +422,8 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM State Senates
 	*/
-	public java.util.List<CrmStateSenate> findByZipCode(
-		java.lang.String zipCode, int start, int end,
+	public java.util.List<CrmStateSenate> findByZipCode(String zipCode,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -440,7 +435,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the first matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByZipCode_First(java.lang.String zipCode,
+	public CrmStateSenate findByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -451,7 +446,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByZipCode_First(java.lang.String zipCode,
+	public CrmStateSenate fetchByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -462,7 +457,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @return the last matching CRM State Senate
 	* @throws NoSuchCrmStateSenateException if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate findByZipCode_Last(java.lang.String zipCode,
+	public CrmStateSenate findByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -473,7 +468,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM State Senate, or <code>null</code> if a matching CRM State Senate could not be found
 	*/
-	public CrmStateSenate fetchByZipCode_Last(java.lang.String zipCode,
+	public CrmStateSenate fetchByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator);
 
 	/**
@@ -486,7 +481,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @throws NoSuchCrmStateSenateException if a CRM State Senate with the primary key could not be found
 	*/
 	public CrmStateSenate[] findByZipCode_PrevAndNext(long crmStateSenateId,
-		java.lang.String zipCode,
+		String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmStateSenate> orderByComparator)
 		throws NoSuchCrmStateSenateException;
 
@@ -495,7 +490,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	*
 	* @param zipCode the zip code
 	*/
-	public void removeByZipCode(java.lang.String zipCode);
+	public void removeByZipCode(String zipCode);
 
 	/**
 	* Returns the number of CRM State Senates where zipCode = &#63;.
@@ -503,7 +498,7 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	* @param zipCode the zip code
 	* @return the number of matching CRM State Senates
 	*/
-	public int countByZipCode(java.lang.String zipCode);
+	public int countByZipCode(String zipCode);
 
 	/**
 	* Caches the CRM State Senate in the entity cache if it is enabled.
@@ -626,5 +621,5 @@ public interface CrmStateSenatePersistence extends BasePersistence<CrmStateSenat
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

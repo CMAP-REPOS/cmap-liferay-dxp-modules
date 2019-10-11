@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmOutreachLog;
 import contact.manager.model.CrmOutreachLogModel;
@@ -265,7 +265,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -357,7 +357,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -368,7 +368,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -431,7 +431,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	@Override
 	public String getNote() {
 		if (_note == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _note;
@@ -446,7 +446,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	@Override
 	public String getMedium() {
 		if (_medium == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _medium;
@@ -461,7 +461,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 	@Override
 	public String getActivityType() {
 		if (_activityType == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _activityType;
@@ -801,7 +801,7 @@ public class CrmOutreachLogModelImpl extends BaseModelImpl<CrmOutreachLog>
 
 	private static final ClassLoader _classLoader = CrmOutreachLog.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmOutreachLog.class
+			CrmOutreachLog.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

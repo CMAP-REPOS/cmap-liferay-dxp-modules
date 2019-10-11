@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmStateRep;
 
@@ -100,7 +99,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		CrmStateRepImpl crmStateRepImpl = new CrmStateRepImpl();
 
 		if (uuid == null) {
-			crmStateRepImpl.setUuid(StringPool.BLANK);
+			crmStateRepImpl.setUuid("");
 		}
 		else {
 			crmStateRepImpl.setUuid(uuid);
@@ -112,7 +111,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		crmStateRepImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmStateRepImpl.setUserName(StringPool.BLANK);
+			crmStateRepImpl.setUserName("");
 		}
 		else {
 			crmStateRepImpl.setUserName(userName);
@@ -133,21 +132,21 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		}
 
 		if (name == null) {
-			crmStateRepImpl.setName(StringPool.BLANK);
+			crmStateRepImpl.setName("");
 		}
 		else {
 			crmStateRepImpl.setName(name);
 		}
 
 		if (number == null) {
-			crmStateRepImpl.setNumber(StringPool.BLANK);
+			crmStateRepImpl.setNumber("");
 		}
 		else {
 			crmStateRepImpl.setNumber(number);
 		}
 
 		if (zipCode == null) {
-			crmStateRepImpl.setZipCode(StringPool.BLANK);
+			crmStateRepImpl.setZipCode("");
 		}
 		else {
 			crmStateRepImpl.setZipCode(zipCode);
@@ -181,7 +180,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -196,7 +195,7 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -206,21 +205,21 @@ public class CrmStateRepCacheModel implements CacheModel<CrmStateRep>,
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		if (number == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(number);
 		}
 
 		if (zipCode == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(zipCode);

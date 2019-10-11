@@ -41,8 +41,6 @@ public class CrmContactPermission implements BaseModelPermissionChecker {
         PermissionChecker permissionChecker, long groupId, long crmContactId, String actionId) 
             throws PortalException {
 
-    	CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
-
         return CrmContactModelPermission.contains(permissionChecker, groupId, actionId);
     }
 

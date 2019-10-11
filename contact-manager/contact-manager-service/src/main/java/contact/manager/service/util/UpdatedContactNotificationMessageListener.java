@@ -2,7 +2,6 @@ package contact.manager.service.util;
 
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -32,12 +31,14 @@ import contact.manager.service.CrmContactAuditLogLocalServiceUtil;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 14 * * MON"}, // Every Monday at 2pm UTC (8am Central)
+		property = {"cron.expression=0 0 14 ? * MON"}, // Every Monday at 2pm UTC (8am Central Standard)
+//		property = {"cron.expression=0 0 20 * * ?"}, // Every day at 8pm UTC (3pm Central Daylight)
 		immediate = true,
 		service = UpdatedContactNotificationMessageListener.class )
 public class UpdatedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UpdatedContactNotificationMessageListener.class);
+	private static final String _ARTIFACT_BUILD_VERSION = "UpdatedContactNotificationMessageListener build 20190625";
 
 	@Reference(unbind = "-")
 	public void setTriggerFactory(TriggerFactory triggerFactory) { _triggerFactory = triggerFactory; }
@@ -69,6 +70,19 @@ extends ContactManagerBaseMessageListener {
 			_log.trace(">> doReceive ");
 		}
 
+		if ( !PropsUtil.contains(ContactNotificationConstants.UPDATES_NOTIFICATION_ENABLED ) 
+			|| !PropsUtil.get(ContactNotificationConstants.UPDATES_NOTIFICATION_ENABLED).equalsIgnoreCase("true") ) {
+				
+			if (_log.isWarnEnabled()) {
+				_log.warn("doReceive aborted because " + ContactNotificationConstants.UPDATES_NOTIFICATION_ENABLED + " is set to false");
+			}
+		
+			if (_log.isTraceEnabled()) {
+				_log.trace("<< doReceive ");
+			}
+			return;
+		}
+
 		
         Date lastWeekDate = new Date(System.currentTimeMillis() - 7 * 24 * 60 * 60 * 1000);
 		if (_log.isDebugEnabled()) {
@@ -76,8 +90,9 @@ extends ContactManagerBaseMessageListener {
 		}
 
 		// Get list of contacts added or updated
+				
 		Criterion criterion = RestrictionsFactoryUtil.or( RestrictionsFactoryUtil.gt("createDate",  lastWeekDate), RestrictionsFactoryUtil.gt("modifiedDate",  lastWeekDate) );
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(CrmContactAuditLog.class);
+		DynamicQuery dynamicQuery = CrmContactAuditLogLocalServiceUtil.dynamicQuery(); // DynamicQueryFactoryUtil.forClass(CrmContactAuditLog.class, classLoader);
 		dynamicQuery.add(criterion);
 		List<CrmContactAuditLog> contactAuditLogList = CrmContactAuditLogLocalServiceUtil.dynamicQuery(dynamicQuery);
 		
@@ -119,14 +134,15 @@ extends ContactManagerBaseMessageListener {
 			final String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); // "cmap@cmap1pas2.illinois.gov";
 			final String to = PropsUtil.get(ContactNotificationConstants.EMAIL_TO_ADDRESS); // "contactmanagers@cmap.illinois.gov"; // "cmap.contactmanagers@base22.com";
 			final String cc[] = PropsUtil.getArray(ContactNotificationConstants.EMAIL_CC_ADDRESS); // {"kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov"};
-			final String subject ="CMAP - Contact Changes and Additions Alert";
-			
+			final String subject = "CMAP - Contact Changes and Additions Alert";
+			final String footer = _ARTIFACT_BUILD_VERSION + " " + PropsUtil.get(ContactNotificationConstants.ENVIRONMENT_NAME);
+
 			if (_log.isDebugEnabled()) {
 				_log.debug("Email properties:\nFrom: " + (null != from ? from : "null") + "; to: " + ( null != to ? to : "null") + "; CC: " + ( null != cc ? String.join(", ", cc) : "null") );
 			}
 			
 			if ( null != to && !to.trim().isEmpty() ) {
-				UpdatedContactNotificationEmailUtil.buildAndSendEmail(from, to, cc, subject, updatedContactList);
+				UpdatedContactNotificationEmailUtil.buildAndSendEmail(from, to, cc, subject, updatedContactList, footer);
 			}
 			else if (_log.isWarnEnabled()) {
 					_log.warn("Email will not be sent because there's no email address configured for the property " + ContactNotificationConstants.EMAIL_TO_ADDRESS);

@@ -157,7 +157,7 @@
 						<strong><liferay-ui:message
 								key="crm.label.primaryEmailAddress" /></strong>
 					</p>
-					<p><%=viewModel.getPrimaryEmailAddress()%></p>
+					<p><a href="<%="mailto:"+ viewModel.getPrimaryEmailAddress()%>"><%=viewModel.getPrimaryEmailAddress()%></a></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.primaryFax" /></strong>
 					</p>
@@ -175,19 +175,19 @@
 						<strong><liferay-ui:message
 								key="crm.label.alternateEmail" /></strong>
 					</p>
-					<p><%=viewModel.getAlternateEmail()%></p>
+					<p><a href="<%="mailto:"+ viewModel.getAlternateEmail()%>"><%=viewModel.getAlternateEmail()%></a></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.facebookId" /></strong>
 					</p>
-					<p><%=viewModel.getFacebookId()%></p>
+					<p><a href="<%=viewModel.getFacebookId()%>"><%=viewModel.getFacebookId()%></a></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.twitterHandle" /></strong>
 					</p>
-					<p><%=viewModel.getTwitterHandle()%></p>
+					<p><a href="<%=viewModel.getTwitterHandle()%>"><%=viewModel.getTwitterHandle()%></a></p>
 					<p>
 						<strong><liferay-ui:message key="crm.label.linkedInUrl" /></strong>
 					</p>
-					<p><%=viewModel.getLinkedInUrl()%></p>
+					<p><a href="<%=viewModel.getLinkedInUrl()%>"><%=viewModel.getLinkedInUrl()%></a></p>
 				</div>
 			</aui:col>
 		</aui:row>

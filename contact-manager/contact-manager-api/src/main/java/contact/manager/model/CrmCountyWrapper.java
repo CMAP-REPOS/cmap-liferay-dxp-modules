@@ -137,138 +137,13 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	}
 
 	@Override
-	public boolean isCachedModel() {
-		return _crmCounty.isCachedModel();
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _crmCounty.isEscapedModel();
-	}
-
-	@Override
-	public boolean isNew() {
-		return _crmCounty.isNew();
-	}
-
-	@Override
-	public ExpandoBridge getExpandoBridge() {
-		return _crmCounty.getExpandoBridge();
-	}
-
-	@Override
-	public com.liferay.portal.kernel.model.CacheModel<contact.manager.model.CrmCounty> toCacheModel() {
-		return _crmCounty.toCacheModel();
-	}
-
-	@Override
-	public contact.manager.model.CrmCounty toEscapedModel() {
-		return new CrmCountyWrapper(_crmCounty.toEscapedModel());
-	}
-
-	@Override
-	public contact.manager.model.CrmCounty toUnescapedModel() {
-		return new CrmCountyWrapper(_crmCounty.toUnescapedModel());
-	}
-
-	@Override
-	public int compareTo(contact.manager.model.CrmCounty crmCounty) {
-		return _crmCounty.compareTo(crmCounty);
-	}
-
-	@Override
-	public int hashCode() {
-		return _crmCounty.hashCode();
-	}
-
-	@Override
-	public Serializable getPrimaryKeyObj() {
-		return _crmCounty.getPrimaryKeyObj();
-	}
-
-	@Override
-	public java.lang.Object clone() {
+	public Object clone() {
 		return new CrmCountyWrapper((CrmCounty)_crmCounty.clone());
 	}
 
-	/**
-	* Returns the name of this CRM County.
-	*
-	* @return the name of this CRM County
-	*/
 	@Override
-	public java.lang.String getName() {
-		return _crmCounty.getName();
-	}
-
-	/**
-	* Returns the user name of this CRM County.
-	*
-	* @return the user name of this CRM County
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _crmCounty.getUserName();
-	}
-
-	/**
-	* Returns the user uuid of this CRM County.
-	*
-	* @return the user uuid of this CRM County
-	*/
-	@Override
-	public java.lang.String getUserUuid() {
-		return _crmCounty.getUserUuid();
-	}
-
-	/**
-	* Returns the uuid of this CRM County.
-	*
-	* @return the uuid of this CRM County
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _crmCounty.getUuid();
-	}
-
-	/**
-	* Returns the zip code of this CRM County.
-	*
-	* @return the zip code of this CRM County
-	*/
-	@Override
-	public java.lang.String getZipCode() {
-		return _crmCounty.getZipCode();
-	}
-
-	@Override
-	public java.lang.String toString() {
-		return _crmCounty.toString();
-	}
-
-	@Override
-	public java.lang.String toXmlString() {
-		return _crmCounty.toXmlString();
-	}
-
-	/**
-	* Returns the create date of this CRM County.
-	*
-	* @return the create date of this CRM County
-	*/
-	@Override
-	public Date getCreateDate() {
-		return _crmCounty.getCreateDate();
-	}
-
-	/**
-	* Returns the modified date of this CRM County.
-	*
-	* @return the modified date of this CRM County
-	*/
-	@Override
-	public Date getModifiedDate() {
-		return _crmCounty.getModifiedDate();
+	public int compareTo(CrmCounty crmCounty) {
+		return _crmCounty.compareTo(crmCounty);
 	}
 
 	/**
@@ -282,6 +157,16 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	}
 
 	/**
+	* Returns the create date of this CRM County.
+	*
+	* @return the create date of this CRM County
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _crmCounty.getCreateDate();
+	}
+
+	/**
 	* Returns the crm county ID of this CRM County.
 	*
 	* @return the crm county ID of this CRM County
@@ -289,6 +174,11 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	@Override
 	public long getCrmCountyId() {
 		return _crmCounty.getCrmCountyId();
+	}
+
+	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return _crmCounty.getExpandoBridge();
 	}
 
 	/**
@@ -302,6 +192,26 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	}
 
 	/**
+	* Returns the modified date of this CRM County.
+	*
+	* @return the modified date of this CRM County
+	*/
+	@Override
+	public Date getModifiedDate() {
+		return _crmCounty.getModifiedDate();
+	}
+
+	/**
+	* Returns the name of this CRM County.
+	*
+	* @return the name of this CRM County
+	*/
+	@Override
+	public String getName() {
+		return _crmCounty.getName();
+	}
+
+	/**
 	* Returns the primary key of this CRM County.
 	*
 	* @return the primary key of this CRM County
@@ -309,6 +219,11 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	@Override
 	public long getPrimaryKey() {
 		return _crmCounty.getPrimaryKey();
+	}
+
+	@Override
+	public Serializable getPrimaryKeyObj() {
+		return _crmCounty.getPrimaryKeyObj();
 	}
 
 	/**
@@ -319,6 +234,66 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	@Override
 	public long getUserId() {
 		return _crmCounty.getUserId();
+	}
+
+	/**
+	* Returns the user name of this CRM County.
+	*
+	* @return the user name of this CRM County
+	*/
+	@Override
+	public String getUserName() {
+		return _crmCounty.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this CRM County.
+	*
+	* @return the user uuid of this CRM County
+	*/
+	@Override
+	public String getUserUuid() {
+		return _crmCounty.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this CRM County.
+	*
+	* @return the uuid of this CRM County
+	*/
+	@Override
+	public String getUuid() {
+		return _crmCounty.getUuid();
+	}
+
+	/**
+	* Returns the zip code of this CRM County.
+	*
+	* @return the zip code of this CRM County
+	*/
+	@Override
+	public String getZipCode() {
+		return _crmCounty.getZipCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return _crmCounty.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _crmCounty.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _crmCounty.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _crmCounty.isNew();
 	}
 
 	@Override
@@ -362,14 +337,14 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	}
 
 	@Override
-	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
-		_crmCounty.setExpandoBridgeAttributes(expandoBridge);
-	}
-
-	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
 		_crmCounty.setExpandoBridgeAttributes(baseModel);
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ExpandoBridge expandoBridge) {
+		_crmCounty.setExpandoBridgeAttributes(expandoBridge);
 	}
 
 	@Override
@@ -403,7 +378,7 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	* @param name the name of this CRM County
 	*/
 	@Override
-	public void setName(java.lang.String name) {
+	public void setName(String name) {
 		_crmCounty.setName(name);
 	}
 
@@ -443,7 +418,7 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	* @param userName the user name of this CRM County
 	*/
 	@Override
-	public void setUserName(java.lang.String userName) {
+	public void setUserName(String userName) {
 		_crmCounty.setUserName(userName);
 	}
 
@@ -453,7 +428,7 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	* @param userUuid the user uuid of this CRM County
 	*/
 	@Override
-	public void setUserUuid(java.lang.String userUuid) {
+	public void setUserUuid(String userUuid) {
 		_crmCounty.setUserUuid(userUuid);
 	}
 
@@ -463,7 +438,7 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	* @param uuid the uuid of this CRM County
 	*/
 	@Override
-	public void setUuid(java.lang.String uuid) {
+	public void setUuid(String uuid) {
 		_crmCounty.setUuid(uuid);
 	}
 
@@ -473,8 +448,33 @@ public class CrmCountyWrapper implements CrmCounty, ModelWrapper<CrmCounty> {
 	* @param zipCode the zip code of this CRM County
 	*/
 	@Override
-	public void setZipCode(java.lang.String zipCode) {
+	public void setZipCode(String zipCode) {
 		_crmCounty.setZipCode(zipCode);
+	}
+
+	@Override
+	public com.liferay.portal.kernel.model.CacheModel<CrmCounty> toCacheModel() {
+		return _crmCounty.toCacheModel();
+	}
+
+	@Override
+	public CrmCounty toEscapedModel() {
+		return new CrmCountyWrapper(_crmCounty.toEscapedModel());
+	}
+
+	@Override
+	public String toString() {
+		return _crmCounty.toString();
+	}
+
+	@Override
+	public CrmCounty toUnescapedModel() {
+		return new CrmCountyWrapper(_crmCounty.toUnescapedModel());
+	}
+
+	@Override
+	public String toXmlString() {
+		return _crmCounty.toXmlString();
 	}
 
 	@Override

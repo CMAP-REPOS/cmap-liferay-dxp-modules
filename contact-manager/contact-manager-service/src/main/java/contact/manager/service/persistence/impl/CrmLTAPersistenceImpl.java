@@ -31,10 +31,9 @@ import com.liferay.portal.kernel.service.persistence.CompanyProvider;
 import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReflectionUtil;
+import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
@@ -50,6 +49,7 @@ import contact.manager.service.persistence.CrmLTAPersistence;
 import java.io.Serializable;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationHandler;
 
 import java.util.Collections;
 import java.util.Date;
@@ -229,7 +229,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -317,7 +317,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -366,7 +366,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append("uuid=");
 		msg.append(uuid);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -457,7 +457,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -593,7 +593,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -672,7 +672,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			msg.append(", groupId=");
 			msg.append(groupId);
 
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
+			msg.append("}");
 
 			if (_log.isDebugEnabled()) {
 				_log.debug(msg.toString());
@@ -735,7 +735,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -775,13 +775,6 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 					result = crmLTA;
 
 					cacheResult(crmLTA);
-
-					if ((crmLTA.getUuid() == null) ||
-							!crmLTA.getUuid().equals(uuid) ||
-							(crmLTA.getGroupId() != groupId)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, crmLTA);
-					}
 				}
 			}
 			catch (Exception e) {
@@ -842,7 +835,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -1039,7 +1032,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1135,7 +1128,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -1190,7 +1183,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append(", companyId=");
 		msg.append(companyId);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -1284,7 +1277,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		if (uuid == null) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 		}
-		else if (uuid.equals(StringPool.BLANK)) {
+		else if (uuid.equals("")) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1426,7 +1419,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (uuid == null) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
 			}
-			else if (uuid.equals(StringPool.BLANK)) {
+			else if (uuid.equals("")) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1610,7 +1603,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1698,7 +1691,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -1747,7 +1740,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		msg.append("zipCode=");
 		msg.append(zipCode);
 
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
+		msg.append("}");
 
 		throw new NoSuchCrmLTAException(msg.toString());
 	}
@@ -1839,7 +1832,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		if (zipCode == null) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 		}
-		else if (zipCode.equals(StringPool.BLANK)) {
+		else if (zipCode.equals("")) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1975,7 +1968,7 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 			if (zipCode == null) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
 			}
-			else if (zipCode.equals(StringPool.BLANK)) {
+			else if (zipCode.equals("")) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2024,8 +2017,10 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		setModelClass(CrmLTA.class);
 
 		try {
-			Field field = ReflectionUtil.getDeclaredField(BasePersistenceImpl.class,
+			Field field = BasePersistenceImpl.class.getDeclaredField(
 					"_dbColumnNames");
+
+			field.setAccessible(true);
 
 			Map<String, String> dbColumnNames = new HashMap<String, String>();
 
@@ -2229,8 +2224,6 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 
 	@Override
 	protected CrmLTA removeImpl(CrmLTA crmLTA) {
-		crmLTA = toUnwrappedModel(crmLTA);
-
 		Session session = null;
 
 		try {
@@ -2261,9 +2254,23 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 
 	@Override
 	public CrmLTA updateImpl(CrmLTA crmLTA) {
-		crmLTA = toUnwrappedModel(crmLTA);
-
 		boolean isNew = crmLTA.isNew();
+
+		if (!(crmLTA instanceof CrmLTAModelImpl)) {
+			InvocationHandler invocationHandler = null;
+
+			if (ProxyUtil.isProxyClass(crmLTA.getClass())) {
+				invocationHandler = ProxyUtil.getInvocationHandler(crmLTA);
+
+				throw new IllegalArgumentException(
+					"Implement ModelWrapper in crmLTA proxy " +
+					invocationHandler.getClass());
+			}
+
+			throw new IllegalArgumentException(
+				"Implement ModelWrapper in custom CrmLTA implementation " +
+				crmLTA.getClass());
+		}
 
 		CrmLTAModelImpl crmLTAModelImpl = (CrmLTAModelImpl)crmLTA;
 
@@ -2412,30 +2419,6 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		crmLTA.resetOriginalValues();
 
 		return crmLTA;
-	}
-
-	protected CrmLTA toUnwrappedModel(CrmLTA crmLTA) {
-		if (crmLTA instanceof CrmLTAImpl) {
-			return crmLTA;
-		}
-
-		CrmLTAImpl crmLTAImpl = new CrmLTAImpl();
-
-		crmLTAImpl.setNew(crmLTA.isNew());
-		crmLTAImpl.setPrimaryKey(crmLTA.getPrimaryKey());
-
-		crmLTAImpl.setUuid(crmLTA.getUuid());
-		crmLTAImpl.setCrmLTAId(crmLTA.getCrmLTAId());
-		crmLTAImpl.setGroupId(crmLTA.getGroupId());
-		crmLTAImpl.setCompanyId(crmLTA.getCompanyId());
-		crmLTAImpl.setUserId(crmLTA.getUserId());
-		crmLTAImpl.setUserName(crmLTA.getUserName());
-		crmLTAImpl.setCreateDate(crmLTA.getCreateDate());
-		crmLTAImpl.setModifiedDate(crmLTA.getModifiedDate());
-		crmLTAImpl.setName(crmLTA.getName());
-		crmLTAImpl.setZipCode(crmLTA.getZipCode());
-
-		return crmLTAImpl;
 	}
 
 	/**
@@ -2587,12 +2570,12 @@ public class CrmLTAPersistenceImpl extends BasePersistenceImpl<CrmLTA>
 		for (Serializable primaryKey : uncachedPrimaryKeys) {
 			query.append((long)primaryKey);
 
-			query.append(StringPool.COMMA);
+			query.append(",");
 		}
 
 		query.setIndex(query.index() - 1);
 
-		query.append(StringPool.CLOSE_PARENTHESIS);
+		query.append(")");
 
 		String sql = query.toString();
 

@@ -19,7 +19,6 @@ import aQute.bnd.annotation.ProviderType;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmGroup;
 
@@ -65,7 +64,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -87,6 +86,8 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		sb.append(name);
 		sb.append(", crmContactsCount=");
 		sb.append(crmContactsCount);
+		sb.append(", status=");
+		sb.append(status);
 		sb.append("}");
 
 		return sb.toString();
@@ -97,7 +98,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		CrmGroupImpl crmGroupImpl = new CrmGroupImpl();
 
 		if (uuid == null) {
-			crmGroupImpl.setUuid(StringPool.BLANK);
+			crmGroupImpl.setUuid("");
 		}
 		else {
 			crmGroupImpl.setUuid(uuid);
@@ -109,7 +110,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		crmGroupImpl.setUserId(userId);
 
 		if (userName == null) {
-			crmGroupImpl.setUserName(StringPool.BLANK);
+			crmGroupImpl.setUserName("");
 		}
 		else {
 			crmGroupImpl.setUserName(userName);
@@ -130,13 +131,20 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		}
 
 		if (name == null) {
-			crmGroupImpl.setName(StringPool.BLANK);
+			crmGroupImpl.setName("");
 		}
 		else {
 			crmGroupImpl.setName(name);
 		}
 
 		crmGroupImpl.setCrmContactsCount(crmContactsCount);
+
+		if (status == null) {
+			crmGroupImpl.setStatus("");
+		}
+		else {
+			crmGroupImpl.setStatus(status);
+		}
 
 		crmGroupImpl.resetOriginalValues();
 
@@ -160,13 +168,14 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		name = objectInput.readUTF();
 
 		crmContactsCount = objectInput.readLong();
+		status = objectInput.readUTF();
 	}
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		if (uuid == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(uuid);
@@ -181,7 +190,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		objectOutput.writeLong(userId);
 
 		if (userName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(userName);
@@ -191,13 +200,20 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 		objectOutput.writeLong(modifiedDate);
 
 		if (name == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
+			objectOutput.writeUTF("");
 		}
 		else {
 			objectOutput.writeUTF(name);
 		}
 
 		objectOutput.writeLong(crmContactsCount);
+
+		if (status == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(status);
+		}
 	}
 
 	public String uuid;
@@ -210,4 +226,5 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	public long modifiedDate;
 	public String name;
 	public long crmContactsCount;
+	public String status;
 }

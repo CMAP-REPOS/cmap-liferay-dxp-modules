@@ -821,19 +821,19 @@ public interface CrmContactModel extends BaseModel<CrmContact>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmContact crmContact);
+	public int compareTo(CrmContact crmContact);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmContact> toCacheModel();
+	public CacheModel<CrmContact> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmContact toEscapedModel();
+	public CrmContact toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmContact toUnescapedModel();
+	public CrmContact toUnescapedModel();
 
 	@Override
 	public String toString();

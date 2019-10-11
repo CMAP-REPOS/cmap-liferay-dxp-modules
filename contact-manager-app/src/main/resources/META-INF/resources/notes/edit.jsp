@@ -22,24 +22,36 @@
 	renderResponse.setTitle((crmContact != null)
 			? ("New Note for " + crmContact.getFirstName() + " " + crmContact.getLastName())
 			: "New Note");
+	
+	if(crmNote != null)
+	{
+		renderResponse.setTitle("Edit Note for " + crmContact.getFirstName() + " " + crmContact.getLastName());
+	}
 %>
 
+<%//AQUI SE MANDA LLAMAR EL NOMBRE DEL METODO EN EL PORTLET.JAVA!!!!!!! %>
 <portlet:actionURL
 	name='<%=crmNote == null ? "addNote" : "updateNote"%>'
 	var="editNoteURL" />
+
 
 <div class="container-fluid">
 
 	<aui:form action="<%=editNoteURL%>"
 		name="<portlet:namespace />fm">
+		<%//aui:input hidden manda  %>
 		<aui:input type="hidden" name="crmContactId"
 			value='<%=String.valueOf(crmContactId)%>'>
+		</aui:input>
+		<aui:input type="hidden" name="crmNoteId"
+			value='<%=String.valueOf(crmNoteId)%>'>
 		</aui:input>
 		<aui:row>
 			<aui:col md="12">
 				<aui:fieldset-group markupView="lexicon">
 					<aui:fieldset>
-						<aui:input name="note" label="Notes" type="textarea">
+						<aui:input name="note" label="Notes" type="textarea"
+							value='<%=crmNote == null ? "" : crmNote.getNote()%>'>
 							<aui:validator name="required" />
 							<aui:validator name="maxLength">50000</aui:validator>
 						</aui:input>

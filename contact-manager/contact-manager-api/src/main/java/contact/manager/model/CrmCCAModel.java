@@ -277,19 +277,19 @@ public interface CrmCCAModel extends BaseModel<CrmCCA>, GroupedModel,
 	public Object clone();
 
 	@Override
-	public int compareTo(contact.manager.model.CrmCCA crmCCA);
+	public int compareTo(CrmCCA crmCCA);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<contact.manager.model.CrmCCA> toCacheModel();
+	public CacheModel<CrmCCA> toCacheModel();
 
 	@Override
-	public contact.manager.model.CrmCCA toEscapedModel();
+	public CrmCCA toEscapedModel();
 
 	@Override
-	public contact.manager.model.CrmCCA toUnescapedModel();
+	public CrmCCA toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -1,0 +1,6 @@
+Bundle-Name: twitter-api-web-serrvice
+Bundle-SymbolicName: com.cmap.portlets.twitter.api.service
+Bundle-Version: 1.0.0
+Export-Package: com.cmap.portlets.twitter.api.service.constants
+-sources: true
+-metatype: *

@@ -16,7 +16,8 @@ package contact.manager.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import com.liferay.osgi.util.ServiceTrackerFactory;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -41,37 +42,6 @@ public class CrmOutreachLogLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link contact.manager.service.impl.CrmOutreachLogLocalServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
-		return getService().getActionableDynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return getService().getExportActionableDynamicQuery(portletDataContext);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		return getService().getIndexableActionableDynamicQuery();
-	}
-
-	/**
-	* @throws PortalException
-	*/
-	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().deletePersistedModel(persistedModel);
-	}
-
-	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
 
 	/**
 	* Adds the CRM Outreach Log to the database. Also notifies the appropriate model listeners.
@@ -82,6 +52,10 @@ public class CrmOutreachLogLocalServiceUtil {
 	public static contact.manager.model.CrmOutreachLog addCrmOutreachLog(
 		contact.manager.model.CrmOutreachLog crmOutreachLog) {
 		return getService().addCrmOutreachLog(crmOutreachLog);
+	}
+
+	public static int countByCrmContactIdId(long crmContactId) {
+		return getService().countByCrmContactIdId(crmContactId);
 	}
 
 	/**
@@ -119,81 +93,17 @@ public class CrmOutreachLogLocalServiceUtil {
 		return getService().deleteCrmOutreachLog(crmOutreachLogId);
 	}
 
-	public static contact.manager.model.CrmOutreachLog fetchCrmOutreachLog(
-		long crmOutreachLogId) {
-		return getService().fetchCrmOutreachLog(crmOutreachLogId);
-	}
-
 	/**
-	* Returns the CRM Outreach Log matching the UUID and group.
-	*
-	* @param uuid the CRM Outreach Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
+	* @throws PortalException
 	*/
-	public static contact.manager.model.CrmOutreachLog fetchCrmOutreachLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId) {
-		return getService().fetchCrmOutreachLogByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the CRM Outreach Log with the primary key.
-	*
-	* @param crmOutreachLogId the primary key of the CRM Outreach Log
-	* @return the CRM Outreach Log
-	* @throws PortalException if a CRM Outreach Log with the primary key could not be found
-	*/
-	public static contact.manager.model.CrmOutreachLog getCrmOutreachLog(
-		long crmOutreachLogId)
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmOutreachLog(crmOutreachLogId);
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	/**
-	* Returns the CRM Outreach Log matching the UUID and group.
-	*
-	* @param uuid the CRM Outreach Log's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Outreach Log
-	* @throws PortalException if a matching CRM Outreach Log could not be found
-	*/
-	public static contact.manager.model.CrmOutreachLog getCrmOutreachLogByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-		return getService().getCrmOutreachLogByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Updates the CRM Outreach Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmOutreachLog the CRM Outreach Log
-	* @return the CRM Outreach Log that was updated
-	*/
-	public static contact.manager.model.CrmOutreachLog updateCrmOutreachLog(
-		contact.manager.model.CrmOutreachLog crmOutreachLog) {
-		return getService().updateCrmOutreachLog(crmOutreachLog);
-	}
-
-	public static int countByCrmContactIdId(long crmContactId) {
-		return getService().countByCrmContactIdId(crmContactId);
-	}
-
-	/**
-	* Returns the number of CRM Outreach Logs.
-	*
-	* @return the number of CRM Outreach Logs
-	*/
-	public static int getCrmOutreachLogsCount() {
-		return getService().getCrmOutreachLogsCount();
-	}
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public static java.lang.String getOSGiServiceIdentifier() {
-		return getService().getOSGiServiceIdentifier();
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
 	}
 
 	/**
@@ -246,6 +156,47 @@ public class CrmOutreachLogLocalServiceUtil {
 				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static contact.manager.model.CrmOutreachLog fetchCrmOutreachLog(
+		long crmOutreachLogId) {
+		return getService().fetchCrmOutreachLog(crmOutreachLogId);
+	}
+
+	/**
+	* Returns the CRM Outreach Log matching the UUID and group.
+	*
+	* @param uuid the CRM Outreach Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Outreach Log, or <code>null</code> if a matching CRM Outreach Log could not be found
+	*/
+	public static contact.manager.model.CrmOutreachLog fetchCrmOutreachLogByUuidAndGroupId(
+		String uuid, long groupId) {
+		return getService().fetchCrmOutreachLogByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<contact.manager.model.CrmOutreachLog> findByCrmContactId(
 		long crmContactId)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -265,6 +216,37 @@ public class CrmOutreachLogLocalServiceUtil {
 		return getService()
 				   .findByCrmContactId(crmContactId, start, end,
 			orderByComparator);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the CRM Outreach Log with the primary key.
+	*
+	* @param crmOutreachLogId the primary key of the CRM Outreach Log
+	* @return the CRM Outreach Log
+	* @throws PortalException if a CRM Outreach Log with the primary key could not be found
+	*/
+	public static contact.manager.model.CrmOutreachLog getCrmOutreachLog(
+		long crmOutreachLogId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmOutreachLog(crmOutreachLogId);
+	}
+
+	/**
+	* Returns the CRM Outreach Log matching the UUID and group.
+	*
+	* @param uuid the CRM Outreach Log's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Outreach Log
+	* @throws PortalException if a matching CRM Outreach Log could not be found
+	*/
+	public static contact.manager.model.CrmOutreachLog getCrmOutreachLogByUuidAndGroupId(
+		String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getCrmOutreachLogByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -291,7 +273,7 @@ public class CrmOutreachLogLocalServiceUtil {
 	* @return the matching CRM Outreach Logs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmOutreachLog> getCrmOutreachLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId) {
+		String uuid, long companyId) {
 		return getService().getCrmOutreachLogsByUuidAndCompanyId(uuid, companyId);
 	}
 
@@ -306,7 +288,7 @@ public class CrmOutreachLogLocalServiceUtil {
 	* @return the range of matching CRM Outreach Logs, or an empty list if no matches were found
 	*/
 	public static java.util.List<contact.manager.model.CrmOutreachLog> getCrmOutreachLogsByUuidAndCompanyId(
-		java.lang.String uuid, long companyId, int start, int end,
+		String uuid, long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmOutreachLog> orderByComparator) {
 		return getService()
 				   .getCrmOutreachLogsByUuidAndCompanyId(uuid, companyId,
@@ -314,33 +296,64 @@ public class CrmOutreachLogLocalServiceUtil {
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Outreach Logs.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Outreach Logs
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
-		return getService().dynamicQueryCount(dynamicQuery);
+	public static int getCrmOutreachLogsCount() {
+		return getService().getCrmOutreachLogsCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
+	public static String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the CRM Outreach Log in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmOutreachLog the CRM Outreach Log
+	* @return the CRM Outreach Log that was updated
+	*/
+	public static contact.manager.model.CrmOutreachLog updateCrmOutreachLog(
+		contact.manager.model.CrmOutreachLog crmOutreachLog) {
+		return getService().updateCrmOutreachLog(crmOutreachLog);
 	}
 
 	public static CrmOutreachLogLocalService getService() {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<CrmOutreachLogLocalService, CrmOutreachLogLocalService> _serviceTracker =
-		ServiceTrackerFactory.open(CrmOutreachLogLocalService.class);
+	private static ServiceTracker<CrmOutreachLogLocalService, CrmOutreachLogLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(CrmOutreachLogLocalService.class);
+
+		ServiceTracker<CrmOutreachLogLocalService, CrmOutreachLogLocalService> serviceTracker =
+			new ServiceTracker<CrmOutreachLogLocalService, CrmOutreachLogLocalService>(bundle.getBundleContext(),
+				CrmOutreachLogLocalService.class, null);
+
+		serviceTracker.open();
+
+		_serviceTracker = serviceTracker;
+	}
 }

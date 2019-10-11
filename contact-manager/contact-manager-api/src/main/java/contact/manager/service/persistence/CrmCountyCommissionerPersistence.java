@@ -48,8 +48,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param uuid the uuid
 	* @return the matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid(
-		java.lang.String uuid);
+	public java.util.List<CrmCountyCommissioner> findByUuid(String uuid);
 
 	/**
 	* Returns a range of all the CRM County Commissioners where uuid = &#63;.
@@ -63,8 +62,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param end the upper bound of the range of CRM County Commissioners (not inclusive)
 	* @return the range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid(
-		java.lang.String uuid, int start, int end);
+	public java.util.List<CrmCountyCommissioner> findByUuid(String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM County Commissioners where uuid = &#63;.
@@ -79,8 +78,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -97,8 +96,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid(
-		java.lang.String uuid, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByUuid(String uuid,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -110,7 +109,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the first matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByUuid_First(java.lang.String uuid,
+	public CrmCountyCommissioner findByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -121,7 +120,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUuid_First(java.lang.String uuid,
+	public CrmCountyCommissioner fetchByUuid_First(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -132,7 +131,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the last matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByUuid_Last(java.lang.String uuid,
+	public CrmCountyCommissioner findByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -143,7 +142,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUuid_Last(java.lang.String uuid,
+	public CrmCountyCommissioner fetchByUuid_Last(String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -156,7 +155,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @throws NoSuchCrmCountyCommissionerException if a CRM County Commissioner with the primary key could not be found
 	*/
 	public CrmCountyCommissioner[] findByUuid_PrevAndNext(
-		long crmCountyCommissionerOrBoardDistId, java.lang.String uuid,
+		long crmCountyCommissionerOrBoardDistId, String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -165,7 +164,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	*
 	* @param uuid the uuid
 	*/
-	public void removeByUuid(java.lang.String uuid);
+	public void removeByUuid(String uuid);
 
 	/**
 	* Returns the number of CRM County Commissioners where uuid = &#63;.
@@ -173,7 +172,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param uuid the uuid
 	* @return the number of matching CRM County Commissioners
 	*/
-	public int countByUuid(java.lang.String uuid);
+	public int countByUuid(String uuid);
 
 	/**
 	* Returns the CRM County Commissioner where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmCountyCommissionerException} if it could not be found.
@@ -183,8 +182,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCrmCountyCommissionerException;
+	public CrmCountyCommissioner findByUUID_G(String uuid, long groupId)
+		throws NoSuchCrmCountyCommissionerException;
 
 	/**
 	* Returns the CRM County Commissioner where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -193,8 +192,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param groupId the group ID
 	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUUID_G(java.lang.String uuid,
-		long groupId);
+	public CrmCountyCommissioner fetchByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns the CRM County Commissioner where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -204,8 +202,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUUID_G(java.lang.String uuid,
-		long groupId, boolean retrieveFromCache);
+	public CrmCountyCommissioner fetchByUUID_G(String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the CRM County Commissioner where uuid = &#63; and groupId = &#63; from the database.
@@ -214,8 +212,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param groupId the group ID
 	* @return the CRM County Commissioner that was removed
 	*/
-	public CrmCountyCommissioner removeByUUID_G(java.lang.String uuid,
-		long groupId) throws NoSuchCrmCountyCommissionerException;
+	public CrmCountyCommissioner removeByUUID_G(String uuid, long groupId)
+		throws NoSuchCrmCountyCommissionerException;
 
 	/**
 	* Returns the number of CRM County Commissioners where uuid = &#63; and groupId = &#63;.
@@ -224,7 +222,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param groupId the group ID
 	* @return the number of matching CRM County Commissioners
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId);
+	public int countByUUID_G(String uuid, long groupId);
 
 	/**
 	* Returns all the CRM County Commissioners where uuid = &#63; and companyId = &#63;.
@@ -233,8 +231,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param companyId the company ID
 	* @return the matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid_C(
-		java.lang.String uuid, long companyId);
+	public java.util.List<CrmCountyCommissioner> findByUuid_C(String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the CRM County Commissioners where uuid = &#63; and companyId = &#63;.
@@ -249,8 +247,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param end the upper bound of the range of CRM County Commissioners (not inclusive)
 	* @return the range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end);
+	public java.util.List<CrmCountyCommissioner> findByUuid_C(String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM County Commissioners where uuid = &#63; and companyId = &#63;.
@@ -266,8 +264,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -285,8 +283,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByUuid_C(String uuid,
+		long companyId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -299,7 +297,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the first matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByUuid_C_First(java.lang.String uuid,
+	public CrmCountyCommissioner findByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
@@ -312,7 +310,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUuid_C_First(java.lang.String uuid,
+	public CrmCountyCommissioner fetchByUuid_C_First(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
@@ -325,8 +323,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the last matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByUuid_C_Last(java.lang.String uuid,
-		long companyId,
+	public CrmCountyCommissioner findByUuid_C_Last(String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -338,7 +335,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByUuid_C_Last(java.lang.String uuid,
+	public CrmCountyCommissioner fetchByUuid_C_Last(String uuid,
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
@@ -353,8 +350,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @throws NoSuchCrmCountyCommissionerException if a CRM County Commissioner with the primary key could not be found
 	*/
 	public CrmCountyCommissioner[] findByUuid_C_PrevAndNext(
-		long crmCountyCommissionerOrBoardDistId, java.lang.String uuid,
-		long companyId,
+		long crmCountyCommissionerOrBoardDistId, String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -364,7 +360,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param uuid the uuid
 	* @param companyId the company ID
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId);
+	public void removeByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns the number of CRM County Commissioners where uuid = &#63; and companyId = &#63;.
@@ -373,7 +369,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param companyId the company ID
 	* @return the number of matching CRM County Commissioners
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId);
+	public int countByUuid_C(String uuid, long companyId);
 
 	/**
 	* Returns all the CRM County Commissioners where zipCode = &#63;.
@@ -381,8 +377,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param zipCode the zip code
 	* @return the matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode);
+	public java.util.List<CrmCountyCommissioner> findByZipCode(String zipCode);
 
 	/**
 	* Returns a range of all the CRM County Commissioners where zipCode = &#63;.
@@ -396,8 +391,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param end the upper bound of the range of CRM County Commissioners (not inclusive)
 	* @return the range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode, int start, int end);
+	public java.util.List<CrmCountyCommissioner> findByZipCode(String zipCode,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the CRM County Commissioners where zipCode = &#63;.
@@ -412,8 +407,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByZipCode(String zipCode,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -430,8 +425,8 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the ordered range of matching CRM County Commissioners
 	*/
-	public java.util.List<CrmCountyCommissioner> findByZipCode(
-		java.lang.String zipCode, int start, int end,
+	public java.util.List<CrmCountyCommissioner> findByZipCode(String zipCode,
+		int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator,
 		boolean retrieveFromCache);
 
@@ -443,7 +438,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the first matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByZipCode_First(java.lang.String zipCode,
+	public CrmCountyCommissioner findByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -454,8 +449,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByZipCode_First(
-		java.lang.String zipCode,
+	public CrmCountyCommissioner fetchByZipCode_First(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -466,7 +460,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @return the last matching CRM County Commissioner
 	* @throws NoSuchCrmCountyCommissionerException if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner findByZipCode_Last(java.lang.String zipCode,
+	public CrmCountyCommissioner findByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -477,7 +471,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching CRM County Commissioner, or <code>null</code> if a matching CRM County Commissioner could not be found
 	*/
-	public CrmCountyCommissioner fetchByZipCode_Last(java.lang.String zipCode,
+	public CrmCountyCommissioner fetchByZipCode_Last(String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator);
 
 	/**
@@ -490,7 +484,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @throws NoSuchCrmCountyCommissionerException if a CRM County Commissioner with the primary key could not be found
 	*/
 	public CrmCountyCommissioner[] findByZipCode_PrevAndNext(
-		long crmCountyCommissionerOrBoardDistId, java.lang.String zipCode,
+		long crmCountyCommissionerOrBoardDistId, String zipCode,
 		com.liferay.portal.kernel.util.OrderByComparator<CrmCountyCommissioner> orderByComparator)
 		throws NoSuchCrmCountyCommissionerException;
 
@@ -499,7 +493,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	*
 	* @param zipCode the zip code
 	*/
-	public void removeByZipCode(java.lang.String zipCode);
+	public void removeByZipCode(String zipCode);
 
 	/**
 	* Returns the number of CRM County Commissioners where zipCode = &#63;.
@@ -507,7 +501,7 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	* @param zipCode the zip code
 	* @return the number of matching CRM County Commissioners
 	*/
-	public int countByZipCode(java.lang.String zipCode);
+	public int countByZipCode(String zipCode);
 
 	/**
 	* Caches the CRM County Commissioner in the entity cache if it is enabled.
@@ -634,5 +628,5 @@ public interface CrmCountyCommissionerPersistence extends BasePersistence<CrmCou
 	public int countAll();
 
 	@Override
-	public java.util.Set<java.lang.String> getBadColumnNames();
+	public java.util.Set<String> getBadColumnNames();
 }

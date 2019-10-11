@@ -63,29 +63,6 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CrmNoteLocalServiceUtil} to access the CRM Note local service. Add custom service methods to {@link contact.manager.service.impl.CrmNoteLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ActionableDynamicQuery getActionableDynamicQuery();
-
-	public DynamicQuery dynamicQuery();
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		PortletDataContext portletDataContext);
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
-
-	/**
-	* @throws PortalException
-	*/
-	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
-		throws PortalException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException;
 
 	/**
 	* Adds the CRM Note to the database. Also notifies the appropriate model listeners.
@@ -96,12 +73,15 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.REINDEX)
 	public CrmNote addCrmNote(CrmNote crmNote);
 
+	public int countByCrmContactId(long crmContactId);
+
 	/**
 	* Creates a new CRM Note with the primary key. Does not add the CRM Note to the database.
 	*
 	* @param crmNoteId the primary key for the new CRM Note
 	* @return the new CRM Note
 	*/
+	@Transactional(enabled = false)
 	public CrmNote createCrmNote(long crmNoteId);
 
 	/**
@@ -123,67 +103,14 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	@Indexable(type = IndexableType.DELETE)
 	public CrmNote deleteCrmNote(long crmNoteId) throws PortalException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmNote fetchCrmNote(long crmNoteId);
-
 	/**
-	* Returns the CRM Note matching the UUID and group.
-	*
-	* @param uuid the CRM Note's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	* @throws PortalException
 	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmNote fetchCrmNoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId);
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
-	/**
-	* Returns the CRM Note with the primary key.
-	*
-	* @param crmNoteId the primary key of the CRM Note
-	* @return the CRM Note
-	* @throws PortalException if a CRM Note with the primary key could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmNote getCrmNote(long crmNoteId) throws PortalException;
-
-	/**
-	* Returns the CRM Note matching the UUID and group.
-	*
-	* @param uuid the CRM Note's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM Note
-	* @throws PortalException if a matching CRM Note could not be found
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public CrmNote getCrmNoteByUuidAndGroupId(java.lang.String uuid,
-		long groupId) throws PortalException;
-
-	/**
-	* Updates the CRM Note in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmNote the CRM Note
-	* @return the CRM Note that was updated
-	*/
-	@Indexable(type = IndexableType.REINDEX)
-	public CrmNote updateCrmNote(CrmNote crmNote);
-
-	public int countByCrmContactId(long crmContactId);
-
-	/**
-	* Returns the number of CRM Notes.
-	*
-	* @return the number of CRM Notes
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCrmNotesCount();
-
-	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
-	public java.lang.String getOSGiServiceIdentifier();
+	public DynamicQuery dynamicQuery();
 
 	/**
 	* Performs a dynamic query on the database and returns the matching rows.
@@ -224,6 +151,37 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
 		int end, OrderByComparator<T> orderByComparator);
 
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmNote fetchCrmNote(long crmNoteId);
+
+	/**
+	* Returns the CRM Note matching the UUID and group.
+	*
+	* @param uuid the CRM Note's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Note, or <code>null</code> if a matching CRM Note could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmNote fetchCrmNoteByUuidAndGroupId(String uuid, long groupId);
+
 	public List<CrmNote> findByCrmContactId(long crmContactId);
 
 	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
@@ -231,6 +189,31 @@ public interface CrmNoteLocalService extends BaseLocalService,
 
 	public List<CrmNote> findByCrmContactId(long crmContactId, int start,
 		int end, OrderByComparator<CrmNote> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	/**
+	* Returns the CRM Note with the primary key.
+	*
+	* @param crmNoteId the primary key of the CRM Note
+	* @return the CRM Note
+	* @throws PortalException if a CRM Note with the primary key could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmNote getCrmNote(long crmNoteId) throws PortalException;
+
+	/**
+	* Returns the CRM Note matching the UUID and group.
+	*
+	* @param uuid the CRM Note's UUID
+	* @param groupId the primary key of the group
+	* @return the matching CRM Note
+	* @throws PortalException if a matching CRM Note could not be found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public CrmNote getCrmNoteByUuidAndGroupId(String uuid, long groupId)
+		throws PortalException;
 
 	/**
 	* Returns a range of all the CRM Notes.
@@ -254,7 +237,7 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	* @return the matching CRM Notes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmNote> getCrmNotesByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmNote> getCrmNotesByUuidAndCompanyId(String uuid,
 		long companyId);
 
 	/**
@@ -268,25 +251,43 @@ public interface CrmNoteLocalService extends BaseLocalService,
 	* @return the range of matching CRM Notes, or an empty list if no matches were found
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<CrmNote> getCrmNotesByUuidAndCompanyId(java.lang.String uuid,
+	public List<CrmNote> getCrmNotesByUuidAndCompanyId(String uuid,
 		long companyId, int start, int end,
 		OrderByComparator<CrmNote> orderByComparator);
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the number of CRM Notes.
 	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
+	* @return the number of CRM Notes
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery);
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getCrmNotesCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
-	* Returns the number of rows matching the dynamic query.
+	* Returns the OSGi service identifier.
 	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
+	* @return the OSGi service identifier
 	*/
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection);
+	public String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
+
+	/**
+	* Updates the CRM Note in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param crmNote the CRM Note
+	* @return the CRM Note that was updated
+	*/
+	@Indexable(type = IndexableType.REINDEX)
+	public CrmNote updateCrmNote(CrmNote crmNote);
 }

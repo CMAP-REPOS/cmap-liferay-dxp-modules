@@ -24,6 +24,7 @@ import com.liferay.exportimport.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.model.CacheModel;
+import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
 import com.liferay.portal.kernel.service.ServiceContext;
@@ -32,7 +33,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import contact.manager.model.CrmStateSenate;
 import contact.manager.model.CrmStateSenateModel;
@@ -248,7 +248,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 	@Override
 	public String getUuid() {
 		if (_uuid == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _uuid;
@@ -340,7 +340,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 			return user.getUuid();
 		}
 		catch (PortalException pe) {
-			return StringPool.BLANK;
+			return "";
 		}
 	}
 
@@ -351,7 +351,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _userName;
@@ -392,7 +392,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 	@Override
 	public String getName() {
 		if (_name == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _name;
@@ -409,7 +409,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 	@Override
 	public String getNumber() {
 		if (_number == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _number;
@@ -426,7 +426,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 	@Override
 	public String getZipCode() {
 		if (_zipCode == null) {
-			return StringPool.BLANK;
+			return "";
 		}
 		else {
 			return _zipCode;
@@ -743,7 +743,7 @@ public class CrmStateSenateModelImpl extends BaseModelImpl<CrmStateSenate>
 
 	private static final ClassLoader _classLoader = CrmStateSenate.class.getClassLoader();
 	private static final Class<?>[] _escapedModelInterfaces = new Class[] {
-			CrmStateSenate.class
+			CrmStateSenate.class, ModelWrapper.class
 		};
 	private String _uuid;
 	private String _originalUuid;

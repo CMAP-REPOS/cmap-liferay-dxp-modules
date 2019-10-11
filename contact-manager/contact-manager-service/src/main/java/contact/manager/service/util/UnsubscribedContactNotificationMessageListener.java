@@ -29,13 +29,14 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central)
+		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central Standard)
+//		property = {"cron.expression=0 0 20 * * ?"}, // Every day at 8pm UTC (3pm Central Daylight)
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )
 public class UnsubscribedContactNotificationMessageListener
 extends ContactManagerBaseMessageListener {
 	private static final Log _log = LogFactoryUtil.getLog(UnsubscribedContactNotificationMessageListener.class);
-	
+	private static final String _ARTIFACT_BUILD_VERSION = "UnsubscribedContactNotificationMessageListener build 20190625";
 	private static final Boolean _QUERY_REMOVED_CONTACTS = true;
 
 	@Reference(unbind = "-")
@@ -70,6 +71,18 @@ extends ContactManagerBaseMessageListener {
 			_log.trace(">> doReceive ");
 		}
 
+		if ( !PropsUtil.contains(ContactNotificationConstants.UNSUBSCRIBED_VIP_NOTIFICATION_ENABLED) 
+			|| !PropsUtil.get(ContactNotificationConstants.UNSUBSCRIBED_VIP_NOTIFICATION_ENABLED).equalsIgnoreCase("true") ) {
+			
+			if (_log.isWarnEnabled()) {
+				_log.warn("doReceive aborted because " + ContactNotificationConstants.UNSUBSCRIBED_VIP_NOTIFICATION_ENABLED + " is set to false");
+			}
+		
+			if (_log.isTraceEnabled()) {
+				_log.trace("<< doReceive (early return) ");
+			}
+			return;
+		}
 		
 		List<UnsubscribedContact> unsubscribedContactList = new ArrayList<UnsubscribedContact>();
 
@@ -129,26 +142,40 @@ extends ContactManagerBaseMessageListener {
 						
 						List<EmailAddress> emailAddressList = constantContactContact.getEmailAddresses();
 						if (emailAddressList != null && !emailAddressList.isEmpty()) {
-							EmailAddress emailAddress = emailAddressList.get(0);
-							if (null != emailAddress && null != emailAddress.getOptOutDate() ) {
-								unsubscribeDate = ConstantContactUtil.parseIsoDate( emailAddress.getOptOutDate() );
+							for(EmailAddress emailAddressItem : emailAddressList) {
+								if (null != emailAddressItem && null != emailAddressItem.getOptOutDate() ) {
+									unsubscribeDate = ConstantContactUtil.parseIsoDate( emailAddressItem.getOptOutDate() );
+									break;
+								}
 							}
 						}
 						
-						if ( (null != unsubscribeDate && unsubscribeDate.after( yesterdayDate )) || (_QUERY_REMOVED_CONTACTS && null == unsubscribeDate) ) {
+						if (
+								null != contactListItem.getPrimaryEmailAddress() 
+								&& (
+										(
+											null != unsubscribeDate 
+											&& unsubscribeDate.after( yesterdayDate )
+										)  
+										|| (
+											_QUERY_REMOVED_CONTACTS 
+											&& null == unsubscribeDate
+										)
+									)
+							) {
 							
-							UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
+							UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate, null == unsubscribeDate ); 
 
 							if (_log.isDebugEnabled()) {
-								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) );
+								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + (unsubscribedContact.isRemoved() ? " removed by an administrator" : " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) ) );
 							}
 							
 							unsubscribedContactList.add(unsubscribedContact);
 						}
 						else {
 							if (_log.isDebugEnabled()) {
-								UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate ); 
-								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) + " - Ignored" );
+								UnsubscribedContact unsubscribedContact = new UnsubscribedContact( constantContactContact.getId(), contactListItem.getPrimaryEmailAddress(), unsubscribeDate, null == unsubscribeDate ); 
+								_log.debug("Contact " + unsubscribedContact.getConstantContactActivityEmailAddress() + (unsubscribedContact.isRemoved() ? " removed by an administrator" : " unsubscribed on " + formatDate(unsubscribedContact.getConstantContactActivityUnsubscribeDate()) ) + " - Ignored" );
 							}
 						}
 					}
@@ -161,34 +188,40 @@ extends ContactManagerBaseMessageListener {
 			}
 		}
 
-		if (null != unsubscribedContactList && !unsubscribedContactList.isEmpty()) {
-
-			if (_log.isInfoEnabled()) {
-				_log.info("Calling email utility with list of " + Integer.toString( unsubscribedContactList.size() ) + " VIP contacts...");
-			}
-
-			final String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); // "cmap@cmap1pas2.illinois.gov";
-			final String to = PropsUtil.get(ContactNotificationConstants.EMAIL_TO_ADDRESS); // "contactmanagers@cmap.illinois.gov"; // "cmap.contactmanagers@base22.com";
-			final String cc[] = PropsUtil.getArray(ContactNotificationConstants.EMAIL_CC_ADDRESS); // {"kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov"};
-			final String subject ="CMAP - VIP Contact Unsubscribe Alert";
-
-			if (_log.isDebugEnabled()) {
-				_log.debug("Email properties:\nFrom: " + (null != from ? from : "null") + "; to: " + ( null != to ? to : "null") + "; CC: " + ( null != cc ? String.join(", ", cc) : "null") );
-			}
-
-			if ( null != to && !to.trim().isEmpty() ) {
-				UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(from, to, cc, subject, unsubscribedContactList);
-			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Email will not be sent because there's no email address configured for the property " + ContactNotificationConstants.EMAIL_TO_ADDRESS);
-			}
-		}
-		else {
+		if ( null == unsubscribedContactList || unsubscribedContactList.isEmpty() ) {
 			if (_log.isInfoEnabled()) {
 				_log.info("No VIP contacts unsubscribed");
 			}
+			
+			if (_log.isTraceEnabled()) {
+				_log.trace("<< doReceive (early return) ");
+			}
+
+			return;
 		}
+
+		if (_log.isInfoEnabled()) {
+			_log.info("Calling email utility with list of " + Integer.toString( unsubscribedContactList.size() ) + " VIP contacts...");
+		}
+
+		final String from = PropsUtil.get(ContactNotificationConstants.EMAIL_FROM_ADDRESS); // "cmap@cmap1pas2.illinois.gov";
+		final String to = PropsUtil.get(ContactNotificationConstants.EMAIL_TO_ADDRESS); // "contactmanagers@cmap.illinois.gov";
+		final String cc[] = PropsUtil.getArray(ContactNotificationConstants.EMAIL_CC_ADDRESS); // {"kharris@cmap.illinois.gov", "SKane@cmap.illinois.gov"};
+		final String subject = "CMAP - Important Subscribers Unsubscribed Alert";
+		final String footer = _ARTIFACT_BUILD_VERSION + " " + PropsUtil.get(ContactNotificationConstants.ENVIRONMENT_NAME);
 		
+		if (_log.isDebugEnabled()) {
+			_log.debug("Email properties:\nFrom: " + (null != from ? from : "null") + "; to: " + ( null != to ? to : "null") + "; CC: " + ( null != cc ? String.join(", ", cc) : "null") );
+		}
+
+		if ( null != to && !to.trim().isEmpty() ) {
+			UnsubscribedContactNotificationEmailUtil.buildAndSendEmail(from, to, cc, subject, unsubscribedContactList, footer);
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn("Email will not be sent because there's no email address configured for the property " + ContactNotificationConstants.EMAIL_TO_ADDRESS);
+		}
+
+			
 		if (_log.isTraceEnabled()) {
 			_log.trace("<< doReceive ");
 		}
