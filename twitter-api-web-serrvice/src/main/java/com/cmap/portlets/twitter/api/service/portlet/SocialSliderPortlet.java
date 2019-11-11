@@ -256,8 +256,6 @@ public class SocialSliderPortlet extends MVCPortlet {
 	        urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
 	    }
 	    
-	    System.out.println("Authorization Request header -> " + authorizationHeaderValue);
-	    
 	    GetMethod getMethod = new GetMethod(urlWithParams.toString());
 
 	    getMethod.addRequestHeader("Authorization", authorizationHeaderValue);
