@@ -2,8 +2,7 @@
 
 <%
 	//CalendarBooking event = calendarBookings.get(0);
-	request.setAttribute("events", eventBlocks);
-	
+	request.setAttribute("eventsMap", eventsMap);
 %>
 
 <div class="row-no-margin">
@@ -19,22 +18,22 @@
             <hr class="header-hr">
             <div class="b-event-list__list">
                 <!-- ========= START: Event ITEM ======== -->
-                <c:forEach var="event" items="${events}">
+                <c:forEach var="event" items="${eventsMap}">
                 
 	                <div class="b-event-item">
 	                    <p class="b-event-item__event-date">
 	                        <!-- Event Date -->
-	                        <span class="b-event-item__date">${ event.getMonth() } ${ event.getDay() }</span>
+	                        <span class="b-event-item__date">${ event.key.getMonth() } ${ event.key.getDay() }</span>
 	                        <!-- Event Day Name -->
-	                        <span class="b-event-item__day">${ event.getWeekday() }</span>
+	                        <span class="b-event-item__day">${ event.key.getWeekday() }</span>
 	                    </p>
 	                    <!-- Event Time -->
 	                    <p class="b-event-item__event-time">
-	                        ${ event.getDuration() }
+	                        ${ event.key.getDuration() }
 	                    </p>
 	                    <!-- Event Detail, and Event Name -->
 	                    <p class="b-event-item__event-name">
-	                        ${ event.getTitle() }
+	                        <a href="${ event.value }"> ${ event.key.getTitle() } </a>
 	                    </p>
 	                </div>       
 				</c:forEach>
@@ -63,21 +62,21 @@
                 </div>
                 <div class="b-event-list__list slider-container slider-container-calendar">
                     <!-- ========= START: Event ITEM ======== -->
-                    <c:forEach var="event" items="${events}">
+                    <c:forEach var="event" items="${eventsMap}">
 	                    <div class="col-xs-16 b-event-item">
 	                        <p class="b-event-item__event-date">
 	                            <!-- Event Date -->
-	                            <span class="b-event-item__date">${ event.getMonth() } ${ event.getDay() }</span>
+	                            <span class="b-event-item__date">${ event.key.getMonth() } ${ event.key.getDay() }</span>
 	                            <!-- Event Day Name -->
-	                            <span class="b-event-item__day">${ event.getWeekday() }</span>
+	                            <span class="b-event-item__day">${ event.key.getWeekday() }</span>
 	                        </p>
 	                        <!-- Event Time -->
 	                        <p class="b-event-item__event-time">
-	                            ${ event.getDuration() }
+	                            ${ event.key.getDuration() }
 	                        </p>
 	                        <!-- Link to Event Detail, and Event Name -->
 	                        <p class="b-event-item__event-name">
-	                        	${ event.getTitle() }
+	                        	<a href="${ event.value }"> ${ event.key.getTitle() } </a>
 	                        </p>
 	                    </div>
                     </c:forEach>
