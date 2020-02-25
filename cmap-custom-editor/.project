@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>cmap.custom.editor</name>
-	<comment>Project cmap.custom.editor created by Buildship.</comment>
+	<name>cmap-custom-editor</name>
+	<comment>Project cmap-custom-editor created by Buildship.</comment>
 	<projects>
 	</projects>
 	<buildSpec>
