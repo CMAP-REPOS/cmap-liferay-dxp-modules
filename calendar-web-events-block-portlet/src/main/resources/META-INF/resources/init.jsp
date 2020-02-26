@@ -19,11 +19,14 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.PrintWriter"%>
+<%@ page import="java.io.Serializable"%>
 <%@ page import="java.text.DateFormat"%>
 <%@ page import="java.text.SimpleDateFormat"%>
 <%@ page import="java.util.Date"%>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
+<%@ page import="java.util.Map"%>
+<%@ page import="java.util.HashMap"%>
 
 <%@ page import="javax.portlet.Portlet"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -43,6 +46,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	List<CalendarBooking> calendarBookings = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq, 0, count, orderByComparator);
 	
 	List<EventBlock> eventBlocks = new ArrayList<>();
+	Map<EventBlock, Serializable> eventsMap = new HashMap<EventBlock, Serializable>();
 	Date date = new Date();
 	long timeMilli = date.getTime();
 	int eventLimit = 0;
@@ -54,8 +58,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 			EventBlock eventBlock = new EventBlock(event);
 		    eventBlocks.add(eventBlock);
 		    eventLimit++;
+		    
+		    eventsMap.put(eventBlock, event.getExpandoBridge().getAttribute("Link"));
 		}
 	}
-	 
-
 %>
