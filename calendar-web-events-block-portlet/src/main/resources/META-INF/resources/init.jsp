@@ -26,7 +26,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="java.util.List"%>
 <%@ page import="java.util.ArrayList"%>
 <%@ page import="java.util.Map"%>
-<%@ page import="java.util.HashMap"%>
+<%@ page import="java.util.LinkedHashMap"%>
+<%@ page import="java.util.TreeMap"%>
 
 <%@ page import="javax.portlet.Portlet"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -46,7 +47,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	List<CalendarBooking> calendarBookings = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery(dq, 0, count, orderByComparator);
 	
 	List<EventBlock> eventBlocks = new ArrayList<>();
-	Map<EventBlock, Serializable> eventsMap = new HashMap<EventBlock, Serializable>();
+	Map<EventBlock, Serializable> eventsMap = new LinkedHashMap<EventBlock, Serializable>();
 	Date date = new Date();
 	long timeMilli = date.getTime();
 	int eventLimit = 0;
@@ -58,8 +59,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 			EventBlock eventBlock = new EventBlock(event);
 		    eventBlocks.add(eventBlock);
 		    eventLimit++;
-		    
-		    eventsMap.put(eventBlock, event.getExpandoBridge().getAttribute("Link"));
+		    Serializable eventLink = event.getExpandoBridge().getAttribute("Link");
+		    eventsMap.put(eventBlock, eventLink);
 		}
 	}
+	
+	
 %>

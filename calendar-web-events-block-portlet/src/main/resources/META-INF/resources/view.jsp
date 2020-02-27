@@ -19,7 +19,6 @@
             <div class="b-event-list__list">
                 <!-- ========= START: Event ITEM ======== -->
                 <c:forEach var="event" items="${eventsMap}">
-                
 	                <div class="b-event-item">
 	                    <p class="b-event-item__event-date">
 	                        <!-- Event Date -->
