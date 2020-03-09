@@ -1,5 +1,0 @@
-Bundle-Name: my-new-button
-Bundle-SymbolicName: com.liferay.docs.my.button
-Bundle-Version: 1.0.0
-Export-Package: com.liferay.docs.my.button.constants
-Web-ContextPath: /my-new-button

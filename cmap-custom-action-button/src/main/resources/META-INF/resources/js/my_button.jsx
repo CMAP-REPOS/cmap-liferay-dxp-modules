@@ -95,7 +95,7 @@
 				 * @method  _createActions
 				 */
 				_createActions: function() {
-				    alert("I am working");
+				    console.log("Why am i here");
 				    // var numberOfActions = prompt("How many actions do you want?", "1");
 				    // while ( confirm("Do you want " + numberOfActions + "?") !== true ) {
 				    // 	numberOfActions = prompt("How many actions do you want?", "1");
