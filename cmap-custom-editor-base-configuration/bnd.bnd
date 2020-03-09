@@ -1,0 +1,4 @@
+Bundle-Name: cmap-custom-editor-base-configuration
+Bundle-SymbolicName: gov.illinois.cmap.custom.editor.base.configuration
+Bundle-Version: 1.0.0
+Export-Package: gov.illinois.cmap.custom.editor.base.configuration.constants

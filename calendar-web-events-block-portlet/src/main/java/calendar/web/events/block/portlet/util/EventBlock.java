@@ -1,7 +1,6 @@
 package calendar.web.events.block.portlet.util;
 
 import com.liferay.calendar.model.CalendarBooking;
-
 import java.io.Serializable;
 
 public class EventBlock implements Serializable {
@@ -19,7 +18,7 @@ public class EventBlock implements Serializable {
 		 return BaseDateUtil.getMonthName(event); 
 	 }
 	 
-	 public int getDay() {
+	 public String getDay() {
 		 return BaseDateUtil.getDayNumber(event); 
 	 }
 	 

@@ -1,0 +1,5 @@
+Bundle-Name: yellButton
+Bundle-SymbolicName: yellButton
+Bundle-Version: 1.0.0
+Export-Package: yellButton.constants
+Web-ContextPath: /yell-button-project

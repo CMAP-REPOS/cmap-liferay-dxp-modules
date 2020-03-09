@@ -1,4 +1,0 @@
-Bundle-Name: cmap-custom-editor
-Bundle-SymbolicName: gov.illinois.cmap.custom.editor
-Bundle-Version: 1.0.0
-Export-Package: gov.illinois.cmap.custom.editor.constants

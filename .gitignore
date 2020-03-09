@@ -3,3 +3,4 @@ custom-portlets/bin
 /.settings
 .DS_Store
 calendar-web-events-block-portlet/bin
+/node-modules
