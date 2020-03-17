@@ -80,13 +80,15 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		System.out.println("TODAY TIME: " + timeMilli);
 		System.out.println("Recurrence " + event.getRecurrence());
 		System.out.println("RecurrenceObject " + event.getRecurrenceObj());
+		System.out.println("Object is in thrash: " + event.isInTrash());
+		
 		
 		// Get recurring Events and insert them into a new List
 		// recurrence=RRULE:FREQ=DAILY;UNTIL=20200320;INTERVAL=2,
-		List<CalendarBooking> recurringBookings;
-		if (Validator.isNotNull(event.getRecurrenceObj())) {
-			System.out.println("Event is recurrent");
-		}
+	//	List<CalendarBooking> recurringBookings;
+	//	if (Validator.isNotNull(event.getRecurrenceObj())) {
+	//		System.out.println("Event is recurrent");
+	//	}
 		
 		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
 		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())

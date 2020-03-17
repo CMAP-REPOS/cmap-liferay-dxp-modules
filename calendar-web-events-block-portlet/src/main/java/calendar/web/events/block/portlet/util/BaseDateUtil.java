@@ -51,15 +51,15 @@ public class BaseDateUtil {
 		Date dateStart = new Date(dateEventStart);
 		Date dateEnd = new Date(dateEventEnd);
 		
-		System.out.println("BASEDATEUTIL dateStart " + dateStart);
-		System.out.println("BASEDATEUTIL dateEnd " + dateEnd);
+	//	System.out.println("BASEDATEUTIL dateStart " + dateStart);
+	//	System.out.println("BASEDATEUTIL dateEnd " + dateEnd);
 		
 		SimpleDateFormat simpleDateformat = new SimpleDateFormat("h:mm a");
 		TimeZone etTimeZone = TimeZone.getTimeZone("America/Chicago"); //Target timezone
 		simpleDateformat.setTimeZone(etTimeZone);
 		
-		System.out.println("BASEDATEUTIL dateStartFormatted " + simpleDateformat.format(dateStart));
-		System.out.println("BASEDATEUTIL dateEndFormatted " + simpleDateformat.format(dateEnd));
+	//	System.out.println("BASEDATEUTIL dateStartFormatted " + simpleDateformat.format(dateStart));
+	//	System.out.println("BASEDATEUTIL dateEndFormatted " + simpleDateformat.format(dateEnd));
 	
 		String eventDuration = simpleDateformat.format(dateStart) + "-" + simpleDateformat.format(dateEnd);
 		
