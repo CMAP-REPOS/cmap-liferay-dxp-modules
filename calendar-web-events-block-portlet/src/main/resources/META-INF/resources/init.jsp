@@ -43,6 +43,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	// Get the number of existing Bookings
 	int count = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
 
+	System.out.println(count);
+
 	// Create the necessary utilities to create the query to get all the bookings
 	DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
 	OrderByComparator orderByComparator = new CalendarBookingsEventStartTimeComparator(true);

@@ -63,6 +63,12 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 		 * SpecialChar = SpecialChar
 		 * Templates = Templates
 		 * Format = FormatDropdown
+		 * PasteText = paste with format
+		 * PasteFromWord = paste with Word Format
+		 * ShowBlocks = show the building blocks of the page
+		 * 
+		 * Want to add but not working:
+		 * 
 		 * BasicStyles = Bold/Italic/Underline/Strike/Subscript/Superscript
 		 * SCAYT = Spell Check As You Type
 		 * 
@@ -71,11 +77,11 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 		String extraPlugins = jsonObject.getString("extraPlugins");
 		if (Validator.isNotNull(extraPlugins)) {
 		  extraPlugins = extraPlugins + ",ae_uibridge,ae_buttonbridge,ae_menubridge,ae_panelmenubuttonbridge,ae_richcombobridge,ae_autolink,ae_placeholder," +
-				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format";
+				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt";
 		}
 		else {
 		  extraPlugins = "ae_uibridge,ae_buttonbridge,ae_menubridge,ae_panelmenubuttonbridge,ae_richcombobridge,ae_autolink,ae_placeholder," + 
-				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format";
+				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt";
 		}
 		jsonObject.put("extraPlugins", extraPlugins);
 		
@@ -86,10 +92,6 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 		// Add buttons to add toolbar
         addToolbarButtons.put("PageBreak");
         addToolbarButtons.put("SpecialChar");
-        
-        // TODO:
-        // Add templates URL
-        addToolbarButtons.put("Templates");
 		
 		// Add config too AlloyEditor
 		addToolbar.put("buttons", addToolbarButtons);
@@ -135,6 +137,8 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	                buttons.put("Copy");
 	                buttons.put("Cut");
 	                buttons.put("Paste");
+	                buttons.put("PasteText");
+	                buttons.put("PasteFromWord");
 	                buttons.put("Undo");
 	                buttons.put("Redo");
 	                buttons.put("paragraphRight");
@@ -144,11 +148,14 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	                buttons.put("SelectAll");
 	                buttons.put("Find");
 	                buttons.put("Replace");
-//	                buttons.put("Scayt");
-	                //AlloyEditor Strike
-	                //buttons.put("strike");
-	                //CKEditor Strike
-	                //buttons.put("Strike");
+	                buttons.put("ShowBlocks");
+	                //AlloyEditor Failing Buttons
+	                buttons.put("strike");
+	                buttons.put("quote");
+	                //CKEditor Failing Plugins
+	                buttons.put("Strike");
+	                buttons.put("Scayt");
+	                buttons.put("IndentBlock");
 	                
 	        }
 		}
@@ -161,10 +168,10 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	}
 	
 	/*
-	 * Helper function to remove the Format Styles Dropdown
-	 * @param: styleButtonsJSONArray = the buttonToolbar to clean
+	 * Helper function to clean the Format Styles Dropdown
+	 * @param: dropdownStyles = the dropdownStyles toolbar button that will be cleaned
 	 * @param: index = the limit to which we will remove itmes from the dropdown
-	 * @return: newJSONArray = a new Array that has all the elements of styleButtonsArray except index
+	 * @return: newJSONArray = a new Array that has all the elements of dropdownStyles until the index (inclusive)
 	 */
 	private JSONArray cleanDropdownStyles (JSONArray dropdownStyles, int index) {
 		
