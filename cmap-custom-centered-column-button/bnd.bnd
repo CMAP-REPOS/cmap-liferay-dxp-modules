@@ -2,3 +2,4 @@ Bundle-Name: cmap-custom-centered-column-button
 Bundle-SymbolicName: gov.illinois.cmap.custom.editor.centered.column.button
 Bundle-Version: 1.0.0
 Export-Package: gov.illinois.cmap.custom.editor.centered.column.button.constants
+Web-ContextPath: /cmap-custom-centered-column-button

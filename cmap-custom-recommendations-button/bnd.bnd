@@ -1,0 +1,5 @@
+Bundle-Name: cmap-custom-recommendations-button
+Bundle-SymbolicName: gov.illinois.cmap.custom.editor.recommendations.button
+Bundle-Version: 1.0.0
+Export-Package: gov.illinois.cmap.custom.editor.recommendations.button.constants
+Web-ContextPath: /cmap-custom-recommendations-button

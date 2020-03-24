@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "babel-preset-react": "^6.11.1",
+    "metal-cli": "^4.0.1"
+  },
+  "name": "cmap-custom-page-card-button",
+  "version": "1.0.0",
+  "dependencies": {
+    "liferay-module-config-generator": "^1.3.3"
+  }
+}

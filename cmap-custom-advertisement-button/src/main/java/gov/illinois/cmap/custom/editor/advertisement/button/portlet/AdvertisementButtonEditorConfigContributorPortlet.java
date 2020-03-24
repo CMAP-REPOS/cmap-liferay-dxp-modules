@@ -1,4 +1,4 @@
-package gov.illinois.cmap.custom.editor.centered.column.button.portlet;
+package gov.illinois.cmap.custom.editor.advertisement.button.portlet;
 
 import com.liferay.portal.kernel.editor.configuration.BaseEditorConfigContributor;
 import com.liferay.portal.kernel.editor.configuration.EditorConfigContributor;
@@ -23,7 +23,7 @@ import org.osgi.service.component.annotations.Component;
 	    },
 	    service = EditorConfigContributor.class  
 )
-public class CenteredColumnButtonEditorConfigContributorPortlet extends BaseEditorConfigContributor {
+public class AdvertisementButtonEditorConfigContributorPortlet extends BaseEditorConfigContributor {
 
 	@Override
 	public void populateConfigJSONObject(JSONObject jsonObject, Map<String, Object> inputEditorTaglibAttributes,
@@ -38,10 +38,14 @@ public class CenteredColumnButtonEditorConfigContributorPortlet extends BaseEdit
 		JSONArray addToolbarButtons = addToolbar.getJSONArray("buttons");
 		
 		//put
-		addToolbarButtons.put("centeredColumnButton");
+		addToolbarButtons.put("advertisementButton");
+		
 		
 		addToolbar.put("buttons", addToolbarButtons);
+
 		toolbarsJSONObject.put("add", addToolbar);
+
 		jsonObject.put("toolbars", toolbarsJSONObject);
+
 	}
 }

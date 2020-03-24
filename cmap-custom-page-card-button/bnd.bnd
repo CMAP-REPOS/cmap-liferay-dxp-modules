@@ -1,0 +1,5 @@
+Bundle-Name: cmap-custom-page-card-button
+Bundle-SymbolicName: gov.illinois.cmap.custom.editor.page.card.button
+Bundle-Version: 1.0.0
+Export-Package: gov.illinois.cmap.custom.editor.page.card.button.constants
+Web-ContextPath: /cmap-custom-page-card-button

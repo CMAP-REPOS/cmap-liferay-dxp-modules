@@ -1,7 +1,5 @@
 /* global React, ReactDOM AlloyEditor */
 
-import './../css/main.css'
-
 (function() {
         'use strict';
 
