@@ -152,6 +152,8 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	                //AlloyEditor Failing Buttons
 	                buttons.put("strike");
 	                buttons.put("quote");
+	                buttons.put("subscript");
+	                buttons.put("superscript");
 	                //CKEditor Failing Plugins
 	                buttons.put("Strike");
 	                buttons.put("Scayt");
