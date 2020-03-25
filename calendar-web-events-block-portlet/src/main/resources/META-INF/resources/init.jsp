@@ -35,6 +35,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="javax.portlet.RenderRequest"%>
 <%@ page import="javax.portlet.RenderResponse"%>
 
+<%@ page import="com.liferay.calendar.recurrence.RecurrenceSerializer"%>
+<%@ page import="com.liferay.calendar.recurrence.Recurrence"%>
+<%@ page import="java.util.TimeZone"%>
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
@@ -85,10 +89,21 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		
 		// Get recurring Events and insert them into a new List
 		// recurrence=RRULE:FREQ=DAILY;UNTIL=20200320;INTERVAL=2,
-	//	List<CalendarBooking> recurringBookings;
-	//	if (Validator.isNotNull(event.getRecurrenceObj())) {
-	//		System.out.println("Event is recurrent");
-	//	}
+		List<CalendarBooking> recurringBookings;
+		if (Validator.isNotNull(event.getRecurrenceObj())) {
+			Recurrence recurrence = event.getRecurrenceObj();
+			System.out.println("Event is recurrent");
+			Recurrence deserializedRecurrence = RecurrenceSerializer.deserialize(event.getRecurrence(), TimeZone.getTimeZone("America/Chicago"));
+			System.out.println("Deserialized Recurrence: " + deserializedRecurrence);
+			System.out.println("Serialized Recurrence: " + RecurrenceSerializer.serialize(deserializedRecurrence));
+			System.out.println("UntilJCalendar: " + recurrence.getUntilJCalendar());
+			System.out.println("ExceptionJCalendars: " + recurrence.getExceptionJCalendars());
+			System.out.println("Interval: " + recurrence.getInterval());
+			System.out.println("Weekdays: " + recurrence.getWeekdays());
+			System.out.println("Positional Weekdays: " + recurrence.getPositionalWeekdays());
+			System.out.println("Positional Weekday: " + recurrence.getPositionalWeekday());
+			System.out.println("Months: " + recurrence.getMonths());
+		}
 		
 		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
 		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())
