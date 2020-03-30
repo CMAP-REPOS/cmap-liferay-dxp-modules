@@ -17,6 +17,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet"%>
 <%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
 <%@ page import="com.liferay.portal.kernel.util.Validator"%>
+<%@ page import="com.liferay.portal.kernel.util.Time"%>
 
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.PrintWriter"%>
@@ -29,6 +30,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.LinkedHashMap"%>
 <%@ page import="java.util.TreeMap"%>
+<%@ page import="java.util.TimeZone"%>
+<%@ page import="java.util.Collections"%>
 
 <%@ page import="javax.portlet.Portlet"%>
 <%@ page import="javax.portlet.PortletException"%>
@@ -37,7 +40,8 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 
 <%@ page import="com.liferay.calendar.recurrence.RecurrenceSerializer"%>
 <%@ page import="com.liferay.calendar.recurrence.Recurrence"%>
-<%@ page import="java.util.TimeZone"%>
+<%@ page import="com.liferay.calendar.util.RecurrenceUtil"%>
+
 
 <liferay-theme:defineObjects />
 
@@ -70,8 +74,22 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	// Initialize the event limit
 	int eventLimit = 0;
 	
+	// Testing for recurrence
+	long now = new Date().getTime();
+	long endTime = now + Time.MONTH;
+			
+	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(calendarBookings, now, endTime, 5);
+	System.out.println("\n\n\nAll Events expanded:\n\n\n" + allEventsExpanded);
+	
+	// order allEventsExpanded and we're done
+	// TODO
+	// Order events
+	Collections.sort(allEventsExpanded, orderByComparator);
+	
+	System.out.println("\n\n\nAll Events expanded after sort:\n\n\n" + allEventsExpanded);
+	
 	// Iterate through all the events
-	for(CalendarBooking event:calendarBookings)
+	for(CalendarBooking event:allEventsExpanded)
 	{	
 		// For each event set the start and end time in milliseconds
 		long milisEventStartTime = event.getStartTime() / 1000;
@@ -79,19 +97,19 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		event.setStartTime(milisEventStartTime);
 		event.setEndTime(milisEventEndTime);
 		
-		System.out.println("\n\nEvent " + event);
+		/* System.out.println("\n\nEvent " + event);
 		System.out.println("EVENT START TIME: " + event.getStartTime());
 		System.out.println("TODAY TIME: " + timeMilli);
 		System.out.println("Recurrence " + event.getRecurrence());
 		System.out.println("RecurrenceObject " + event.getRecurrenceObj());
-		System.out.println("Object is in thrash: " + event.isInTrash());
+		System.out.println("Object is in thrash: " + event.isInTrash()); */
 		
 		
 		// Get recurring Events and insert them into a new List
 		// recurrence=RRULE:FREQ=DAILY;UNTIL=20200320;INTERVAL=2,
 		List<CalendarBooking> recurringBookings;
 		if (Validator.isNotNull(event.getRecurrenceObj())) {
-			Recurrence recurrence = event.getRecurrenceObj();
+			/* Recurrence recurrence = event.getRecurrenceObj();
 			System.out.println("Event is recurrent");
 			Recurrence deserializedRecurrence = RecurrenceSerializer.deserialize(event.getRecurrence(), TimeZone.getTimeZone("America/Chicago"));
 			System.out.println("Deserialized Recurrence: " + deserializedRecurrence);
@@ -102,7 +120,9 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 			System.out.println("Weekdays: " + recurrence.getWeekdays());
 			System.out.println("Positional Weekdays: " + recurrence.getPositionalWeekdays());
 			System.out.println("Positional Weekday: " + recurrence.getPositionalWeekday());
-			System.out.println("Months: " + recurrence.getMonths());
+			System.out.println("Months: " + recurrence.getMonths()); */
+			//List<CalendarBooking> expandedCalendarBooking = RecurrenceUtil.expandCalendarBooking(event, timeMilli, endTime, 5);
+			//System.out.println("\n\nList of expanded CalendarBooking:\n\n" + expandedCalendarBooking);
 		}
 		
 		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
@@ -111,7 +131,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 			// Create an EventBlock from the event
 			EventBlock eventBlock = new EventBlock(event);
 			
-			System.out.println(eventBlock.getMonth() + " " + eventBlock.getDay() + " " + eventBlock.getTitle() + " " + eventBlock.getDuration() + "\n\n\n\n");
+			// System.out.println(eventBlock.getMonth() + " " + eventBlock.getDay() + " " + eventBlock.getTitle() + " " + eventBlock.getDuration() + "\n\n\n\n");
 			
 			// Add it to the eventBlocks Array and count it
 		    eventBlocks.add(eventBlock);
