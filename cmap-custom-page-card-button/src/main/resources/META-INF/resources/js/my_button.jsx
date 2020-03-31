@@ -1,5 +1,7 @@
 /* global React, ReactDOM AlloyEditor */
 
+import ClayModal from 'clay-modal';
+
 (function() {
         'use strict';
 
@@ -41,13 +43,13 @@
                 // Aqui se entra cuando le das click al boton de ADD TOOLBAR
                 render: function() {
                     var cssClass = 'ae-button ' + this.getStateClasses();
-                    var svg = Liferay.Util.getLexiconIconTpl('desktop');
+                    var svg = Liferay.Util.getLexiconIconTpl('plus-squares');
 
                     return (
                         <button
                             className={cssClass}
                             onClick={this._createPageCards}
-                            title="Log the selected text in the console"
+                            title="Insert Page Cards"
                             dangerouslySetInnerHTML={{__html: svg}}
                         />
                     );
@@ -82,7 +84,7 @@
                                     '</div>'+
                                     '<div class="bottom-content">'+
                                       '<div class="normal-headline">'+
-                                        '<a href="https://google.com" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a>'+
+                                        '<a href="https://cmap.illinois.gov" target="_blank">This is the link text, double click to edit link location. Double click photo to change image.</a>'+
                                       '</div>'+
                                     '</div>'+
                                   '</div>', editorInstance._editor.document );

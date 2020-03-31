@@ -42,13 +42,13 @@
                 // Aqui se entra cuando le das click al boton de ADD TOOLBAR
 				render: function() {
 			        var cssClass = 'ae-button ' + this.getStateClasses();
-			        var svg = Liferay.Util.getLexiconIconTpl('desktop');
+			        var svg = Liferay.Util.getLexiconIconTpl('mark-as-question');
 
 			        return (
 		                <button
 		                    className={cssClass}
 		                    onClick={this._createRecommendations}
-		                    title="Log the selected text in the console"
+		                    title="Create a series of recommendations"
 		                    dangerouslySetInnerHTML={{__html: svg}}
 		                />
 			        );
@@ -57,7 +57,7 @@
 
 				 // Esto es lo que pasa cuando le picas al boton
 				_createRecommendations: function() {
-					console.log("Hey BITCH");
+					console.log("Hey!");
 
 					this.state.recommendations = window.prompt("How many recommendations do you want?");
 

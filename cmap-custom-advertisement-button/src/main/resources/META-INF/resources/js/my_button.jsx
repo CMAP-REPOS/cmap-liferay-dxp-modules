@@ -42,13 +42,13 @@
                 // Aqui se entra cuando le das click al boton de ADD TOOLBAR
 				render: function() {
 			        var cssClass = 'ae-button ' + this.getStateClasses();
-			        var svg = Liferay.Util.getLexiconIconTpl('desktop');
+			        var svg = Liferay.Util.getLexiconIconTpl('community');
 
 			        return (
 		                <button
 		                    className={cssClass}
 		                    onClick={this._createAdvertisement}
-		                    title="Create a Centered Column"
+		                    title="Create an Advertisement"
 		                    dangerouslySetInnerHTML={{__html: svg}}
 		                />
 			        );
@@ -57,7 +57,7 @@
 
 				 // Esto es lo que pasa cuando le picas al boton
 				_createAdvertisement: function() {
-					console.log("TOPKEK");
+					console.log("Lol");
 
 					console.log(this);
 

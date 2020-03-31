@@ -42,13 +42,13 @@
                 // Aqui se entra cuando le das click al boton de ADD TOOLBAR
 				render: function() {
 			        var cssClass = 'ae-button ' + this.getStateClasses();
-			        var svg = Liferay.Util.getLexiconIconTpl('desktop');
+			        var svg = Liferay.Util.getLexiconIconTpl('cards');
 
 			        return (
 		                <button
 		                    className={cssClass}
 		                    onClick={this._createActions}
-		                    title="Log the selected text in the console"
+		                    title="Create a series of actions"
 		                    dangerouslySetInnerHTML={{__html: svg}}
 		                />
 			        );

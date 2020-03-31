@@ -42,7 +42,7 @@
                 // Aqui se entra cuando le das click al boton de ADD TOOLBAR
 				render: function() {
 			        var cssClass = 'ae-button ' + this.getStateClasses();
-			        var svg = Liferay.Util.getLexiconIconTpl('desktop');
+			        var svg = Liferay.Util.getLexiconIconTpl('add-column');
 
 			        return (
 		                <button

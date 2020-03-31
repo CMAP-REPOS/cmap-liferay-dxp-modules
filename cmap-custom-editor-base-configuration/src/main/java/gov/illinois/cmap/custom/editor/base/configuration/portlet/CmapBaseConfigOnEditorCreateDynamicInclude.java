@@ -15,19 +15,12 @@
  */
 package gov.illinois.cmap.custom.editor.base.configuration.portlet;
 
-import javax.portlet.Portlet;
-
 import com.liferay.portal.kernel.servlet.taglib.DynamicInclude;
 import com.liferay.portal.kernel.util.StreamUtil;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.URL;
 
-import javax.portlet.GenericPortlet;
-import javax.portlet.PortletException;
-import javax.portlet.RenderRequest;
-import javax.portlet.RenderResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
