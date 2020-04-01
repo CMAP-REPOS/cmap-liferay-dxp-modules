@@ -51,8 +51,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	// Get the number of existing Bookings
 	int count = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
 
-	System.out.println(count);
-
 	// Create the necessary utilities to create the query to get all the bookings
 	DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
 	OrderByComparator orderByComparator = new CalendarBookingsEventStartTimeComparator(true);
@@ -79,15 +77,10 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	long endTime = now + Time.MONTH;
 			
 	//
-	//
-	//
 	// TODO: Check if expand events throws an error and handle it
 	//
-	//
-	//
 	
-	
-	// Expands all events to create instances of recurrent events
+	// Expands all events to create 5 instances of recurrent events in the time span between today and 1 month
 	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(calendarBookings, now, endTime, 5);
 	
 	// Order events so the widget can show them correctly
@@ -109,9 +102,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 			// Create an EventBlock from the event
 			EventBlock eventBlock = new EventBlock(event);
 			
-			// System.out.println(eventBlock.getMonth() + " " + eventBlock.getDay() + " " + eventBlock.getTitle() + " " + eventBlock.getDuration() + "\n\n\n\n");
-			
-			// Add it to the eventBlocks Array and count it
+			// Add it to the eventBlocks Array and update the counter
 		    eventBlocks.add(eventBlock);
 		    eventLimit++;
 		    
