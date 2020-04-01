@@ -74,19 +74,24 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	// Initialize the event limit
 	int eventLimit = 0;
 	
-	// Testing for recurrence
-	long now = new Date().getTime();
+	// Creating date windows for event recurrency handling
+	long now = date.getTime();
 	long endTime = now + Time.MONTH;
 			
+	//
+	//
+	//
+	// TODO: Check if expand events throws an error and handle it
+	//
+	//
+	//
+	
+	
+	// Expands all events to create instances of recurrent events
 	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(calendarBookings, now, endTime, 5);
-	System.out.println("\n\n\nAll Events expanded:\n\n\n" + allEventsExpanded);
 	
-	// order allEventsExpanded and we're done
-	// TODO
-	// Order events
+	// Order events so the widget can show them correctly
 	Collections.sort(allEventsExpanded, orderByComparator);
-	
-	System.out.println("\n\n\nAll Events expanded after sort:\n\n\n" + allEventsExpanded);
 	
 	// Iterate through all the events
 	for(CalendarBooking event:allEventsExpanded)
@@ -97,33 +102,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 		event.setStartTime(milisEventStartTime);
 		event.setEndTime(milisEventEndTime);
 		
-		/* System.out.println("\n\nEvent " + event);
-		System.out.println("EVENT START TIME: " + event.getStartTime());
-		System.out.println("TODAY TIME: " + timeMilli);
-		System.out.println("Recurrence " + event.getRecurrence());
-		System.out.println("RecurrenceObject " + event.getRecurrenceObj());
-		System.out.println("Object is in thrash: " + event.isInTrash()); */
-		
-		
-		// Get recurring Events and insert them into a new List
-		// recurrence=RRULE:FREQ=DAILY;UNTIL=20200320;INTERVAL=2,
-		List<CalendarBooking> recurringBookings;
-		if (Validator.isNotNull(event.getRecurrenceObj())) {
-			/* Recurrence recurrence = event.getRecurrenceObj();
-			System.out.println("Event is recurrent");
-			Recurrence deserializedRecurrence = RecurrenceSerializer.deserialize(event.getRecurrence(), TimeZone.getTimeZone("America/Chicago"));
-			System.out.println("Deserialized Recurrence: " + deserializedRecurrence);
-			System.out.println("Serialized Recurrence: " + RecurrenceSerializer.serialize(deserializedRecurrence));
-			System.out.println("UntilJCalendar: " + recurrence.getUntilJCalendar());
-			System.out.println("ExceptionJCalendars: " + recurrence.getExceptionJCalendars());
-			System.out.println("Interval: " + recurrence.getInterval());
-			System.out.println("Weekdays: " + recurrence.getWeekdays());
-			System.out.println("Positional Weekdays: " + recurrence.getPositionalWeekdays());
-			System.out.println("Positional Weekday: " + recurrence.getPositionalWeekday());
-			System.out.println("Months: " + recurrence.getMonths()); */
-			//List<CalendarBooking> expandedCalendarBooking = RecurrenceUtil.expandCalendarBooking(event, timeMilli, endTime, 5);
-			//System.out.println("\n\nList of expanded CalendarBooking:\n\n" + expandedCalendarBooking);
-		}
 		
 		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
 		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())
