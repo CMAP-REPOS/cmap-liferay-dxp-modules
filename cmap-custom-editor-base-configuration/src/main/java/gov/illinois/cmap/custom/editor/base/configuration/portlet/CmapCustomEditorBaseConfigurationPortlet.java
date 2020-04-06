@@ -76,11 +76,11 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 		String extraPlugins = jsonObject.getString("extraPlugins");
 		if (Validator.isNotNull(extraPlugins)) {
 		  extraPlugins = extraPlugins + ",ae_uibridge,ae_buttonbridge,ae_menubridge,ae_panelmenubuttonbridge,ae_richcombobridge,ae_autolink,ae_placeholder," +
-				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt";
+				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt,stylescombo";
 		}
 		else {
 		  extraPlugins = "ae_uibridge,ae_buttonbridge,ae_menubridge,ae_panelmenubuttonbridge,ae_richcombobridge,ae_autolink,ae_placeholder," + 
-				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt";
+				  "clipboard,font,undo,pagebreak,indent,selectall,find,specialchar,templates,format,pastetext,pastefromword,showblocks,basicstyles,scayt,stylescombo";
 		}
 		jsonObject.put("extraPlugins", extraPlugins);
 		
@@ -129,7 +129,7 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	                 * SCAYT
 	                 * IndentBlock (only lists)
 	                */
-	                buttons.put("Indent");
+	                buttons.put("Styles");
 	                buttons.put("removeFormat");
 	                buttons.put("Font");
 	                buttons.put("FontSize");
@@ -153,16 +153,20 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 	                buttons.put("quote");
 	                buttons.put("subscript");
 	                buttons.put("superscript");
+	                buttons.put("Indent");
 	                //CKEditor Failing Plugins
 	                buttons.put("Strike");
 	                buttons.put("Scayt");
 	                buttons.put("IndentBlock");
+	                
+	                //System.out.println(buttons);
 	                
 	        }
 		}
 		
 		// Add config to AlloyEditor
 		stylesToolbar.put("selections", selectionsJSONArray);
+		//System.out.println(stylesToolbar);
 		toolbarsJSONObject.put("styles", stylesToolbar);
 		jsonObject.put("toolbars", toolbarsJSONObject);
 		
@@ -178,9 +182,77 @@ public class CmapCustomEditorBaseConfigurationPortlet extends BaseEditorConfigCo
 		
 		JSONArray newJSONArray = JSONFactoryUtil.createJSONArray();
 		
+		// Delete Out of the Box Dropdown styles that are not needed
 		for (int i = 0; i <= index; i++) {
 			newJSONArray.put(dropdownStyles.get(i));
 		}
+		
+		// Add Custom CMAP Styles
+		
+		// Large P
+		JSONObject largeP = JSONFactoryUtil.createJSONObject();
+		largeP.put("name", "Large Paragraph");
+		JSONObject styleLargeP = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesLargeP = JSONFactoryUtil.createJSONObject();
+		attributesLargeP.put("class", "presna-large");
+		styleLargeP.put("attributes", attributesLargeP);
+		styleLargeP.put("type", 1);
+		styleLargeP.put("element", "p");
+		largeP.put("style", styleLargeP);
+		newJSONArray.put(largeP);
+		
+		// Recommendation
+		JSONObject recommendation = JSONFactoryUtil.createJSONObject();
+		recommendation.put("name", "Recommendation");
+		JSONObject styleRec = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesRec = JSONFactoryUtil.createJSONObject();
+		attributesRec.put("class", "section-sub-headline recommendation-headline");
+		styleRec.put("attributes", attributesRec);
+		styleRec.put("type", 1);
+		styleRec.put("element", "span");
+		recommendation.put("style", styleRec);
+		newJSONArray.put(recommendation);
+		
+		// Goal
+		JSONObject goal = JSONFactoryUtil.createJSONObject();
+		goal.put("name", "Goal");
+		JSONObject styleGoal = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesGoal = JSONFactoryUtil.createJSONObject();
+		attributesGoal.put("class", "normal-headline goal-headline");
+		styleGoal.put("attributes", attributesGoal);
+		styleGoal.put("type", 1);
+		styleGoal.put("element", "span");
+		goal.put("style", styleGoal);
+		newJSONArray.put(goal);
+		
+		
+		// Alt Color
+		JSONObject altColor = JSONFactoryUtil.createJSONObject();
+		altColor.put("name", "Alt Color");
+		JSONObject styleAltColor = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesAltColor = JSONFactoryUtil.createJSONObject();
+		attributesAltColor.put("class", "alt-color");
+		styleAltColor.put("attributes", attributesAltColor);
+		styleAltColor.put("type", 1);
+		styleAltColor.put("element", "span");
+		altColor.put("style", styleAltColor);
+		newJSONArray.put(altColor);
+				
+		
+		// Button
+		JSONObject buttonDropdownStyle = JSONFactoryUtil.createJSONObject();
+		buttonDropdownStyle.put("name", "Button");
+		JSONObject styleButton = JSONFactoryUtil.createJSONObject();
+		JSONObject attributesButton = JSONFactoryUtil.createJSONObject();
+		attributesButton.put("class", "button");
+		styleButton.put("attributes", attributesButton);
+		styleButton.put("type", 1);
+		styleButton.put("element", "a");
+		buttonDropdownStyle.put("style", styleButton);
+		newJSONArray.put(buttonDropdownStyle);
+		
+		
+		//System.out.println(newJSONArray);
 		
 		return newJSONArray;
 	}
