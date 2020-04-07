@@ -76,33 +76,44 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	long now = date.getTime();
 	long endTime = now + Time.MONTH;
 			
+	// Create a new List that will contain all the relevant events for the widget
+	List<CalendarBooking> relevantBookings = new ArrayList<>();
+	
+	// Eliminate events in trash from the expanding of bookings
+	for(CalendarBooking event:calendarBookings) {
+		// If the event has a status different from 8 (deleted)
+		if (!event.isInTrash()) {
+			relevantBookings.add(event);
+		}
+	}
+	
 	//
 	// TODO: Check if expand events throws an error and handle it
 	//
-	
 	// Expands all events to create 5 instances of recurrent events in the time span between today and 1 month
-	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(calendarBookings, now, endTime, 5);
+	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(relevantBookings, now, endTime, 5);
 	
 	// Order events so the widget can show them correctly
 	Collections.sort(allEventsExpanded, orderByComparator);
 	
-	// Iterate through all the events
-	for(CalendarBooking event:allEventsExpanded)
-	{	
+	// Iterate through all the expanded and ordered events
+	for(CalendarBooking event:allEventsExpanded) {	
+		
 		// For each event set the start and end time in milliseconds
+		// the API throws nanoseconds and a bug was found when using nanoseconds
 		long milisEventStartTime = event.getStartTime() / 1000;
 		long milisEventEndTime = event.getEndTime() / 1000;
 		event.setStartTime(milisEventStartTime);
 		event.setEndTime(milisEventEndTime);
 		
-		
-		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
-		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())
-		{
-			// Create an EventBlock from the event
-			EventBlock eventBlock = new EventBlock(event);
+		// If we havent surpassed the event view limit 
+		// and the event is NOT in the trash (this check is done for safety)
+		// and the start time is greater or equal than todays date
+		// then continue with the operations
+		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash()) {
 			
 			// Add it to the eventBlocks Array and update the counter
+			EventBlock eventBlock = new EventBlock(event);
 		    eventBlocks.add(eventBlock);
 		    eventLimit++;
 		    
