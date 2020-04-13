@@ -57,13 +57,6 @@
 
 				 // Esto es lo que pasa cuando le picas al boton
 				_createAdvertisement: function() {
-					console.log("Lol");
-
-					console.log(this);
-
-					console.log(CKEDITOR.config);
-				   	// this tiene:
-				   	// props y state
 				   	let editorInstance = this.props.editor._editor;
 
 			   		var element = CKEDITOR.dom.element
