@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmNoteModel
- * @see contact.manager.model.impl.CrmNoteImpl
- * @see contact.manager.model.impl.CrmNoteModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmNoteImpl")
 @ProviderType
 public interface CrmNote extends CrmNoteModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmNoteImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmNoteImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmNote, Long> CRM_NOTE_ID_ACCESSOR = new Accessor<CrmNote, Long>() {
+	public static final Accessor<CrmNote, Long> CRM_NOTE_ID_ACCESSOR =
+		new Accessor<CrmNote, Long>() {
+
 			@Override
 			public Long get(CrmNote crmNote) {
 				return crmNote.getCrmNoteId();
@@ -52,5 +53,7 @@ public interface CrmNote extends CrmNoteModel, PersistedModel {
 			public Class<CrmNote> getTypeClass() {
 				return CrmNote.class;
 			}
+
 		};
+
 }

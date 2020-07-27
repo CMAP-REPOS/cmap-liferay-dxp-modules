@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmStateSenate;
-
 import contact.manager.service.CrmStateSenateLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmStateSenateLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmStateSenateBaseImpl extends CrmStateSenateModelImpl
-	implements CrmStateSenate {
+public abstract class CrmStateSenateBaseImpl
+	extends CrmStateSenateModelImpl implements CrmStateSenate {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM State Senate model instance should use the {@link CrmStateSenate} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM State Senate model instance should use the <code>CrmStateSenate</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmStateSenateBaseImpl extends CrmStateSenateModelImpl
 			CrmStateSenateLocalServiceUtil.updateCrmStateSenate(this);
 		}
 	}
+
 }

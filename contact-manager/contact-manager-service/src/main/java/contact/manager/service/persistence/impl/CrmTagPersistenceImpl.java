@@ -26,10 +26,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -44,11 +43,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmTagException;
-
 import contact.manager.model.CrmTag;
 import contact.manager.model.impl.CrmTagImpl;
 import contact.manager.model.impl.CrmTagModelImpl;
-
 import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmTagPersistence;
 
@@ -75,50 +72,32 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmTagPersistence
- * @see contact.manager.service.persistence.CrmTagUtil
  * @generated
  */
 @ProviderType
-public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
-	implements CrmTagPersistence {
+public class CrmTagPersistenceImpl
+	extends BasePersistenceImpl<CrmTag> implements CrmTagPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmTagUtil} to access the CRM Tag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmTagUtil</code> to access the CRM Tag persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmTagImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmTagModelImpl.UUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmTagImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM Tags where uuid = &#63;.
@@ -135,7 +114,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns a range of all the CRM Tags where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -152,66 +131,71 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns an ordered range of all the CRM Tags where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Tags
 	 */
+	@Deprecated
 	@Override
-	public List<CrmTag> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmTag> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmTag> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmTag> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Tags where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Tags
 	 */
 	@Override
-	public List<CrmTag> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmTag> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmTag> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmTag> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmTag> list = null;
+		List<CrmTag> list = (List<CrmTag>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmTag>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmTag crmTag : list) {
+				if (!uuid.equals(crmTag.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmTag crmTag : list) {
-					if (!Objects.equals(uuid, crmTag.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -220,8 +204,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -231,10 +215,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -244,11 +225,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmTagModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -268,16 +248,16 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				}
 
 				if (!pagination) {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -306,9 +286,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag findByUuid_First(String uuid,
-		OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag findByUuid_First(
+			String uuid, OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByUuid_First(uuid, orderByComparator);
 
 		if (crmTag != null) {
@@ -335,8 +316,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the first matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag fetchByUuid_First(String uuid,
-		OrderByComparator<CrmTag> orderByComparator) {
+	public CrmTag fetchByUuid_First(
+		String uuid, OrderByComparator<CrmTag> orderByComparator) {
+
 		List<CrmTag> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -355,9 +337,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag findByUuid_Last(String uuid,
-		OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag findByUuid_Last(
+			String uuid, OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (crmTag != null) {
@@ -384,15 +367,17 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the last matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag fetchByUuid_Last(String uuid,
-		OrderByComparator<CrmTag> orderByComparator) {
+	public CrmTag fetchByUuid_Last(
+		String uuid, OrderByComparator<CrmTag> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmTag> list = findByUuid(uuid, count - 1, count, orderByComparator);
+		List<CrmTag> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -411,9 +396,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a CRM Tag with the primary key could not be found
 	 */
 	@Override
-	public CrmTag[] findByUuid_PrevAndNext(long crmTagId, String uuid,
-		OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag[] findByUuid_PrevAndNext(
+			long crmTagId, String uuid,
+			OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmTag crmTag = findByPrimaryKey(crmTagId);
 
 		Session session = null;
@@ -423,13 +412,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			CrmTag[] array = new CrmTagImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmTag, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmTag, uuid, orderByComparator, true);
 
 			array[1] = crmTag;
 
-			array[2] = getByUuid_PrevAndNext(session, crmTag, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmTag, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -441,14 +430,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		}
 	}
 
-	protected CrmTag getByUuid_PrevAndNext(Session session, CrmTag crmTag,
-		String uuid, OrderByComparator<CrmTag> orderByComparator,
-		boolean previous) {
+	protected CrmTag getByUuid_PrevAndNext(
+		Session session, CrmTag crmTag, String uuid,
+		OrderByComparator<CrmTag> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -459,10 +449,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -472,7 +459,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -544,10 +532,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmTag);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmTag)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -568,8 +556,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmTag crmTag : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmTag crmTag :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmTag);
 		}
 	}
@@ -582,9 +571,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -595,10 +586,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -639,22 +627,16 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmTag.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmTag.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmTag.uuid IS NULL OR crmTag.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmTagModelImpl.UUID_COLUMN_BITMASK |
-			CrmTagModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmTag.uuid IS NULL OR crmTag.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM Tag where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmTagException} if it could not be found.
+	 * Returns the CRM Tag where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmTagException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -664,6 +646,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public CrmTag findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByUUID_G(uuid, groupId);
 
 		if (crmTag == null) {
@@ -690,15 +673,20 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	}
 
 	/**
-	 * Returns the CRM Tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM Tag where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmTag fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmTag fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -706,26 +694,24 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmTag fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmTag) {
 			CrmTag crmTag = (CrmTag)result;
 
 			if (!Objects.equals(uuid, crmTag.getUuid()) ||
-					(groupId != crmTag.getGroupId())) {
+				(groupId != crmTag.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -737,10 +723,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -771,8 +754,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				List<CrmTag> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					CrmTag crmTag = list.get(0);
@@ -783,7 +766,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -810,6 +793,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public CrmTag removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = findByUUID_G(uuid, groupId);
 
 		return remove(crmTag);
@@ -824,9 +808,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -837,10 +823,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -885,30 +868,18 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmTag.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmTag.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmTag.uuid IS NULL OR crmTag.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmTag.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmTagModelImpl.UUID_COLUMN_BITMASK |
-			CrmTagModelImpl.COMPANYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmTag.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmTag.uuid IS NULL OR crmTag.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmTag.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM Tags where uuid = &#63; and companyId = &#63;.
@@ -919,15 +890,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public List<CrmTag> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Tags where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -937,8 +908,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the range of matching CRM Tags
 	 */
 	@Override
-	public List<CrmTag> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<CrmTag> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -946,27 +918,32 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns an ordered range of all the CRM Tags where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Tags
 	 */
+	@Deprecated
 	@Override
-	public List<CrmTag> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmTag> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmTag> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmTag> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Tags where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -974,46 +951,44 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Tags
 	 */
 	@Override
-	public List<CrmTag> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmTag> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmTag> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmTag> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmTag> list = null;
+		List<CrmTag> list = (List<CrmTag>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmTag>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmTag crmTag : list) {
+				if (!uuid.equals(crmTag.getUuid()) ||
+					(companyId != crmTag.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmTag crmTag : list) {
-					if (!Objects.equals(uuid, crmTag.getUuid()) ||
-							(companyId != crmTag.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1022,8 +997,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1033,10 +1008,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1048,11 +1020,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmTagModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1074,16 +1045,16 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1113,9 +1084,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (crmTag != null) {
@@ -1146,10 +1119,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the first matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag fetchByUuid_C_First(String uuid, long companyId,
+	public CrmTag fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmTag> orderByComparator) {
-		List<CrmTag> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<CrmTag> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1168,9 +1143,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (crmTag != null) {
@@ -1201,16 +1178,18 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the last matching CRM Tag, or <code>null</code> if a matching CRM Tag could not be found
 	 */
 	@Override
-	public CrmTag fetchByUuid_C_Last(String uuid, long companyId,
+	public CrmTag fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmTag> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmTag> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<CrmTag> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1230,9 +1209,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @throws NoSuchCrmTagException if a CRM Tag with the primary key could not be found
 	 */
 	@Override
-	public CrmTag[] findByUuid_C_PrevAndNext(long crmTagId, String uuid,
-		long companyId, OrderByComparator<CrmTag> orderByComparator)
+	public CrmTag[] findByUuid_C_PrevAndNext(
+			long crmTagId, String uuid, long companyId,
+			OrderByComparator<CrmTag> orderByComparator)
 		throws NoSuchCrmTagException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmTag crmTag = findByPrimaryKey(crmTagId);
 
 		Session session = null;
@@ -1242,13 +1225,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			CrmTag[] array = new CrmTagImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, crmTag, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmTag, uuid, companyId, orderByComparator, true);
 
 			array[1] = crmTag;
 
-			array[2] = getByUuid_C_PrevAndNext(session, crmTag, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmTag, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1260,14 +1243,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		}
 	}
 
-	protected CrmTag getByUuid_C_PrevAndNext(Session session, CrmTag crmTag,
-		String uuid, long companyId,
+	protected CrmTag getByUuid_C_PrevAndNext(
+		Session session, CrmTag crmTag, String uuid, long companyId,
 		OrderByComparator<CrmTag> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1278,10 +1262,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1293,7 +1274,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1367,10 +1349,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmTag);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmTag)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1392,8 +1374,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmTag crmTag : findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmTag crmTag :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmTag);
 		}
 	}
@@ -1407,9 +1392,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1420,10 +1407,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1468,23 +1452,27 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmTag.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmTag.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmTag.uuid IS NULL OR crmTag.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmTag.companyId = ?";
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmTag.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmTag.uuid IS NULL OR crmTag.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmTag.companyId = ?";
 
 	public CrmTagPersistenceImpl() {
 		setModelClass(CrmTag.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -1502,11 +1490,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public void cacheResult(CrmTag crmTag) {
-		entityCache.putResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagImpl.class, crmTag.getPrimaryKey(), crmTag);
+		entityCache.putResult(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+			crmTag.getPrimaryKey(), crmTag);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { crmTag.getUuid(), crmTag.getGroupId() }, crmTag);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {crmTag.getUuid(), crmTag.getGroupId()}, crmTag);
 
 		crmTag.resetOriginalValues();
 	}
@@ -1519,8 +1509,10 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public void cacheResult(List<CrmTag> crmTags) {
 		for (CrmTag crmTag : crmTags) {
-			if (entityCache.getResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-						CrmTagImpl.class, crmTag.getPrimaryKey()) == null) {
+			if (entityCache.getResult(
+					CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+					crmTag.getPrimaryKey()) == null) {
+
 				cacheResult(crmTag);
 			}
 			else {
@@ -1533,7 +1525,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Clears the cache for all CRM Tags.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -1549,13 +1541,14 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Clears the cache for the CRM Tag.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmTag crmTag) {
-		entityCache.removeResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagImpl.class, crmTag.getPrimaryKey());
+		entityCache.removeResult(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+			crmTag.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -1569,8 +1562,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CrmTag crmTag : crmTags) {
-			entityCache.removeResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-				CrmTagImpl.class, crmTag.getPrimaryKey());
+			entityCache.removeResult(
+				CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+				crmTag.getPrimaryKey());
 
 			clearUniqueFindersCache((CrmTagModelImpl)crmTag, true);
 		}
@@ -1578,35 +1572,37 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 	protected void cacheUniqueFindersCache(CrmTagModelImpl crmTagModelImpl) {
 		Object[] args = new Object[] {
+			crmTagModelImpl.getUuid(), crmTagModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmTagModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CrmTagModelImpl crmTagModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				crmTagModelImpl.getUuid(), crmTagModelImpl.getGroupId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmTagModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(CrmTagModelImpl crmTagModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					crmTagModelImpl.getUuid(), crmTagModelImpl.getGroupId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmTagModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmTagModelImpl.getOriginalUuid(),
-					crmTagModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmTagModelImpl.getOriginalUuid(),
+				crmTagModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -1627,7 +1623,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 		crmTag.setUuid(uuid);
 
-		crmTag.setCompanyId(companyProvider.getCompanyId());
+		crmTag.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return crmTag;
 	}
@@ -1665,8 +1661,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmTagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmTagException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmTag);
@@ -1684,7 +1680,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 	@Override
 	protected CrmTag removeImpl(CrmTag crmTag) {
-		crmTagToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(crmTag.getPrimaryKey());
+		crmTagToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(
+			crmTag.getPrimaryKey());
 
 		Session session = null;
 
@@ -1692,8 +1689,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			session = openSession();
 
 			if (!session.contains(crmTag)) {
-				crmTag = (CrmTag)session.get(CrmTagImpl.class,
-						crmTag.getPrimaryKeyObj());
+				crmTag = (CrmTag)session.get(
+					CrmTagImpl.class, crmTag.getPrimaryKeyObj());
 			}
 
 			if (crmTag != null) {
@@ -1726,12 +1723,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmTag proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmTag implementation " +
-				crmTag.getClass());
+					crmTag.getClass());
 		}
 
 		CrmTagModelImpl crmTagModelImpl = (CrmTagModelImpl)crmTag;
@@ -1742,7 +1739,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			crmTag.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -1790,67 +1788,71 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		if (!CrmTagModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { crmTagModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {crmTagModelImpl.getUuid()};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				crmTagModelImpl.getUuid(), crmTagModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmTagModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmTagModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {crmTagModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((crmTagModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmTagModelImpl.getOriginalUuid(),
+					crmTagModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmTagModelImpl.getUuid(), crmTagModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmTagModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmTagModelImpl.getOriginalUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmTagModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-			}
-
-			if ((crmTagModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmTagModelImpl.getOriginalUuid(),
-						crmTagModelImpl.getOriginalCompanyId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-
-				args = new Object[] {
-						crmTagModelImpl.getUuid(),
-						crmTagModelImpl.getCompanyId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 		}
 
-		entityCache.putResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-			CrmTagImpl.class, crmTag.getPrimaryKey(), crmTag, false);
+		entityCache.putResult(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+			crmTag.getPrimaryKey(), crmTag, false);
 
 		clearUniqueFindersCache(crmTagModelImpl, false);
 		cacheUniqueFindersCache(crmTagModelImpl);
@@ -1861,7 +1863,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	}
 
 	/**
-	 * Returns the CRM Tag with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM Tag with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM Tag
 	 * @return the CRM Tag
@@ -1870,6 +1872,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public CrmTag findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmTagException {
+
 		CrmTag crmTag = fetchByPrimaryKey(primaryKey);
 
 		if (crmTag == null) {
@@ -1877,15 +1880,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmTagException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmTagException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmTag;
 	}
 
 	/**
-	 * Returns the CRM Tag with the primary key or throws a {@link NoSuchCrmTagException} if it could not be found.
+	 * Returns the CRM Tag with the primary key or throws a <code>NoSuchCrmTagException</code> if it could not be found.
 	 *
 	 * @param crmTagId the primary key of the CRM Tag
 	 * @return the CRM Tag
@@ -1904,8 +1907,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public CrmTag fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-				CrmTagImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -1925,13 +1928,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 					cacheResult(crmTag);
 				}
 				else {
-					entityCache.putResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-						CrmTagImpl.class, primaryKey, nullModel);
+					entityCache.putResult(
+						CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+						primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-					CrmTagImpl.class, primaryKey);
+				entityCache.removeResult(
+					CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+					primaryKey);
 
 				throw processException(e);
 			}
@@ -1957,6 +1962,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public Map<Serializable, CrmTag> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
@@ -1980,8 +1986,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-					CrmTagImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+				primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2001,8 +2008,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMTAG_WHERE_PKS_IN);
 
@@ -2034,8 +2041,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmTagModelImpl.ENTITY_CACHE_ENABLED,
-					CrmTagImpl.class, primaryKey, nullModel);
+				entityCache.putResult(
+					CrmTagModelImpl.ENTITY_CACHE_ENABLED, CrmTagImpl.class,
+					primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2062,7 +2070,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns a range of all the CRM Tags.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Tags
@@ -2078,70 +2086,72 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns an ordered range of all the CRM Tags.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM Tags
 	 */
+	@Deprecated
 	@Override
-	public List<CrmTag> findAll(int start, int end,
-		OrderByComparator<CrmTag> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmTag> findAll(
+		int start, int end, OrderByComparator<CrmTag> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Tags.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Tags
 	 * @param end the upper bound of the range of CRM Tags (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM Tags
 	 */
 	@Override
-	public List<CrmTag> findAll(int start, int end,
-		OrderByComparator<CrmTag> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmTag> findAll(
+		int start, int end, OrderByComparator<CrmTag> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmTag> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmTag>)finderCache.getResult(finderPath, finderArgs,
-					this);
-		}
+		List<CrmTag> list = (List<CrmTag>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMTAG);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2161,16 +2171,16 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmTag>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmTag>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2208,8 +2218,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2221,12 +2231,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2266,7 +2276,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns a range of all the CRM Contacts associated with the CRM Tag.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the CRM Tag
@@ -2275,8 +2285,9 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the range of CRM Contacts associated with the CRM Tag
 	 */
 	@Override
-	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
-		int start, int end) {
+	public List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end) {
+
 		return getCrmContacts(pk, start, end, null);
 	}
 
@@ -2284,7 +2295,7 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Returns an ordered range of all the CRM Contacts associated with the CRM Tag.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmTagModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmTagModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the CRM Tag
@@ -2294,11 +2305,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @return the ordered range of CRM Contacts associated with the CRM Tag
 	 */
 	@Override
-	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
-		int start, int end,
+	public List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end,
 		OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		return crmTagToCrmContactTableMapper.getRightBaseModels(pk, start, end,
-			orderByComparator);
+
+		return crmTagToCrmContactTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -2323,8 +2335,8 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 */
 	@Override
 	public boolean containsCrmContact(long pk, long crmContactPK) {
-		return crmTagToCrmContactTableMapper.containsTableMapping(pk,
-			crmContactPK);
+		return crmTagToCrmContactTableMapper.containsTableMapping(
+			pk, crmContactPK);
 	}
 
 	/**
@@ -2354,12 +2366,12 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		CrmTag crmTag = fetchByPrimaryKey(pk);
 
 		if (crmTag == null) {
-			crmTagToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, crmContactPK);
+			crmTagToCrmContactTableMapper.addTableMapping(
+				CompanyThreadLocal.getCompanyId(), pk, crmContactPK);
 		}
 		else {
-			crmTagToCrmContactTableMapper.addTableMapping(crmTag.getCompanyId(),
-				pk, crmContactPK);
+			crmTagToCrmContactTableMapper.addTableMapping(
+				crmTag.getCompanyId(), pk, crmContactPK);
 		}
 	}
 
@@ -2370,17 +2382,19 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param crmContact the CRM Contact
 	 */
 	@Override
-	public void addCrmContact(long pk,
-		contact.manager.model.CrmContact crmContact) {
+	public void addCrmContact(
+		long pk, contact.manager.model.CrmContact crmContact) {
+
 		CrmTag crmTag = fetchByPrimaryKey(pk);
 
 		if (crmTag == null) {
-			crmTagToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, crmContact.getPrimaryKey());
+			crmTagToCrmContactTableMapper.addTableMapping(
+				CompanyThreadLocal.getCompanyId(), pk,
+				crmContact.getPrimaryKey());
 		}
 		else {
-			crmTagToCrmContactTableMapper.addTableMapping(crmTag.getCompanyId(),
-				pk, crmContact.getPrimaryKey());
+			crmTagToCrmContactTableMapper.addTableMapping(
+				crmTag.getCompanyId(), pk, crmContact.getPrimaryKey());
 		}
 	}
 
@@ -2397,14 +2411,14 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		CrmTag crmTag = fetchByPrimaryKey(pk);
 
 		if (crmTag == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = crmTag.getCompanyId();
 		}
 
-		crmTagToCrmContactTableMapper.addTableMappings(companyId, pk,
-			crmContactPKs);
+		crmTagToCrmContactTableMapper.addTableMappings(
+			companyId, pk, crmContactPKs);
 	}
 
 	/**
@@ -2414,10 +2428,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param crmContacts the CRM Contacts
 	 */
 	@Override
-	public void addCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
-		addCrmContacts(pk,
-			ListUtil.toLongArray(crmContacts,
+	public void addCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
+		addCrmContacts(
+			pk,
+			ListUtil.toLongArray(
+				crmContacts,
 				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
 	}
 
@@ -2449,10 +2466,11 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param crmContact the CRM Contact
 	 */
 	@Override
-	public void removeCrmContact(long pk,
-		contact.manager.model.CrmContact crmContact) {
-		crmTagToCrmContactTableMapper.deleteTableMapping(pk,
-			crmContact.getPrimaryKey());
+	public void removeCrmContact(
+		long pk, contact.manager.model.CrmContact crmContact) {
+
+		crmTagToCrmContactTableMapper.deleteTableMapping(
+			pk, crmContact.getPrimaryKey());
 	}
 
 	/**
@@ -2473,10 +2491,13 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param crmContacts the CRM Contacts
 	 */
 	@Override
-	public void removeCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
-		removeCrmContacts(pk,
-			ListUtil.toLongArray(crmContacts,
+	public void removeCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
+		removeCrmContacts(
+			pk,
+			ListUtil.toLongArray(
+				crmContacts,
 				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
 	}
 
@@ -2489,15 +2510,16 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	@Override
 	public void setCrmContacts(long pk, long[] crmContactPKs) {
 		Set<Long> newCrmContactPKsSet = SetUtil.fromArray(crmContactPKs);
-		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(crmTagToCrmContactTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(
+			crmTagToCrmContactTableMapper.getRightPrimaryKeys(pk));
 
-		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(oldCrmContactPKsSet);
+		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(
+			oldCrmContactPKsSet);
 
 		removeCrmContactPKsSet.removeAll(newCrmContactPKsSet);
 
-		crmTagToCrmContactTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeCrmContactPKsSet));
+		crmTagToCrmContactTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeCrmContactPKsSet));
 
 		newCrmContactPKsSet.removeAll(oldCrmContactPKsSet);
 
@@ -2506,14 +2528,14 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		CrmTag crmTag = fetchByPrimaryKey(pk);
 
 		if (crmTag == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = crmTag.getCompanyId();
 		}
 
-		crmTagToCrmContactTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newCrmContactPKsSet));
+		crmTagToCrmContactTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newCrmContactPKsSet));
 	}
 
 	/**
@@ -2523,13 +2545,15 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * @param crmContacts the CRM Contacts to be associated with the CRM Tag
 	 */
 	@Override
-	public void setCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
+	public void setCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
 		try {
 			long[] crmContactPKs = new long[crmContacts.size()];
 
 			for (int i = 0; i < crmContacts.size(); i++) {
-				contact.manager.model.CrmContact crmContact = crmContacts.get(i);
+				contact.manager.model.CrmContact crmContact = crmContacts.get(
+					i);
 
 				crmContactPKs[i] = crmContact.getPrimaryKey();
 			}
@@ -2555,9 +2579,86 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 	 * Initializes the CRM Tag persistence.
 	 */
 	public void afterPropertiesSet() {
-		crmTagToCrmContactTableMapper = TableMapperFactory.getTableMapper("crm_contacts_tags",
-				"companyId", "crmTagId", "crmContactId", this,
-				crmContactPersistence);
+		crmTagToCrmContactTableMapper = TableMapperFactory.getTableMapper(
+			"crm_contacts_tags", "companyId", "crmTagId", "crmContactId", this,
+			crmContactPersistence);
+
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmTagModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmTagModelImpl.UUID_COLUMN_BITMASK |
+			CrmTagModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, CrmTagImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmTagModelImpl.UUID_COLUMN_BITMASK |
+			CrmTagModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmTagModelImpl.ENTITY_CACHE_ENABLED,
+			CrmTagModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -2569,25 +2670,45 @@ public class CrmTagPersistenceImpl extends BasePersistenceImpl<CrmTag>
 		TableMapperFactory.removeTableMapper("crm_contacts_tags");
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
 	@BeanReference(type = CrmContactPersistence.class)
 	protected CrmContactPersistence crmContactPersistence;
-	protected TableMapper<CrmTag, contact.manager.model.CrmContact> crmTagToCrmContactTableMapper;
-	private static final String _SQL_SELECT_CRMTAG = "SELECT crmTag FROM CrmTag crmTag";
-	private static final String _SQL_SELECT_CRMTAG_WHERE_PKS_IN = "SELECT crmTag FROM CrmTag crmTag WHERE crmTagId IN (";
-	private static final String _SQL_SELECT_CRMTAG_WHERE = "SELECT crmTag FROM CrmTag crmTag WHERE ";
-	private static final String _SQL_COUNT_CRMTAG = "SELECT COUNT(crmTag) FROM CrmTag crmTag";
-	private static final String _SQL_COUNT_CRMTAG_WHERE = "SELECT COUNT(crmTag) FROM CrmTag crmTag WHERE ";
+
+	protected TableMapper<CrmTag, contact.manager.model.CrmContact>
+		crmTagToCrmContactTableMapper;
+
+	private static final String _SQL_SELECT_CRMTAG =
+		"SELECT crmTag FROM CrmTag crmTag";
+
+	private static final String _SQL_SELECT_CRMTAG_WHERE_PKS_IN =
+		"SELECT crmTag FROM CrmTag crmTag WHERE crmTagId IN (";
+
+	private static final String _SQL_SELECT_CRMTAG_WHERE =
+		"SELECT crmTag FROM CrmTag crmTag WHERE ";
+
+	private static final String _SQL_COUNT_CRMTAG =
+		"SELECT COUNT(crmTag) FROM CrmTag crmTag";
+
+	private static final String _SQL_COUNT_CRMTAG_WHERE =
+		"SELECT COUNT(crmTag) FROM CrmTag crmTag WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "crmTag.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmTag exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmTag exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmTagPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmTag exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmTag exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmTagPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

@@ -25,34 +25,42 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmContactAuditLogChangeModel
- * @see contact.manager.model.impl.CrmContactAuditLogChangeImpl
- * @see contact.manager.model.impl.CrmContactAuditLogChangeModelImpl
  * @generated
  */
-@ImplementationClassName("contact.manager.model.impl.CrmContactAuditLogChangeImpl")
+@ImplementationClassName(
+	"contact.manager.model.impl.CrmContactAuditLogChangeImpl"
+)
 @ProviderType
-public interface CrmContactAuditLogChange extends CrmContactAuditLogChangeModel,
-	PersistedModel {
+public interface CrmContactAuditLogChange
+	extends CrmContactAuditLogChangeModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmContactAuditLogChangeImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmContactAuditLogChangeImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmContactAuditLogChange, Long> CRM_CONTACT_AUDIT_LOG_CHANGE_ID_ACCESSOR =
-		new Accessor<CrmContactAuditLogChange, Long>() {
-			@Override
-			public Long get(CrmContactAuditLogChange crmContactAuditLogChange) {
-				return crmContactAuditLogChange.getCrmContactAuditLogChangeId();
-			}
+	public static final Accessor<CrmContactAuditLogChange, Long>
+		CRM_CONTACT_AUDIT_LOG_CHANGE_ID_ACCESSOR =
+			new Accessor<CrmContactAuditLogChange, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(
+					CrmContactAuditLogChange crmContactAuditLogChange) {
 
-			@Override
-			public Class<CrmContactAuditLogChange> getTypeClass() {
-				return CrmContactAuditLogChange.class;
-			}
-		};
+					return crmContactAuditLogChange.
+						getCrmContactAuditLogChangeId();
+				}
+
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<CrmContactAuditLogChange> getTypeClass() {
+					return CrmContactAuditLogChange.class;
+				}
+
+			};
+
 }

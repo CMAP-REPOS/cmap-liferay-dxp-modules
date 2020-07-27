@@ -18,19 +18,20 @@ import aQute.bnd.annotation.ProviderType;
 
 /**
  * Provides the SOAP utility for the
- * {@link contact.manager.service.CrmCountyCommissionerServiceUtil} service utility. The
- * static methods of this class calls the same methods of the service utility.
- * However, the signatures are different because it is difficult for SOAP to
- * support certain types.
+ * <code>contact.manager.service.CrmCountyCommissionerServiceUtil</code> service
+ * utility. The static methods of this class call the same methods of the
+ * service utility. However, the signatures are different because it is
+ * difficult for SOAP to support certain types.
  *
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
- * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link contact.manager.model.CrmCountyCommissionerSoap}.
- * If the method in the service utility returns a
- * {@link contact.manager.model.CrmCountyCommissioner}, that is translated to a
- * {@link contact.manager.model.CrmCountyCommissionerSoap}. Methods that SOAP cannot
- * safely wire are skipped.
+ * if the method in the service utility returns a <code>java.util.List</code>,
+ * that is translated to an array of
+ * <code>contact.manager.model.CrmCountyCommissionerSoap</code>. If the method in the
+ * service utility returns a
+ * <code>contact.manager.model.CrmCountyCommissioner</code>, that is translated to a
+ * <code>contact.manager.model.CrmCountyCommissionerSoap</code>. Methods that SOAP
+ * cannot safely wire are skipped.
  * </p>
  *
  * <p>
@@ -52,8 +53,6 @@ import aQute.bnd.annotation.ProviderType;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerServiceHttp
- * @see contact.manager.model.CrmCountyCommissionerSoap
- * @see contact.manager.service.CrmCountyCommissionerServiceUtil
  * @generated
  */
 @ProviderType

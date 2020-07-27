@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,6 +39,7 @@ import java.util.Objects;
  */
 @ProviderType
 public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
+
 	public CrmTagWrapper(CrmTag crmTag) {
 		_crmTag = crmTag;
 	}
@@ -135,35 +134,35 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	@Override
-	public int compareTo(CrmTag crmTag) {
+	public int compareTo(contact.manager.model.CrmTag crmTag) {
 		return _crmTag.compareTo(crmTag);
 	}
 
 	/**
-	* Returns the company ID of this CRM Tag.
-	*
-	* @return the company ID of this CRM Tag
-	*/
+	 * Returns the company ID of this CRM Tag.
+	 *
+	 * @return the company ID of this CRM Tag
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmTag.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM Tag.
-	*
-	* @return the create date of this CRM Tag
-	*/
+	 * Returns the create date of this CRM Tag.
+	 *
+	 * @return the create date of this CRM Tag
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmTag.getCreateDate();
 	}
 
 	/**
-	* Returns the crm tag ID of this CRM Tag.
-	*
-	* @return the crm tag ID of this CRM Tag
-	*/
+	 * Returns the crm tag ID of this CRM Tag.
+	 *
+	 * @return the crm tag ID of this CRM Tag
+	 */
 	@Override
 	public long getCrmTagId() {
 		return _crmTag.getCrmTagId();
@@ -175,40 +174,40 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Returns the group ID of this CRM Tag.
-	*
-	* @return the group ID of this CRM Tag
-	*/
+	 * Returns the group ID of this CRM Tag.
+	 *
+	 * @return the group ID of this CRM Tag
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmTag.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM Tag.
-	*
-	* @return the modified date of this CRM Tag
-	*/
+	 * Returns the modified date of this CRM Tag.
+	 *
+	 * @return the modified date of this CRM Tag
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmTag.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this CRM Tag.
-	*
-	* @return the name of this CRM Tag
-	*/
+	 * Returns the name of this CRM Tag.
+	 *
+	 * @return the name of this CRM Tag
+	 */
 	@Override
 	public String getName() {
 		return _crmTag.getName();
 	}
 
 	/**
-	* Returns the primary key of this CRM Tag.
-	*
-	* @return the primary key of this CRM Tag
-	*/
+	 * Returns the primary key of this CRM Tag.
+	 *
+	 * @return the primary key of this CRM Tag
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmTag.getPrimaryKey();
@@ -220,40 +219,40 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Returns the user ID of this CRM Tag.
-	*
-	* @return the user ID of this CRM Tag
-	*/
+	 * Returns the user ID of this CRM Tag.
+	 *
+	 * @return the user ID of this CRM Tag
+	 */
 	@Override
 	public long getUserId() {
 		return _crmTag.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM Tag.
-	*
-	* @return the user name of this CRM Tag
-	*/
+	 * Returns the user name of this CRM Tag.
+	 *
+	 * @return the user name of this CRM Tag
+	 */
 	@Override
 	public String getUserName() {
 		return _crmTag.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM Tag.
-	*
-	* @return the user uuid of this CRM Tag
-	*/
+	 * Returns the user uuid of this CRM Tag.
+	 *
+	 * @return the user uuid of this CRM Tag
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmTag.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM Tag.
-	*
-	* @return the uuid of this CRM Tag
-	*/
+	 * Returns the uuid of this CRM Tag.
+	 *
+	 * @return the uuid of this CRM Tag
+	 */
 	@Override
 	public String getUuid() {
 		return _crmTag.getUuid();
@@ -290,30 +289,30 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Sets the company ID of this CRM Tag.
-	*
-	* @param companyId the company ID of this CRM Tag
-	*/
+	 * Sets the company ID of this CRM Tag.
+	 *
+	 * @param companyId the company ID of this CRM Tag
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmTag.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM Tag.
-	*
-	* @param createDate the create date of this CRM Tag
-	*/
+	 * Sets the create date of this CRM Tag.
+	 *
+	 * @param createDate the create date of this CRM Tag
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmTag.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm tag ID of this CRM Tag.
-	*
-	* @param crmTagId the crm tag ID of this CRM Tag
-	*/
+	 * Sets the crm tag ID of this CRM Tag.
+	 *
+	 * @param crmTagId the crm tag ID of this CRM Tag
+	 */
 	@Override
 	public void setCrmTagId(long crmTagId) {
 		_crmTag.setCrmTagId(crmTagId);
@@ -322,6 +321,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmTag.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -336,30 +336,30 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Sets the group ID of this CRM Tag.
-	*
-	* @param groupId the group ID of this CRM Tag
-	*/
+	 * Sets the group ID of this CRM Tag.
+	 *
+	 * @param groupId the group ID of this CRM Tag
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmTag.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM Tag.
-	*
-	* @param modifiedDate the modified date of this CRM Tag
-	*/
+	 * Sets the modified date of this CRM Tag.
+	 *
+	 * @param modifiedDate the modified date of this CRM Tag
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmTag.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this CRM Tag.
-	*
-	* @param name the name of this CRM Tag
-	*/
+	 * Sets the name of this CRM Tag.
+	 *
+	 * @param name the name of this CRM Tag
+	 */
 	@Override
 	public void setName(String name) {
 		_crmTag.setName(name);
@@ -371,10 +371,10 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Sets the primary key of this CRM Tag.
-	*
-	* @param primaryKey the primary key of this CRM Tag
-	*/
+	 * Sets the primary key of this CRM Tag.
+	 *
+	 * @param primaryKey the primary key of this CRM Tag
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmTag.setPrimaryKey(primaryKey);
@@ -386,52 +386,54 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	/**
-	* Sets the user ID of this CRM Tag.
-	*
-	* @param userId the user ID of this CRM Tag
-	*/
+	 * Sets the user ID of this CRM Tag.
+	 *
+	 * @param userId the user ID of this CRM Tag
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmTag.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM Tag.
-	*
-	* @param userName the user name of this CRM Tag
-	*/
+	 * Sets the user name of this CRM Tag.
+	 *
+	 * @param userName the user name of this CRM Tag
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmTag.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM Tag.
-	*
-	* @param userUuid the user uuid of this CRM Tag
-	*/
+	 * Sets the user uuid of this CRM Tag.
+	 *
+	 * @param userUuid the user uuid of this CRM Tag
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmTag.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM Tag.
-	*
-	* @param uuid the uuid of this CRM Tag
-	*/
+	 * Sets the uuid of this CRM Tag.
+	 *
+	 * @param uuid the uuid of this CRM Tag
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmTag.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmTag> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmTag> toCacheModel() {
+
 		return _crmTag.toCacheModel();
 	}
 
 	@Override
-	public CrmTag toEscapedModel() {
+	public contact.manager.model.CrmTag toEscapedModel() {
 		return new CrmTagWrapper(_crmTag.toEscapedModel());
 	}
 
@@ -441,7 +443,7 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	@Override
-	public CrmTag toUnescapedModel() {
+	public contact.manager.model.CrmTag toUnescapedModel() {
 		return new CrmTagWrapper(_crmTag.toUnescapedModel());
 	}
 
@@ -495,4 +497,5 @@ public class CrmTagWrapper implements CrmTag, ModelWrapper<CrmTag> {
 	}
 
 	private final CrmTag _crmTag;
+
 }

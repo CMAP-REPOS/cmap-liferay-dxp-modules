@@ -26,10 +26,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapper;
 import com.liferay.portal.kernel.service.persistence.impl.TableMapperFactory;
@@ -44,11 +43,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmGroupException;
-
 import contact.manager.model.CrmGroup;
 import contact.manager.model.impl.CrmGroupImpl;
 import contact.manager.model.impl.CrmGroupModelImpl;
-
 import contact.manager.service.persistence.CrmContactPersistence;
 import contact.manager.service.persistence.CrmGroupPersistence;
 
@@ -75,51 +72,32 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmGroupPersistence
- * @see contact.manager.service.persistence.CrmGroupUtil
  * @generated
  */
 @ProviderType
-public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
-	implements CrmGroupPersistence {
+public class CrmGroupPersistenceImpl
+	extends BasePersistenceImpl<CrmGroup> implements CrmGroupPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmGroupUtil} to access the CRM Group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmGroupUtil</code> to access the CRM Group persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmGroupImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
-			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmGroupImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM Groups where uuid = &#63;.
@@ -136,7 +114,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns a range of all the CRM Groups where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -153,66 +131,71 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Groups where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
+	@Deprecated
 	@Override
-	public List<CrmGroup> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmGroup> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Groups where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmGroup> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmGroup> list = null;
+		List<CrmGroup> list = (List<CrmGroup>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmGroup>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmGroup crmGroup : list) {
+				if (!uuid.equals(crmGroup.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmGroup crmGroup : list) {
-					if (!Objects.equals(uuid, crmGroup.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -221,8 +204,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -232,10 +215,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -245,11 +225,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmGroupModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -269,16 +248,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				}
 
 				if (!pagination) {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -307,9 +286,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByUuid_First(String uuid,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByUuid_First(
+			String uuid, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByUuid_First(uuid, orderByComparator);
 
 		if (crmGroup != null) {
@@ -336,8 +316,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByUuid_First(String uuid,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByUuid_First(
+		String uuid, OrderByComparator<CrmGroup> orderByComparator) {
+
 		List<CrmGroup> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -356,9 +337,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByUuid_Last(String uuid,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByUuid_Last(
+			String uuid, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (crmGroup != null) {
@@ -385,16 +367,17 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByUuid_Last(String uuid,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByUuid_Last(
+		String uuid, OrderByComparator<CrmGroup> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmGroup> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<CrmGroup> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -413,9 +396,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	 */
 	@Override
-	public CrmGroup[] findByUuid_PrevAndNext(long crmGroupId, String uuid,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup[] findByUuid_PrevAndNext(
+			long crmGroupId, String uuid,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmGroup crmGroup = findByPrimaryKey(crmGroupId);
 
 		Session session = null;
@@ -425,13 +412,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			CrmGroup[] array = new CrmGroupImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmGroup, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmGroup, uuid, orderByComparator, true);
 
 			array[1] = crmGroup;
 
-			array[2] = getByUuid_PrevAndNext(session, crmGroup, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmGroup, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -443,14 +430,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 	}
 
-	protected CrmGroup getByUuid_PrevAndNext(Session session,
-		CrmGroup crmGroup, String uuid,
+	protected CrmGroup getByUuid_PrevAndNext(
+		Session session, CrmGroup crmGroup, String uuid,
 		OrderByComparator<CrmGroup> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -461,10 +449,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -474,7 +459,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -546,10 +532,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmGroup);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmGroup)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -570,8 +556,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmGroup crmGroup : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmGroup crmGroup :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmGroup);
 		}
 	}
@@ -584,9 +571,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -597,10 +586,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -641,22 +627,17 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmGroup.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmGroup.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmGroup.uuid IS NULL OR crmGroup.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
-			CrmGroupModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"crmGroup.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmGroup.uuid IS NULL OR crmGroup.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM Group where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmGroupException} if it could not be found.
+	 * Returns the CRM Group where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmGroupException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -666,6 +647,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public CrmGroup findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByUUID_G(uuid, groupId);
 
 		if (crmGroup == null) {
@@ -692,15 +674,20 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	}
 
 	/**
-	 * Returns the CRM Group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM Group where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmGroup fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmGroup fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -708,26 +695,24 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmGroup fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmGroup) {
 			CrmGroup crmGroup = (CrmGroup)result;
 
 			if (!Objects.equals(uuid, crmGroup.getUuid()) ||
-					(groupId != crmGroup.getGroupId())) {
+				(groupId != crmGroup.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -739,10 +724,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -773,8 +755,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				List<CrmGroup> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					CrmGroup crmGroup = list.get(0);
@@ -785,7 +767,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -812,6 +794,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public CrmGroup removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = findByUUID_G(uuid, groupId);
 
 		return remove(crmGroup);
@@ -826,9 +809,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -839,10 +824,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -887,31 +869,18 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmGroup.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmGroup.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmGroup.uuid IS NULL OR crmGroup.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmGroup.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
-			CrmGroupModelImpl.COMPANYID_COLUMN_BITMASK |
-			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmGroup.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmGroup.uuid IS NULL OR crmGroup.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmGroup.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM Groups where uuid = &#63; and companyId = &#63;.
@@ -922,15 +891,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public List<CrmGroup> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Groups where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -940,8 +909,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the range of matching CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<CrmGroup> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -949,27 +919,32 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Groups where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
+	@Deprecated
 	@Override
-	public List<CrmGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmGroup> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Groups where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -977,46 +952,44 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmGroup> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmGroup> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmGroup> list = null;
+		List<CrmGroup> list = (List<CrmGroup>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmGroup>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmGroup crmGroup : list) {
+				if (!uuid.equals(crmGroup.getUuid()) ||
+					(companyId != crmGroup.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmGroup crmGroup : list) {
-					if (!Objects.equals(uuid, crmGroup.getUuid()) ||
-							(companyId != crmGroup.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1025,8 +998,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1036,10 +1009,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1051,11 +1021,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmGroupModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1077,16 +1046,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1116,11 +1085,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
-		CrmGroup crmGroup = fetchByUuid_C_First(uuid, companyId,
-				orderByComparator);
+
+		CrmGroup crmGroup = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (crmGroup != null) {
 			return crmGroup;
@@ -1150,10 +1121,12 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByUuid_C_First(String uuid, long companyId,
+	public CrmGroup fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmGroup> orderByComparator) {
-		List<CrmGroup> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<CrmGroup> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1172,11 +1145,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
-		CrmGroup crmGroup = fetchByUuid_C_Last(uuid, companyId,
-				orderByComparator);
+
+		CrmGroup crmGroup = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (crmGroup != null) {
 			return crmGroup;
@@ -1206,16 +1181,18 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByUuid_C_Last(String uuid, long companyId,
+	public CrmGroup fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmGroup> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmGroup> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<CrmGroup> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1235,9 +1212,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	 */
 	@Override
-	public CrmGroup[] findByUuid_C_PrevAndNext(long crmGroupId, String uuid,
-		long companyId, OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup[] findByUuid_C_PrevAndNext(
+			long crmGroupId, String uuid, long companyId,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmGroup crmGroup = findByPrimaryKey(crmGroupId);
 
 		Session session = null;
@@ -1247,13 +1228,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			CrmGroup[] array = new CrmGroupImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, crmGroup, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmGroup, uuid, companyId, orderByComparator, true);
 
 			array[1] = crmGroup;
 
-			array[2] = getByUuid_C_PrevAndNext(session, crmGroup, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmGroup, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1265,14 +1246,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 	}
 
-	protected CrmGroup getByUuid_C_PrevAndNext(Session session,
-		CrmGroup crmGroup, String uuid, long companyId,
+	protected CrmGroup getByUuid_C_PrevAndNext(
+		Session session, CrmGroup crmGroup, String uuid, long companyId,
 		OrderByComparator<CrmGroup> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1283,10 +1265,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1298,7 +1277,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1372,10 +1352,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmGroup);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmGroup)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1397,8 +1377,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmGroup crmGroup : findByUuid_C(uuid, companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CrmGroup crmGroup :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmGroup);
 		}
 	}
@@ -1412,9 +1395,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1425,10 +1410,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1473,28 +1455,18 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmGroup.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmGroup.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmGroup.uuid IS NULL OR crmGroup.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmGroup.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_NAME = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
-			new String[] { String.class.getName() },
-			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_NAME = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
-			new String[] { String.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmGroup.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmGroup.uuid IS NULL OR crmGroup.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmGroup.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByName;
+	private FinderPath _finderPathWithoutPaginationFindByName;
+	private FinderPath _finderPathCountByName;
 
 	/**
 	 * Returns all the CRM Groups where name = &#63;.
@@ -1511,7 +1483,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns a range of all the CRM Groups where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param name the name
@@ -1528,66 +1500,71 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Groups where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
 	 * @param name the name
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
+	@Deprecated
 	@Override
-	public List<CrmGroup> findByName(String name, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator) {
-		return findByName(name, start, end, orderByComparator, true);
+	public List<CrmGroup> findByName(
+		String name, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean useFinderCache) {
+
+		return findByName(name, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Groups where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param name the name
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findByName(String name, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmGroup> findByName(
+		String name, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
+
+		name = Objects.toString(name, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME;
-			finderArgs = new Object[] { name };
+			finderPath = _finderPathWithoutPaginationFindByName;
+			finderArgs = new Object[] {name};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_NAME;
-			finderArgs = new Object[] { name, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByName;
+			finderArgs = new Object[] {name, start, end, orderByComparator};
 		}
 
-		List<CrmGroup> list = null;
+		List<CrmGroup> list = (List<CrmGroup>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmGroup>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmGroup crmGroup : list) {
+				if (!name.equals(crmGroup.getName())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmGroup crmGroup : list) {
-					if (!Objects.equals(name, crmGroup.getName())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1596,8 +1573,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1607,10 +1584,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -1620,11 +1594,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmGroupModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1644,16 +1617,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				}
 
 				if (!pagination) {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1682,9 +1655,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByName_First(String name,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByName_First(
+			String name, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByName_First(name, orderByComparator);
 
 		if (crmGroup != null) {
@@ -1711,8 +1685,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByName_First(String name,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByName_First(
+		String name, OrderByComparator<CrmGroup> orderByComparator) {
+
 		List<CrmGroup> list = findByName(name, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1731,9 +1706,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByName_Last(String name,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByName_Last(
+			String name, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByName_Last(name, orderByComparator);
 
 		if (crmGroup != null) {
@@ -1760,16 +1736,17 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByName_Last(String name,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByName_Last(
+		String name, OrderByComparator<CrmGroup> orderByComparator) {
+
 		int count = countByName(name);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmGroup> list = findByName(name, count - 1, count,
-				orderByComparator);
+		List<CrmGroup> list = findByName(
+			name, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1788,9 +1765,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	 */
 	@Override
-	public CrmGroup[] findByName_PrevAndNext(long crmGroupId, String name,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup[] findByName_PrevAndNext(
+			long crmGroupId, String name,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
+		name = Objects.toString(name, "");
+
 		CrmGroup crmGroup = findByPrimaryKey(crmGroupId);
 
 		Session session = null;
@@ -1800,13 +1781,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			CrmGroup[] array = new CrmGroupImpl[3];
 
-			array[0] = getByName_PrevAndNext(session, crmGroup, name,
-					orderByComparator, true);
+			array[0] = getByName_PrevAndNext(
+				session, crmGroup, name, orderByComparator, true);
 
 			array[1] = crmGroup;
 
-			array[2] = getByName_PrevAndNext(session, crmGroup, name,
-					orderByComparator, false);
+			array[2] = getByName_PrevAndNext(
+				session, crmGroup, name, orderByComparator, false);
 
 			return array;
 		}
@@ -1818,14 +1799,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 	}
 
-	protected CrmGroup getByName_PrevAndNext(Session session,
-		CrmGroup crmGroup, String name,
+	protected CrmGroup getByName_PrevAndNext(
+		Session session, CrmGroup crmGroup, String name,
 		OrderByComparator<CrmGroup> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1836,10 +1818,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 		boolean bindName = false;
 
-		if (name == null) {
-			query.append(_FINDER_COLUMN_NAME_NAME_1);
-		}
-		else if (name.equals("")) {
+		if (name.isEmpty()) {
 			query.append(_FINDER_COLUMN_NAME_NAME_3);
 		}
 		else {
@@ -1849,7 +1828,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1921,10 +1901,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmGroup);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmGroup)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1945,8 +1925,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public void removeByName(String name) {
-		for (CrmGroup crmGroup : findByName(name, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmGroup crmGroup :
+				findByName(name, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmGroup);
 		}
 	}
@@ -1959,9 +1940,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countByName(String name) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_NAME;
+		name = Objects.toString(name, "");
 
-		Object[] finderArgs = new Object[] { name };
+		FinderPath finderPath = _finderPathCountByName;
+
+		Object[] finderArgs = new Object[] {name};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1972,10 +1955,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindName = false;
 
-			if (name == null) {
-				query.append(_FINDER_COLUMN_NAME_NAME_1);
-			}
-			else if (name.equals("")) {
+			if (name.isEmpty()) {
 				query.append(_FINDER_COLUMN_NAME_NAME_3);
 			}
 			else {
@@ -2016,29 +1996,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_NAME_NAME_1 = "crmGroup.name IS NULL";
-	private static final String _FINDER_COLUMN_NAME_NAME_2 = "crmGroup.name = ?";
-	private static final String _FINDER_COLUMN_NAME_NAME_3 = "(crmGroup.name IS NULL OR crmGroup.name = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS =
-		new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
-			new String[] { String.class.getName() },
-			CrmGroupModelImpl.STATUS_COLUMN_BITMASK |
-			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_STATUS = new FinderPath(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
-			new String[] { String.class.getName() });
+	private static final String _FINDER_COLUMN_NAME_NAME_2 =
+		"crmGroup.name = ?";
+
+	private static final String _FINDER_COLUMN_NAME_NAME_3 =
+		"(crmGroup.name IS NULL OR crmGroup.name = '')";
+
+	private FinderPath _finderPathWithPaginationFindByStatus;
+	private FinderPath _finderPathWithoutPaginationFindByStatus;
+	private FinderPath _finderPathCountByStatus;
 
 	/**
 	 * Returns all the CRM Groups where status = &#63;.
@@ -2055,7 +2021,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns a range of all the CRM Groups where status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param status the status
@@ -2072,66 +2038,71 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Groups where status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStatus(String, int, int, OrderByComparator)}
 	 * @param status the status
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
+	@Deprecated
 	@Override
-	public List<CrmGroup> findByStatus(String status, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator) {
-		return findByStatus(status, start, end, orderByComparator, true);
+	public List<CrmGroup> findByStatus(
+		String status, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator, boolean useFinderCache) {
+
+		return findByStatus(status, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Groups where status = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param status the status
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findByStatus(String status, int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmGroup> findByStatus(
+		String status, int start, int end,
+		OrderByComparator<CrmGroup> orderByComparator) {
+
+		status = Objects.toString(status, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS;
-			finderArgs = new Object[] { status };
+			finderPath = _finderPathWithoutPaginationFindByStatus;
+			finderArgs = new Object[] {status};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_STATUS;
-			finderArgs = new Object[] { status, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByStatus;
+			finderArgs = new Object[] {status, start, end, orderByComparator};
 		}
 
-		List<CrmGroup> list = null;
+		List<CrmGroup> list = (List<CrmGroup>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmGroup>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmGroup crmGroup : list) {
+				if (!status.equals(crmGroup.getStatus())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmGroup crmGroup : list) {
-					if (!Objects.equals(status, crmGroup.getStatus())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -2140,8 +2111,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2151,10 +2122,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindStatus = false;
 
-			if (status == null) {
-				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
-			}
-			else if (status.equals("")) {
+			if (status.isEmpty()) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 			}
 			else {
@@ -2164,11 +2132,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmGroupModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -2188,16 +2155,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				}
 
 				if (!pagination) {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2226,9 +2193,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByStatus_First(String status,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByStatus_First(
+			String status, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByStatus_First(status, orderByComparator);
 
 		if (crmGroup != null) {
@@ -2255,8 +2223,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the first matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByStatus_First(String status,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByStatus_First(
+		String status, OrderByComparator<CrmGroup> orderByComparator) {
+
 		List<CrmGroup> list = findByStatus(status, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2275,9 +2244,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup findByStatus_Last(String status,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup findByStatus_Last(
+			String status, OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByStatus_Last(status, orderByComparator);
 
 		if (crmGroup != null) {
@@ -2304,16 +2274,17 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the last matching CRM Group, or <code>null</code> if a matching CRM Group could not be found
 	 */
 	@Override
-	public CrmGroup fetchByStatus_Last(String status,
-		OrderByComparator<CrmGroup> orderByComparator) {
+	public CrmGroup fetchByStatus_Last(
+		String status, OrderByComparator<CrmGroup> orderByComparator) {
+
 		int count = countByStatus(status);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmGroup> list = findByStatus(status, count - 1, count,
-				orderByComparator);
+		List<CrmGroup> list = findByStatus(
+			status, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2332,9 +2303,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @throws NoSuchCrmGroupException if a CRM Group with the primary key could not be found
 	 */
 	@Override
-	public CrmGroup[] findByStatus_PrevAndNext(long crmGroupId, String status,
-		OrderByComparator<CrmGroup> orderByComparator)
+	public CrmGroup[] findByStatus_PrevAndNext(
+			long crmGroupId, String status,
+			OrderByComparator<CrmGroup> orderByComparator)
 		throws NoSuchCrmGroupException {
+
+		status = Objects.toString(status, "");
+
 		CrmGroup crmGroup = findByPrimaryKey(crmGroupId);
 
 		Session session = null;
@@ -2344,13 +2319,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			CrmGroup[] array = new CrmGroupImpl[3];
 
-			array[0] = getByStatus_PrevAndNext(session, crmGroup, status,
-					orderByComparator, true);
+			array[0] = getByStatus_PrevAndNext(
+				session, crmGroup, status, orderByComparator, true);
 
 			array[1] = crmGroup;
 
-			array[2] = getByStatus_PrevAndNext(session, crmGroup, status,
-					orderByComparator, false);
+			array[2] = getByStatus_PrevAndNext(
+				session, crmGroup, status, orderByComparator, false);
 
 			return array;
 		}
@@ -2362,14 +2337,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 	}
 
-	protected CrmGroup getByStatus_PrevAndNext(Session session,
-		CrmGroup crmGroup, String status,
+	protected CrmGroup getByStatus_PrevAndNext(
+		Session session, CrmGroup crmGroup, String status,
 		OrderByComparator<CrmGroup> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -2380,10 +2356,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 		boolean bindStatus = false;
 
-		if (status == null) {
-			query.append(_FINDER_COLUMN_STATUS_STATUS_1);
-		}
-		else if (status.equals("")) {
+		if (status.isEmpty()) {
 			query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 		}
 		else {
@@ -2393,7 +2366,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -2465,10 +2439,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmGroup);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmGroup)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -2489,8 +2463,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public void removeByStatus(String status) {
-		for (CrmGroup crmGroup : findByStatus(status, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmGroup crmGroup :
+				findByStatus(
+					status, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmGroup);
 		}
 	}
@@ -2503,9 +2479,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countByStatus(String status) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_STATUS;
+		status = Objects.toString(status, "");
 
-		Object[] finderArgs = new Object[] { status };
+		FinderPath finderPath = _finderPathCountByStatus;
+
+		Object[] finderArgs = new Object[] {status};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -2516,10 +2494,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 			boolean bindStatus = false;
 
-			if (status == null) {
-				query.append(_FINDER_COLUMN_STATUS_STATUS_1);
-			}
-			else if (status.equals("")) {
+			if (status.isEmpty()) {
 				query.append(_FINDER_COLUMN_STATUS_STATUS_3);
 			}
 			else {
@@ -2560,22 +2535,24 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_STATUS_STATUS_1 = "crmGroup.status IS NULL";
-	private static final String _FINDER_COLUMN_STATUS_STATUS_2 = "crmGroup.status = ?";
-	private static final String _FINDER_COLUMN_STATUS_STATUS_3 = "(crmGroup.status IS NULL OR crmGroup.status = '')";
+	private static final String _FINDER_COLUMN_STATUS_STATUS_2 =
+		"crmGroup.status = ?";
+
+	private static final String _FINDER_COLUMN_STATUS_STATUS_3 =
+		"(crmGroup.status IS NULL OR crmGroup.status = '')";
 
 	public CrmGroupPersistenceImpl() {
 		setModelClass(CrmGroup.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2593,11 +2570,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public void cacheResult(CrmGroup crmGroup) {
-		entityCache.putResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupImpl.class, crmGroup.getPrimaryKey(), crmGroup);
+		entityCache.putResult(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+			crmGroup.getPrimaryKey(), crmGroup);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { crmGroup.getUuid(), crmGroup.getGroupId() }, crmGroup);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {crmGroup.getUuid(), crmGroup.getGroupId()}, crmGroup);
 
 		crmGroup.resetOriginalValues();
 	}
@@ -2610,8 +2589,10 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public void cacheResult(List<CrmGroup> crmGroups) {
 		for (CrmGroup crmGroup : crmGroups) {
-			if (entityCache.getResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-						CrmGroupImpl.class, crmGroup.getPrimaryKey()) == null) {
+			if (entityCache.getResult(
+					CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+					crmGroup.getPrimaryKey()) == null) {
+
 				cacheResult(crmGroup);
 			}
 			else {
@@ -2624,7 +2605,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Clears the cache for all CRM Groups.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2640,13 +2621,14 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Clears the cache for the CRM Group.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmGroup crmGroup) {
-		entityCache.removeResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupImpl.class, crmGroup.getPrimaryKey());
+		entityCache.removeResult(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+			crmGroup.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2660,44 +2642,49 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CrmGroup crmGroup : crmGroups) {
-			entityCache.removeResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-				CrmGroupImpl.class, crmGroup.getPrimaryKey());
+			entityCache.removeResult(
+				CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+				crmGroup.getPrimaryKey());
 
 			clearUniqueFindersCache((CrmGroupModelImpl)crmGroup, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CrmGroupModelImpl crmGroupModelImpl) {
-		Object[] args = new Object[] {
-				crmGroupModelImpl.getUuid(), crmGroupModelImpl.getGroupId()
-			};
+	protected void cacheUniqueFindersCache(
+		CrmGroupModelImpl crmGroupModelImpl) {
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmGroupModelImpl, false);
+		Object[] args = new Object[] {
+			crmGroupModelImpl.getUuid(), crmGroupModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmGroupModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		CrmGroupModelImpl crmGroupModelImpl, boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					crmGroupModelImpl.getUuid(), crmGroupModelImpl.getGroupId()
-				};
+				crmGroupModelImpl.getUuid(), crmGroupModelImpl.getGroupId()
+			};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmGroupModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmGroupModelImpl.getOriginalUuid(),
-					crmGroupModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmGroupModelImpl.getOriginalUuid(),
+				crmGroupModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -2718,7 +2705,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 		crmGroup.setUuid(uuid);
 
-		crmGroup.setCompanyId(companyProvider.getCompanyId());
+		crmGroup.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return crmGroup;
 	}
@@ -2745,21 +2732,22 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public CrmGroup remove(Serializable primaryKey)
 		throws NoSuchCrmGroupException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmGroup crmGroup = (CrmGroup)session.get(CrmGroupImpl.class,
-					primaryKey);
+			CrmGroup crmGroup = (CrmGroup)session.get(
+				CrmGroupImpl.class, primaryKey);
 
 			if (crmGroup == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmGroupException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmGroup);
@@ -2777,7 +2765,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 	@Override
 	protected CrmGroup removeImpl(CrmGroup crmGroup) {
-		crmGroupToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(crmGroup.getPrimaryKey());
+		crmGroupToCrmContactTableMapper.deleteLeftPrimaryKeyTableMappings(
+			crmGroup.getPrimaryKey());
 
 		Session session = null;
 
@@ -2785,8 +2774,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			session = openSession();
 
 			if (!session.contains(crmGroup)) {
-				crmGroup = (CrmGroup)session.get(CrmGroupImpl.class,
-						crmGroup.getPrimaryKeyObj());
+				crmGroup = (CrmGroup)session.get(
+					CrmGroupImpl.class, crmGroup.getPrimaryKeyObj());
 			}
 
 			if (crmGroup != null) {
@@ -2819,12 +2808,12 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmGroup proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmGroup implementation " +
-				crmGroup.getClass());
+					crmGroup.getClass());
 		}
 
 		CrmGroupModelImpl crmGroupModelImpl = (CrmGroupModelImpl)crmGroup;
@@ -2835,7 +2824,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			crmGroup.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -2883,112 +2873,122 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		if (!CrmGroupModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { crmGroupModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {crmGroupModelImpl.getUuid()};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				crmGroupModelImpl.getUuid(), crmGroupModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {crmGroupModelImpl.getName()};
+
+			finderCache.removeResult(_finderPathCountByName, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByName, args);
+
+			args = new Object[] {crmGroupModelImpl.getStatus()};
+
+			finderCache.removeResult(_finderPathCountByStatus, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByStatus, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmGroupModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmGroupModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {crmGroupModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((crmGroupModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmGroupModelImpl.getOriginalUuid(),
+					crmGroupModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmGroupModelImpl.getUuid(),
 					crmGroupModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
-
-			args = new Object[] { crmGroupModelImpl.getName() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
-				args);
-
-			args = new Object[] { crmGroupModelImpl.getStatus() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmGroupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmGroupModelImpl.getOriginalUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmGroupModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
 			if ((crmGroupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByName.getColumnBitmask()) !=
+					 0) {
+
 				Object[] args = new Object[] {
-						crmGroupModelImpl.getOriginalUuid(),
-						crmGroupModelImpl.getOriginalCompanyId()
-					};
+					crmGroupModelImpl.getOriginalName()
+				};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByName, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByName, args);
 
-				args = new Object[] {
-						crmGroupModelImpl.getUuid(),
-						crmGroupModelImpl.getCompanyId()
-					};
+				args = new Object[] {crmGroupModelImpl.getName()};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByName, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByName, args);
 			}
 
 			if ((crmGroupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmGroupModelImpl.getOriginalName() };
+				 _finderPathWithoutPaginationFindByStatus.getColumnBitmask()) !=
+					 0) {
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
-					args);
-
-				args = new Object[] { crmGroupModelImpl.getName() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_NAME, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_NAME,
-					args);
-			}
-
-			if ((crmGroupModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						crmGroupModelImpl.getOriginalStatus()
-					};
+					crmGroupModelImpl.getOriginalStatus()
+				};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
-					args);
+				finderCache.removeResult(_finderPathCountByStatus, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByStatus, args);
 
-				args = new Object[] { crmGroupModelImpl.getStatus() };
+				args = new Object[] {crmGroupModelImpl.getStatus()};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_STATUS, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_STATUS,
-					args);
+				finderCache.removeResult(_finderPathCountByStatus, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByStatus, args);
 			}
 		}
 
-		entityCache.putResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-			CrmGroupImpl.class, crmGroup.getPrimaryKey(), crmGroup, false);
+		entityCache.putResult(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+			crmGroup.getPrimaryKey(), crmGroup, false);
 
 		clearUniqueFindersCache(crmGroupModelImpl, false);
 		cacheUniqueFindersCache(crmGroupModelImpl);
@@ -2999,7 +2999,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	}
 
 	/**
-	 * Returns the CRM Group with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM Group with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM Group
 	 * @return the CRM Group
@@ -3008,6 +3008,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public CrmGroup findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmGroupException {
+
 		CrmGroup crmGroup = fetchByPrimaryKey(primaryKey);
 
 		if (crmGroup == null) {
@@ -3015,15 +3016,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmGroupException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmGroupException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmGroup;
 	}
 
 	/**
-	 * Returns the CRM Group with the primary key or throws a {@link NoSuchCrmGroupException} if it could not be found.
+	 * Returns the CRM Group with the primary key or throws a <code>NoSuchCrmGroupException</code> if it could not be found.
 	 *
 	 * @param crmGroupId the primary key of the CRM Group
 	 * @return the CRM Group
@@ -3032,6 +3033,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public CrmGroup findByPrimaryKey(long crmGroupId)
 		throws NoSuchCrmGroupException {
+
 		return findByPrimaryKey((Serializable)crmGroupId);
 	}
 
@@ -3043,8 +3045,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public CrmGroup fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-				CrmGroupImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+			primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -3058,19 +3061,22 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			try {
 				session = openSession();
 
-				crmGroup = (CrmGroup)session.get(CrmGroupImpl.class, primaryKey);
+				crmGroup = (CrmGroup)session.get(
+					CrmGroupImpl.class, primaryKey);
 
 				if (crmGroup != null) {
 					cacheResult(crmGroup);
 				}
 				else {
-					entityCache.putResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(
+						CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
 						CrmGroupImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-					CrmGroupImpl.class, primaryKey);
+				entityCache.removeResult(
+					CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+					primaryKey);
 
 				throw processException(e);
 			}
@@ -3096,6 +3102,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public Map<Serializable, CrmGroup> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
@@ -3119,8 +3126,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-					CrmGroupImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+				primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -3140,8 +3148,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMGROUP_WHERE_PKS_IN);
 
@@ -3173,8 +3181,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
-					CrmGroupImpl.class, primaryKey, nullModel);
+				entityCache.putResult(
+					CrmGroupModelImpl.ENTITY_CACHE_ENABLED, CrmGroupImpl.class,
+					primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -3201,7 +3210,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns a range of all the CRM Groups.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Groups
@@ -3217,70 +3226,72 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Groups.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM Groups
 	 */
+	@Deprecated
 	@Override
-	public List<CrmGroup> findAll(int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmGroup> findAll(
+		int start, int end, OrderByComparator<CrmGroup> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Groups.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Groups
 	 * @param end the upper bound of the range of CRM Groups (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM Groups
 	 */
 	@Override
-	public List<CrmGroup> findAll(int start, int end,
-		OrderByComparator<CrmGroup> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmGroup> findAll(
+		int start, int end, OrderByComparator<CrmGroup> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmGroup> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmGroup>)finderCache.getResult(finderPath,
-					finderArgs, this);
-		}
+		List<CrmGroup> list = (List<CrmGroup>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMGROUP);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -3300,16 +3311,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmGroup>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmGroup>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -3347,8 +3358,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -3360,12 +3371,12 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -3398,7 +3409,6 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public List<contact.manager.model.CrmContact> getCrmContacts(long pk) {
-		System.out.println("######  Primary Key ->" + pk + "######");
 		return getCrmContacts(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
@@ -3406,7 +3416,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns a range of all the CRM Contacts associated with the CRM Group.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the CRM Group
@@ -3415,8 +3425,9 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the range of CRM Contacts associated with the CRM Group
 	 */
 	@Override
-	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
-		int start, int end) {
+	public List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end) {
+
 		return getCrmContacts(pk, start, end, null);
 	}
 
@@ -3424,7 +3435,7 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Returns an ordered range of all the CRM Contacts associated with the CRM Group.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmGroupModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmGroupModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param pk the primary key of the CRM Group
@@ -3434,11 +3445,12 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @return the ordered range of CRM Contacts associated with the CRM Group
 	 */
 	@Override
-	public List<contact.manager.model.CrmContact> getCrmContacts(long pk,
-		int start, int end,
+	public List<contact.manager.model.CrmContact> getCrmContacts(
+		long pk, int start, int end,
 		OrderByComparator<contact.manager.model.CrmContact> orderByComparator) {
-		return crmGroupToCrmContactTableMapper.getRightBaseModels(pk, start,
-			end, orderByComparator);
+
+		return crmGroupToCrmContactTableMapper.getRightBaseModels(
+			pk, start, end, orderByComparator);
 	}
 
 	/**
@@ -3463,8 +3475,8 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 */
 	@Override
 	public boolean containsCrmContact(long pk, long crmContactPK) {
-		return crmGroupToCrmContactTableMapper.containsTableMapping(pk,
-			crmContactPK);
+		return crmGroupToCrmContactTableMapper.containsTableMapping(
+			pk, crmContactPK);
 	}
 
 	/**
@@ -3494,12 +3506,12 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		CrmGroup crmGroup = fetchByPrimaryKey(pk);
 
 		if (crmGroup == null) {
-			crmGroupToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, crmContactPK);
+			crmGroupToCrmContactTableMapper.addTableMapping(
+				CompanyThreadLocal.getCompanyId(), pk, crmContactPK);
 		}
 		else {
-			crmGroupToCrmContactTableMapper.addTableMapping(crmGroup.getCompanyId(),
-				pk, crmContactPK);
+			crmGroupToCrmContactTableMapper.addTableMapping(
+				crmGroup.getCompanyId(), pk, crmContactPK);
 		}
 	}
 
@@ -3510,17 +3522,19 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param crmContact the CRM Contact
 	 */
 	@Override
-	public void addCrmContact(long pk,
-		contact.manager.model.CrmContact crmContact) {
+	public void addCrmContact(
+		long pk, contact.manager.model.CrmContact crmContact) {
+
 		CrmGroup crmGroup = fetchByPrimaryKey(pk);
 
 		if (crmGroup == null) {
-			crmGroupToCrmContactTableMapper.addTableMapping(companyProvider.getCompanyId(),
-				pk, crmContact.getPrimaryKey());
+			crmGroupToCrmContactTableMapper.addTableMapping(
+				CompanyThreadLocal.getCompanyId(), pk,
+				crmContact.getPrimaryKey());
 		}
 		else {
-			crmGroupToCrmContactTableMapper.addTableMapping(crmGroup.getCompanyId(),
-				pk, crmContact.getPrimaryKey());
+			crmGroupToCrmContactTableMapper.addTableMapping(
+				crmGroup.getCompanyId(), pk, crmContact.getPrimaryKey());
 		}
 	}
 
@@ -3537,14 +3551,14 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		CrmGroup crmGroup = fetchByPrimaryKey(pk);
 
 		if (crmGroup == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = crmGroup.getCompanyId();
 		}
 
-		crmGroupToCrmContactTableMapper.addTableMappings(companyId, pk,
-			crmContactPKs);
+		crmGroupToCrmContactTableMapper.addTableMappings(
+			companyId, pk, crmContactPKs);
 	}
 
 	/**
@@ -3554,10 +3568,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param crmContacts the CRM Contacts
 	 */
 	@Override
-	public void addCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
-		addCrmContacts(pk,
-			ListUtil.toLongArray(crmContacts,
+	public void addCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
+		addCrmContacts(
+			pk,
+			ListUtil.toLongArray(
+				crmContacts,
 				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
 	}
 
@@ -3589,10 +3606,11 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param crmContact the CRM Contact
 	 */
 	@Override
-	public void removeCrmContact(long pk,
-		contact.manager.model.CrmContact crmContact) {
-		crmGroupToCrmContactTableMapper.deleteTableMapping(pk,
-			crmContact.getPrimaryKey());
+	public void removeCrmContact(
+		long pk, contact.manager.model.CrmContact crmContact) {
+
+		crmGroupToCrmContactTableMapper.deleteTableMapping(
+			pk, crmContact.getPrimaryKey());
 	}
 
 	/**
@@ -3613,10 +3631,13 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param crmContacts the CRM Contacts
 	 */
 	@Override
-	public void removeCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
-		removeCrmContacts(pk,
-			ListUtil.toLongArray(crmContacts,
+	public void removeCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
+		removeCrmContacts(
+			pk,
+			ListUtil.toLongArray(
+				crmContacts,
 				contact.manager.model.CrmContact.CRM_CONTACT_ID_ACCESSOR));
 	}
 
@@ -3629,15 +3650,16 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	@Override
 	public void setCrmContacts(long pk, long[] crmContactPKs) {
 		Set<Long> newCrmContactPKsSet = SetUtil.fromArray(crmContactPKs);
-		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(crmGroupToCrmContactTableMapper.getRightPrimaryKeys(
-					pk));
+		Set<Long> oldCrmContactPKsSet = SetUtil.fromArray(
+			crmGroupToCrmContactTableMapper.getRightPrimaryKeys(pk));
 
-		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(oldCrmContactPKsSet);
+		Set<Long> removeCrmContactPKsSet = new HashSet<Long>(
+			oldCrmContactPKsSet);
 
 		removeCrmContactPKsSet.removeAll(newCrmContactPKsSet);
 
-		crmGroupToCrmContactTableMapper.deleteTableMappings(pk,
-			ArrayUtil.toLongArray(removeCrmContactPKsSet));
+		crmGroupToCrmContactTableMapper.deleteTableMappings(
+			pk, ArrayUtil.toLongArray(removeCrmContactPKsSet));
 
 		newCrmContactPKsSet.removeAll(oldCrmContactPKsSet);
 
@@ -3646,14 +3668,14 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		CrmGroup crmGroup = fetchByPrimaryKey(pk);
 
 		if (crmGroup == null) {
-			companyId = companyProvider.getCompanyId();
+			companyId = CompanyThreadLocal.getCompanyId();
 		}
 		else {
 			companyId = crmGroup.getCompanyId();
 		}
 
-		crmGroupToCrmContactTableMapper.addTableMappings(companyId, pk,
-			ArrayUtil.toLongArray(newCrmContactPKsSet));
+		crmGroupToCrmContactTableMapper.addTableMappings(
+			companyId, pk, ArrayUtil.toLongArray(newCrmContactPKsSet));
 	}
 
 	/**
@@ -3663,13 +3685,15 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * @param crmContacts the CRM Contacts to be associated with the CRM Group
 	 */
 	@Override
-	public void setCrmContacts(long pk,
-		List<contact.manager.model.CrmContact> crmContacts) {
+	public void setCrmContacts(
+		long pk, List<contact.manager.model.CrmContact> crmContacts) {
+
 		try {
 			long[] crmContactPKs = new long[crmContacts.size()];
 
 			for (int i = 0; i < crmContacts.size(); i++) {
-				contact.manager.model.CrmContact crmContact = crmContacts.get(i);
+				contact.manager.model.CrmContact crmContact = crmContacts.get(
+					i);
 
 				crmContactPKs[i] = crmContact.getPrimaryKey();
 			}
@@ -3695,9 +3719,133 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 	 * Initializes the CRM Group persistence.
 	 */
 	public void afterPropertiesSet() {
-		crmGroupToCrmContactTableMapper = TableMapperFactory.getTableMapper("crm_contacts_groups",
-				"companyId", "crmGroupId", "crmContactId", this,
-				crmContactPersistence);
+		crmGroupToCrmContactTableMapper = TableMapperFactory.getTableMapper(
+			"crm_contacts_groups", "companyId", "crmGroupId", "crmContactId",
+			this, crmContactPersistence);
+
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
+			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
+			CrmGroupModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmGroupModelImpl.UUID_COLUMN_BITMASK |
+			CrmGroupModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByName = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByName",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByName = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByName",
+			new String[] {String.class.getName()},
+			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByName = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByName",
+			new String[] {String.class.getName()});
+
+		_finderPathWithPaginationFindByStatus = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByStatus",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByStatus = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, CrmGroupImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByStatus",
+			new String[] {String.class.getName()},
+			CrmGroupModelImpl.STATUS_COLUMN_BITMASK |
+			CrmGroupModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByStatus = new FinderPath(
+			CrmGroupModelImpl.ENTITY_CACHE_ENABLED,
+			CrmGroupModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByStatus",
+			new String[] {String.class.getName()});
 	}
 
 	public void destroy() {
@@ -3709,25 +3857,45 @@ public class CrmGroupPersistenceImpl extends BasePersistenceImpl<CrmGroup>
 		TableMapperFactory.removeTableMapper("crm_contacts_groups");
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
+
 	@BeanReference(type = CrmContactPersistence.class)
 	protected CrmContactPersistence crmContactPersistence;
-	protected TableMapper<CrmGroup, contact.manager.model.CrmContact> crmGroupToCrmContactTableMapper;
-	private static final String _SQL_SELECT_CRMGROUP = "SELECT crmGroup FROM CrmGroup crmGroup";
-	private static final String _SQL_SELECT_CRMGROUP_WHERE_PKS_IN = "SELECT crmGroup FROM CrmGroup crmGroup WHERE crmGroupId IN (";
-	private static final String _SQL_SELECT_CRMGROUP_WHERE = "SELECT crmGroup FROM CrmGroup crmGroup WHERE ";
-	private static final String _SQL_COUNT_CRMGROUP = "SELECT COUNT(crmGroup) FROM CrmGroup crmGroup";
-	private static final String _SQL_COUNT_CRMGROUP_WHERE = "SELECT COUNT(crmGroup) FROM CrmGroup crmGroup WHERE ";
+
+	protected TableMapper<CrmGroup, contact.manager.model.CrmContact>
+		crmGroupToCrmContactTableMapper;
+
+	private static final String _SQL_SELECT_CRMGROUP =
+		"SELECT crmGroup FROM CrmGroup crmGroup";
+
+	private static final String _SQL_SELECT_CRMGROUP_WHERE_PKS_IN =
+		"SELECT crmGroup FROM CrmGroup crmGroup WHERE crmGroupId IN (";
+
+	private static final String _SQL_SELECT_CRMGROUP_WHERE =
+		"SELECT crmGroup FROM CrmGroup crmGroup WHERE ";
+
+	private static final String _SQL_COUNT_CRMGROUP =
+		"SELECT COUNT(crmGroup) FROM CrmGroup crmGroup";
+
+	private static final String _SQL_COUNT_CRMGROUP_WHERE =
+		"SELECT COUNT(crmGroup) FROM CrmGroup crmGroup WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "crmGroup.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmGroup exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmGroup exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmGroupPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmGroup exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmGroup exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmGroupPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

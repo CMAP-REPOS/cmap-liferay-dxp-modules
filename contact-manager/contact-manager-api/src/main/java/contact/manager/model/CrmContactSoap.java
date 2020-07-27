@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmContactSoap implements Serializable {
+
 	public static CrmContactSoap toSoapModel(CrmContact model) {
 		CrmContactSoap soapModel = new CrmContactSoap();
 
@@ -62,7 +63,8 @@ public class CrmContactSoap implements Serializable {
 		soapModel.setSecondaryAddressState(model.getSecondaryAddressState());
 		soapModel.setSecondaryAddressZip(model.getSecondaryAddressZip());
 		soapModel.setSecondaryAddressCounty(model.getSecondaryAddressCounty());
-		soapModel.setSecondaryAddressCountry(model.getSecondaryAddressCountry());
+		soapModel.setSecondaryAddressCountry(
+			model.getSecondaryAddressCountry());
 		soapModel.setPrimaryPhone(model.getPrimaryPhone());
 		soapModel.setPrimaryPhoneExtension(model.getPrimaryPhoneExtension());
 		soapModel.setPrimaryFax(model.getPrimaryFax());
@@ -111,7 +113,8 @@ public class CrmContactSoap implements Serializable {
 	}
 
 	public static CrmContactSoap[] toSoapModels(List<CrmContact> models) {
-		List<CrmContactSoap> soapModels = new ArrayList<CrmContactSoap>(models.size());
+		List<CrmContactSoap> soapModels = new ArrayList<CrmContactSoap>(
+			models.size());
 
 		for (CrmContact model : models) {
 			soapModels.add(toSoapModel(model));
@@ -549,4 +552,5 @@ public class CrmContactSoap implements Serializable {
 	private long _imageFileEntryId;
 	private String _tagsList;
 	private String _groupsList;
+
 }

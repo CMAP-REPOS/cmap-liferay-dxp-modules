@@ -160,8 +160,12 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 
     SearchContext searchContext = SearchContextFactory.getInstance(request);    
     
-	String s = keywords.replaceAll("[^a-zA-Z0-9.]", " ");
+    System.out.println("=====Keywords ---->" + keywords);
+	String s = keywords.replaceAll("[^a-zA-Z0-9'.]", " ");
 	System.out.println("=======String s --->" + s);
+	for (String c:columns) {
+		System.out.println("=====Column ---->" + c);	
+	}
 	
 	searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
@@ -201,6 +205,8 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	System.out.println("=======Query --->" + query);
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
+	
+	System.out.println("=====Hits --> " + hits);
 
 %>
 

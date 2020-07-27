@@ -33,11 +33,11 @@ import java.util.Date;
  * The cache model class for representing CrmTag in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmTag
  * @generated
  */
 @ProviderType
 public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -156,8 +156,7 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -200,4 +199,5 @@ public class CrmTagCacheModel implements CacheModel<CrmTag>, Externalizable {
 	public long createDate;
 	public long modifiedDate;
 	public String name;
+
 }

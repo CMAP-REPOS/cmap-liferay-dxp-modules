@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,6 +39,7 @@ import java.util.Objects;
  */
 @ProviderType
 public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
+
 	public CrmChiWardWrapper(CrmChiWard crmChiWard) {
 		_crmChiWard = crmChiWard;
 	}
@@ -142,35 +141,35 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	@Override
-	public int compareTo(CrmChiWard crmChiWard) {
+	public int compareTo(contact.manager.model.CrmChiWard crmChiWard) {
 		return _crmChiWard.compareTo(crmChiWard);
 	}
 
 	/**
-	* Returns the company ID of this CRM Chi Ward.
-	*
-	* @return the company ID of this CRM Chi Ward
-	*/
+	 * Returns the company ID of this CRM Chi Ward.
+	 *
+	 * @return the company ID of this CRM Chi Ward
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmChiWard.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM Chi Ward.
-	*
-	* @return the create date of this CRM Chi Ward
-	*/
+	 * Returns the create date of this CRM Chi Ward.
+	 *
+	 * @return the create date of this CRM Chi Ward
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmChiWard.getCreateDate();
 	}
 
 	/**
-	* Returns the crm chi ward ID of this CRM Chi Ward.
-	*
-	* @return the crm chi ward ID of this CRM Chi Ward
-	*/
+	 * Returns the crm chi ward ID of this CRM Chi Ward.
+	 *
+	 * @return the crm chi ward ID of this CRM Chi Ward
+	 */
 	@Override
 	public long getCrmChiWardId() {
 		return _crmChiWard.getCrmChiWardId();
@@ -182,40 +181,40 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Returns the group ID of this CRM Chi Ward.
-	*
-	* @return the group ID of this CRM Chi Ward
-	*/
+	 * Returns the group ID of this CRM Chi Ward.
+	 *
+	 * @return the group ID of this CRM Chi Ward
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmChiWard.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM Chi Ward.
-	*
-	* @return the modified date of this CRM Chi Ward
-	*/
+	 * Returns the modified date of this CRM Chi Ward.
+	 *
+	 * @return the modified date of this CRM Chi Ward
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmChiWard.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this CRM Chi Ward.
-	*
-	* @return the name of this CRM Chi Ward
-	*/
+	 * Returns the name of this CRM Chi Ward.
+	 *
+	 * @return the name of this CRM Chi Ward
+	 */
 	@Override
 	public String getName() {
 		return _crmChiWard.getName();
 	}
 
 	/**
-	* Returns the primary key of this CRM Chi Ward.
-	*
-	* @return the primary key of this CRM Chi Ward
-	*/
+	 * Returns the primary key of this CRM Chi Ward.
+	 *
+	 * @return the primary key of this CRM Chi Ward
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmChiWard.getPrimaryKey();
@@ -227,50 +226,50 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Returns the user ID of this CRM Chi Ward.
-	*
-	* @return the user ID of this CRM Chi Ward
-	*/
+	 * Returns the user ID of this CRM Chi Ward.
+	 *
+	 * @return the user ID of this CRM Chi Ward
+	 */
 	@Override
 	public long getUserId() {
 		return _crmChiWard.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM Chi Ward.
-	*
-	* @return the user name of this CRM Chi Ward
-	*/
+	 * Returns the user name of this CRM Chi Ward.
+	 *
+	 * @return the user name of this CRM Chi Ward
+	 */
 	@Override
 	public String getUserName() {
 		return _crmChiWard.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM Chi Ward.
-	*
-	* @return the user uuid of this CRM Chi Ward
-	*/
+	 * Returns the user uuid of this CRM Chi Ward.
+	 *
+	 * @return the user uuid of this CRM Chi Ward
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmChiWard.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM Chi Ward.
-	*
-	* @return the uuid of this CRM Chi Ward
-	*/
+	 * Returns the uuid of this CRM Chi Ward.
+	 *
+	 * @return the uuid of this CRM Chi Ward
+	 */
 	@Override
 	public String getUuid() {
 		return _crmChiWard.getUuid();
 	}
 
 	/**
-	* Returns the zip code of this CRM Chi Ward.
-	*
-	* @return the zip code of this CRM Chi Ward
-	*/
+	 * Returns the zip code of this CRM Chi Ward.
+	 *
+	 * @return the zip code of this CRM Chi Ward
+	 */
 	@Override
 	public String getZipCode() {
 		return _crmChiWard.getZipCode();
@@ -307,30 +306,30 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Sets the company ID of this CRM Chi Ward.
-	*
-	* @param companyId the company ID of this CRM Chi Ward
-	*/
+	 * Sets the company ID of this CRM Chi Ward.
+	 *
+	 * @param companyId the company ID of this CRM Chi Ward
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmChiWard.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM Chi Ward.
-	*
-	* @param createDate the create date of this CRM Chi Ward
-	*/
+	 * Sets the create date of this CRM Chi Ward.
+	 *
+	 * @param createDate the create date of this CRM Chi Ward
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmChiWard.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm chi ward ID of this CRM Chi Ward.
-	*
-	* @param crmChiWardId the crm chi ward ID of this CRM Chi Ward
-	*/
+	 * Sets the crm chi ward ID of this CRM Chi Ward.
+	 *
+	 * @param crmChiWardId the crm chi ward ID of this CRM Chi Ward
+	 */
 	@Override
 	public void setCrmChiWardId(long crmChiWardId) {
 		_crmChiWard.setCrmChiWardId(crmChiWardId);
@@ -339,6 +338,7 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmChiWard.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -353,30 +353,30 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Sets the group ID of this CRM Chi Ward.
-	*
-	* @param groupId the group ID of this CRM Chi Ward
-	*/
+	 * Sets the group ID of this CRM Chi Ward.
+	 *
+	 * @param groupId the group ID of this CRM Chi Ward
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmChiWard.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM Chi Ward.
-	*
-	* @param modifiedDate the modified date of this CRM Chi Ward
-	*/
+	 * Sets the modified date of this CRM Chi Ward.
+	 *
+	 * @param modifiedDate the modified date of this CRM Chi Ward
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmChiWard.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this CRM Chi Ward.
-	*
-	* @param name the name of this CRM Chi Ward
-	*/
+	 * Sets the name of this CRM Chi Ward.
+	 *
+	 * @param name the name of this CRM Chi Ward
+	 */
 	@Override
 	public void setName(String name) {
 		_crmChiWard.setName(name);
@@ -388,10 +388,10 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Sets the primary key of this CRM Chi Ward.
-	*
-	* @param primaryKey the primary key of this CRM Chi Ward
-	*/
+	 * Sets the primary key of this CRM Chi Ward.
+	 *
+	 * @param primaryKey the primary key of this CRM Chi Ward
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmChiWard.setPrimaryKey(primaryKey);
@@ -403,62 +403,64 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	/**
-	* Sets the user ID of this CRM Chi Ward.
-	*
-	* @param userId the user ID of this CRM Chi Ward
-	*/
+	 * Sets the user ID of this CRM Chi Ward.
+	 *
+	 * @param userId the user ID of this CRM Chi Ward
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmChiWard.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM Chi Ward.
-	*
-	* @param userName the user name of this CRM Chi Ward
-	*/
+	 * Sets the user name of this CRM Chi Ward.
+	 *
+	 * @param userName the user name of this CRM Chi Ward
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmChiWard.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM Chi Ward.
-	*
-	* @param userUuid the user uuid of this CRM Chi Ward
-	*/
+	 * Sets the user uuid of this CRM Chi Ward.
+	 *
+	 * @param userUuid the user uuid of this CRM Chi Ward
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmChiWard.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM Chi Ward.
-	*
-	* @param uuid the uuid of this CRM Chi Ward
-	*/
+	 * Sets the uuid of this CRM Chi Ward.
+	 *
+	 * @param uuid the uuid of this CRM Chi Ward
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmChiWard.setUuid(uuid);
 	}
 
 	/**
-	* Sets the zip code of this CRM Chi Ward.
-	*
-	* @param zipCode the zip code of this CRM Chi Ward
-	*/
+	 * Sets the zip code of this CRM Chi Ward.
+	 *
+	 * @param zipCode the zip code of this CRM Chi Ward
+	 */
 	@Override
 	public void setZipCode(String zipCode) {
 		_crmChiWard.setZipCode(zipCode);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmChiWard> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmChiWard> toCacheModel() {
+
 		return _crmChiWard.toCacheModel();
 	}
 
 	@Override
-	public CrmChiWard toEscapedModel() {
+	public contact.manager.model.CrmChiWard toEscapedModel() {
 		return new CrmChiWardWrapper(_crmChiWard.toEscapedModel());
 	}
 
@@ -468,7 +470,7 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	@Override
-	public CrmChiWard toUnescapedModel() {
+	public contact.manager.model.CrmChiWard toUnescapedModel() {
 		return new CrmChiWardWrapper(_crmChiWard.toUnescapedModel());
 	}
 
@@ -522,4 +524,5 @@ public class CrmChiWardWrapper implements CrmChiWard, ModelWrapper<CrmChiWard> {
 	}
 
 	private final CrmChiWard _crmChiWard;
+
 }

@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmContactAuditLog in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmContactAuditLog
  * @generated
  */
 @ProviderType
-public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditLog>,
-	Externalizable {
+public class CrmContactAuditLogCacheModel
+	implements CacheModel<CrmContactAuditLog>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +49,12 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 			return false;
 		}
 
-		CrmContactAuditLogCacheModel crmContactAuditLogCacheModel = (CrmContactAuditLogCacheModel)obj;
+		CrmContactAuditLogCacheModel crmContactAuditLogCacheModel =
+			(CrmContactAuditLogCacheModel)obj;
 
-		if (crmContactAuditLogId == crmContactAuditLogCacheModel.crmContactAuditLogId) {
+		if (crmContactAuditLogId ==
+				crmContactAuditLogCacheModel.crmContactAuditLogId) {
+
 			return true;
 		}
 
@@ -100,7 +103,8 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 
 	@Override
 	public CrmContactAuditLog toEntityModel() {
-		CrmContactAuditLogImpl crmContactAuditLogImpl = new CrmContactAuditLogImpl();
+		CrmContactAuditLogImpl crmContactAuditLogImpl =
+			new CrmContactAuditLogImpl();
 
 		if (uuid == null) {
 			crmContactAuditLogImpl.setUuid("");
@@ -188,8 +192,7 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -254,4 +257,5 @@ public class CrmContactAuditLogCacheModel implements CacheModel<CrmContactAuditL
 	public String action;
 	public String oldSnapshot;
 	public String newSnapshot;
+
 }

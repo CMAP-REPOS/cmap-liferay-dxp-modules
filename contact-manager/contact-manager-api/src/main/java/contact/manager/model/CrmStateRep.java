@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmStateRepModel
- * @see contact.manager.model.impl.CrmStateRepImpl
- * @see contact.manager.model.impl.CrmStateRepModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmStateRepImpl")
 @ProviderType
 public interface CrmStateRep extends CrmStateRepModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmStateRepImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmStateRepImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmStateRep, Long> CRM_STATE_REP_ID_ACCESSOR = new Accessor<CrmStateRep, Long>() {
+	public static final Accessor<CrmStateRep, Long> CRM_STATE_REP_ID_ACCESSOR =
+		new Accessor<CrmStateRep, Long>() {
+
 			@Override
 			public Long get(CrmStateRep crmStateRep) {
 				return crmStateRep.getCrmStateRepId();
@@ -52,5 +53,7 @@ public interface CrmStateRep extends CrmStateRepModel, PersistedModel {
 			public Class<CrmStateRep> getTypeClass() {
 				return CrmStateRep.class;
 			}
+
 		};
+
 }

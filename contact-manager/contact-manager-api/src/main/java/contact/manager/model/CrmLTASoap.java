@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmLTASoap implements Serializable {
+
 	public static CrmLTASoap toSoapModel(CrmLTA model) {
 		CrmLTASoap soapModel = new CrmLTASoap();
 
@@ -185,4 +186,5 @@ public class CrmLTASoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _zipCode;
+
 }

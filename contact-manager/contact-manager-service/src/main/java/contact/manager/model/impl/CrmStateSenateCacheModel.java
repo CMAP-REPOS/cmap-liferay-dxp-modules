@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmStateSenate in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmStateSenate
  * @generated
  */
 @ProviderType
-public class CrmStateSenateCacheModel implements CacheModel<CrmStateSenate>,
-	Externalizable {
+public class CrmStateSenateCacheModel
+	implements CacheModel<CrmStateSenate>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,7 +49,8 @@ public class CrmStateSenateCacheModel implements CacheModel<CrmStateSenate>,
 			return false;
 		}
 
-		CrmStateSenateCacheModel crmStateSenateCacheModel = (CrmStateSenateCacheModel)obj;
+		CrmStateSenateCacheModel crmStateSenateCacheModel =
+			(CrmStateSenateCacheModel)obj;
 
 		if (crmStateSenateId == crmStateSenateCacheModel.crmStateSenateId) {
 			return true;
@@ -177,8 +178,7 @@ public class CrmStateSenateCacheModel implements CacheModel<CrmStateSenate>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -237,4 +237,5 @@ public class CrmStateSenateCacheModel implements CacheModel<CrmStateSenate>,
 	public String name;
 	public String number;
 	public String zipCode;
+
 }

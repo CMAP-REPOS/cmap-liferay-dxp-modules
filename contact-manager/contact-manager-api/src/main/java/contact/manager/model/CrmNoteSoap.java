@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmNoteSoap implements Serializable {
+
 	public static CrmNoteSoap toSoapModel(CrmNote model) {
 		CrmNoteSoap soapModel = new CrmNoteSoap();
 
@@ -75,7 +76,8 @@ public class CrmNoteSoap implements Serializable {
 	}
 
 	public static CrmNoteSoap[] toSoapModels(List<CrmNote> models) {
-		List<CrmNoteSoap> soapModels = new ArrayList<CrmNoteSoap>(models.size());
+		List<CrmNoteSoap> soapModels = new ArrayList<CrmNoteSoap>(
+			models.size());
 
 		for (CrmNote model : models) {
 			soapModels.add(toSoapModel(model));
@@ -185,4 +187,5 @@ public class CrmNoteSoap implements Serializable {
 	private Date _modifiedDate;
 	private long _crmContactId;
 	private String _note;
+
 }

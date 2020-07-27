@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmCountySoap implements Serializable {
+
 	public static CrmCountySoap toSoapModel(CrmCounty model) {
 		CrmCountySoap soapModel = new CrmCountySoap();
 
@@ -75,7 +76,8 @@ public class CrmCountySoap implements Serializable {
 	}
 
 	public static CrmCountySoap[] toSoapModels(List<CrmCounty> models) {
-		List<CrmCountySoap> soapModels = new ArrayList<CrmCountySoap>(models.size());
+		List<CrmCountySoap> soapModels = new ArrayList<CrmCountySoap>(
+			models.size());
 
 		for (CrmCounty model : models) {
 			soapModels.add(toSoapModel(model));
@@ -185,4 +187,5 @@ public class CrmCountySoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _zipCode;
+
 }

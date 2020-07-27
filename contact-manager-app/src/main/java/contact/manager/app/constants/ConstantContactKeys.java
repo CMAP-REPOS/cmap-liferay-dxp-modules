@@ -18,6 +18,8 @@ public class ConstantContactKeys {
 	// Contact has been taken off all contactlists, and can be added to a
 	// contactlist
 	public static final String CC_STATUS_REMOVED = "REMOVED";
+	public static final String CC_STATUS_UPDATED_CONFIRMED = "UPDATED_CONFIRMED";
+	public static final String CC_STATUS_ADDED_CONFIRMED = "ADDED_CONFIRMED";
 	// someone who is not a contact, but has registered for one of the account's
 	// events
 	public static final String CC_STATUS_NON_SUBSCRIBER = "SUBSCRIBER";

@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyModel
- * @see contact.manager.model.impl.CrmCountyImpl
- * @see contact.manager.model.impl.CrmCountyModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmCountyImpl")
 @ProviderType
 public interface CrmCounty extends CrmCountyModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmCountyImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmCountyImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmCounty, Long> CRM_COUNTY_ID_ACCESSOR = new Accessor<CrmCounty, Long>() {
+	public static final Accessor<CrmCounty, Long> CRM_COUNTY_ID_ACCESSOR =
+		new Accessor<CrmCounty, Long>() {
+
 			@Override
 			public Long get(CrmCounty crmCounty) {
 				return crmCounty.getCrmCountyId();
@@ -52,5 +53,7 @@ public interface CrmCounty extends CrmCountyModel, PersistedModel {
 			public Class<CrmCounty> getTypeClass() {
 				return CrmCounty.class;
 			}
+
 		};
+
 }

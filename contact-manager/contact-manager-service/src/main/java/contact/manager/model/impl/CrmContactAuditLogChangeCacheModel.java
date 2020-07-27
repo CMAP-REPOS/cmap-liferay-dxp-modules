@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmContactAuditLogChange in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmContactAuditLogChange
  * @generated
  */
 @ProviderType
-public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContactAuditLogChange>,
-	Externalizable {
+public class CrmContactAuditLogChangeCacheModel
+	implements CacheModel<CrmContactAuditLogChange>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +49,12 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 			return false;
 		}
 
-		CrmContactAuditLogChangeCacheModel crmContactAuditLogChangeCacheModel = (CrmContactAuditLogChangeCacheModel)obj;
+		CrmContactAuditLogChangeCacheModel crmContactAuditLogChangeCacheModel =
+			(CrmContactAuditLogChangeCacheModel)obj;
 
-		if (crmContactAuditLogChangeId == crmContactAuditLogChangeCacheModel.crmContactAuditLogChangeId) {
+		if (crmContactAuditLogChangeId ==
+				crmContactAuditLogChangeCacheModel.crmContactAuditLogChangeId) {
+
 			return true;
 		}
 
@@ -98,7 +101,8 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 
 	@Override
 	public CrmContactAuditLogChange toEntityModel() {
-		CrmContactAuditLogChangeImpl crmContactAuditLogChangeImpl = new CrmContactAuditLogChangeImpl();
+		CrmContactAuditLogChangeImpl crmContactAuditLogChangeImpl =
+			new CrmContactAuditLogChangeImpl();
 
 		if (uuid == null) {
 			crmContactAuditLogChangeImpl.setUuid("");
@@ -107,7 +111,8 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 			crmContactAuditLogChangeImpl.setUuid(uuid);
 		}
 
-		crmContactAuditLogChangeImpl.setCrmContactAuditLogChangeId(crmContactAuditLogChangeId);
+		crmContactAuditLogChangeImpl.setCrmContactAuditLogChangeId(
+			crmContactAuditLogChangeId);
 		crmContactAuditLogChangeImpl.setGroupId(groupId);
 		crmContactAuditLogChangeImpl.setCompanyId(companyId);
 		crmContactAuditLogChangeImpl.setUserId(userId);
@@ -130,10 +135,12 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 			crmContactAuditLogChangeImpl.setModifiedDate(null);
 		}
 		else {
-			crmContactAuditLogChangeImpl.setModifiedDate(new Date(modifiedDate));
+			crmContactAuditLogChangeImpl.setModifiedDate(
+				new Date(modifiedDate));
 		}
 
-		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(crmContactAuditLogId);
+		crmContactAuditLogChangeImpl.setCrmContactAuditLogId(
+			crmContactAuditLogId);
 
 		if (fieldName == null) {
 			crmContactAuditLogChangeImpl.setFieldName("");
@@ -183,8 +190,7 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -246,4 +252,5 @@ public class CrmContactAuditLogChangeCacheModel implements CacheModel<CrmContact
 	public String fieldName;
 	public String oldValue;
 	public String newValue;
+
 }

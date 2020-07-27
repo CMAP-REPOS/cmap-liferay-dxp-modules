@@ -293,7 +293,7 @@ public class ContactApiModel {
 	public boolean isConfirmed() {
 		return confirmed;
 	}
-
+	
 	public void setAddresses(List<Address> addresses) {
 		this.addresses = addresses;
 	}
@@ -381,5 +381,33 @@ public class ContactApiModel {
 	public void setWorkPhone(String workPhone) {
 		this.workPhone = workPhone;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "{" +
+				"id: " + this.id + ", " +
+				"firstName: " + this.firstName  + ", " +
+				"middleName: " + this.middleName  + ", " +
+				"lastName: " + this.lastName  + ", " +
+				"emailAddresses: " + this.emailAddresses + ", " +
+				"companyName: " + this.companyName  + ", " +
+				"createdDate: " + this.createdDate + ", " +
+				"modifiedDate: " + this.modifiedDate + ", " +
+				"fax: " + this.fax  + ", " +
+				"confirmed: " + this.confirmed + ", " +
+				"customFields: " + this.customFields + ", " +
+				"homePhone: " + this.homePhone + ", " +
+				"cellphone: " + this.cellPhone + ", " +
+				"addresses: " + this.addresses + ", " +
+				"jobTitle: " + this.jobTitle + ", " +
+				"lists: " + this.lists + ", " +
+				"notes: " + this.notes + ", " +
+				"prefixName: " + this.prefixName + ", " +
+				"source: " + this.source + ", " +
+				"sourceDetails: " + this.sourceDetails + ", " +
+				"status: " + this.status + ", " +
+				"workphone: " + this.workPhone + 
+				"}\n" ;
+	}
+	
 }

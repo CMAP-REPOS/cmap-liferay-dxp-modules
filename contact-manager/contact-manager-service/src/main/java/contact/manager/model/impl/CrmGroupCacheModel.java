@@ -33,11 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmGroup in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmGroup
  * @generated
  */
 @ProviderType
-public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable {
+public class CrmGroupCacheModel
+	implements CacheModel<CrmGroup>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -172,8 +173,7 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -227,4 +227,5 @@ public class CrmGroupCacheModel implements CacheModel<CrmGroup>, Externalizable 
 	public String name;
 	public long crmContactsCount;
 	public String status;
+
 }

@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmOutreachLogSoap implements Serializable {
+
 	public static CrmOutreachLogSoap toSoapModel(CrmOutreachLog model) {
 		CrmOutreachLogSoap soapModel = new CrmOutreachLogSoap();
 
@@ -60,11 +61,14 @@ public class CrmOutreachLogSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CrmOutreachLogSoap[][] toSoapModels(CrmOutreachLog[][] models) {
+	public static CrmOutreachLogSoap[][] toSoapModels(
+		CrmOutreachLog[][] models) {
+
 		CrmOutreachLogSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CrmOutreachLogSoap[models.length][models[0].length];
+			soapModels =
+				new CrmOutreachLogSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CrmOutreachLogSoap[0][0];
@@ -77,8 +81,11 @@ public class CrmOutreachLogSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CrmOutreachLogSoap[] toSoapModels(List<CrmOutreachLog> models) {
-		List<CrmOutreachLogSoap> soapModels = new ArrayList<CrmOutreachLogSoap>(models.size());
+	public static CrmOutreachLogSoap[] toSoapModels(
+		List<CrmOutreachLog> models) {
+
+		List<CrmOutreachLogSoap> soapModels = new ArrayList<CrmOutreachLogSoap>(
+			models.size());
 
 		for (CrmOutreachLog model : models) {
 			soapModels.add(toSoapModel(model));
@@ -215,4 +222,5 @@ public class CrmOutreachLogSoap implements Serializable {
 	private String _medium;
 	private String _activityType;
 	private Date _outreachDate;
+
 }

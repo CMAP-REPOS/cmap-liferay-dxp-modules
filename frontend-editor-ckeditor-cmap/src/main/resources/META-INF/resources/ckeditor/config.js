@@ -57,7 +57,7 @@ CKEDITOR.editorConfig = function( config ) {
   ];
   config.disallowedContent = "h3;h4;h5;h6;";
 
-  console.log(config);
+  console.log("I'm here this config: " + config);
   return config;
 };
 

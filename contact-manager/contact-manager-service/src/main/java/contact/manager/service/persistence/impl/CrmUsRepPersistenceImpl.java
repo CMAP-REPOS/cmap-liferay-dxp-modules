@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -39,11 +38,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmUsRepException;
-
 import contact.manager.model.CrmUsRep;
 import contact.manager.model.impl.CrmUsRepImpl;
 import contact.manager.model.impl.CrmUsRepModelImpl;
-
 import contact.manager.service.persistence.CrmUsRepPersistence;
 
 import java.io.Serializable;
@@ -69,52 +66,32 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmUsRepPersistence
- * @see contact.manager.service.persistence.CrmUsRepUtil
  * @generated
  */
 @ProviderType
-public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
-	implements CrmUsRepPersistence {
+public class CrmUsRepPersistenceImpl
+	extends BasePersistenceImpl<CrmUsRep> implements CrmUsRepPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmUsRepUtil} to access the CRM US Rep persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmUsRepUtil</code> to access the CRM US Rep persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmUsRepImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmUsRepImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM US Reps where uuid = &#63;.
@@ -131,7 +108,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns a range of all the CRM US Reps where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -148,66 +125,71 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns an ordered range of all the CRM US Reps where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
+	@Deprecated
 	@Override
-	public List<CrmUsRep> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmUsRep> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM US Reps where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
 	@Override
-	public List<CrmUsRep> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmUsRep> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmUsRep> list = null;
+		List<CrmUsRep> list = (List<CrmUsRep>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmUsRep>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmUsRep crmUsRep : list) {
+				if (!uuid.equals(crmUsRep.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmUsRep crmUsRep : list) {
-					if (!Objects.equals(uuid, crmUsRep.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -216,8 +198,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -227,10 +209,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -240,11 +219,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmUsRepModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -264,16 +242,16 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				}
 
 				if (!pagination) {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -302,9 +280,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByUuid_First(String uuid,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByUuid_First(
+			String uuid, OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByUuid_First(uuid, orderByComparator);
 
 		if (crmUsRep != null) {
@@ -331,8 +310,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByUuid_First(String uuid,
-		OrderByComparator<CrmUsRep> orderByComparator) {
+	public CrmUsRep fetchByUuid_First(
+		String uuid, OrderByComparator<CrmUsRep> orderByComparator) {
+
 		List<CrmUsRep> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -351,9 +331,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByUuid_Last(String uuid,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByUuid_Last(
+			String uuid, OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (crmUsRep != null) {
@@ -380,16 +361,17 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByUuid_Last(String uuid,
-		OrderByComparator<CrmUsRep> orderByComparator) {
+	public CrmUsRep fetchByUuid_Last(
+		String uuid, OrderByComparator<CrmUsRep> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmUsRep> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<CrmUsRep> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -408,9 +390,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	 */
 	@Override
-	public CrmUsRep[] findByUuid_PrevAndNext(long crmUsRepId, String uuid,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep[] findByUuid_PrevAndNext(
+			long crmUsRepId, String uuid,
+			OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmUsRep crmUsRep = findByPrimaryKey(crmUsRepId);
 
 		Session session = null;
@@ -420,13 +406,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			CrmUsRep[] array = new CrmUsRepImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmUsRep, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmUsRep, uuid, orderByComparator, true);
 
 			array[1] = crmUsRep;
 
-			array[2] = getByUuid_PrevAndNext(session, crmUsRep, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmUsRep, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -438,14 +424,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 	}
 
-	protected CrmUsRep getByUuid_PrevAndNext(Session session,
-		CrmUsRep crmUsRep, String uuid,
+	protected CrmUsRep getByUuid_PrevAndNext(
+		Session session, CrmUsRep crmUsRep, String uuid,
 		OrderByComparator<CrmUsRep> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -456,10 +443,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -469,7 +453,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -541,10 +526,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmUsRep);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmUsRep)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -565,8 +550,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmUsRep crmUsRep : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmUsRep crmUsRep :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmUsRep);
 		}
 	}
@@ -579,9 +565,11 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -592,10 +580,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -636,22 +621,17 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmUsRep.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmUsRep.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
-			CrmUsRepModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"crmUsRep.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmUsRepException} if it could not be found.
+	 * Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmUsRepException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -661,6 +641,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public CrmUsRep findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByUUID_G(uuid, groupId);
 
 		if (crmUsRep == null) {
@@ -687,15 +668,20 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	}
 
 	/**
-	 * Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM US Rep where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmUsRep fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmUsRep fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -703,26 +689,24 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmUsRep fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmUsRep) {
 			CrmUsRep crmUsRep = (CrmUsRep)result;
 
 			if (!Objects.equals(uuid, crmUsRep.getUuid()) ||
-					(groupId != crmUsRep.getGroupId())) {
+				(groupId != crmUsRep.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -734,10 +718,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -768,8 +749,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				List<CrmUsRep> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					CrmUsRep crmUsRep = list.get(0);
@@ -780,7 +761,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -807,6 +788,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public CrmUsRep removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = findByUUID_G(uuid, groupId);
 
 		return remove(crmUsRep);
@@ -821,9 +803,11 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -834,10 +818,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -882,32 +863,18 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmUsRep.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmUsRep.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmUsRep.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
-			CrmUsRepModelImpl.COMPANYID_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmUsRep.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmUsRep.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM US Reps where uuid = &#63; and companyId = &#63;.
@@ -918,15 +885,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public List<CrmUsRep> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM US Reps where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -936,8 +903,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the range of matching CRM US Reps
 	 */
 	@Override
-	public List<CrmUsRep> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<CrmUsRep> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -945,27 +913,32 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns an ordered range of all the CRM US Reps where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
+	@Deprecated
 	@Override
-	public List<CrmUsRep> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmUsRep> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmUsRep> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM US Reps where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -973,46 +946,44 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
 	@Override
-	public List<CrmUsRep> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmUsRep> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmUsRep> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmUsRep> list = null;
+		List<CrmUsRep> list = (List<CrmUsRep>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmUsRep>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmUsRep crmUsRep : list) {
+				if (!uuid.equals(crmUsRep.getUuid()) ||
+					(companyId != crmUsRep.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmUsRep crmUsRep : list) {
-					if (!Objects.equals(uuid, crmUsRep.getUuid()) ||
-							(companyId != crmUsRep.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1021,8 +992,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1032,10 +1003,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1047,11 +1015,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmUsRepModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1073,16 +1040,16 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1112,11 +1079,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
-		CrmUsRep crmUsRep = fetchByUuid_C_First(uuid, companyId,
-				orderByComparator);
+
+		CrmUsRep crmUsRep = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (crmUsRep != null) {
 			return crmUsRep;
@@ -1146,10 +1115,12 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByUuid_C_First(String uuid, long companyId,
+	public CrmUsRep fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmUsRep> orderByComparator) {
-		List<CrmUsRep> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<CrmUsRep> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1168,11 +1139,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
-		CrmUsRep crmUsRep = fetchByUuid_C_Last(uuid, companyId,
-				orderByComparator);
+
+		CrmUsRep crmUsRep = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (crmUsRep != null) {
 			return crmUsRep;
@@ -1202,16 +1175,18 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByUuid_C_Last(String uuid, long companyId,
+	public CrmUsRep fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmUsRep> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmUsRep> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<CrmUsRep> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1231,9 +1206,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	 */
 	@Override
-	public CrmUsRep[] findByUuid_C_PrevAndNext(long crmUsRepId, String uuid,
-		long companyId, OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep[] findByUuid_C_PrevAndNext(
+			long crmUsRepId, String uuid, long companyId,
+			OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmUsRep crmUsRep = findByPrimaryKey(crmUsRepId);
 
 		Session session = null;
@@ -1243,13 +1222,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			CrmUsRep[] array = new CrmUsRepImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, crmUsRep, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmUsRep, uuid, companyId, orderByComparator, true);
 
 			array[1] = crmUsRep;
 
-			array[2] = getByUuid_C_PrevAndNext(session, crmUsRep, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmUsRep, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1261,14 +1240,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 	}
 
-	protected CrmUsRep getByUuid_C_PrevAndNext(Session session,
-		CrmUsRep crmUsRep, String uuid, long companyId,
+	protected CrmUsRep getByUuid_C_PrevAndNext(
+		Session session, CrmUsRep crmUsRep, String uuid, long companyId,
 		OrderByComparator<CrmUsRep> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1279,10 +1259,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1294,7 +1271,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1368,10 +1346,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmUsRep);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmUsRep)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1393,8 +1371,11 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmUsRep crmUsRep : findByUuid_C(uuid, companyId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CrmUsRep crmUsRep :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmUsRep);
 		}
 	}
@@ -1408,9 +1389,11 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1421,10 +1404,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1469,31 +1449,18 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmUsRep.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmUsRep.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmUsRep.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
-		new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
-			new String[] { String.class.getName() },
-			CrmUsRepModelImpl.ZIPCODE_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
-			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
-			new String[] { String.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmUsRep.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmUsRep.uuid IS NULL OR crmUsRep.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmUsRep.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByZipCode;
+	private FinderPath _finderPathWithoutPaginationFindByZipCode;
+	private FinderPath _finderPathCountByZipCode;
 
 	/**
 	 * Returns all the CRM US Reps where zipCode = &#63;.
@@ -1503,14 +1470,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public List<CrmUsRep> findByZipCode(String zipCode) {
-		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByZipCode(
+			zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM US Reps where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
@@ -1527,66 +1495,71 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns an ordered range of all the CRM US Reps where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByZipCode(String, int, int, OrderByComparator)}
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
+	@Deprecated
 	@Override
-	public List<CrmUsRep> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator) {
-		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	public List<CrmUsRep> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator, boolean useFinderCache) {
+
+		return findByZipCode(zipCode, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM US Reps where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM US Reps
 	 */
 	@Override
-	public List<CrmUsRep> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmUsRep> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmUsRep> orderByComparator) {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode };
+			finderPath = _finderPathWithoutPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode, start, end, orderByComparator};
 		}
 
-		List<CrmUsRep> list = null;
+		List<CrmUsRep> list = (List<CrmUsRep>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmUsRep>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmUsRep crmUsRep : list) {
+				if (!zipCode.equals(crmUsRep.getZipCode())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmUsRep crmUsRep : list) {
-					if (!Objects.equals(zipCode, crmUsRep.getZipCode())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1595,8 +1568,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1606,10 +1579,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1619,11 +1589,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmUsRepModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1643,16 +1612,16 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				}
 
 				if (!pagination) {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1681,9 +1650,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByZipCode_First(String zipCode,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByZipCode_First(
+			String zipCode, OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByZipCode_First(zipCode, orderByComparator);
 
 		if (crmUsRep != null) {
@@ -1710,8 +1680,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the first matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByZipCode_First(String zipCode,
-		OrderByComparator<CrmUsRep> orderByComparator) {
+	public CrmUsRep fetchByZipCode_First(
+		String zipCode, OrderByComparator<CrmUsRep> orderByComparator) {
+
 		List<CrmUsRep> list = findByZipCode(zipCode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1730,9 +1701,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep findByZipCode_Last(String zipCode,
-		OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep findByZipCode_Last(
+			String zipCode, OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByZipCode_Last(zipCode, orderByComparator);
 
 		if (crmUsRep != null) {
@@ -1759,16 +1731,17 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @return the last matching CRM US Rep, or <code>null</code> if a matching CRM US Rep could not be found
 	 */
 	@Override
-	public CrmUsRep fetchByZipCode_Last(String zipCode,
-		OrderByComparator<CrmUsRep> orderByComparator) {
+	public CrmUsRep fetchByZipCode_Last(
+		String zipCode, OrderByComparator<CrmUsRep> orderByComparator) {
+
 		int count = countByZipCode(zipCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmUsRep> list = findByZipCode(zipCode, count - 1, count,
-				orderByComparator);
+		List<CrmUsRep> list = findByZipCode(
+			zipCode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1787,9 +1760,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * @throws NoSuchCrmUsRepException if a CRM US Rep with the primary key could not be found
 	 */
 	@Override
-	public CrmUsRep[] findByZipCode_PrevAndNext(long crmUsRepId,
-		String zipCode, OrderByComparator<CrmUsRep> orderByComparator)
+	public CrmUsRep[] findByZipCode_PrevAndNext(
+			long crmUsRepId, String zipCode,
+			OrderByComparator<CrmUsRep> orderByComparator)
 		throws NoSuchCrmUsRepException {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		CrmUsRep crmUsRep = findByPrimaryKey(crmUsRepId);
 
 		Session session = null;
@@ -1799,13 +1776,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			CrmUsRep[] array = new CrmUsRepImpl[3];
 
-			array[0] = getByZipCode_PrevAndNext(session, crmUsRep, zipCode,
-					orderByComparator, true);
+			array[0] = getByZipCode_PrevAndNext(
+				session, crmUsRep, zipCode, orderByComparator, true);
 
 			array[1] = crmUsRep;
 
-			array[2] = getByZipCode_PrevAndNext(session, crmUsRep, zipCode,
-					orderByComparator, false);
+			array[2] = getByZipCode_PrevAndNext(
+				session, crmUsRep, zipCode, orderByComparator, false);
 
 			return array;
 		}
@@ -1817,14 +1794,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 	}
 
-	protected CrmUsRep getByZipCode_PrevAndNext(Session session,
-		CrmUsRep crmUsRep, String zipCode,
+	protected CrmUsRep getByZipCode_PrevAndNext(
+		Session session, CrmUsRep crmUsRep, String zipCode,
 		OrderByComparator<CrmUsRep> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1835,10 +1813,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 		boolean bindZipCode = false;
 
-		if (zipCode == null) {
-			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-		}
-		else if (zipCode.equals("")) {
+		if (zipCode.isEmpty()) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1848,7 +1823,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1920,10 +1896,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmUsRep);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmUsRep)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1944,8 +1920,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public void removeByZipCode(String zipCode) {
-		for (CrmUsRep crmUsRep : findByZipCode(zipCode, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmUsRep crmUsRep :
+				findByZipCode(
+					zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmUsRep);
 		}
 	}
@@ -1958,9 +1936,11 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public int countByZipCode(String zipCode) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+		zipCode = Objects.toString(zipCode, "");
 
-		Object[] finderArgs = new Object[] { zipCode };
+		FinderPath finderPath = _finderPathCountByZipCode;
+
+		Object[] finderArgs = new Object[] {zipCode};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1971,10 +1951,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2015,23 +1992,25 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "crmUsRep.zipCode IS NULL";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "crmUsRep.zipCode = ?";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(crmUsRep.zipCode IS NULL OR crmUsRep.zipCode = '')";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 =
+		"crmUsRep.zipCode = ?";
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 =
+		"(crmUsRep.zipCode IS NULL OR crmUsRep.zipCode = '')";
 
 	public CrmUsRepPersistenceImpl() {
 		setModelClass(CrmUsRep.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+		dbColumnNames.put("number", "number_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
-			dbColumnNames.put("number", "number_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2049,11 +2028,13 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public void cacheResult(CrmUsRep crmUsRep) {
-		entityCache.putResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepImpl.class, crmUsRep.getPrimaryKey(), crmUsRep);
+		entityCache.putResult(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+			crmUsRep.getPrimaryKey(), crmUsRep);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { crmUsRep.getUuid(), crmUsRep.getGroupId() }, crmUsRep);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {crmUsRep.getUuid(), crmUsRep.getGroupId()}, crmUsRep);
 
 		crmUsRep.resetOriginalValues();
 	}
@@ -2066,8 +2047,10 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public void cacheResult(List<CrmUsRep> crmUsReps) {
 		for (CrmUsRep crmUsRep : crmUsReps) {
-			if (entityCache.getResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-						CrmUsRepImpl.class, crmUsRep.getPrimaryKey()) == null) {
+			if (entityCache.getResult(
+					CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+					crmUsRep.getPrimaryKey()) == null) {
+
 				cacheResult(crmUsRep);
 			}
 			else {
@@ -2080,7 +2063,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Clears the cache for all CRM US Reps.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2096,13 +2079,14 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Clears the cache for the CRM US Rep.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmUsRep crmUsRep) {
-		entityCache.removeResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepImpl.class, crmUsRep.getPrimaryKey());
+		entityCache.removeResult(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+			crmUsRep.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2116,44 +2100,49 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CrmUsRep crmUsRep : crmUsReps) {
-			entityCache.removeResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-				CrmUsRepImpl.class, crmUsRep.getPrimaryKey());
+			entityCache.removeResult(
+				CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+				crmUsRep.getPrimaryKey());
 
 			clearUniqueFindersCache((CrmUsRepModelImpl)crmUsRep, true);
 		}
 	}
 
-	protected void cacheUniqueFindersCache(CrmUsRepModelImpl crmUsRepModelImpl) {
-		Object[] args = new Object[] {
-				crmUsRepModelImpl.getUuid(), crmUsRepModelImpl.getGroupId()
-			};
+	protected void cacheUniqueFindersCache(
+		CrmUsRepModelImpl crmUsRepModelImpl) {
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmUsRepModelImpl, false);
+		Object[] args = new Object[] {
+			crmUsRepModelImpl.getUuid(), crmUsRepModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmUsRepModelImpl, false);
 	}
 
 	protected void clearUniqueFindersCache(
 		CrmUsRepModelImpl crmUsRepModelImpl, boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					crmUsRepModelImpl.getUuid(), crmUsRepModelImpl.getGroupId()
-				};
+				crmUsRepModelImpl.getUuid(), crmUsRepModelImpl.getGroupId()
+			};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmUsRepModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmUsRepModelImpl.getOriginalUuid(),
-					crmUsRepModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmUsRepModelImpl.getOriginalUuid(),
+				crmUsRepModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -2174,7 +2163,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 		crmUsRep.setUuid(uuid);
 
-		crmUsRep.setCompanyId(companyProvider.getCompanyId());
+		crmUsRep.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return crmUsRep;
 	}
@@ -2201,21 +2190,22 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public CrmUsRep remove(Serializable primaryKey)
 		throws NoSuchCrmUsRepException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmUsRep crmUsRep = (CrmUsRep)session.get(CrmUsRepImpl.class,
-					primaryKey);
+			CrmUsRep crmUsRep = (CrmUsRep)session.get(
+				CrmUsRepImpl.class, primaryKey);
 
 			if (crmUsRep == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmUsRepException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmUsRepException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmUsRep);
@@ -2239,8 +2229,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			session = openSession();
 
 			if (!session.contains(crmUsRep)) {
-				crmUsRep = (CrmUsRep)session.get(CrmUsRepImpl.class,
-						crmUsRep.getPrimaryKeyObj());
+				crmUsRep = (CrmUsRep)session.get(
+					CrmUsRepImpl.class, crmUsRep.getPrimaryKeyObj());
 			}
 
 			if (crmUsRep != null) {
@@ -2273,12 +2263,12 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmUsRep proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmUsRep implementation " +
-				crmUsRep.getClass());
+					crmUsRep.getClass());
 		}
 
 		CrmUsRepModelImpl crmUsRepModelImpl = (CrmUsRepModelImpl)crmUsRep;
@@ -2289,7 +2279,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			crmUsRep.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -2337,91 +2328,97 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		if (!CrmUsRepModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { crmUsRepModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {crmUsRepModelImpl.getUuid()};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				crmUsRepModelImpl.getUuid(), crmUsRepModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {crmUsRepModelImpl.getZipCode()};
+
+			finderCache.removeResult(_finderPathCountByZipCode, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByZipCode, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmUsRepModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmUsRepModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {crmUsRepModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((crmUsRepModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmUsRepModelImpl.getOriginalUuid(),
+					crmUsRepModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmUsRepModelImpl.getUuid(),
 					crmUsRepModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
-
-			args = new Object[] { crmUsRepModelImpl.getZipCode() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmUsRepModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmUsRepModelImpl.getOriginalUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmUsRepModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
 			if ((crmUsRepModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByZipCode.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						crmUsRepModelImpl.getOriginalUuid(),
-						crmUsRepModelImpl.getOriginalCompanyId()
-					};
+					crmUsRepModelImpl.getOriginalZipCode()
+				};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 
-				args = new Object[] {
-						crmUsRepModelImpl.getUuid(),
-						crmUsRepModelImpl.getCompanyId()
-					};
+				args = new Object[] {crmUsRepModelImpl.getZipCode()};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-			}
-
-			if ((crmUsRepModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmUsRepModelImpl.getOriginalZipCode()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
-
-				args = new Object[] { crmUsRepModelImpl.getZipCode() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 			}
 		}
 
-		entityCache.putResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-			CrmUsRepImpl.class, crmUsRep.getPrimaryKey(), crmUsRep, false);
+		entityCache.putResult(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+			crmUsRep.getPrimaryKey(), crmUsRep, false);
 
 		clearUniqueFindersCache(crmUsRepModelImpl, false);
 		cacheUniqueFindersCache(crmUsRepModelImpl);
@@ -2432,7 +2429,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	}
 
 	/**
-	 * Returns the CRM US Rep with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM US Rep with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM US Rep
 	 * @return the CRM US Rep
@@ -2441,6 +2438,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public CrmUsRep findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmUsRepException {
+
 		CrmUsRep crmUsRep = fetchByPrimaryKey(primaryKey);
 
 		if (crmUsRep == null) {
@@ -2448,15 +2446,15 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmUsRepException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmUsRepException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmUsRep;
 	}
 
 	/**
-	 * Returns the CRM US Rep with the primary key or throws a {@link NoSuchCrmUsRepException} if it could not be found.
+	 * Returns the CRM US Rep with the primary key or throws a <code>NoSuchCrmUsRepException</code> if it could not be found.
 	 *
 	 * @param crmUsRepId the primary key of the CRM US Rep
 	 * @return the CRM US Rep
@@ -2465,6 +2463,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public CrmUsRep findByPrimaryKey(long crmUsRepId)
 		throws NoSuchCrmUsRepException {
+
 		return findByPrimaryKey((Serializable)crmUsRepId);
 	}
 
@@ -2476,8 +2475,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public CrmUsRep fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-				CrmUsRepImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+			primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -2491,19 +2491,22 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			try {
 				session = openSession();
 
-				crmUsRep = (CrmUsRep)session.get(CrmUsRepImpl.class, primaryKey);
+				crmUsRep = (CrmUsRep)session.get(
+					CrmUsRepImpl.class, primaryKey);
 
 				if (crmUsRep != null) {
 					cacheResult(crmUsRep);
 				}
 				else {
-					entityCache.putResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(
+						CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
 						CrmUsRepImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-					CrmUsRepImpl.class, primaryKey);
+				entityCache.removeResult(
+					CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+					primaryKey);
 
 				throw processException(e);
 			}
@@ -2529,6 +2532,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	@Override
 	public Map<Serializable, CrmUsRep> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
@@ -2552,8 +2556,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-					CrmUsRepImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+				primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2573,8 +2578,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMUSREP_WHERE_PKS_IN);
 
@@ -2606,8 +2611,9 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
-					CrmUsRepImpl.class, primaryKey, nullModel);
+				entityCache.putResult(
+					CrmUsRepModelImpl.ENTITY_CACHE_ENABLED, CrmUsRepImpl.class,
+					primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2634,7 +2640,7 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns a range of all the CRM US Reps.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM US Reps
@@ -2650,70 +2656,72 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Returns an ordered range of all the CRM US Reps.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM US Reps
 	 */
+	@Deprecated
 	@Override
-	public List<CrmUsRep> findAll(int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmUsRep> findAll(
+		int start, int end, OrderByComparator<CrmUsRep> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM US Reps.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmUsRepModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmUsRepModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM US Reps
 	 * @param end the upper bound of the range of CRM US Reps (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM US Reps
 	 */
 	@Override
-	public List<CrmUsRep> findAll(int start, int end,
-		OrderByComparator<CrmUsRep> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmUsRep> findAll(
+		int start, int end, OrderByComparator<CrmUsRep> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmUsRep> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmUsRep>)finderCache.getResult(finderPath,
-					finderArgs, this);
-		}
+		List<CrmUsRep> list = (List<CrmUsRep>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMUSREP);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2733,16 +2741,16 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmUsRep>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmUsRep>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2780,8 +2788,8 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2793,12 +2801,12 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2824,6 +2832,110 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 	 * Initializes the CRM US Rep persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
+			CrmUsRepModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmUsRepModelImpl.UUID_COLUMN_BITMASK |
+			CrmUsRepModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByZipCode = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByZipCode = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, CrmUsRepImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] {String.class.getName()},
+			CrmUsRepModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NUMBER_COLUMN_BITMASK |
+			CrmUsRepModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByZipCode = new FinderPath(
+			CrmUsRepModelImpl.ENTITY_CACHE_ENABLED,
+			CrmUsRepModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] {String.class.getName()});
 	}
 
 	public void destroy() {
@@ -2833,22 +2945,39 @@ public class CrmUsRepPersistenceImpl extends BasePersistenceImpl<CrmUsRep>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CRMUSREP = "SELECT crmUsRep FROM CrmUsRep crmUsRep";
-	private static final String _SQL_SELECT_CRMUSREP_WHERE_PKS_IN = "SELECT crmUsRep FROM CrmUsRep crmUsRep WHERE crmUsRepId IN (";
-	private static final String _SQL_SELECT_CRMUSREP_WHERE = "SELECT crmUsRep FROM CrmUsRep crmUsRep WHERE ";
-	private static final String _SQL_COUNT_CRMUSREP = "SELECT COUNT(crmUsRep) FROM CrmUsRep crmUsRep";
-	private static final String _SQL_COUNT_CRMUSREP_WHERE = "SELECT COUNT(crmUsRep) FROM CrmUsRep crmUsRep WHERE ";
+
+	private static final String _SQL_SELECT_CRMUSREP =
+		"SELECT crmUsRep FROM CrmUsRep crmUsRep";
+
+	private static final String _SQL_SELECT_CRMUSREP_WHERE_PKS_IN =
+		"SELECT crmUsRep FROM CrmUsRep crmUsRep WHERE crmUsRepId IN (";
+
+	private static final String _SQL_SELECT_CRMUSREP_WHERE =
+		"SELECT crmUsRep FROM CrmUsRep crmUsRep WHERE ";
+
+	private static final String _SQL_COUNT_CRMUSREP =
+		"SELECT COUNT(crmUsRep) FROM CrmUsRep crmUsRep";
+
+	private static final String _SQL_COUNT_CRMUSREP_WHERE =
+		"SELECT COUNT(crmUsRep) FROM CrmUsRep crmUsRep WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "crmUsRep.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmUsRep exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmUsRep exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmUsRepPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid", "number"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmUsRep exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmUsRep exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmUsRepPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid", "number"});
+
 }

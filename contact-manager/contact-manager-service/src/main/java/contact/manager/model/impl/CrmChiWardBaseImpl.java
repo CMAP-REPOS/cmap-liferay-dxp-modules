@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmChiWard;
-
 import contact.manager.service.CrmChiWardLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmChiWardLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmChiWardBaseImpl extends CrmChiWardModelImpl
-	implements CrmChiWard {
+public abstract class CrmChiWardBaseImpl
+	extends CrmChiWardModelImpl implements CrmChiWard {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Chi Ward model instance should use the {@link CrmChiWard} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Chi Ward model instance should use the <code>CrmChiWard</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmChiWardBaseImpl extends CrmChiWardModelImpl
 			CrmChiWardLocalServiceUtil.updateCrmChiWard(this);
 		}
 	}
+
 }

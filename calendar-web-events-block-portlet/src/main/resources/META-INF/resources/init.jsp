@@ -17,6 +17,7 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet"%>
 <%@ page import="com.liferay.portal.kernel.util.OrderByComparator"%>
 <%@ page import="com.liferay.portal.kernel.util.Validator"%>
+<%@ page import="com.liferay.portal.kernel.util.Time"%>
 
 <%@ page import="java.io.IOException"%>
 <%@ page import="java.io.PrintWriter"%>
@@ -29,11 +30,18 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%@ page import="java.util.Map"%>
 <%@ page import="java.util.LinkedHashMap"%>
 <%@ page import="java.util.TreeMap"%>
+<%@ page import="java.util.TimeZone"%>
+<%@ page import="java.util.Collections"%>
 
 <%@ page import="javax.portlet.Portlet"%>
 <%@ page import="javax.portlet.PortletException"%>
 <%@ page import="javax.portlet.RenderRequest"%>
 <%@ page import="javax.portlet.RenderResponse"%>
+
+<%@ page import="com.liferay.calendar.recurrence.RecurrenceSerializer"%>
+<%@ page import="com.liferay.calendar.recurrence.Recurrence"%>
+<%@ page import="com.liferay.calendar.util.RecurrenceUtil"%>
+
 
 <liferay-theme:defineObjects />
 
@@ -42,8 +50,6 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 <%	
 	// Get the number of existing Bookings
 	int count = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.getCalendarBookingsCount();
-
-	System.out.println(count);
 
 	// Create the necessary utilities to create the query to get all the bookings
 	DynamicQuery dq = com.liferay.calendar.service.CalendarBookingLocalServiceUtil.dynamicQuery();
@@ -66,37 +72,48 @@ taglib uri="http://liferay.com/tld/ui" prefix="liferay-ui" %>
 	// Initialize the event limit
 	int eventLimit = 0;
 	
-	// Iterate through all the events
-	for(CalendarBooking event:calendarBookings)
-	{	
+	// Creating date windows for event recurrency handling
+	long now = date.getTime();
+	long endTime = now + Time.MONTH;
+			
+	// Create a new List that will contain all the relevant events for the widget
+	List<CalendarBooking> relevantBookings = new ArrayList<>();
+	
+	// Eliminate events in trash from the expanding of bookings
+	for(CalendarBooking event:calendarBookings) {
+		// If the event has a status different from 8 (deleted)
+		if (!event.isInTrash()) {
+			relevantBookings.add(event);
+		}
+	}
+	
+	//
+	// TODO: Check if expand events throws an error and handle it
+	//
+	// Expands all events to create 5 instances of recurrent events in the time span between today and 1 month
+	List<CalendarBooking> allEventsExpanded = RecurrenceUtil.expandCalendarBookings(relevantBookings, now, endTime, 5);
+	
+	// Order events so the widget can show them correctly
+	Collections.sort(allEventsExpanded, orderByComparator);
+	
+	// Iterate through all the expanded and ordered events
+	for(CalendarBooking event:allEventsExpanded) {	
+		
 		// For each event set the start and end time in milliseconds
+		// the API throws nanoseconds and a bug was found when using nanoseconds
 		long milisEventStartTime = event.getStartTime() / 1000;
 		long milisEventEndTime = event.getEndTime() / 1000;
 		event.setStartTime(milisEventStartTime);
 		event.setEndTime(milisEventEndTime);
 		
-		System.out.println("\n\nEvent " + event);
-		System.out.println("EVENT START TIME: " + event.getStartTime());
-		System.out.println("TODAY TIME: " + timeMilli);
-		System.out.println("Recurrence " + event.getRecurrence());
-		System.out.println("RecurrenceObject " + event.getRecurrenceObj());
-		
-		// Get recurring Events and insert them into a new List
-		// recurrence=RRULE:FREQ=DAILY;UNTIL=20200320;INTERVAL=2,
-		List<CalendarBooking> recurringBookings;
-		if (Validator.isNotNull(event.getRecurrenceObj())) {
-			System.out.println("Event is recurrent");
-		}
-		
-		// If we havent surpassed the limit and the event is NOT in the trash and the start time is greater or equal than todays date, continue with the operations
-		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash())
-		{
-			// Create an EventBlock from the event
+		// If we havent surpassed the event view limit 
+		// and the event is NOT in the trash (this check is done for safety)
+		// and the start time is greater or equal than todays date
+		// then continue with the operations
+		if(timeMilli <= event.getStartTime() && eventLimit <= 4 && !event.isInTrash()) {
+			
+			// Add it to the eventBlocks Array and update the counter
 			EventBlock eventBlock = new EventBlock(event);
-			
-			System.out.println(eventBlock.getMonth() + " " + eventBlock.getDay() + " " + eventBlock.getTitle() + " " + eventBlock.getDuration() + "\n\n\n\n");
-			
-			// Add it to the eventBlocks Array and count it
 		    eventBlocks.add(eventBlock);
 		    eventLimit++;
 		    

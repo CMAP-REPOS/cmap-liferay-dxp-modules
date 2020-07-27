@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmContact;
-
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmContactLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmContactBaseImpl extends CrmContactModelImpl
-	implements CrmContact {
+public abstract class CrmContactBaseImpl
+	extends CrmContactModelImpl implements CrmContact {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Contact model instance should use the {@link CrmContact} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Contact model instance should use the <code>CrmContact</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmContactBaseImpl extends CrmContactModelImpl
 			CrmContactLocalServiceUtil.updateCrmContact(this);
 		}
 	}
+
 }

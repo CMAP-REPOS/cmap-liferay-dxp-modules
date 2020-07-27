@@ -93,6 +93,7 @@ if (editorOptions != null) {
 		%>
 
 		<script>
+		console.log("css class fragment: ");
 		console.log('<%= PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNHost() + PortalWebResourcesUtil.getContextPath(PortalWebResourceConstants.RESOURCE_TYPE_EDITOR_CKEDITOR) + "/ckeditor/ckeditor.js", javaScriptLastModified) %>');
 		</script>
 
@@ -112,6 +113,7 @@ if (editorOptions != null) {
 			};
 
 			CKEDITOR.getNextZIndex = function() {
+				console.log(CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10);
 				return CKEDITOR.dialog._.currentZIndex ? CKEDITOR.dialog._.currentZIndex + 10 : Liferay.zIndex.WINDOW + 10;
 			};
 

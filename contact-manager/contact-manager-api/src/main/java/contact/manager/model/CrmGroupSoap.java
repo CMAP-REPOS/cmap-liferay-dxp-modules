@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmGroupSoap implements Serializable {
+
 	public static CrmGroupSoap toSoapModel(CrmGroup model) {
 		CrmGroupSoap soapModel = new CrmGroupSoap();
 
@@ -76,7 +77,8 @@ public class CrmGroupSoap implements Serializable {
 	}
 
 	public static CrmGroupSoap[] toSoapModels(List<CrmGroup> models) {
-		List<CrmGroupSoap> soapModels = new ArrayList<CrmGroupSoap>(models.size());
+		List<CrmGroupSoap> soapModels = new ArrayList<CrmGroupSoap>(
+			models.size());
 
 		for (CrmGroup model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,4 +197,5 @@ public class CrmGroupSoap implements Serializable {
 	private String _name;
 	private long _crmContactsCount;
 	private String _status;
+
 }

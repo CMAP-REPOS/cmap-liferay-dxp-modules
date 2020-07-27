@@ -24,11 +24,9 @@ create index IX_312A4732 on crm_contactauditlogchange (uuid_[$COLUMN_LENGTH:75$]
 create unique index IX_969EF234 on crm_contactauditlogchange (uuid_[$COLUMN_LENGTH:75$], groupId);
 
 create index IX_B260C23 on crm_contacts_groups (companyId);
-create index IX_4C9BC5F6 on crm_contacts_groups (crmContactId);
 create index IX_6F74C715 on crm_contacts_groups (crmGroupId);
 
 create index IX_115C7B3E on crm_contacts_tags (companyId);
-create index IX_45273CFB on crm_contacts_tags (crmContactId);
 create index IX_909D5275 on crm_contacts_tags (crmTagId);
 
 create index IX_86BE2385 on crm_county (uuid_[$COLUMN_LENGTH:75$], companyId);

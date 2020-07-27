@@ -25,34 +25,37 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmContactAuditLogModel
- * @see contact.manager.model.impl.CrmContactAuditLogImpl
- * @see contact.manager.model.impl.CrmContactAuditLogModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmContactAuditLogImpl")
 @ProviderType
-public interface CrmContactAuditLog extends CrmContactAuditLogModel,
-	PersistedModel {
+public interface CrmContactAuditLog
+	extends CrmContactAuditLogModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmContactAuditLogImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmContactAuditLogImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmContactAuditLog, Long> CRM_CONTACT_AUDIT_LOG_ID_ACCESSOR =
-		new Accessor<CrmContactAuditLog, Long>() {
-			@Override
-			public Long get(CrmContactAuditLog crmContactAuditLog) {
-				return crmContactAuditLog.getCrmContactAuditLogId();
-			}
+	public static final Accessor<CrmContactAuditLog, Long>
+		CRM_CONTACT_AUDIT_LOG_ID_ACCESSOR =
+			new Accessor<CrmContactAuditLog, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(CrmContactAuditLog crmContactAuditLog) {
+					return crmContactAuditLog.getCrmContactAuditLogId();
+				}
 
-			@Override
-			public Class<CrmContactAuditLog> getTypeClass() {
-				return CrmContactAuditLog.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<CrmContactAuditLog> getTypeClass() {
+					return CrmContactAuditLog.class;
+				}
+
+			};
+
 }

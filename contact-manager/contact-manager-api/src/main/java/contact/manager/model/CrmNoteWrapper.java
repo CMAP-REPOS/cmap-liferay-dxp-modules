@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,6 +39,7 @@ import java.util.Objects;
  */
 @ProviderType
 public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
+
 	public CrmNoteWrapper(CrmNote crmNote) {
 		_crmNote = crmNote;
 	}
@@ -142,45 +141,45 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	@Override
-	public int compareTo(CrmNote crmNote) {
+	public int compareTo(contact.manager.model.CrmNote crmNote) {
 		return _crmNote.compareTo(crmNote);
 	}
 
 	/**
-	* Returns the company ID of this CRM Note.
-	*
-	* @return the company ID of this CRM Note
-	*/
+	 * Returns the company ID of this CRM Note.
+	 *
+	 * @return the company ID of this CRM Note
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmNote.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM Note.
-	*
-	* @return the create date of this CRM Note
-	*/
+	 * Returns the create date of this CRM Note.
+	 *
+	 * @return the create date of this CRM Note
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmNote.getCreateDate();
 	}
 
 	/**
-	* Returns the crm contact ID of this CRM Note.
-	*
-	* @return the crm contact ID of this CRM Note
-	*/
+	 * Returns the crm contact ID of this CRM Note.
+	 *
+	 * @return the crm contact ID of this CRM Note
+	 */
 	@Override
 	public long getCrmContactId() {
 		return _crmNote.getCrmContactId();
 	}
 
 	/**
-	* Returns the crm note ID of this CRM Note.
-	*
-	* @return the crm note ID of this CRM Note
-	*/
+	 * Returns the crm note ID of this CRM Note.
+	 *
+	 * @return the crm note ID of this CRM Note
+	 */
 	@Override
 	public long getCrmNoteId() {
 		return _crmNote.getCrmNoteId();
@@ -192,40 +191,40 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Returns the group ID of this CRM Note.
-	*
-	* @return the group ID of this CRM Note
-	*/
+	 * Returns the group ID of this CRM Note.
+	 *
+	 * @return the group ID of this CRM Note
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmNote.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM Note.
-	*
-	* @return the modified date of this CRM Note
-	*/
+	 * Returns the modified date of this CRM Note.
+	 *
+	 * @return the modified date of this CRM Note
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmNote.getModifiedDate();
 	}
 
 	/**
-	* Returns the note of this CRM Note.
-	*
-	* @return the note of this CRM Note
-	*/
+	 * Returns the note of this CRM Note.
+	 *
+	 * @return the note of this CRM Note
+	 */
 	@Override
 	public String getNote() {
 		return _crmNote.getNote();
 	}
 
 	/**
-	* Returns the primary key of this CRM Note.
-	*
-	* @return the primary key of this CRM Note
-	*/
+	 * Returns the primary key of this CRM Note.
+	 *
+	 * @return the primary key of this CRM Note
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmNote.getPrimaryKey();
@@ -237,40 +236,40 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Returns the user ID of this CRM Note.
-	*
-	* @return the user ID of this CRM Note
-	*/
+	 * Returns the user ID of this CRM Note.
+	 *
+	 * @return the user ID of this CRM Note
+	 */
 	@Override
 	public long getUserId() {
 		return _crmNote.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM Note.
-	*
-	* @return the user name of this CRM Note
-	*/
+	 * Returns the user name of this CRM Note.
+	 *
+	 * @return the user name of this CRM Note
+	 */
 	@Override
 	public String getUserName() {
 		return _crmNote.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM Note.
-	*
-	* @return the user uuid of this CRM Note
-	*/
+	 * Returns the user uuid of this CRM Note.
+	 *
+	 * @return the user uuid of this CRM Note
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmNote.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM Note.
-	*
-	* @return the uuid of this CRM Note
-	*/
+	 * Returns the uuid of this CRM Note.
+	 *
+	 * @return the uuid of this CRM Note
+	 */
 	@Override
 	public String getUuid() {
 		return _crmNote.getUuid();
@@ -307,40 +306,40 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Sets the company ID of this CRM Note.
-	*
-	* @param companyId the company ID of this CRM Note
-	*/
+	 * Sets the company ID of this CRM Note.
+	 *
+	 * @param companyId the company ID of this CRM Note
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmNote.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM Note.
-	*
-	* @param createDate the create date of this CRM Note
-	*/
+	 * Sets the create date of this CRM Note.
+	 *
+	 * @param createDate the create date of this CRM Note
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmNote.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm contact ID of this CRM Note.
-	*
-	* @param crmContactId the crm contact ID of this CRM Note
-	*/
+	 * Sets the crm contact ID of this CRM Note.
+	 *
+	 * @param crmContactId the crm contact ID of this CRM Note
+	 */
 	@Override
 	public void setCrmContactId(long crmContactId) {
 		_crmNote.setCrmContactId(crmContactId);
 	}
 
 	/**
-	* Sets the crm note ID of this CRM Note.
-	*
-	* @param crmNoteId the crm note ID of this CRM Note
-	*/
+	 * Sets the crm note ID of this CRM Note.
+	 *
+	 * @param crmNoteId the crm note ID of this CRM Note
+	 */
 	@Override
 	public void setCrmNoteId(long crmNoteId) {
 		_crmNote.setCrmNoteId(crmNoteId);
@@ -349,6 +348,7 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmNote.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -363,20 +363,20 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Sets the group ID of this CRM Note.
-	*
-	* @param groupId the group ID of this CRM Note
-	*/
+	 * Sets the group ID of this CRM Note.
+	 *
+	 * @param groupId the group ID of this CRM Note
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmNote.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM Note.
-	*
-	* @param modifiedDate the modified date of this CRM Note
-	*/
+	 * Sets the modified date of this CRM Note.
+	 *
+	 * @param modifiedDate the modified date of this CRM Note
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmNote.setModifiedDate(modifiedDate);
@@ -388,20 +388,20 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Sets the note of this CRM Note.
-	*
-	* @param note the note of this CRM Note
-	*/
+	 * Sets the note of this CRM Note.
+	 *
+	 * @param note the note of this CRM Note
+	 */
 	@Override
 	public void setNote(String note) {
 		_crmNote.setNote(note);
 	}
 
 	/**
-	* Sets the primary key of this CRM Note.
-	*
-	* @param primaryKey the primary key of this CRM Note
-	*/
+	 * Sets the primary key of this CRM Note.
+	 *
+	 * @param primaryKey the primary key of this CRM Note
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmNote.setPrimaryKey(primaryKey);
@@ -413,52 +413,54 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	/**
-	* Sets the user ID of this CRM Note.
-	*
-	* @param userId the user ID of this CRM Note
-	*/
+	 * Sets the user ID of this CRM Note.
+	 *
+	 * @param userId the user ID of this CRM Note
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmNote.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM Note.
-	*
-	* @param userName the user name of this CRM Note
-	*/
+	 * Sets the user name of this CRM Note.
+	 *
+	 * @param userName the user name of this CRM Note
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmNote.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM Note.
-	*
-	* @param userUuid the user uuid of this CRM Note
-	*/
+	 * Sets the user uuid of this CRM Note.
+	 *
+	 * @param userUuid the user uuid of this CRM Note
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmNote.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM Note.
-	*
-	* @param uuid the uuid of this CRM Note
-	*/
+	 * Sets the uuid of this CRM Note.
+	 *
+	 * @param uuid the uuid of this CRM Note
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmNote.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmNote> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmNote> toCacheModel() {
+
 		return _crmNote.toCacheModel();
 	}
 
 	@Override
-	public CrmNote toEscapedModel() {
+	public contact.manager.model.CrmNote toEscapedModel() {
 		return new CrmNoteWrapper(_crmNote.toEscapedModel());
 	}
 
@@ -468,7 +470,7 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	@Override
-	public CrmNote toUnescapedModel() {
+	public contact.manager.model.CrmNote toUnescapedModel() {
 		return new CrmNoteWrapper(_crmNote.toUnescapedModel());
 	}
 
@@ -522,4 +524,5 @@ public class CrmNoteWrapper implements CrmNote, ModelWrapper<CrmNote> {
 	}
 
 	private final CrmNote _crmNote;
+
 }

@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmLTAModel
- * @see contact.manager.model.impl.CrmLTAImpl
- * @see contact.manager.model.impl.CrmLTAModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmLTAImpl")
 @ProviderType
 public interface CrmLTA extends CrmLTAModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmLTAImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmLTAImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmLTA, Long> CRM_LTA_ID_ACCESSOR = new Accessor<CrmLTA, Long>() {
+	public static final Accessor<CrmLTA, Long> CRM_LTA_ID_ACCESSOR =
+		new Accessor<CrmLTA, Long>() {
+
 			@Override
 			public Long get(CrmLTA crmLTA) {
 				return crmLTA.getCrmLTAId();
@@ -52,5 +53,7 @@ public interface CrmLTA extends CrmLTAModel, PersistedModel {
 			public Class<CrmLTA> getTypeClass() {
 				return CrmLTA.class;
 			}
+
 		};
+
 }

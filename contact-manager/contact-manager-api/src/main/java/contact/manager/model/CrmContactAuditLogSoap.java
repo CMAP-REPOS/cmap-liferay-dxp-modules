@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmContactAuditLogSoap implements Serializable {
+
 	public static CrmContactAuditLogSoap toSoapModel(CrmContactAuditLog model) {
 		CrmContactAuditLogSoap soapModel = new CrmContactAuditLogSoap();
 
@@ -52,7 +53,9 @@ public class CrmContactAuditLogSoap implements Serializable {
 
 	public static CrmContactAuditLogSoap[] toSoapModels(
 		CrmContactAuditLog[] models) {
-		CrmContactAuditLogSoap[] soapModels = new CrmContactAuditLogSoap[models.length];
+
+		CrmContactAuditLogSoap[] soapModels =
+			new CrmContactAuditLogSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,10 +66,12 @@ public class CrmContactAuditLogSoap implements Serializable {
 
 	public static CrmContactAuditLogSoap[][] toSoapModels(
 		CrmContactAuditLog[][] models) {
+
 		CrmContactAuditLogSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CrmContactAuditLogSoap[models.length][models[0].length];
+			soapModels =
+				new CrmContactAuditLogSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CrmContactAuditLogSoap[0][0];
@@ -81,13 +86,16 @@ public class CrmContactAuditLogSoap implements Serializable {
 
 	public static CrmContactAuditLogSoap[] toSoapModels(
 		List<CrmContactAuditLog> models) {
-		List<CrmContactAuditLogSoap> soapModels = new ArrayList<CrmContactAuditLogSoap>(models.size());
+
+		List<CrmContactAuditLogSoap> soapModels =
+			new ArrayList<CrmContactAuditLogSoap>(models.size());
 
 		for (CrmContactAuditLog model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CrmContactAuditLogSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new CrmContactAuditLogSoap[soapModels.size()]);
 	}
 
 	public CrmContactAuditLogSoap() {
@@ -218,4 +226,5 @@ public class CrmContactAuditLogSoap implements Serializable {
 	private String _action;
 	private String _oldSnapshot;
 	private String _newSnapshot;
+
 }

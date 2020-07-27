@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmCountyCommissioner;
-
 import contact.manager.service.CrmCountyCommissionerLocalServiceUtil;
 
 /**
@@ -35,18 +34,22 @@ import contact.manager.service.CrmCountyCommissionerLocalServiceUtil;
 @ProviderType
 public abstract class CrmCountyCommissionerBaseImpl
 	extends CrmCountyCommissionerModelImpl implements CrmCountyCommissioner {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM County Commissioner model instance should use the {@link CrmCountyCommissioner} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM County Commissioner model instance should use the <code>CrmCountyCommissioner</code> interface instead.
 	 */
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			CrmCountyCommissionerLocalServiceUtil.addCrmCountyCommissioner(this);
+			CrmCountyCommissionerLocalServiceUtil.addCrmCountyCommissioner(
+				this);
 		}
 		else {
-			CrmCountyCommissionerLocalServiceUtil.updateCrmCountyCommissioner(this);
+			CrmCountyCommissionerLocalServiceUtil.updateCrmCountyCommissioner(
+				this);
 		}
 	}
+
 }

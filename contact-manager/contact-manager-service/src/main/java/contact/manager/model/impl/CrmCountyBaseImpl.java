@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmCounty;
-
 import contact.manager.service.CrmCountyLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmCountyLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmCountyBaseImpl extends CrmCountyModelImpl
-	implements CrmCounty {
+public abstract class CrmCountyBaseImpl
+	extends CrmCountyModelImpl implements CrmCounty {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM County model instance should use the {@link CrmCounty} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM County model instance should use the <code>CrmCounty</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmCountyBaseImpl extends CrmCountyModelImpl
 			CrmCountyLocalServiceUtil.updateCrmCounty(this);
 		}
 	}
+
 }

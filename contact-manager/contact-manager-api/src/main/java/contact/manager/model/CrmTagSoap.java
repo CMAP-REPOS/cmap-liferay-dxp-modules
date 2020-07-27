@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmTagSoap implements Serializable {
+
 	public static CrmTagSoap toSoapModel(CrmTag model) {
 		CrmTagSoap soapModel = new CrmTagSoap();
 
@@ -175,4 +176,5 @@ public class CrmTagSoap implements Serializable {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _name;
+
 }

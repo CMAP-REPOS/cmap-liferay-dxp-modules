@@ -25,20 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmStateSenateModel
- * @see contact.manager.model.impl.CrmStateSenateImpl
- * @see contact.manager.model.impl.CrmStateSenateModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmStateSenateImpl")
 @ProviderType
 public interface CrmStateSenate extends CrmStateSenateModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmStateSenateImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmStateSenateImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmStateSenate, Long> CRM_STATE_SENATE_ID_ACCESSOR =
-		new Accessor<CrmStateSenate, Long>() {
+	public static final Accessor<CrmStateSenate, Long>
+		CRM_STATE_SENATE_ID_ACCESSOR = new Accessor<CrmStateSenate, Long>() {
+
 			@Override
 			public Long get(CrmStateSenate crmStateSenate) {
 				return crmStateSenate.getCrmStateSenateId();
@@ -53,5 +53,7 @@ public interface CrmStateSenate extends CrmStateSenateModel, PersistedModel {
 			public Class<CrmStateSenate> getTypeClass() {
 				return CrmStateSenate.class;
 			}
+
 		};
+
 }

@@ -26,67 +26,72 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
  * @generated
  */
 @ProviderType
-public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
-	ServiceWrapper<CrmLTALocalService> {
+public class CrmLTALocalServiceWrapper
+	implements CrmLTALocalService, ServiceWrapper<CrmLTALocalService> {
+
 	public CrmLTALocalServiceWrapper(CrmLTALocalService crmLTALocalService) {
 		_crmLTALocalService = crmLTALocalService;
 	}
 
 	/**
-	* Adds the CRM LTA to the database. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTA the CRM LTA
-	* @return the CRM LTA that was added
-	*/
+	 * Adds the CRM LTA to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param crmLTA the CRM LTA
+	 * @return the CRM LTA that was added
+	 */
 	@Override
 	public contact.manager.model.CrmLTA addCrmLTA(
 		contact.manager.model.CrmLTA crmLTA) {
+
 		return _crmLTALocalService.addCrmLTA(crmLTA);
 	}
 
 	/**
-	* Creates a new CRM LTA with the primary key. Does not add the CRM LTA to the database.
-	*
-	* @param crmLTAId the primary key for the new CRM LTA
-	* @return the new CRM LTA
-	*/
+	 * Creates a new CRM LTA with the primary key. Does not add the CRM LTA to the database.
+	 *
+	 * @param crmLTAId the primary key for the new CRM LTA
+	 * @return the new CRM LTA
+	 */
 	@Override
 	public contact.manager.model.CrmLTA createCrmLTA(long crmLTAId) {
 		return _crmLTALocalService.createCrmLTA(crmLTAId);
 	}
 
 	/**
-	* Deletes the CRM LTA from the database. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTA the CRM LTA
-	* @return the CRM LTA that was removed
-	*/
+	 * Deletes the CRM LTA from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param crmLTA the CRM LTA
+	 * @return the CRM LTA that was removed
+	 */
 	@Override
 	public contact.manager.model.CrmLTA deleteCrmLTA(
 		contact.manager.model.CrmLTA crmLTA) {
+
 		return _crmLTALocalService.deleteCrmLTA(crmLTA);
 	}
 
 	/**
-	* Deletes the CRM LTA with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTAId the primary key of the CRM LTA
-	* @return the CRM LTA that was removed
-	* @throws PortalException if a CRM LTA with the primary key could not be found
-	*/
+	 * Deletes the CRM LTA with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param crmLTAId the primary key of the CRM LTA
+	 * @return the CRM LTA that was removed
+	 * @throws PortalException if a CRM LTA with the primary key could not be found
+	 */
 	@Override
 	public contact.manager.model.CrmLTA deleteCrmLTA(long crmLTAId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _crmLTALocalService.deleteCrmLTA(crmLTAId);
 	}
 
 	/**
-	* @throws PortalException
-	*/
+	 * @throws PortalException
+	 */
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
-		com.liferay.portal.kernel.model.PersistedModel persistedModel)
+			com.liferay.portal.kernel.model.PersistedModel persistedModel)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _crmLTALocalService.deletePersistedModel(persistedModel);
 	}
 
@@ -96,81 +101,86 @@ public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	*/
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _crmLTALocalService.dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmLTAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end) {
+
 		return _crmLTALocalService.dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	*/
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmLTAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 */
 	@Override
 	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
 		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
-		return _crmLTALocalService.dynamicQuery(dynamicQuery, start, end,
-			orderByComparator);
+
+		return _crmLTALocalService.dynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+
 		return _crmLTALocalService.dynamicQueryCount(dynamicQuery);
 	}
 
 	/**
-	* Returns the number of rows matching the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows matching the dynamic query
-	*/
+	 * Returns the number of rows matching the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows matching the dynamic query
+	 */
 	@Override
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
 		com.liferay.portal.kernel.dao.orm.Projection projection) {
+
 		return _crmLTALocalService.dynamicQueryCount(dynamicQuery, projection);
 	}
 
@@ -180,131 +190,149 @@ public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
 	}
 
 	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
-	*/
+	 * Returns the CRM LTA matching the UUID and group.
+	 *
+	 * @param uuid the CRM LTA's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching CRM LTA, or <code>null</code> if a matching CRM LTA could not be found
+	 */
 	@Override
 	public contact.manager.model.CrmLTA fetchCrmLTAByUuidAndGroupId(
 		String uuid, long groupId) {
+
 		return _crmLTALocalService.fetchCrmLTAByUuidAndGroupId(uuid, groupId);
 	}
 
 	@Override
 	public java.util.List<contact.manager.model.CrmLTA> findByZipCode(
 		String zipCode) {
+
 		return _crmLTALocalService.findByZipCode(zipCode);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
+		getActionableDynamicQuery() {
+
 		return _crmLTALocalService.getActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the CRM LTA with the primary key.
-	*
-	* @param crmLTAId the primary key of the CRM LTA
-	* @return the CRM LTA
-	* @throws PortalException if a CRM LTA with the primary key could not be found
-	*/
+	 * Returns the CRM LTA with the primary key.
+	 *
+	 * @param crmLTAId the primary key of the CRM LTA
+	 * @return the CRM LTA
+	 * @throws PortalException if a CRM LTA with the primary key could not be found
+	 */
 	@Override
 	public contact.manager.model.CrmLTA getCrmLTA(long crmLTAId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _crmLTALocalService.getCrmLTA(crmLTAId);
 	}
 
 	/**
-	* Returns the CRM LTA matching the UUID and group.
-	*
-	* @param uuid the CRM LTA's UUID
-	* @param groupId the primary key of the group
-	* @return the matching CRM LTA
-	* @throws PortalException if a matching CRM LTA could not be found
-	*/
+	 * Returns the CRM LTA matching the UUID and group.
+	 *
+	 * @param uuid the CRM LTA's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching CRM LTA
+	 * @throws PortalException if a matching CRM LTA could not be found
+	 */
 	@Override
-	public contact.manager.model.CrmLTA getCrmLTAByUuidAndGroupId(String uuid,
-		long groupId)
+	public contact.manager.model.CrmLTA getCrmLTAByUuidAndGroupId(
+			String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _crmLTALocalService.getCrmLTAByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
-	* Returns a range of all the CRM LTAs.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmLTAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of CRM LTAs
-	* @param end the upper bound of the range of CRM LTAs (not inclusive)
-	* @return the range of CRM LTAs
-	*/
+	 * Returns a range of all the CRM LTAs.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmLTAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of CRM LTAs
+	 * @param end the upper bound of the range of CRM LTAs (not inclusive)
+	 * @return the range of CRM LTAs
+	 */
 	@Override
-	public java.util.List<contact.manager.model.CrmLTA> getCrmLTAs(int start,
-		int end) {
+	public java.util.List<contact.manager.model.CrmLTA> getCrmLTAs(
+		int start, int end) {
+
 		return _crmLTALocalService.getCrmLTAs(start, end);
 	}
 
 	/**
-	* Returns all the CRM LTAs matching the UUID and company.
-	*
-	* @param uuid the UUID of the CRM LTAs
-	* @param companyId the primary key of the company
-	* @return the matching CRM LTAs, or an empty list if no matches were found
-	*/
+	 * Returns all the CRM LTAs matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the CRM LTAs
+	 * @param companyId the primary key of the company
+	 * @return the matching CRM LTAs, or an empty list if no matches were found
+	 */
 	@Override
-	public java.util.List<contact.manager.model.CrmLTA> getCrmLTAsByUuidAndCompanyId(
-		String uuid, long companyId) {
-		return _crmLTALocalService.getCrmLTAsByUuidAndCompanyId(uuid, companyId);
+	public java.util.List<contact.manager.model.CrmLTA>
+		getCrmLTAsByUuidAndCompanyId(String uuid, long companyId) {
+
+		return _crmLTALocalService.getCrmLTAsByUuidAndCompanyId(
+			uuid, companyId);
 	}
 
 	/**
-	* Returns a range of CRM LTAs matching the UUID and company.
-	*
-	* @param uuid the UUID of the CRM LTAs
-	* @param companyId the primary key of the company
-	* @param start the lower bound of the range of CRM LTAs
-	* @param end the upper bound of the range of CRM LTAs (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the range of matching CRM LTAs, or an empty list if no matches were found
-	*/
+	 * Returns a range of CRM LTAs matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the CRM LTAs
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of CRM LTAs
+	 * @param end the upper bound of the range of CRM LTAs (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching CRM LTAs, or an empty list if no matches were found
+	 */
 	@Override
-	public java.util.List<contact.manager.model.CrmLTA> getCrmLTAsByUuidAndCompanyId(
-		String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<contact.manager.model.CrmLTA> orderByComparator) {
-		return _crmLTALocalService.getCrmLTAsByUuidAndCompanyId(uuid,
-			companyId, start, end, orderByComparator);
+	public java.util.List<contact.manager.model.CrmLTA>
+		getCrmLTAsByUuidAndCompanyId(
+			String uuid, long companyId, int start, int end,
+			com.liferay.portal.kernel.util.OrderByComparator
+				<contact.manager.model.CrmLTA> orderByComparator) {
+
+		return _crmLTALocalService.getCrmLTAsByUuidAndCompanyId(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
-	* Returns the number of CRM LTAs.
-	*
-	* @return the number of CRM LTAs
-	*/
+	 * Returns the number of CRM LTAs.
+	 *
+	 * @return the number of CRM LTAs
+	 */
 	@Override
 	public int getCrmLTAsCount() {
 		return _crmLTALocalService.getCrmLTAsCount();
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
-		com.liferay.exportimport.kernel.lar.PortletDataContext portletDataContext) {
-		return _crmLTALocalService.getExportActionableDynamicQuery(portletDataContext);
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery
+		getExportActionableDynamicQuery(
+			com.liferay.exportimport.kernel.lar.PortletDataContext
+				portletDataContext) {
+
+		return _crmLTALocalService.getExportActionableDynamicQuery(
+			portletDataContext);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
+
 		return _crmLTALocalService.getIndexableActionableDynamicQuery();
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _crmLTALocalService.getOSGiServiceIdentifier();
@@ -312,20 +340,22 @@ public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
 
 	@Override
 	public com.liferay.portal.kernel.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
+			java.io.Serializable primaryKeyObj)
 		throws com.liferay.portal.kernel.exception.PortalException {
+
 		return _crmLTALocalService.getPersistedModel(primaryKeyObj);
 	}
 
 	/**
-	* Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param crmLTA the CRM LTA
-	* @return the CRM LTA that was updated
-	*/
+	 * Updates the CRM LTA in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param crmLTA the CRM LTA
+	 * @return the CRM LTA that was updated
+	 */
 	@Override
 	public contact.manager.model.CrmLTA updateCrmLTA(
 		contact.manager.model.CrmLTA crmLTA) {
+
 		return _crmLTALocalService.updateCrmLTA(crmLTA);
 	}
 
@@ -340,4 +370,5 @@ public class CrmLTALocalServiceWrapper implements CrmLTALocalService,
 	}
 
 	private CrmLTALocalService _crmLTALocalService;
+
 }

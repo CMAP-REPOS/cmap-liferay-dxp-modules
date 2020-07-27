@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -39,11 +38,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmContactAuditLogChangeException;
-
 import contact.manager.model.CrmContactAuditLogChange;
 import contact.manager.model.impl.CrmContactAuditLogChangeImpl;
 import contact.manager.model.impl.CrmContactAuditLogChangeModelImpl;
-
 import contact.manager.service.persistence.CrmContactAuditLogChangePersistence;
 
 import java.io.Serializable;
@@ -69,54 +66,33 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmContactAuditLogChangePersistence
- * @see contact.manager.service.persistence.CrmContactAuditLogChangeUtil
  * @generated
  */
 @ProviderType
-public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl<CrmContactAuditLogChange>
+public class CrmContactAuditLogChangePersistenceImpl
+	extends BasePersistenceImpl<CrmContactAuditLogChange>
 	implements CrmContactAuditLogChangePersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmContactAuditLogChangeUtil} to access the CRM Contact Audit Log Change persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmContactAuditLogChangeUtil</code> to access the CRM Contact Audit Log Change persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmContactAuditLogChangeImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmContactAuditLogChangeImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM Contact Audit Log Changes where uuid = &#63;.
@@ -133,7 +109,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Returns a range of all the CRM Contact Audit Log Changes where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -142,8 +118,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the range of matching CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid(String uuid, int start,
-		int end) {
+	public List<CrmContactAuditLogChange> findByUuid(
+		String uuid, int start, int end) {
+
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -151,67 +128,73 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Contact Audit Log Changes
 	 */
+	@Deprecated
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid(String uuid, int start,
-		int end, OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmContactAuditLogChange> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid(String uuid, int start,
-		int end, OrderByComparator<CrmContactAuditLogChange> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmContactAuditLogChange> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmContactAuditLogChange> list = null;
+		List<CrmContactAuditLogChange> list =
+			(List<CrmContactAuditLogChange>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmContactAuditLogChange>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
+				if (!uuid.equals(crmContactAuditLogChange.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
-					if (!Objects.equals(uuid, crmContactAuditLogChange.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -220,8 +203,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -231,10 +214,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -244,11 +224,10 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmContactAuditLogChangeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -268,16 +247,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				}
 
 				if (!pagination) {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -306,11 +285,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange findByUuid_First(String uuid,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+	public CrmContactAuditLogChange findByUuid_First(
+			String uuid,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_First(uuid,
-				orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_First(
+			uuid, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -336,10 +317,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the first matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange fetchByUuid_First(String uuid,
+	public CrmContactAuditLogChange fetchByUuid_First(
+		String uuid,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		List<CrmContactAuditLogChange> list = findByUuid(uuid, 0, 1,
-				orderByComparator);
+
+		List<CrmContactAuditLogChange> list = findByUuid(
+			uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -357,11 +340,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange findByUuid_Last(String uuid,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+	public CrmContactAuditLogChange findByUuid_Last(
+			String uuid,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_Last(uuid,
-				orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_Last(
+			uuid, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -387,16 +372,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the last matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange fetchByUuid_Last(String uuid,
+	public CrmContactAuditLogChange fetchByUuid_Last(
+		String uuid,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmContactAuditLogChange> list = findByUuid(uuid, count - 1,
-				count, orderByComparator);
+		List<CrmContactAuditLogChange> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -416,25 +403,32 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange[] findByUuid_PrevAndNext(
-		long crmContactAuditLogChangeId, String uuid,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+			long crmContactAuditLogChangeId, String uuid,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(crmContactAuditLogChangeId);
+
+		uuid = Objects.toString(uuid, "");
+
+		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(
+			crmContactAuditLogChangeId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmContactAuditLogChange[] array = new CrmContactAuditLogChangeImpl[3];
+			CrmContactAuditLogChange[] array =
+				new CrmContactAuditLogChangeImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmContactAuditLogChange,
-					uuid, orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmContactAuditLogChange, uuid, orderByComparator,
+				true);
 
 			array[1] = crmContactAuditLogChange;
 
-			array[2] = getByUuid_PrevAndNext(session, crmContactAuditLogChange,
-					uuid, orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmContactAuditLogChange, uuid, orderByComparator,
+				false);
 
 			return array;
 		}
@@ -446,15 +440,17 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		}
 	}
 
-	protected CrmContactAuditLogChange getByUuid_PrevAndNext(Session session,
-		CrmContactAuditLogChange crmContactAuditLogChange, String uuid,
+	protected CrmContactAuditLogChange getByUuid_PrevAndNext(
+		Session session, CrmContactAuditLogChange crmContactAuditLogChange,
+		String uuid,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -465,10 +461,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -478,7 +471,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -550,10 +544,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmContactAuditLogChange);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						crmContactAuditLogChange)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -574,8 +569,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmContactAuditLogChange crmContactAuditLogChange : findByUuid(
-				uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CrmContactAuditLogChange crmContactAuditLogChange :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmContactAuditLogChange);
 		}
 	}
@@ -588,9 +584,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -601,10 +599,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -645,23 +640,17 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmContactAuditLogChange.uuid IS NULL";
-	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmContactAuditLogChange.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK |
-			CrmContactAuditLogChangeModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_UUID_2 =
+		"crmContactAuditLogChange.uuid = ?";
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmContactAuditLogChangeException} if it could not be found.
+	 * Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmContactAuditLogChangeException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -671,8 +660,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUUID_G(uuid,
-				groupId);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUUID_G(
+			uuid, groupId);
 
 		if (crmContactAuditLogChange == null) {
 			StringBundler msg = new StringBundler(6);
@@ -698,15 +688,20 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM Contact Audit Log Change where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmContactAuditLogChange fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmContactAuditLogChange fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -714,26 +709,25 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmContactAuditLogChange fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmContactAuditLogChange) {
-			CrmContactAuditLogChange crmContactAuditLogChange = (CrmContactAuditLogChange)result;
+			CrmContactAuditLogChange crmContactAuditLogChange =
+				(CrmContactAuditLogChange)result;
 
 			if (!Objects.equals(uuid, crmContactAuditLogChange.getUuid()) ||
-					(groupId != crmContactAuditLogChange.getGroupId())) {
+				(groupId != crmContactAuditLogChange.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -745,10 +739,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -779,11 +770,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				List<CrmContactAuditLogChange> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
-					CrmContactAuditLogChange crmContactAuditLogChange = list.get(0);
+					CrmContactAuditLogChange crmContactAuditLogChange =
+						list.get(0);
 
 					result = crmContactAuditLogChange;
 
@@ -791,7 +783,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -818,8 +810,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = findByUUID_G(uuid,
-				groupId);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = findByUUID_G(
+			uuid, groupId);
 
 		return remove(crmContactAuditLogChange);
 	}
@@ -833,9 +826,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -846,10 +841,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -894,32 +886,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmContactAuditLogChange.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmContactAuditLogChange.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmContactAuditLogChange.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK |
-			CrmContactAuditLogChangeModelImpl.COMPANYID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmContactAuditLogChange.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmContactAuditLogChange.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
@@ -929,17 +907,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the matching CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid_C(String uuid,
-		long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+	public List<CrmContactAuditLogChange> findByUuid_C(
+		String uuid, long companyId) {
+
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -949,8 +928,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the range of matching CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid_C(String uuid,
-		long companyId, int start, int end) {
+	public List<CrmContactAuditLogChange> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -958,28 +938,33 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Contact Audit Log Changes
 	 */
+	@Deprecated
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid_C(String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmContactAuditLogChange> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -987,47 +972,45 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findByUuid_C(String uuid,
-		long companyId, int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmContactAuditLogChange> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmContactAuditLogChange> list = null;
+		List<CrmContactAuditLogChange> list =
+			(List<CrmContactAuditLogChange>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmContactAuditLogChange>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
+				if (!uuid.equals(crmContactAuditLogChange.getUuid()) ||
+					(companyId != crmContactAuditLogChange.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
-					if (!Objects.equals(uuid, crmContactAuditLogChange.getUuid()) ||
-							(companyId != crmContactAuditLogChange.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1036,8 +1019,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1047,10 +1030,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1062,11 +1042,10 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmContactAuditLogChangeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1088,16 +1067,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1127,12 +1106,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange findByUuid_C_First(String uuid,
-		long companyId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+	public CrmContactAuditLogChange findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_C_First(uuid,
-				companyId, orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -1162,11 +1142,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the first matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange fetchByUuid_C_First(String uuid,
-		long companyId,
+	public CrmContactAuditLogChange fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		List<CrmContactAuditLogChange> list = findByUuid_C(uuid, companyId, 0,
-				1, orderByComparator);
+
+		List<CrmContactAuditLogChange> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1185,12 +1166,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @throws NoSuchCrmContactAuditLogChangeException if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange findByUuid_C_Last(String uuid,
-		long companyId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+	public CrmContactAuditLogChange findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_C_Last(uuid,
-				companyId, orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -1220,17 +1202,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * @return the last matching CRM Contact Audit Log Change, or <code>null</code> if a matching CRM Contact Audit Log Change could not be found
 	 */
 	@Override
-	public CrmContactAuditLogChange fetchByUuid_C_Last(String uuid,
-		long companyId,
+	public CrmContactAuditLogChange fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmContactAuditLogChange> list = findByUuid_C(uuid, companyId,
-				count - 1, count, orderByComparator);
+		List<CrmContactAuditLogChange> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1251,27 +1234,32 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange[] findByUuid_C_PrevAndNext(
-		long crmContactAuditLogChangeId, String uuid, long companyId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+			long crmContactAuditLogChangeId, String uuid, long companyId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(crmContactAuditLogChangeId);
+
+		uuid = Objects.toString(uuid, "");
+
+		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(
+			crmContactAuditLogChangeId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmContactAuditLogChange[] array = new CrmContactAuditLogChangeImpl[3];
+			CrmContactAuditLogChange[] array =
+				new CrmContactAuditLogChangeImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session,
-					crmContactAuditLogChange, uuid, companyId,
-					orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmContactAuditLogChange, uuid, companyId,
+				orderByComparator, true);
 
 			array[1] = crmContactAuditLogChange;
 
-			array[2] = getByUuid_C_PrevAndNext(session,
-					crmContactAuditLogChange, uuid, companyId,
-					orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmContactAuditLogChange, uuid, companyId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1288,11 +1276,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		String uuid, long companyId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1303,10 +1292,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1318,7 +1304,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1392,10 +1379,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmContactAuditLogChange);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						crmContactAuditLogChange)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1417,8 +1405,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmContactAuditLogChange crmContactAuditLogChange : findByUuid_C(
-				uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CrmContactAuditLogChange crmContactAuditLogChange :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmContactAuditLogChange);
 		}
 	}
@@ -1432,9 +1423,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1445,10 +1438,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1493,34 +1483,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmContactAuditLogChange.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmContactAuditLogChange.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmContactAuditLogChange.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID =
-		new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCrmContactAuditLogId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID =
-		new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
-			CrmContactAuditLogChangeImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCrmContactAuditLogId",
-			new String[] { Long.class.getName() },
-			CrmContactAuditLogChangeModelImpl.CRMCONTACTAUDITLOGID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CRMCONTACTAUDITLOGID = new FinderPath(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByCrmContactAuditLogId", new String[] { Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmContactAuditLogChange.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmContactAuditLogChange.uuid IS NULL OR crmContactAuditLogChange.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmContactAuditLogChange.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByCrmContactAuditLogId;
+	private FinderPath _finderPathWithoutPaginationFindByCrmContactAuditLogId;
+	private FinderPath _finderPathCountByCrmContactAuditLogId;
 
 	/**
 	 * Returns all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
@@ -1531,15 +1505,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
 		long crmContactAuditLogId) {
-		return findByCrmContactAuditLogId(crmContactAuditLogId,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+
+		return findByCrmContactAuditLogId(
+			crmContactAuditLogId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param crmContactAuditLogId the crm contact audit log ID
@@ -1550,14 +1525,42 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
 		long crmContactAuditLogId, int start, int end) {
-		return findByCrmContactAuditLogId(crmContactAuditLogId, start, end, null);
+
+		return findByCrmContactAuditLogId(
+			crmContactAuditLogId, start, end, null);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCrmContactAuditLogId(long, int, int, OrderByComparator)}
+	 * @param crmContactAuditLogId the crm contact audit log ID
+	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
+	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching CRM Contact Audit Log Changes
+	 */
+	@Deprecated
+	@Override
+	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
+		long crmContactAuditLogId, int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
+		boolean useFinderCache) {
+
+		return findByCrmContactAuditLogId(
+			crmContactAuditLogId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param crmContactAuditLogId the crm contact audit log ID
@@ -1570,61 +1573,37 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
 		long crmContactAuditLogId, int start, int end,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		return findByCrmContactAuditLogId(crmContactAuditLogId, start, end,
-			orderByComparator, true);
-	}
 
-	/**
-	 * Returns an ordered range of all the CRM Contact Audit Log Changes where crmContactAuditLogId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param crmContactAuditLogId the crm contact audit log ID
-	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
-	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching CRM Contact Audit Log Changes
-	 */
-	@Override
-	public List<CrmContactAuditLogChange> findByCrmContactAuditLogId(
-		long crmContactAuditLogId, int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
-		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID;
-			finderArgs = new Object[] { crmContactAuditLogId };
+			finderPath = _finderPathWithoutPaginationFindByCrmContactAuditLogId;
+			finderArgs = new Object[] {crmContactAuditLogId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID;
+			finderPath = _finderPathWithPaginationFindByCrmContactAuditLogId;
 			finderArgs = new Object[] {
-					crmContactAuditLogId,
-					
-					start, end, orderByComparator
-				};
+				crmContactAuditLogId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmContactAuditLogChange> list = null;
+		List<CrmContactAuditLogChange> list =
+			(List<CrmContactAuditLogChange>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmContactAuditLogChange>)finderCache.getResult(finderPath,
-					finderArgs, this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
+				if ((crmContactAuditLogId !=
+						crmContactAuditLogChange.getCrmContactAuditLogId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmContactAuditLogChange crmContactAuditLogChange : list) {
-					if ((crmContactAuditLogId != crmContactAuditLogChange.getCrmContactAuditLogId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1633,8 +1612,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1642,14 +1621,14 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE);
 
-			query.append(_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
+			query.append(
+				_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmContactAuditLogChangeModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1667,16 +1646,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				qPos.add(crmContactAuditLogId);
 
 				if (!pagination) {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1706,11 +1685,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange findByCrmContactAuditLogId_First(
-		long crmContactAuditLogId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+			long crmContactAuditLogId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByCrmContactAuditLogId_First(crmContactAuditLogId,
-				orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange =
+			fetchByCrmContactAuditLogId_First(
+				crmContactAuditLogId, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -1739,8 +1720,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	public CrmContactAuditLogChange fetchByCrmContactAuditLogId_First(
 		long crmContactAuditLogId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		List<CrmContactAuditLogChange> list = findByCrmContactAuditLogId(crmContactAuditLogId,
-				0, 1, orderByComparator);
+
+		List<CrmContactAuditLogChange> list = findByCrmContactAuditLogId(
+			crmContactAuditLogId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1759,11 +1741,13 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange findByCrmContactAuditLogId_Last(
-		long crmContactAuditLogId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+			long crmContactAuditLogId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByCrmContactAuditLogId_Last(crmContactAuditLogId,
-				orderByComparator);
+
+		CrmContactAuditLogChange crmContactAuditLogChange =
+			fetchByCrmContactAuditLogId_Last(
+				crmContactAuditLogId, orderByComparator);
 
 		if (crmContactAuditLogChange != null) {
 			return crmContactAuditLogChange;
@@ -1792,14 +1776,15 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	public CrmContactAuditLogChange fetchByCrmContactAuditLogId_Last(
 		long crmContactAuditLogId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
 		int count = countByCrmContactAuditLogId(crmContactAuditLogId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmContactAuditLogChange> list = findByCrmContactAuditLogId(crmContactAuditLogId,
-				count - 1, count, orderByComparator);
+		List<CrmContactAuditLogChange> list = findByCrmContactAuditLogId(
+			crmContactAuditLogId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1819,27 +1804,30 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange[] findByCrmContactAuditLogId_PrevAndNext(
-		long crmContactAuditLogChangeId, long crmContactAuditLogId,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator)
+			long crmContactAuditLogChangeId, long crmContactAuditLogId,
+			OrderByComparator<CrmContactAuditLogChange> orderByComparator)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(crmContactAuditLogChangeId);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = findByPrimaryKey(
+			crmContactAuditLogChangeId);
 
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmContactAuditLogChange[] array = new CrmContactAuditLogChangeImpl[3];
+			CrmContactAuditLogChange[] array =
+				new CrmContactAuditLogChangeImpl[3];
 
-			array[0] = getByCrmContactAuditLogId_PrevAndNext(session,
-					crmContactAuditLogChange, crmContactAuditLogId,
-					orderByComparator, true);
+			array[0] = getByCrmContactAuditLogId_PrevAndNext(
+				session, crmContactAuditLogChange, crmContactAuditLogId,
+				orderByComparator, true);
 
 			array[1] = crmContactAuditLogChange;
 
-			array[2] = getByCrmContactAuditLogId_PrevAndNext(session,
-					crmContactAuditLogChange, crmContactAuditLogId,
-					orderByComparator, false);
+			array[2] = getByCrmContactAuditLogId_PrevAndNext(
+				session, crmContactAuditLogChange, crmContactAuditLogId,
+				orderByComparator, false);
 
 			return array;
 		}
@@ -1856,11 +1844,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		long crmContactAuditLogId,
 		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
 		boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1869,10 +1858,12 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 		query.append(_SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE);
 
-		query.append(_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
+		query.append(
+			_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1942,10 +1933,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		qPos.add(crmContactAuditLogId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmContactAuditLogChange);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(
+						crmContactAuditLogChange)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1966,8 +1958,11 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public void removeByCrmContactAuditLogId(long crmContactAuditLogId) {
-		for (CrmContactAuditLogChange crmContactAuditLogChange : findByCrmContactAuditLogId(
-				crmContactAuditLogId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CrmContactAuditLogChange crmContactAuditLogChange :
+				findByCrmContactAuditLogId(
+					crmContactAuditLogId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmContactAuditLogChange);
 		}
 	}
@@ -1980,9 +1975,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countByCrmContactAuditLogId(long crmContactAuditLogId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CRMCONTACTAUDITLOGID;
+		FinderPath finderPath = _finderPathCountByCrmContactAuditLogId;
 
-		Object[] finderArgs = new Object[] { crmContactAuditLogId };
+		Object[] finderArgs = new Object[] {crmContactAuditLogId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1991,7 +1986,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			query.append(_SQL_COUNT_CRMCONTACTAUDITLOGCHANGE_WHERE);
 
-			query.append(_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
+			query.append(
+				_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2);
 
 			String sql = query.toString();
 
@@ -2023,21 +2019,22 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2 =
-		"crmContactAuditLogChange.crmContactAuditLogId = ?";
+	private static final String
+		_FINDER_COLUMN_CRMCONTACTAUDITLOGID_CRMCONTACTAUDITLOGID_2 =
+			"crmContactAuditLogChange.crmContactAuditLogId = ?";
 
 	public CrmContactAuditLogChangePersistenceImpl() {
 		setModelClass(CrmContactAuditLogChange.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2055,15 +2052,18 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public void cacheResult(CrmContactAuditLogChange crmContactAuditLogChange) {
-		entityCache.putResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactAuditLogChangeImpl.class,
 			crmContactAuditLogChange.getPrimaryKey(), crmContactAuditLogChange);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
 			new Object[] {
 				crmContactAuditLogChange.getUuid(),
 				crmContactAuditLogChange.getGroupId()
-			}, crmContactAuditLogChange);
+			},
+			crmContactAuditLogChange);
 
 		crmContactAuditLogChange.resetOriginalValues();
 	}
@@ -2076,11 +2076,15 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public void cacheResult(
 		List<CrmContactAuditLogChange> crmContactAuditLogChanges) {
-		for (CrmContactAuditLogChange crmContactAuditLogChange : crmContactAuditLogChanges) {
+
+		for (CrmContactAuditLogChange crmContactAuditLogChange :
+				crmContactAuditLogChanges) {
+
 			if (entityCache.getResult(
-						CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-						CrmContactAuditLogChangeImpl.class,
-						crmContactAuditLogChange.getPrimaryKey()) == null) {
+					CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+					CrmContactAuditLogChangeImpl.class,
+					crmContactAuditLogChange.getPrimaryKey()) == null) {
+
 				cacheResult(crmContactAuditLogChange);
 			}
 			else {
@@ -2093,7 +2097,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Clears the cache for all CRM Contact Audit Log Changes.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2109,73 +2113,83 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Clears the cache for the CRM Contact Audit Log Change.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmContactAuditLogChange crmContactAuditLogChange) {
-		entityCache.removeResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactAuditLogChangeImpl.class,
 			crmContactAuditLogChange.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		clearUniqueFindersCache((CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange,
-			true);
+		clearUniqueFindersCache(
+			(CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange, true);
 	}
 
 	@Override
 	public void clearCache(
 		List<CrmContactAuditLogChange> crmContactAuditLogChanges) {
+
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
-		for (CrmContactAuditLogChange crmContactAuditLogChange : crmContactAuditLogChanges) {
-			entityCache.removeResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+		for (CrmContactAuditLogChange crmContactAuditLogChange :
+				crmContactAuditLogChanges) {
+
+			entityCache.removeResult(
+				CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 				CrmContactAuditLogChangeImpl.class,
 				crmContactAuditLogChange.getPrimaryKey());
 
-			clearUniqueFindersCache((CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange,
+			clearUniqueFindersCache(
+				(CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange,
 				true);
 		}
 	}
 
 	protected void cacheUniqueFindersCache(
 		CrmContactAuditLogChangeModelImpl crmContactAuditLogChangeModelImpl) {
-		Object[] args = new Object[] {
-				crmContactAuditLogChangeModelImpl.getUuid(),
-				crmContactAuditLogChangeModelImpl.getGroupId()
-			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmContactAuditLogChangeModelImpl, false);
+		Object[] args = new Object[] {
+			crmContactAuditLogChangeModelImpl.getUuid(),
+			crmContactAuditLogChangeModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmContactAuditLogChangeModelImpl,
+			false);
 	}
 
 	protected void clearUniqueFindersCache(
 		CrmContactAuditLogChangeModelImpl crmContactAuditLogChangeModelImpl,
 		boolean clearCurrent) {
+
 		if (clearCurrent) {
 			Object[] args = new Object[] {
-					crmContactAuditLogChangeModelImpl.getUuid(),
-					crmContactAuditLogChangeModelImpl.getGroupId()
-				};
+				crmContactAuditLogChangeModelImpl.getUuid(),
+				crmContactAuditLogChangeModelImpl.getGroupId()
+			};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmContactAuditLogChangeModelImpl.getOriginalUuid(),
-					crmContactAuditLogChangeModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmContactAuditLogChangeModelImpl.getOriginalUuid(),
+				crmContactAuditLogChangeModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -2187,7 +2201,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange create(long crmContactAuditLogChangeId) {
-		CrmContactAuditLogChange crmContactAuditLogChange = new CrmContactAuditLogChangeImpl();
+		CrmContactAuditLogChange crmContactAuditLogChange =
+			new CrmContactAuditLogChangeImpl();
 
 		crmContactAuditLogChange.setNew(true);
 		crmContactAuditLogChange.setPrimaryKey(crmContactAuditLogChangeId);
@@ -2196,7 +2211,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 		crmContactAuditLogChange.setUuid(uuid);
 
-		crmContactAuditLogChange.setCompanyId(companyProvider.getCompanyId());
+		crmContactAuditLogChange.setCompanyId(
+			CompanyThreadLocal.getCompanyId());
 
 		return crmContactAuditLogChange;
 	}
@@ -2211,6 +2227,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange remove(long crmContactAuditLogChangeId)
 		throws NoSuchCrmContactAuditLogChangeException {
+
 		return remove((Serializable)crmContactAuditLogChangeId);
 	}
 
@@ -2224,21 +2241,23 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange remove(Serializable primaryKey)
 		throws NoSuchCrmContactAuditLogChangeException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmContactAuditLogChange crmContactAuditLogChange = (CrmContactAuditLogChange)session.get(CrmContactAuditLogChangeImpl.class,
-					primaryKey);
+			CrmContactAuditLogChange crmContactAuditLogChange =
+				(CrmContactAuditLogChange)session.get(
+					CrmContactAuditLogChangeImpl.class, primaryKey);
 
 			if (crmContactAuditLogChange == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmContactAuditLogChangeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmContactAuditLogChangeException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmContactAuditLogChange);
@@ -2257,13 +2276,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	protected CrmContactAuditLogChange removeImpl(
 		CrmContactAuditLogChange crmContactAuditLogChange) {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
 			if (!session.contains(crmContactAuditLogChange)) {
-				crmContactAuditLogChange = (CrmContactAuditLogChange)session.get(CrmContactAuditLogChangeImpl.class,
+				crmContactAuditLogChange =
+					(CrmContactAuditLogChange)session.get(
+						CrmContactAuditLogChangeImpl.class,
 						crmContactAuditLogChange.getPrimaryKeyObj());
 			}
 
@@ -2288,25 +2310,30 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange updateImpl(
 		CrmContactAuditLogChange crmContactAuditLogChange) {
+
 		boolean isNew = crmContactAuditLogChange.isNew();
 
-		if (!(crmContactAuditLogChange instanceof CrmContactAuditLogChangeModelImpl)) {
+		if (!(crmContactAuditLogChange instanceof
+				CrmContactAuditLogChangeModelImpl)) {
+
 			InvocationHandler invocationHandler = null;
 
 			if (ProxyUtil.isProxyClass(crmContactAuditLogChange.getClass())) {
-				invocationHandler = ProxyUtil.getInvocationHandler(crmContactAuditLogChange);
+				invocationHandler = ProxyUtil.getInvocationHandler(
+					crmContactAuditLogChange);
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmContactAuditLogChange proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmContactAuditLogChange implementation " +
-				crmContactAuditLogChange.getClass());
+					crmContactAuditLogChange.getClass());
 		}
 
-		CrmContactAuditLogChangeModelImpl crmContactAuditLogChangeModelImpl = (CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange;
+		CrmContactAuditLogChangeModelImpl crmContactAuditLogChangeModelImpl =
+			(CrmContactAuditLogChangeModelImpl)crmContactAuditLogChange;
 
 		if (Validator.isNull(crmContactAuditLogChange.getUuid())) {
 			String uuid = PortalUUIDUtil.generate();
@@ -2314,7 +2341,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			crmContactAuditLogChange.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -2323,8 +2351,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				crmContactAuditLogChange.setCreateDate(now);
 			}
 			else {
-				crmContactAuditLogChange.setCreateDate(serviceContext.getCreateDate(
-						now));
+				crmContactAuditLogChange.setCreateDate(
+					serviceContext.getCreateDate(now));
 			}
 		}
 
@@ -2333,8 +2361,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				crmContactAuditLogChange.setModifiedDate(now);
 			}
 			else {
-				crmContactAuditLogChange.setModifiedDate(serviceContext.getModifiedDate(
-						now));
+				crmContactAuditLogChange.setModifiedDate(
+					serviceContext.getModifiedDate(now));
 			}
 		}
 
@@ -2349,7 +2377,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				crmContactAuditLogChange.setNew(false);
 			}
 			else {
-				crmContactAuditLogChange = (CrmContactAuditLogChange)session.merge(crmContactAuditLogChange);
+				crmContactAuditLogChange =
+					(CrmContactAuditLogChange)session.merge(
+						crmContactAuditLogChange);
 			}
 		}
 		catch (Exception e) {
@@ -2364,101 +2394,111 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		if (!CrmContactAuditLogChangeModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
+		else if (isNew) {
 			Object[] args = new Object[] {
+				crmContactAuditLogChangeModelImpl.getUuid()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
+
+			args = new Object[] {
+				crmContactAuditLogChangeModelImpl.getUuid(),
+				crmContactAuditLogChangeModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {
+				crmContactAuditLogChangeModelImpl.getCrmContactAuditLogId()
+			};
+
+			finderCache.removeResult(
+				_finderPathCountByCrmContactAuditLogId, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByCrmContactAuditLogId, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmContactAuditLogChangeModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {
 					crmContactAuditLogChangeModelImpl.getUuid()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
 
-			args = new Object[] {
+			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmContactAuditLogChangeModelImpl.getOriginalUuid(),
+					crmContactAuditLogChangeModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmContactAuditLogChangeModelImpl.getUuid(),
 					crmContactAuditLogChangeModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+			}
 
-			args = new Object[] {
+			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByCrmContactAuditLogId.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					crmContactAuditLogChangeModelImpl.
+						getOriginalCrmContactAuditLogId()
+				};
+
+				finderCache.removeResult(
+					_finderPathCountByCrmContactAuditLogId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCrmContactAuditLogId,
+					args);
+
+				args = new Object[] {
 					crmContactAuditLogChangeModelImpl.getCrmContactAuditLogId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTAUDITLOGID,
-				args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmContactAuditLogChangeModelImpl.getOriginalUuid()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmContactAuditLogChangeModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-			}
-
-			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmContactAuditLogChangeModelImpl.getOriginalUuid(),
-						crmContactAuditLogChangeModelImpl.getOriginalCompanyId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-
-				args = new Object[] {
-						crmContactAuditLogChangeModelImpl.getUuid(),
-						crmContactAuditLogChangeModelImpl.getCompanyId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-			}
-
-			if ((crmContactAuditLogChangeModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmContactAuditLogChangeModelImpl.getOriginalCrmContactAuditLogId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTAUDITLOGID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID,
-					args);
-
-				args = new Object[] {
-						crmContactAuditLogChangeModelImpl.getCrmContactAuditLogId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_CRMCONTACTAUDITLOGID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CRMCONTACTAUDITLOGID,
+				finderCache.removeResult(
+					_finderPathCountByCrmContactAuditLogId, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByCrmContactAuditLogId,
 					args);
 			}
 		}
 
-		entityCache.putResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 			CrmContactAuditLogChangeImpl.class,
 			crmContactAuditLogChange.getPrimaryKey(), crmContactAuditLogChange,
 			false);
@@ -2472,7 +2512,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the CRM Contact Audit Log Change with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM Contact Audit Log Change with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM Contact Audit Log Change
 	 * @return the CRM Contact Audit Log Change
@@ -2481,22 +2521,24 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmContactAuditLogChangeException {
-		CrmContactAuditLogChange crmContactAuditLogChange = fetchByPrimaryKey(primaryKey);
+
+		CrmContactAuditLogChange crmContactAuditLogChange = fetchByPrimaryKey(
+			primaryKey);
 
 		if (crmContactAuditLogChange == null) {
 			if (_log.isDebugEnabled()) {
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmContactAuditLogChangeException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmContactAuditLogChangeException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmContactAuditLogChange;
 	}
 
 	/**
-	 * Returns the CRM Contact Audit Log Change with the primary key or throws a {@link NoSuchCrmContactAuditLogChangeException} if it could not be found.
+	 * Returns the CRM Contact Audit Log Change with the primary key or throws a <code>NoSuchCrmContactAuditLogChangeException</code> if it could not be found.
 	 *
 	 * @param crmContactAuditLogChangeId the primary key of the CRM Contact Audit Log Change
 	 * @return the CRM Contact Audit Log Change
@@ -2504,8 +2546,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange findByPrimaryKey(
-		long crmContactAuditLogChangeId)
+			long crmContactAuditLogChangeId)
 		throws NoSuchCrmContactAuditLogChangeException {
+
 		return findByPrimaryKey((Serializable)crmContactAuditLogChangeId);
 	}
 
@@ -2517,14 +2560,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public CrmContactAuditLogChange fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-				CrmContactAuditLogChangeImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
 		}
 
-		CrmContactAuditLogChange crmContactAuditLogChange = (CrmContactAuditLogChange)serializable;
+		CrmContactAuditLogChange crmContactAuditLogChange =
+			(CrmContactAuditLogChange)serializable;
 
 		if (crmContactAuditLogChange == null) {
 			Session session = null;
@@ -2532,20 +2577,23 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			try {
 				session = openSession();
 
-				crmContactAuditLogChange = (CrmContactAuditLogChange)session.get(CrmContactAuditLogChangeImpl.class,
-						primaryKey);
+				crmContactAuditLogChange =
+					(CrmContactAuditLogChange)session.get(
+						CrmContactAuditLogChangeImpl.class, primaryKey);
 
 				if (crmContactAuditLogChange != null) {
 					cacheResult(crmContactAuditLogChange);
 				}
 				else {
-					entityCache.putResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(
+						CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 						CrmContactAuditLogChangeImpl.class, primaryKey,
 						nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(
+					CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 					CrmContactAuditLogChangeImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2567,24 +2615,28 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	@Override
 	public CrmContactAuditLogChange fetchByPrimaryKey(
 		long crmContactAuditLogChangeId) {
+
 		return fetchByPrimaryKey((Serializable)crmContactAuditLogChangeId);
 	}
 
 	@Override
 	public Map<Serializable, CrmContactAuditLogChange> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
 
-		Map<Serializable, CrmContactAuditLogChange> map = new HashMap<Serializable, CrmContactAuditLogChange>();
+		Map<Serializable, CrmContactAuditLogChange> map =
+			new HashMap<Serializable, CrmContactAuditLogChange>();
 
 		if (primaryKeys.size() == 1) {
 			Iterator<Serializable> iterator = primaryKeys.iterator();
 
 			Serializable primaryKey = iterator.next();
 
-			CrmContactAuditLogChange crmContactAuditLogChange = fetchByPrimaryKey(primaryKey);
+			CrmContactAuditLogChange crmContactAuditLogChange =
+				fetchByPrimaryKey(primaryKey);
 
 			if (crmContactAuditLogChange != null) {
 				map.put(primaryKey, crmContactAuditLogChange);
@@ -2596,8 +2648,9 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
-					CrmContactAuditLogChangeImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+				CrmContactAuditLogChangeImpl.class, primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2617,8 +2670,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE_PKS_IN);
 
@@ -2641,17 +2694,22 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 
 			Query q = session.createQuery(sql);
 
-			for (CrmContactAuditLogChange crmContactAuditLogChange : (List<CrmContactAuditLogChange>)q.list()) {
-				map.put(crmContactAuditLogChange.getPrimaryKeyObj(),
+			for (CrmContactAuditLogChange crmContactAuditLogChange :
+					(List<CrmContactAuditLogChange>)q.list()) {
+
+				map.put(
+					crmContactAuditLogChange.getPrimaryKeyObj(),
 					crmContactAuditLogChange);
 
 				cacheResult(crmContactAuditLogChange);
 
-				uncachedPrimaryKeys.remove(crmContactAuditLogChange.getPrimaryKeyObj());
+				uncachedPrimaryKeys.remove(
+					crmContactAuditLogChange.getPrimaryKeyObj());
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.putResult(
+					CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
 					CrmContactAuditLogChangeImpl.class, primaryKey, nullModel);
 			}
 		}
@@ -2679,7 +2737,7 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Returns a range of all the CRM Contact Audit Log Changes.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
@@ -2695,71 +2753,75 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM Contact Audit Log Changes
 	 */
+	@Deprecated
 	@Override
-	public List<CrmContactAuditLogChange> findAll(int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmContactAuditLogChange> findAll(
+		int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Contact Audit Log Changes.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmContactAuditLogChangeModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmContactAuditLogChangeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Contact Audit Log Changes
 	 * @param end the upper bound of the range of CRM Contact Audit Log Changes (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM Contact Audit Log Changes
 	 */
 	@Override
-	public List<CrmContactAuditLogChange> findAll(int start, int end,
-		OrderByComparator<CrmContactAuditLogChange> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmContactAuditLogChange> findAll(
+		int start, int end,
+		OrderByComparator<CrmContactAuditLogChange> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmContactAuditLogChange> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmContactAuditLogChange>)finderCache.getResult(finderPath,
-					finderArgs, this);
-		}
+		List<CrmContactAuditLogChange> list =
+			(List<CrmContactAuditLogChange>)finderCache.getResult(
+				finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMCONTACTAUDITLOGCHANGE);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2767,7 +2829,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				sql = _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE;
 
 				if (pagination) {
-					sql = sql.concat(CrmContactAuditLogChangeModelImpl.ORDER_BY_JPQL);
+					sql = sql.concat(
+						CrmContactAuditLogChangeModelImpl.ORDER_BY_JPQL);
 				}
 			}
 
@@ -2779,16 +2842,16 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end, false);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmContactAuditLogChange>)QueryUtil.list(q,
-							getDialect(), start, end);
+					list = (List<CrmContactAuditLogChange>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2826,8 +2889,8 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2835,16 +2898,17 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(_SQL_COUNT_CRMCONTACTAUDITLOGCHANGE);
+				Query q = session.createQuery(
+					_SQL_COUNT_CRMCONTACTAUDITLOGCHANGE);
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2870,6 +2934,115 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 	 * Initializes the CRM Contact Audit Log Change persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK |
+			CrmContactAuditLogChangeModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmContactAuditLogChangeModelImpl.UUID_COLUMN_BITMASK |
+			CrmContactAuditLogChangeModelImpl.COMPANYID_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByCrmContactAuditLogId = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByCrmContactAuditLogId",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByCrmContactAuditLogId = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED,
+			CrmContactAuditLogChangeImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByCrmContactAuditLogId", new String[] {Long.class.getName()},
+			CrmContactAuditLogChangeModelImpl.
+				CRMCONTACTAUDITLOGID_COLUMN_BITMASK);
+
+		_finderPathCountByCrmContactAuditLogId = new FinderPath(
+			CrmContactAuditLogChangeModelImpl.ENTITY_CACHE_ENABLED,
+			CrmContactAuditLogChangeModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByCrmContactAuditLogId", new String[] {Long.class.getName()});
 	}
 
 	public void destroy() {
@@ -2879,23 +3052,41 @@ public class CrmContactAuditLogChangePersistenceImpl extends BasePersistenceImpl
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE = "SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange";
-	private static final String _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE_PKS_IN =
-		"SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE crmContactAuditLogChangeId IN (";
-	private static final String _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE = "SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE ";
-	private static final String _SQL_COUNT_CRMCONTACTAUDITLOGCHANGE = "SELECT COUNT(crmContactAuditLogChange) FROM CrmContactAuditLogChange crmContactAuditLogChange";
-	private static final String _SQL_COUNT_CRMCONTACTAUDITLOGCHANGE_WHERE = "SELECT COUNT(crmContactAuditLogChange) FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE ";
-	private static final String _ORDER_BY_ENTITY_ALIAS = "crmContactAuditLogChange.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmContactAuditLogChange exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmContactAuditLogChange exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmContactAuditLogChangePersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE =
+		"SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange";
+
+	private static final String
+		_SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE_PKS_IN =
+			"SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE crmContactAuditLogChangeId IN (";
+
+	private static final String _SQL_SELECT_CRMCONTACTAUDITLOGCHANGE_WHERE =
+		"SELECT crmContactAuditLogChange FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE ";
+
+	private static final String _SQL_COUNT_CRMCONTACTAUDITLOGCHANGE =
+		"SELECT COUNT(crmContactAuditLogChange) FROM CrmContactAuditLogChange crmContactAuditLogChange";
+
+	private static final String _SQL_COUNT_CRMCONTACTAUDITLOGCHANGE_WHERE =
+		"SELECT COUNT(crmContactAuditLogChange) FROM CrmContactAuditLogChange crmContactAuditLogChange WHERE ";
+
+	private static final String _ORDER_BY_ENTITY_ALIAS =
+		"crmContactAuditLogChange.";
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmContactAuditLogChange exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmContactAuditLogChange exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmContactAuditLogChangePersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

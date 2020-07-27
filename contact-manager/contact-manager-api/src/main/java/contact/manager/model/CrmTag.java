@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmTagModel
- * @see contact.manager.model.impl.CrmTagImpl
- * @see contact.manager.model.impl.CrmTagModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmTagImpl")
 @ProviderType
 public interface CrmTag extends CrmTagModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmTagImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmTagImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmTag, Long> CRM_TAG_ID_ACCESSOR = new Accessor<CrmTag, Long>() {
+	public static final Accessor<CrmTag, Long> CRM_TAG_ID_ACCESSOR =
+		new Accessor<CrmTag, Long>() {
+
 			@Override
 			public Long get(CrmTag crmTag) {
 				return crmTag.getCrmTagId();
@@ -52,5 +53,7 @@ public interface CrmTag extends CrmTagModel, PersistedModel {
 			public Class<CrmTag> getTypeClass() {
 				return CrmTag.class;
 			}
+
 		};
+
 }

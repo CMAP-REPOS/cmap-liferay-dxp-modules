@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -41,6 +39,7 @@ import java.util.Objects;
  */
 @ProviderType
 public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
+
 	public CrmMuniWrapper(CrmMuni crmMuni) {
 		_crmMuni = crmMuni;
 	}
@@ -142,35 +141,35 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	@Override
-	public int compareTo(CrmMuni crmMuni) {
+	public int compareTo(contact.manager.model.CrmMuni crmMuni) {
 		return _crmMuni.compareTo(crmMuni);
 	}
 
 	/**
-	* Returns the company ID of this CRM Muni.
-	*
-	* @return the company ID of this CRM Muni
-	*/
+	 * Returns the company ID of this CRM Muni.
+	 *
+	 * @return the company ID of this CRM Muni
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmMuni.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM Muni.
-	*
-	* @return the create date of this CRM Muni
-	*/
+	 * Returns the create date of this CRM Muni.
+	 *
+	 * @return the create date of this CRM Muni
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmMuni.getCreateDate();
 	}
 
 	/**
-	* Returns the crm muni ID of this CRM Muni.
-	*
-	* @return the crm muni ID of this CRM Muni
-	*/
+	 * Returns the crm muni ID of this CRM Muni.
+	 *
+	 * @return the crm muni ID of this CRM Muni
+	 */
 	@Override
 	public long getCrmMuniId() {
 		return _crmMuni.getCrmMuniId();
@@ -182,40 +181,40 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Returns the group ID of this CRM Muni.
-	*
-	* @return the group ID of this CRM Muni
-	*/
+	 * Returns the group ID of this CRM Muni.
+	 *
+	 * @return the group ID of this CRM Muni
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmMuni.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM Muni.
-	*
-	* @return the modified date of this CRM Muni
-	*/
+	 * Returns the modified date of this CRM Muni.
+	 *
+	 * @return the modified date of this CRM Muni
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmMuni.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this CRM Muni.
-	*
-	* @return the name of this CRM Muni
-	*/
+	 * Returns the name of this CRM Muni.
+	 *
+	 * @return the name of this CRM Muni
+	 */
 	@Override
 	public String getName() {
 		return _crmMuni.getName();
 	}
 
 	/**
-	* Returns the primary key of this CRM Muni.
-	*
-	* @return the primary key of this CRM Muni
-	*/
+	 * Returns the primary key of this CRM Muni.
+	 *
+	 * @return the primary key of this CRM Muni
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmMuni.getPrimaryKey();
@@ -227,50 +226,50 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Returns the user ID of this CRM Muni.
-	*
-	* @return the user ID of this CRM Muni
-	*/
+	 * Returns the user ID of this CRM Muni.
+	 *
+	 * @return the user ID of this CRM Muni
+	 */
 	@Override
 	public long getUserId() {
 		return _crmMuni.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM Muni.
-	*
-	* @return the user name of this CRM Muni
-	*/
+	 * Returns the user name of this CRM Muni.
+	 *
+	 * @return the user name of this CRM Muni
+	 */
 	@Override
 	public String getUserName() {
 		return _crmMuni.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM Muni.
-	*
-	* @return the user uuid of this CRM Muni
-	*/
+	 * Returns the user uuid of this CRM Muni.
+	 *
+	 * @return the user uuid of this CRM Muni
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmMuni.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM Muni.
-	*
-	* @return the uuid of this CRM Muni
-	*/
+	 * Returns the uuid of this CRM Muni.
+	 *
+	 * @return the uuid of this CRM Muni
+	 */
 	@Override
 	public String getUuid() {
 		return _crmMuni.getUuid();
 	}
 
 	/**
-	* Returns the zip code of this CRM Muni.
-	*
-	* @return the zip code of this CRM Muni
-	*/
+	 * Returns the zip code of this CRM Muni.
+	 *
+	 * @return the zip code of this CRM Muni
+	 */
 	@Override
 	public String getZipCode() {
 		return _crmMuni.getZipCode();
@@ -307,30 +306,30 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Sets the company ID of this CRM Muni.
-	*
-	* @param companyId the company ID of this CRM Muni
-	*/
+	 * Sets the company ID of this CRM Muni.
+	 *
+	 * @param companyId the company ID of this CRM Muni
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmMuni.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM Muni.
-	*
-	* @param createDate the create date of this CRM Muni
-	*/
+	 * Sets the create date of this CRM Muni.
+	 *
+	 * @param createDate the create date of this CRM Muni
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmMuni.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm muni ID of this CRM Muni.
-	*
-	* @param crmMuniId the crm muni ID of this CRM Muni
-	*/
+	 * Sets the crm muni ID of this CRM Muni.
+	 *
+	 * @param crmMuniId the crm muni ID of this CRM Muni
+	 */
 	@Override
 	public void setCrmMuniId(long crmMuniId) {
 		_crmMuni.setCrmMuniId(crmMuniId);
@@ -339,6 +338,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmMuni.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -353,30 +353,30 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Sets the group ID of this CRM Muni.
-	*
-	* @param groupId the group ID of this CRM Muni
-	*/
+	 * Sets the group ID of this CRM Muni.
+	 *
+	 * @param groupId the group ID of this CRM Muni
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmMuni.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM Muni.
-	*
-	* @param modifiedDate the modified date of this CRM Muni
-	*/
+	 * Sets the modified date of this CRM Muni.
+	 *
+	 * @param modifiedDate the modified date of this CRM Muni
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmMuni.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this CRM Muni.
-	*
-	* @param name the name of this CRM Muni
-	*/
+	 * Sets the name of this CRM Muni.
+	 *
+	 * @param name the name of this CRM Muni
+	 */
 	@Override
 	public void setName(String name) {
 		_crmMuni.setName(name);
@@ -388,10 +388,10 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Sets the primary key of this CRM Muni.
-	*
-	* @param primaryKey the primary key of this CRM Muni
-	*/
+	 * Sets the primary key of this CRM Muni.
+	 *
+	 * @param primaryKey the primary key of this CRM Muni
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmMuni.setPrimaryKey(primaryKey);
@@ -403,62 +403,64 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	/**
-	* Sets the user ID of this CRM Muni.
-	*
-	* @param userId the user ID of this CRM Muni
-	*/
+	 * Sets the user ID of this CRM Muni.
+	 *
+	 * @param userId the user ID of this CRM Muni
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmMuni.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM Muni.
-	*
-	* @param userName the user name of this CRM Muni
-	*/
+	 * Sets the user name of this CRM Muni.
+	 *
+	 * @param userName the user name of this CRM Muni
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmMuni.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM Muni.
-	*
-	* @param userUuid the user uuid of this CRM Muni
-	*/
+	 * Sets the user uuid of this CRM Muni.
+	 *
+	 * @param userUuid the user uuid of this CRM Muni
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmMuni.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM Muni.
-	*
-	* @param uuid the uuid of this CRM Muni
-	*/
+	 * Sets the uuid of this CRM Muni.
+	 *
+	 * @param uuid the uuid of this CRM Muni
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmMuni.setUuid(uuid);
 	}
 
 	/**
-	* Sets the zip code of this CRM Muni.
-	*
-	* @param zipCode the zip code of this CRM Muni
-	*/
+	 * Sets the zip code of this CRM Muni.
+	 *
+	 * @param zipCode the zip code of this CRM Muni
+	 */
 	@Override
 	public void setZipCode(String zipCode) {
 		_crmMuni.setZipCode(zipCode);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmMuni> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmMuni> toCacheModel() {
+
 		return _crmMuni.toCacheModel();
 	}
 
 	@Override
-	public CrmMuni toEscapedModel() {
+	public contact.manager.model.CrmMuni toEscapedModel() {
 		return new CrmMuniWrapper(_crmMuni.toEscapedModel());
 	}
 
@@ -468,7 +470,7 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	@Override
-	public CrmMuni toUnescapedModel() {
+	public contact.manager.model.CrmMuni toUnescapedModel() {
 		return new CrmMuniWrapper(_crmMuni.toUnescapedModel());
 	}
 
@@ -522,4 +524,5 @@ public class CrmMuniWrapper implements CrmMuni, ModelWrapper<CrmMuni> {
 	}
 
 	private final CrmMuni _crmMuni;
+
 }

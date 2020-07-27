@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -39,11 +38,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmCCAException;
-
 import contact.manager.model.CrmCCA;
 import contact.manager.model.impl.CrmCCAImpl;
 import contact.manager.model.impl.CrmCCAModelImpl;
-
 import contact.manager.service.persistence.CrmCCAPersistence;
 
 import java.io.Serializable;
@@ -69,51 +66,32 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmCCAPersistence
- * @see contact.manager.service.persistence.CrmCCAUtil
  * @generated
  */
 @ProviderType
-public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
-	implements CrmCCAPersistence {
+public class CrmCCAPersistenceImpl
+	extends BasePersistenceImpl<CrmCCA> implements CrmCCAPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmCCAUtil} to access the CRM CCA persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmCCAUtil</code> to access the CRM CCA persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmCCAImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
-			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmCCAImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM CCAs where uuid = &#63;.
@@ -130,7 +108,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns a range of all the CRM CCAs where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -147,66 +125,71 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns an ordered range of all the CRM CCAs where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
+	@Deprecated
 	@Override
-	public List<CrmCCA> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmCCA> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM CCAs where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
 	@Override
-	public List<CrmCCA> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmCCA> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmCCA> list = null;
+		List<CrmCCA> list = (List<CrmCCA>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmCCA>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmCCA crmCCA : list) {
+				if (!uuid.equals(crmCCA.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmCCA crmCCA : list) {
-					if (!Objects.equals(uuid, crmCCA.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -215,8 +198,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -226,10 +209,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -239,11 +219,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmCCAModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -263,16 +242,16 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				}
 
 				if (!pagination) {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -301,9 +280,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByUuid_First(String uuid,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByUuid_First(
+			String uuid, OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByUuid_First(uuid, orderByComparator);
 
 		if (crmCCA != null) {
@@ -330,8 +310,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByUuid_First(String uuid,
-		OrderByComparator<CrmCCA> orderByComparator) {
+	public CrmCCA fetchByUuid_First(
+		String uuid, OrderByComparator<CrmCCA> orderByComparator) {
+
 		List<CrmCCA> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -350,9 +331,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByUuid_Last(String uuid,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByUuid_Last(
+			String uuid, OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (crmCCA != null) {
@@ -379,15 +361,17 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByUuid_Last(String uuid,
-		OrderByComparator<CrmCCA> orderByComparator) {
+	public CrmCCA fetchByUuid_Last(
+		String uuid, OrderByComparator<CrmCCA> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmCCA> list = findByUuid(uuid, count - 1, count, orderByComparator);
+		List<CrmCCA> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -406,9 +390,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	 */
 	@Override
-	public CrmCCA[] findByUuid_PrevAndNext(long crmCCAId, String uuid,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA[] findByUuid_PrevAndNext(
+			long crmCCAId, String uuid,
+			OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmCCA crmCCA = findByPrimaryKey(crmCCAId);
 
 		Session session = null;
@@ -418,13 +406,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			CrmCCA[] array = new CrmCCAImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmCCA, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmCCA, uuid, orderByComparator, true);
 
 			array[1] = crmCCA;
 
-			array[2] = getByUuid_PrevAndNext(session, crmCCA, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmCCA, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -436,14 +424,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 	}
 
-	protected CrmCCA getByUuid_PrevAndNext(Session session, CrmCCA crmCCA,
-		String uuid, OrderByComparator<CrmCCA> orderByComparator,
-		boolean previous) {
+	protected CrmCCA getByUuid_PrevAndNext(
+		Session session, CrmCCA crmCCA, String uuid,
+		OrderByComparator<CrmCCA> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -454,10 +443,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -467,7 +453,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -539,10 +526,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmCCA);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmCCA)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -563,8 +550,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmCCA crmCCA : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmCCA crmCCA :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmCCA);
 		}
 	}
@@ -577,9 +565,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -590,10 +580,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -634,22 +621,16 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmCCA.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmCCA.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmCCA.uuid IS NULL OR crmCCA.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
-			CrmCCAModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmCCA.uuid IS NULL OR crmCCA.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM CCA where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmCCAException} if it could not be found.
+	 * Returns the CRM CCA where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmCCAException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -659,6 +640,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	@Override
 	public CrmCCA findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByUUID_G(uuid, groupId);
 
 		if (crmCCA == null) {
@@ -685,15 +667,20 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	}
 
 	/**
-	 * Returns the CRM CCA where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM CCA where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmCCA fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmCCA fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -701,26 +688,24 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmCCA fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmCCA) {
 			CrmCCA crmCCA = (CrmCCA)result;
 
 			if (!Objects.equals(uuid, crmCCA.getUuid()) ||
-					(groupId != crmCCA.getGroupId())) {
+				(groupId != crmCCA.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -732,10 +717,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -766,8 +748,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				List<CrmCCA> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					CrmCCA crmCCA = list.get(0);
@@ -778,7 +760,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -805,6 +787,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	@Override
 	public CrmCCA removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = findByUUID_G(uuid, groupId);
 
 		return remove(crmCCA);
@@ -819,9 +802,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -832,10 +817,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -880,31 +862,18 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmCCA.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmCCA.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmCCA.uuid IS NULL OR crmCCA.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmCCA.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
-			CrmCCAModelImpl.COMPANYID_COLUMN_BITMASK |
-			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmCCA.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmCCA.uuid IS NULL OR crmCCA.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmCCA.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM CCAs where uuid = &#63; and companyId = &#63;.
@@ -915,15 +884,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public List<CrmCCA> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM CCAs where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -933,8 +902,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the range of matching CRM CCAs
 	 */
 	@Override
-	public List<CrmCCA> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<CrmCCA> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -942,27 +912,32 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns an ordered range of all the CRM CCAs where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
+	@Deprecated
 	@Override
-	public List<CrmCCA> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmCCA> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmCCA> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM CCAs where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -970,46 +945,44 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
 	@Override
-	public List<CrmCCA> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmCCA> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmCCA> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmCCA> list = null;
+		List<CrmCCA> list = (List<CrmCCA>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmCCA>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmCCA crmCCA : list) {
+				if (!uuid.equals(crmCCA.getUuid()) ||
+					(companyId != crmCCA.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmCCA crmCCA : list) {
-					if (!Objects.equals(uuid, crmCCA.getUuid()) ||
-							(companyId != crmCCA.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1018,8 +991,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1029,10 +1002,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1044,11 +1014,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmCCAModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1070,16 +1039,16 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1109,9 +1078,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByUuid_C_First(uuid, companyId, orderByComparator);
 
 		if (crmCCA != null) {
@@ -1142,10 +1113,12 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByUuid_C_First(String uuid, long companyId,
+	public CrmCCA fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmCCA> orderByComparator) {
-		List<CrmCCA> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<CrmCCA> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1164,9 +1137,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 
 		if (crmCCA != null) {
@@ -1197,16 +1172,18 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByUuid_C_Last(String uuid, long companyId,
+	public CrmCCA fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmCCA> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmCCA> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<CrmCCA> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1226,9 +1203,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	 */
 	@Override
-	public CrmCCA[] findByUuid_C_PrevAndNext(long crmCCAId, String uuid,
-		long companyId, OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA[] findByUuid_C_PrevAndNext(
+			long crmCCAId, String uuid, long companyId,
+			OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmCCA crmCCA = findByPrimaryKey(crmCCAId);
 
 		Session session = null;
@@ -1238,13 +1219,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			CrmCCA[] array = new CrmCCAImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, crmCCA, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmCCA, uuid, companyId, orderByComparator, true);
 
 			array[1] = crmCCA;
 
-			array[2] = getByUuid_C_PrevAndNext(session, crmCCA, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmCCA, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1256,14 +1237,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 	}
 
-	protected CrmCCA getByUuid_C_PrevAndNext(Session session, CrmCCA crmCCA,
-		String uuid, long companyId,
+	protected CrmCCA getByUuid_C_PrevAndNext(
+		Session session, CrmCCA crmCCA, String uuid, long companyId,
 		OrderByComparator<CrmCCA> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1274,10 +1256,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1289,7 +1268,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1363,10 +1343,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmCCA);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmCCA)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1388,8 +1368,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmCCA crmCCA : findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmCCA crmCCA :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmCCA);
 		}
 	}
@@ -1403,9 +1386,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1416,10 +1401,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1464,30 +1446,18 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmCCA.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmCCA.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmCCA.uuid IS NULL OR crmCCA.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmCCA.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
-		new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
-			new String[] { String.class.getName() },
-			CrmCCAModelImpl.ZIPCODE_COLUMN_BITMASK |
-			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
-			new String[] { String.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmCCA.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmCCA.uuid IS NULL OR crmCCA.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmCCA.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByZipCode;
+	private FinderPath _finderPathWithoutPaginationFindByZipCode;
+	private FinderPath _finderPathCountByZipCode;
 
 	/**
 	 * Returns all the CRM CCAs where zipCode = &#63;.
@@ -1497,14 +1467,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public List<CrmCCA> findByZipCode(String zipCode) {
-		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByZipCode(
+			zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM CCAs where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
@@ -1521,66 +1492,71 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns an ordered range of all the CRM CCAs where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByZipCode(String, int, int, OrderByComparator)}
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
+	@Deprecated
 	@Override
-	public List<CrmCCA> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator) {
-		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	public List<CrmCCA> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator, boolean useFinderCache) {
+
+		return findByZipCode(zipCode, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM CCAs where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM CCAs
 	 */
 	@Override
-	public List<CrmCCA> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmCCA> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmCCA> orderByComparator) {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode };
+			finderPath = _finderPathWithoutPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode, start, end, orderByComparator};
 		}
 
-		List<CrmCCA> list = null;
+		List<CrmCCA> list = (List<CrmCCA>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmCCA>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmCCA crmCCA : list) {
+				if (!zipCode.equals(crmCCA.getZipCode())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmCCA crmCCA : list) {
-					if (!Objects.equals(zipCode, crmCCA.getZipCode())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1589,8 +1565,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1600,10 +1576,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1613,11 +1586,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmCCAModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1637,16 +1609,16 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				}
 
 				if (!pagination) {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1675,9 +1647,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByZipCode_First(String zipCode,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByZipCode_First(
+			String zipCode, OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByZipCode_First(zipCode, orderByComparator);
 
 		if (crmCCA != null) {
@@ -1704,8 +1677,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the first matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByZipCode_First(String zipCode,
-		OrderByComparator<CrmCCA> orderByComparator) {
+	public CrmCCA fetchByZipCode_First(
+		String zipCode, OrderByComparator<CrmCCA> orderByComparator) {
+
 		List<CrmCCA> list = findByZipCode(zipCode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1724,9 +1698,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA findByZipCode_Last(String zipCode,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA findByZipCode_Last(
+			String zipCode, OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByZipCode_Last(zipCode, orderByComparator);
 
 		if (crmCCA != null) {
@@ -1753,16 +1728,17 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @return the last matching CRM CCA, or <code>null</code> if a matching CRM CCA could not be found
 	 */
 	@Override
-	public CrmCCA fetchByZipCode_Last(String zipCode,
-		OrderByComparator<CrmCCA> orderByComparator) {
+	public CrmCCA fetchByZipCode_Last(
+		String zipCode, OrderByComparator<CrmCCA> orderByComparator) {
+
 		int count = countByZipCode(zipCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmCCA> list = findByZipCode(zipCode, count - 1, count,
-				orderByComparator);
+		List<CrmCCA> list = findByZipCode(
+			zipCode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1781,9 +1757,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * @throws NoSuchCrmCCAException if a CRM CCA with the primary key could not be found
 	 */
 	@Override
-	public CrmCCA[] findByZipCode_PrevAndNext(long crmCCAId, String zipCode,
-		OrderByComparator<CrmCCA> orderByComparator)
+	public CrmCCA[] findByZipCode_PrevAndNext(
+			long crmCCAId, String zipCode,
+			OrderByComparator<CrmCCA> orderByComparator)
 		throws NoSuchCrmCCAException {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		CrmCCA crmCCA = findByPrimaryKey(crmCCAId);
 
 		Session session = null;
@@ -1793,13 +1773,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			CrmCCA[] array = new CrmCCAImpl[3];
 
-			array[0] = getByZipCode_PrevAndNext(session, crmCCA, zipCode,
-					orderByComparator, true);
+			array[0] = getByZipCode_PrevAndNext(
+				session, crmCCA, zipCode, orderByComparator, true);
 
 			array[1] = crmCCA;
 
-			array[2] = getByZipCode_PrevAndNext(session, crmCCA, zipCode,
-					orderByComparator, false);
+			array[2] = getByZipCode_PrevAndNext(
+				session, crmCCA, zipCode, orderByComparator, false);
 
 			return array;
 		}
@@ -1811,14 +1791,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 	}
 
-	protected CrmCCA getByZipCode_PrevAndNext(Session session, CrmCCA crmCCA,
-		String zipCode, OrderByComparator<CrmCCA> orderByComparator,
-		boolean previous) {
+	protected CrmCCA getByZipCode_PrevAndNext(
+		Session session, CrmCCA crmCCA, String zipCode,
+		OrderByComparator<CrmCCA> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1829,10 +1810,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 		boolean bindZipCode = false;
 
-		if (zipCode == null) {
-			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-		}
-		else if (zipCode.equals("")) {
+		if (zipCode.isEmpty()) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1842,7 +1820,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1914,10 +1893,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmCCA);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmCCA)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1938,8 +1917,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public void removeByZipCode(String zipCode) {
-		for (CrmCCA crmCCA : findByZipCode(zipCode, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmCCA crmCCA :
+				findByZipCode(
+					zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmCCA);
 		}
 	}
@@ -1952,9 +1933,11 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public int countByZipCode(String zipCode) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+		zipCode = Objects.toString(zipCode, "");
 
-		Object[] finderArgs = new Object[] { zipCode };
+		FinderPath finderPath = _finderPathCountByZipCode;
+
+		Object[] finderArgs = new Object[] {zipCode};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1965,10 +1948,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2009,22 +1989,24 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "crmCCA.zipCode IS NULL";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "crmCCA.zipCode = ?";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(crmCCA.zipCode IS NULL OR crmCCA.zipCode = '')";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 =
+		"crmCCA.zipCode = ?";
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 =
+		"(crmCCA.zipCode IS NULL OR crmCCA.zipCode = '')";
 
 	public CrmCCAPersistenceImpl() {
 		setModelClass(CrmCCA.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2042,11 +2024,13 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public void cacheResult(CrmCCA crmCCA) {
-		entityCache.putResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAImpl.class, crmCCA.getPrimaryKey(), crmCCA);
+		entityCache.putResult(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+			crmCCA.getPrimaryKey(), crmCCA);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { crmCCA.getUuid(), crmCCA.getGroupId() }, crmCCA);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {crmCCA.getUuid(), crmCCA.getGroupId()}, crmCCA);
 
 		crmCCA.resetOriginalValues();
 	}
@@ -2059,8 +2043,10 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	@Override
 	public void cacheResult(List<CrmCCA> crmCCAs) {
 		for (CrmCCA crmCCA : crmCCAs) {
-			if (entityCache.getResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-						CrmCCAImpl.class, crmCCA.getPrimaryKey()) == null) {
+			if (entityCache.getResult(
+					CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+					crmCCA.getPrimaryKey()) == null) {
+
 				cacheResult(crmCCA);
 			}
 			else {
@@ -2073,7 +2059,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Clears the cache for all CRM CCAs.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2089,13 +2075,14 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Clears the cache for the CRM CCA.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmCCA crmCCA) {
-		entityCache.removeResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAImpl.class, crmCCA.getPrimaryKey());
+		entityCache.removeResult(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+			crmCCA.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2109,8 +2096,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CrmCCA crmCCA : crmCCAs) {
-			entityCache.removeResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-				CrmCCAImpl.class, crmCCA.getPrimaryKey());
+			entityCache.removeResult(
+				CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+				crmCCA.getPrimaryKey());
 
 			clearUniqueFindersCache((CrmCCAModelImpl)crmCCA, true);
 		}
@@ -2118,35 +2106,37 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 	protected void cacheUniqueFindersCache(CrmCCAModelImpl crmCCAModelImpl) {
 		Object[] args = new Object[] {
+			crmCCAModelImpl.getUuid(), crmCCAModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmCCAModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CrmCCAModelImpl crmCCAModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				crmCCAModelImpl.getUuid(), crmCCAModelImpl.getGroupId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmCCAModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(CrmCCAModelImpl crmCCAModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					crmCCAModelImpl.getUuid(), crmCCAModelImpl.getGroupId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmCCAModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmCCAModelImpl.getOriginalUuid(),
-					crmCCAModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmCCAModelImpl.getOriginalUuid(),
+				crmCCAModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -2167,7 +2157,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 		crmCCA.setUuid(uuid);
 
-		crmCCA.setCompanyId(companyProvider.getCompanyId());
+		crmCCA.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return crmCCA;
 	}
@@ -2205,8 +2195,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmCCAException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmCCAException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmCCA);
@@ -2230,8 +2220,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			session = openSession();
 
 			if (!session.contains(crmCCA)) {
-				crmCCA = (CrmCCA)session.get(CrmCCAImpl.class,
-						crmCCA.getPrimaryKeyObj());
+				crmCCA = (CrmCCA)session.get(
+					CrmCCAImpl.class, crmCCA.getPrimaryKeyObj());
 			}
 
 			if (crmCCA != null) {
@@ -2264,12 +2254,12 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmCCA proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmCCA implementation " +
-				crmCCA.getClass());
+					crmCCA.getClass());
 		}
 
 		CrmCCAModelImpl crmCCAModelImpl = (CrmCCAModelImpl)crmCCA;
@@ -2280,7 +2270,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			crmCCA.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -2328,90 +2319,96 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		if (!CrmCCAModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { crmCCAModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {crmCCAModelImpl.getUuid()};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				crmCCAModelImpl.getUuid(), crmCCAModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {crmCCAModelImpl.getZipCode()};
+
+			finderCache.removeResult(_finderPathCountByZipCode, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByZipCode, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmCCAModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmCCAModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {crmCCAModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((crmCCAModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmCCAModelImpl.getOriginalUuid(),
+					crmCCAModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmCCAModelImpl.getUuid(), crmCCAModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
-
-			args = new Object[] { crmCCAModelImpl.getZipCode() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmCCAModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmCCAModelImpl.getOriginalUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmCCAModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
 			if ((crmCCAModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByZipCode.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						crmCCAModelImpl.getOriginalUuid(),
-						crmCCAModelImpl.getOriginalCompanyId()
-					};
+					crmCCAModelImpl.getOriginalZipCode()
+				};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 
-				args = new Object[] {
-						crmCCAModelImpl.getUuid(),
-						crmCCAModelImpl.getCompanyId()
-					};
+				args = new Object[] {crmCCAModelImpl.getZipCode()};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-			}
-
-			if ((crmCCAModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmCCAModelImpl.getOriginalZipCode()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
-
-				args = new Object[] { crmCCAModelImpl.getZipCode() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 			}
 		}
 
-		entityCache.putResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-			CrmCCAImpl.class, crmCCA.getPrimaryKey(), crmCCA, false);
+		entityCache.putResult(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+			crmCCA.getPrimaryKey(), crmCCA, false);
 
 		clearUniqueFindersCache(crmCCAModelImpl, false);
 		cacheUniqueFindersCache(crmCCAModelImpl);
@@ -2422,7 +2419,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	}
 
 	/**
-	 * Returns the CRM CCA with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM CCA with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM CCA
 	 * @return the CRM CCA
@@ -2431,6 +2428,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	@Override
 	public CrmCCA findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmCCAException {
+
 		CrmCCA crmCCA = fetchByPrimaryKey(primaryKey);
 
 		if (crmCCA == null) {
@@ -2438,15 +2436,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmCCAException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmCCAException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmCCA;
 	}
 
 	/**
-	 * Returns the CRM CCA with the primary key or throws a {@link NoSuchCrmCCAException} if it could not be found.
+	 * Returns the CRM CCA with the primary key or throws a <code>NoSuchCrmCCAException</code> if it could not be found.
 	 *
 	 * @param crmCCAId the primary key of the CRM CCA
 	 * @return the CRM CCA
@@ -2465,8 +2463,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public CrmCCA fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-				CrmCCAImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class, primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -2486,13 +2484,15 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 					cacheResult(crmCCA);
 				}
 				else {
-					entityCache.putResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-						CrmCCAImpl.class, primaryKey, nullModel);
+					entityCache.putResult(
+						CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+						primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-					CrmCCAImpl.class, primaryKey);
+				entityCache.removeResult(
+					CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+					primaryKey);
 
 				throw processException(e);
 			}
@@ -2518,6 +2518,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	@Override
 	public Map<Serializable, CrmCCA> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
@@ -2541,8 +2542,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-					CrmCCAImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+				primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2562,8 +2564,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMCCA_WHERE_PKS_IN);
 
@@ -2595,8 +2597,9 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
-					CrmCCAImpl.class, primaryKey, nullModel);
+				entityCache.putResult(
+					CrmCCAModelImpl.ENTITY_CACHE_ENABLED, CrmCCAImpl.class,
+					primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2623,7 +2626,7 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns a range of all the CRM CCAs.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM CCAs
@@ -2639,70 +2642,72 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Returns an ordered range of all the CRM CCAs.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM CCAs
 	 */
+	@Deprecated
 	@Override
-	public List<CrmCCA> findAll(int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmCCA> findAll(
+		int start, int end, OrderByComparator<CrmCCA> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM CCAs.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmCCAModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmCCAModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM CCAs
 	 * @param end the upper bound of the range of CRM CCAs (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM CCAs
 	 */
 	@Override
-	public List<CrmCCA> findAll(int start, int end,
-		OrderByComparator<CrmCCA> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmCCA> findAll(
+		int start, int end, OrderByComparator<CrmCCA> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmCCA> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmCCA>)finderCache.getResult(finderPath, finderArgs,
-					this);
-		}
+		List<CrmCCA> list = (List<CrmCCA>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMCCA);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2722,16 +2727,16 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end, false);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmCCA>)QueryUtil.list(q, getDialect(), start,
-							end);
+					list = (List<CrmCCA>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2769,8 +2774,8 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2782,12 +2787,12 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2813,6 +2818,107 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 	 * Initializes the CRM CCA persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
+			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
+			CrmCCAModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmCCAModelImpl.UUID_COLUMN_BITMASK |
+			CrmCCAModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByZipCode = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByZipCode = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, CrmCCAImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] {String.class.getName()},
+			CrmCCAModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CrmCCAModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByZipCode = new FinderPath(
+			CrmCCAModelImpl.ENTITY_CACHE_ENABLED,
+			CrmCCAModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] {String.class.getName()});
 	}
 
 	public void destroy() {
@@ -2822,22 +2928,39 @@ public class CrmCCAPersistenceImpl extends BasePersistenceImpl<CrmCCA>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CRMCCA = "SELECT crmCCA FROM CrmCCA crmCCA";
-	private static final String _SQL_SELECT_CRMCCA_WHERE_PKS_IN = "SELECT crmCCA FROM CrmCCA crmCCA WHERE crmCCAId IN (";
-	private static final String _SQL_SELECT_CRMCCA_WHERE = "SELECT crmCCA FROM CrmCCA crmCCA WHERE ";
-	private static final String _SQL_COUNT_CRMCCA = "SELECT COUNT(crmCCA) FROM CrmCCA crmCCA";
-	private static final String _SQL_COUNT_CRMCCA_WHERE = "SELECT COUNT(crmCCA) FROM CrmCCA crmCCA WHERE ";
+
+	private static final String _SQL_SELECT_CRMCCA =
+		"SELECT crmCCA FROM CrmCCA crmCCA";
+
+	private static final String _SQL_SELECT_CRMCCA_WHERE_PKS_IN =
+		"SELECT crmCCA FROM CrmCCA crmCCA WHERE crmCCAId IN (";
+
+	private static final String _SQL_SELECT_CRMCCA_WHERE =
+		"SELECT crmCCA FROM CrmCCA crmCCA WHERE ";
+
+	private static final String _SQL_COUNT_CRMCCA =
+		"SELECT COUNT(crmCCA) FROM CrmCCA crmCCA";
+
+	private static final String _SQL_COUNT_CRMCCA_WHERE =
+		"SELECT COUNT(crmCCA) FROM CrmCCA crmCCA WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "crmCCA.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmCCA exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmCCA exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmCCAPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmCCA exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmCCA exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmCCAPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

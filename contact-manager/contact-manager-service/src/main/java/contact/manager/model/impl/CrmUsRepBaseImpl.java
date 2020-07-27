@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmUsRep;
-
 import contact.manager.service.CrmUsRepLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmUsRepLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmUsRepBaseImpl extends CrmUsRepModelImpl
-	implements CrmUsRep {
+public abstract class CrmUsRepBaseImpl
+	extends CrmUsRepModelImpl implements CrmUsRep {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM US Rep model instance should use the {@link CrmUsRep} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM US Rep model instance should use the <code>CrmUsRep</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmUsRepBaseImpl extends CrmUsRepModelImpl
 			CrmUsRepLocalServiceUtil.updateCrmUsRep(this);
 		}
 	}
+
 }
