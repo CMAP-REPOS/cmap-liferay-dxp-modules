@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmOutreachLog in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmOutreachLog
  * @generated
  */
 @ProviderType
-public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
-	Externalizable {
+public class CrmOutreachLogCacheModel
+	implements CacheModel<CrmOutreachLog>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,7 +49,8 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 			return false;
 		}
 
-		CrmOutreachLogCacheModel crmOutreachLogCacheModel = (CrmOutreachLogCacheModel)obj;
+		CrmOutreachLogCacheModel crmOutreachLogCacheModel =
+			(CrmOutreachLogCacheModel)obj;
 
 		if (crmOutreachLogId == crmOutreachLogCacheModel.crmOutreachLogId) {
 			return true;
@@ -193,8 +194,7 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -259,4 +259,5 @@ public class CrmOutreachLogCacheModel implements CacheModel<CrmOutreachLog>,
 	public String medium;
 	public String activityType;
 	public long outreachDate;
+
 }

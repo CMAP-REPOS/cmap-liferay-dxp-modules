@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmMuni;
-
 import contact.manager.service.CrmMuniLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmMuniLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmMuniBaseImpl extends CrmMuniModelImpl
-	implements CrmMuni {
+public abstract class CrmMuniBaseImpl
+	extends CrmMuniModelImpl implements CrmMuni {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Muni model instance should use the {@link CrmMuni} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Muni model instance should use the <code>CrmMuni</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmMuniBaseImpl extends CrmMuniModelImpl
 			CrmMuniLocalServiceUtil.updateCrmMuni(this);
 		}
 	}
+
 }

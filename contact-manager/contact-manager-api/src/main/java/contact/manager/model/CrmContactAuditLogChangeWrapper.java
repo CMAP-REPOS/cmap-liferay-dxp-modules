@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -40,10 +38,13 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange,
-	ModelWrapper<CrmContactAuditLogChange> {
+public class CrmContactAuditLogChangeWrapper
+	implements CrmContactAuditLogChange,
+			   ModelWrapper<CrmContactAuditLogChange> {
+
 	public CrmContactAuditLogChangeWrapper(
 		CrmContactAuditLogChange crmContactAuditLogChange) {
+
 		_crmContactAuditLogChange = crmContactAuditLogChange;
 	}
 
@@ -62,8 +63,8 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("crmContactAuditLogChangeId",
-			getCrmContactAuditLogChangeId());
+		attributes.put(
+			"crmContactAuditLogChangeId", getCrmContactAuditLogChangeId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -87,7 +88,7 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 		}
 
 		Long crmContactAuditLogChangeId = (Long)attributes.get(
-				"crmContactAuditLogChangeId");
+			"crmContactAuditLogChangeId");
 
 		if (crmContactAuditLogChangeId != null) {
 			setCrmContactAuditLogChangeId(crmContactAuditLogChangeId);
@@ -129,7 +130,8 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 			setModifiedDate(modifiedDate);
 		}
 
-		Long crmContactAuditLogId = (Long)attributes.get("crmContactAuditLogId");
+		Long crmContactAuditLogId = (Long)attributes.get(
+			"crmContactAuditLogId");
 
 		if (crmContactAuditLogId != null) {
 			setCrmContactAuditLogId(crmContactAuditLogId);
@@ -156,49 +158,53 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 
 	@Override
 	public Object clone() {
-		return new CrmContactAuditLogChangeWrapper((CrmContactAuditLogChange)_crmContactAuditLogChange.clone());
+		return new CrmContactAuditLogChangeWrapper(
+			(CrmContactAuditLogChange)_crmContactAuditLogChange.clone());
 	}
 
 	@Override
-	public int compareTo(CrmContactAuditLogChange crmContactAuditLogChange) {
+	public int compareTo(
+		contact.manager.model.CrmContactAuditLogChange
+			crmContactAuditLogChange) {
+
 		return _crmContactAuditLogChange.compareTo(crmContactAuditLogChange);
 	}
 
 	/**
-	* Returns the company ID of this CRM Contact Audit Log Change.
-	*
-	* @return the company ID of this CRM Contact Audit Log Change
-	*/
+	 * Returns the company ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the company ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmContactAuditLogChange.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM Contact Audit Log Change.
-	*
-	* @return the create date of this CRM Contact Audit Log Change
-	*/
+	 * Returns the create date of this CRM Contact Audit Log Change.
+	 *
+	 * @return the create date of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmContactAuditLogChange.getCreateDate();
 	}
 
 	/**
-	* Returns the crm contact audit log change ID of this CRM Contact Audit Log Change.
-	*
-	* @return the crm contact audit log change ID of this CRM Contact Audit Log Change
-	*/
+	 * Returns the crm contact audit log change ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the crm contact audit log change ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getCrmContactAuditLogChangeId() {
 		return _crmContactAuditLogChange.getCrmContactAuditLogChangeId();
 	}
 
 	/**
-	* Returns the crm contact audit log ID of this CRM Contact Audit Log Change.
-	*
-	* @return the crm contact audit log ID of this CRM Contact Audit Log Change
-	*/
+	 * Returns the crm contact audit log ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the crm contact audit log ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getCrmContactAuditLogId() {
 		return _crmContactAuditLogChange.getCrmContactAuditLogId();
@@ -210,60 +216,60 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Returns the field name of this CRM Contact Audit Log Change.
-	*
-	* @return the field name of this CRM Contact Audit Log Change
-	*/
+	 * Returns the field name of this CRM Contact Audit Log Change.
+	 *
+	 * @return the field name of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getFieldName() {
 		return _crmContactAuditLogChange.getFieldName();
 	}
 
 	/**
-	* Returns the group ID of this CRM Contact Audit Log Change.
-	*
-	* @return the group ID of this CRM Contact Audit Log Change
-	*/
+	 * Returns the group ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the group ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmContactAuditLogChange.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM Contact Audit Log Change.
-	*
-	* @return the modified date of this CRM Contact Audit Log Change
-	*/
+	 * Returns the modified date of this CRM Contact Audit Log Change.
+	 *
+	 * @return the modified date of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmContactAuditLogChange.getModifiedDate();
 	}
 
 	/**
-	* Returns the new value of this CRM Contact Audit Log Change.
-	*
-	* @return the new value of this CRM Contact Audit Log Change
-	*/
+	 * Returns the new value of this CRM Contact Audit Log Change.
+	 *
+	 * @return the new value of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getNewValue() {
 		return _crmContactAuditLogChange.getNewValue();
 	}
 
 	/**
-	* Returns the old value of this CRM Contact Audit Log Change.
-	*
-	* @return the old value of this CRM Contact Audit Log Change
-	*/
+	 * Returns the old value of this CRM Contact Audit Log Change.
+	 *
+	 * @return the old value of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getOldValue() {
 		return _crmContactAuditLogChange.getOldValue();
 	}
 
 	/**
-	* Returns the primary key of this CRM Contact Audit Log Change.
-	*
-	* @return the primary key of this CRM Contact Audit Log Change
-	*/
+	 * Returns the primary key of this CRM Contact Audit Log Change.
+	 *
+	 * @return the primary key of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmContactAuditLogChange.getPrimaryKey();
@@ -275,40 +281,40 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Returns the user ID of this CRM Contact Audit Log Change.
-	*
-	* @return the user ID of this CRM Contact Audit Log Change
-	*/
+	 * Returns the user ID of this CRM Contact Audit Log Change.
+	 *
+	 * @return the user ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public long getUserId() {
 		return _crmContactAuditLogChange.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM Contact Audit Log Change.
-	*
-	* @return the user name of this CRM Contact Audit Log Change
-	*/
+	 * Returns the user name of this CRM Contact Audit Log Change.
+	 *
+	 * @return the user name of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getUserName() {
 		return _crmContactAuditLogChange.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM Contact Audit Log Change.
-	*
-	* @return the user uuid of this CRM Contact Audit Log Change
-	*/
+	 * Returns the user uuid of this CRM Contact Audit Log Change.
+	 *
+	 * @return the user uuid of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmContactAuditLogChange.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM Contact Audit Log Change.
-	*
-	* @return the uuid of this CRM Contact Audit Log Change
-	*/
+	 * Returns the uuid of this CRM Contact Audit Log Change.
+	 *
+	 * @return the uuid of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public String getUuid() {
 		return _crmContactAuditLogChange.getUuid();
@@ -345,40 +351,41 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Sets the company ID of this CRM Contact Audit Log Change.
-	*
-	* @param companyId the company ID of this CRM Contact Audit Log Change
-	*/
+	 * Sets the company ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param companyId the company ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmContactAuditLogChange.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM Contact Audit Log Change.
-	*
-	* @param createDate the create date of this CRM Contact Audit Log Change
-	*/
+	 * Sets the create date of this CRM Contact Audit Log Change.
+	 *
+	 * @param createDate the create date of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmContactAuditLogChange.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm contact audit log change ID of this CRM Contact Audit Log Change.
-	*
-	* @param crmContactAuditLogChangeId the crm contact audit log change ID of this CRM Contact Audit Log Change
-	*/
+	 * Sets the crm contact audit log change ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param crmContactAuditLogChangeId the crm contact audit log change ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setCrmContactAuditLogChangeId(long crmContactAuditLogChangeId) {
-		_crmContactAuditLogChange.setCrmContactAuditLogChangeId(crmContactAuditLogChangeId);
+		_crmContactAuditLogChange.setCrmContactAuditLogChangeId(
+			crmContactAuditLogChangeId);
 	}
 
 	/**
-	* Sets the crm contact audit log ID of this CRM Contact Audit Log Change.
-	*
-	* @param crmContactAuditLogId the crm contact audit log ID of this CRM Contact Audit Log Change
-	*/
+	 * Sets the crm contact audit log ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param crmContactAuditLogId the crm contact audit log ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setCrmContactAuditLogId(long crmContactAuditLogId) {
 		_crmContactAuditLogChange.setCrmContactAuditLogId(crmContactAuditLogId);
@@ -387,6 +394,7 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmContactAuditLogChange.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -401,30 +409,30 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Sets the field name of this CRM Contact Audit Log Change.
-	*
-	* @param fieldName the field name of this CRM Contact Audit Log Change
-	*/
+	 * Sets the field name of this CRM Contact Audit Log Change.
+	 *
+	 * @param fieldName the field name of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setFieldName(String fieldName) {
 		_crmContactAuditLogChange.setFieldName(fieldName);
 	}
 
 	/**
-	* Sets the group ID of this CRM Contact Audit Log Change.
-	*
-	* @param groupId the group ID of this CRM Contact Audit Log Change
-	*/
+	 * Sets the group ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param groupId the group ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmContactAuditLogChange.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM Contact Audit Log Change.
-	*
-	* @param modifiedDate the modified date of this CRM Contact Audit Log Change
-	*/
+	 * Sets the modified date of this CRM Contact Audit Log Change.
+	 *
+	 * @param modifiedDate the modified date of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmContactAuditLogChange.setModifiedDate(modifiedDate);
@@ -436,30 +444,30 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Sets the new value of this CRM Contact Audit Log Change.
-	*
-	* @param newValue the new value of this CRM Contact Audit Log Change
-	*/
+	 * Sets the new value of this CRM Contact Audit Log Change.
+	 *
+	 * @param newValue the new value of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setNewValue(String newValue) {
 		_crmContactAuditLogChange.setNewValue(newValue);
 	}
 
 	/**
-	* Sets the old value of this CRM Contact Audit Log Change.
-	*
-	* @param oldValue the old value of this CRM Contact Audit Log Change
-	*/
+	 * Sets the old value of this CRM Contact Audit Log Change.
+	 *
+	 * @param oldValue the old value of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setOldValue(String oldValue) {
 		_crmContactAuditLogChange.setOldValue(oldValue);
 	}
 
 	/**
-	* Sets the primary key of this CRM Contact Audit Log Change.
-	*
-	* @param primaryKey the primary key of this CRM Contact Audit Log Change
-	*/
+	 * Sets the primary key of this CRM Contact Audit Log Change.
+	 *
+	 * @param primaryKey the primary key of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmContactAuditLogChange.setPrimaryKey(primaryKey);
@@ -471,53 +479,56 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	/**
-	* Sets the user ID of this CRM Contact Audit Log Change.
-	*
-	* @param userId the user ID of this CRM Contact Audit Log Change
-	*/
+	 * Sets the user ID of this CRM Contact Audit Log Change.
+	 *
+	 * @param userId the user ID of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmContactAuditLogChange.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM Contact Audit Log Change.
-	*
-	* @param userName the user name of this CRM Contact Audit Log Change
-	*/
+	 * Sets the user name of this CRM Contact Audit Log Change.
+	 *
+	 * @param userName the user name of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmContactAuditLogChange.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM Contact Audit Log Change.
-	*
-	* @param userUuid the user uuid of this CRM Contact Audit Log Change
-	*/
+	 * Sets the user uuid of this CRM Contact Audit Log Change.
+	 *
+	 * @param userUuid the user uuid of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmContactAuditLogChange.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM Contact Audit Log Change.
-	*
-	* @param uuid the uuid of this CRM Contact Audit Log Change
-	*/
+	 * Sets the uuid of this CRM Contact Audit Log Change.
+	 *
+	 * @param uuid the uuid of this CRM Contact Audit Log Change
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmContactAuditLogChange.setUuid(uuid);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmContactAuditLogChange> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmContactAuditLogChange> toCacheModel() {
+
 		return _crmContactAuditLogChange.toCacheModel();
 	}
 
 	@Override
-	public CrmContactAuditLogChange toEscapedModel() {
-		return new CrmContactAuditLogChangeWrapper(_crmContactAuditLogChange.toEscapedModel());
+	public contact.manager.model.CrmContactAuditLogChange toEscapedModel() {
+		return new CrmContactAuditLogChangeWrapper(
+			_crmContactAuditLogChange.toEscapedModel());
 	}
 
 	@Override
@@ -526,8 +537,9 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	@Override
-	public CrmContactAuditLogChange toUnescapedModel() {
-		return new CrmContactAuditLogChangeWrapper(_crmContactAuditLogChange.toUnescapedModel());
+	public contact.manager.model.CrmContactAuditLogChange toUnescapedModel() {
+		return new CrmContactAuditLogChangeWrapper(
+			_crmContactAuditLogChange.toUnescapedModel());
 	}
 
 	@Override
@@ -545,10 +557,13 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 			return false;
 		}
 
-		CrmContactAuditLogChangeWrapper crmContactAuditLogChangeWrapper = (CrmContactAuditLogChangeWrapper)obj;
+		CrmContactAuditLogChangeWrapper crmContactAuditLogChangeWrapper =
+			(CrmContactAuditLogChangeWrapper)obj;
 
-		if (Objects.equals(_crmContactAuditLogChange,
-					crmContactAuditLogChangeWrapper._crmContactAuditLogChange)) {
+		if (Objects.equals(
+				_crmContactAuditLogChange,
+				crmContactAuditLogChangeWrapper._crmContactAuditLogChange)) {
+
 			return true;
 		}
 
@@ -581,4 +596,5 @@ public class CrmContactAuditLogChangeWrapper implements CrmContactAuditLogChange
 	}
 
 	private final CrmContactAuditLogChange _crmContactAuditLogChange;
+
 }

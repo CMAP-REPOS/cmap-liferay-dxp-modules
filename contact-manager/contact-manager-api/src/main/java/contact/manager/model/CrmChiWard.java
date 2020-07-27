@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmChiWardModel
- * @see contact.manager.model.impl.CrmChiWardImpl
- * @see contact.manager.model.impl.CrmChiWardModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmChiWardImpl")
 @ProviderType
 public interface CrmChiWard extends CrmChiWardModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmChiWardImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmChiWardImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmChiWard, Long> CRM_CHI_WARD_ID_ACCESSOR = new Accessor<CrmChiWard, Long>() {
+	public static final Accessor<CrmChiWard, Long> CRM_CHI_WARD_ID_ACCESSOR =
+		new Accessor<CrmChiWard, Long>() {
+
 			@Override
 			public Long get(CrmChiWard crmChiWard) {
 				return crmChiWard.getCrmChiWardId();
@@ -52,5 +53,7 @@ public interface CrmChiWard extends CrmChiWardModel, PersistedModel {
 			public Class<CrmChiWard> getTypeClass() {
 				return CrmChiWard.class;
 			}
+
 		};
+
 }

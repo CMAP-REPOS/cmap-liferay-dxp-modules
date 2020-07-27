@@ -321,7 +321,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			String id = null;
 			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
 			if (ccContact!= null) {
+				System.out.println(ccContact.getStatus());
 				if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) { // if contact is not active, activated first
+					System.out.println("if ccContact is not null and status it NOT 'active'");
 					ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 					StringBuffer bufferResponse = new StringBuffer();
 					//not sure if visitor or woner works everitime when updating general contact data or changing status
@@ -395,6 +397,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			// TODO: set session message
 		//	return;
 		//}
+
 		
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
@@ -405,13 +408,17 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			crmContact = ContactUtil.updateCrmContactProperties(crmContact, request, serviceContext, false);
 
+			// FROM HERE ON FORWARD crmContact contains the "updated" fields.
 			//Code to update ConstantContact in case of any update in Fname, Lname, primaryEmail, organization;
 			boolean errorOnConstactContact = false;
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 			StringBuffer messageResponse = new StringBuffer();
 			try {
 				if (crmContact.getConstantContactId()!= 0) {
+						
+						// Model is the constant contact object which contains everything BEFORE updating
 						ContactApiModel model = constantContactServiceImpl.getContact(new Long(crmContact.getConstantContactId()).toString());
+						
 						boolean update = false;
 						if (model.getFirstName() == null || !crmContact.getFirstName().equals(model.getFirstName())){
 							update = true;
@@ -431,9 +438,11 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 							model.setCompanyName(crmContact.getOrganization());
 						}
 						
+						
 						if (!isEmailInEmailAddressList(model.getEmailAddresses(), crmContact.getPrimaryEmailAddress())){
 							ContactApiModel modelP = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE, 1);
-							if (modelP== null) {
+
+							if (modelP == null) {
 								addEmailToEmailAddressList(model, crmContact.getPrimaryEmailAddress());
 								update = true;
 							} else {
@@ -464,9 +473,16 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				e.printStackTrace();
 			}
 			
+			
 			CrmContact updatedContact = null;
-			if (!errorOnConstactContact) {
-				updatedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
+			
+			// CMAP-436 solution, do not remove
+			try {
+				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);
+			} catch (Exception e) {
+				if (crmContact.getStatus() != ConstantContactKeys.CC_STATUS_UPDATED_CONFIRMED) {
+					throw new Exception("CRM Contact updated, using workaround from CMAP-436");
+				}
 			}
 			
 			if (updatedContact != null) {
@@ -476,6 +492,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			response.setRenderParameter("crmContactId", String.valueOf(crmContactId));
 			response.setRenderParameter("mvcPath", "/contacts/details.jsp");
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -485,6 +502,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
 
+		
 		ThemeDisplay themeDisplay = (ThemeDisplay) request.getAttribute(WebKeys.THEME_DISPLAY);
 		User user = themeDisplay.getUser();
 		
@@ -502,15 +520,26 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			Date now = new Date();
 
 			CrmContact crmContact = _crmContactLocalService.getCrmContact(crmContactId);
+			
 			crmContact.setStatus(ConstantContactKeys.CC_STATUS_REMOVED);
 			crmContact.setUserId(userId);
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			long constantContactID =  crmContact.getConstantContactId();
-			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
+			
+			
+			// CMAP-436 solution, do not remove
+			try {
+				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);
+			} catch (Exception e) {
+				if (crmContact.getStatus() != ConstantContactKeys.CC_STATUS_UPDATED_CONFIRMED) {
+					throw new Exception("CRM Contact updated, using workaround from CMAP-436");
+				}
+			}	
+
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 
-			if (deletedContact != null) {
+			if (crmContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
 				StringBuffer statusCode = new StringBuffer();
 				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
@@ -526,6 +555,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 		} catch (Exception e) {
 			LOGGER.error("Exception in ContactManagerAppPortlet.deleteContact: " + e.getMessage());
+			e.printStackTrace();
 		}
 	}
 	
@@ -538,7 +568,15 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 
 			crmContact = ContactUtil.updateCrmContactModifiedDate(crmContact, serviceContext);
 			
-			CrmContact updatedContact = _crmContactLocalService.updateCrmContact(crmContact,serviceContext);
+			// CMAP-436 solution, do not remove
+			try {
+				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);
+			} catch (Exception e) {
+				if (crmContact.getStatus() != ConstantContactKeys.CC_STATUS_UPDATED_CONFIRMED) {
+					throw new Exception("CRM Contact updated, using workaround from CMAP-436");
+				}
+			}	
+
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -592,7 +630,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmOutreachLog.class.getName(), request);
 			long crmNoteId = ParamUtil.getLong(request, "crmNoteId");
-			System.out.println("=======crmNoteID -> " + crmNoteId + "=======");
 
 			CrmNote crmNote = _crmNoteLocalService.getCrmNote(crmNoteId);
 			CrmNote originalCrmNote = (CrmNote)crmNote.clone();
@@ -600,7 +637,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			crmNote = NoteUtil.updateCrmNoteProperties(crmNote, request, serviceContext, false);
 			_crmNoteLocalService.updateCrmNote(crmNote);
 			
-			System.out.println("=======crmNote.getCrmContactId -> " + String.valueOf(crmNote.getCrmContactId()) + "=======");
 			
 			if (crmNote != null) {
 				auditContactAction(serviceContext, crmNote.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_NOTE_UPDATE, originalCrmNote, crmNote);
@@ -640,7 +676,6 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 				updateContactModifiedDate(request,crmNote.getCrmContactId());
 			}
 			
-			System.out.println("=======Delet l crmContactId -> " + crmContactId + "=======");
 			response.setRenderParameter("crmContactId", String.valueOf(crmNote.getCrmContactId()));
 			response.setRenderParameter("mvcPath", "/notes/view.jsp");
 

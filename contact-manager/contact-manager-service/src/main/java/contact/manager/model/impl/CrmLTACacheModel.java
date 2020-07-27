@@ -33,11 +33,11 @@ import java.util.Date;
  * The cache model class for representing CrmLTA in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmLTA
  * @generated
  */
 @ProviderType
 public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -166,8 +166,7 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -218,4 +217,5 @@ public class CrmLTACacheModel implements CacheModel<CrmLTA>, Externalizable {
 	public long modifiedDate;
 	public String name;
 	public String zipCode;
+
 }

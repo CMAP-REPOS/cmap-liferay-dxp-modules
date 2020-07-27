@@ -25,20 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmOutreachLogModel
- * @see contact.manager.model.impl.CrmOutreachLogImpl
- * @see contact.manager.model.impl.CrmOutreachLogModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmOutreachLogImpl")
 @ProviderType
 public interface CrmOutreachLog extends CrmOutreachLogModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmOutreachLogImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmOutreachLogImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmOutreachLog, Long> CRM_OUTREACH_LOG_ID_ACCESSOR =
-		new Accessor<CrmOutreachLog, Long>() {
+	public static final Accessor<CrmOutreachLog, Long>
+		CRM_OUTREACH_LOG_ID_ACCESSOR = new Accessor<CrmOutreachLog, Long>() {
+
 			@Override
 			public Long get(CrmOutreachLog crmOutreachLog) {
 				return crmOutreachLog.getCrmOutreachLogId();
@@ -53,5 +53,7 @@ public interface CrmOutreachLog extends CrmOutreachLogModel, PersistedModel {
 			public Class<CrmOutreachLog> getTypeClass() {
 				return CrmOutreachLog.class;
 			}
+
 		};
+
 }

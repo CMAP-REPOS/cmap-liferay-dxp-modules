@@ -140,7 +140,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	@Override
 	public String addContact(String id, String firstName, String lastName, String organization,
 			String email, StringBuffer messageResponse) {
-
 		LOGGER.trace("#addContact(String, String, String, String, String) - enter");
 		String constantContactId = "";
 		try {
@@ -276,10 +275,13 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 			
 			if (status == HttpServletResponse.SC_OK) {
 				String jsonResponse = readApiResponse(connection);
+				
 				ContactsCollectionResponse response = OBJECT_MAPPER.readValue(jsonResponse,
 						ContactsCollectionResponse.class);
 
 				List<ContactApiModel> contacts = response.getResults();
+				
+				
 				if (contacts != null && !contacts.isEmpty()) {
 					contact = contacts.get(0);
 				}
@@ -298,6 +300,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				}
 			}
 		}
+		
 
 		return contact;
 	}
@@ -328,7 +331,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 		String apiUrl = String.format("%semailmarketing/campaigns?api_key=%s&status=%s&limit=%s&modified_since=%s",
 				apibaseurl, apikey, status, limit, date);
-		System.out.println(apiUrl);
 		return getEmailCampaingsWithParams(apiUrl);
 	}
 	
@@ -512,6 +514,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 	
 	@Override
 	public String updateContact(ContactApiModel model, StringBuffer response, String actionBy) throws JsonProcessingException, IOException{
+		
 		LOGGER.trace("#updateContact - enter");
 		/*
 		 * Lists and Notes aren't modified here, but are removed if they aren't passed back to the
@@ -537,8 +540,6 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = apibaseurl + "contacts/" + model.getId()
 				+ "?action_by="+actionBy+"&api_key=" + apikey;
 		
-		System.out.println(apiUrl);
-
 		HttpURLConnection connection = null;
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.PUT,
@@ -546,12 +547,10 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
-			System.out.println(contactModelJson);
 			out.write(contactModelJson);
 			out.close();
 
 			int status = connection.getResponseCode();
-			System.out.println("de regreso" + connection.getResponseMessage());
 			if (LOGGER.isDebugEnabled()) {
 				LOGGER.debug("#updateContact - HTTP response code: " + status);
 				LOGGER.debug("#updateContact - apiUrl: " + apiUrl);
@@ -605,6 +604,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 				}
 			}
 		}
+		
 
 		return result;
 	}
@@ -658,6 +658,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.POST,
 					Integer.toString(contactModelJson.getBytes().length), true, true);
+			System.out.println("connection " + connection);
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
 			out.write(contactModelJson);

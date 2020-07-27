@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmOutreachLog;
-
 import contact.manager.service.CrmOutreachLogLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmOutreachLogLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmOutreachLogBaseImpl extends CrmOutreachLogModelImpl
-	implements CrmOutreachLog {
+public abstract class CrmOutreachLogBaseImpl
+	extends CrmOutreachLogModelImpl implements CrmOutreachLog {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Outreach Log model instance should use the {@link CrmOutreachLog} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Outreach Log model instance should use the <code>CrmOutreachLog</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmOutreachLogBaseImpl extends CrmOutreachLogModelImpl
 			CrmOutreachLogLocalServiceUtil.updateCrmOutreachLog(this);
 		}
 	}
+
 }

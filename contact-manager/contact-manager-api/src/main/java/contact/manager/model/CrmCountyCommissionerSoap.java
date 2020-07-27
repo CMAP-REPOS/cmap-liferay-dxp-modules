@@ -26,17 +26,19 @@ import java.util.List;
  * This class is used by SOAP remote services, specifically {@link contact.manager.service.http.CrmCountyCommissionerServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see contact.manager.service.http.CrmCountyCommissionerServiceSoap
  * @generated
  */
 @ProviderType
 public class CrmCountyCommissionerSoap implements Serializable {
+
 	public static CrmCountyCommissionerSoap toSoapModel(
 		CrmCountyCommissioner model) {
+
 		CrmCountyCommissionerSoap soapModel = new CrmCountyCommissionerSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCrmCountyCommissionerOrBoardDistId(model.getCrmCountyCommissionerOrBoardDistId());
+		soapModel.setCrmCountyCommissionerOrBoardDistId(
+			model.getCrmCountyCommissionerOrBoardDistId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -52,7 +54,9 @@ public class CrmCountyCommissionerSoap implements Serializable {
 
 	public static CrmCountyCommissionerSoap[] toSoapModels(
 		CrmCountyCommissioner[] models) {
-		CrmCountyCommissionerSoap[] soapModels = new CrmCountyCommissionerSoap[models.length];
+
+		CrmCountyCommissionerSoap[] soapModels =
+			new CrmCountyCommissionerSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,10 +67,12 @@ public class CrmCountyCommissionerSoap implements Serializable {
 
 	public static CrmCountyCommissionerSoap[][] toSoapModels(
 		CrmCountyCommissioner[][] models) {
+
 		CrmCountyCommissionerSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CrmCountyCommissionerSoap[models.length][models[0].length];
+			soapModels =
+				new CrmCountyCommissionerSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CrmCountyCommissionerSoap[0][0];
@@ -81,13 +87,16 @@ public class CrmCountyCommissionerSoap implements Serializable {
 
 	public static CrmCountyCommissionerSoap[] toSoapModels(
 		List<CrmCountyCommissioner> models) {
-		List<CrmCountyCommissionerSoap> soapModels = new ArrayList<CrmCountyCommissionerSoap>(models.size());
+
+		List<CrmCountyCommissionerSoap> soapModels =
+			new ArrayList<CrmCountyCommissionerSoap>(models.size());
 
 		for (CrmCountyCommissioner model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CrmCountyCommissionerSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new CrmCountyCommissionerSoap[soapModels.size()]);
 	}
 
 	public CrmCountyCommissionerSoap() {
@@ -115,7 +124,9 @@ public class CrmCountyCommissionerSoap implements Serializable {
 
 	public void setCrmCountyCommissionerOrBoardDistId(
 		long crmCountyCommissionerOrBoardDistId) {
-		_crmCountyCommissionerOrBoardDistId = crmCountyCommissionerOrBoardDistId;
+
+		_crmCountyCommissionerOrBoardDistId =
+			crmCountyCommissionerOrBoardDistId;
 	}
 
 	public long getGroupId() {
@@ -201,4 +212,5 @@ public class CrmCountyCommissionerSoap implements Serializable {
 	private String _name;
 	private String _number;
 	private String _zipCode;
+
 }

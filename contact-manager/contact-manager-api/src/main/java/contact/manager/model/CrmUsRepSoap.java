@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmUsRepSoap implements Serializable {
+
 	public static CrmUsRepSoap toSoapModel(CrmUsRep model) {
 		CrmUsRepSoap soapModel = new CrmUsRepSoap();
 
@@ -76,7 +77,8 @@ public class CrmUsRepSoap implements Serializable {
 	}
 
 	public static CrmUsRepSoap[] toSoapModels(List<CrmUsRep> models) {
-		List<CrmUsRepSoap> soapModels = new ArrayList<CrmUsRepSoap>(models.size());
+		List<CrmUsRepSoap> soapModels = new ArrayList<CrmUsRepSoap>(
+			models.size());
 
 		for (CrmUsRep model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,4 +197,5 @@ public class CrmUsRepSoap implements Serializable {
 	private String _name;
 	private String _number;
 	private String _zipCode;
+
 }

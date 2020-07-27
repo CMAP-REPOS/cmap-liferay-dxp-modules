@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmMuniModel
- * @see contact.manager.model.impl.CrmMuniImpl
- * @see contact.manager.model.impl.CrmMuniModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmMuniImpl")
 @ProviderType
 public interface CrmMuni extends CrmMuniModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmMuniImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmMuniImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmMuni, Long> CRM_MUNI_ID_ACCESSOR = new Accessor<CrmMuni, Long>() {
+	public static final Accessor<CrmMuni, Long> CRM_MUNI_ID_ACCESSOR =
+		new Accessor<CrmMuni, Long>() {
+
 			@Override
 			public Long get(CrmMuni crmMuni) {
 				return crmMuni.getCrmMuniId();
@@ -52,5 +53,7 @@ public interface CrmMuni extends CrmMuniModel, PersistedModel {
 			public Class<CrmMuni> getTypeClass() {
 				return CrmMuni.class;
 			}
+
 		};
+
 }

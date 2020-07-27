@@ -25,10 +25,9 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
-import com.liferay.portal.kernel.service.persistence.CompanyProvider;
-import com.liferay.portal.kernel.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -39,11 +38,9 @@ import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.exception.NoSuchCrmMuniException;
-
 import contact.manager.model.CrmMuni;
 import contact.manager.model.impl.CrmMuniImpl;
 import contact.manager.model.impl.CrmMuniModelImpl;
-
 import contact.manager.service.persistence.CrmMuniPersistence;
 
 import java.io.Serializable;
@@ -69,51 +66,32 @@ import java.util.Set;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see CrmMuniPersistence
- * @see contact.manager.service.persistence.CrmMuniUtil
  * @generated
  */
 @ProviderType
-public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
-	implements CrmMuniPersistence {
+public class CrmMuniPersistenceImpl
+	extends BasePersistenceImpl<CrmMuni> implements CrmMuniPersistence {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link CrmMuniUtil} to access the CRM Muni persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify or reference this class directly. Always use <code>CrmMuniUtil</code> to access the CRM Muni persistence. Modify <code>service.xml</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static final String FINDER_CLASS_NAME_ENTITY = CrmMuniImpl.class.getName();
-	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List1";
-	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION = FINDER_CLASS_NAME_ENTITY +
-		".List2";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_ALL = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll", new String[0]);
-	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
-			new String[] { String.class.getName() },
-			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
-			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
-			new String[] { String.class.getName() });
+	public static final String FINDER_CLASS_NAME_ENTITY =
+		CrmMuniImpl.class.getName();
+
+	public static final String FINDER_CLASS_NAME_LIST_WITH_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List1";
+
+	public static final String FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION =
+		FINDER_CLASS_NAME_ENTITY + ".List2";
+
+	private FinderPath _finderPathWithPaginationFindAll;
+	private FinderPath _finderPathWithoutPaginationFindAll;
+	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByUuid;
+	private FinderPath _finderPathWithoutPaginationFindByUuid;
+	private FinderPath _finderPathCountByUuid;
 
 	/**
 	 * Returns all the CRM Munis where uuid = &#63;.
@@ -130,7 +108,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns a range of all the CRM Munis where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -147,66 +125,71 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns an ordered range of all the CRM Munis where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid(String, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
+	@Deprecated
 	@Override
-	public List<CrmMuni> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator) {
-		return findByUuid(uuid, start, end, orderByComparator, true);
+	public List<CrmMuni> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid(uuid, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Munis where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
 	@Override
-	public List<CrmMuni> findByUuid(String uuid, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmMuni> findByUuid(
+		String uuid, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid };
+			finderPath = _finderPathWithoutPaginationFindByUuid;
+			finderArgs = new Object[] {uuid};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID;
-			finderArgs = new Object[] { uuid, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByUuid;
+			finderArgs = new Object[] {uuid, start, end, orderByComparator};
 		}
 
-		List<CrmMuni> list = null;
+		List<CrmMuni> list = (List<CrmMuni>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmMuni>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmMuni crmMuni : list) {
+				if (!uuid.equals(crmMuni.getUuid())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmMuni crmMuni : list) {
-					if (!Objects.equals(uuid, crmMuni.getUuid())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -215,8 +198,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -226,10 +209,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -239,11 +219,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmMuniModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -263,16 +242,16 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				}
 
 				if (!pagination) {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -301,9 +280,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByUuid_First(String uuid,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByUuid_First(
+			String uuid, OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByUuid_First(uuid, orderByComparator);
 
 		if (crmMuni != null) {
@@ -330,8 +310,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByUuid_First(String uuid,
-		OrderByComparator<CrmMuni> orderByComparator) {
+	public CrmMuni fetchByUuid_First(
+		String uuid, OrderByComparator<CrmMuni> orderByComparator) {
+
 		List<CrmMuni> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -350,9 +331,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByUuid_Last(String uuid,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByUuid_Last(
+			String uuid, OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (crmMuni != null) {
@@ -379,16 +361,17 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByUuid_Last(String uuid,
-		OrderByComparator<CrmMuni> orderByComparator) {
+	public CrmMuni fetchByUuid_Last(
+		String uuid, OrderByComparator<CrmMuni> orderByComparator) {
+
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmMuni> list = findByUuid(uuid, count - 1, count,
-				orderByComparator);
+		List<CrmMuni> list = findByUuid(
+			uuid, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -407,9 +390,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	 */
 	@Override
-	public CrmMuni[] findByUuid_PrevAndNext(long crmMuniId, String uuid,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni[] findByUuid_PrevAndNext(
+			long crmMuniId, String uuid,
+			OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmMuni crmMuni = findByPrimaryKey(crmMuniId);
 
 		Session session = null;
@@ -419,13 +406,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			CrmMuni[] array = new CrmMuniImpl[3];
 
-			array[0] = getByUuid_PrevAndNext(session, crmMuni, uuid,
-					orderByComparator, true);
+			array[0] = getByUuid_PrevAndNext(
+				session, crmMuni, uuid, orderByComparator, true);
 
 			array[1] = crmMuni;
 
-			array[2] = getByUuid_PrevAndNext(session, crmMuni, uuid,
-					orderByComparator, false);
+			array[2] = getByUuid_PrevAndNext(
+				session, crmMuni, uuid, orderByComparator, false);
 
 			return array;
 		}
@@ -437,14 +424,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 	}
 
-	protected CrmMuni getByUuid_PrevAndNext(Session session, CrmMuni crmMuni,
-		String uuid, OrderByComparator<CrmMuni> orderByComparator,
-		boolean previous) {
+	protected CrmMuni getByUuid_PrevAndNext(
+		Session session, CrmMuni crmMuni, String uuid,
+		OrderByComparator<CrmMuni> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -455,10 +443,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_UUID_3);
 		}
 		else {
@@ -468,7 +453,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -540,10 +526,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmMuni);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmMuni)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -564,8 +550,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public void removeByUuid(String uuid) {
-		for (CrmMuni crmMuni : findByUuid(uuid, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmMuni crmMuni :
+				findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmMuni);
 		}
 	}
@@ -578,9 +565,11 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public int countByUuid(String uuid) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid };
+		FinderPath finderPath = _finderPathCountByUuid;
+
+		Object[] finderArgs = new Object[] {uuid};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -591,10 +580,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_UUID_3);
 			}
 			else {
@@ -635,22 +621,16 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_UUID_1 = "crmMuni.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "crmMuni.uuid = ?";
-	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(crmMuni.uuid IS NULL OR crmMuni.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
-			CrmMuniModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
+
+	private static final String _FINDER_COLUMN_UUID_UUID_3 =
+		"(crmMuni.uuid IS NULL OR crmMuni.uuid = '')";
+
+	private FinderPath _finderPathFetchByUUID_G;
+	private FinderPath _finderPathCountByUUID_G;
 
 	/**
-	 * Returns the CRM Muni where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCrmMuniException} if it could not be found.
+	 * Returns the CRM Muni where uuid = &#63; and groupId = &#63; or throws a <code>NoSuchCrmMuniException</code> if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
@@ -660,6 +640,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public CrmMuni findByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByUUID_G(uuid, groupId);
 
 		if (crmMuni == null) {
@@ -686,15 +667,20 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	}
 
 	/**
-	 * Returns the CRM Muni where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the CRM Muni where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUUID_G(String,long)}
 	 * @param uuid the uuid
 	 * @param groupId the group ID
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
+	@Deprecated
 	@Override
-	public CrmMuni fetchByUUID_G(String uuid, long groupId) {
-		return fetchByUUID_G(uuid, groupId, true);
+	public CrmMuni fetchByUUID_G(
+		String uuid, long groupId, boolean useFinderCache) {
+
+		return fetchByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -702,26 +688,24 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { uuid, groupId };
+	public CrmMuni fetchByUUID_G(String uuid, long groupId) {
+		uuid = Objects.toString(uuid, "");
 
-		Object result = null;
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
+		Object result = finderCache.getResult(
+			_finderPathFetchByUUID_G, finderArgs, this);
 
 		if (result instanceof CrmMuni) {
 			CrmMuni crmMuni = (CrmMuni)result;
 
 			if (!Objects.equals(uuid, crmMuni.getUuid()) ||
-					(groupId != crmMuni.getGroupId())) {
+				(groupId != crmMuni.getGroupId())) {
+
 				result = null;
 			}
 		}
@@ -733,10 +717,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -767,8 +748,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				List<CrmMuni> list = q.list();
 
 				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
+					finderCache.putResult(
+						_finderPathFetchByUUID_G, finderArgs, list);
 				}
 				else {
 					CrmMuni crmMuni = list.get(0);
@@ -779,7 +760,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				}
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, finderArgs);
+				finderCache.removeResult(_finderPathFetchByUUID_G, finderArgs);
 
 				throw processException(e);
 			}
@@ -806,6 +787,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public CrmMuni removeByUUID_G(String uuid, long groupId)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = findByUUID_G(uuid, groupId);
 
 		return remove(crmMuni);
@@ -820,9 +802,11 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public int countByUUID_G(String uuid, long groupId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, groupId };
+		FinderPath finderPath = _finderPathCountByUUID_G;
+
+		Object[] finderArgs = new Object[] {uuid, groupId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -833,10 +817,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
 			}
 			else {
@@ -881,31 +862,18 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "crmMuni.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "crmMuni.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(crmMuni.uuid IS NULL OR crmMuni.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "crmMuni.groupId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
-			new String[] {
-				String.class.getName(), Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C =
-		new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
-			CrmMuniModelImpl.COMPANYID_COLUMN_BITMASK |
-			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
-			new String[] { String.class.getName(), Long.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_G_UUID_2 =
+		"crmMuni.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_UUID_3 =
+		"(crmMuni.uuid IS NULL OR crmMuni.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 =
+		"crmMuni.groupId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByUuid_C;
+	private FinderPath _finderPathWithoutPaginationFindByUuid_C;
+	private FinderPath _finderPathCountByUuid_C;
 
 	/**
 	 * Returns all the CRM Munis where uuid = &#63; and companyId = &#63;.
@@ -916,15 +884,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public List<CrmMuni> findByUuid_C(String uuid, long companyId) {
-		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
+		return findByUuid_C(
+			uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Munis where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -934,8 +902,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the range of matching CRM Munis
 	 */
 	@Override
-	public List<CrmMuni> findByUuid_C(String uuid, long companyId, int start,
-		int end) {
+	public List<CrmMuni> findByUuid_C(
+		String uuid, long companyId, int start, int end) {
+
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -943,27 +912,32 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns an ordered range of all the CRM Munis where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUuid_C(String,long, int, int, OrderByComparator)}
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
+	@Deprecated
 	@Override
-	public List<CrmMuni> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmMuni> orderByComparator) {
-		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	public List<CrmMuni> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator, boolean useFinderCache) {
+
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Munis where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -971,46 +945,44 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
 	@Override
-	public List<CrmMuni> findByUuid_C(String uuid, long companyId, int start,
-		int end, OrderByComparator<CrmMuni> orderByComparator,
-		boolean retrieveFromCache) {
+	public List<CrmMuni> findByUuid_C(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator) {
+
+		uuid = Objects.toString(uuid, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C;
-			finderArgs = new Object[] { uuid, companyId };
+			finderPath = _finderPathWithoutPaginationFindByUuid_C;
+			finderArgs = new Object[] {uuid, companyId};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C;
+			finderPath = _finderPathWithPaginationFindByUuid_C;
 			finderArgs = new Object[] {
-					uuid, companyId,
-					
-					start, end, orderByComparator
-				};
+				uuid, companyId, start, end, orderByComparator
+			};
 		}
 
-		List<CrmMuni> list = null;
+		List<CrmMuni> list = (List<CrmMuni>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmMuni>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmMuni crmMuni : list) {
+				if (!uuid.equals(crmMuni.getUuid()) ||
+					(companyId != crmMuni.getCompanyId())) {
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmMuni crmMuni : list) {
-					if (!Objects.equals(uuid, crmMuni.getUuid()) ||
-							(companyId != crmMuni.getCompanyId())) {
-						list = null;
+					list = null;
 
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1019,8 +991,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1030,10 +1002,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1045,11 +1014,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmMuniModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1071,16 +1039,16 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				qPos.add(companyId);
 
 				if (!pagination) {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1110,10 +1078,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByUuid_C_First(
+			String uuid, long companyId,
+			OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
-		CrmMuni crmMuni = fetchByUuid_C_First(uuid, companyId, orderByComparator);
+
+		CrmMuni crmMuni = fetchByUuid_C_First(
+			uuid, companyId, orderByComparator);
 
 		if (crmMuni != null) {
 			return crmMuni;
@@ -1143,10 +1114,12 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByUuid_C_First(String uuid, long companyId,
+	public CrmMuni fetchByUuid_C_First(
+		String uuid, long companyId,
 		OrderByComparator<CrmMuni> orderByComparator) {
-		List<CrmMuni> list = findByUuid_C(uuid, companyId, 0, 1,
-				orderByComparator);
+
+		List<CrmMuni> list = findByUuid_C(
+			uuid, companyId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1165,10 +1138,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByUuid_C_Last(
+			String uuid, long companyId,
+			OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
-		CrmMuni crmMuni = fetchByUuid_C_Last(uuid, companyId, orderByComparator);
+
+		CrmMuni crmMuni = fetchByUuid_C_Last(
+			uuid, companyId, orderByComparator);
 
 		if (crmMuni != null) {
 			return crmMuni;
@@ -1198,16 +1174,18 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByUuid_C_Last(String uuid, long companyId,
+	public CrmMuni fetchByUuid_C_Last(
+		String uuid, long companyId,
 		OrderByComparator<CrmMuni> orderByComparator) {
+
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmMuni> list = findByUuid_C(uuid, companyId, count - 1, count,
-				orderByComparator);
+		List<CrmMuni> list = findByUuid_C(
+			uuid, companyId, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1227,9 +1205,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	 */
 	@Override
-	public CrmMuni[] findByUuid_C_PrevAndNext(long crmMuniId, String uuid,
-		long companyId, OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni[] findByUuid_C_PrevAndNext(
+			long crmMuniId, String uuid, long companyId,
+			OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
+		uuid = Objects.toString(uuid, "");
+
 		CrmMuni crmMuni = findByPrimaryKey(crmMuniId);
 
 		Session session = null;
@@ -1239,13 +1221,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			CrmMuni[] array = new CrmMuniImpl[3];
 
-			array[0] = getByUuid_C_PrevAndNext(session, crmMuni, uuid,
-					companyId, orderByComparator, true);
+			array[0] = getByUuid_C_PrevAndNext(
+				session, crmMuni, uuid, companyId, orderByComparator, true);
 
 			array[1] = crmMuni;
 
-			array[2] = getByUuid_C_PrevAndNext(session, crmMuni, uuid,
-					companyId, orderByComparator, false);
+			array[2] = getByUuid_C_PrevAndNext(
+				session, crmMuni, uuid, companyId, orderByComparator, false);
 
 			return array;
 		}
@@ -1257,14 +1239,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 	}
 
-	protected CrmMuni getByUuid_C_PrevAndNext(Session session, CrmMuni crmMuni,
-		String uuid, long companyId,
+	protected CrmMuni getByUuid_C_PrevAndNext(
+		Session session, CrmMuni crmMuni, String uuid, long companyId,
 		OrderByComparator<CrmMuni> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(5 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1275,10 +1258,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 		boolean bindUuid = false;
 
-		if (uuid == null) {
-			query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-		}
-		else if (uuid.equals("")) {
+		if (uuid.isEmpty()) {
 			query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 		}
 		else {
@@ -1290,7 +1270,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		query.append(_FINDER_COLUMN_UUID_C_COMPANYID_2);
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1364,10 +1345,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		qPos.add(companyId);
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmMuni);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmMuni)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1389,8 +1370,11 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public void removeByUuid_C(String uuid, long companyId) {
-		for (CrmMuni crmMuni : findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmMuni crmMuni :
+				findByUuid_C(
+					uuid, companyId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+					null)) {
+
 			remove(crmMuni);
 		}
 	}
@@ -1404,9 +1388,11 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public int countByUuid_C(String uuid, long companyId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
+		uuid = Objects.toString(uuid, "");
 
-		Object[] finderArgs = new Object[] { uuid, companyId };
+		FinderPath finderPath = _finderPathCountByUuid_C;
+
+		Object[] finderArgs = new Object[] {uuid, companyId};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1417,10 +1403,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindUuid = false;
 
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_C_UUID_1);
-			}
-			else if (uuid.equals("")) {
+			if (uuid.isEmpty()) {
 				query.append(_FINDER_COLUMN_UUID_C_UUID_3);
 			}
 			else {
@@ -1465,30 +1448,18 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_UUID_C_UUID_1 = "crmMuni.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "crmMuni.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(crmMuni.uuid IS NULL OR crmMuni.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "crmMuni.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
-			new String[] {
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE =
-		new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
-			new String[] { String.class.getName() },
-			CrmMuniModelImpl.ZIPCODE_COLUMN_BITMASK |
-			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_ZIPCODE = new FinderPath(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
-			new String[] { String.class.getName() });
+	private static final String _FINDER_COLUMN_UUID_C_UUID_2 =
+		"crmMuni.uuid = ? AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_UUID_3 =
+		"(crmMuni.uuid IS NULL OR crmMuni.uuid = '') AND ";
+
+	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 =
+		"crmMuni.companyId = ?";
+
+	private FinderPath _finderPathWithPaginationFindByZipCode;
+	private FinderPath _finderPathWithoutPaginationFindByZipCode;
+	private FinderPath _finderPathCountByZipCode;
 
 	/**
 	 * Returns all the CRM Munis where zipCode = &#63;.
@@ -1498,14 +1469,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public List<CrmMuni> findByZipCode(String zipCode) {
-		return findByZipCode(zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByZipCode(
+			zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
 	 * Returns a range of all the CRM Munis where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
@@ -1522,66 +1494,71 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns an ordered range of all the CRM Munis where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByZipCode(String, int, int, OrderByComparator)}
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
+	@Deprecated
 	@Override
-	public List<CrmMuni> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator) {
-		return findByZipCode(zipCode, start, end, orderByComparator, true);
+	public List<CrmMuni> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator, boolean useFinderCache) {
+
+		return findByZipCode(zipCode, start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Munis where zipCode = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param zipCode the zip code
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of matching CRM Munis
 	 */
 	@Override
-	public List<CrmMuni> findByZipCode(String zipCode, int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmMuni> findByZipCode(
+		String zipCode, int start, int end,
+		OrderByComparator<CrmMuni> orderByComparator) {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode };
+			finderPath = _finderPathWithoutPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_ZIPCODE;
-			finderArgs = new Object[] { zipCode, start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindByZipCode;
+			finderArgs = new Object[] {zipCode, start, end, orderByComparator};
 		}
 
-		List<CrmMuni> list = null;
+		List<CrmMuni> list = (List<CrmMuni>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
-		if (retrieveFromCache) {
-			list = (List<CrmMuni>)finderCache.getResult(finderPath, finderArgs,
-					this);
+		if ((list != null) && !list.isEmpty()) {
+			for (CrmMuni crmMuni : list) {
+				if (!zipCode.equals(crmMuni.getZipCode())) {
+					list = null;
 
-			if ((list != null) && !list.isEmpty()) {
-				for (CrmMuni crmMuni : list) {
-					if (!Objects.equals(zipCode, crmMuni.getZipCode())) {
-						list = null;
-
-						break;
-					}
+					break;
 				}
 			}
 		}
@@ -1590,8 +1567,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1601,10 +1578,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -1614,11 +1588,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			}
 
 			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else
-			 if (pagination) {
+			else if (pagination) {
 				query.append(CrmMuniModelImpl.ORDER_BY_JPQL);
 			}
 
@@ -1638,16 +1611,16 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				}
 
 				if (!pagination) {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -1676,9 +1649,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByZipCode_First(String zipCode,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByZipCode_First(
+			String zipCode, OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByZipCode_First(zipCode, orderByComparator);
 
 		if (crmMuni != null) {
@@ -1705,8 +1679,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the first matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByZipCode_First(String zipCode,
-		OrderByComparator<CrmMuni> orderByComparator) {
+	public CrmMuni fetchByZipCode_First(
+		String zipCode, OrderByComparator<CrmMuni> orderByComparator) {
+
 		List<CrmMuni> list = findByZipCode(zipCode, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1725,9 +1700,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni findByZipCode_Last(String zipCode,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni findByZipCode_Last(
+			String zipCode, OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByZipCode_Last(zipCode, orderByComparator);
 
 		if (crmMuni != null) {
@@ -1754,16 +1730,17 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @return the last matching CRM Muni, or <code>null</code> if a matching CRM Muni could not be found
 	 */
 	@Override
-	public CrmMuni fetchByZipCode_Last(String zipCode,
-		OrderByComparator<CrmMuni> orderByComparator) {
+	public CrmMuni fetchByZipCode_Last(
+		String zipCode, OrderByComparator<CrmMuni> orderByComparator) {
+
 		int count = countByZipCode(zipCode);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CrmMuni> list = findByZipCode(zipCode, count - 1, count,
-				orderByComparator);
+		List<CrmMuni> list = findByZipCode(
+			zipCode, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1782,9 +1759,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * @throws NoSuchCrmMuniException if a CRM Muni with the primary key could not be found
 	 */
 	@Override
-	public CrmMuni[] findByZipCode_PrevAndNext(long crmMuniId, String zipCode,
-		OrderByComparator<CrmMuni> orderByComparator)
+	public CrmMuni[] findByZipCode_PrevAndNext(
+			long crmMuniId, String zipCode,
+			OrderByComparator<CrmMuni> orderByComparator)
 		throws NoSuchCrmMuniException {
+
+		zipCode = Objects.toString(zipCode, "");
+
 		CrmMuni crmMuni = findByPrimaryKey(crmMuniId);
 
 		Session session = null;
@@ -1794,13 +1775,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			CrmMuni[] array = new CrmMuniImpl[3];
 
-			array[0] = getByZipCode_PrevAndNext(session, crmMuni, zipCode,
-					orderByComparator, true);
+			array[0] = getByZipCode_PrevAndNext(
+				session, crmMuni, zipCode, orderByComparator, true);
 
 			array[1] = crmMuni;
 
-			array[2] = getByZipCode_PrevAndNext(session, crmMuni, zipCode,
-					orderByComparator, false);
+			array[2] = getByZipCode_PrevAndNext(
+				session, crmMuni, zipCode, orderByComparator, false);
 
 			return array;
 		}
@@ -1812,14 +1793,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 	}
 
-	protected CrmMuni getByZipCode_PrevAndNext(Session session,
-		CrmMuni crmMuni, String zipCode,
+	protected CrmMuni getByZipCode_PrevAndNext(
+		Session session, CrmMuni crmMuni, String zipCode,
 		OrderByComparator<CrmMuni> orderByComparator, boolean previous) {
+
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
+			query = new StringBundler(
+				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
@@ -1830,10 +1812,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 		boolean bindZipCode = false;
 
-		if (zipCode == null) {
-			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-		}
-		else if (zipCode.equals("")) {
+		if (zipCode.isEmpty()) {
 			query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 		}
 		else {
@@ -1843,7 +1822,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 
 		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+			String[] orderByConditionFields =
+				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
 				query.append(WHERE_AND);
@@ -1915,10 +1895,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		}
 
 		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(crmMuni);
+			for (Object orderByConditionValue :
+					orderByComparator.getOrderByConditionValues(crmMuni)) {
 
-			for (Object value : values) {
-				qPos.add(value);
+				qPos.add(orderByConditionValue);
 			}
 		}
 
@@ -1939,8 +1919,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public void removeByZipCode(String zipCode) {
-		for (CrmMuni crmMuni : findByZipCode(zipCode, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
+		for (CrmMuni crmMuni :
+				findByZipCode(
+					zipCode, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
 			remove(crmMuni);
 		}
 	}
@@ -1953,9 +1935,11 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public int countByZipCode(String zipCode) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_ZIPCODE;
+		zipCode = Objects.toString(zipCode, "");
 
-		Object[] finderArgs = new Object[] { zipCode };
+		FinderPath finderPath = _finderPathCountByZipCode;
+
+		Object[] finderArgs = new Object[] {zipCode};
 
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
@@ -1966,10 +1950,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 			boolean bindZipCode = false;
 
-			if (zipCode == null) {
-				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_1);
-			}
-			else if (zipCode.equals("")) {
+			if (zipCode.isEmpty()) {
 				query.append(_FINDER_COLUMN_ZIPCODE_ZIPCODE_3);
 			}
 			else {
@@ -2010,22 +1991,24 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_1 = "crmMuni.zipCode IS NULL";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 = "crmMuni.zipCode = ?";
-	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 = "(crmMuni.zipCode IS NULL OR crmMuni.zipCode = '')";
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_2 =
+		"crmMuni.zipCode = ?";
+
+	private static final String _FINDER_COLUMN_ZIPCODE_ZIPCODE_3 =
+		"(crmMuni.zipCode IS NULL OR crmMuni.zipCode = '')";
 
 	public CrmMuniPersistenceImpl() {
 		setModelClass(CrmMuni.class);
 
+		Map<String, String> dbColumnNames = new HashMap<String, String>();
+
+		dbColumnNames.put("uuid", "uuid_");
+
 		try {
 			Field field = BasePersistenceImpl.class.getDeclaredField(
-					"_dbColumnNames");
+				"_dbColumnNames");
 
 			field.setAccessible(true);
-
-			Map<String, String> dbColumnNames = new HashMap<String, String>();
-
-			dbColumnNames.put("uuid", "uuid_");
 
 			field.set(this, dbColumnNames);
 		}
@@ -2043,11 +2026,13 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public void cacheResult(CrmMuni crmMuni) {
-		entityCache.putResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniImpl.class, crmMuni.getPrimaryKey(), crmMuni);
+		entityCache.putResult(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+			crmMuni.getPrimaryKey(), crmMuni);
 
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { crmMuni.getUuid(), crmMuni.getGroupId() }, crmMuni);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G,
+			new Object[] {crmMuni.getUuid(), crmMuni.getGroupId()}, crmMuni);
 
 		crmMuni.resetOriginalValues();
 	}
@@ -2060,8 +2045,10 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public void cacheResult(List<CrmMuni> crmMunis) {
 		for (CrmMuni crmMuni : crmMunis) {
-			if (entityCache.getResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-						CrmMuniImpl.class, crmMuni.getPrimaryKey()) == null) {
+			if (entityCache.getResult(
+					CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+					crmMuni.getPrimaryKey()) == null) {
+
 				cacheResult(crmMuni);
 			}
 			else {
@@ -2074,7 +2061,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Clears the cache for all CRM Munis.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
@@ -2090,13 +2077,14 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Clears the cache for the CRM Muni.
 	 *
 	 * <p>
-	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
+	 * The <code>EntityCache</code> and <code>FinderCache</code> are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(CrmMuni crmMuni) {
-		entityCache.removeResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniImpl.class, crmMuni.getPrimaryKey());
+		entityCache.removeResult(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+			crmMuni.getPrimaryKey());
 
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
@@ -2110,8 +2098,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (CrmMuni crmMuni : crmMunis) {
-			entityCache.removeResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-				CrmMuniImpl.class, crmMuni.getPrimaryKey());
+			entityCache.removeResult(
+				CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+				crmMuni.getPrimaryKey());
 
 			clearUniqueFindersCache((CrmMuniModelImpl)crmMuni, true);
 		}
@@ -2119,35 +2108,37 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 	protected void cacheUniqueFindersCache(CrmMuniModelImpl crmMuniModelImpl) {
 		Object[] args = new Object[] {
+			crmMuniModelImpl.getUuid(), crmMuniModelImpl.getGroupId()
+		};
+
+		finderCache.putResult(
+			_finderPathCountByUUID_G, args, Long.valueOf(1), false);
+		finderCache.putResult(
+			_finderPathFetchByUUID_G, args, crmMuniModelImpl, false);
+	}
+
+	protected void clearUniqueFindersCache(
+		CrmMuniModelImpl crmMuniModelImpl, boolean clearCurrent) {
+
+		if (clearCurrent) {
+			Object[] args = new Object[] {
 				crmMuniModelImpl.getUuid(), crmMuniModelImpl.getGroupId()
 			};
 
-		finderCache.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-			Long.valueOf(1), false);
-		finderCache.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-			crmMuniModelImpl, false);
-	}
-
-	protected void clearUniqueFindersCache(CrmMuniModelImpl crmMuniModelImpl,
-		boolean clearCurrent) {
-		if (clearCurrent) {
-			Object[] args = new Object[] {
-					crmMuniModelImpl.getUuid(), crmMuniModelImpl.getGroupId()
-				};
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 
 		if ((crmMuniModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			Object[] args = new Object[] {
-					crmMuniModelImpl.getOriginalUuid(),
-					crmMuniModelImpl.getOriginalGroupId()
-				};
+			 _finderPathFetchByUUID_G.getColumnBitmask()) != 0) {
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			finderCache.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+			Object[] args = new Object[] {
+				crmMuniModelImpl.getOriginalUuid(),
+				crmMuniModelImpl.getOriginalGroupId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUUID_G, args);
+			finderCache.removeResult(_finderPathFetchByUUID_G, args);
 		}
 	}
 
@@ -2168,7 +2159,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 		crmMuni.setUuid(uuid);
 
-		crmMuni.setCompanyId(companyProvider.getCompanyId());
+		crmMuni.setCompanyId(CompanyThreadLocal.getCompanyId());
 
 		return crmMuni;
 	}
@@ -2195,20 +2186,22 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public CrmMuni remove(Serializable primaryKey)
 		throws NoSuchCrmMuniException {
+
 		Session session = null;
 
 		try {
 			session = openSession();
 
-			CrmMuni crmMuni = (CrmMuni)session.get(CrmMuniImpl.class, primaryKey);
+			CrmMuni crmMuni = (CrmMuni)session.get(
+				CrmMuniImpl.class, primaryKey);
 
 			if (crmMuni == null) {
 				if (_log.isDebugEnabled()) {
 					_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchCrmMuniException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-					primaryKey);
+				throw new NoSuchCrmMuniException(
+					_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
 			return remove(crmMuni);
@@ -2232,8 +2225,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			session = openSession();
 
 			if (!session.contains(crmMuni)) {
-				crmMuni = (CrmMuni)session.get(CrmMuniImpl.class,
-						crmMuni.getPrimaryKeyObj());
+				crmMuni = (CrmMuni)session.get(
+					CrmMuniImpl.class, crmMuni.getPrimaryKeyObj());
 			}
 
 			if (crmMuni != null) {
@@ -2266,12 +2259,12 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 				throw new IllegalArgumentException(
 					"Implement ModelWrapper in crmMuni proxy " +
-					invocationHandler.getClass());
+						invocationHandler.getClass());
 			}
 
 			throw new IllegalArgumentException(
 				"Implement ModelWrapper in custom CrmMuni implementation " +
-				crmMuni.getClass());
+					crmMuni.getClass());
 		}
 
 		CrmMuniModelImpl crmMuniModelImpl = (CrmMuniModelImpl)crmMuni;
@@ -2282,7 +2275,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			crmMuni.setUuid(uuid);
 		}
 
-		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+		ServiceContext serviceContext =
+			ServiceContextThreadLocal.getServiceContext();
 
 		Date now = new Date();
 
@@ -2330,90 +2324,96 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		if (!CrmMuniModelImpl.COLUMN_BITMASK_ENABLED) {
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
-		else
-		 if (isNew) {
-			Object[] args = new Object[] { crmMuniModelImpl.getUuid() };
+		else if (isNew) {
+			Object[] args = new Object[] {crmMuniModelImpl.getUuid()};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-				args);
+			finderCache.removeResult(_finderPathCountByUuid, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid, args);
 
 			args = new Object[] {
+				crmMuniModelImpl.getUuid(), crmMuniModelImpl.getCompanyId()
+			};
+
+			finderCache.removeResult(_finderPathCountByUuid_C, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByUuid_C, args);
+
+			args = new Object[] {crmMuniModelImpl.getZipCode()};
+
+			finderCache.removeResult(_finderPathCountByZipCode, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByZipCode, args);
+
+			finderCache.removeResult(_finderPathCountAll, FINDER_ARGS_EMPTY);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
+		}
+		else {
+			if ((crmMuniModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmMuniModelImpl.getOriginalUuid()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+
+				args = new Object[] {crmMuniModelImpl.getUuid()};
+
+				finderCache.removeResult(_finderPathCountByUuid, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid, args);
+			}
+
+			if ((crmMuniModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByUuid_C.getColumnBitmask()) !=
+					 0) {
+
+				Object[] args = new Object[] {
+					crmMuniModelImpl.getOriginalUuid(),
+					crmMuniModelImpl.getOriginalCompanyId()
+				};
+
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
+
+				args = new Object[] {
 					crmMuniModelImpl.getUuid(), crmMuniModelImpl.getCompanyId()
 				};
 
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-				args);
-
-			args = new Object[] { crmMuniModelImpl.getZipCode() };
-
-			finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-				args);
-
-			finderCache.removeResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY);
-			finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL,
-				FINDER_ARGS_EMPTY);
-		}
-
-		else {
-			if ((crmMuniModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] { crmMuniModelImpl.getOriginalUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
-
-				args = new Object[] { crmMuniModelImpl.getUuid() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
-					args);
+				finderCache.removeResult(_finderPathCountByUuid_C, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByUuid_C, args);
 			}
 
 			if ((crmMuniModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C.getColumnBitmask()) != 0) {
+				 _finderPathWithoutPaginationFindByZipCode.
+					 getColumnBitmask()) != 0) {
+
 				Object[] args = new Object[] {
-						crmMuniModelImpl.getOriginalUuid(),
-						crmMuniModelImpl.getOriginalCompanyId()
-					};
+					crmMuniModelImpl.getOriginalZipCode()
+				};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 
-				args = new Object[] {
-						crmMuniModelImpl.getUuid(),
-						crmMuniModelImpl.getCompanyId()
-					};
+				args = new Object[] {crmMuniModelImpl.getZipCode()};
 
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
-					args);
-			}
-
-			if ((crmMuniModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						crmMuniModelImpl.getOriginalZipCode()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
-
-				args = new Object[] { crmMuniModelImpl.getZipCode() };
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_ZIPCODE, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ZIPCODE,
-					args);
+				finderCache.removeResult(_finderPathCountByZipCode, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByZipCode, args);
 			}
 		}
 
-		entityCache.putResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-			CrmMuniImpl.class, crmMuni.getPrimaryKey(), crmMuni, false);
+		entityCache.putResult(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+			crmMuni.getPrimaryKey(), crmMuni, false);
 
 		clearUniqueFindersCache(crmMuniModelImpl, false);
 		cacheUniqueFindersCache(crmMuniModelImpl);
@@ -2424,7 +2424,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	}
 
 	/**
-	 * Returns the CRM Muni with the primary key or throws a {@link com.liferay.portal.kernel.exception.NoSuchModelException} if it could not be found.
+	 * Returns the CRM Muni with the primary key or throws a <code>com.liferay.portal.kernel.exception.NoSuchModelException</code> if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the CRM Muni
 	 * @return the CRM Muni
@@ -2433,6 +2433,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public CrmMuni findByPrimaryKey(Serializable primaryKey)
 		throws NoSuchCrmMuniException {
+
 		CrmMuni crmMuni = fetchByPrimaryKey(primaryKey);
 
 		if (crmMuni == null) {
@@ -2440,15 +2441,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				_log.debug(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchCrmMuniException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
-				primaryKey);
+			throw new NoSuchCrmMuniException(
+				_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 		}
 
 		return crmMuni;
 	}
 
 	/**
-	 * Returns the CRM Muni with the primary key or throws a {@link NoSuchCrmMuniException} if it could not be found.
+	 * Returns the CRM Muni with the primary key or throws a <code>NoSuchCrmMuniException</code> if it could not be found.
 	 *
 	 * @param crmMuniId the primary key of the CRM Muni
 	 * @return the CRM Muni
@@ -2457,6 +2458,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public CrmMuni findByPrimaryKey(long crmMuniId)
 		throws NoSuchCrmMuniException {
+
 		return findByPrimaryKey((Serializable)crmMuniId);
 	}
 
@@ -2468,8 +2470,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public CrmMuni fetchByPrimaryKey(Serializable primaryKey) {
-		Serializable serializable = entityCache.getResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-				CrmMuniImpl.class, primaryKey);
+		Serializable serializable = entityCache.getResult(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+			primaryKey);
 
 		if (serializable == nullModel) {
 			return null;
@@ -2489,13 +2492,15 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 					cacheResult(crmMuni);
 				}
 				else {
-					entityCache.putResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(
+						CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
 						CrmMuniImpl.class, primaryKey, nullModel);
 				}
 			}
 			catch (Exception e) {
-				entityCache.removeResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-					CrmMuniImpl.class, primaryKey);
+				entityCache.removeResult(
+					CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+					primaryKey);
 
 				throw processException(e);
 			}
@@ -2521,6 +2526,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	@Override
 	public Map<Serializable, CrmMuni> fetchByPrimaryKeys(
 		Set<Serializable> primaryKeys) {
+
 		if (primaryKeys.isEmpty()) {
 			return Collections.emptyMap();
 		}
@@ -2544,8 +2550,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		Set<Serializable> uncachedPrimaryKeys = null;
 
 		for (Serializable primaryKey : primaryKeys) {
-			Serializable serializable = entityCache.getResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-					CrmMuniImpl.class, primaryKey);
+			Serializable serializable = entityCache.getResult(
+				CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+				primaryKey);
 
 			if (serializable != nullModel) {
 				if (serializable == null) {
@@ -2565,8 +2572,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			return map;
 		}
 
-		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
-				1);
+		StringBundler query = new StringBundler(
+			uncachedPrimaryKeys.size() * 2 + 1);
 
 		query.append(_SQL_SELECT_CRMMUNI_WHERE_PKS_IN);
 
@@ -2598,8 +2605,9 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 			}
 
 			for (Serializable primaryKey : uncachedPrimaryKeys) {
-				entityCache.putResult(CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
-					CrmMuniImpl.class, primaryKey, nullModel);
+				entityCache.putResult(
+					CrmMuniModelImpl.ENTITY_CACHE_ENABLED, CrmMuniImpl.class,
+					primaryKey, nullModel);
 			}
 		}
 		catch (Exception e) {
@@ -2626,7 +2634,7 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns a range of all the CRM Munis.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Munis
@@ -2642,70 +2650,72 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Returns an ordered range of all the CRM Munis.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of CRM Munis
 	 */
+	@Deprecated
 	@Override
-	public List<CrmMuni> findAll(int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator) {
-		return findAll(start, end, orderByComparator, true);
+	public List<CrmMuni> findAll(
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator,
+		boolean useFinderCache) {
+
+		return findAll(start, end, orderByComparator);
 	}
 
 	/**
 	 * Returns an ordered range of all the CRM Munis.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link CrmMuniModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CrmMuniModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Munis
 	 * @param end the upper bound of the range of CRM Munis (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
 	 * @return the ordered range of CRM Munis
 	 */
 	@Override
-	public List<CrmMuni> findAll(int start, int end,
-		OrderByComparator<CrmMuni> orderByComparator, boolean retrieveFromCache) {
+	public List<CrmMuni> findAll(
+		int start, int end, OrderByComparator<CrmMuni> orderByComparator) {
+
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
+			(orderByComparator == null)) {
+
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_ALL;
+			finderPath = _finderPathWithoutPaginationFindAll;
 			finderArgs = FINDER_ARGS_EMPTY;
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_ALL;
-			finderArgs = new Object[] { start, end, orderByComparator };
+			finderPath = _finderPathWithPaginationFindAll;
+			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<CrmMuni> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<CrmMuni>)finderCache.getResult(finderPath, finderArgs,
-					this);
-		}
+		List<CrmMuni> list = (List<CrmMuni>)finderCache.getResult(
+			finderPath, finderArgs, this);
 
 		if (list == null) {
 			StringBundler query = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 2));
+				query = new StringBundler(
+					2 + (orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CRMMUNI);
 
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
 				sql = query.toString();
 			}
@@ -2725,16 +2735,16 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 				Query q = session.createQuery(sql);
 
 				if (!pagination) {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end, false);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end, false);
 
 					Collections.sort(list);
 
 					list = Collections.unmodifiableList(list);
 				}
 				else {
-					list = (List<CrmMuni>)QueryUtil.list(q, getDialect(),
-							start, end);
+					list = (List<CrmMuni>)QueryUtil.list(
+						q, getDialect(), start, end);
 				}
 
 				cacheResult(list);
@@ -2772,8 +2782,8 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 */
 	@Override
 	public int countAll() {
-		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
-				FINDER_ARGS_EMPTY, this);
+		Long count = (Long)finderCache.getResult(
+			_finderPathCountAll, FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
 			Session session = null;
@@ -2785,12 +2795,12 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 
 				count = (Long)q.uniqueResult();
 
-				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
-					count);
+				finderCache.putResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
 			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY);
+				finderCache.removeResult(
+					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
 				throw processException(e);
 			}
@@ -2816,6 +2826,107 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 	 * Initializes the CRM Muni persistence.
 	 */
 	public void afterPropertiesSet() {
+		_finderPathWithPaginationFindAll = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findAll", new String[0]);
+
+		_finderPathWithoutPaginationFindAll = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findAll",
+			new String[0]);
+
+		_finderPathCountAll = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
+			new String[0]);
+
+		_finderPathWithPaginationFindByUuid = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
+			new String[] {String.class.getName()},
+			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
+			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
+			new String[] {String.class.getName()});
+
+		_finderPathFetchByUUID_G = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
+			CrmMuniModelImpl.GROUPID_COLUMN_BITMASK);
+
+		_finderPathCountByUUID_G = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByUuid_C = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByUuid_C = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()},
+			CrmMuniModelImpl.UUID_COLUMN_BITMASK |
+			CrmMuniModelImpl.COMPANYID_COLUMN_BITMASK |
+			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByUuid_C = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
+			new String[] {String.class.getName(), Long.class.getName()});
+
+		_finderPathWithPaginationFindByZipCode = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByZipCode",
+			new String[] {
+				String.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByZipCode = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, CrmMuniImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByZipCode",
+			new String[] {String.class.getName()},
+			CrmMuniModelImpl.ZIPCODE_COLUMN_BITMASK |
+			CrmMuniModelImpl.NAME_COLUMN_BITMASK);
+
+		_finderPathCountByZipCode = new FinderPath(
+			CrmMuniModelImpl.ENTITY_CACHE_ENABLED,
+			CrmMuniModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByZipCode",
+			new String[] {String.class.getName()});
 	}
 
 	public void destroy() {
@@ -2825,22 +2936,39 @@ public class CrmMuniPersistenceImpl extends BasePersistenceImpl<CrmMuni>
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
-	@ServiceReference(type = CompanyProviderWrapper.class)
-	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
+
 	@ServiceReference(type = FinderCache.class)
 	protected FinderCache finderCache;
-	private static final String _SQL_SELECT_CRMMUNI = "SELECT crmMuni FROM CrmMuni crmMuni";
-	private static final String _SQL_SELECT_CRMMUNI_WHERE_PKS_IN = "SELECT crmMuni FROM CrmMuni crmMuni WHERE crmMuniId IN (";
-	private static final String _SQL_SELECT_CRMMUNI_WHERE = "SELECT crmMuni FROM CrmMuni crmMuni WHERE ";
-	private static final String _SQL_COUNT_CRMMUNI = "SELECT COUNT(crmMuni) FROM CrmMuni crmMuni";
-	private static final String _SQL_COUNT_CRMMUNI_WHERE = "SELECT COUNT(crmMuni) FROM CrmMuni crmMuni WHERE ";
+
+	private static final String _SQL_SELECT_CRMMUNI =
+		"SELECT crmMuni FROM CrmMuni crmMuni";
+
+	private static final String _SQL_SELECT_CRMMUNI_WHERE_PKS_IN =
+		"SELECT crmMuni FROM CrmMuni crmMuni WHERE crmMuniId IN (";
+
+	private static final String _SQL_SELECT_CRMMUNI_WHERE =
+		"SELECT crmMuni FROM CrmMuni crmMuni WHERE ";
+
+	private static final String _SQL_COUNT_CRMMUNI =
+		"SELECT COUNT(crmMuni) FROM CrmMuni crmMuni";
+
+	private static final String _SQL_COUNT_CRMMUNI_WHERE =
+		"SELECT COUNT(crmMuni) FROM CrmMuni crmMuni WHERE ";
+
 	private static final String _ORDER_BY_ENTITY_ALIAS = "crmMuni.";
-	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No CrmMuni exists with the primary key ";
-	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No CrmMuni exists with the key {";
-	private static final Log _log = LogFactoryUtil.getLog(CrmMuniPersistenceImpl.class);
-	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
-			});
+
+	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY =
+		"No CrmMuni exists with the primary key ";
+
+	private static final String _NO_SUCH_ENTITY_WITH_KEY =
+		"No CrmMuni exists with the key {";
+
+	private static final Log _log = LogFactoryUtil.getLog(
+		CrmMuniPersistenceImpl.class);
+
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(
+		new String[] {"uuid"});
+
 }

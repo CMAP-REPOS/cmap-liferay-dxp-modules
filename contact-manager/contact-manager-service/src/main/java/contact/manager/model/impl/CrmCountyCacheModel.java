@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmCounty in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmCounty
  * @generated
  */
 @ProviderType
-public class CrmCountyCacheModel implements CacheModel<CrmCounty>,
-	Externalizable {
+public class CrmCountyCacheModel
+	implements CacheModel<CrmCounty>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -167,8 +167,7 @@ public class CrmCountyCacheModel implements CacheModel<CrmCounty>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -219,4 +218,5 @@ public class CrmCountyCacheModel implements CacheModel<CrmCounty>,
 	public long modifiedDate;
 	public String name;
 	public String zipCode;
+
 }

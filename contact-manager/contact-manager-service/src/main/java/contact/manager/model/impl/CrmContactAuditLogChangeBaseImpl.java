@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmContactAuditLogChange;
-
 import contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil;
 
 /**
@@ -36,18 +35,22 @@ import contact.manager.service.CrmContactAuditLogChangeLocalServiceUtil;
 public abstract class CrmContactAuditLogChangeBaseImpl
 	extends CrmContactAuditLogChangeModelImpl
 	implements CrmContactAuditLogChange {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Contact Audit Log Change model instance should use the {@link CrmContactAuditLogChange} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Contact Audit Log Change model instance should use the <code>CrmContactAuditLogChange</code> interface instead.
 	 */
 	@Override
 	public void persist() {
 		if (this.isNew()) {
-			CrmContactAuditLogChangeLocalServiceUtil.addCrmContactAuditLogChange(this);
+			CrmContactAuditLogChangeLocalServiceUtil.
+				addCrmContactAuditLogChange(this);
 		}
 		else {
-			CrmContactAuditLogChangeLocalServiceUtil.updateCrmContactAuditLogChange(this);
+			CrmContactAuditLogChangeLocalServiceUtil.
+				updateCrmContactAuditLogChange(this);
 		}
 	}
+
 }

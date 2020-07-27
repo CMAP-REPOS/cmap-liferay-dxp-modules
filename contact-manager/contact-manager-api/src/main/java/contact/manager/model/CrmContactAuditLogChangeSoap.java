@@ -30,12 +30,16 @@ import java.util.List;
  */
 @ProviderType
 public class CrmContactAuditLogChangeSoap implements Serializable {
+
 	public static CrmContactAuditLogChangeSoap toSoapModel(
 		CrmContactAuditLogChange model) {
-		CrmContactAuditLogChangeSoap soapModel = new CrmContactAuditLogChangeSoap();
+
+		CrmContactAuditLogChangeSoap soapModel =
+			new CrmContactAuditLogChangeSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setCrmContactAuditLogChangeId(model.getCrmContactAuditLogChangeId());
+		soapModel.setCrmContactAuditLogChangeId(
+			model.getCrmContactAuditLogChangeId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -52,7 +56,9 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 
 	public static CrmContactAuditLogChangeSoap[] toSoapModels(
 		CrmContactAuditLogChange[] models) {
-		CrmContactAuditLogChangeSoap[] soapModels = new CrmContactAuditLogChangeSoap[models.length];
+
+		CrmContactAuditLogChangeSoap[] soapModels =
+			new CrmContactAuditLogChangeSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -63,10 +69,13 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 
 	public static CrmContactAuditLogChangeSoap[][] toSoapModels(
 		CrmContactAuditLogChange[][] models) {
+
 		CrmContactAuditLogChangeSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CrmContactAuditLogChangeSoap[models.length][models[0].length];
+			soapModels =
+				new CrmContactAuditLogChangeSoap
+					[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CrmContactAuditLogChangeSoap[0][0];
@@ -81,13 +90,16 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 
 	public static CrmContactAuditLogChangeSoap[] toSoapModels(
 		List<CrmContactAuditLogChange> models) {
-		List<CrmContactAuditLogChangeSoap> soapModels = new ArrayList<CrmContactAuditLogChangeSoap>(models.size());
+
+		List<CrmContactAuditLogChangeSoap> soapModels =
+			new ArrayList<CrmContactAuditLogChangeSoap>(models.size());
 
 		for (CrmContactAuditLogChange model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new CrmContactAuditLogChangeSoap[soapModels.size()]);
+		return soapModels.toArray(
+			new CrmContactAuditLogChangeSoap[soapModels.size()]);
 	}
 
 	public CrmContactAuditLogChangeSoap() {
@@ -209,4 +221,5 @@ public class CrmContactAuditLogChangeSoap implements Serializable {
 	private String _fieldName;
 	private String _oldValue;
 	private String _newValue;
+
 }

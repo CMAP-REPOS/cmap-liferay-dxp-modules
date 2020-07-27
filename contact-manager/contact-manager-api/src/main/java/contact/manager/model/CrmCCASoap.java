@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmCCASoap implements Serializable {
+
 	public static CrmCCASoap toSoapModel(CrmCCA model) {
 		CrmCCASoap soapModel = new CrmCCASoap();
 
@@ -185,4 +186,5 @@ public class CrmCCASoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _zipCode;
+
 }

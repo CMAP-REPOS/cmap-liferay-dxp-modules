@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmGroup;
-
 import contact.manager.service.CrmGroupLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmGroupLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmGroupBaseImpl extends CrmGroupModelImpl
-	implements CrmGroup {
+public abstract class CrmGroupBaseImpl
+	extends CrmGroupModelImpl implements CrmGroup {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Group model instance should use the {@link CrmGroup} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Group model instance should use the <code>CrmGroup</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmGroupBaseImpl extends CrmGroupModelImpl
 			CrmGroupLocalServiceUtil.updateCrmGroup(this);
 		}
 	}
+
 }

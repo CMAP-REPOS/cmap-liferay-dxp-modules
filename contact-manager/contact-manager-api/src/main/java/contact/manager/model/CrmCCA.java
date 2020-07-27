@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCCAModel
- * @see contact.manager.model.impl.CrmCCAImpl
- * @see contact.manager.model.impl.CrmCCAModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmCCAImpl")
 @ProviderType
 public interface CrmCCA extends CrmCCAModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmCCAImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmCCAImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmCCA, Long> CRM_CCA_ID_ACCESSOR = new Accessor<CrmCCA, Long>() {
+	public static final Accessor<CrmCCA, Long> CRM_CCA_ID_ACCESSOR =
+		new Accessor<CrmCCA, Long>() {
+
 			@Override
 			public Long get(CrmCCA crmCCA) {
 				return crmCCA.getCrmCCAId();
@@ -52,5 +53,7 @@ public interface CrmCCA extends CrmCCAModel, PersistedModel {
 			public Class<CrmCCA> getTypeClass() {
 				return CrmCCA.class;
 			}
+
 		};
+
 }

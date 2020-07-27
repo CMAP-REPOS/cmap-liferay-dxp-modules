@@ -25,34 +25,38 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerModel
- * @see contact.manager.model.impl.CrmCountyCommissionerImpl
- * @see contact.manager.model.impl.CrmCountyCommissionerModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmCountyCommissionerImpl")
 @ProviderType
-public interface CrmCountyCommissioner extends CrmCountyCommissionerModel,
-	PersistedModel {
+public interface CrmCountyCommissioner
+	extends CrmCountyCommissionerModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmCountyCommissionerImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmCountyCommissionerImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmCountyCommissioner, Long> CRM_COUNTY_COMMISSIONER_OR_BOARD_DIST_ID_ACCESSOR =
-		new Accessor<CrmCountyCommissioner, Long>() {
-			@Override
-			public Long get(CrmCountyCommissioner crmCountyCommissioner) {
-				return crmCountyCommissioner.getCrmCountyCommissionerOrBoardDistId();
-			}
+	public static final Accessor<CrmCountyCommissioner, Long>
+		CRM_COUNTY_COMMISSIONER_OR_BOARD_DIST_ID_ACCESSOR =
+			new Accessor<CrmCountyCommissioner, Long>() {
 
-			@Override
-			public Class<Long> getAttributeClass() {
-				return Long.class;
-			}
+				@Override
+				public Long get(CrmCountyCommissioner crmCountyCommissioner) {
+					return crmCountyCommissioner.
+						getCrmCountyCommissionerOrBoardDistId();
+				}
 
-			@Override
-			public Class<CrmCountyCommissioner> getTypeClass() {
-				return CrmCountyCommissioner.class;
-			}
-		};
+				@Override
+				public Class<Long> getAttributeClass() {
+					return Long.class;
+				}
+
+				@Override
+				public Class<CrmCountyCommissioner> getTypeClass() {
+					return CrmCountyCommissioner.class;
+				}
+
+			};
+
 }

@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -40,10 +38,12 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
-	ModelWrapper<CrmCountyCommissioner> {
+public class CrmCountyCommissionerWrapper
+	implements CrmCountyCommissioner, ModelWrapper<CrmCountyCommissioner> {
+
 	public CrmCountyCommissionerWrapper(
 		CrmCountyCommissioner crmCountyCommissioner) {
+
 		_crmCountyCommissioner = crmCountyCommissioner;
 	}
 
@@ -62,7 +62,8 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("crmCountyCommissionerOrBoardDistId",
+		attributes.put(
+			"crmCountyCommissionerOrBoardDistId",
 			getCrmCountyCommissionerOrBoardDistId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
@@ -86,10 +87,11 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 		}
 
 		Long crmCountyCommissionerOrBoardDistId = (Long)attributes.get(
-				"crmCountyCommissionerOrBoardDistId");
+			"crmCountyCommissionerOrBoardDistId");
 
 		if (crmCountyCommissionerOrBoardDistId != null) {
-			setCrmCountyCommissionerOrBoardDistId(crmCountyCommissionerOrBoardDistId);
+			setCrmCountyCommissionerOrBoardDistId(
+				crmCountyCommissionerOrBoardDistId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -149,39 +151,42 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 
 	@Override
 	public Object clone() {
-		return new CrmCountyCommissionerWrapper((CrmCountyCommissioner)_crmCountyCommissioner.clone());
+		return new CrmCountyCommissionerWrapper(
+			(CrmCountyCommissioner)_crmCountyCommissioner.clone());
 	}
 
 	@Override
-	public int compareTo(CrmCountyCommissioner crmCountyCommissioner) {
+	public int compareTo(
+		contact.manager.model.CrmCountyCommissioner crmCountyCommissioner) {
+
 		return _crmCountyCommissioner.compareTo(crmCountyCommissioner);
 	}
 
 	/**
-	* Returns the company ID of this CRM County Commissioner.
-	*
-	* @return the company ID of this CRM County Commissioner
-	*/
+	 * Returns the company ID of this CRM County Commissioner.
+	 *
+	 * @return the company ID of this CRM County Commissioner
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmCountyCommissioner.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM County Commissioner.
-	*
-	* @return the create date of this CRM County Commissioner
-	*/
+	 * Returns the create date of this CRM County Commissioner.
+	 *
+	 * @return the create date of this CRM County Commissioner
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmCountyCommissioner.getCreateDate();
 	}
 
 	/**
-	* Returns the crm county commissioner or board dist ID of this CRM County Commissioner.
-	*
-	* @return the crm county commissioner or board dist ID of this CRM County Commissioner
-	*/
+	 * Returns the crm county commissioner or board dist ID of this CRM County Commissioner.
+	 *
+	 * @return the crm county commissioner or board dist ID of this CRM County Commissioner
+	 */
 	@Override
 	public long getCrmCountyCommissionerOrBoardDistId() {
 		return _crmCountyCommissioner.getCrmCountyCommissionerOrBoardDistId();
@@ -193,50 +198,50 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Returns the group ID of this CRM County Commissioner.
-	*
-	* @return the group ID of this CRM County Commissioner
-	*/
+	 * Returns the group ID of this CRM County Commissioner.
+	 *
+	 * @return the group ID of this CRM County Commissioner
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmCountyCommissioner.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM County Commissioner.
-	*
-	* @return the modified date of this CRM County Commissioner
-	*/
+	 * Returns the modified date of this CRM County Commissioner.
+	 *
+	 * @return the modified date of this CRM County Commissioner
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmCountyCommissioner.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this CRM County Commissioner.
-	*
-	* @return the name of this CRM County Commissioner
-	*/
+	 * Returns the name of this CRM County Commissioner.
+	 *
+	 * @return the name of this CRM County Commissioner
+	 */
 	@Override
 	public String getName() {
 		return _crmCountyCommissioner.getName();
 	}
 
 	/**
-	* Returns the number of this CRM County Commissioner.
-	*
-	* @return the number of this CRM County Commissioner
-	*/
+	 * Returns the number of this CRM County Commissioner.
+	 *
+	 * @return the number of this CRM County Commissioner
+	 */
 	@Override
 	public String getNumber() {
 		return _crmCountyCommissioner.getNumber();
 	}
 
 	/**
-	* Returns the primary key of this CRM County Commissioner.
-	*
-	* @return the primary key of this CRM County Commissioner
-	*/
+	 * Returns the primary key of this CRM County Commissioner.
+	 *
+	 * @return the primary key of this CRM County Commissioner
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmCountyCommissioner.getPrimaryKey();
@@ -248,50 +253,50 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Returns the user ID of this CRM County Commissioner.
-	*
-	* @return the user ID of this CRM County Commissioner
-	*/
+	 * Returns the user ID of this CRM County Commissioner.
+	 *
+	 * @return the user ID of this CRM County Commissioner
+	 */
 	@Override
 	public long getUserId() {
 		return _crmCountyCommissioner.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM County Commissioner.
-	*
-	* @return the user name of this CRM County Commissioner
-	*/
+	 * Returns the user name of this CRM County Commissioner.
+	 *
+	 * @return the user name of this CRM County Commissioner
+	 */
 	@Override
 	public String getUserName() {
 		return _crmCountyCommissioner.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM County Commissioner.
-	*
-	* @return the user uuid of this CRM County Commissioner
-	*/
+	 * Returns the user uuid of this CRM County Commissioner.
+	 *
+	 * @return the user uuid of this CRM County Commissioner
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmCountyCommissioner.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM County Commissioner.
-	*
-	* @return the uuid of this CRM County Commissioner
-	*/
+	 * Returns the uuid of this CRM County Commissioner.
+	 *
+	 * @return the uuid of this CRM County Commissioner
+	 */
 	@Override
 	public String getUuid() {
 		return _crmCountyCommissioner.getUuid();
 	}
 
 	/**
-	* Returns the zip code of this CRM County Commissioner.
-	*
-	* @return the zip code of this CRM County Commissioner
-	*/
+	 * Returns the zip code of this CRM County Commissioner.
+	 *
+	 * @return the zip code of this CRM County Commissioner
+	 */
 	@Override
 	public String getZipCode() {
 		return _crmCountyCommissioner.getZipCode();
@@ -328,39 +333,42 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Sets the company ID of this CRM County Commissioner.
-	*
-	* @param companyId the company ID of this CRM County Commissioner
-	*/
+	 * Sets the company ID of this CRM County Commissioner.
+	 *
+	 * @param companyId the company ID of this CRM County Commissioner
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmCountyCommissioner.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM County Commissioner.
-	*
-	* @param createDate the create date of this CRM County Commissioner
-	*/
+	 * Sets the create date of this CRM County Commissioner.
+	 *
+	 * @param createDate the create date of this CRM County Commissioner
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmCountyCommissioner.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm county commissioner or board dist ID of this CRM County Commissioner.
-	*
-	* @param crmCountyCommissionerOrBoardDistId the crm county commissioner or board dist ID of this CRM County Commissioner
-	*/
+	 * Sets the crm county commissioner or board dist ID of this CRM County Commissioner.
+	 *
+	 * @param crmCountyCommissionerOrBoardDistId the crm county commissioner or board dist ID of this CRM County Commissioner
+	 */
 	@Override
 	public void setCrmCountyCommissionerOrBoardDistId(
 		long crmCountyCommissionerOrBoardDistId) {
-		_crmCountyCommissioner.setCrmCountyCommissionerOrBoardDistId(crmCountyCommissionerOrBoardDistId);
+
+		_crmCountyCommissioner.setCrmCountyCommissionerOrBoardDistId(
+			crmCountyCommissionerOrBoardDistId);
 	}
 
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmCountyCommissioner.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -375,30 +383,30 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Sets the group ID of this CRM County Commissioner.
-	*
-	* @param groupId the group ID of this CRM County Commissioner
-	*/
+	 * Sets the group ID of this CRM County Commissioner.
+	 *
+	 * @param groupId the group ID of this CRM County Commissioner
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmCountyCommissioner.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM County Commissioner.
-	*
-	* @param modifiedDate the modified date of this CRM County Commissioner
-	*/
+	 * Sets the modified date of this CRM County Commissioner.
+	 *
+	 * @param modifiedDate the modified date of this CRM County Commissioner
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmCountyCommissioner.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this CRM County Commissioner.
-	*
-	* @param name the name of this CRM County Commissioner
-	*/
+	 * Sets the name of this CRM County Commissioner.
+	 *
+	 * @param name the name of this CRM County Commissioner
+	 */
 	@Override
 	public void setName(String name) {
 		_crmCountyCommissioner.setName(name);
@@ -410,20 +418,20 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Sets the number of this CRM County Commissioner.
-	*
-	* @param number the number of this CRM County Commissioner
-	*/
+	 * Sets the number of this CRM County Commissioner.
+	 *
+	 * @param number the number of this CRM County Commissioner
+	 */
 	@Override
 	public void setNumber(String number) {
 		_crmCountyCommissioner.setNumber(number);
 	}
 
 	/**
-	* Sets the primary key of this CRM County Commissioner.
-	*
-	* @param primaryKey the primary key of this CRM County Commissioner
-	*/
+	 * Sets the primary key of this CRM County Commissioner.
+	 *
+	 * @param primaryKey the primary key of this CRM County Commissioner
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmCountyCommissioner.setPrimaryKey(primaryKey);
@@ -435,63 +443,66 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	/**
-	* Sets the user ID of this CRM County Commissioner.
-	*
-	* @param userId the user ID of this CRM County Commissioner
-	*/
+	 * Sets the user ID of this CRM County Commissioner.
+	 *
+	 * @param userId the user ID of this CRM County Commissioner
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmCountyCommissioner.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM County Commissioner.
-	*
-	* @param userName the user name of this CRM County Commissioner
-	*/
+	 * Sets the user name of this CRM County Commissioner.
+	 *
+	 * @param userName the user name of this CRM County Commissioner
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmCountyCommissioner.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM County Commissioner.
-	*
-	* @param userUuid the user uuid of this CRM County Commissioner
-	*/
+	 * Sets the user uuid of this CRM County Commissioner.
+	 *
+	 * @param userUuid the user uuid of this CRM County Commissioner
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmCountyCommissioner.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM County Commissioner.
-	*
-	* @param uuid the uuid of this CRM County Commissioner
-	*/
+	 * Sets the uuid of this CRM County Commissioner.
+	 *
+	 * @param uuid the uuid of this CRM County Commissioner
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmCountyCommissioner.setUuid(uuid);
 	}
 
 	/**
-	* Sets the zip code of this CRM County Commissioner.
-	*
-	* @param zipCode the zip code of this CRM County Commissioner
-	*/
+	 * Sets the zip code of this CRM County Commissioner.
+	 *
+	 * @param zipCode the zip code of this CRM County Commissioner
+	 */
 	@Override
 	public void setZipCode(String zipCode) {
 		_crmCountyCommissioner.setZipCode(zipCode);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmCountyCommissioner> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmCountyCommissioner> toCacheModel() {
+
 		return _crmCountyCommissioner.toCacheModel();
 	}
 
 	@Override
-	public CrmCountyCommissioner toEscapedModel() {
-		return new CrmCountyCommissionerWrapper(_crmCountyCommissioner.toEscapedModel());
+	public contact.manager.model.CrmCountyCommissioner toEscapedModel() {
+		return new CrmCountyCommissionerWrapper(
+			_crmCountyCommissioner.toEscapedModel());
 	}
 
 	@Override
@@ -500,8 +511,9 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	@Override
-	public CrmCountyCommissioner toUnescapedModel() {
-		return new CrmCountyCommissionerWrapper(_crmCountyCommissioner.toUnescapedModel());
+	public contact.manager.model.CrmCountyCommissioner toUnescapedModel() {
+		return new CrmCountyCommissionerWrapper(
+			_crmCountyCommissioner.toUnescapedModel());
 	}
 
 	@Override
@@ -519,10 +531,13 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 			return false;
 		}
 
-		CrmCountyCommissionerWrapper crmCountyCommissionerWrapper = (CrmCountyCommissionerWrapper)obj;
+		CrmCountyCommissionerWrapper crmCountyCommissionerWrapper =
+			(CrmCountyCommissionerWrapper)obj;
 
-		if (Objects.equals(_crmCountyCommissioner,
-					crmCountyCommissionerWrapper._crmCountyCommissioner)) {
+		if (Objects.equals(
+				_crmCountyCommissioner,
+				crmCountyCommissionerWrapper._crmCountyCommissioner)) {
+
 			return true;
 		}
 
@@ -555,4 +570,5 @@ public class CrmCountyCommissionerWrapper implements CrmCountyCommissioner,
 	}
 
 	private final CrmCountyCommissioner _crmCountyCommissioner;
+
 }

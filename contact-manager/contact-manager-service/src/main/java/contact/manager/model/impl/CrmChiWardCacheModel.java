@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmChiWard in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmChiWard
  * @generated
  */
 @ProviderType
-public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
-	Externalizable {
+public class CrmChiWardCacheModel
+	implements CacheModel<CrmChiWard>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -167,8 +167,7 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -219,4 +218,5 @@ public class CrmChiWardCacheModel implements CacheModel<CrmChiWard>,
 	public long modifiedDate;
 	public String name;
 	public String zipCode;
+
 }

@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmNote;
-
 import contact.manager.service.CrmNoteLocalServiceUtil;
 
 /**
@@ -33,12 +32,13 @@ import contact.manager.service.CrmNoteLocalServiceUtil;
  * @generated
  */
 @ProviderType
-public abstract class CrmNoteBaseImpl extends CrmNoteModelImpl
-	implements CrmNote {
+public abstract class CrmNoteBaseImpl
+	extends CrmNoteModelImpl implements CrmNote {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Note model instance should use the {@link CrmNote} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Note model instance should use the <code>CrmNote</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -49,4 +49,5 @@ public abstract class CrmNoteBaseImpl extends CrmNoteModelImpl
 			CrmNoteLocalServiceUtil.updateCrmNote(this);
 		}
 	}
+
 }

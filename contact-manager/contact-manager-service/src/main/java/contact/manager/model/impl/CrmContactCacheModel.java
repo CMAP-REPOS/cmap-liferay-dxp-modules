@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmContact in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmContact
  * @generated
  */
 @ProviderType
-public class CrmContactCacheModel implements CacheModel<CrmContact>,
-	Externalizable {
+public class CrmContactCacheModel
+	implements CacheModel<CrmContact>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -514,8 +514,7 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -839,4 +838,5 @@ public class CrmContactCacheModel implements CacheModel<CrmContact>,
 	public long imageFileEntryId;
 	public String tagsList;
 	public String groupsList;
+
 }

@@ -21,7 +21,6 @@ import com.liferay.exportimport.kernel.lar.ManifestSummary;
 import com.liferay.exportimport.kernel.lar.PortletDataContext;
 import com.liferay.exportimport.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBManagerUtil;
@@ -50,7 +49,6 @@ import com.liferay.portal.kernel.util.PortalUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import contact.manager.model.CrmCounty;
-
 import contact.manager.service.CrmCountyLocalService;
 import contact.manager.service.persistence.CrmCCAPersistence;
 import contact.manager.service.persistence.CrmChiWardPersistence;
@@ -84,16 +82,17 @@ import javax.sql.DataSource;
  *
  * @author Brian Wing Shun Chan
  * @see contact.manager.service.impl.CrmCountyLocalServiceImpl
- * @see contact.manager.service.CrmCountyLocalServiceUtil
  * @generated
  */
 @ProviderType
-public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
+public abstract class CrmCountyLocalServiceBaseImpl
+	extends BaseLocalServiceImpl
 	implements CrmCountyLocalService, IdentifiableOSGiService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. Always use {@link contact.manager.service.CrmCountyLocalServiceUtil} to access the CRM County local service.
+	 * Never modify or reference this class directly. Use <code>CrmCountyLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>contact.manager.service.CrmCountyLocalServiceUtil</code>.
 	 */
 
 	/**
@@ -131,8 +130,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public CrmCounty deleteCrmCounty(long crmCountyId)
-		throws PortalException {
+	public CrmCounty deleteCrmCounty(long crmCountyId) throws PortalException {
 		return crmCountyPersistence.remove(crmCountyId);
 	}
 
@@ -152,8 +150,8 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public DynamicQuery dynamicQuery() {
 		Class<?> clazz = getClass();
 
-		return DynamicQueryFactoryUtil.forClass(CrmCounty.class,
-			clazz.getClassLoader());
+		return DynamicQueryFactoryUtil.forClass(
+			CrmCounty.class, clazz.getClassLoader());
 	}
 
 	/**
@@ -171,7 +169,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmCountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmCountyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -180,17 +178,18 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end) {
-		return crmCountyPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end) {
+
+		return crmCountyPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end);
 	}
 
 	/**
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmCountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmCountyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -200,10 +199,12 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the ordered range of matching rows
 	 */
 	@Override
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
-		int end, OrderByComparator<T> orderByComparator) {
-		return crmCountyPersistence.findWithDynamicQuery(dynamicQuery, start,
-			end, orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator) {
+
+		return crmCountyPersistence.findWithDynamicQuery(
+			dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -225,10 +226,11 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) {
-		return crmCountyPersistence.countWithDynamicQuery(dynamicQuery,
-			projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection) {
+
+		return crmCountyPersistence.countWithDynamicQuery(
+			dynamicQuery, projection);
 	}
 
 	@Override
@@ -262,7 +264,8 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@Override
 	public ActionableDynamicQuery getActionableDynamicQuery() {
-		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+		ActionableDynamicQuery actionableDynamicQuery =
+			new DefaultActionableDynamicQuery();
 
 		actionableDynamicQuery.setBaseLocalService(crmCountyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
@@ -274,20 +277,26 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	@Override
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
-		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+	public IndexableActionableDynamicQuery
+		getIndexableActionableDynamicQuery() {
 
-		indexableActionableDynamicQuery.setBaseLocalService(crmCountyLocalService);
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery =
+			new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(
+			crmCountyLocalService);
 		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
 		indexableActionableDynamicQuery.setModelClass(CrmCounty.class);
 
-		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("crmCountyId");
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"crmCountyId");
 
 		return indexableActionableDynamicQuery;
 	}
 
 	protected void initActionableDynamicQuery(
 		ActionableDynamicQuery actionableDynamicQuery) {
+
 		actionableDynamicQuery.setBaseLocalService(crmCountyLocalService);
 		actionableDynamicQuery.setClassLoader(getClassLoader());
 		actionableDynamicQuery.setModelClass(CrmCounty.class);
@@ -298,49 +307,64 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
 		final PortletDataContext portletDataContext) {
-		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+
+		final ExportActionableDynamicQuery exportActionableDynamicQuery =
+			new ExportActionableDynamicQuery() {
+
 				@Override
 				public long performCount() throws PortalException {
-					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+					ManifestSummary manifestSummary =
+						portletDataContext.getManifestSummary();
 
 					StagedModelType stagedModelType = getStagedModelType();
 
 					long modelAdditionCount = super.performCount();
 
-					manifestSummary.addModelAdditionCount(stagedModelType,
-						modelAdditionCount);
+					manifestSummary.addModelAdditionCount(
+						stagedModelType, modelAdditionCount);
 
-					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
-							stagedModelType);
+					long modelDeletionCount =
+						ExportImportHelperUtil.getModelDeletionCount(
+							portletDataContext, stagedModelType);
 
-					manifestSummary.addModelDeletionCount(stagedModelType,
-						modelDeletionCount);
+					manifestSummary.addModelDeletionCount(
+						stagedModelType, modelDeletionCount);
 
 					return modelAdditionCount;
 				}
+
 			};
 
 		initActionableDynamicQuery(exportActionableDynamicQuery);
 
-		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+		exportActionableDynamicQuery.setAddCriteriaMethod(
+			new ActionableDynamicQuery.AddCriteriaMethod() {
+
 				@Override
 				public void addCriteria(DynamicQuery dynamicQuery) {
-					portletDataContext.addDateRangeCriteria(dynamicQuery,
-						"modifiedDate");
+					portletDataContext.addDateRangeCriteria(
+						dynamicQuery, "modifiedDate");
 				}
+
 			});
 
-		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+		exportActionableDynamicQuery.setCompanyId(
+			portletDataContext.getCompanyId());
 
-		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<CrmCounty>() {
+		exportActionableDynamicQuery.setPerformActionMethod(
+			new ActionableDynamicQuery.PerformActionMethod<CrmCounty>() {
+
 				@Override
 				public void performAction(CrmCounty crmCounty)
 					throws PortalException {
-					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
-						crmCounty);
+
+					StagedModelDataHandlerUtil.exportStagedModel(
+						portletDataContext, crmCounty);
 				}
+
 			});
-		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+		exportActionableDynamicQuery.setStagedModelType(
+			new StagedModelType(
 				PortalUtil.getClassNameId(CrmCounty.class.getName())));
 
 		return exportActionableDynamicQuery;
@@ -352,12 +376,14 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
 		throws PortalException {
+
 		return crmCountyLocalService.deleteCrmCounty((CrmCounty)persistedModel);
 	}
 
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
+
 		return crmCountyPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -369,8 +395,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the matching CRM Counties, or an empty list if no matches were found
 	 */
 	@Override
-	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(String uuid,
-		long companyId) {
+	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(
+		String uuid, long companyId) {
+
 		return crmCountyPersistence.findByUuid_C(uuid, companyId);
 	}
 
@@ -385,11 +412,12 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @return the range of matching CRM Counties, or an empty list if no matches were found
 	 */
 	@Override
-	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(String uuid,
-		long companyId, int start, int end,
+	public List<CrmCounty> getCrmCountiesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
 		OrderByComparator<CrmCounty> orderByComparator) {
-		return crmCountyPersistence.findByUuid_C(uuid, companyId, start, end,
-			orderByComparator);
+
+		return crmCountyPersistence.findByUuid_C(
+			uuid, companyId, start, end, orderByComparator);
 	}
 
 	/**
@@ -403,6 +431,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	@Override
 	public CrmCounty getCrmCountyByUuidAndGroupId(String uuid, long groupId)
 		throws PortalException {
+
 		return crmCountyPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -410,7 +439,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns a range of all the CRM Counties.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link contact.manager.model.impl.CrmCountyModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>contact.manager.model.impl.CrmCountyModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of CRM Counties
@@ -460,6 +489,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmCCALocalService(
 		contact.manager.service.CrmCCALocalService crmCCALocalService) {
+
 		this.crmCCALocalService = crmCCALocalService;
 	}
 
@@ -486,7 +516,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Chi Ward local service
 	 */
-	public contact.manager.service.CrmChiWardLocalService getCrmChiWardLocalService() {
+	public contact.manager.service.CrmChiWardLocalService
+		getCrmChiWardLocalService() {
+
 		return crmChiWardLocalService;
 	}
 
@@ -497,6 +529,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmChiWardLocalService(
 		contact.manager.service.CrmChiWardLocalService crmChiWardLocalService) {
+
 		this.crmChiWardLocalService = crmChiWardLocalService;
 	}
 
@@ -516,6 +549,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmChiWardPersistence(
 		CrmChiWardPersistence crmChiWardPersistence) {
+
 		this.crmChiWardPersistence = crmChiWardPersistence;
 	}
 
@@ -524,7 +558,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Contact local service
 	 */
-	public contact.manager.service.CrmContactLocalService getCrmContactLocalService() {
+	public contact.manager.service.CrmContactLocalService
+		getCrmContactLocalService() {
+
 		return crmContactLocalService;
 	}
 
@@ -535,6 +571,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmContactLocalService(
 		contact.manager.service.CrmContactLocalService crmContactLocalService) {
+
 		this.crmContactLocalService = crmContactLocalService;
 	}
 
@@ -554,6 +591,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmContactPersistence(
 		CrmContactPersistence crmContactPersistence) {
+
 		this.crmContactPersistence = crmContactPersistence;
 	}
 
@@ -562,7 +600,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Contact Audit Log local service
 	 */
-	public contact.manager.service.CrmContactAuditLogLocalService getCrmContactAuditLogLocalService() {
+	public contact.manager.service.CrmContactAuditLogLocalService
+		getCrmContactAuditLogLocalService() {
+
 		return crmContactAuditLogLocalService;
 	}
 
@@ -572,7 +612,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmContactAuditLogLocalService the CRM Contact Audit Log local service
 	 */
 	public void setCrmContactAuditLogLocalService(
-		contact.manager.service.CrmContactAuditLogLocalService crmContactAuditLogLocalService) {
+		contact.manager.service.CrmContactAuditLogLocalService
+			crmContactAuditLogLocalService) {
+
 		this.crmContactAuditLogLocalService = crmContactAuditLogLocalService;
 	}
 
@@ -592,6 +634,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmContactAuditLogPersistence(
 		CrmContactAuditLogPersistence crmContactAuditLogPersistence) {
+
 		this.crmContactAuditLogPersistence = crmContactAuditLogPersistence;
 	}
 
@@ -600,7 +643,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Contact Audit Log Change local service
 	 */
-	public contact.manager.service.CrmContactAuditLogChangeLocalService getCrmContactAuditLogChangeLocalService() {
+	public contact.manager.service.CrmContactAuditLogChangeLocalService
+		getCrmContactAuditLogChangeLocalService() {
+
 		return crmContactAuditLogChangeLocalService;
 	}
 
@@ -610,8 +655,11 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmContactAuditLogChangeLocalService the CRM Contact Audit Log Change local service
 	 */
 	public void setCrmContactAuditLogChangeLocalService(
-		contact.manager.service.CrmContactAuditLogChangeLocalService crmContactAuditLogChangeLocalService) {
-		this.crmContactAuditLogChangeLocalService = crmContactAuditLogChangeLocalService;
+		contact.manager.service.CrmContactAuditLogChangeLocalService
+			crmContactAuditLogChangeLocalService) {
+
+		this.crmContactAuditLogChangeLocalService =
+			crmContactAuditLogChangeLocalService;
 	}
 
 	/**
@@ -619,7 +667,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Contact Audit Log Change persistence
 	 */
-	public CrmContactAuditLogChangePersistence getCrmContactAuditLogChangePersistence() {
+	public CrmContactAuditLogChangePersistence
+		getCrmContactAuditLogChangePersistence() {
+
 		return crmContactAuditLogChangePersistence;
 	}
 
@@ -629,8 +679,11 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmContactAuditLogChangePersistence the CRM Contact Audit Log Change persistence
 	 */
 	public void setCrmContactAuditLogChangePersistence(
-		CrmContactAuditLogChangePersistence crmContactAuditLogChangePersistence) {
-		this.crmContactAuditLogChangePersistence = crmContactAuditLogChangePersistence;
+		CrmContactAuditLogChangePersistence
+			crmContactAuditLogChangePersistence) {
+
+		this.crmContactAuditLogChangePersistence =
+			crmContactAuditLogChangePersistence;
 	}
 
 	/**
@@ -649,6 +702,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmCountyLocalService(
 		CrmCountyLocalService crmCountyLocalService) {
+
 		this.crmCountyLocalService = crmCountyLocalService;
 	}
 
@@ -668,6 +722,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmCountyPersistence(
 		CrmCountyPersistence crmCountyPersistence) {
+
 		this.crmCountyPersistence = crmCountyPersistence;
 	}
 
@@ -676,7 +731,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM County Commissioner local service
 	 */
-	public contact.manager.service.CrmCountyCommissionerLocalService getCrmCountyCommissionerLocalService() {
+	public contact.manager.service.CrmCountyCommissionerLocalService
+		getCrmCountyCommissionerLocalService() {
+
 		return crmCountyCommissionerLocalService;
 	}
 
@@ -686,8 +743,11 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmCountyCommissionerLocalService the CRM County Commissioner local service
 	 */
 	public void setCrmCountyCommissionerLocalService(
-		contact.manager.service.CrmCountyCommissionerLocalService crmCountyCommissionerLocalService) {
-		this.crmCountyCommissionerLocalService = crmCountyCommissionerLocalService;
+		contact.manager.service.CrmCountyCommissionerLocalService
+			crmCountyCommissionerLocalService) {
+
+		this.crmCountyCommissionerLocalService =
+			crmCountyCommissionerLocalService;
 	}
 
 	/**
@@ -695,7 +755,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM County Commissioner persistence
 	 */
-	public CrmCountyCommissionerPersistence getCrmCountyCommissionerPersistence() {
+	public CrmCountyCommissionerPersistence
+		getCrmCountyCommissionerPersistence() {
+
 		return crmCountyCommissionerPersistence;
 	}
 
@@ -706,7 +768,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmCountyCommissionerPersistence(
 		CrmCountyCommissionerPersistence crmCountyCommissionerPersistence) {
-		this.crmCountyCommissionerPersistence = crmCountyCommissionerPersistence;
+
+		this.crmCountyCommissionerPersistence =
+			crmCountyCommissionerPersistence;
 	}
 
 	/**
@@ -714,7 +778,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Group local service
 	 */
-	public contact.manager.service.CrmGroupLocalService getCrmGroupLocalService() {
+	public contact.manager.service.CrmGroupLocalService
+		getCrmGroupLocalService() {
+
 		return crmGroupLocalService;
 	}
 
@@ -725,6 +791,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmGroupLocalService(
 		contact.manager.service.CrmGroupLocalService crmGroupLocalService) {
+
 		this.crmGroupLocalService = crmGroupLocalService;
 	}
 
@@ -742,7 +809,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param crmGroupPersistence the CRM Group persistence
 	 */
-	public void setCrmGroupPersistence(CrmGroupPersistence crmGroupPersistence) {
+	public void setCrmGroupPersistence(
+		CrmGroupPersistence crmGroupPersistence) {
+
 		this.crmGroupPersistence = crmGroupPersistence;
 	}
 
@@ -762,6 +831,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmLTALocalService(
 		contact.manager.service.CrmLTALocalService crmLTALocalService) {
+
 		this.crmLTALocalService = crmLTALocalService;
 	}
 
@@ -788,7 +858,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Muni local service
 	 */
-	public contact.manager.service.CrmMuniLocalService getCrmMuniLocalService() {
+	public contact.manager.service.CrmMuniLocalService
+		getCrmMuniLocalService() {
+
 		return crmMuniLocalService;
 	}
 
@@ -799,6 +871,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmMuniLocalService(
 		contact.manager.service.CrmMuniLocalService crmMuniLocalService) {
+
 		this.crmMuniLocalService = crmMuniLocalService;
 	}
 
@@ -825,7 +898,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Note local service
 	 */
-	public contact.manager.service.CrmNoteLocalService getCrmNoteLocalService() {
+	public contact.manager.service.CrmNoteLocalService
+		getCrmNoteLocalService() {
+
 		return crmNoteLocalService;
 	}
 
@@ -836,6 +911,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmNoteLocalService(
 		contact.manager.service.CrmNoteLocalService crmNoteLocalService) {
+
 		this.crmNoteLocalService = crmNoteLocalService;
 	}
 
@@ -862,7 +938,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM Outreach Log local service
 	 */
-	public contact.manager.service.CrmOutreachLogLocalService getCrmOutreachLogLocalService() {
+	public contact.manager.service.CrmOutreachLogLocalService
+		getCrmOutreachLogLocalService() {
+
 		return crmOutreachLogLocalService;
 	}
 
@@ -872,7 +950,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmOutreachLogLocalService the CRM Outreach Log local service
 	 */
 	public void setCrmOutreachLogLocalService(
-		contact.manager.service.CrmOutreachLogLocalService crmOutreachLogLocalService) {
+		contact.manager.service.CrmOutreachLogLocalService
+			crmOutreachLogLocalService) {
+
 		this.crmOutreachLogLocalService = crmOutreachLogLocalService;
 	}
 
@@ -892,6 +972,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmOutreachLogPersistence(
 		CrmOutreachLogPersistence crmOutreachLogPersistence) {
+
 		this.crmOutreachLogPersistence = crmOutreachLogPersistence;
 	}
 
@@ -900,7 +981,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM State Rep local service
 	 */
-	public contact.manager.service.CrmStateRepLocalService getCrmStateRepLocalService() {
+	public contact.manager.service.CrmStateRepLocalService
+		getCrmStateRepLocalService() {
+
 		return crmStateRepLocalService;
 	}
 
@@ -910,7 +993,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmStateRepLocalService the CRM State Rep local service
 	 */
 	public void setCrmStateRepLocalService(
-		contact.manager.service.CrmStateRepLocalService crmStateRepLocalService) {
+		contact.manager.service.CrmStateRepLocalService
+			crmStateRepLocalService) {
+
 		this.crmStateRepLocalService = crmStateRepLocalService;
 	}
 
@@ -930,6 +1015,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmStateRepPersistence(
 		CrmStateRepPersistence crmStateRepPersistence) {
+
 		this.crmStateRepPersistence = crmStateRepPersistence;
 	}
 
@@ -938,7 +1024,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM State Senate local service
 	 */
-	public contact.manager.service.CrmStateSenateLocalService getCrmStateSenateLocalService() {
+	public contact.manager.service.CrmStateSenateLocalService
+		getCrmStateSenateLocalService() {
+
 		return crmStateSenateLocalService;
 	}
 
@@ -948,7 +1036,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param crmStateSenateLocalService the CRM State Senate local service
 	 */
 	public void setCrmStateSenateLocalService(
-		contact.manager.service.CrmStateSenateLocalService crmStateSenateLocalService) {
+		contact.manager.service.CrmStateSenateLocalService
+			crmStateSenateLocalService) {
+
 		this.crmStateSenateLocalService = crmStateSenateLocalService;
 	}
 
@@ -968,6 +1058,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmStateSenatePersistence(
 		CrmStateSenatePersistence crmStateSenatePersistence) {
+
 		this.crmStateSenatePersistence = crmStateSenatePersistence;
 	}
 
@@ -987,6 +1078,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmTagLocalService(
 		contact.manager.service.CrmTagLocalService crmTagLocalService) {
+
 		this.crmTagLocalService = crmTagLocalService;
 	}
 
@@ -1013,7 +1105,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the CRM US Rep local service
 	 */
-	public contact.manager.service.CrmUsRepLocalService getCrmUsRepLocalService() {
+	public contact.manager.service.CrmUsRepLocalService
+		getCrmUsRepLocalService() {
+
 		return crmUsRepLocalService;
 	}
 
@@ -1024,6 +1118,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setCrmUsRepLocalService(
 		contact.manager.service.CrmUsRepLocalService crmUsRepLocalService) {
+
 		this.crmUsRepLocalService = crmUsRepLocalService;
 	}
 
@@ -1041,7 +1136,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param crmUsRepPersistence the CRM US Rep persistence
 	 */
-	public void setCrmUsRepPersistence(CrmUsRepPersistence crmUsRepPersistence) {
+	public void setCrmUsRepPersistence(
+		CrmUsRepPersistence crmUsRepPersistence) {
+
 		this.crmUsRepPersistence = crmUsRepPersistence;
 	}
 
@@ -1050,7 +1147,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the counter local service
 	 */
-	public com.liferay.counter.kernel.service.CounterLocalService getCounterLocalService() {
+	public com.liferay.counter.kernel.service.CounterLocalService
+		getCounterLocalService() {
+
 		return counterLocalService;
 	}
 
@@ -1060,7 +1159,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param counterLocalService the counter local service
 	 */
 	public void setCounterLocalService(
-		com.liferay.counter.kernel.service.CounterLocalService counterLocalService) {
+		com.liferay.counter.kernel.service.CounterLocalService
+			counterLocalService) {
+
 		this.counterLocalService = counterLocalService;
 	}
 
@@ -1069,7 +1170,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the class name local service
 	 */
-	public com.liferay.portal.kernel.service.ClassNameLocalService getClassNameLocalService() {
+	public com.liferay.portal.kernel.service.ClassNameLocalService
+		getClassNameLocalService() {
+
 		return classNameLocalService;
 	}
 
@@ -1079,7 +1182,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param classNameLocalService the class name local service
 	 */
 	public void setClassNameLocalService(
-		com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService) {
+		com.liferay.portal.kernel.service.ClassNameLocalService
+			classNameLocalService) {
+
 		this.classNameLocalService = classNameLocalService;
 	}
 
@@ -1099,6 +1204,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setClassNamePersistence(
 		ClassNamePersistence classNamePersistence) {
+
 		this.classNamePersistence = classNamePersistence;
 	}
 
@@ -1107,7 +1213,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the resource local service
 	 */
-	public com.liferay.portal.kernel.service.ResourceLocalService getResourceLocalService() {
+	public com.liferay.portal.kernel.service.ResourceLocalService
+		getResourceLocalService() {
+
 		return resourceLocalService;
 	}
 
@@ -1117,7 +1225,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param resourceLocalService the resource local service
 	 */
 	public void setResourceLocalService(
-		com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService) {
+		com.liferay.portal.kernel.service.ResourceLocalService
+			resourceLocalService) {
+
 		this.resourceLocalService = resourceLocalService;
 	}
 
@@ -1126,7 +1236,9 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the user local service
 	 */
-	public com.liferay.portal.kernel.service.UserLocalService getUserLocalService() {
+	public com.liferay.portal.kernel.service.UserLocalService
+		getUserLocalService() {
+
 		return userLocalService;
 	}
 
@@ -1137,6 +1249,7 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 */
 	public void setUserLocalService(
 		com.liferay.portal.kernel.service.UserLocalService userLocalService) {
+
 		this.userLocalService = userLocalService;
 	}
 
@@ -1159,8 +1272,8 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		persistedModelLocalServiceRegistry.register("contact.manager.model.CrmCounty",
-			crmCountyLocalService);
+		persistedModelLocalServiceRegistry.register(
+			"contact.manager.model.CrmCounty", crmCountyLocalService);
 	}
 
 	public void destroy() {
@@ -1200,8 +1313,8 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 			sql = db.buildSQL(sql);
 			sql = PortalUtil.transformSQL(sql);
 
-			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-					sql);
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(
+				dataSource, sql);
 
 			sqlUpdate.update();
 		}
@@ -1212,80 +1325,151 @@ public abstract class CrmCountyLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = contact.manager.service.CrmCCALocalService.class)
 	protected contact.manager.service.CrmCCALocalService crmCCALocalService;
+
 	@BeanReference(type = CrmCCAPersistence.class)
 	protected CrmCCAPersistence crmCCAPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmChiWardLocalService.class)
-	protected contact.manager.service.CrmChiWardLocalService crmChiWardLocalService;
+	protected contact.manager.service.CrmChiWardLocalService
+		crmChiWardLocalService;
+
 	@BeanReference(type = CrmChiWardPersistence.class)
 	protected CrmChiWardPersistence crmChiWardPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmContactLocalService.class)
-	protected contact.manager.service.CrmContactLocalService crmContactLocalService;
+	protected contact.manager.service.CrmContactLocalService
+		crmContactLocalService;
+
 	@BeanReference(type = CrmContactPersistence.class)
 	protected CrmContactPersistence crmContactPersistence;
-	@BeanReference(type = contact.manager.service.CrmContactAuditLogLocalService.class)
-	protected contact.manager.service.CrmContactAuditLogLocalService crmContactAuditLogLocalService;
+
+	@BeanReference(
+		type = contact.manager.service.CrmContactAuditLogLocalService.class
+	)
+	protected contact.manager.service.CrmContactAuditLogLocalService
+		crmContactAuditLogLocalService;
+
 	@BeanReference(type = CrmContactAuditLogPersistence.class)
 	protected CrmContactAuditLogPersistence crmContactAuditLogPersistence;
-	@BeanReference(type = contact.manager.service.CrmContactAuditLogChangeLocalService.class)
-	protected contact.manager.service.CrmContactAuditLogChangeLocalService crmContactAuditLogChangeLocalService;
+
+	@BeanReference(
+		type = contact.manager.service.CrmContactAuditLogChangeLocalService.class
+	)
+	protected contact.manager.service.CrmContactAuditLogChangeLocalService
+		crmContactAuditLogChangeLocalService;
+
 	@BeanReference(type = CrmContactAuditLogChangePersistence.class)
-	protected CrmContactAuditLogChangePersistence crmContactAuditLogChangePersistence;
+	protected CrmContactAuditLogChangePersistence
+		crmContactAuditLogChangePersistence;
+
 	@BeanReference(type = CrmCountyLocalService.class)
 	protected CrmCountyLocalService crmCountyLocalService;
+
 	@BeanReference(type = CrmCountyPersistence.class)
 	protected CrmCountyPersistence crmCountyPersistence;
-	@BeanReference(type = contact.manager.service.CrmCountyCommissionerLocalService.class)
-	protected contact.manager.service.CrmCountyCommissionerLocalService crmCountyCommissionerLocalService;
+
+	@BeanReference(
+		type = contact.manager.service.CrmCountyCommissionerLocalService.class
+	)
+	protected contact.manager.service.CrmCountyCommissionerLocalService
+		crmCountyCommissionerLocalService;
+
 	@BeanReference(type = CrmCountyCommissionerPersistence.class)
 	protected CrmCountyCommissionerPersistence crmCountyCommissionerPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmGroupLocalService.class)
 	protected contact.manager.service.CrmGroupLocalService crmGroupLocalService;
+
 	@BeanReference(type = CrmGroupPersistence.class)
 	protected CrmGroupPersistence crmGroupPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmLTALocalService.class)
 	protected contact.manager.service.CrmLTALocalService crmLTALocalService;
+
 	@BeanReference(type = CrmLTAPersistence.class)
 	protected CrmLTAPersistence crmLTAPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmMuniLocalService.class)
 	protected contact.manager.service.CrmMuniLocalService crmMuniLocalService;
+
 	@BeanReference(type = CrmMuniPersistence.class)
 	protected CrmMuniPersistence crmMuniPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmNoteLocalService.class)
 	protected contact.manager.service.CrmNoteLocalService crmNoteLocalService;
+
 	@BeanReference(type = CrmNotePersistence.class)
 	protected CrmNotePersistence crmNotePersistence;
-	@BeanReference(type = contact.manager.service.CrmOutreachLogLocalService.class)
-	protected contact.manager.service.CrmOutreachLogLocalService crmOutreachLogLocalService;
+
+	@BeanReference(
+		type = contact.manager.service.CrmOutreachLogLocalService.class
+	)
+	protected contact.manager.service.CrmOutreachLogLocalService
+		crmOutreachLogLocalService;
+
 	@BeanReference(type = CrmOutreachLogPersistence.class)
 	protected CrmOutreachLogPersistence crmOutreachLogPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmStateRepLocalService.class)
-	protected contact.manager.service.CrmStateRepLocalService crmStateRepLocalService;
+	protected contact.manager.service.CrmStateRepLocalService
+		crmStateRepLocalService;
+
 	@BeanReference(type = CrmStateRepPersistence.class)
 	protected CrmStateRepPersistence crmStateRepPersistence;
-	@BeanReference(type = contact.manager.service.CrmStateSenateLocalService.class)
-	protected contact.manager.service.CrmStateSenateLocalService crmStateSenateLocalService;
+
+	@BeanReference(
+		type = contact.manager.service.CrmStateSenateLocalService.class
+	)
+	protected contact.manager.service.CrmStateSenateLocalService
+		crmStateSenateLocalService;
+
 	@BeanReference(type = CrmStateSenatePersistence.class)
 	protected CrmStateSenatePersistence crmStateSenatePersistence;
+
 	@BeanReference(type = contact.manager.service.CrmTagLocalService.class)
 	protected contact.manager.service.CrmTagLocalService crmTagLocalService;
+
 	@BeanReference(type = CrmTagPersistence.class)
 	protected CrmTagPersistence crmTagPersistence;
+
 	@BeanReference(type = contact.manager.service.CrmUsRepLocalService.class)
 	protected contact.manager.service.CrmUsRepLocalService crmUsRepLocalService;
+
 	@BeanReference(type = CrmUsRepPersistence.class)
 	protected CrmUsRepPersistence crmUsRepPersistence;
-	@ServiceReference(type = com.liferay.counter.kernel.service.CounterLocalService.class)
-	protected com.liferay.counter.kernel.service.CounterLocalService counterLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ClassNameLocalService.class)
-	protected com.liferay.portal.kernel.service.ClassNameLocalService classNameLocalService;
+
+	@ServiceReference(
+		type = com.liferay.counter.kernel.service.CounterLocalService.class
+	)
+	protected com.liferay.counter.kernel.service.CounterLocalService
+		counterLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ClassNameLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ClassNameLocalService
+		classNameLocalService;
+
 	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@ServiceReference(type = com.liferay.portal.kernel.service.ResourceLocalService.class)
-	protected com.liferay.portal.kernel.service.ResourceLocalService resourceLocalService;
-	@ServiceReference(type = com.liferay.portal.kernel.service.UserLocalService.class)
-	protected com.liferay.portal.kernel.service.UserLocalService userLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.ResourceLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.ResourceLocalService
+		resourceLocalService;
+
+	@ServiceReference(
+		type = com.liferay.portal.kernel.service.UserLocalService.class
+	)
+	protected com.liferay.portal.kernel.service.UserLocalService
+		userLocalService;
+
 	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
+
 	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
-	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
+	protected PersistedModelLocalServiceRegistry
+		persistedModelLocalServiceRegistry;
+
 }

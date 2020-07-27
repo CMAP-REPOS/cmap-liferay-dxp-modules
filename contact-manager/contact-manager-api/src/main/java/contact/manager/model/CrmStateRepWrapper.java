@@ -17,9 +17,7 @@ package contact.manager.model;
 import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.expando.kernel.model.ExpandoBridge;
-
 import com.liferay.exportimport.kernel.lar.StagedModelType;
-
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.service.ServiceContext;
 
@@ -40,8 +38,9 @@ import java.util.Objects;
  * @generated
  */
 @ProviderType
-public class CrmStateRepWrapper implements CrmStateRep,
-	ModelWrapper<CrmStateRep> {
+public class CrmStateRepWrapper
+	implements CrmStateRep, ModelWrapper<CrmStateRep> {
+
 	public CrmStateRepWrapper(CrmStateRep crmStateRep) {
 		_crmStateRep = crmStateRep;
 	}
@@ -150,35 +149,35 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	@Override
-	public int compareTo(CrmStateRep crmStateRep) {
+	public int compareTo(contact.manager.model.CrmStateRep crmStateRep) {
 		return _crmStateRep.compareTo(crmStateRep);
 	}
 
 	/**
-	* Returns the company ID of this CRM State Rep.
-	*
-	* @return the company ID of this CRM State Rep
-	*/
+	 * Returns the company ID of this CRM State Rep.
+	 *
+	 * @return the company ID of this CRM State Rep
+	 */
 	@Override
 	public long getCompanyId() {
 		return _crmStateRep.getCompanyId();
 	}
 
 	/**
-	* Returns the create date of this CRM State Rep.
-	*
-	* @return the create date of this CRM State Rep
-	*/
+	 * Returns the create date of this CRM State Rep.
+	 *
+	 * @return the create date of this CRM State Rep
+	 */
 	@Override
 	public Date getCreateDate() {
 		return _crmStateRep.getCreateDate();
 	}
 
 	/**
-	* Returns the crm state rep ID of this CRM State Rep.
-	*
-	* @return the crm state rep ID of this CRM State Rep
-	*/
+	 * Returns the crm state rep ID of this CRM State Rep.
+	 *
+	 * @return the crm state rep ID of this CRM State Rep
+	 */
 	@Override
 	public long getCrmStateRepId() {
 		return _crmStateRep.getCrmStateRepId();
@@ -190,50 +189,50 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Returns the group ID of this CRM State Rep.
-	*
-	* @return the group ID of this CRM State Rep
-	*/
+	 * Returns the group ID of this CRM State Rep.
+	 *
+	 * @return the group ID of this CRM State Rep
+	 */
 	@Override
 	public long getGroupId() {
 		return _crmStateRep.getGroupId();
 	}
 
 	/**
-	* Returns the modified date of this CRM State Rep.
-	*
-	* @return the modified date of this CRM State Rep
-	*/
+	 * Returns the modified date of this CRM State Rep.
+	 *
+	 * @return the modified date of this CRM State Rep
+	 */
 	@Override
 	public Date getModifiedDate() {
 		return _crmStateRep.getModifiedDate();
 	}
 
 	/**
-	* Returns the name of this CRM State Rep.
-	*
-	* @return the name of this CRM State Rep
-	*/
+	 * Returns the name of this CRM State Rep.
+	 *
+	 * @return the name of this CRM State Rep
+	 */
 	@Override
 	public String getName() {
 		return _crmStateRep.getName();
 	}
 
 	/**
-	* Returns the number of this CRM State Rep.
-	*
-	* @return the number of this CRM State Rep
-	*/
+	 * Returns the number of this CRM State Rep.
+	 *
+	 * @return the number of this CRM State Rep
+	 */
 	@Override
 	public String getNumber() {
 		return _crmStateRep.getNumber();
 	}
 
 	/**
-	* Returns the primary key of this CRM State Rep.
-	*
-	* @return the primary key of this CRM State Rep
-	*/
+	 * Returns the primary key of this CRM State Rep.
+	 *
+	 * @return the primary key of this CRM State Rep
+	 */
 	@Override
 	public long getPrimaryKey() {
 		return _crmStateRep.getPrimaryKey();
@@ -245,50 +244,50 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Returns the user ID of this CRM State Rep.
-	*
-	* @return the user ID of this CRM State Rep
-	*/
+	 * Returns the user ID of this CRM State Rep.
+	 *
+	 * @return the user ID of this CRM State Rep
+	 */
 	@Override
 	public long getUserId() {
 		return _crmStateRep.getUserId();
 	}
 
 	/**
-	* Returns the user name of this CRM State Rep.
-	*
-	* @return the user name of this CRM State Rep
-	*/
+	 * Returns the user name of this CRM State Rep.
+	 *
+	 * @return the user name of this CRM State Rep
+	 */
 	@Override
 	public String getUserName() {
 		return _crmStateRep.getUserName();
 	}
 
 	/**
-	* Returns the user uuid of this CRM State Rep.
-	*
-	* @return the user uuid of this CRM State Rep
-	*/
+	 * Returns the user uuid of this CRM State Rep.
+	 *
+	 * @return the user uuid of this CRM State Rep
+	 */
 	@Override
 	public String getUserUuid() {
 		return _crmStateRep.getUserUuid();
 	}
 
 	/**
-	* Returns the uuid of this CRM State Rep.
-	*
-	* @return the uuid of this CRM State Rep
-	*/
+	 * Returns the uuid of this CRM State Rep.
+	 *
+	 * @return the uuid of this CRM State Rep
+	 */
 	@Override
 	public String getUuid() {
 		return _crmStateRep.getUuid();
 	}
 
 	/**
-	* Returns the zip code of this CRM State Rep.
-	*
-	* @return the zip code of this CRM State Rep
-	*/
+	 * Returns the zip code of this CRM State Rep.
+	 *
+	 * @return the zip code of this CRM State Rep
+	 */
 	@Override
 	public String getZipCode() {
 		return _crmStateRep.getZipCode();
@@ -325,30 +324,30 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Sets the company ID of this CRM State Rep.
-	*
-	* @param companyId the company ID of this CRM State Rep
-	*/
+	 * Sets the company ID of this CRM State Rep.
+	 *
+	 * @param companyId the company ID of this CRM State Rep
+	 */
 	@Override
 	public void setCompanyId(long companyId) {
 		_crmStateRep.setCompanyId(companyId);
 	}
 
 	/**
-	* Sets the create date of this CRM State Rep.
-	*
-	* @param createDate the create date of this CRM State Rep
-	*/
+	 * Sets the create date of this CRM State Rep.
+	 *
+	 * @param createDate the create date of this CRM State Rep
+	 */
 	@Override
 	public void setCreateDate(Date createDate) {
 		_crmStateRep.setCreateDate(createDate);
 	}
 
 	/**
-	* Sets the crm state rep ID of this CRM State Rep.
-	*
-	* @param crmStateRepId the crm state rep ID of this CRM State Rep
-	*/
+	 * Sets the crm state rep ID of this CRM State Rep.
+	 *
+	 * @param crmStateRepId the crm state rep ID of this CRM State Rep
+	 */
 	@Override
 	public void setCrmStateRepId(long crmStateRepId) {
 		_crmStateRep.setCrmStateRepId(crmStateRepId);
@@ -357,6 +356,7 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	@Override
 	public void setExpandoBridgeAttributes(
 		com.liferay.portal.kernel.model.BaseModel<?> baseModel) {
+
 		_crmStateRep.setExpandoBridgeAttributes(baseModel);
 	}
 
@@ -371,30 +371,30 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Sets the group ID of this CRM State Rep.
-	*
-	* @param groupId the group ID of this CRM State Rep
-	*/
+	 * Sets the group ID of this CRM State Rep.
+	 *
+	 * @param groupId the group ID of this CRM State Rep
+	 */
 	@Override
 	public void setGroupId(long groupId) {
 		_crmStateRep.setGroupId(groupId);
 	}
 
 	/**
-	* Sets the modified date of this CRM State Rep.
-	*
-	* @param modifiedDate the modified date of this CRM State Rep
-	*/
+	 * Sets the modified date of this CRM State Rep.
+	 *
+	 * @param modifiedDate the modified date of this CRM State Rep
+	 */
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		_crmStateRep.setModifiedDate(modifiedDate);
 	}
 
 	/**
-	* Sets the name of this CRM State Rep.
-	*
-	* @param name the name of this CRM State Rep
-	*/
+	 * Sets the name of this CRM State Rep.
+	 *
+	 * @param name the name of this CRM State Rep
+	 */
 	@Override
 	public void setName(String name) {
 		_crmStateRep.setName(name);
@@ -406,20 +406,20 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Sets the number of this CRM State Rep.
-	*
-	* @param number the number of this CRM State Rep
-	*/
+	 * Sets the number of this CRM State Rep.
+	 *
+	 * @param number the number of this CRM State Rep
+	 */
 	@Override
 	public void setNumber(String number) {
 		_crmStateRep.setNumber(number);
 	}
 
 	/**
-	* Sets the primary key of this CRM State Rep.
-	*
-	* @param primaryKey the primary key of this CRM State Rep
-	*/
+	 * Sets the primary key of this CRM State Rep.
+	 *
+	 * @param primaryKey the primary key of this CRM State Rep
+	 */
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_crmStateRep.setPrimaryKey(primaryKey);
@@ -431,62 +431,64 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	/**
-	* Sets the user ID of this CRM State Rep.
-	*
-	* @param userId the user ID of this CRM State Rep
-	*/
+	 * Sets the user ID of this CRM State Rep.
+	 *
+	 * @param userId the user ID of this CRM State Rep
+	 */
 	@Override
 	public void setUserId(long userId) {
 		_crmStateRep.setUserId(userId);
 	}
 
 	/**
-	* Sets the user name of this CRM State Rep.
-	*
-	* @param userName the user name of this CRM State Rep
-	*/
+	 * Sets the user name of this CRM State Rep.
+	 *
+	 * @param userName the user name of this CRM State Rep
+	 */
 	@Override
 	public void setUserName(String userName) {
 		_crmStateRep.setUserName(userName);
 	}
 
 	/**
-	* Sets the user uuid of this CRM State Rep.
-	*
-	* @param userUuid the user uuid of this CRM State Rep
-	*/
+	 * Sets the user uuid of this CRM State Rep.
+	 *
+	 * @param userUuid the user uuid of this CRM State Rep
+	 */
 	@Override
 	public void setUserUuid(String userUuid) {
 		_crmStateRep.setUserUuid(userUuid);
 	}
 
 	/**
-	* Sets the uuid of this CRM State Rep.
-	*
-	* @param uuid the uuid of this CRM State Rep
-	*/
+	 * Sets the uuid of this CRM State Rep.
+	 *
+	 * @param uuid the uuid of this CRM State Rep
+	 */
 	@Override
 	public void setUuid(String uuid) {
 		_crmStateRep.setUuid(uuid);
 	}
 
 	/**
-	* Sets the zip code of this CRM State Rep.
-	*
-	* @param zipCode the zip code of this CRM State Rep
-	*/
+	 * Sets the zip code of this CRM State Rep.
+	 *
+	 * @param zipCode the zip code of this CRM State Rep
+	 */
 	@Override
 	public void setZipCode(String zipCode) {
 		_crmStateRep.setZipCode(zipCode);
 	}
 
 	@Override
-	public com.liferay.portal.kernel.model.CacheModel<CrmStateRep> toCacheModel() {
+	public com.liferay.portal.kernel.model.CacheModel
+		<contact.manager.model.CrmStateRep> toCacheModel() {
+
 		return _crmStateRep.toCacheModel();
 	}
 
 	@Override
-	public CrmStateRep toEscapedModel() {
+	public contact.manager.model.CrmStateRep toEscapedModel() {
 		return new CrmStateRepWrapper(_crmStateRep.toEscapedModel());
 	}
 
@@ -496,7 +498,7 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	@Override
-	public CrmStateRep toUnescapedModel() {
+	public contact.manager.model.CrmStateRep toUnescapedModel() {
 		return new CrmStateRepWrapper(_crmStateRep.toUnescapedModel());
 	}
 
@@ -550,4 +552,5 @@ public class CrmStateRepWrapper implements CrmStateRep,
 	}
 
 	private final CrmStateRep _crmStateRep;
+
 }

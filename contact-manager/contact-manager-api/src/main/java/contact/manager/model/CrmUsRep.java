@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmUsRepModel
- * @see contact.manager.model.impl.CrmUsRepImpl
- * @see contact.manager.model.impl.CrmUsRepModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmUsRepImpl")
 @ProviderType
 public interface CrmUsRep extends CrmUsRepModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmUsRepImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmUsRepImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmUsRep, Long> CRM_US_REP_ID_ACCESSOR = new Accessor<CrmUsRep, Long>() {
+	public static final Accessor<CrmUsRep, Long> CRM_US_REP_ID_ACCESSOR =
+		new Accessor<CrmUsRep, Long>() {
+
 			@Override
 			public Long get(CrmUsRep crmUsRep) {
 				return crmUsRep.getCrmUsRepId();
@@ -52,5 +53,7 @@ public interface CrmUsRep extends CrmUsRepModel, PersistedModel {
 			public Class<CrmUsRep> getTypeClass() {
 				return CrmUsRep.class;
 			}
+
 		};
+
 }

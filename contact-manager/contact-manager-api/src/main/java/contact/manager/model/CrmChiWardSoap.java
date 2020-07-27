@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmChiWardSoap implements Serializable {
+
 	public static CrmChiWardSoap toSoapModel(CrmChiWard model) {
 		CrmChiWardSoap soapModel = new CrmChiWardSoap();
 
@@ -75,7 +76,8 @@ public class CrmChiWardSoap implements Serializable {
 	}
 
 	public static CrmChiWardSoap[] toSoapModels(List<CrmChiWard> models) {
-		List<CrmChiWardSoap> soapModels = new ArrayList<CrmChiWardSoap>(models.size());
+		List<CrmChiWardSoap> soapModels = new ArrayList<CrmChiWardSoap>(
+			models.size());
 
 		for (CrmChiWard model : models) {
 			soapModels.add(toSoapModel(model));
@@ -185,4 +187,5 @@ public class CrmChiWardSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _name;
 	private String _zipCode;
+
 }

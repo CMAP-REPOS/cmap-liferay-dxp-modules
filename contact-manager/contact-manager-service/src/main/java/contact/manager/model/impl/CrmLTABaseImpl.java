@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmLTA;
-
 import contact.manager.service.CrmLTALocalServiceUtil;
 
 /**
@@ -34,10 +33,11 @@ import contact.manager.service.CrmLTALocalServiceUtil;
  */
 @ProviderType
 public abstract class CrmLTABaseImpl extends CrmLTAModelImpl implements CrmLTA {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM LTA model instance should use the {@link CrmLTA} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM LTA model instance should use the <code>CrmLTA</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -48,4 +48,5 @@ public abstract class CrmLTABaseImpl extends CrmLTAModelImpl implements CrmLTA {
 			CrmLTALocalServiceUtil.updateCrmLTA(this);
 		}
 	}
+
 }

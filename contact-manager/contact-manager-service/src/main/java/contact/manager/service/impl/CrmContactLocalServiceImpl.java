@@ -1,5 +1,4 @@
-/**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+/** * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -31,6 +30,7 @@ import java.util.List;
 
 import contact.manager.exception.NoSuchCrmContactException;
 import contact.manager.model.CrmContact;
+import contact.manager.model.CrmContactModel;
 import contact.manager.model.CrmGroup;
 import contact.manager.model.CrmTag;
 import contact.manager.serachindexer.CrmContactIndexer;
@@ -122,12 +122,17 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 		long groupId = serviceContext.getScopeGroupId();
 		crmContactPersistence.update(crmContact);
 		resourceLocalService.addResources(crmContact.getCompanyId(), groupId, crmContact.getUserId(), CrmContact.class.getName(), crmContact.getCrmContactId(), false, true, true);
-		return crmContact;
+		return (CrmContact) crmContact;
 	}
 	
+	/*
+	 * THIS CODE WILL NEVER RUN
+	 * @see contact.manager.service.base.CrmContactLocalServiceBaseImpl#updateCrmContact(contact.manager.model.CrmContact)
+	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CrmContact updateCrmContact(CrmContact crmContact) {
+		
 		//adding this in case the indexer is not auto registred.
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
 		if (indexer == null){
@@ -141,6 +146,7 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public CrmContact updateCrmContact(CrmContact crmContact, ServiceContext serviceContext) throws PortalException {
+		
 		//adding this in case the indexer is not auto registred.
 		Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
 		if (indexer == null){
@@ -148,15 +154,17 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 	    	IndexerRegistryUtil.register(contactIndexer);
 		}
 		
-		
 		resourceLocalService.updateResources(serviceContext.getCompanyId(),
                 serviceContext.getScopeGroupId(), 
                 CrmContact.class.getName(), crmContact.getCrmContactId(),
                 serviceContext.getGroupPermissions(),
                 serviceContext.getGuestPermissions());
+				
+		crmContactPersistence.update(crmContact);
 		
-		
-		return crmContactPersistence.update(crmContact);
+		crmContact.setStatus("UPDATED_CONFIRMED");
+
+		return (CrmContact) crmContact;
 	}
 	
 	@Indexable(type = IndexableType.DELETE)

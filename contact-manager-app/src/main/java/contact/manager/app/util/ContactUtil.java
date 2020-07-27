@@ -165,6 +165,7 @@ public class ContactUtil {
 		String organization = mapContact.get("Organization");
 		
 		boolean isVip;
+		System.out.println(mapContact.get("Alert"));
 		if(mapContact.get("Alert").equals("TRUE"))
 		{
 			isVip = true;

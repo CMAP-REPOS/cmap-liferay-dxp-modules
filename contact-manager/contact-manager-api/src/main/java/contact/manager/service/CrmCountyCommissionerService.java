@@ -32,28 +32,35 @@ import com.liferay.portal.kernel.transaction.Transactional;
  *
  * @author Brian Wing Shun Chan
  * @see CrmCountyCommissionerServiceUtil
- * @see contact.manager.service.base.CrmCountyCommissionerServiceBaseImpl
- * @see contact.manager.service.impl.CrmCountyCommissionerServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
-@OSGiBeanProperties(property =  {
-	"json.web.service.context.name=crm", "json.web.service.context.path=CrmCountyCommissioner"}, service = CrmCountyCommissionerService.class)
+@OSGiBeanProperties(
+	property = {
+		"json.web.service.context.name=crm",
+		"json.web.service.context.path=CrmCountyCommissioner"
+	},
+	service = CrmCountyCommissionerService.class
+)
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
-	PortalException.class, SystemException.class})
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
 public interface CrmCountyCommissionerService extends BaseService {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link CrmCountyCommissionerServiceUtil} to access the CRM County Commissioner remote service. Add custom service methods to {@link contact.manager.service.impl.CrmCountyCommissionerServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link CrmCountyCommissionerServiceUtil} to access the CRM County Commissioner remote service. Add custom service methods to <code>contact.manager.service.impl.CrmCountyCommissionerServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	public String getOSGiServiceIdentifier();
+
 }

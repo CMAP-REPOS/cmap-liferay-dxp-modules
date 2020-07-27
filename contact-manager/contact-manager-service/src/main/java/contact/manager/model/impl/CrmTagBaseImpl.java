@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmTag;
-
 import contact.manager.service.CrmTagLocalServiceUtil;
 
 /**
@@ -34,10 +33,11 @@ import contact.manager.service.CrmTagLocalServiceUtil;
  */
 @ProviderType
 public abstract class CrmTagBaseImpl extends CrmTagModelImpl implements CrmTag {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM Tag model instance should use the {@link CrmTag} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM Tag model instance should use the <code>CrmTag</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -48,4 +48,5 @@ public abstract class CrmTagBaseImpl extends CrmTagModelImpl implements CrmTag {
 			CrmTagLocalServiceUtil.updateCrmTag(this);
 		}
 	}
+
 }

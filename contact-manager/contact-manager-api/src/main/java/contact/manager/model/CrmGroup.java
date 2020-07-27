@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmGroupModel
- * @see contact.manager.model.impl.CrmGroupImpl
- * @see contact.manager.model.impl.CrmGroupModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmGroupImpl")
 @ProviderType
 public interface CrmGroup extends CrmGroupModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmGroupImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmGroupImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmGroup, Long> CRM_GROUP_ID_ACCESSOR = new Accessor<CrmGroup, Long>() {
+	public static final Accessor<CrmGroup, Long> CRM_GROUP_ID_ACCESSOR =
+		new Accessor<CrmGroup, Long>() {
+
 			@Override
 			public Long get(CrmGroup crmGroup) {
 				return crmGroup.getCrmGroupId();
@@ -52,5 +53,7 @@ public interface CrmGroup extends CrmGroupModel, PersistedModel {
 			public Class<CrmGroup> getTypeClass() {
 				return CrmGroup.class;
 			}
+
 		};
+
 }

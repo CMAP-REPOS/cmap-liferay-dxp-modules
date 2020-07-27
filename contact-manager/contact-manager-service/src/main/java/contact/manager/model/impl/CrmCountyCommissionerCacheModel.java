@@ -33,12 +33,12 @@ import java.util.Date;
  * The cache model class for representing CrmCountyCommissioner in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmCountyCommissioner
  * @generated
  */
 @ProviderType
-public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyCommissioner>,
-	Externalizable {
+public class CrmCountyCommissionerCacheModel
+	implements CacheModel<CrmCountyCommissioner>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -49,9 +49,13 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 			return false;
 		}
 
-		CrmCountyCommissionerCacheModel crmCountyCommissionerCacheModel = (CrmCountyCommissionerCacheModel)obj;
+		CrmCountyCommissionerCacheModel crmCountyCommissionerCacheModel =
+			(CrmCountyCommissionerCacheModel)obj;
 
-		if (crmCountyCommissionerOrBoardDistId == crmCountyCommissionerCacheModel.crmCountyCommissionerOrBoardDistId) {
+		if (crmCountyCommissionerOrBoardDistId ==
+				crmCountyCommissionerCacheModel.
+					crmCountyCommissionerOrBoardDistId) {
+
 			return true;
 		}
 
@@ -96,7 +100,8 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 
 	@Override
 	public CrmCountyCommissioner toEntityModel() {
-		CrmCountyCommissionerImpl crmCountyCommissionerImpl = new CrmCountyCommissionerImpl();
+		CrmCountyCommissionerImpl crmCountyCommissionerImpl =
+			new CrmCountyCommissionerImpl();
 
 		if (uuid == null) {
 			crmCountyCommissionerImpl.setUuid("");
@@ -105,7 +110,8 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 			crmCountyCommissionerImpl.setUuid(uuid);
 		}
 
-		crmCountyCommissionerImpl.setCrmCountyCommissionerOrBoardDistId(crmCountyCommissionerOrBoardDistId);
+		crmCountyCommissionerImpl.setCrmCountyCommissionerOrBoardDistId(
+			crmCountyCommissionerOrBoardDistId);
 		crmCountyCommissionerImpl.setGroupId(groupId);
 		crmCountyCommissionerImpl.setCompanyId(companyId);
 		crmCountyCommissionerImpl.setUserId(userId);
@@ -177,8 +183,7 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -237,4 +242,5 @@ public class CrmCountyCommissionerCacheModel implements CacheModel<CrmCountyComm
 	public String name;
 	public String number;
 	public String zipCode;
+
 }

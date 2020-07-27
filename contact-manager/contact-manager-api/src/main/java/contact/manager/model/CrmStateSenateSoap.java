@@ -30,6 +30,7 @@ import java.util.List;
  */
 @ProviderType
 public class CrmStateSenateSoap implements Serializable {
+
 	public static CrmStateSenateSoap toSoapModel(CrmStateSenate model) {
 		CrmStateSenateSoap soapModel = new CrmStateSenateSoap();
 
@@ -58,11 +59,14 @@ public class CrmStateSenateSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CrmStateSenateSoap[][] toSoapModels(CrmStateSenate[][] models) {
+	public static CrmStateSenateSoap[][] toSoapModels(
+		CrmStateSenate[][] models) {
+
 		CrmStateSenateSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new CrmStateSenateSoap[models.length][models[0].length];
+			soapModels =
+				new CrmStateSenateSoap[models.length][models[0].length];
 		}
 		else {
 			soapModels = new CrmStateSenateSoap[0][0];
@@ -75,8 +79,11 @@ public class CrmStateSenateSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static CrmStateSenateSoap[] toSoapModels(List<CrmStateSenate> models) {
-		List<CrmStateSenateSoap> soapModels = new ArrayList<CrmStateSenateSoap>(models.size());
+	public static CrmStateSenateSoap[] toSoapModels(
+		List<CrmStateSenate> models) {
+
+		List<CrmStateSenateSoap> soapModels = new ArrayList<CrmStateSenateSoap>(
+			models.size());
 
 		for (CrmStateSenate model : models) {
 			soapModels.add(toSoapModel(model));
@@ -195,4 +202,5 @@ public class CrmStateSenateSoap implements Serializable {
 	private String _name;
 	private String _number;
 	private String _zipCode;
+
 }

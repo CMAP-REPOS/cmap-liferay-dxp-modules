@@ -10,4 +10,9 @@ public class ContactList {
 
 	public ContactList() {
 	}
+	
+	@Override
+	public String toString() {
+		return "{ id: " + this.id + ", " + "status: " + this.status + "}";
+	}
 }

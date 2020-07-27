@@ -28,17 +28,19 @@ import com.liferay.portal.kernel.service.ServiceWrapper;
 @ProviderType
 public class CrmCountyCommissionerServiceWrapper
 	implements CrmCountyCommissionerService,
-		ServiceWrapper<CrmCountyCommissionerService> {
+			   ServiceWrapper<CrmCountyCommissionerService> {
+
 	public CrmCountyCommissionerServiceWrapper(
 		CrmCountyCommissionerService crmCountyCommissionerService) {
+
 		_crmCountyCommissionerService = crmCountyCommissionerService;
 	}
 
 	/**
-	* Returns the OSGi service identifier.
-	*
-	* @return the OSGi service identifier
-	*/
+	 * Returns the OSGi service identifier.
+	 *
+	 * @return the OSGi service identifier
+	 */
 	@Override
 	public String getOSGiServiceIdentifier() {
 		return _crmCountyCommissionerService.getOSGiServiceIdentifier();
@@ -52,8 +54,10 @@ public class CrmCountyCommissionerServiceWrapper
 	@Override
 	public void setWrappedService(
 		CrmCountyCommissionerService crmCountyCommissionerService) {
+
 		_crmCountyCommissionerService = crmCountyCommissionerService;
 	}
 
 	private CrmCountyCommissionerService _crmCountyCommissionerService;
+
 }

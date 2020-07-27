@@ -33,11 +33,11 @@ import java.util.Date;
  * The cache model class for representing CrmNote in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see CrmNote
  * @generated
  */
 @ProviderType
 public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
@@ -162,8 +162,7 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 	}
 
 	@Override
-	public void writeExternal(ObjectOutput objectOutput)
-		throws IOException {
+	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		if (uuid == null) {
 			objectOutput.writeUTF("");
 		}
@@ -209,4 +208,5 @@ public class CrmNoteCacheModel implements CacheModel<CrmNote>, Externalizable {
 	public long modifiedDate;
 	public long crmContactId;
 	public String note;
+
 }

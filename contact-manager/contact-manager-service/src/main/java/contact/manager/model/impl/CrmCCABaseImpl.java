@@ -17,7 +17,6 @@ package contact.manager.model.impl;
 import aQute.bnd.annotation.ProviderType;
 
 import contact.manager.model.CrmCCA;
-
 import contact.manager.service.CrmCCALocalServiceUtil;
 
 /**
@@ -34,10 +33,11 @@ import contact.manager.service.CrmCCALocalServiceUtil;
  */
 @ProviderType
 public abstract class CrmCCABaseImpl extends CrmCCAModelImpl implements CrmCCA {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this class directly. All methods that expect a CRM CCA model instance should use the {@link CrmCCA} interface instead.
+	 * Never modify or reference this class directly. All methods that expect a CRM CCA model instance should use the <code>CrmCCA</code> interface instead.
 	 */
 	@Override
 	public void persist() {
@@ -48,4 +48,5 @@ public abstract class CrmCCABaseImpl extends CrmCCAModelImpl implements CrmCCA {
 			CrmCCALocalServiceUtil.updateCrmCCA(this);
 		}
 	}
+
 }

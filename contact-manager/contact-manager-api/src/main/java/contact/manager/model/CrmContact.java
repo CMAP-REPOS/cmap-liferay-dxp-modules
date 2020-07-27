@@ -25,19 +25,20 @@ import com.liferay.portal.kernel.util.Accessor;
  *
  * @author Brian Wing Shun Chan
  * @see CrmContactModel
- * @see contact.manager.model.impl.CrmContactImpl
- * @see contact.manager.model.impl.CrmContactModelImpl
  * @generated
  */
 @ImplementationClassName("contact.manager.model.impl.CrmContactImpl")
 @ProviderType
 public interface CrmContact extends CrmContactModel, PersistedModel {
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link contact.manager.model.impl.CrmContactImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to <code>contact.manager.model.impl.CrmContactImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<CrmContact, Long> CRM_CONTACT_ID_ACCESSOR = new Accessor<CrmContact, Long>() {
+	public static final Accessor<CrmContact, Long> CRM_CONTACT_ID_ACCESSOR =
+		new Accessor<CrmContact, Long>() {
+
 			@Override
 			public Long get(CrmContact crmContact) {
 				return crmContact.getCrmContactId();
@@ -52,5 +53,7 @@ public interface CrmContact extends CrmContactModel, PersistedModel {
 			public Class<CrmContact> getTypeClass() {
 				return CrmContact.class;
 			}
+
 		};
+
 }
