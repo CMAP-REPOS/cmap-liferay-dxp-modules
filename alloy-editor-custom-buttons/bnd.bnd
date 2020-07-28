@@ -1,6 +1,0 @@
-Bundle-Name: alloy-editor-custom-buttons
-Bundle-SymbolicName: gov.illinois.cmap.alloyeditor.custom.buttons
-Bundle-Version: 1.0.0
-Export-Package: gov.illinois.cmap.alloyeditor.custom.buttons.constants
-Web-ContextPath: /alloy-editor-custom-buttons
-

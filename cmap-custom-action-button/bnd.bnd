@@ -1,5 +1,0 @@
-Bundle-Name: cmap-custom-action-button
-Bundle-SymbolicName: gov.illinois.cmap.custom.editor.actions.custom.button
-Bundle-Version: 1.0.0
-Export-Package: gov.illinois.cmap.custom.editor.actions.custom.button.constants
-Web-ContextPath: /action-button-project
