@@ -27,6 +27,7 @@
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
 
 <%
+	System.out.println("Hello there");
   List<Integer> crmContactsId = new ArrayList<Integer>();
 
   String keywords = "";
@@ -104,7 +105,8 @@
   String kp2 = keywords;
   keywords = keywords!=null ? keywords.toLowerCase() : "";
 
-  
+
+	System.out.println("Hi there");
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -140,6 +142,7 @@
 
 <%
 
+System.out.println("Howdy there");
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
 System.out.println("indexer: "+indexer);
@@ -170,9 +173,15 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
+
+	System.out.println("======== orderByCol: " + orderByCol);
+	System.out.println("======== orderByType: " + orderByType);
+    
+    
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
     	try{
     		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
+    		 System.out.println("sorts: " + sorts);
     		 searchContext.setSorts(sorts);
     	 } catch(Exception e){
     		 e.printStackTrace();
@@ -206,7 +215,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 	
-	System.out.println("=====Hits --> " + hits);
+	/*  System.out.println("=====Hits --> " + hits); */
 
 %>
 

@@ -476,11 +476,13 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			CrmContact updatedContact = null;
 			
+			Long modifiedDateMilis = crmContact.getModifiedDate().getTime();
+			
 			// CMAP-436 solution, do not remove
 			try {
 				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			} catch (Exception e) {
-				if (crmContact.getStatus() != ConstantContactKeys.CC_STATUS_UPDATED_CONFIRMED) {
+				if (crmContact.getModifiedDate().getTime() == (modifiedDateMilis + 100) ) {
 					throw new Exception("CRM Contact updated, using workaround from CMAP-436");
 				}
 			}
@@ -529,20 +531,27 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			
 			
 			// CMAP-436 solution, do not remove
+			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			StringBuffer statusCode = new StringBuffer();
+			String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
+			Long modifiedDateMilis = crmContact.getModifiedDate().getTime();
+			
+			System.out.println("modifiedDateMilis: " + modifiedDateMilis);
+			
 			try {
 				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);
 			} catch (Exception e) {
-				if (crmContact.getStatus() != ConstantContactKeys.CC_STATUS_UPDATED_CONFIRMED) {
+				if (crmContact.getModifiedDate().getTime() != (modifiedDateMilis + 100)) {
 					throw new Exception("CRM Contact updated, using workaround from CMAP-436");
 				}
 			}	
 
-			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
+			
 
 			if (crmContact != null) {
 				auditContactAction(serviceContext, crmContactId, ContactManagerAppPortletKeys.ACTION_DELETE);
-				StringBuffer statusCode = new StringBuffer();
-				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
+//				StringBuffer statusCode = new StringBuffer();
+//				String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
 				
 				if (!statusCode.toString().equals("204") && !statusCode.toString().equals("200")) {
 					SessionErrors.add(request, statusCode.toString()); 

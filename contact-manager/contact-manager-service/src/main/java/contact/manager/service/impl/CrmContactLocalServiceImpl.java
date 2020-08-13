@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 import java.util.List;
+import java.util.Date;
 
 import contact.manager.exception.NoSuchCrmContactException;
 import contact.manager.model.CrmContact;
@@ -162,7 +163,8 @@ public class CrmContactLocalServiceImpl extends CrmContactLocalServiceBaseImpl {
 				
 		crmContactPersistence.update(crmContact);
 		
-		crmContact.setStatus("UPDATED_CONFIRMED");
+		crmContact.setModifiedDate(new Date(crmContact.getModifiedDate().getTime() + 100));
+		System.out.println("crmContact modifiedDate: " + crmContact.getModifiedDate().getTime());
 
 		return (CrmContact) crmContact;
 	}
