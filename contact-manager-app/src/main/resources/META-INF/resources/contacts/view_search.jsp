@@ -180,8 +180,15 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
     
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
     	try{
-    		 Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol+"_String_sortable", orderByType) };
-    		 System.out.println("sorts: " + sorts);
+    		// CMAP-439
+    		String sortSuffix = "_String_sortable";
+    		if ( orderByCol != null && "modifiedDate".equals(orderByCol)) { 
+    			sortSuffix = "_Number_sortable";
+    		}
+    		
+    		Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol + sortSuffix , orderByType) };;
+    		
+    		 System.out.println("sorts: " + sorts[0]);
     		 searchContext.setSorts(sorts);
     	 } catch(Exception e){
     		 e.printStackTrace();
@@ -233,6 +240,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 					    CrmContact entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
 
+					    System.out.println("viewSearch crmContact entry modifiedDate: " + entry.getModifiedDate());
 						if (entry != null){
 							viewModels.add(new CrmContactViewModel(entry));
 						}
@@ -255,6 +263,15 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 						}
 					}
 
+					// debugging
+					// why is this variable named viewModels but the one used in the Liferay Tag is called viewModel?
+					// in this point the sort has already happened, the problem lies before this.
+					for (CrmContactViewModel crmViewModel: viewModels) {
+						System.out.println("crmViewModel modifiedDate: " + crmViewModel.getModifiedDate());
+					}
+					System.out.println("viewSearch viewModels: " + viewModels);
+					
+					// end debugging
 					pageContext.setAttribute("results", viewModels);
 					%>
 				</liferay-ui:search-container-results>

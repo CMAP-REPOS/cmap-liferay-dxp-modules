@@ -29,7 +29,7 @@ System.out.println("View Hi");
 	String primaryEmailAddress = ParamUtil.getString(request, "orderByCol",
 			CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS);
 	String modifiedDate = ParamUtil.getString(request, "orderByCol", CrmContactFieldKeys.MODIFIED_DATE);
-	String createDate = ParamUtil.getString(request, "orderByCol",CrmContactFieldKeys.CREATE_DATE);
+	//String createDate = ParamUtil.getString(request, "orderByCol",CrmContactFieldKeys.CREATE_DATE);
 
 	boolean orderByAsc = false;
 
@@ -43,61 +43,82 @@ System.out.println("View Hi");
 
 	if (firstName.equals(CrmContactFieldKeys.FIRST_NAME)) {
 		orderByComparator = new CrmContactFirstNameComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (lastName.equals(CrmContactFieldKeys.LAST_NAME)) {
 		orderByComparator = new CrmContactLastNameComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (organization.equals(CrmContactFieldKeys.ORGANIZATION)) {
 		orderByComparator = new CrmContactOrganizationComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (jobTitle.equals(CrmContactFieldKeys.JOB_TITLE)) {
 		orderByComparator = new CrmContactJobTitleComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryAddress1.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_1)) {
 		orderByComparator = new CrmContactPrimaryAddress1Comparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryAddress2.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_2)) {
 		orderByComparator = new CrmContactPrimaryAddress2Comparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryAddressCity.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_CITY)) {
 		orderByComparator = new CrmContactPrimaryAddressCityComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryAddressZip.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_ZIP)) {
 		orderByComparator = new CrmContactPrimaryAddressZipComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryAddressCounty.equals(CrmContactFieldKeys.PRIMARY_ADDRESS_COUNTY)) {
 		orderByComparator = new CrmContactPrimaryAddressCountyComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryPhone.equals(CrmContactFieldKeys.PRIMARY_PHONE)) {
 		orderByComparator = new CrmContactPrimaryPhoneComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryCell.equals(CrmContactFieldKeys.PRIMARY_CELL)) {
 		orderByComparator = new CrmContactPrimaryCellComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (primaryEmailAddress.equals(CrmContactFieldKeys.PRIMARY_EMAIL_ADDRESS)) {
 		orderByComparator = new CrmContactPrimaryEmailAddressComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
 
 	if (modifiedDate.equals(CrmContactFieldKeys.MODIFIED_DATE)) {
 		orderByComparator = new CrmContactModifiedDateComparator(orderByAsc);
+		System.out.println("orderByComparator: " + orderByComparator);
 	}
+	
+
+	System.out.println("orderByComparatorFinal: " + orderByComparator);
 	
 	List<CrmContact> crmContactsTemp = CrmContactLocalServiceUtil.getCrmContactsByStatus(
 			ConstantContactKeys.CC_STATUS_ACTIVE, 0,
 			CrmContactLocalServiceUtil.getCrmContactsCount(), orderByComparator);
 	
 	int crmContactActiveCount = crmContactsTemp.size();
+	
+	for (CrmContact contactTemp : crmContactsTemp) {
+		System.out.println("crmContactsTemp contact ModifiedDate: " + contactTemp.getModifiedDate());	
+	}
+	
 		
 	
 %>
