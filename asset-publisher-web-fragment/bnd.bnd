@@ -1,4 +1,4 @@
 Bundle-Name: asset-publisher-web-fragment
 Bundle-SymbolicName: asset.publisher.web.fragment
 Bundle-Version: 1.0.0
-Fragment-Host: com.liferay.asset.publisher.web;bundle-version="1.6.10"
+Fragment-Host: com.liferay.asset.publisher.web;bundle-version="3.0.72"

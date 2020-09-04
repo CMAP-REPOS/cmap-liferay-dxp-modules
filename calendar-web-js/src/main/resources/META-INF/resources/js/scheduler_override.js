@@ -1335,6 +1335,7 @@ AUI.add(
 						var event = instance.get('event');
 
 						if (event) {
+							// CMAP-410 this line is showing errors.
 							var calendar = CalendarUtil.availableCalendars[event.get('calendarId')];
 
 							if (calendar) {
