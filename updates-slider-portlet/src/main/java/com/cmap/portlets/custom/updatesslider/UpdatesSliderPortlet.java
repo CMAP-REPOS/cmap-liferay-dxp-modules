@@ -160,6 +160,9 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			Date publishDate = assetEntry.getPublishDate();
 			String title = assetEntry.getTitle(_locale);
 			String summary = assetRenderer.getSummary();
+			// journal article
+			// sax
+			// obtener campos necesarios (titulo, summary)
 			String dateFormatted = dateFormat.format(publishDate);
 			String link = _linkPrefix + assetRenderer.getUrlTitle();
 

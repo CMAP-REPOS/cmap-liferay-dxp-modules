@@ -7,22 +7,21 @@ dependencies {
 	compileOnly group: "javax.portlet", name: "portlet-api"
 	compileOnly group: "javax.servlet", name: "javax.servlet-api"
 	compile group: "javax.mail", name: "mail"
+	compile group: "org.apache.velocity", name: "velocity", version: '1.7'
 	compile group: 'werken-xpath', name: 'werken-xpath', version: '0.9.4'
-	compile group: 'antlr', name: 'antlr'
+	compile group: "antlr", name: "antlr"
 	compile group: 'javax.jmdns', name: 'jmdns', version: '3.4.1'
-	compile group: 'oro', name: 'oro'
-	compile group: 'log4j', name: 'log4j'
+	compile group: "oro", name: "oro"
+	compile group: "log4j", name: "log4j"
 	compile group: 'logkit', name: 'logkit', version: '2.0'	
+	compile group: "commons-collections", name: "commons-collections", version: '3.2.2'
+	compile group: "commons-lang", name: "commons-lang", version: '2.6'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.6'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.9.6'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.9.6'
-	compile group: 'org.apache.velocity', name: 'velocity', version: '1.7'
-	
-	compile group: 'commons-collections', name: 'commons-collections', version: '3.2.1'
-	compile group: 'commons-lang', name: 'commons-lang', version: '2.4'
+	compileOnly project(":modules:contact-manager:contact-manager-api")
 	
 	compileOnly group: "com.liferay", name: "com.liferay.petra.string"
-	compileOnly project(":modules:contact-manager:contact-manager-api")
 }
 
 buildService {

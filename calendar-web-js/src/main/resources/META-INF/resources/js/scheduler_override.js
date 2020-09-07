@@ -1044,11 +1044,11 @@ AUI.add(
 					_updateSchedulerEvent: function (schedulerEvent, changedAttributes) {
 						var instance = this;
 
-						var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+//						var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
 
 						Liferay.CalendarMessageUtil.promptSchedulerEventUpdate(
 							{
-								calendarName: calendar.get('name'),
+								calendarName: "CMAP",
 								duration: instance._getCalendarBookingDuration(schedulerEvent),
 								hasChild: schedulerEvent.get('hasChildCalendarBookings'),
 								masterBooking: schedulerEvent.isMasterBooking(),
@@ -1531,8 +1531,11 @@ AUI.add(
 						var children = [];
 						var editGroup = [];
 						var respondGroup = [];
+						
+						console.log("schedulerEvent: ");
+						console.log(sche);
 
-						var calendar = CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
+						var calendar = Liferay.CalendarUtil.availableCalendars[schedulerEvent.get('calendarId')];
 						var status = schedulerEvent.get('status');
 
 						if (calendar) {
