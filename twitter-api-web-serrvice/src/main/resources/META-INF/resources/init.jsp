@@ -43,8 +43,8 @@
 	String oAuthAccessToken = null;
 	String oAuthAccessTokenSecret = null;
 	String fbScreenName = null;
-	String fbPageID =  null;
-	String fbAccessToken = null;
+	//String fbPageID =  null;
+	//String fbAccessToken = null;
 	
 	if (Validator.isNotNull(socialSliderConfiguration)) {
 		
@@ -65,14 +65,14 @@
 		oAuthAccessTokenSecret = 
 		portletPreferences.getValue("oAuthAccessTokenSecret", socialSliderConfiguration.oAuthAccessTokenSecret());
 
-		fbScreenName =
-				portletPreferences.getValue("fbScreenName", socialSliderConfiguration.fbScreenName());
-
-		fbPageID =
-				portletPreferences.getValue("fbPageID", socialSliderConfiguration.fbPageID());
-
-		fbAccessToken =
-				portletPreferences.getValue("fbAccessToken", socialSliderConfiguration.fbAccessToken());
+		//fbScreenName =
+		//		portletPreferences.getValue("fbScreenName", socialSliderConfiguration.fbScreenName());
+		//
+		//fbPageID =
+		//		portletPreferences.getValue("fbPageID", socialSliderConfiguration.fbPageID());
+		//
+		//fbAccessToken =
+		//		portletPreferences.getValue("fbAccessToken", socialSliderConfiguration.fbAccessToken());
 	
 		if (Validator.isDigit(postCountPref)) {
 			postCount = Integer.parseInt(postCountPref);

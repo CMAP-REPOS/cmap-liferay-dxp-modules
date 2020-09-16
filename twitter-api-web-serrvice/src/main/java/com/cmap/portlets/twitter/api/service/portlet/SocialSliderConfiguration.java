@@ -27,13 +27,13 @@ public interface SocialSliderConfiguration {
 	@Meta.AD(required = false)
 	public String oAuthAccessTokenSecret();
 
-	@Meta.AD(required = false)
-	public String fbScreenName();
-
-	@Meta.AD(required = false)
-	public String fbPageID();
-
-	@Meta.AD(required = false)
-	public String fbAccessToken();
+//	@Meta.AD(required = false)
+//	public String fbScreenName();
+//
+//	@Meta.AD(required = false)
+//	public String fbPageID();
+//
+//	@Meta.AD(required = false)
+//	public String fbAccessToken();
 
 }

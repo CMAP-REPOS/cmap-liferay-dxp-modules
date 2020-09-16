@@ -69,9 +69,9 @@ public class SocialSliderConfigurationAction
 		String oAuthConsumerSecret = ParamUtil.getString(actionRequest, "oAuthConsumerSecret");
 		String oAuthAccessToken = ParamUtil.getString(actionRequest, "oAuthAccessToken");
 		String oAuthAccessTokenSecret = ParamUtil.getString(actionRequest, "oAuthAccessTokenSecret");
-		String fbScreenName = ParamUtil.getString(actionRequest, "fbScreenName");
-		String fbPageID = ParamUtil.getString(actionRequest, "fbPageID");
-		String fbAccessToken = ParamUtil.getString(actionRequest, "fbAccessToken");
+//		String fbScreenName = ParamUtil.getString(actionRequest, "fbScreenName");
+//		String fbPageID = ParamUtil.getString(actionRequest, "fbPageID");
+//		String fbAccessToken = ParamUtil.getString(actionRequest, "fbAccessToken");
 
 		setPreference(actionRequest, "twitterScreenName", twitterScreenName);
 		setPreference(actionRequest, "postCount", postCount);
@@ -79,9 +79,9 @@ public class SocialSliderConfigurationAction
 		setPreference(actionRequest, "oAuthConsumerSecret", oAuthConsumerSecret);
 		setPreference(actionRequest, "oAuthAccessToken", oAuthAccessToken);
 		setPreference(actionRequest, "oAuthAccessTokenSecret", oAuthAccessTokenSecret);
-		setPreference(actionRequest, "fbScreenName", fbScreenName);
-		setPreference(actionRequest, "fbPageID", fbPageID);
-		setPreference(actionRequest, "fbAccessToken", fbAccessToken);
+//		setPreference(actionRequest, "fbScreenName", fbScreenName);
+//		setPreference(actionRequest, "fbPageID", fbPageID);
+//		setPreference(actionRequest, "fbAccessToken", fbAccessToken);
 
 		super.processAction(portletConfig, actionRequest, actionResponse);
 	}

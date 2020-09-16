@@ -47,6 +47,7 @@
 			value="<%= oAuthAccessTokenSecret %>">
 		</aui:input>
 
+		<%-- Handle Facebook Posts
 		<aui:input type="text" name="fbScreenName" label="Facebook Screen Name"
 				   value="<%= fbScreenName %>">
 		</aui:input>
@@ -58,7 +59,7 @@
 		<aui:input type="text" name="fbAccessToken" label="Facebook Access Token Secret"
 				   value="<%= fbAccessToken %>">
 		</aui:input>
-
+ 		--%>
 	</aui:fieldset>
 
 	<aui:button-row>

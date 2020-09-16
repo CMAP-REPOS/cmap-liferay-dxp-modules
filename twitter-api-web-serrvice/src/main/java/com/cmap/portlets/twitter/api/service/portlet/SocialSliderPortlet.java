@@ -76,9 +76,9 @@ public class SocialSliderPortlet extends MVCPortlet {
 			String oAuthConsumerSecret = "";
 			String oAuthAccessToken = "";
 			String oAuthAccessTokenSecret = "";
-			String fbScreenName = "";
-			String fbPageID =  "";
-			String fbAccessToken = "";
+//			String fbScreenName = "";
+//			String fbPageID =  "";
+//			String fbAccessToken = "";
 			
 			String twitterScreenNamePref = null;
 			String postCountPref = null;
@@ -86,9 +86,9 @@ public class SocialSliderPortlet extends MVCPortlet {
 			String oAuthConsumerSecretPref = null;
 			String oAuthAccessTokenPref = null;
 			String oAuthAccessTokenSecretPref = null;
-			String fbScreenNamePref = null;
-			String fbPageIDPref =  null;
-			String fbAccessTokenPref = null;
+//			String fbScreenNamePref = null;
+//			String fbPageIDPref =  null;
+//			String fbAccessTokenPref = null;
 			
 			int postLength = 150;
 			
@@ -111,14 +111,14 @@ public class SocialSliderPortlet extends MVCPortlet {
 				oAuthAccessTokenSecretPref = portletPreferences.getValue("oAuthAccessTokenSecret",
 						_socialSliderConfiguration.oAuthAccessTokenSecret());
 
-				fbScreenNamePref = portletPreferences.getValue("fbScreenName",
-						_socialSliderConfiguration.fbScreenName());
-
-				fbPageIDPref = portletPreferences.getValue("fbPageID",
-						_socialSliderConfiguration.fbPageID());
-
-				fbAccessTokenPref = portletPreferences.getValue("fbAccessToken",
-						_socialSliderConfiguration.fbAccessToken());
+//				fbScreenNamePref = portletPreferences.getValue("fbScreenName",
+//						_socialSliderConfiguration.fbScreenName());
+//
+//				fbPageIDPref = portletPreferences.getValue("fbPageID",
+//						_socialSliderConfiguration.fbPageID());
+//
+//				fbAccessTokenPref = portletPreferences.getValue("fbAccessToken",
+//						_socialSliderConfiguration.fbAccessToken());
 			
 				if (Validator.isDigit(postCountPref)) {
 					postCountNum = Integer.parseInt(postCountPref);
@@ -130,13 +130,13 @@ public class SocialSliderPortlet extends MVCPortlet {
 				oAuthConsumerSecret = oAuthConsumerSecretPref;
 				oAuthAccessToken = oAuthAccessTokenPref;
 				oAuthAccessTokenSecret = oAuthAccessTokenSecretPref;
-				fbScreenName = fbScreenNamePref;
-				fbPageID =  fbPageIDPref;
-				fbAccessToken =fbAccessTokenPref;
+//				fbScreenName = fbScreenNamePref;
+//				fbPageID =  fbPageIDPref;
+//				fbAccessToken =fbAccessTokenPref;
 			}
 			
 			JSONArray jsonResponseArrayTwitter = getTwitterRequest(twitterScreenName, postCount, oAuthConsumerKey, oAuthConsumerSecret, oAuthAccessToken, oAuthAccessTokenSecret);
-			JSONArray jsonResponseArrayFB = getFacebookRequest(fbPageID, fbAccessToken, postCount);
+//			JSONArray jsonResponseArrayFB = getFacebookRequest(fbPageID, fbAccessToken, postCount);
 
 			List<SocialSliderSocialMediaPost> socialMediaPostsUnordered = new ArrayList<SocialSliderSocialMediaPost>();
 			List<SocialSliderSocialMediaPost> socialMediaPosts = new ArrayList<SocialSliderSocialMediaPost>();
@@ -148,14 +148,14 @@ public class SocialSliderPortlet extends MVCPortlet {
 					socialMediaPostsUnordered.add(socialMediaPost);
 				}
 			}
-
-			for (int i=0; i < jsonResponseArrayFB.length(); i++) {
-				SocialSliderSocialMediaPost socialMediaPost = getMediaPostFB(jsonResponseArrayFB.getJSONObject(i), fbScreenName, postLength);
-
-				if (socialMediaPost != null) {
-					socialMediaPostsUnordered.add(socialMediaPost);
-				}
-			}
+//
+//			for (int i=0; i < jsonResponseArrayFB.length(); i++) {
+//				SocialSliderSocialMediaPost socialMediaPost = getMediaPostFB(jsonResponseArrayFB.getJSONObject(i), fbScreenName, postLength);
+//
+//				if (socialMediaPost != null) {
+//					socialMediaPostsUnordered.add(socialMediaPost);
+//				}
+//			}
 
 			OrderByComparator orderByComparator = new SocialMediaPostDateComparator(false);
 
@@ -166,7 +166,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 			}
 			
 			renderRequest.setAttribute("twitterScreenName", twitterScreenName);
-			renderRequest.setAttribute("fbScreenName", fbScreenName);
+//			renderRequest.setAttribute("fbScreenName", fbScreenName);
 			renderRequest.setAttribute("socialMediaPosts", socialMediaPosts);
 			renderRequest.setAttribute(SocialSliderConfiguration.class.getName(), _socialSliderConfiguration);
 
