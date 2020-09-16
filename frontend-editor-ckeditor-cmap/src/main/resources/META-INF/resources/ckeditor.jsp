@@ -422,6 +422,10 @@ name = HtmlUtil.escapeJS(name);
 
 		var editorConfig = <%= Validator.isNotNull(editorConfigJSONObject) ? editorConfigJSONObject : "{}" %>;
 		var config = A.merge(defaultConfig, editorConfig);
+		<script>
+			console.log("Hi");
+			console.log(config)
+		</script>
 		CKEDITOR.<%= inlineEdit ? "inline" : "replace" %>('<%= name %>', config);
 
 		Liferay.on(

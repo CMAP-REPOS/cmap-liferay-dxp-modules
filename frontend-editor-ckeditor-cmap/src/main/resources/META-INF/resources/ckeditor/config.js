@@ -47,12 +47,6 @@ CKEDITOR.editorConfig = function( config ) {
     }, { 
       name: 'styles', 
       groups: [ 'styles' ] 
-    }, { 
-      name: 'others', 
-      groups: [ 'others' ] 
-    }, { 
-      name: 'about', 
-      groups: [ 'about' ] 
     } 
   ];
   config.disallowedContent = "h3;h4;h5;h6;";
@@ -60,6 +54,14 @@ CKEDITOR.editorConfig = function( config ) {
   console.log("I'm here this config: " + config);
   return config;
 };
+
+//, { 
+//    name: 'others', 
+//groups: [ 'others' ] 
+//  }, { 
+//    name: 'about', 
+//groups: [ 'about' ] 
+//  }
 
 // var editor = CKEDITOR.instances['_com_liferay_journal_web_portlet_JournalPortlet_Content_INSTANCE_cidhEditor'];
 // if (editor) { editor.destroy(true); }

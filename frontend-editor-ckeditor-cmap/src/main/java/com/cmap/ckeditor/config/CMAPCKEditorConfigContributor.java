@@ -67,7 +67,7 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		JSONArray contentsCss = JSONFactoryUtil.createJSONArray();
 		contentsCss.put("/o/cmap-onto-2050-theme/css/main.css");
-		contentsCss.put("/o/cmap-onto-2050-theme/css/aui.css");
+		contentsCss.put("/o/cmap-onto-2050-theme/css/clay.css");
 		contentsCss.put("https://cloud.webtype.com/css/2f300d46-99ee-4656-bf09-870688012aaf.css");
 		contentsCss.put("https://cloud.typography.com/7947314/7427752/css/fonts.css");
 		jsonObject.put("contentsCss", contentsCss);
@@ -112,7 +112,8 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("toolbar", "null");
 
 		try{
-			jsonObject.put("toolbarGroups", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] }, { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] } ]"));
+			// , { name: 'others', groups: [ 'others' ] }, { name: 'about', groups: [ 'about' ] }
+			jsonObject.put("toolbarGroups", JSONFactoryUtil.createJSONArray("[{ name: 'document', groups: [ 'mode', 'document', 'doctools' ] }, { name: 'clipboard', groups: [ 'clipboard', 'undo' ] }, { name: 'editing', groups: [ 'find', 'selection', 'spellchecker', 'editing' ] }, { name: 'insert', groups: [ 'insert' ] }, { name: 'tools', groups: [ 'tools' ] }, { name: 'forms', groups: [ 'forms' ] }, '/', { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] }, { name: 'links', groups: [ 'links' ] }, { name: 'colors', groups: [ 'colors' ] }, { name: 'paragraph', groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] }, { name: 'styles', groups: [ 'styles' ] } ]"));
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
