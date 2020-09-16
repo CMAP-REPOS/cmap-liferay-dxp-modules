@@ -7,7 +7,7 @@
 
 <div class="row-no-margin">
     <!-- ========= START: Event List DESKTOP version ======== -->
-    <div class="col-md-16 no-padding hidden-xs hidden-sm">
+    <div class="col-sm-16 no-padding hidden-xs">
         <div class="b-event-list b-event-list--desktop">
             <div class="b-event-list__header">
                 <h2>EVENTS
@@ -42,7 +42,7 @@
     </div>
     <!-- ========= END: Event List DESKTOP version ======== -->
     <!-- ========= START: Event List MOBILE version ======== -->
-    <div class="col-xs-16 no-padding hidden-md hidden-lg">
+    <div class="col-xs-16 no-padding hidden-sm hidden-md hidden-lg">
         <div class="slider slider-calendar">
             <div class="b-event-list b-event-list--mobile">
                 <div class="row">
