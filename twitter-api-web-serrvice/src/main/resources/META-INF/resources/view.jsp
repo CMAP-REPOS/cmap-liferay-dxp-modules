@@ -4,6 +4,7 @@
 		Validator.isNull(twitterScreenName) || Validator.isNull(oAuthConsumerKey) || Validator.isNull(oAuthConsumerSecret) ||
 				Validator.isNull(oAuthAccessToken) || Validator.isNull(oAuthAccessTokenSecret) || "0".equals(postCount);
 				//Validator.isNull(fbScreenName) || Validator.isNull(fbPageID) || Validator.isNull(fbAccessToken)
+				
 %>
 
 <c:choose>

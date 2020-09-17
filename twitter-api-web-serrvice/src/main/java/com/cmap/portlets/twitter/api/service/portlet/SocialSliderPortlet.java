@@ -148,6 +148,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 					socialMediaPostsUnordered.add(socialMediaPost);
 				}
 			}
+			
 //
 //			for (int i=0; i < jsonResponseArrayFB.length(); i++) {
 //				SocialSliderSocialMediaPost socialMediaPost = getMediaPostFB(jsonResponseArrayFB.getJSONObject(i), fbScreenName, postLength);
@@ -161,7 +162,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 
 			Collections.sort(socialMediaPostsUnordered,orderByComparator);
 
-			for (int i=0; i < postCountNum; i++) {
+			for (int i=0; i < postCountNum - 1; i++) {
 				socialMediaPosts.add(socialMediaPostsUnordered.get(i));
 			}
 			
