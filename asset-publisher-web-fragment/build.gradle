@@ -1,3 +1,17 @@
 dependencies {
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.kernel"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.portal.impl"
+	compileOnly group: "com.liferay.portal", name: "com.liferay.util.taglib"
+	
+	
+	compileOnly group: "com.liferay", name: "com.liferay.asset.publisher.api"
 	compileOnly group: "com.liferay", name: "com.liferay.asset.publisher.web", version: "3.0.72"
+	compileOnly group: "com.liferay", name: "com.liferay.dynamic.data.mapping.api"
+	compileOnly group: "com.liferay", name: "com.liferay.item.selector.api"
+	compileOnly group: "com.liferay", name: "com.liferay.site.item.selector.api"
+	compileOnly group: "com.liferay", name: "com.liferay.info.api"
+	compileOnly group: "com.liferay", name: "com.liferay.asset.list.api"
+	compileOnly group: "com.liferay", name: "com.liferay.asset.api"
+	
+	compileOnly group: "javax.portlet", name: "portlet-api"
 }

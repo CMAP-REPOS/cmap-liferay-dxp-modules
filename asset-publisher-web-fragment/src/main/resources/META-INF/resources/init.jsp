@@ -44,17 +44,18 @@ page import="com.liferay.asset.kernel.service.AssetCategoryLocalServiceUtil" %><
 page import="com.liferay.asset.kernel.service.AssetVocabularyLocalServiceUtil" %><%@
 page import="com.liferay.asset.kernel.util.AssetEntryQueryProcessor" %><%@
 page import="com.liferay.asset.kernel.util.comparator.AssetRendererFactoryTypeNameComparator" %><%@
-page import="com.liferay.asset.publisher.web.configuration.AssetPublisherPortletInstanceConfiguration" %><%@
-page import="com.liferay.asset.publisher.web.configuration.AssetPublisherWebConfiguration" %><%@
-page import="com.liferay.asset.publisher.web.constants.AssetPublisherConstants" %><%@
-page import="com.liferay.asset.publisher.web.constants.AssetPublisherPortletKeys" %><%@
-page import="com.liferay.asset.publisher.web.constants.AssetPublisherWebKeys" %><%@
-page import="com.liferay.asset.publisher.web.display.context.AssetEntryResult" %><%@
-page import="com.liferay.asset.publisher.web.display.context.AssetPublisherDisplayContext" %><%@
-page import="com.liferay.asset.publisher.web.display.context.ItemSelectorViewDisplayContext" %><%@
-page import="com.liferay.asset.publisher.web.util.AssetPublisherCustomizer" %><%@
-page import="com.liferay.asset.publisher.web.util.AssetPublisherHelper" %><%@
-page import="com.liferay.asset.publisher.web.util.AssetPublisherUtil" %><%@
+page import="com.liferay.asset.publisher.web.internal.configuration.AssetPublisherPortletInstanceConfiguration" %><%@
+page import="com.liferay.asset.publisher.web.internal.configuration.AssetPublisherWebConfiguration" %><%@
+page import="com.liferay.asset.publisher.web.internal.action.AssetEntryActionRegistry" %><%@
+page import="com.liferay.asset.publisher.constants.AssetPublisherConstants" %><%@
+page import="com.liferay.asset.publisher.constants.AssetPublisherPortletKeys" %><%@
+page import="com.liferay.asset.publisher.constants.AssetPublisherWebKeys" %><%@
+page import="com.liferay.asset.publisher.util.AssetEntryResult" %><%@
+page import="com.liferay.asset.publisher.web.internal.display.context.AssetPublisherDisplayContext" %><%@
+page import="com.liferay.asset.publisher.web.internal.display.context.ItemSelectorViewDisplayContext" %><%@
+page import="com.liferay.asset.publisher.web.internal.util.AssetPublisherCustomizer" %><%@
+page import="com.liferay.asset.publisher.util.AssetPublisherHelper" %><%@
+page import="com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil" %><%@
 page import="com.liferay.document.library.kernel.document.conversion.DocumentConversionUtil" %><%@
 page import="com.liferay.document.library.kernel.util.DLUtil" %><%@
 page import="com.liferay.dynamic.data.mapping.model.DDMStructure" %><%@
@@ -113,7 +114,12 @@ page import="com.liferay.portlet.asset.util.AssetUtil" %><%@
 page import="com.liferay.portlet.usersadmin.search.GroupSearch" %><%@
 page import="com.liferay.site.item.selector.criteria.SiteItemSelectorReturnType" %><%@
 page import="com.liferay.site.item.selector.criterion.SiteItemSelectorCriterion" %><%@
-page import="com.liferay.taglib.servlet.PipingServletResponse" %>
+page import="com.liferay.taglib.servlet.PipingServletResponse" %><%@
+page import="com.liferay.asset.util.AssetHelper" %><%@
+page import="com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider" %><%@
+page import="com.liferay.info.list.provider.InfoListProviderTracker" %><%@
+page import="com.liferay.asset.util.AssetPublisherAddItemHolder" %><%@
+page import="com.liferay.asset.constants.AssetWebKeys" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -139,12 +145,27 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
-AssetPublisherCustomizer assetPublisherCustomizer = (AssetPublisherCustomizer)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
-AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(assetPublisherCustomizer, liferayPortletRequest, liferayPortletResponse, portletPreferences);
-AssetPublisherPortletInstanceConfiguration assetPublisherPortletInstanceConfiguration = (AssetPublisherPortletInstanceConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
+
+AssetEntryActionRegistry assetEntryActionRegistry;
+AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
+AssetListAssetEntryProvider assetListAssetEntryProvider;
+AssetPublisherHelper assetPublisherHelper;
 AssetPublisherWebConfiguration assetPublisherWebConfiguration = (AssetPublisherWebConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
+AssetPublisherWebUtil assetPublisherWebUtil;
+InfoListProviderTracker infoListProviderTracker;
+AssetPublisherCustomizer assetPublisherCustomizer = (AssetPublisherCustomizer)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
+
+AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(
+			assetEntryActionRegistry, assetHelper, assetListAssetEntryProvider, 
+			assetPublisherCustomizer, 
+			assetPublisherHelper, assetPublisherWebConfiguration, assetPublisherWebUtil, infoListProviderTracker,
+			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+
+AssetPublisherPortletInstanceConfiguration assetPublisherPortletInstanceConfiguration = (AssetPublisherPortletInstanceConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
+
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
+
 %>
 
 <%@ include file="/init-ext.jsp" %>

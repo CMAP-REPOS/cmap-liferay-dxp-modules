@@ -18,7 +18,7 @@
 <!--  ADDED FOR UPDATE  -->
 
 <%
-List<AssetEntry> assetEntries = AssetPublisherUtil.getAssetEntries(renderRequest, portletPreferences, permissionChecker, assetPublisherDisplayContext.getGroupIds(), assetPublisherDisplayContext.getAllAssetCategoryIds(), assetPublisherDisplayContext.getAllAssetTagNames(), false, assetPublisherDisplayContext.isEnablePermissions());
+List<AssetEntry> assetEntries = assetPublisherDisplayContext.getAssetEntries();
 
 searchContainer.setTotal(assetEntries.size());
 
@@ -76,10 +76,10 @@ request.setAttribute("view.jsp-results", assetEntries);
 		<liferay-ddm:template-renderer className="<%= AssetEntry.class.getName() %>" displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>" displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>" entries="<%= new ArrayList<AssetEntry>() %>">
 
 			<%
-			Map<Long, Map<String, PortletURL>> addPortletURLs = assetPublisherDisplayContext.getScopeAddPortletURLs(1);
+			Map<Long, List<AssetPublisherAddItemHolder>> scopeAssetPublisherAddItemHolders= assetPublisherDisplayContext.getScopeAssetPublisherAddItemHolders(1);
 			%>
 
-			<c:if test="<%= MapUtil.isEmpty(addPortletURLs) %>">
+			<c:if test="<%= MapUtil.isEmpty(scopeAssetPublisherAddItemHolders) %>">
 
 				<%
 				renderRequest.setAttribute(WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
