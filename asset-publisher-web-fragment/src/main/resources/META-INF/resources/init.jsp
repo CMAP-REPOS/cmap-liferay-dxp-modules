@@ -146,12 +146,12 @@ page import="javax.portlet.PortletURL" %>
 
 <%
 
-AssetEntryActionRegistry assetEntryActionRegistry;
+AssetEntryActionRegistry assetEntryActionRegistry = (AssetEntryActionRegistry)request.getAttribute(AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY);
 AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
 AssetListAssetEntryProvider assetListAssetEntryProvider;
-AssetPublisherHelper assetPublisherHelper;
+AssetPublisherHelper assetPublisherHelper = (AssetPublisherHelper)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
 AssetPublisherWebConfiguration assetPublisherWebConfiguration = (AssetPublisherWebConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
-AssetPublisherWebUtil assetPublisherWebUtil;
+AssetPublisherWebUtil assetPublisherWebUtil = (AssetPublisherWebUtil)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
 InfoListProviderTracker infoListProviderTracker;
 AssetPublisherCustomizer assetPublisherCustomizer = (AssetPublisherCustomizer)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
 
