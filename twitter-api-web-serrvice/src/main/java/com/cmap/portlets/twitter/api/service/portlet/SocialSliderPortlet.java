@@ -66,6 +66,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 	@Override
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
+
+		System.out.println("doView");
 		
 		try {
 			PortletPreferences portletPreferences = renderRequest.getPreferences();
@@ -181,6 +183,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 	public JSONArray getTwitterRequest(String twitterScreenName, String tweetCount, String oAuthConsumerKey,
 			String oAuthConsumerSecret, String oAuthAccessToken, String oAuthAccessTokenSecret) throws Exception{
 		
+		System.out.println("getTwitterRequest");
+		
 		StringBuffer urlWithParams;
 		
 		String excludeReplies = "true";
@@ -257,6 +261,9 @@ public class SocialSliderPortlet extends MVCPortlet {
 	        urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
 	    }
 	    
+	    System.out.println("urlWithParams: ");
+	    System.out.println(urlWithParams);
+	    
 	    GetMethod getMethod = new GetMethod(urlWithParams.toString());
 
 	    getMethod.addRequestHeader("Authorization", authorizationHeaderValue);
@@ -267,6 +274,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 		String response1 = null;
 	
 		response1 = getMethod.getResponseBodyAsString();
+		
+		System.out.println("response1: " + response1);
 	
 		JSONArray jsonResponseArray = JSONFactoryUtil.createJSONArray(response1);
 		
@@ -328,6 +337,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 	
 	protected SocialSliderSocialMediaPost getMediaPostTwitter(JSONObject jsonPost, int postLength) {
 
+		System.out.println("getMediaPostTwitter");
+		
 		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);
 		
