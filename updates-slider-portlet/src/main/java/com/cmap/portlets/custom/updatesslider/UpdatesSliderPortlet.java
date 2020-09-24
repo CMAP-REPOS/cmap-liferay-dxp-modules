@@ -3,14 +3,13 @@ package com.cmap.portlets.custom.updatesslider;
 import com.cmap.portlets.custom.updatesslider.constants.UpdatesSliderPortletKeys;
 import com.liferay.asset.kernel.model.AssetEntry;
 import com.liferay.asset.kernel.model.AssetRenderer;
-import com.liferay.asset.kernel.service.AssetEntryLocalServiceUtil;
 import com.liferay.asset.kernel.service.AssetEntryServiceUtil;
 import com.liferay.asset.kernel.service.persistence.AssetEntryQuery;
 import com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.petra.string.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.io.IOException;
@@ -156,7 +155,8 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-
+			System.out.println("assetRehderer: " + assetRenderer);
+			
 			Date publishDate = assetEntry.getPublishDate();
 			String title = assetEntry.getTitle(_locale);
 			String summary = assetRenderer.getSummary();
@@ -165,6 +165,11 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			// obtener campos necesarios (titulo, summary)
 			String dateFormatted = dateFormat.format(publishDate);
 			String link = _linkPrefix + assetRenderer.getUrlTitle();
+			
+			System.out.println("dateFormatted: " + dateFormatted);
+			System.out.println("title: " + title);
+			System.out.println("summary: " + summary);
+			System.out.println("link: " + link);
 
 			if (summary.isEmpty()) {
 				summary = assetEntry.getDescription(_locale);
