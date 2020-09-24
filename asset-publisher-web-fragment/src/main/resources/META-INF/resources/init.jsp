@@ -119,7 +119,9 @@ page import="com.liferay.asset.util.AssetHelper" %><%@
 page import="com.liferay.asset.list.asset.entry.provider.AssetListAssetEntryProvider" %><%@
 page import="com.liferay.info.list.provider.InfoListProviderTracker" %><%@
 page import="com.liferay.asset.util.AssetPublisherAddItemHolder" %><%@
-page import="com.liferay.asset.constants.AssetWebKeys" %>
+page import="com.liferay.asset.constants.AssetWebKeys" %><%@
+page import="com.liferay.registry.Registry" %><%@
+page import="com.liferay.registry.RegistryUtil" %>
 
 <%@ page import="java.io.Serializable" %>
 
@@ -138,6 +140,15 @@ page import="java.util.Set" %>
 page import="javax.portlet.PortletRequest" %><%@
 page import="javax.portlet.PortletURL" %>
 
+
+<%@ page import="com.liferay.osgi.service.tracker.collections.list.ServiceTrackerList" %>
+<%@ page import="com.liferay.osgi.service.tracker.collections.list.ServiceTrackerListFactory" %>
+<%@ page import="org.osgi.framework.Bundle" %>
+<%@ page import="org.osgi.framework.BundleContext" %>
+<%@ page import="org.osgi.framework.FrameworkUtil" %>
+<%@ page import="com.liferay.asset.publisher.web.internal.portlet.AssetPublisherPortlet" %>
+<%@ page import="com.liferay.portal.configuration.metatype.bnd.util.ConfigurableUtil" %>
+
 <liferay-frontend:defineObjects />
 
 <liferay-theme:defineObjects />
@@ -145,24 +156,50 @@ page import="javax.portlet.PortletURL" %>
 <portlet:defineObjects />
 
 <%
+// serviceTrackerListFactory (sp?) instead of RegistryUtil
+Registry registry = RegistryUtil.getRegistry();
+System.out.println("registry: " + registry);
 
-AssetEntryActionRegistry assetEntryActionRegistry = (AssetEntryActionRegistry)request.getAttribute(AssetPublisherWebKeys.ASSET_ENTRY_ACTION_REGISTRY);
+//Bundle bundle = FrameworkUtil.getBundle(AssetPublisherPortlet.class);
+//BundleContext bundleContext = bundle.getBundleContext();
+
+//String filter = StringPool.BLANK;
+
+//ServiceTrackerList<InfoListProviderTracker, InfoListProviderTracker> serviceTrackerInfoListProvider = ServiceTrackerListFactory.open(bundleContext, InfoListProviderTracker.class, filter);
+
+InfoListProviderTracker infoListProviderTracker = registry.getService(InfoListProviderTracker.class);
+System.out.println("infoListProviderTracker: " + infoListProviderTracker);
+AssetListAssetEntryProvider assetListAssetEntryProvider = registry.getService(AssetListAssetEntryProvider.class);
+System.out.println("assetListAssetEntryProvider: " + assetListAssetEntryProvider);
+
+AssetEntryActionRegistry assetEntryActionRegistry = registry.getService(AssetEntryActionRegistry.class);
+System.out.println("assetEntryActionRegistry: " + assetEntryActionRegistry);
+
 AssetHelper assetHelper = (AssetHelper)request.getAttribute(AssetWebKeys.ASSET_HELPER);
-AssetListAssetEntryProvider assetListAssetEntryProvider;
+System.out.println("assetHelper: " + assetHelper);
+
 AssetPublisherHelper assetPublisherHelper = (AssetPublisherHelper)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_HELPER);
-AssetPublisherWebConfiguration assetPublisherWebConfiguration = (AssetPublisherWebConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_CONFIGURATION);
+System.out.println("assetPublisherHelper: " + assetPublisherHelper);
+
+Map<String, Object> properties = new HashMap<String, Object>();
+AssetPublisherWebConfiguration assetPublisherWebConfiguration = ConfigurableUtil.createConfigurable(AssetPublisherWebConfiguration.class, properties);
+System.out.println("assetPublisherWebConfiguration: " + assetPublisherWebConfiguration);
+
 AssetPublisherWebUtil assetPublisherWebUtil = (AssetPublisherWebUtil)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_WEB_UTIL);
-InfoListProviderTracker infoListProviderTracker;
-AssetPublisherCustomizer assetPublisherCustomizer = (AssetPublisherCustomizer)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_CUSTOMIZER);
+System.out.println("assetPublisherWebUtil: " + assetPublisherWebUtil);
+
+AssetPublisherCustomizer assetPublisherCustomizer = registry.getService(AssetPublisherCustomizer.class);
+System.out.println("assetPublisherCustomizer: " + assetPublisherCustomizer);
 
 AssetPublisherDisplayContext assetPublisherDisplayContext = new AssetPublisherDisplayContext(
 			assetEntryActionRegistry, assetHelper, assetListAssetEntryProvider, 
 			assetPublisherCustomizer, 
 			assetPublisherHelper, assetPublisherWebConfiguration, assetPublisherWebUtil, infoListProviderTracker,
 			liferayPortletRequest, liferayPortletResponse, portletPreferences);
+System.out.println("assetPublisherDisplayContext: " + assetPublisherDisplayContext);
 
-AssetPublisherPortletInstanceConfiguration assetPublisherPortletInstanceConfiguration = (AssetPublisherPortletInstanceConfiguration)request.getAttribute(AssetPublisherWebKeys.ASSET_PUBLISHER_PORTLET_INSTANCE_CONFIGURATION);
-
+AssetPublisherPortletInstanceConfiguration assetPublisherPortletInstanceConfiguration = portletDisplay.getPortletInstanceConfiguration(AssetPublisherPortletInstanceConfiguration.class);
+System.out.println("assetPublisherPortletInstanceConfiguration: " + assetPublisherPortletInstanceConfiguration);
 
 Format dateFormatDate = FastDateFormatFactoryUtil.getDate(locale, timeZone);
 

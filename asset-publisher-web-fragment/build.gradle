@@ -12,6 +12,11 @@ dependencies {
 	compileOnly group: "com.liferay", name: "com.liferay.info.api"
 	compileOnly group: "com.liferay", name: "com.liferay.asset.list.api"
 	compileOnly group: "com.liferay", name: "com.liferay.asset.api"
+	compileOnly group: "com.liferay", name: "com.liferay.registry.api"
+	
+	compileOnly group: "org.osgi", name: "org.osgi.core"
+	compileOnly group: "com.liferay", name: "com.liferay.osgi.service.tracker.collections"
+	compileOnly group: "com.liferay", name: "com.liferay.portal.configuration.metatype.api"
 	
 	compileOnly group: "javax.portlet", name: "portlet-api"
 }
