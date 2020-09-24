@@ -975,11 +975,26 @@ AUI.add(
 						var recorder = instance.get('eventRecorder');
 
 						var activeViewName = instance.get('activeView').get('name');
+						
+						var calendarContainer = instance.get('calendarContainer');
+						
+						var availableCalendars = calendarContainer.get('availableCalendars');
+						
+						console.log("availableCalendars");
+						console.log(availableCalendars);
 
-						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
+						var defaultCalendar = calendarContainer.get('defaultCalendar');
+						
+						console.log("defaultCalendar");
+						console.log(defaultCalendar);
+						
+//						var defaultUserCalendar = CalendarUtil.getDefaultUserCalendar();
 
-						var calendarId = defaultUserCalendar.get('calendarId');
+						var calendarId = defaultCalendar.get('calendarId');
 
+						console.log("calendarId");
+						console.log(calendarId);
+						
 						var editCalendarBookingURL = decodeURIComponent(recorder.get('editCalendarBookingURL'));
 
 						var startTimeDate = instance.get('date');

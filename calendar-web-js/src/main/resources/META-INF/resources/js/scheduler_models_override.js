@@ -243,7 +243,6 @@ AUI.add(
 
 					if (scheduler) {
 						var currentTime = new Date();
-						console.log(currentTime);
 
 						result = endDate.getTime() < currentTime.getTime();
 					} else {
