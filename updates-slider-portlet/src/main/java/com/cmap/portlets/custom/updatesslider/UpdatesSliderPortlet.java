@@ -31,6 +31,8 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Modified;
 
+import com.liferay.journal.model.JournalArticle;
+
 @Component(configurationPid = "com.cmap.portlets.custom.updatesslider.UpdatesSliderConfiguration", immediate = true, property = {
 		"com.liferay.portlet.display-category=CMAP", "com.liferay.portlet.instanceable=true",
 		"javax.portlet.display-name=Updates Slider", "javax.portlet.init-param.config-template=/configuration.jsp",
@@ -126,6 +128,8 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 			assetEntryQuery.setOrderByCol2("title");
 			assetEntryQuery.setOrderByType2("ASC");
 
+			//System.out.println("assetEntryQuery: " + assetEntryQuery);
+			
 			List<AssetEntry> assetEntries = AssetEntryServiceUtil.getEntries(assetEntryQuery);
 			List<UpdatesSliderAssetModel> assetModels = new ArrayList<UpdatesSliderAssetModel>();
 
@@ -148,37 +152,44 @@ public class UpdatesSliderPortlet extends MVCPortlet {
 	}
 
 	protected UpdatesSliderAssetModel getAssetModel(AssetEntry assetEntry, int summaryLength) {
-
+		
+		//System.out.println("assetEntry: " + assetEntry);
+		
 		UpdatesSliderAssetModel assetModel = new UpdatesSliderAssetModel(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK);
 
 		try {
 			DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy");
 			AssetRenderer<?> assetRenderer = assetEntry.getAssetRenderer();
-			System.out.println("assetRehderer: " + assetRenderer);
+			//System.out.println("assetRenderer: " + assetRenderer);
 			
 			Date publishDate = assetEntry.getPublishDate();
 			String title = assetEntry.getTitle(_locale);
-			String summary = assetRenderer.getSummary();
+			String summary = assetRenderer.getSearchSummary(_locale);
 			// journal article
+			// JournalArticle journalArticle = assetRenderer.getArticle();
 			// sax
 			// obtener campos necesarios (titulo, summary)
 			String dateFormatted = dateFormat.format(publishDate);
 			String link = _linkPrefix + assetRenderer.getUrlTitle();
 			
-			System.out.println("dateFormatted: " + dateFormatted);
-			System.out.println("title: " + title);
-			System.out.println("summary: " + summary);
-			System.out.println("link: " + link);
+//			System.out.println("dateFormatted: " + dateFormatted);
+//			System.out.println("title: " + title);
+//			System.out.println("summary: " + summary);
+//			System.out.println("link: " + link);
 
 			if (summary.isEmpty()) {
 				summary = assetEntry.getDescription(_locale);
 			}
 
+//			System.out.println("summary: " + summary);
+			
 			if (summary.length() > summaryLength) {
 				summary.replaceAll("\\s{2,}", " ").trim();
 				summary = summary.substring(0, summaryLength - 3) + "...";
 			}
+
+//			System.out.println("summary: " + summary);
 
 			if (title.isEmpty() || summary.isEmpty() || link.isEmpty() || dateFormatted.isEmpty()) {
 				assetModel = null;
