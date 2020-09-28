@@ -1029,6 +1029,8 @@ AUI.add(
 						var instance = this;
 
 						var schedulerEvent = event.schedulerEvent;
+						
+						var remoteServices = instance.get('remoteServices');
 
 						var success = function () {
 							instance.load();
@@ -1038,19 +1040,43 @@ AUI.add(
 						if (schedulerEvent.isRecurring()) {
 							RecurrenceUtil.openConfirmationPanel(
 								'delete',
-								function () {
-									CalendarUtil.deleteEventInstance(schedulerEvent, false, success);
+								() => {
+									remoteServices.deleteEventInstance(
+										schedulerEvent,
+										false,
+										success
+									);
 								},
-								function () {
-									CalendarUtil.deleteEventInstance(schedulerEvent, true, success);
+								() => {
+									remoteServices.deleteEventInstance(
+										schedulerEvent,
+										true,
+										success
+									);
 								},
-								function () {
-									CalendarUtil.deleteEvent(schedulerEvent, success);
+								() => {
+									remoteServices.deleteEvent(
+										schedulerEvent,
+										success
+									);
 								}
 							);
-						}
-						else if (schedulerEvent.isMasterBooking() && confirm(Liferay.Language.get('deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'))) {
-							CalendarUtil.deleteEvent(schedulerEvent, success);
+						} else if (schedulerEvent.isMasterBooking()) {
+							var confirmationMessage;
+
+							if (schedulerEvent.get('hasChildCalendarBookings')) {
+								confirmationMessage = Liferay.Language.get(
+									'deleting-this-event-will-cancel-the-meeting-with-your-guests-would-you-like-to-delete'
+								);
+							} else {
+								confirmationMessage = Liferay.Language.get(
+									'would-you-like-to-delete-this-event'
+								);
+							}
+
+							if (confirm(confirmationMessage)) {
+								remoteServices.deleteEvent(schedulerEvent, success);
+							}
 						}
 
 						event.preventDefault();
