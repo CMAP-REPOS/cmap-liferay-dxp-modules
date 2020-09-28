@@ -17,6 +17,9 @@
 	var defaultVideoHeight = 300;
 	var defaultVideoWidth = 400;
 
+	if(CKEDITOR.plugins.get('itemselector')){
+		return;
+	}
 	CKEDITOR.plugins.add(
 		'itemselector',
 		{
