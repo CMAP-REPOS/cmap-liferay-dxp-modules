@@ -14,217 +14,108 @@
  */
 --%>
 
-<aui:fieldset-group markupView="lexicon">
-	<aui:fieldset cssClass="general-display-settings">
-		<c:if test="<%= assetPublisherDisplayContext.isShowEnableAddContentButton() %>">
-			<aui:input helpMessage="show-add-content-button-help" name="preferences--showAddContentButton--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAddContentButton() %>" />
-		</c:if>
+<%@ include file="/init.jsp" %>
 
-		<div class="display-template">
-			<liferay-ddm:template-selector
-				className="<%= AssetEntry.class.getName() %>"
-				defaultDisplayStyle="<%= AssetPublisherWebConfigurationValues.DISPLAY_STYLE_DEFAULT %>"
-				displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
-				displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
-				displayStyles="<%= Arrays.asList(AssetPublisherWebConfigurationValues.DISPLAY_STYLES) %>"
-				label="display-template"
-				refreshURL="<%= configurationRenderURL.toString() %>"
-			/>
-		</div>
+<%
+PortletURL configurationRenderURL = (PortletURL)request.getAttribute("configuration.jsp-configurationRenderURL");
+%>
 
-		<aui:select cssClass="abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--" value="<%= assetPublisherDisplayContext.getAbstractLength() %>">
-			<aui:option label="100" />
-			<aui:option label="200" />
-			<aui:option label="300" />
-			<aui:option label="400" />
-			<aui:option label="500" />
-		</aui:select>
+<div class="display-template">
+	<liferay-ddm:template-selector
+		className="<%= AssetEntry.class.getName() %>"
+		defaultDisplayStyle="<%= assetPublisherDisplayContext.getDefaultDisplayStyle() %>"
+		displayStyle="<%= assetPublisherDisplayContext.getDisplayStyle() %>"
+		displayStyleGroupId="<%= assetPublisherDisplayContext.getDisplayStyleGroupId() %>"
+		displayStyles="<%= Arrays.asList(assetPublisherDisplayContext.getDisplayStyles()) %>"
+		label="display-template"
+		refreshURL="<%= configurationRenderURL.toString() %>"
+	/>
+</div>
 
-		<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>" />
+<aui:select cssClass="abstract-length" helpMessage="abstract-length-key-help" name="preferences--abstractLength--" value="<%= assetPublisherDisplayContext.getAbstractLength() %>">
+	<aui:option label="100" />
+	<aui:option label="200" />
+	<aui:option label="300" />
+	<aui:option label="400" />
+	<aui:option label="500" />
+</aui:select>
 
-		<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
+<aui:input cssClass="hidden-field show-asset-title" name="preferences--showAssetTitle--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAssetTitle() %>" />
 
-		<aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
+<aui:input cssClass="hidden-field show-context-link" name="preferences--showContextLink--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowContextLink() %>" />
 
-		<aui:select cssClass="asset-link-behavior hidden-field" name="preferences--assetLinkBehavior--">
-			<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
-			<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
-		</aui:select>
+<aui:input cssClass="hidden-field show-extra-info" name="preferences--showExtraInfo--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowExtraInfo() %>" />
 
-		<aui:input helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
-			<aui:validator name="digits" />
-		</aui:input>
+<aui:select cssClass="asset-link-behavior hidden-field" name="preferences--assetLinkBehavior--">
+	<aui:option label="show-full-content" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorShowFullContent() %>" value="showFullContent" />
+	<aui:option label="view-in-context" selected="<%= assetPublisherDisplayContext.isAssetLinkBehaviorViewInPortlet() %>" value="viewInPortlet" />
+</aui:select>
 
-		<aui:select name="preferences--paginationType--">
+<aui:input helpMessage="number-of-items-to-display-help" label="number-of-items-to-display" name="preferences--delta--" type="text" value="<%= assetPublisherDisplayContext.getDelta() %>">
+	<aui:validator name="digits" />
+</aui:input>
 
-			<%
-			for (String paginationType : assetPublisherDisplayContext.PAGINATION_TYPES) {
-			%>
+<aui:select name="preferences--paginationType--">
 
-				<aui:option label="<%= paginationType %>" selected="<%= assetPublisherDisplayContext.isPaginationTypeSelected(paginationType) %>" />
+	<%
+	for (String paginationType : assetPublisherDisplayContext.PAGINATION_TYPES) {
+	%>
 
-			<%
-			}
-			%>
+		<aui:option label="<%= paginationType %>" selected="<%= assetPublisherDisplayContext.isPaginationTypeSelected(paginationType) %>" />
 
-		</aui:select>
+	<%
+	}
+	%>
 
-		<c:if test="<%= !AssetPublisherWebConfigurationValues.SEARCH_WITH_INDEX %>">
-			<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
-				<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
-			</c:if>
-		</c:if>
+</aui:select>
 
-		<%
-		String helpMessage1 = "<em>" + LanguageUtil.format(request, "content-related-to-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
-		String helpMessage2 = "<em>" + LanguageUtil.format(request, "content-with-tag-x", StringPool.DOUBLE_PERIOD, false) + "</em>";
-		%>
+<c:if test="<%= !assetPublisherDisplayContext.isSearchWithIndex() && assetPublisherDisplayContext.isSelectionStyleDynamic() %>">
+	<aui:input label="exclude-assets-with-0-views" name="preferences--excludeZeroViewCount--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isExcludeZeroViewCount() %>" />
+</c:if>
 
-		<aui:input helpMessage='<%= LanguageUtil.format(request, "such-as-x-or-x", new Object[] {helpMessage1, helpMessage2}, false) %>' name="preferences--showMetadataDescriptions--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowMetadataDescriptions() %>" />
 
-		<aui:input name="preferences--showAvailableLocales--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isShowAvailableLocales() %>" />
+<!--  We are still missing some functionality related to this function here
+7.0 module working : https://github.com/CMAP-REPOS/cmap-liferay-dxp-modules/blob/cba009ddd690aa1317dce6e10b450587a8e9443b/asset-publisher-web-fragment/src/main/resources/META-INF/resources/display_settings.jspf#L214
+7.0 assetpublisher base code: https://github.com/liferay/liferay-portal/blob/6b14c8e0496926309a5fac347cb2d342d7412c1f/modules/apps/web-experience/asset/asset-publisher-web/src/main/resources/META-INF/resources/display_settings.jspf#L214
+7.2 assetpublisher base code: https://github.com/liferay/liferay-portal/blob/ded0e9390637985231e962e4ad4cfa4639eabb26/modules/apps/asset/asset-publisher-web/src/main/resources/META-INF/resources/configuration/display_settings.jsp#L100
 
-		<c:if test="<%= assetPublisherDisplayContext.isEnableSetAsDefaultAssetPublisher() %>">
-			<aui:input helpMessage="set-as-the-default-asset-publisher-for-this-page-help" label="set-as-the-default-asset-publisher-for-this-page" name="defaultAssetPublisher" type="toggle-switch" value="<%= AssetUtil.isDefaultAssetPublisher(layout, portletDisplay.getId(), assetPublisherDisplayContext.getPortletResource()) %>" />
-		</c:if>
-
-		<aui:field-wrapper helpMessage='<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() ? "enabling-openoffice-integration-provides-document-conversion-functionality" : StringPool.BLANK %>' label="enable-conversion-to">
-			<div class="field-row">
-
-				<%
-				String[] conversions = DocumentConversionUtil.getConversions("html");
-
-				for (String conversion : conversions) {
-				%>
-
-					<aui:input checked="<%= ArrayUtil.contains(assetPublisherDisplayContext.getExtensions(), conversion) %>" disabled="<%= !assetPublisherDisplayContext.isOpenOfficeServerEnabled() %>" id='<%= "extensions" + conversion %>' inlineField="<%= true %>" label="<%= StringUtil.toUpperCase(conversion) %>" name="extensions" type="toggle-switch" value="<%= conversion %>" />
-
-				<%
-				}
-				%>
-
-			</div>
-		</aui:field-wrapper>
-
-		<aui:input name="preferences--enablePrint--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnablePrint() %>" />
-
-		<aui:input name="preferences--enableFlags--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableFlags() %>" />
-
-		<c:choose>
-			<c:when test="<%= !assetPublisherDisplayContext.isShowEnablePermissions() %>">
-				<aui:input name="preferences--enablePermissions--" type="hidden" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="preferences--enablePermissions--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnablePermissions() %>" />
-			</c:otherwise>
-		</c:choose>
-
-		<c:choose>
-			<c:when test="<%= !assetPublisherDisplayContext.isShowEnableRelatedAssets() %>">
-				<aui:input name="preferences--enableRelatedAssets--" type="hidden" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-			</c:when>
-			<c:otherwise>
-				<aui:input name="preferences--enableRelatedAssets--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableRelatedAssets() %>" />
-			</c:otherwise>
-		</c:choose>
-
-		<aui:input name="preferences--enableRatings--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableRatings() %>" />
-
-		<aui:input name="preferences--enableComments--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableComments() %>" />
-
-		<aui:input name="preferences--enableCommentRatings--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableCommentRatings() %>" />
-
-		<liferay-ui:social-bookmarks-settings
-			displayPosition="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayPosition() %>"
-			displayStyle="<%= assetPublisherDisplayContext.getSocialBookmarksDisplayStyle() %>"
-			enabled="<%= assetPublisherDisplayContext.isEnableSocialBookmarks() %>"
-		/>
-
-		<c:if test="<%= assetPublisherDisplayContext.isSelectionStyleManual() %>">
-			<aui:input helpMessage="enable-tag-based-navigation-help" label="enable-tag-based-navigation" name="preferences--enableTagBasedNavigation--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableTagBasedNavigation() %>" />
-		</c:if>
-
-		<aui:input name="preferences--enableViewCountIncrement--" type="toggle-switch" value="<%= assetPublisherDisplayContext.isEnableViewCountIncrement() %>" />
-	</aui:fieldset>
-
-	<aui:fieldset collapsed="<%= true %>" collapsible="<%= true %>" label="show-metadata">
-		<aui:input name="preferences--metadataFields--" type="hidden" />
-
-		<aui:field-wrapper label="metadata-fields">
-
-			<%
-
-			// Left list
-
-			List leftList = new ArrayList();
-
-			String[] metadataFields = assetPublisherDisplayContext.getMetadataFields();
-
-			for (int i = 0; i < metadataFields.length; i++) {
-				String folderColumn = metadataFields[i];
-
-				leftList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
-			}
-
-			// Right list
-
-			List rightList = new ArrayList();
-
-			Arrays.sort(metadataFields);
-
-			String[] allMetadataFields = new String[] {"create-date", "modified-date", "publish-date", "expiration-date", "priority", "author", "view-count", "categories", "tags"};
-
-			for (String folderColumn : allMetadataFields) {
-				if (Arrays.binarySearch(metadataFields, folderColumn) < 0) {
-					rightList.add(new KeyValuePair(folderColumn, LanguageUtil.get(request, folderColumn)));
-				}
-			}
-
-			rightList = ListUtil.sort(rightList, new KeyValuePairComparator(false, true));
-			%>
-
-			<liferay-ui:input-move-boxes
-				leftBoxName="currentMetadataFields"
-				leftList="<%= leftList %>"
-				leftReorder="<%= Boolean.TRUE.toString() %>"
-				leftTitle="current"
-				rightBoxName="availableMetadataFields"
-				rightList="<%= rightList %>"
-				rightTitle="available"
-			/>
-		</aui:field-wrapper>
-	</aui:fieldset>
-</aui:fieldset-group>
-
-<aui:script sandbox="<%= true %>">
-	var selectDisplayStyle = $('#<portlet:namespace />displayStyle');
+still trying to understand how the changes made in our 7.0 module relate to the 7.2 functionality.
+-->
+<aui:script require="metal-dom/src/dom as dom">
+	var displayStyleSelect = document.getElementById(
+		'<portlet:namespace />displayStyle'
+	);
 
 	function showHiddenFields() {
-		var hiddenFields = $('.hidden-field');
+		var displayStyle = displayStyleSelect.value;
 
-		hiddenFields.parentsUntil('.general-display-settings', '.checkbox, .form-group').addClass('hide');
+		var hiddenFields = document.querySelectorAll('.hidden-field');
 
-		var displayStyle = selectDisplayStyle.val();
+		Array.prototype.forEach.call(hiddenFields, function(field) {
+			var fieldContainer = dom.closest(field, '.form-group');
 
-		if (displayStyle == 'full-content') {
-			showParent('.show-asset-title');
-			showParent('.show-context-link');
-			showParent('.show-extra-info');
-		}
-		else {
-			if (displayStyle == 'abstracts') {
-				showParent('.abstract-length');
+			if (fieldContainer) {
+				var fieldClassList = field.classList;
+				var fieldContainerClassList = fieldContainer.classList;
+
+				if ( displayStyle === 'full-content' && (fieldClassList.contains('show-asset-title') || fieldClassList.contains('show-context-link') || fieldClassList.contains('show-extra-info'))) {
+					fieldContainerClassList.remove('hide');
+				} else {
+					if ( displayStyle === 'abstracts' && fieldClassList.contains('abstract-length')) {
+						fieldContainerClassList.remove('hide');
+					}
+					
+					if (fieldClassList.contains('asset-link-behavior')) {
+						fieldContainerClassList.remove('hide');
+					}
+				} else {
+					fieldContainerClassList.add('hide');
+				}
 			}
-
-			showParent('.asset-link-behavior');
-		}
-	}
-
-	function showParent(child, parent) {
-		$(child).parentsUntil('.general-display-settings', '.form-group').removeClass('hide');
+		});
 	}
 
 	showHiddenFields();
 
-	selectDisplayStyle.on('change', showHiddenFields);
+	displayStyleSelect.addEventListener('change', showHiddenFields);
 </aui:script>
