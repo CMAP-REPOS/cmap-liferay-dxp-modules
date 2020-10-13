@@ -18,3 +18,7 @@
 <%@ page import="com.liferay.asset.kernel.service.AssetEntryServiceUtil" %>
 <%@ page import="java.util.TimeZone" %>
 <%@ page import="java.util.Locale" %>
+<%@ page import="com.liferay.portal.kernel.service.PortletLocalServiceUtil" %>
+<%@ page import="com.liferay.portal.kernel.model.Portlet" %>
+<%@ page import="com.liferay.asset.publisher.web.internal.util.AssetPublisherWebUtil" %>
+<%@ page import="com.liferay.asset.publisher.constants.AssetPublisherWebKeys" %>
