@@ -205,7 +205,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 					//START CMAP-252 if contacts exist in CRM active, return the error
 					if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
 						LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
-						System.out.println("=======Contact Already Exists=======");
+//						System.out.println("=======Contact Already Exists=======");
 					}
 					else 
 					{
@@ -256,8 +256,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 							id = ccAddedContact.getId();
 							
 							if (id==null || id.trim().isEmpty()) {
-								System.out.println(crmContact.getPrimaryEmailAddress());
-								System.out.println(messageResponse);
+//								System.out.println(crmContact.getPrimaryEmailAddress());
+//								System.out.println(messageResponse);
 							}
 						}
 						
@@ -272,7 +272,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 							CrmContact updatedContact = _crmContactLocalService.updateCrmContact(addedContact, serviceContext);
 							
 							if (updatedContact != null) {
-								System.out.println(updatedContact);
+//								System.out.println(updatedContact);
 								auditContactAction(serviceContext, crmContact.getCrmContactId(), ContactManagerAppPortletKeys.ACTION_UPDATE);
 							}
 						}
@@ -307,8 +307,8 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			//START CMAP-252 if contacts exist in CRM active, return the error
 			if (_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() > 0) {
 				LOGGER.debug("#Search on CRM Contactes - 409: The email address provided is already in use");
-				System.out.println(crmContact.getPrimaryEmailAddress());
-				System.out.println(_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() );
+//				System.out.println(crmContact.getPrimaryEmailAddress());
+//				System.out.println(_crmContactLocalService.findByPrimaryEmailAddressAndStatus(crmContact.getPrimaryEmailAddress(), ConstantContactKeys.CC_STATUS_ACTIVE).size() );
 				SessionErrors.add(request, "409");
 				response.setRenderParameter("mvcPath", "/contacts/view.jsp");
 				return;
@@ -321,9 +321,9 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			String id = null;
 			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(crmContact.getPrimaryEmailAddress(), "ALL", 10);
 			if (ccContact!= null) {
-				System.out.println(ccContact.getStatus());
+//				System.out.println(ccContact.getStatus());
 				if (!ConstantContactKeys.CC_STATUS_ACTIVE.equals(ccContact.getStatus())) { // if contact is not active, activated first
-					System.out.println("if ccContact is not null and status it NOT 'active'");
+//					System.out.println("if ccContact is not null and status it NOT 'active'");
 					ccContact.setStatus(ConstantContactKeys.CC_STATUS_ACTIVE);
 					StringBuffer bufferResponse = new StringBuffer();
 					//not sure if visitor or woner works everitime when updating general contact data or changing status
@@ -536,7 +536,7 @@ public class ContactManagerAppPortlet extends MVCPortlet {
 			String responseBody = constantContactServiceImpl.deleteContact(Long.toString(constantContactID), statusCode);
 			Long modifiedDateMilis = crmContact.getModifiedDate().getTime();
 			
-			System.out.println("modifiedDateMilis: " + modifiedDateMilis);
+//			System.out.println("modifiedDateMilis: " + modifiedDateMilis);
 			
 			try {
 				_crmContactLocalService.updateCrmContact(crmContact, serviceContext);

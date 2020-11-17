@@ -91,6 +91,9 @@ public class BaseDateUtil {
 		// however, it sends it in GTM timezone, so, to avoid wrong rendering
 		// we do not set the timezone in that case.
 		if (event.isAllDay()) {
+
+			TimeZone etTimeZone = TimeZone.getTimeZone("America/Chicago"); //Target timezone
+			simpleDateformat.setTimeZone(etTimeZone);
 			
 			String eventDuration = simpleDateformat.format(dateStart) + "-" + simpleDateformat.format(dateEnd);
 			

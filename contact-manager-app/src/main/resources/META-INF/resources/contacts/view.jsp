@@ -8,7 +8,6 @@
 <liferay-ui:error key="500" message="500 Server error" />
 
 <%
-System.out.println("View Hi");
 	
 	List<CrmContactViewModel> viewModels = new ArrayList<CrmContactViewModel>();
 

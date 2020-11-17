@@ -28,6 +28,7 @@ import contact.manager.service.CrmContactLocalServiceUtil;
 import contact.manager.service.CrmOutreachLogLocalServiceUtil;
 
 @Component(
+//		property = {"cron.expression=0 0 * * * ?"}, // Running every hour. Part of Outage test.
 		property = {"cron.expression=0 0 2 * * ?"}, // Will run every day at 2am. To run it every hour use: '0 0 * * * ?'. For every 5 minutes, use:'0 */5 * * * ?'. 
 		immediate = true,
 		service = ConstantContactUpdatesMessageListener.class )

@@ -67,7 +67,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 	public void doView(RenderRequest renderRequest, RenderResponse renderResponse)
 			throws IOException, PortletException {
 
-		//System.out.println("doView");
+//		System.out.println("doView");
 		
 		try {
 			PortletPreferences portletPreferences = renderRequest.getPreferences();
@@ -143,11 +143,11 @@ public class SocialSliderPortlet extends MVCPortlet {
 			List<SocialSliderSocialMediaPost> socialMediaPostsUnordered = new ArrayList<SocialSliderSocialMediaPost>();
 			List<SocialSliderSocialMediaPost> socialMediaPosts = new ArrayList<SocialSliderSocialMediaPost>();
 			
-			//System.out.println("jsonResponseArrayTwitter.length() : " + jsonResponseArrayTwitter.length());
+//			System.out.println("jsonResponseArrayTwitter.length() : " + jsonResponseArrayTwitter.length());
 			
 			for (int i=0; i < jsonResponseArrayTwitter.length(); i++) {
 				SocialSliderSocialMediaPost socialMediaPost = getMediaPostTwitter(jsonResponseArrayTwitter.getJSONObject(i), postLength);
-				//System.out.println("socialMediaPost: " + socialMediaPost);
+//				System.out.println("socialMediaPost: " + socialMediaPost);
 				if (socialMediaPost != null) {
 					socialMediaPostsUnordered.add(socialMediaPost);
 				}
@@ -166,11 +166,11 @@ public class SocialSliderPortlet extends MVCPortlet {
 
 			Collections.sort(socialMediaPostsUnordered,orderByComparator);
 
-			//System.out.println("postCountNum : " + postCountNum);
-			for (int i=0; i < postCountNum - 2; i++) {
-				//System.out.println("i: " + i);
+//			System.out.println("postCountNum : " + postCountNum);
+			for (int i=0; i < jsonResponseArrayTwitter.length(); i++) {
+//				System.out.println("i: " + i);
 				socialMediaPosts.add(socialMediaPostsUnordered.get(i));
-				//System.out.println("i (otra vez): " + i);
+//				System.out.println("i (otra vez): " + i);
 			}
 			
 			renderRequest.setAttribute("twitterScreenName", twitterScreenName);
@@ -188,9 +188,9 @@ public class SocialSliderPortlet extends MVCPortlet {
 	public JSONArray getTwitterRequest(String twitterScreenName, String tweetCount, String oAuthConsumerKey,
 			String oAuthConsumerSecret, String oAuthAccessToken, String oAuthAccessTokenSecret) throws Exception{
 		
-		//System.out.println("getTwitterRequest");
+//		System.out.println("getTwitterRequest");
 		
-		//System.out.println("tweetCount: " + tweetCount);
+//		System.out.println("tweetCount: " + tweetCount);
 		
 		StringBuffer urlWithParams;
 		
@@ -268,8 +268,8 @@ public class SocialSliderPortlet extends MVCPortlet {
 	        urlWithParams.append(urlParam.getName() + "=" + urlParam.getValue());
 	    }
 	    
-	    //System.out.println("urlWithParams: ");
-	    //System.out.println(urlWithParams);
+//	    System.out.println("urlWithParams: ");
+//	    System.out.println(urlWithParams);
 	    
 	    GetMethod getMethod = new GetMethod(urlWithParams.toString());
 
@@ -284,7 +284,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 	
 		JSONArray jsonResponseArray = JSONFactoryUtil.createJSONArray(response1);
 		
-		//System.out.println("twitterAPI response length: " + jsonResponseArray.length());
+//		System.out.println("twitterAPI response length: " + jsonResponseArray.length());
 		
 		return jsonResponseArray;
 	}
@@ -344,7 +344,7 @@ public class SocialSliderPortlet extends MVCPortlet {
 	
 	protected SocialSliderSocialMediaPost getMediaPostTwitter(JSONObject jsonPost, int postLength) {
 
-		//System.out.println("getMediaPostTwitter");
+//		System.out.println("getMediaPostTwitter");
 		
 		SocialSliderSocialMediaPost socialMediaPost = new SocialSliderSocialMediaPost(StringPool.BLANK, StringPool.BLANK,
 				StringPool.BLANK, StringPool.BLANK, StringPool.BLANK, 0, false);

@@ -44,7 +44,7 @@ public class HandleFormMVCActionCommand extends BaseMVCActionCommand{
 	}
 	
 	private void addtoWeeklyEmailList(ActionRequest request) {
-		System.out.println("Inside _handleActionCommand");
+//		System.out.println("Inside _handleActionCommand");
 		
 		try {
 			String contactEmail = request.getParameter("contactEmail");

@@ -29,7 +29,8 @@ import contact.manager.model.CrmContact;
 import contact.manager.service.CrmContactLocalServiceUtil;
 
 @Component(
-		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central Standard)
+//		property = {"cron.expression=0 0 * * * ?"}, // Running every hour. Part of Outage test.
+		property = {"cron.expression=0 0 5 * * ?"}, // Every day at 5am UTC (11pm Central Standard) ** This is the one
 //		property = {"cron.expression=0 0 20 * * ?"}, // Every day at 8pm UTC (3pm Central Daylight)
 		immediate = true,
 		service = UnsubscribedContactNotificationMessageListener.class )

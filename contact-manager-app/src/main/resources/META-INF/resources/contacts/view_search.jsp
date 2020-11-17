@@ -27,7 +27,6 @@
 <%@ page import="contact.manager.serachindexer.CrmContactIndexer" %>
 
 <%
-	System.out.println("Hello there");
   List<Integer> crmContactsId = new ArrayList<Integer>();
 
   String keywords = "";
@@ -106,7 +105,7 @@
   keywords = keywords!=null ? keywords.toLowerCase() : "";
 
 
-	System.out.println("Hi there");
+	// System.out.println("Hi there");
 %>
 
 <liferay-portlet:renderURL varImpl="searchURL">
@@ -142,40 +141,40 @@
 
 <%
 
-System.out.println("Howdy there");
+// System.out.println("Howdy there");
 
 Indexer indexer = IndexerRegistryUtil.getIndexer(CrmContact.class);
-System.out.println("indexer: "+indexer);
-System.out.println("param: "+ParamUtil.getString(request, "indexer"));
+// System.out.println("indexer: "+indexer);
+// System.out.println("param: "+ParamUtil.getString(request, "indexer"));
 if (indexer != null && "unreg".equals(ParamUtil.getString(request, "indexer"))){
 	IndexerRegistryUtil.unregister(indexer);
-	System.out.println("go in one: ");
+	// System.out.println("go in one: ");
 } else if (indexer == null && "reg".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactIndexer contactIndexer = new CrmContactIndexer();
 	IndexerRegistryUtil.register(contactIndexer);
-	System.out.println("go in tow: ");
+	// System.out.println("go in tow: ");
 }
 
 if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "indexer"))){
 	CrmContactLocalServiceUtil.initCrmContactResourcePermissions(ServiceContextFactory.getInstance(CrmContact.class.getName(), request));
-	System.out.println("go in tree: ");
+	// System.out.println("go in tree: ");
 }
 
     SearchContext searchContext = SearchContextFactory.getInstance(request);    
     
-    System.out.println("=====Keywords ---->" + keywords);
+ //   System.out.println("=====Keywords ---->" + keywords);
 	String s = keywords.replaceAll("[^a-zA-Z0-9'.]", " ");
-	System.out.println("=======String s --->" + s);
+//	System.out.println("=======String s --->" + s);
 	for (String c:columns) {
-		System.out.println("=====Column ---->" + c);	
+	//	System.out.println("=====Column ---->" + c);	
 	}
 	
 	searchContext.setAttribute("paginationType", "more");
     String orderByCol = ParamUtil.getString(request, "orderByCol");
     String orderByType = ParamUtil.getString(request, "orderByType");
 
-	System.out.println("======== orderByCol: " + orderByCol);
-	System.out.println("======== orderByType: " + orderByType);
+	//System.out.println("======== orderByCol: " + orderByCol);
+	//System.out.println("======== orderByType: " + orderByType);
     
     
     if (!"".equals(orderByCol) && !"".equals(orderByType)){
@@ -188,7 +187,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
     		
     		Sort[] sorts = { SortFactoryUtil.getSort(CrmContact.class, orderByCol + sortSuffix , orderByType) };;
     		
-    		 System.out.println("sorts: " + sorts[0]);
+    		// System.out.println("sorts: " + sorts[0]);
     		 searchContext.setSorts(sorts);
     	 } catch(Exception e){
     		 e.printStackTrace();
@@ -218,7 +217,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 	termQuery = new TermQueryImpl("status", ConstantContactKeys.CC_STATUS_ACTIVE);
 	query.add(termQuery, BooleanClauseOccur.MUST);
 	
-	System.out.println("=======Query --->" + query);
+	//System.out.println("=======Query --->" + query);
 	
 	Hits hits = IndexSearcherHelperUtil.search(searchContext, query);
 	
@@ -240,7 +239,7 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 					    long entryId = GetterUtil.getLong(doc.get(Field.ENTRY_CLASS_PK));
 					    CrmContact entry = CrmContactLocalServiceUtil.getCrmContact(entryId);
 
-					    System.out.println("viewSearch crmContact entry modifiedDate: " + entry.getModifiedDate());
+				//	    System.out.println("viewSearch crmContact entry modifiedDate: " + entry.getModifiedDate());
 						if (entry != null){
 							viewModels.add(new CrmContactViewModel(entry));
 						}
@@ -264,12 +263,13 @@ if ("initCrmContactResourcePermissions".equals(ParamUtil.getString(request, "ind
 					}
 
 					// debugging
+					// DONE but left over just in case
 					// why is this variable named viewModels but the one used in the Liferay Tag is called viewModel?
 					// in this point the sort has already happened, the problem lies before this.
-					for (CrmContactViewModel crmViewModel: viewModels) {
-						System.out.println("crmViewModel modifiedDate: " + crmViewModel.getModifiedDate());
-					}
-					System.out.println("viewSearch viewModels: " + viewModels);
+					//for (CrmContactViewModel crmViewModel: viewModels) {
+					//	System.out.println("crmViewModel modifiedDate: " + crmViewModel.getModifiedDate());
+					//}
+					//System.out.println("viewSearch viewModels: " + viewModels);
 					
 					// end debugging
 					pageContext.setAttribute("results", viewModels);

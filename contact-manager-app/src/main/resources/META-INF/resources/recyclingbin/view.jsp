@@ -209,8 +209,9 @@ if ( !"".equals(ParamUtil.getString(request, "first-name"))){
 					<%
 						String mailtoPrimaryEmailBin = "mailto:" + viewModel.getPrimaryEmailAddress();
 					%>
-					<liferay-ui:search-container-column-button name="Delete" href="<%="window.location.href='"+deleteContactURL.toString().replaceAll("XXXXX", Long.toString(viewModel.getCrmContactId()))+"'"%>"/> 
 					
+					<liferay-ui:search-container-column-jsp
+						path="/recyclingbin/view_actions.jsp" name="Actions" />
 					<liferay-ui:search-container-column-text property="firstName"
 						name="First Name" orderable="true" orderableProperty="firstName" />
 					<liferay-ui:search-container-column-text property="lastName"

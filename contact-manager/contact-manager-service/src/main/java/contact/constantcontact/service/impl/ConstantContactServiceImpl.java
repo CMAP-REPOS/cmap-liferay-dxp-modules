@@ -382,7 +382,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/unsubscribes?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getUnsubscribedContacts: "+apiUrl);
+//		System.out.println("#getUnsubscribedContacts: "+apiUrl);
 
 		return getContactActivity(apiUrl);
 	}
@@ -394,7 +394,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/bounces?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getBouncedContacts: "+apiUrl);
+//		System.out.println("#getBouncedContacts: "+apiUrl);
 		
 		return getContactActivity(apiUrl);
 	}
@@ -406,7 +406,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/opens?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getEmailOpenContacts: "+apiUrl);
+//		System.out.println("#getEmailOpenContacts: "+apiUrl);
 		
 		return getContactActivity(apiUrl);
 	}
@@ -418,7 +418,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/sends?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getBouncedContacts: "+apiUrl);
+//		System.out.println("#getBouncedContacts: "+apiUrl);
 		
 		return getContactActivity(apiUrl);
 	}
@@ -430,7 +430,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/forwards?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getForwardedContacts: "+apiUrl);
+//		System.out.println("#getForwardedContacts: "+apiUrl);
 		
 		return getContactActivity(apiUrl);
 	}
@@ -442,7 +442,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		String apiUrl = String.format(
 				"%semailmarketing/campaigns/%s/tracking/clicks?api_key=%s&created_since=%s",
 				apibaseurl, campaignId, apikey, createdSinceDate);
-		System.out.println("#getEmailClickContacts: "+apiUrl);
+//		System.out.println("#getEmailClickContacts: "+apiUrl);
 
 		return getContactActivity(apiUrl);
 	}
@@ -658,7 +658,7 @@ public class ConstantContactServiceImpl implements ConstantContactService {
 		try {
 			connection = this.getHttpUrlConnection(apiUrl, HttpMethods.POST,
 					Integer.toString(contactModelJson.getBytes().length), true, true);
-			System.out.println("connection " + connection);
+//			System.out.println("connection " + connection);
 			BufferedWriter out = new BufferedWriter(new OutputStreamWriter(
 					connection.getOutputStream()));
 			out.write(contactModelJson);

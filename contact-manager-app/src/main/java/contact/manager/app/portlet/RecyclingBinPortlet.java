@@ -64,7 +64,7 @@ public class RecyclingBinPortlet  extends MVCPortlet {
 	
 	public void deleteContact(ActionRequest request, ActionResponse response) throws PortalException {
 
-		System.out.println("\n======= Recycling Bin Delete Workflow =======\n");
+//		System.out.println("\n======= Recycling Bin Delete Workflow =======\n");
 		try {
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(CrmContact.class.getName(), request);
 			long crmContactId = ParamUtil.getLong(request, "crmContactId");
@@ -77,7 +77,7 @@ public class RecyclingBinPortlet  extends MVCPortlet {
 			crmContact.setUserName(UserUtil.getUserName(userId));
 			crmContact.setModifiedDate(serviceContext.getModifiedDate(now));
 			CrmContact deletedContact = _crmContactLocalService.updateCrmContact(crmContact, serviceContext);
-			System.out.println("deleted contact" + deletedContact);
+//			System.out.println("deleted contact" + deletedContact);
 			if (deletedContact != null) {
 //				ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 //				StringBuffer bufferResponse = new StringBuffer();
