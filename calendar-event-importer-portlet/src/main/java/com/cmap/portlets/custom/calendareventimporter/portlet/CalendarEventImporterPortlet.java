@@ -58,14 +58,14 @@ public class CalendarEventImporterPortlet extends GenericPortlet {
 		//printWriter.print("=====Event Title " + calendarBookings.get(0).getTitleCurrentValue() + "=========");
 		
 		for(CalendarBooking event:calendarBookings){
-          System.out.println("=====Event Title " + event.getTitleCurrentValue() + "=========");
+//          System.out.println("=====Event Title " + event.getTitleCurrentValue() + "=========");
           
           long dateEvent = event.getStartTime();
           DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
           Date date = new Date(dateEvent);
           
-          System.out.println("=====Event Date " + date + "=========");
-          System.out.println("=====Event Day " + date.getDay() + "=========");
+//          System.out.println("=====Event Date " + date + "=========");
+//          System.out.println("=====Event Day " + date.getDay() + "=========");
           
           
         }

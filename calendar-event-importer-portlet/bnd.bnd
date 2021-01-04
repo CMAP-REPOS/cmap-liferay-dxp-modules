@@ -1,4 +1,4 @@
 Bundle-Name: calendar-event-importer-portlet
 Bundle-SymbolicName: com.cmap.portlets.custom
 Bundle-Version: 1.0.0
-Export-Package: com.cmap.portlets.custom.constants}
+Export-Package: com.cmap.portlets.custom.constants

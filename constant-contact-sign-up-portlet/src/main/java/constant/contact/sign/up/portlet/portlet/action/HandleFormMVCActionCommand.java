@@ -6,6 +6,7 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.BaseMVCActionCommand;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCActionCommand;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class HandleFormMVCActionCommand extends BaseMVCActionCommand{
 //		System.out.println("Inside _handleActionCommand");
 		
 		try {
-			String contactEmail = request.getParameter("contactEmail");
+			String contactEmail = ParamUtil.getString(request, "contactEmail");
 			ConstantContactServiceImpl constantContactServiceImpl = new ConstantContactServiceImpl();
 			ContactApiModel ccContact = constantContactServiceImpl.getContactByEmailAndContactStatus(contactEmail, "ALL", 10);
 			
