@@ -71,7 +71,7 @@
 					var jumpDate = new Date();
 					// month is a 0-based array but value in dropdown is 1-12
 					jumpDate.setFullYear($.trim(dateParts[0]), $.trim(dateParts[1]) - 1, $.trim(dateParts[2]));
-					window._com_liferay_calendar_web_portlet_CalendarPortlet_scheduler.set('date', jumpDate);
+					window._com_liferay_calendar_web_portlet_CalendarPortlet_INSTANCE_CsoLzKTepXRS_scheduler.set('date', jumpDate);
 				});
 
 			}
