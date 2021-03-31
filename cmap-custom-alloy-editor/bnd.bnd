@@ -1,0 +1,4 @@
+Bundle-Name: cmap-custom-alloy-editor
+Bundle-SymbolicName: com.cmap.custom.alloyeditor.configuration
+Bundle-Version: 1.0.0
+Export-Package: com.cmap.custom.alloyeditor.configuration.constants
