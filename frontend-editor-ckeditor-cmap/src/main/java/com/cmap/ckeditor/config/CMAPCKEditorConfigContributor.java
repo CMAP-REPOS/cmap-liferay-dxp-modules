@@ -94,7 +94,7 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 		jsonObject.put("height", 320);
 		jsonObject.put("language_list", JSONFactoryUtil.createJSONArray());
 		jsonObject.put("notification_duration", 0);
-		jsonObject.put("removeButtons", "Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Font,FontSize");
+		jsonObject.put("removeButtons", "Save,NewPage,Preview,Print,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,Flash,Smiley,Iframe,Language,BidiRtl,BidiLtr,About,Font");
 		jsonObject.put("scayt_autoStartup", true);
 		jsonObject.put("scayt_ignoreAllCapsWords", true);
 		jsonObject.put("scayt_ignoreDomainNames", true);

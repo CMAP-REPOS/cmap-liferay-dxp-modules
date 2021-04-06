@@ -11,6 +11,8 @@ CKEDITOR.editorConfig = function( config ) {
     } 
   };
 
+  config.fontSize_sizes = '16/16px;24/24px;48/48px;';
+
   config.toolbarGroups = [
     { 
       name: 'document', 
@@ -40,18 +42,18 @@ CKEDITOR.editorConfig = function( config ) {
       groups: [ 'links' ] 
     }, { 
       name: 'colors', 
-      groups: [ 'colors' ] 
+      groups: [ 'colors' ]
     }, { 
       name: 'paragraph', 
       groups: [ 'align', 'list', 'indent', 'blocks', 'bidi', 'paragraph' ] 
     }, { 
       name: 'styles', 
-      groups: [ 'styles' ] 
-    } 
+      groups: [ 'styles' ]
+    }
   ];
   config.disallowedContent = "h3;h4;h5;h6;";
 
-  console.log("I'm here this config: " + config);
+  console.log("I'm here this config is cool: " + config);
   return config;
 };
 
