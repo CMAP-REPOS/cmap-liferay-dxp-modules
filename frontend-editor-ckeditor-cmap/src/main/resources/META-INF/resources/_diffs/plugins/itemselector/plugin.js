@@ -158,6 +158,9 @@
 					'dialogDefinition',
 					function(event) {
 						var dialogName = event.data.name;
+						
+						alert(dialogName);
+						console.log(dialogName);
 
 						var dialogDefinition = event.data.definition;
 
@@ -165,6 +168,10 @@
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'audioselector', 'url');
 						}
 						else if (dialogName === 'image') {
+
+							alert("bye");
+							console.log("bye");
+							
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'imageselector', 'txtUrl');
 							instance._bindBrowseButton(editor, dialogDefinition, 'Link', 'linkselector', 'txtUrl');
 
@@ -173,6 +180,19 @@
 //							dialogDefinition.onLoad = function() {
 //								this.getContentElement('info', 'txtUrl').getInputElement().setAttribute('readOnly', true);
 //							};
+						}
+						else if (dialogName === 'image2') {
+							
+							alert("hi");
+							console.log("hi");
+							
+							instance._bindBrowseButton(
+								editor,
+								dialogDefinition,
+								'info',
+								'imageselector',
+								'txtUrl'
+							);
 						}
 						else if (dialogName === 'video') {
 							instance._bindBrowseButton(editor, dialogDefinition, 'info', 'videoselector', 'poster');

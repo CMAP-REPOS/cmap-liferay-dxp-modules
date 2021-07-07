@@ -60,7 +60,7 @@ public class CMAPCKEditorConfigContributor extends BaseEditorConfigContributor {
 
 		// logger.warn(jsonObject.toString());
 
-		String extra_plugins = "scayt,itemselector,lfrpopup,widget,advertisement,page-cards,actions,recommendations,endnotes,centered-content";
+		String extra_plugins = "scayt,lfrpopup,widget,advertisement,page-cards,actions,recommendations,endnotes,centered-content"; 
 		
 		jsonObject.put("bodyClass", "journal-content-article");
 		jsonObject.put("bodyId", "cmap-ckeditor");
