@@ -61,6 +61,7 @@
 
 			<p>{date}</p>
 			<p>{location}</p>
+			{description}
 
 			<div class="detailsLink hidden">
 				
