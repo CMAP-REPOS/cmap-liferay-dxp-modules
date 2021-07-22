@@ -729,7 +729,7 @@ AUI.add(
 						this,
 						arguments
 					);
-					
+
 					// CMAP: get event location if event exists
 					var eventLocation = schedulerEvent.get('location');
 
@@ -738,11 +738,13 @@ AUI.add(
 					var formattedStartTime = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%I:%M %p');
 					var formattedEndTime = schedulerEvent._formatDate(schedulerEvent.get('endDate'), '%I:%M %p');
 					var formattedDateTime = formattedDate + ", " + formattedStartTime + " - " + formattedEndTime;
-					
+					try{
+						var eventBookingId = schedulerEvent.get('calendarBookingId');
+					} catch (e) {
+						console.log(e);
+					}
+					window.eventBookingId = eventBookingId;
 					var description = schedulerEvent.get('description');
-					
-					console.log(CalendarBooking.getExpandoBridge());
-					
 					var newData = A.merge(templateData, {
 						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
 							schedulerEvent,
@@ -780,10 +782,10 @@ AUI.add(
 						appointment: instance._getAppointment(templateData, eventLocation),
 						date: formattedDateTime,
 						description: description,
+						eventBookingId: eventBookingId,
 						googleCalendarLink: instance._getGoogleCalendarLink(templateData, eventLocation),
-						calendarBookingId: schedulerEvent.get('calendarBookingId')
+						calendarBookingId: schedulerEvent.get('calendarBookingId'),
 					});
-					
 					return newData;
 				},
 
