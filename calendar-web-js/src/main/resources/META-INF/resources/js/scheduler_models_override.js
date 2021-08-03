@@ -104,7 +104,11 @@ AUI.add(
 					validator: isValue,
 					value: STR_BLANK
 				},
-
+				eventBookingId: {
+					setter: String,
+					validator: isValue,
+					value: STR_BLANK
+				},
 				editingEvent: {
 					validator: isBoolean,
 					value: false

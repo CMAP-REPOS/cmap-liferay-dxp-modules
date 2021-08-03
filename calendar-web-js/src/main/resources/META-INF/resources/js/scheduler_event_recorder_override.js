@@ -729,15 +729,23 @@ AUI.add(
 						this,
 						arguments
 					);
-					
+
 					// CMAP: get event location if event exists
 					var eventLocation = schedulerEvent.get('location');
 
 					// CMAP: get formatted date and time for email form
 					var formattedDate = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%m/%d/%Y');
-					var formattedTime = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%I:%M %p');
-
-					return A.merge(templateData, {
+					var formattedStartTime = schedulerEvent._formatDate(schedulerEvent.get('startDate'), '%I:%M %p');
+					var formattedEndTime = schedulerEvent._formatDate(schedulerEvent.get('endDate'), '%I:%M %p');
+					var formattedDateTime = formattedDate + ", " + formattedStartTime + " - " + formattedEndTime;
+					try{
+						var eventBookingId = schedulerEvent.get('calendarBookingId');
+					} catch (e) {
+						console.log(e);
+					}
+					window.eventBookingId = eventBookingId;
+					var description = schedulerEvent.get('description');
+					var newData = A.merge(templateData, {
 						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
 							schedulerEvent,
 							CalendarWorkflow.STATUS_APPROVED
@@ -772,11 +780,13 @@ AUI.add(
 						location: eventLocation,
 						locationEncoded: encodeURIComponent(eventLocation),
 						appointment: instance._getAppointment(templateData, eventLocation),
-						formattedDate,
-						formattedTime,
+						date: formattedDateTime,
+						description: description,
+						eventBookingId: eventBookingId,
 						googleCalendarLink: instance._getGoogleCalendarLink(templateData, eventLocation),
-						calendarBookingId: schedulerEvent.get('calendarBookingId')
+						calendarBookingId: schedulerEvent.get('calendarBookingId'),
 					});
+					return newData;
 				},
 
 				getUpdatedSchedulerEvent(optAttrMap) {
@@ -820,46 +830,6 @@ AUI.add(
 						instance
 					);
 				},
-				
-//				// CMAP: copied in A.SchedulerEventRecorder.showPopover from alloy-3.0.1
-//				showPopover: function (node) {
-//
-//					console.log('showPopover');
-//
-//					var instance = this,
-//						event = instance.get('event');
-//
-//					if (!instance.popover.get('rendered')) {
-//						instance._renderPopover();
-//					}
-//
-//					if (!node) {
-//						if (event) {
-//							node = event.get('node');
-//						}
-//						else {
-//							node = instance.get('node');
-//						}
-//					}
-//
-//					if (A.Lang.isNodeList(node)) {
-//						node = node.item(0);
-//					}
-//
-//					var align = instance.popover.get('align');
-//					instance.popover.set('align', {
-//						node: node,
-//						points: align.points
-//					});
-//
-//					// CMAP: call cmap.calendar.form.getEventLink if it is defined -- see view.jsp in calendar-web-form-pZ
-//					if (!!cmap && !!cmap.calendar && !!cmap.calendar.form && !!cmap.calendar.form.getEventLink) {
-//						cmap.calendar.form.getEventLink(event.get('calendarBookingId'), instance);
-//					} else {
-//						instance.popover.show();
-//					}
-////					instance.popover.show();
-//				},
 
 				isMasterBooking: Lang.emptyFnFalse,
 

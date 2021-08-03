@@ -13,7 +13,6 @@
  * details.
  */
 --%>
-
 <script id="<portlet:namespace />eventRecorderHeaderTpl" type="text/x-alloy-template">
 	<div class="calendar-portlet-event-recorder">
 		<div class="scheduler-event-recorder-header">
@@ -61,9 +60,11 @@
 
 			<p>{date}</p>
 			<p>{location}</p>
-
+			{description}
+			<span class="hidden" id="bookingId">{eventBookingId}</span>
+			<p>link: <span id="eventBooking__span"></span></p>
 			<div class="detailsLink hidden">
-				
+
 			</div>
 
 			<div class="scheduler-event-recorder-actions">
@@ -115,4 +116,44 @@
 			</tpl>
 		</div>
 	</div>
+</script>
+<script>
+
+	// process wait for the server to finish
+	// process wait the website to render
+	// then hit the API, and push to the span created the result of such
+
+	// we add this event listener to finish the load
+	// we need another eventListener to handle multiple
+	function liferayService() {
+		var link;
+		var bookingId;
+		setTimeout(function(){
+			bookingId = window.eventBookingId;
+			Liferay.Service(
+					"/expandovalue/get-data",
+					{
+						companyId: Liferay.ThemeDisplay.getCompanyId(),
+						className: "com.liferay.calendar.model.CalendarBooking",
+						tableName: "CUSTOM_FIELDS",
+						columnName: "Link",
+						classPK: bookingId,
+					},
+					function (obj) {
+						// once we receive the obj we can then pass it to
+						link = obj;
+						var eventBookingSpan = document.getElementById("eventBooking__span");
+						eventBookingSpan.innerHTML = "<a href=\"" + link + "\">" + link + "</a>";
+					}
+			);
+			}, 2000);
+		}
+		window.addEventListener("load", () => {
+			var container = document.getElementsByClassName("calendar-portlet-column-parent")[0];
+			container.addEventListener("click", (event) => {
+				if (event.target.matches("div.scheduler-event-title") || event.target.matches("div.scheduler-event-content")) {
+					liferayService();
+				}
+			});
+		})
 </script>
