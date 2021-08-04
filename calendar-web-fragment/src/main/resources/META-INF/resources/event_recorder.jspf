@@ -129,7 +129,7 @@
 		var link;
 		var bookingId;
 		setTimeout(function(){
-			bookingId = window.eventBookingId;
+			bookingId = document.getElementById("bookingId").innerText;
 			Liferay.Service(
 					"/expandovalue/get-data",
 					{
@@ -137,7 +137,7 @@
 						className: "com.liferay.calendar.model.CalendarBooking",
 						tableName: "CUSTOM_FIELDS",
 						columnName: "Link",
-						classPK: bookingId,
+						classPK: Number(bookingId),
 					},
 					function (obj) {
 						// once we receive the obj we can then pass it to
