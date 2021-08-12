@@ -743,7 +743,6 @@ AUI.add(
 					} catch (e) {
 						console.log(e);
 					}
-					window.eventBookingId = eventBookingId;
 					var description = schedulerEvent.get('description');
 					var newData = A.merge(templateData, {
 						acceptLinkEnabled: instance._hasWorkflowStatusPermission(
